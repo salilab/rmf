@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_NODE_SET_HANDLE_H
 #define IMPLIBRMF_NODE_SET_HANDLE_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include "HDF5Group.h"
 #include "internal/SharedData.h"
 #include "types.h"

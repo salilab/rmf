@@ -8,7 +8,7 @@
 #ifndef IMPLIBRMF_INTERNAL_HASH_H
 #define IMPLIBRMF_INTERNAL_HASH_H
 
-#include "../RMF_config.h"
+#include <RMF/config.h>
 
 #ifdef __clang__
 #pragma clang diagnostic push

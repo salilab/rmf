@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_NAMES_H
 #define IMPLIBRMF_NAMES_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include "types.h"
 #include "Key.h"
 #include <sstream>
@@ -94,9 +94,6 @@ namespace RMF {
     return std::string("lock");
   }
   /** @} */
-
-  /** Return the path to an example file from the name.*/
-  RMFEXPORT std::string get_example_path(std::string file_name);
 
   /** Node names have to obey certain rules, such as no quotes
       in the name. This returns a string that has been modified to

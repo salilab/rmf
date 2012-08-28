@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_HDF_5_HANDLE_H
 #define IMPLIBRMF_HDF_5_HANDLE_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include "NodeID.h"
 #include "infrastructure_macros.h"
 #include "internal/intrusive_ptr_object.h"

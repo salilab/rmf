@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_PROFILE_H
 #define IMPLIBRMF_PROFILE_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include <string>
 
 namespace RMF {

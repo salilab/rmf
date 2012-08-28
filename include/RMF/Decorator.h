@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_DECORATOR_H
 #define IMPLIBRMF_DECORATOR_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include "internal/lazy.h"
 namespace RMF {
 

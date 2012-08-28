@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_INTERNAL_IMP_OPERATIONS_H
 #define IMPLIBRMF_INTERNAL_IMP_OPERATIONS_H
 
-#include "../RMF_config.h"
+#include <RMF/config.h>
 #include "../NodeHandle.h"
 #include "../FileHandle.h"
 #include "../types.h"

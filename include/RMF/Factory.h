@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_FACTORY_H
 #define IMPLIBRMF_FACTORY_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 namespace RMF {
 
 /** Factories in RMF allow one to create Decorator objects as well

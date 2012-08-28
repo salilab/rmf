@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_LAZY_H
 #define IMPLIBRMF_LAZY_H
 
-#include "../RMF_config.h"
+#include <RMF/config.h>
 #include "intrusive_ptr_object.h"
 #include "errors.h"
 #include "../FileHandle.h"

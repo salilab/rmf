@@ -9,7 +9,7 @@
 #define IMPLIBRMF_INTERNAL_SWIG_HELPERS_H
 
 // Python.h must be included first
-#include "../RMF_config.h"
+#include <RMF/config.h>
 #include "../infrastructure_macros.h"
 #include <boost/array.hpp>
 #include <vector>

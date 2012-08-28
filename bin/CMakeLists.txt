@@ -1,0 +1,8 @@
+FILE(GLOB bins *.cpp)
+foreach (b ${bins})
+  GET_FILENAME_COMPONENT(name ${b} NAME_WE)
+  add_executable(${name} ${b})
+  target_link_libraries(${name} RMF)
+  target_link_libraries(${name} ${Boost_PROGRAM_OPTIONS_LIBRARY})
+  install (FILES ${name} DESTINATION bin)
+endforeach(b)

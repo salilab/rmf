@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_KEY_H
 #define IMPLIBRMF_KEY_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include "Category.h"
 #include "types.h"
 #include "HDF5DataSetD.h"

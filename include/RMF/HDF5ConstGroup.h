@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_HDF_5CONST_GROUP_H
 #define IMPLIBRMF_HDF_5CONST_GROUP_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include "HDF5Object.h"
 #include "HDF5DataSetD.h"
 #include "HDF5ConstAttributes.h"

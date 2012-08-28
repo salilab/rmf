@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_EXCEPTIONS_H
 #define IMPLIBRMF_EXCEPTIONS_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include <exception>
 
 namespace RMF {

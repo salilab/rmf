@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_INTERNAL_SHARED_DATA_H
 #define IMPLIBRMF_INTERNAL_SHARED_DATA_H
 
-#include "../RMF_config.h"
+#include <RMF/config.h>
 #include "../Key.h"
 #include "../types.h"
 #include "../names.h"

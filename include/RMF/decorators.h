@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_DECORATORS_H
 #define IMPLIBRMF_DECORATORS_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include "infrastructure_macros.h"
 #include "NodeHandle.h"
 #include "FileHandle.h"

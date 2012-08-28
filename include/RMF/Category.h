@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_KEY_CATEGORY_H
 #define IMPLIBRMF_KEY_CATEGORY_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include "infrastructure_macros.h"
 #include <vector>
 

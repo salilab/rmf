@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_INTERNAL_HDF_5SHARED_DATA_H
 #define IMPLIBRMF_INTERNAL_HDF_5SHARED_DATA_H
 
-#include "../RMF_config.h"
+#include <RMF/config.h>
 #include "SharedData.h"
 #include "../HDF5Group.h"
 #include "../HDF5File.h"

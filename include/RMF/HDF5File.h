@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_HDF_5FILE_H
 #define IMPLIBRMF_HDF_5FILE_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include "HDF5Group.h"
 #include "HDF5ConstFile.h"
 

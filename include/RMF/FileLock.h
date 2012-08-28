@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_FILE_LOCK_H
 #define IMPLIBRMF_FILE_LOCK_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include "FileConstHandle.h"
 
 

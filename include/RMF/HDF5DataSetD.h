@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_HDF_5DATA_SET_D_H
 #define IMPLIBRMF_HDF_5DATA_SET_D_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include "types.h"
 #include "HDF5Object.h"
 #include "HDF5MutableAttributes.h"

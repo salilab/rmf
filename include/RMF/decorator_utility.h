@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_DECORATOR_UTILITY_H
 #define IMPLIBRMF_DECORATOR_UTILITY_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include "NodeConstHandle.h"
 #include "decorators.h"
 namespace RMF {

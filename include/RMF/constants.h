@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_CONSTANTS_H
 #define IMPLIBRMF_CONSTANTS_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 
 namespace RMF {
   /** A constant used to denote that the particular operation

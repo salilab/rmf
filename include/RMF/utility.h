@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_UTILITY_H
 #define IMPLIBRMF_UTILITY_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include "internal/intrusive_ptr_object.h"
 #include "internal/errors.h"
 #include "NodeConstHandle.h"

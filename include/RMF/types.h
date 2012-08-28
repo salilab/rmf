@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_TYPES_H
 #define IMPLIBRMF_TYPES_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include "NodeID.h"
 #include "hdf5_handle.h"
 #include "infrastructure_macros.h"

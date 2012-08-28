@@ -8,7 +8,7 @@
 #ifndef IMPLIBRMF_SET_H
 #define IMPLIBRMF_SET_H
 
-#include "../RMF_config.h"
+#include <RMF/config.h>
 #include <boost/version.hpp>
 
 // creates warnings in clang and we only use clang for diagnostics anyway

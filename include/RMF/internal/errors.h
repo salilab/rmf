@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_INTERNAL_ERRORS_H
 #define IMPLIBRMF_INTERNAL_ERRORS_H
 
-#include "../RMF_config.h"
+#include <RMF/config.h>
 #include "../infrastructure_macros.h"
 #include <sstream>
 

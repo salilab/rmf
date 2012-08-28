@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_VALIDATOR_H
 #define IMPLIBRMF_VALIDATOR_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include "FileHandle.h"
 
 namespace RMF {

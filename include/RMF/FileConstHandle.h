@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_FILE_CONST_HANDLE_H
 #define IMPLIBRMF_FILE_CONST_HANDLE_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include "internal/SharedData.h"
 #include "Key.h"
 #include "NodeHandle.h"

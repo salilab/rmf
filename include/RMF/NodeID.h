@@ -9,7 +9,7 @@
 #ifndef IMPLIBRMF_NODE_ID_H
 #define IMPLIBRMF_NODE_ID_H
 
-#include "RMF_config.h"
+#include <RMF/config.h>
 #include "infrastructure_macros.h"
 #include <vector>
 #include <iostream>
