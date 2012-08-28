@@ -1,4 +1,4 @@
 rmf
 ===
 
-The library to support reading and writing of RMF files.
+This repository is an attempt to provide an independent version of the RMF library.
