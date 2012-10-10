@@ -199,6 +199,7 @@ IMP_RMF_SWIG_PAIR(RMF, Int, IntRange, IntRanges)
 
 IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DECLARE_TYPE);
 
+%implicitconv;
 %implicitconv RMF::HDF5File;
 %implicitconv RMF::HDF5ConstFile;
 
@@ -286,14 +287,16 @@ namespace RMF {
 %template(_HDF5ConstAttributesObject) RMF::HDF5ConstAttributes<RMF::HDF5Object>;
 %include "RMF/HDF5MutableAttributes.h"
 %include "RMF/HDF5DataSetIndexD.h"
+%template(HDF5DataSetIndex1D) RMF::HDF5DataSetIndexD<1>;
+%template(HDF5DataSetIndex2D) RMF::HDF5DataSetIndexD<2>;
+%template(HDF5DataSetIndex3D) RMF::HDF5DataSetIndexD<3>;
+
 %include "RMF/HDF5DataSetAccessPropertiesD.h"
 %include "RMF/HDF5DataSetCreationPropertiesD.h"
 %include "RMF/HDF5ConstDataSetD.h"
 IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DEFINE_INTERMEDIATE_TYPE);
 %include "RMF/HDF5DataSetD.h"
-%template(HDF5DataSetIndex1D) RMF::HDF5DataSetIndexD<1>;
-%template(HDF5DataSetIndex2D) RMF::HDF5DataSetIndexD<2>;
-%template(HDF5DataSetIndex3D) RMF::HDF5DataSetIndexD<3>;
+
 %template(NodeID) RMF::NodeIDD<1>;
 %template(NodePairID) RMF::NodeIDD<2>;
 %template(NodeTripletID) RMF::NodeIDD<3>;
@@ -363,90 +366,19 @@ IMP_RMF_DECORATOR(RMF, Alias);
 %include "RMF/utility.h"
 
 %pythoncode %{
+_tmpdir=None
 
-import re
-import math
-import sys
-import os
-import random
-import time
-import types
-import shutil
-import datetime
-import unittest
+def _get_temporary_file_path(name):
+   global _tmpdir
+   if not _tmpdir:
+       import tempfile
+       _tmpdir = tempfile.mkdtemp()
+   import os.path
+   return os.path.join(_tmpdir, name)
 
-try:
-    import IMP.test
-    parent=IMP.test.TestCase
-except:
-    parent=unittest.TestCase
-
-class TestCase(parent):
-    """Super class for RMF test cases"""
-
-    if parent == unittest.TestCase:
-        def setUp(self):
-            self.start_time=datetime.datetime.now()
-
-        def tearDown(self):
-            delta= datetime.datetime.now()-self.start_time
-            try:
-                pv = delta.total_seconds()
-            except AttributeError:
-                pv = (float(delta.microseconds) \
-                    + (delta.seconds + delta.days * 24 * 3600) * 10**6) / 10**6
-            if pv > 1:
-                print >> sys.stderr, "in %.3fs ... " % pv,
-
-    def get_input_file_name(self, filename):
-        """Get the full name of an input file in the top-level
-           test directory."""
-        # If we ran from run-all-tests.py, it set an env variable for us with
-        # the top-level test directory
-        if 'TEST_DIRECTORY' in os.environ:
-            top = os.environ['TEST_DIRECTORY']
-            return os.path.join(top, 'input', filename)
-        else:
-            # Otherwise, search up from the test's directory until we find
-            # the input directory
-            testdir = os.path.dirname(os.path.abspath(sys.argv[0]))
-            dirs = testdir.split(os.path.sep)
-            for i in range(len(dirs), 0, -1):
-                input = os.path.sep.join(dirs[:i] + ['input'])
-                if os.path.isdir(input):
-                    return os.path.join(input, filename)
-        # If not found, default to the current working directory:
-        ret= os.path.join('input', filename)
-        if not open(ret, "r"):
-            raise IOError("Test input file "+ret+" does not exist")
-
-    def get_tmp_file_name(self, filename):
-        """Get the full name of an output file in the build/tmp directory."""
-        dirpath=os.environ['IMP_TMP_DIR']
-        if not os.path.exists(dirpath):
-            os.mkdir(dirpath)
-        return os.path.join(dirpath, filename)
-
-"""
-class _TestResult(unittest.TextTestResult):
-    def getDescription(self, test):
-        doc_first_line = test.shortDescription()
-        if self.descriptions and doc_first_line:
-            return doc_first_line
-        else:
-            return str(test)
-
-
-class _TestRunner(unittest.TextTestRunner):
-    def _makeResult(self):
-        return _TestResult(self.stream, self.descriptions, self.verbosity)
-"""
-
-def main(*args, **keys):
-    """Run a set of tests; essentially the same as unittest.main(). Obviates
-       the need to separately import the 'unittest' module, and ensures that
-       main() is from the same unittest module that the IMP.test testcases
-       are."""
-    #testRunner=_TestRunner
-    return unittest.main( *args, **keys)
+def _get_test_input_file_path(name):
+   import sys
+   import os.path
+   dir= os.path.split(sys.argv[0])[0]
+   return os.path.join(dir, "input", name)
 %}

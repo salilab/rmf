@@ -3,14 +3,14 @@ import unittest
 import RMF
 import shutil
 
-class GenericTest(RMF.TestCase):
+class GenericTest(unittest.TestCase):
     def _show(self, g):
         for i in range(0, g.get_number_of_children()):
             print i, g.get_child_name(i), g.get_child_is_group(i)
     """Test the python code"""
     def test_frames(self):
         """Test getting all values for an attribute"""
-        f= RMF.create_rmf_file(self.get_tmp_file_name("test_file_frames.rmf"))
+        f= RMF.create_rmf_file(RMF._get_temporary_file_path("test_file_frames.rmf"))
         r= f.get_root_node()
         print r.get_type()
         sc= f.add_category("sequence")
@@ -22,7 +22,7 @@ class GenericTest(RMF.TestCase):
         self.assertEqual(av, [1,2,RMF.NullInt,4])
     def test_decorators(self):
         """Test getting all values through a decorator"""
-        f= RMF.create_rmf_file(self.get_tmp_file_name("test_file_decorator.rmf"))
+        f= RMF.create_rmf_file(RMF._get_temporary_file_path("test_file_decorator.rmf"))
         r= f.get_root_node()
         fact= RMF.ScoreFactory(f)
         sn= r.add_child("feature", RMF.FEATURE)

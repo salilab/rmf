@@ -1,28 +1,33 @@
 cmake_minimum_required(VERSION 2.8)
 project(RMF)
 
-find_package(Boost COMPONENTS system filesystem thread REQUIRED)
+# needs to be in main CMakeLists.txt
+ENABLE_TESTING()
+
+find_package(Boost COMPONENTS system filesystem thread program_options
+REQUIRED)
 
 include(FindHDF5)
 find_package(HDF5 REQUIRED)
 
 include(FindProtobuf)
-find_package(Protobuf REQUIRED)
+find_package(Protobuf)
 include_directories(${PROTOBUF_INCLUDE_DIR})
 #lib_directories(${PROTOBUF_LIB_DIR})
 
-FIND_PACKAGE(SWIG REQUIRED)
-INCLUDE(${SWIG_USE_FILE})
-
-FIND_PACKAGE(PythonLibs)
-INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
-
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 
-
+set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR})
 
 set (RMF_VERSION_MAJOR 0)
 set (RMF_VERSION_MINOR 9)
+
+if (PROTOBUF_FOUND)
+  set(PROTOBUF_FOUND_INT 1)
+  PROTOBUF_GENERATE_CPP(protobuf_source protobuf_header "data/RMF.proto")
+else(PROTOBUF_FOUND)
+  set(PROTOBUF_FOUND_INT 0)
+endif(PROTOBUF_FOUND)
 
 # configure a header file to pass some of the CMake settings
 # to the source code
@@ -35,8 +40,11 @@ configure_file (
 FILE(GLOB SOURCES "src/*.cpp" "src/internal/*.cpp")
 FILE(GLOB HEADERS "include/RMF/*.h" "include/internal/RMF/*.h")
 
+include_directories("${PROJECT_BINARY_DIR}/include"
+"${PROJECT_SOURCE_DIR}/include" ${HDF5_INCLUDE_DIRS} "${PROJECT_BINARY_DIR}")
 
-add_library(RMF SHARED ${SOURCES} ${HEADERS})
+add_library(RMF SHARED ${SOURCES} ${protobuf_source}
+${protobuf_header} ${HEADERS})
 
 target_link_libraries(RMF
     ${Boost_FILESYSTEM_LIBRARY}
@@ -46,15 +54,13 @@ target_link_libraries(RMF
     ${HDF5_LIBRARIES}
 )
 
+ADD_SUBDIRECTORY(bin)
+ADD_SUBDIRECTORY(pyext)
+ADD_SUBDIRECTORY(test)
+ADD_SUBDIRECTORY(benchmark)
 
-SET(CMAKE_SWIG_FLAGS "-castmode" "-naturalvar" "-Wextra" "-fvirtual" "-interface" "_RMF"
-"-DPySwigIterator=RMF_PySwigIterator" "-c++"
-"-DSwigPyIterator=RMF_SwigPyIterator" "-I${PROJECT_SOURCE_DIR}/pyext" "-DRMFEXPORT")
 
-include_directories("${PROJECT_BINARY_DIR}/include"
-"${PROJECT_SOURCE_DIR}/include" ${HDF5_INCLUDE_DIRS})
-
-SET_SOURCE_FILES_PROPERTIES(RMF.i PROPERTIES CPLUSPLUS ON)
-#SET_SOURCE_FILES_PROPERTIES(RMF.i PROPERTIES SWIG_FLAGS )
-SWIG_ADD_MODULE(RMFPython python RMF.i)
-SWIG_LINK_LIBRARIES(RMFPython ${PYTHON_LIBRARIES} RMF)
+SET(PYTHON_DEST "lib64/python${PYTHON_VERSION}/site-packages" )
+FILE(GLOB RMFPython "_RMF*")
+INSTALL(TARGETS ${RMFPython} DESTINATION ${PYTHON_DEST})
+INSTALL(FILES ${CMAKE_BINARY_DIR}/RMF.py  DESTINATION ${PYTHON_DEST})

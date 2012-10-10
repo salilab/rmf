@@ -2,7 +2,7 @@
 import unittest
 import RMF
 
-class GenericTest(RMF.TestCase):
+class GenericTest(unittest.TestCase):
     def _do_test_type(self, nh, k, v):
         print k, v
         nh.set_value(k, v, 0)
@@ -30,7 +30,7 @@ class GenericTest(RMF.TestCase):
     def test_data_types(self):
         """Test that the various data types work"""
         print "testing types"
-        name=self.get_tmp_file_name("test_data_types.rmf")
+        name=RMF._get_temporary_file_path("test_data_types.rmf")
         f= RMF.create_rmf_file(name)
         self._do_test_types(f, False)
         self._do_test_types(f, True)

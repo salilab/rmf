@@ -2,10 +2,10 @@
 import unittest
 import RMF
 
-class GenericTest(RMF.TestCase):
+class GenericTest(unittest.TestCase):
     def test_aliases(self):
         """Test that aliases can be used and resolve"""
-        fh= RMF.create_rmf_file(self.get_tmp_file_name("alias.rmf"))
+        fh= RMF.create_rmf_file(RMF._get_temporary_file_path("alias.rmf"))
         rh= fh.get_root_node()
         nh= rh.add_child("hi", RMF.REPRESENTATION)
         RMF.add_child_alias(nh, rh)

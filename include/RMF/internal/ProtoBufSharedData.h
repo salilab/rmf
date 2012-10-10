@@ -10,7 +10,7 @@
 #define IMPLIBRMF_INTERNAL_PROTO_BUF_SHARED_DATA_H
 
 #include <RMF/config.h>
-#ifdef RMF_USE_PROTOBUF
+#if RMF_USE_PROTOBUF
 #include "SharedData.h"
 #include "../infrastructure_macros.h"
 #include "RMF.pb.h"

@@ -1,12 +1,8 @@
 /**
  * Copyright 2007-2012 IMP Inventors. All rights reserved.
  */
-#include <IMP/benchmark/benchmark_config.h>
 #include <RMF/FileHandle.h>
-#include <IMP/internal/graph_utility.h>
 #include <boost/timer.hpp>
-#include <IMP/benchmark/utility.h>
-#include <IMP/benchmark/benchmark_macros.h>
 #include <sstream>
 
 namespace {
@@ -80,14 +76,12 @@ double traverse(std::string name) {
 
 int main(int, char **) {
   try {
-    double runtime, dist=0;
-    IMP_TIME(
-             {
-               dist+=traverse(IMP::benchmark::get_data_path("rnapii.rmf"));
-             }, runtime);
+    boost::timer timer;
+    double dist=traverse("rnapii.rmf");
+
     /*std::cout << "TEST1 (decorator_access)  took " << runtime
       << " (" << dist << ")"<< std::endl;*/
-    IMP::benchmark::report("rmf", "c++", runtime, dist);
+    std::cout << "rmf c++" << timer.elapsed() << " " << dist << std::endl;
   } catch (const std::exception &e) {
     std::cerr << "Exception thrown: " << e.what() << std::endl;
   }

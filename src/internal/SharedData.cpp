@@ -107,7 +107,7 @@ namespace RMF {
       }
       if (boost::algorithm::ends_with(path, ".rmf")) {
         ret= new HDF5SharedData(path, create);
-#ifdef RMF_USE_PROTOBUF
+#if RMF_USE_PROTOBUF
       } else if (boost::algorithm::ends_with(path, ".prmf")) {
         ret= new ProtoBufSharedData(path, create);
 #endif
@@ -126,7 +126,7 @@ namespace RMF {
       }
       if (boost::algorithm::ends_with(path, ".rmf")) {
         ret= new HDF5SharedData(path, false);
-#ifdef RMF_USE_PROTOBUF
+#if RMF_USE_PROTOBUF
       } else if (boost::algorithm::ends_with(path, ".prmf")) {
         ret= new ProtoBufSharedData(path, false);
 #endif

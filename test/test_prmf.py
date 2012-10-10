@@ -3,15 +3,15 @@ import unittest
 import RMF
 import shutil
 
-class Tests(RMF.TestCase):
+class Tests(unittest.TestCase):
     def _show(self, g):
         for i in range(0, g.get_number_of_children()):
             print i, g.get_child_name(i), g.get_child_is_group(i)
     """Test the python code"""
     def test_perturbed(self):
         """Test copying a rmf file to a prmf file"""
-        nm= self.get_input_file_name("sink.rmf")
-        onm= self.get_tmp_file_name("sink_out.prmf")
+        nm= RMF._get_test_input_file_path("sink.rmf")
+        onm= RMF._get_temporary_file_path("sink_out.prmf")
         f= RMF.open_rmf_file_read_only(nm)
         try:
             of= RMF.create_rmf_file(onm)
@@ -27,8 +27,8 @@ class Tests(RMF.TestCase):
             self.assert_(RMF.get_equal_frame(f, of, i, i, True))
     def test_simple(self):
         """Test copying a simple rmf file to prmf"""
-        nm= self.get_input_file_name("simple.rmf")
-        onm= self.get_tmp_file_name("simple.prmf")
+        nm= RMF._get_test_input_file_path("simple.rmf")
+        onm= RMF._get_temporary_file_path("simple.prmf")
         f= RMF.open_rmf_file_read_only(nm)
         try:
             of= RMF.create_rmf_file(onm)

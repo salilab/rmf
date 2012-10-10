@@ -7,7 +7,7 @@
  */
 
 #include <RMF/internal/ProtoBufSharedData.h>
-#ifdef RMF_USE_PROTOBUF
+#if RMF_USE_PROTOBUF
 #include <RMF/NodeHandle.h>
 #include <RMF/NodeSetHandle.h>
 #include <RMF/Validator.h>

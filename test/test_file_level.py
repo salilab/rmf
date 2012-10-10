@@ -3,14 +3,14 @@ import unittest
 import RMF
 import shutil
 
-class GenericTest(RMF.TestCase):
+class GenericTest(unittest.TestCase):
     def _show(self, g):
         for i in range(0, g.get_number_of_children()):
             print i, g.get_child_name(i), g.get_child_is_group(i)
     """Test the python code"""
     def test_perturbed(self):
         """Test creating a simple hierarchy file"""
-        f= RMF.create_rmf_file(self.get_tmp_file_name("test_file_perturbed.rmf"))
+        f= RMF.create_rmf_file(RMF._get_temporary_file_path("test_file_perturbed.rmf"))
         r= f.get_root_node()
         print r.get_type()
         sc= f.add_category("sequence")
@@ -20,7 +20,7 @@ class GenericTest(RMF.TestCase):
         self.assertEqual(r.get_value(ik, 0), 1)
     def test_frames(self):
         """Test creating a simple hierarchy file with frames"""
-        f= RMF.create_rmf_file(self.get_tmp_file_name("test_file_frames.rmf"))
+        f= RMF.create_rmf_file(RMF._get_temporary_file_path("test_file_frames.rmf"))
         r= f.get_root_node()
         print r.get_type()
         sc= f.add_category("sequence")
@@ -33,7 +33,7 @@ class GenericTest(RMF.TestCase):
         self.assertEqual(f.get_number_of_frames(), 2)
     def test_perturbed_values(self):
         """Test null values"""
-        f= RMF.create_rmf_file(self.get_tmp_file_name("test_file.rmf"))
+        f= RMF.create_rmf_file(RMF._get_temporary_file_path("test_file.rmf"))
         r= f.get_root_node()
         print r.get_type()
         sc= f.add_category("sequence")

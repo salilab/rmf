@@ -7,15 +7,13 @@
  */
 
 #include <RMF/config.h>
+#include <string>
 
 namespace RMF {
 
 namespace internal {
    std::string rmf_data_path;
    std::string rmf_example_path;
-}
-std::string get_module_version() {
-    return std::string("SVN");
 }
 
 }
