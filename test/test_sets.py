@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import unittest
 import RMF
 import random

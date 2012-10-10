@@ -12,11 +12,15 @@
 #pragma warning( disable: 4503 )
 #endif
 
+#include <boost/version.hpp>
 #include <boost/exception/all.hpp>
+
 #include <boost/type_traits/is_convertible.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <exception>
 
+
+#include "RMF/config.h"
 #include "RMF/constants.h"
 #include "RMF/NodeID.h"
 #include "RMF/types.h"
@@ -25,10 +29,9 @@
 #include "RMF/HDF5ConstAttributes.h"
 #include "RMF/HDF5MutableAttributes.h"
 #include "RMF/HDF5DataSetIndexD.h"
-#include "RMF/HDF5DataSetCreationPropertiesD.h"
 #include "RMF/HDF5DataSetAccessPropertiesD.h"
+#include "RMF/HDF5DataSetCreationPropertiesD.h"
 #include "RMF/HDF5ConstDataSetD.h"
-#include "RMF/HDF5DataSetD.h"
 #include "RMF/Key.h"
 #include "RMF/HDF5ConstGroup.h"
 #include "RMF/HDF5ConstFile.h"
@@ -49,10 +52,8 @@
 #include "RMF/decorators.h"
 #include "RMF/decorator_utility.h"
 #include "RMF/utility.h"
-
-#include "RMF/config.h"
+#include <RMF/internal/swig_helpers.h>
 %}
-%implicitconv;
 %include "std_vector.i"
 %include "std_string.i"
 %include "std_pair.i"
@@ -68,9 +69,8 @@ _plural_types=[]
 
 
 
-%{
-#include <RMF/internal/swig_helpers.h>
-%}
+%include "typemaps.i"
+
 %include "RMF.types.i"
 %include "RMF.exceptions.i"
 %include "RMF/infrastructure_macros.h"
@@ -302,17 +302,21 @@ IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DEFINE_INTERMEDIATE_TYPE);
 
 %include "RMF/Key.h"
 IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DEFINE_TYPE);
+
+
+%include "RMF/Category.h"
+%template(Category) RMF::CategoryD<1>;
+%template(PairCategory) RMF::CategoryD<2>;
+%template(TripletCategory) RMF::CategoryD<3>;
+%template(QuadCategory) RMF::CategoryD<4>;
+
+%include "RMF/names.h"
+
 %include "RMF/HDF5ConstGroup.h"
 %template(_HDF5MutableAttributesGroup) RMF::HDF5MutableAttributes<RMF::HDF5ConstGroup>;
 %include "RMF/HDF5ConstFile.h"
 %include "RMF/HDF5Group.h"
 %include "RMF/HDF5File.h"
-%include "RMF/Category.h"
-
-%template(Category) RMF::CategoryD<1>;
-%template(PairCategory) RMF::CategoryD<2>;
-%template(TripletCategory) RMF::CategoryD<3>;
-%template(QuadCategory) RMF::CategoryD<4>;
 
 %include "RMF/NodeConstHandle.h"
 %include "RMF/NodeHandle.h"
@@ -329,12 +333,12 @@ IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DEFINE_TYPE);
 
 %include "RMF/FileConstHandle.h"
 %include "RMF/FileHandle.h"
-%include "RMF/names.h"
 %include "RMF/Validator.h"
 %include "RMF/Decorator.h"
 %include "RMF/Factory.h"
 
 %include "RMF/FileLock.h"
+
 
 IMP_RMF_DECORATOR(RMF, Particle);
 IMP_RMF_DECORATOR(RMF, IntermediateParticle);
@@ -380,18 +384,19 @@ except:
 class TestCase(parent):
     """Super class for RMF test cases"""
 
-    def setUp(self):
-        self.start_time=datetime.datetime.now()
+    if parent == unittest.TestCase:
+        def setUp(self):
+            self.start_time=datetime.datetime.now()
 
-    def tearDown(self):
-        delta= datetime.datetime.now()-self.start_time
-        try:
-            pv = delta.total_seconds()
-        except AttributeError:
-            pv = (float(delta.microseconds) \
-                  + (delta.seconds + delta.days * 24 * 3600) * 10**6) / 10**6
-        if pv > 1:
-            print >> sys.stderr, "in %.3fs ... " % pv,
+        def tearDown(self):
+            delta= datetime.datetime.now()-self.start_time
+            try:
+                pv = delta.total_seconds()
+            except AttributeError:
+                pv = (float(delta.microseconds) \
+                    + (delta.seconds + delta.days * 24 * 3600) * 10**6) / 10**6
+            if pv > 1:
+                print >> sys.stderr, "in %.3fs ... " % pv,
 
     def get_input_file_name(self, filename):
         """Get the full name of an input file in the top-level

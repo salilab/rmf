@@ -12,6 +12,7 @@
 #include <RMF/config.h>
 #include "types.h"
 #include <boost/functional/hash.hpp>
+#include <stdexcept>
 
 namespace RMF {
 
