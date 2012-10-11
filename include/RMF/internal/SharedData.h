@@ -36,7 +36,7 @@ namespace RMF {
 
 
 
-#define IMP_RMF_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue, \
+#define RMF_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue, \
                                   PassValues, ReturnValues, Arity)      \
     /** Return a value or the null value.*/                             \
     virtual Ucname##Traits::Type get_value(unsigned int node,           \
@@ -82,15 +82,15 @@ namespace RMF {
                                           bool per_frame) const=0;      \
     virtual std::string get_name(Key<Ucname##Traits, Arity> k) const =0
 
-#define IMP_RMF_SHARED_TYPE(lcname, Ucname, PassValue, ReturnValue,     \
+#define RMF_SHARED_TYPE(lcname, Ucname, PassValue, ReturnValue,     \
                             PassValues, ReturnValues)                   \
-    IMP_RMF_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue,   \
+    RMF_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue,   \
                               PassValues, ReturnValues, 1);             \
-    IMP_RMF_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue,   \
+    RMF_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue,   \
                               PassValues, ReturnValues, 2);             \
-    IMP_RMF_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue,   \
+    RMF_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue,   \
                               PassValues, ReturnValues, 3);             \
-    IMP_RMF_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue,   \
+    RMF_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue,   \
                               PassValues, ReturnValues, 4)
 
 
@@ -117,7 +117,7 @@ namespace RMF {
       bool get_is_per_frame(Key<TypeTraits, Arity> k) const {
         return k.get_is_per_frame();
       }
-      IMP_RMF_FOREACH_TYPE(IMP_RMF_SHARED_TYPE);
+      RMF_FOREACH_TYPE(RMF_SHARED_TYPE);
       void audit_key_name(std::string name) const;
       void audit_node_name(std::string name) const;
       template <class T>
@@ -129,16 +129,16 @@ namespace RMF {
       }
       template <class T>
         T get_user_data(int i) const {
-        IMP_RMF_USAGE_CHECK(user_data_.find(i)
+        RMF_USAGE_CHECK(user_data_.find(i)
                             != user_data_.end(),
                             "No such data found");
         try {
           return boost::any_cast<T>(user_data_.find(i)->second);
         } catch (boost::bad_any_cast) {
-          IMP_RMF_THROW("Type mismatch when recovering user data",
+          RMF_THROW("Type mismatch when recovering user data",
                         UsageException);
         }
-        IMP_RMF_NO_RETURN(T);
+        RMF_NO_RETURN(T);
       }
       template <class T>
         void set_association(int id, const T& d, bool overwrite) {
@@ -146,7 +146,7 @@ namespace RMF {
           association_.resize(id+1, boost::any());
           back_association_value_.resize(id+1);
         }
-        IMP_RMF_USAGE_CHECK(overwrite || association_[id].empty(),
+        RMF_USAGE_CHECK(overwrite || association_[id].empty(),
                             "Associations can only be set once");
         if (overwrite && !association_[id].empty()) {
           uintptr_t v= back_association_value_[id];
@@ -155,7 +155,7 @@ namespace RMF {
         uintptr_t v= get_uint(d);
         back_association_value_[id]=v;
         association_[id]=boost::any(d);
-        IMP_RMF_USAGE_CHECK(back_association_.find(v)
+        RMF_USAGE_CHECK(back_association_.find(v)
                             == back_association_.end(),
                             "Collision on association keys.");
         back_association_[v]=id;
@@ -165,15 +165,15 @@ namespace RMF {
         return back_association_.find(get_uint(v)) != back_association_.end();
       }
       boost::any get_association(int id) const {
-        IMP_RMF_USAGE_CHECK(static_cast<unsigned int>(id) < association_.size(),
+        RMF_USAGE_CHECK(static_cast<unsigned int>(id) < association_.size(),
                             std::string("Unassociated id ")+get_name(id));
         try {
           return association_[id];
         } catch (boost::bad_any_cast) {
-          IMP_RMF_THROW("Type mismatch when recovering node data",
+          RMF_THROW("Type mismatch when recovering node data",
                         UsageException);
         }
-        IMP_RMF_NO_RETURN(boost::any);
+        RMF_NO_RETURN(boost::any);
       }
       bool get_has_association(int id) const {
         if (id >= static_cast<int>(association_.size())) return false;
@@ -223,7 +223,7 @@ namespace RMF {
     class ConstGenericSharedData {
     };
 
-#define IMP_RMF_GENERIC_SHARED_ARITY(lcname, Ucname, PassValue, ReturnValue, \
+#define RMF_GENERIC_SHARED_ARITY(lcname, Ucname, PassValue, ReturnValue, \
                                      PassValues, ReturnValues, Arity)   \
     template <>                                                         \
     class ConstGenericSharedData<Ucname##Traits, Arity> {               \
@@ -247,18 +247,18 @@ namespace RMF {
       return p_->add_##lcname##_key_##Arity(category_id, name, mf);     \
     }                                                                   \
     };
-#define IMP_RMF_GENERIC_SHARED(lcname, Ucname, PassValue, ReturnValue,  \
+#define RMF_GENERIC_SHARED(lcname, Ucname, PassValue, ReturnValue,  \
                                PassValues, ReturnValues)                \
-    IMP_RMF_GENERIC_SHARED_ARITY(lcname, Ucname, PassValue, ReturnValue, \
+    RMF_GENERIC_SHARED_ARITY(lcname, Ucname, PassValue, ReturnValue, \
                                  PassValues, ReturnValues, 1);          \
-    IMP_RMF_GENERIC_SHARED_ARITY(lcname, Ucname, PassValue, ReturnValue, \
+    RMF_GENERIC_SHARED_ARITY(lcname, Ucname, PassValue, ReturnValue, \
                                  PassValues, ReturnValues, 2);          \
-    IMP_RMF_GENERIC_SHARED_ARITY(lcname, Ucname, PassValue, ReturnValue, \
+    RMF_GENERIC_SHARED_ARITY(lcname, Ucname, PassValue, ReturnValue, \
                                  PassValues, ReturnValues, 3);          \
-    IMP_RMF_GENERIC_SHARED_ARITY(lcname, Ucname, PassValue, ReturnValue, \
+    RMF_GENERIC_SHARED_ARITY(lcname, Ucname, PassValue, ReturnValue, \
                                  PassValues, ReturnValues, 4)
 
-    IMP_RMF_FOREACH_TYPE(IMP_RMF_GENERIC_SHARED);
+    RMF_FOREACH_TYPE(RMF_GENERIC_SHARED);
 
 
     /**

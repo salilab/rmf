@@ -48,10 +48,10 @@ class HDF5File;
     //! Get an object for the file containing the object
     HDF5File get_file() const;
 
-    IMP_RMF_SHOWABLE(HDF5Object, "HDF5Object " << get_name());
+    RMF_SHOWABLE(HDF5Object, "HDF5Object " << get_name());
 
     hid_t get_handle() const {
-      IMP_RMF_USAGE_CHECK(h_, "No handle in unintialized HDF5Object");
+      RMF_USAGE_CHECK(h_, "No handle in unintialized HDF5Object");
       return h_->get_hid();
     }
 

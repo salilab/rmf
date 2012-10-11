@@ -193,7 +193,7 @@ namespace {
   }
 
 // Note that older g++ is confused by queue.back().get<2>()
-#define IMP_RMF_PRINT_TREE(stream, NodeType, start, num_children,       \
+#define RMF_PRINT_TREE(stream, NodeType, start, num_children,       \
                            get_children, show)                             \
   {                                                                     \
     vector<boost::tuple<std::string, std::string, NodeType> >           \
@@ -224,7 +224,7 @@ namespace {
 void show_hierarchy(NodeConstHandle root,
                     std::ostream &out) {
   using std::operator<<;
-  IMP_RMF_PRINT_TREE(out, NodeConstHandle, root, n.get_children().size(),
+  RMF_PRINT_TREE(out, NodeConstHandle, root, n.get_children().size(),
                  n.get_children(),
                      show_node(n, out));
 }
@@ -254,7 +254,7 @@ void show_hierarchy(NodeConstHandle root,
   ssks=get_keys<StringsTraits>(root.get_file());
   nsks=get_keys<NodeIDsTraits>(root.get_file());
   using std::operator<<;
-  IMP_RMF_PRINT_TREE(out, NodeConstHandle, root, n.get_children().size(),
+  RMF_PRINT_TREE(out, NodeConstHandle, root, n.get_children().size(),
                  n.get_children(),
                      show_node(n, out, fks, fsks, iks, isks, xks, xsks,
                                sks, ssks, nks, nsks, frame, end_frame, step,
@@ -283,7 +283,7 @@ void show_hierarchy_with_decorators(NodeConstHandle root,
   TypedConstFactory typedcf(root.get_file());
   AliasConstFactory aliascf(root.get_file());
   using std::operator<<;
-  IMP_RMF_PRINT_TREE(out, NodeConstHandle, root, n.get_children().size(),
+  RMF_PRINT_TREE(out, NodeConstHandle, root, n.get_children().size(),
                  n.get_children(),
                      show_node_decorators(n, out, ccf, pcf, ipcf, rpcf, scf,
                                           bcf, cycf, segcf, rcf, acf,

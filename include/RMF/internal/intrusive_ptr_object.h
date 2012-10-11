@@ -104,7 +104,7 @@ namespace boost
   {
     // a stack object will be deleted without a release() call...
     // if you use objects properly, this should never happen!
-    IMP_RMF_INTERNAL_CHECK(m_ref_count == 0, "Not 0 ref count");
+    RMF_INTERNAL_CHECK(m_ref_count == 0, "Not 0 ref count");
   }
 
   // for clang++ move these to the actual types that use them

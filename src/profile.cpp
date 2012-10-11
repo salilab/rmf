@@ -37,7 +37,7 @@ void set_is_profiling(bool tf) {
             % last_prof;
         name=oss.str();
       } catch(...) {
-      IMP_RMF_THROW("Invalid format specified in profile name, should be %1%",
+      RMF_THROW("Invalid format specified in profile name, should be %1%",
                     UsageException);
       }
     } else {

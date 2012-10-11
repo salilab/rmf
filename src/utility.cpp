@@ -85,12 +85,12 @@ namespace RMF {
     link_structure(in.get_root_node(), out.get_root_node());
   }
   namespace {
-#define IMP_RMF_COPY_FRAME_1(lcname, Ucname, PassValue,                 \
+#define RMF_COPY_FRAME_1(lcname, Ucname, PassValue,                 \
                              ReturnValue,                               \
                              PassValues, ReturnValues)                  \
     copy_node_frame_type<Ucname##Traits>(in, out, inframe, outframe,    \
                                          incats, outcats)
-#define IMP_RMF_COPY_FRAME_D(lcname, Ucname, PassValue,                 \
+#define RMF_COPY_FRAME_D(lcname, Ucname, PassValue,                 \
                              ReturnValue,                               \
                              PassValues, ReturnValues)                  \
     copy_set_frame_type<Ucname##Traits>(in, out, inframe, outframe,     \
@@ -143,7 +143,7 @@ namespace RMF {
       for (unsigned int i=0; i< incats.size(); ++i) {
         outcats.push_back(get_category_always<1>(out, in.get_name(incats[i])));
       }
-      IMP_RMF_FOREACH_TYPE(IMP_RMF_COPY_FRAME_1);
+      RMF_FOREACH_TYPE(RMF_COPY_FRAME_1);
     }
 
 
@@ -198,7 +198,7 @@ namespace RMF {
         outcats.push_back(get_category_always<Arity>(out,
                                                      in.get_name(incats[i])));
       }
-      IMP_RMF_FOREACH_TYPE(IMP_RMF_COPY_FRAME_D);
+      RMF_FOREACH_TYPE(RMF_COPY_FRAME_D);
     }
   }
 
@@ -291,13 +291,13 @@ bool get_equal_structure(FileConstHandle in, FileConstHandle out,
 
 
   namespace {
-#define IMP_RMF_EQUAL_FRAME_1(lcname, Ucname, PassValue,                 \
+#define RMF_EQUAL_FRAME_1(lcname, Ucname, PassValue,                 \
                              ReturnValue,                               \
                              PassValues, ReturnValues)                  \
     ret=get_equal_node_frame_type<Ucname##Traits>(in, out, inframe, outframe, \
                                                   incats, outcats,      \
                                                   print_diff) &&ret
-#define IMP_RMF_EQUAL_FRAME_D(lcname, Ucname, PassValue,                \
+#define RMF_EQUAL_FRAME_D(lcname, Ucname, PassValue,                \
                              ReturnValue,                               \
                              PassValues, ReturnValues)                  \
     ret=get_equal_set_frame_type<Ucname##Traits>(in, out, inframe, outframe, \
@@ -374,7 +374,7 @@ bool get_equal_structure(FileConstHandle in, FileConstHandle out,
         outcats.push_back(out.get_category<1>(in.get_name(incats[i])));
       }
       bool ret=true;
-      IMP_RMF_FOREACH_TYPE(IMP_RMF_EQUAL_FRAME_1);
+      RMF_FOREACH_TYPE(RMF_EQUAL_FRAME_1);
       return ret;
     }
 
@@ -435,7 +435,7 @@ bool get_equal_structure(FileConstHandle in, FileConstHandle out,
         outcats.push_back(out.get_category<Arity>(in.get_name(incats[i])));
       }
       bool ret=true;
-      IMP_RMF_FOREACH_TYPE(IMP_RMF_EQUAL_FRAME_D);
+      RMF_FOREACH_TYPE(RMF_EQUAL_FRAME_D);
       return ret;
     }
   }

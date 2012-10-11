@@ -46,7 +46,7 @@ namespace RMF {
   }
 //! Get the name of the data set for storing bonds
   inline String get_set_data_data_set_name(int arity) {
-    IMP_RMF_INTERNAL_CHECK(arity > 0, "Bad arity");
+    RMF_INTERNAL_CHECK(arity > 0, "Bad arity");
     std::ostringstream oss;
     using std::operator<<;
     oss << "data_" << arity;
@@ -54,7 +54,7 @@ namespace RMF {
   }
 //! Get the name of the data set for storing category names
   inline String get_category_name_data_set_name(int arity) {
-    IMP_RMF_INTERNAL_CHECK(arity > 0, "Bad arity");
+    RMF_INTERNAL_CHECK(arity > 0, "Bad arity");
     std::ostringstream oss;
     using std::operator<<;
     oss << "category_names_" << arity;
@@ -65,7 +65,7 @@ namespace RMF {
                                            int Arity,
                                            String type_name,
                                            bool per_frame) {
-    IMP_RMF_INTERNAL_CHECK(Arity > 0, "Bad arity");
+    RMF_INTERNAL_CHECK(Arity > 0, "Bad arity");
     std::ostringstream oss;
     using std::operator<<;
     oss << type_name << "_" << category_name << "_";
@@ -80,7 +80,7 @@ namespace RMF {
                                        int arity,
                                        String type_name,
                                        bool per_frame) {
-    IMP_RMF_INTERNAL_CHECK(arity > 0, "Bad arity");
+    RMF_INTERNAL_CHECK(arity > 0, "Bad arity");
     std::ostringstream oss;
     using std::operator<<;
     oss << type_name << "_" << category_name << "_"

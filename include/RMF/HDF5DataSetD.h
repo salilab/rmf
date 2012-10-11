@@ -54,7 +54,7 @@ namespace RMF {
 
     void set_value(const HDF5DataSetIndexD<D> &ijk,
                    typename TypeTraits::Type value) {
-      IMP_RMF_IF_CHECK {
+      RMF_IF_CHECK {
         P::check_index(ijk);
       }
       //IMP_HDF5_HANDLE(sel, H5Dget_space(h_->get_hid()), &H5Sclose);
@@ -66,7 +66,7 @@ namespace RMF {
                                       P::get_input_data_space().get_hid(),
                                       P::get_data_space(), value);
     }
-    IMP_RMF_SHOWABLE(HDF5DataSetD, "HDF5DataSet"
+    RMF_SHOWABLE(HDF5DataSetD, "HDF5DataSet"
                      << D << "D " << P::get_name());
 #ifndef SWIG
     typedef HDF5DataSetIndexD<D-1> RowIndex;
@@ -75,7 +75,7 @@ namespace RMF {
       HDF5DataSetIndexD<D> ijk;
       std::copy(ijkr.begin(), ijkr.end(), ijk.begin());
       ijk[D-1]=0;
-      IMP_RMF_IF_CHECK {
+      RMF_IF_CHECK {
         P::check_index(ijk);
       }
       hsize_t size[D]; std::fill(size, size+D-1, 1);
@@ -93,7 +93,7 @@ namespace RMF {
     //! Write a rectangular block starting at ln of size size
     void set_block(const Index&lb, const Index &size,
                    const typename TypeTraits::Types& value) {
-      IMP_RMF_IF_CHECK {
+      RMF_IF_CHECK {
         P::check_index(lb);
          Index last=lb;
         // offset size by one and check...
@@ -102,7 +102,7 @@ namespace RMF {
           total*= size[i];
           last[i]+=size[i]-1;
         }
-        IMP_RMF_USAGE_CHECK(total==value.size(),
+        RMF_USAGE_CHECK(total==value.size(),
                             internal::get_error_message("Block has size ",
                                                         total, " but found ",
                                                         value.size(),
@@ -133,7 +133,7 @@ namespace RMF {
 
 #ifndef IMP_DOXYGEN
 
-#define IMP_RMF_DECLARE_DATA_SET(lcname, Ucname, PassValue, ReturnValue, \
+#define RMF_DECLARE_DATA_SET(lcname, Ucname, PassValue, ReturnValue, \
                                  PassValues, ReturnValues)              \
   typedef HDF5DataSetD<Ucname##Traits, 1> HDF5##Ucname##DataSet1D;      \
   typedef vector<HDF5##Ucname##DataSet1D> HDF5##Ucname##DataSet1Ds;     \
@@ -159,7 +159,7 @@ namespace RMF {
        \ingroup hdf5
        @{
   */
-  IMP_RMF_FOREACH_TYPE(IMP_RMF_DECLARE_DATA_SET);
+  RMF_FOREACH_TYPE(RMF_DECLARE_DATA_SET);
   /** @} */
 #endif
 } /* namespace RMF */

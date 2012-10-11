@@ -29,9 +29,9 @@
   */                                                                    \
 ReturnValue get_value(UCName##Key k,                                    \
                       int frame=ALL_FRAMES) const {                     \
-  IMP_RMF_USAGE_CHECK(frame >=0 || !k.get_is_per_frame(),               \
+  RMF_USAGE_CHECK(frame >=0 || !k.get_is_per_frame(),               \
                       "No frame specified for per-frame data.");        \
-  IMP_RMF_USAGE_CHECK(get_has_value(k, frame),                          \
+  RMF_USAGE_CHECK(get_has_value(k, frame),                          \
                       internal::get_error_message("Node ", get_name(),  \
                                      " does not have a value for key ", \
                                                   shared_->get_name(k), \
@@ -66,9 +66,9 @@ ReturnValues get_values_always(const UCName##Key##s& k,                 \
 }                                                                       \
 ReturnValues get_values(const UCName##Key##s& k,                        \
                         int frame=ALL_FRAMES) const {                   \
-  IMP_RMF_USAGE_CHECK(frame >=0 || !k[0].get_is_per_frame(),            \
+  RMF_USAGE_CHECK(frame >=0 || !k[0].get_is_per_frame(),            \
                       "No frame specified for per-frame data.");        \
-  IMP_RMF_USAGE_CHECK(get_has_value(k[0], frame),                       \
+  RMF_USAGE_CHECK(get_has_value(k[0], frame),                       \
                       internal::get_error_message("Node ", get_name(),  \
                                      " does not have a value for key ", \
                                                   shared_->get_name(k[0]), \
@@ -158,8 +158,8 @@ protected:
 #endif
 
  public:
-  IMP_RMF_COMPARISONS(NodeConstHandle);
-  IMP_RMF_HASHABLE(NodeConstHandle, return node_);
+  RMF_COMPARISONS(NodeConstHandle);
+  RMF_HASHABLE(NodeConstHandle, return node_);
   NodeConstHandle():node_(-1){}
 
   //! Return the number of child nodes
@@ -217,9 +217,9 @@ protected:
 
       @{
   */
-  IMP_RMF_FOREACH_TYPE(IMP_HDF5_NODE_CONST_KEY_TYPE_METHODS);
+  RMF_FOREACH_TYPE(IMP_HDF5_NODE_CONST_KEY_TYPE_METHODS);
   /** @} */
-  IMP_RMF_SHOWABLE(NodeHandle,
+  RMF_SHOWABLE(NodeHandle,
                    get_name() << "(" << get_type() << ", " << node_ << ")");
 
   FileConstHandle get_file() const;

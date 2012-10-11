@@ -65,17 +65,17 @@ public:
 #endif
   typedef TypeTraitsT TypeTraits;
   Key(): i_(-1), ci_(), pf_(false) {}
-    IMP_RMF_SHOWABLE(Key, "(Category index: " << ci_
+    RMF_SHOWABLE(Key, "(Category index: " << ci_
                      << " per frame: " << (pf_?'T':'F')
                      << " index: " << i_ << ")");
-  IMP_RMF_COMPARISONS(Key);
-  IMP_RMF_HASHABLE(Key, return i_*ci_.get_index());
+  RMF_COMPARISONS(Key);
+  RMF_HASHABLE(Key, return i_*ci_.get_index());
 };
 
 
 #ifndef IMP_DOXYGEN
 
-#define IMP_RMF_DECLARE_KEY(lcname, Ucname, PassValue, ReturnValue,     \
+#define RMF_DECLARE_KEY(lcname, Ucname, PassValue, ReturnValue,     \
                             PassValues, ReturnValues)                   \
   typedef Key<Ucname##Traits, 1> Ucname##Key;                           \
   typedef vector<Ucname##Key> Ucname##Keys;                        \
@@ -102,7 +102,7 @@ public:
     - IntsKey: store a list of arbitrary integers
     @{
 */
-IMP_RMF_FOREACH_TYPE(IMP_RMF_DECLARE_KEY);
+RMF_FOREACH_TYPE(RMF_DECLARE_KEY);
 /** @} */
 #endif
 

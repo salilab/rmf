@@ -76,7 +76,7 @@ namespace RMF {
       return get_attribute< UCName##Traits>(nm);                        \
     }                                                                   \
 
-    IMP_RMF_FOREACH_SIMPLE_TYPE(IMP_HDF5_CONST_ATTRIBUTE);
+    RMF_FOREACH_SIMPLE_TYPE(IMP_HDF5_CONST_ATTRIBUTE);
     IMP_HDF5_CONST_ATTRIBUTE(char, Char, char, char, std::string, std::string);
     /** @} */
   };

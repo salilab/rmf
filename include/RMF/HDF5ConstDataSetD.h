@@ -77,7 +77,7 @@ namespace RMF {
                       CreationProperties props):
       data_(new Data()) {
       //std::cout << "Creating data set " << name << std::endl;
-      IMP_RMF_USAGE_CHECK(!H5Lexists(parent->get_hid(),
+      RMF_USAGE_CHECK(!H5Lexists(parent->get_hid(),
                                      name.c_str(), H5P_DEFAULT),
                           internal::get_error_message("Data set ",name,
                                                       " already exists"));
@@ -98,7 +98,7 @@ namespace RMF {
     HDF5ConstDataSetD(HDF5SharedHandle* parent,
                       std::string name, AccessProperties props):
         data_(new Data()) {
-      IMP_RMF_USAGE_CHECK(H5Lexists(parent->get_hid(),
+      RMF_USAGE_CHECK(H5Lexists(parent->get_hid(),
                                     name.c_str(), H5P_DEFAULT),
                           internal::get_error_message("Data set ",
                                                       name,
@@ -108,7 +108,7 @@ namespace RMF {
                                             &H5Dclose, name));
       //IMP_HDF5_HANDLE(s, H5Dget_space(h_->get_hid()), H5Sclose);
       IMP_HDF5_HANDLE(sel, H5Dget_space(HDF5Object::get_handle()), &H5Sclose);
-      IMP_RMF_USAGE_CHECK(H5Sget_simple_extent_ndims(sel)==D,
+      RMF_USAGE_CHECK(H5Sget_simple_extent_ndims(sel)==D,
                   internal::get_error_message(
                                               "Dimensions don't match. Got ",
                                               H5Sget_simple_extent_ndims(sel),
@@ -130,7 +130,7 @@ namespace RMF {
     void check_index(const HDF5DataSetIndexD<D> &ijk) const {
       HDF5DataSetIndexD<D> sz= get_size();
       for (unsigned int i=0; i< D; ++i) {
-        IMP_RMF_USAGE_CHECK(ijk[i] < sz[i],
+        RMF_USAGE_CHECK(ijk[i] < sz[i],
                internal::get_error_message("Index is out of range: "
                                            , ijk[i], " >= ", sz[i]));
       }
@@ -142,7 +142,7 @@ namespace RMF {
       std::fill(ret, ret+D, -1);
       IMP_HDF5_CALL(H5Sget_simple_extent_dims(get_data_space(),
                                               ret, NULL));
-      IMP_RMF_INTERNAL_CHECK(ret[D-1] <1000000,
+      RMF_INTERNAL_CHECK(ret[D-1] <1000000,
                              "extents not returned properly");
       if (ret[D-1] > 0) {
         // some versions will spew an error on this
@@ -160,7 +160,7 @@ namespace RMF {
   public:
 #if !defined(SWIG) && !defined(IMP_DOXYGEN)
     HDF5ConstDataSetD(hid_t file, std::string name): data_(new Data()) {
-      IMP_RMF_USAGE_CHECK(H5Lexists(file,
+      RMF_USAGE_CHECK(H5Lexists(file,
                                     name.c_str(), H5P_DEFAULT),
                           internal::get_error_message("Data set ", name,
                                                       " does not exist"));
@@ -169,7 +169,7 @@ namespace RMF {
                                             &H5Dclose, name));
       //IMP_HDF5_HANDLE(s, H5Dget_space(h_->get_hid()), H5Sclose);
       IMP_HDF5_HANDLE(sel, H5Dget_space(HDF5Object::get_handle()), &H5Sclose);
-      IMP_RMF_USAGE_CHECK(H5Sget_simple_extent_ndims(sel)==D,
+      RMF_USAGE_CHECK(H5Sget_simple_extent_ndims(sel)==D,
                   internal::get_error_message("Dimensions don't match. Got ",
                                               H5Sget_simple_extent_ndims(sel),
                                               " but expected ", D));
@@ -183,7 +183,7 @@ namespace RMF {
       return data_->size_;
     }
     typename TypeTraits::Type get_value(const HDF5DataSetIndexD<D> &ijk) const {
-      IMP_RMF_IF_CHECK {
+      RMF_IF_CHECK {
         check_index(ijk);
       }
       //IMP_HDF5_HANDLE(sel, H5Dget_space(h_->get_hid()), &H5Sclose);
@@ -195,7 +195,7 @@ namespace RMF {
                                             data_->ids_.get_hid(),
                                             get_data_space());
     }
-    IMP_RMF_SHOWABLE(HDF5ConstDataSetD, "HDF5ConstDataSet"
+    RMF_SHOWABLE(HDF5ConstDataSetD, "HDF5ConstDataSet"
                      << D << "D " << P::get_name());
 #ifndef SWIG
     typedef HDF5DataSetIndexD<D-1> RowIndex;
@@ -203,7 +203,7 @@ namespace RMF {
       HDF5DataSetIndexD<D> ijk;
       std::copy(ijkr.begin(), ijkr.end(), ijk.begin());
       ijk[D-1]=0;
-      IMP_RMF_IF_CHECK {
+      RMF_IF_CHECK {
         check_index(ijk);
       }
       hsize_t size[D]; std::fill(size, size+D-1, 1);
@@ -226,7 +226,7 @@ namespace RMF {
       for (unsigned int i=0; i< D; ++i) {
         total*= size[i];
       }
-      IMP_RMF_IF_CHECK {
+      RMF_IF_CHECK {
         check_index(lb);
       }
       //IMP_HDF5_HANDLE(sel, H5Dget_space(h_->get_hid()), &H5Sclose);
@@ -241,13 +241,13 @@ namespace RMF {
                                              get_data_space(),
                                              total);
     }
-    IMP_RMF_COMPARISONS(HDF5ConstDataSetD);
+    RMF_COMPARISONS(HDF5ConstDataSetD);
   };
 
 
 
 #ifndef IMP_DOXYGEN
-#define IMP_RMF_DECLARE_CONST_DATA_SET(lcname, Ucname, PassValue, ReturnValue, \
+#define RMF_DECLARE_CONST_DATA_SET(lcname, Ucname, PassValue, ReturnValue, \
                                  PassValues, ReturnValues)              \
   typedef HDF5ConstDataSetD<Ucname##Traits, 1> HDF5##Ucname##ConstDataSet1D; \
   typedef vector<HDF5##Ucname##ConstDataSet1D> HDF5##Ucname##ConstDataSet1Ds; \
@@ -260,7 +260,7 @@ namespace RMF {
        \ingroup hdf5
        @{
   */
-  IMP_RMF_FOREACH_TYPE(IMP_RMF_DECLARE_CONST_DATA_SET);
+  RMF_FOREACH_TYPE(RMF_DECLARE_CONST_DATA_SET);
   /** @} */
 #endif
 } /* namespace RMF */

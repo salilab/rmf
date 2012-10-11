@@ -62,7 +62,7 @@ namespace RMF {
       n->set_name(name);
       n->set_type(t);
       // add as child
-      RMFProto::Node *parent=IMP_RMF_PROTO_MINDEX(proto_, node,node);
+      RMFProto::Node *parent=RMF_PROTO_MINDEX(proto_, node,node);
       parent->add_children(id);
       Ints ch= get_children(node);
       Strings names;
@@ -73,10 +73,10 @@ namespace RMF {
     }
 
     Ints ProtoBufSharedData::get_children(int node) const {
-      const RMFProto::Node &n= IMP_RMF_PROTO_INDEX(proto_, node, node);
+      const RMFProto::Node &n= RMF_PROTO_INDEX(proto_, node, node);
       Ints ret(n.children_size());
       for (unsigned int i=0; i < ret.size(); ++i) {
-        ret[i]= IMP_RMF_PROTO_INDEX(n,children, i);
+        ret[i]= RMF_PROTO_INDEX(n,children, i);
       }
       return ret;
     }
@@ -197,7 +197,7 @@ namespace RMF {
           return id;
         }
       default:
-        IMP_RMF_USAGE_CHECK(nis.size()>1 && nis.size()<5,
+        RMF_USAGE_CHECK(nis.size()>1 && nis.size()<5,
                             "Bad set size");
         return -1;
       };
@@ -213,7 +213,7 @@ namespace RMF {
       case 4:
         return get(proto_.quad(index), member_index);
       default:
-        IMP_RMF_USAGE_CHECK(0,
+        RMF_USAGE_CHECK(0,
                             "Bad set size");
         return -1;
       };
@@ -237,7 +237,7 @@ namespace RMF {
       return get_category_data(Arity, id)->name();
     }
 
-#define IMP_RMF_COUNT_FRAMES(lcname, Ucname, PassValue,                 \
+#define RMF_COUNT_FRAMES(lcname, Ucname, PassValue,                 \
                              ReturnValue,                               \
                              PassValues, ReturnValues)                  \
     for (unsigned int j=0;                                              \
@@ -250,7 +250,7 @@ namespace RMF {
       unsigned int ret=0;
       for (unsigned int i=0; i< get_number_of_categories(1); ++i) {
         const CategoryProto *cat=get_category_data(1, i);
-        IMP_RMF_FOREACH_TYPE(IMP_RMF_COUNT_FRAMES);
+        RMF_FOREACH_TYPE(RMF_COUNT_FRAMES);
       }
       return ret;
     }
@@ -265,7 +265,7 @@ namespace RMF {
     void ProtoBufSharedData::flush() const {
       std::fstream out(name_.c_str(), std::ios::out | std::ios::binary);
       if (!out) {
-        IMP_RMF_THROW("Could not open file", IOException);
+        RMF_THROW("Could not open file", IOException);
       }
       proto_.SerializeToOstream(&out);
     }
@@ -290,7 +290,7 @@ namespace RMF {
   void ProtoBufSharedData::reload() {
     std::fstream in(name_.c_str(), std::ios::in | std::ios::binary);
     if (!in) {
-      IMP_RMF_THROW("Could not open file", IOException);
+      RMF_THROW("Could not open file", IOException);
     }
     proto_.ParseFromIstream(&in);
   }

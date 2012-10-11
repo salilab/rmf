@@ -176,7 +176,7 @@ FloatKeys rgb_color_pf_;
     }
     ColoredConst get(NodeConstHandle nh,
                            int frame=ALL_FRAMES) const {
-      IMP_RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
+      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
       return ColoredConst(nh, frame, rgb_color_,
 rgb_color_pf_);
     }
@@ -461,7 +461,7 @@ mass_pf_=P::get_key<FloatTraits>(fh,
     }
     ParticleConst get(NodeConstHandle nh,
                            int frame=ALL_FRAMES) const {
-      IMP_RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
+      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
       return ParticleConst(nh, frame, coordinates_,
 coordinates_pf_,
 radius_,
@@ -704,7 +704,7 @@ radius_pf_=P::get_key<FloatTraits>(fh,
     }
     IntermediateParticleConst get(NodeConstHandle nh,
                            int frame=ALL_FRAMES) const {
-      IMP_RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
+      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
       return IntermediateParticleConst(nh, frame, coordinates_,
 coordinates_pf_,
 radius_,
@@ -942,7 +942,7 @@ FloatKeys coordinates_pf_;
     }
     RigidParticleConst get(NodeConstHandle nh,
                            int frame=ALL_FRAMES) const {
-      IMP_RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
+      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
       return RigidParticleConst(nh, frame, orientation_,
 orientation_pf_,
 coordinates_,
@@ -1246,7 +1246,7 @@ type_pf_=P::get_key<IndexTraits>(fh,
     }
     BallConst get(NodeConstHandle nh,
                            int frame=ALL_FRAMES) const {
-      IMP_RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
+      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
       return BallConst(nh, frame, coordinates_,
 coordinates_pf_,
 radius_,
@@ -1558,7 +1558,7 @@ type_pf_=P::get_key<IndexTraits>(fh,
     }
     CylinderConst get(NodeConstHandle nh,
                            int frame=ALL_FRAMES) const {
-      IMP_RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
+      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
       return CylinderConst(nh, frame, coordinates_,
 coordinates_pf_,
 radius_,
@@ -1816,7 +1816,7 @@ type_pf_=P::get_key<IndexTraits>(fh,
     }
     SegmentConst get(NodeConstHandle nh,
                            int frame=ALL_FRAMES) const {
-      IMP_RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
+      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
       return SegmentConst(nh, frame, coordinates_,
 coordinates_pf_,
 type_,
@@ -2218,7 +2218,7 @@ authors_pf_=P::get_key<StringsTraits>(fh,
     }
     JournalArticleConst get(NodeConstHandle nh,
                            int frame=ALL_FRAMES) const {
-      IMP_RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
+      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
       return JournalArticleConst(nh, frame, title_,
 title_pf_,
 journal_,
@@ -2461,7 +2461,7 @@ type_pf_=P::get_key<StringTraits>(fh,
     }
     ResidueConst get(NodeConstHandle nh,
                            int frame=ALL_FRAMES) const {
-      IMP_RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
+      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
       return ResidueConst(nh, frame, index_,
 type_,
 type_pf_);
@@ -2809,7 +2809,7 @@ element_pf_=P::get_key<IndexTraits>(fh,
     }
     AtomConst get(NodeConstHandle nh,
                            int frame=ALL_FRAMES) const {
-      IMP_RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
+      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
       return AtomConst(nh, frame, coordinates_,
 coordinates_pf_,
 radius_,
@@ -3005,7 +3005,7 @@ chain_id_pf_=P::get_key<IndexTraits>(fh,
     }
     ChainConst get(NodeConstHandle nh,
                            int frame=ALL_FRAMES) const {
-      IMP_RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
+      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
       return ChainConst(nh, frame, chain_id_,
 chain_id_pf_);
     }
@@ -3172,7 +3172,7 @@ indexes_[1]=P::get_key<IntTraits>(fh,
     }
     DomainConst get(NodeConstHandle nh,
                            int frame=ALL_FRAMES) const {
-      IMP_RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
+      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
       return DomainConst(nh, frame, indexes_);
     }
     bool get_is(NodeConstHandle nh, int frame= ALL_FRAMES) const {
@@ -3353,7 +3353,7 @@ copy_index_pf_=P::get_key<IndexTraits>(fh,
     }
     CopyConst get(NodeConstHandle nh,
                            int frame=ALL_FRAMES) const {
-      IMP_RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
+      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
       return CopyConst(nh, frame, copy_index_,
 copy_index_pf_);
     }
@@ -3531,7 +3531,7 @@ diffusion_coefficient_pf_=P::get_key<FloatTraits>(fh,
     }
     DiffuserConst get(NodeConstHandle nh,
                            int frame=ALL_FRAMES) const {
-      IMP_RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
+      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
       return DiffuserConst(nh, frame, diffusion_coefficient_,
 diffusion_coefficient_pf_);
     }
@@ -3709,7 +3709,7 @@ type_name_pf_=P::get_key<StringTraits>(fh,
     }
     TypedConst get(NodeConstHandle nh,
                            int frame=ALL_FRAMES) const {
-      IMP_RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
+      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
       return TypedConst(nh, frame, type_name_,
 type_name_pf_);
     }
@@ -3894,7 +3894,7 @@ aliased_pf_=P::get_key<NodeIDTraits>(fh,
     }
     AliasConst get(NodeConstHandle nh,
                            int frame=ALL_FRAMES) const {
-      IMP_RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
+      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
       return AliasConst(nh, frame, aliased_,
 aliased_pf_);
     }
@@ -4111,7 +4111,7 @@ score_pf_=P::get_key<FloatTraits>(fh,
     }
     ScoreConst get(NodeConstHandle nh,
                            int frame=ALL_FRAMES) const {
-      IMP_RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
+      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
       return ScoreConst(nh, frame, representation_,
 score_,
 score_pf_);

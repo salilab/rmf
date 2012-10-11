@@ -86,7 +86,7 @@ template <class TypeT, int Arity, class Handle>
     }
     return opened;
   }
-#define IMP_RMF_SHOW_TYPE_DATA_XML(lcname, UCName, PassValue, ReturnValue, \
+#define RMF_SHOW_TYPE_DATA_XML(lcname, UCName, PassValue, ReturnValue, \
                                    PassValues, ReturnValues)            \
   opened=show_type_data_xml<RMF::UCName##Traits, Arity>(nh, kc, opened, frame, \
                                                         out);
@@ -97,7 +97,7 @@ template <int Arity, class Handle>
                      int frame,
                      std::ostream &out) {
     bool opened=false;
-    IMP_RMF_FOREACH_TYPE(IMP_RMF_SHOW_TYPE_DATA_XML);
+    RMF_FOREACH_TYPE(RMF_SHOW_TYPE_DATA_XML);
     if (opened) {
       out << "/>\n";
     }

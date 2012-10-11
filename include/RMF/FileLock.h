@@ -35,9 +35,9 @@ namespace RMF {
         milliseconds if the file is locked.*/
     FileLock(FileConstHandle h, double retry_milliseconds=1000);
     ~FileLock();
-    IMP_RMF_COMPARISONS(FileLock);
-    IMP_RMF_HASHABLE(FileLock, return h_.__hash__());
-    IMP_RMF_SHOWABLE(FileLock, "lock on " << h_);
+    RMF_COMPARISONS(FileLock);
+    RMF_HASHABLE(FileLock, return h_.__hash__());
+    RMF_SHOWABLE(FileLock, "lock on " << h_);
   };
 #ifndef IMP_DOXYGEN
 typedef vector<FileLock> FileLocks;

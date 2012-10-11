@@ -15,7 +15,7 @@
 
 namespace RMF {
 /** Validators check invariants of the RMF hierarchy. Use the
-    IMP_RMF_VALIDATOR() macro to register them. They should write
+    RMF_VALIDATOR() macro to register them. They should write
     information about any errors encountered to the provided
     stream.
 */

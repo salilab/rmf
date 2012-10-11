@@ -16,19 +16,19 @@
 #include "RMF.pb.h"
 
 
-#define IMP_RMF_PROTO_INDEX(base, field, index) \
+#define RMF_PROTO_INDEX(base, field, index) \
   (base).field(index)
 
-#define IMP_RMF_PROTO_MINDEX(base, field, index) \
+#define RMF_PROTO_MINDEX(base, field, index) \
   (base).mutable_##field(index)
 
 
-#define IMP_RMF_PROTO_INDEX_2(base, field, index, field2, index2)       \
-  IMP_RMF_PROTO_INDEX(IMP_RMF_PROTO_INDEX(base, field, index),\
+#define RMF_PROTO_INDEX_2(base, field, index, field2, index2)       \
+  RMF_PROTO_INDEX(RMF_PROTO_INDEX(base, field, index),\
                       field2, index2)
 
-#define IMP_RMF_PROTO_MINDEX_2(base, field, index, field2, index2)      \
-  IMP_RMF_PROTO_MINDEX(*IMP_RMF_PROTO_MINDEX(base, field, index),\
+#define RMF_PROTO_MINDEX_2(base, field, index, field2, index2)      \
+  RMF_PROTO_MINDEX(*RMF_PROTO_MINDEX(base, field, index),\
                        field2, index2)
 
 
@@ -76,7 +76,7 @@ namespace RMF {
       static V get(const T &t) {
         V ret(t.value_size());
         for (unsigned int i=0; i< ret.size(); ++i) {
-          ret[i]= IMP_RMF_PROTO_INDEX(t, value,i);
+          ret[i]= RMF_PROTO_INDEX(t, value,i);
         }
         return ret;
       }
@@ -100,7 +100,7 @@ namespace RMF {
       static V get(const T &t) {
         V ret(t.value_size());
         for (unsigned int i=0; i< ret.size(); ++i) {
-          ret[ret.size()-i-1]= NodeID(IMP_RMF_PROTO_INDEX(t, value, i));
+          ret[ret.size()-i-1]= NodeID(RMF_PROTO_INDEX(t, value, i));
         }
         return ret;
       }
@@ -117,7 +117,7 @@ namespace RMF {
     };
 
 
-#define IMP_RMF_PROTO_SHARED_PICKER(lcname, Ucname, PassValue,          \
+#define RMF_PROTO_SHARED_PICKER(lcname, Ucname, PassValue,          \
                                           ReturnValue,                  \
                                           PassValues, ReturnValues)     \
     template <>                                                         \
@@ -161,7 +161,7 @@ namespace RMF {
 
 
 
-#define IMP_RMF_PROTO_SHARED_TYPE_ARITY(lcname, Ucname, PassValue,      \
+#define RMF_PROTO_SHARED_TYPE_ARITY(lcname, Ucname, PassValue,      \
                                         ReturnValue,                    \
                                         PassValues, ReturnValues, Arity) \
     Ucname##Traits::Type get_value(unsigned int node,                   \
@@ -190,19 +190,19 @@ namespace RMF {
       return get_name_impl(k);                                          \
     }
 
-#define IMP_RMF_PROTO_SHARED_TYPE(lcname, Ucname, PassValue, ReturnValue, \
+#define RMF_PROTO_SHARED_TYPE(lcname, Ucname, PassValue, ReturnValue, \
                             PassValues, ReturnValues)               \
-    IMP_RMF_PROTO_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue, \
+    RMF_PROTO_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue, \
                               PassValues, ReturnValues, 1);           \
-    IMP_RMF_PROTO_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue, \
+    RMF_PROTO_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue, \
                               PassValues, ReturnValues, 2);           \
-    IMP_RMF_PROTO_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue, \
+    RMF_PROTO_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue, \
                               PassValues, ReturnValues, 3);           \
-    IMP_RMF_PROTO_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue, \
+    RMF_PROTO_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue, \
                               PassValues, ReturnValues, 4)
 
  template <class T, bool PF> struct DataPicker{};
-    IMP_RMF_FOREACH_TYPE(IMP_RMF_PROTO_SHARED_PICKER);
+    RMF_FOREACH_TYPE(RMF_PROTO_SHARED_PICKER);
 
     class RMFEXPORT ProtoBufSharedData: public SharedData {
       // indexed first by per frame, then by
@@ -221,15 +221,15 @@ namespace RMF {
         if (d->entry_size() <= node) {
           return TypeTraits::get_null_value();
         } else {
-          if (IMP_RMF_PROTO_INDEX(*d, entry, node).frame_size() <= frame) {
+          if (RMF_PROTO_INDEX(*d, entry, node).frame_size() <= frame) {
             return TypeTraits::get_null_value();
           } else if (!ProtoTraits<typename TypeTraits::Type>
-                ::get_has(IMP_RMF_PROTO_INDEX_2((*d), entry,node,
+                ::get_has(RMF_PROTO_INDEX_2((*d), entry,node,
                                                 frame,frame))) {
             return TypeTraits::get_null_value();
           } else {
             return ProtoTraits<typename TypeTraits::Type>
-              ::get(IMP_RMF_PROTO_INDEX_2((*d), entry, node, frame, frame));
+              ::get(RMF_PROTO_INDEX_2((*d), entry, node, frame, frame));
           }
         }
       }
@@ -243,11 +243,11 @@ namespace RMF {
         if (d->entry_size() <= node) {
           return TypeTraits::get_null_value();
         }  else if (!ProtoTraits<typename TypeTraits::Type>
-                    ::get_has(IMP_RMF_PROTO_INDEX(*d, entry,node))) {
+                    ::get_has(RMF_PROTO_INDEX(*d, entry,node))) {
           return TypeTraits::get_null_value();
         } else {
           return ProtoTraits<typename TypeTraits::Type>
-            ::get(IMP_RMF_PROTO_INDEX(*d, entry,node));
+            ::get(RMF_PROTO_INDEX(*d, entry,node));
         }
       }
       template <class TypeTraits>
@@ -268,11 +268,11 @@ namespace RMF {
           return NULL;
         }
         const RMFProto::ArityData &arity_data
-          = IMP_RMF_PROTO_INDEX(proto_, arity, Arity-1);
+          = RMF_PROTO_INDEX(proto_, arity, Arity-1);
         if (arity_data.category_size() <= category_id) {
           return NULL;
         }
-        return &IMP_RMF_PROTO_INDEX(arity_data, category,category_id);
+        return &RMF_PROTO_INDEX(arity_data, category,category_id);
       }
 
       template <class TypeTraits, int Arity>
@@ -305,11 +305,11 @@ namespace RMF {
         while (d.entry_size() <= node) {
           d.add_entry();
         }
-        while (IMP_RMF_PROTO_INDEX(d, entry,node).frame_size() <= frame) {
-          IMP_RMF_PROTO_MINDEX(d, entry,node)->add_frame();
+        while (RMF_PROTO_INDEX(d, entry,node).frame_size() <= frame) {
+          RMF_PROTO_MINDEX(d, entry,node)->add_frame();
         }
         ProtoTraits<typename TypeTraits::Type>
-          ::set(IMP_RMF_PROTO_MINDEX_2(d, entry,node,
+          ::set(RMF_PROTO_MINDEX_2(d, entry,node,
                                        frame,frame), v);
       }
 
@@ -322,7 +322,7 @@ namespace RMF {
           d.add_entry();
         }
         ProtoTraits<typename TypeTraits::Type>
-          ::set(IMP_RMF_PROTO_MINDEX(d, entry,node), v);
+          ::set(RMF_PROTO_MINDEX(d, entry,node), v);
       }
       template <class TypeTraits>
         typename DataPicker<TypeTraits, true>::Proto&
@@ -342,11 +342,11 @@ namespace RMF {
           proto_.add_arity();
         }
         RMFProto::ArityData *arity_data
-          = IMP_RMF_PROTO_MINDEX(proto_, arity, Arity-1);
+          = RMF_PROTO_MINDEX(proto_, arity, Arity-1);
         while (arity_data->category_size() <= category_id) {
           arity_data->add_category();
         }
-        return *IMP_RMF_PROTO_MINDEX(*arity_data, category,category_id);
+        return *RMF_PROTO_MINDEX(*arity_data, category,category_id);
 
       }
 
@@ -408,7 +408,7 @@ namespace RMF {
         }
       }
     public:
-      IMP_RMF_FOREACH_TYPE(IMP_RMF_PROTO_SHARED_TYPE);
+      RMF_FOREACH_TYPE(RMF_PROTO_SHARED_TYPE);
 
       void flush() const;
       std::string get_file_name() const {

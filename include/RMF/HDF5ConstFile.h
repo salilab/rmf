@@ -27,7 +27,7 @@ namespace RMF {
 #endif
     HDF5ConstFile(HDF5File f);
     HDF5ConstFile(){}
-    IMP_RMF_SHOWABLE(HDF5ConstFile, "HDF5ConstFile " << get_name());
+    RMF_SHOWABLE(HDF5ConstFile, "HDF5ConstFile " << get_name());
     std::string get_name() const;
     ~HDF5ConstFile();
   };

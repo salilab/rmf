@@ -63,7 +63,7 @@ class Factory {
   }
  public:
   typedef DecoratorType Decorator;
-  IMP_RMF_SHOWABLE(Factory,
+  RMF_SHOWABLE(Factory,
                    Decorator::get_decorator_type_name()
                    << "Factory");
 };

@@ -16,7 +16,7 @@
 namespace RMF {
   namespace internal {
 
-#define IMP_RMF_CLOSE(lcname, Ucname, PassValue, ReturnValue,           \
+#define RMF_CLOSE(lcname, Ucname, PassValue, ReturnValue,           \
                        PassValues, ReturnValues)                        \
     lcname##_data_sets_=DataDataSetCache<Ucname##Traits, 2>();          \
     per_frame_##lcname##_data_sets_=DataDataSetCache<Ucname##Traits, 3>() \
@@ -33,7 +33,7 @@ namespace RMF {
     }
     fame_names_=HDF5DataSetD<StringTraits, 1>();
     max_cache_.clear();
-    IMP_RMF_FOREACH_TYPE(IMP_RMF_CLOSE);
+    RMF_FOREACH_TYPE(RMF_CLOSE);
     flush();
     file_=HDF5Group();
     H5garbage_collect();
@@ -41,13 +41,13 @@ namespace RMF {
   void HDF5SharedData::open_things(bool create) {
     if (create) {
       file_=create_hdf5_file(file_name_);
-      IMP_RMF_OPERATION(
+      RMF_OPERATION(
           file_.set_attribute<CharTraits>("version", std::string("rmf 1")),
           "adding version string to file.");
       {
         HDF5DataSetCreationPropertiesD<StringTraits, 1> props;
         props.set_compression(GZIP_COMPRESSION);
-        IMP_RMF_OPERATION((file_.add_child_data_set<StringTraits, 1>)
+        RMF_OPERATION((file_.add_child_data_set<StringTraits, 1>)
                           (get_node_name_data_set_name(), props);,
                           "adding node name data set to file.");
       }
@@ -55,7 +55,7 @@ namespace RMF {
         HDF5DataSetCreationPropertiesD<IndexTraits, 2> props;
         props.set_compression(GZIP_COMPRESSION);
         props.set_chunk_size(RMF::HDF5DataSetIndexD<2>(128, 4));
-        IMP_RMF_OPERATION(
+        RMF_OPERATION(
             (file_.add_child_data_set<IndexTraits, 2>)
             (get_node_data_data_set_name(),
              props);,
@@ -64,16 +64,16 @@ namespace RMF {
     } else {
       file_=open_hdf5_file(file_name_);
       std::string version;
-      IMP_RMF_OPERATION(
+      RMF_OPERATION(
           version=file_.get_attribute<CharTraits>("version"),
           "reading version string from file.");
-      IMP_RMF_USAGE_CHECK(version== "rmf 1",
+      RMF_USAGE_CHECK(version== "rmf 1",
                           get_error_message("Unsupported rmf version ",
                                             "string found: \"",
                                             version , "\" expected \"" ,
                                             "rmf 1" , "\""));
     }
-    IMP_RMF_OPERATION(node_names_=(file_.get_child_data_set<StringTraits, 1>)
+    RMF_OPERATION(node_names_=(file_.get_child_data_set<StringTraits, 1>)
                       (get_node_name_data_set_name());,
                       "opening node name data set.");
     HDF5DataSetAccessPropertiesD<IndexTraits, 2> props;
@@ -127,17 +127,17 @@ namespace RMF {
   HDF5SharedData::HDF5SharedData(std::string g, bool create):
       file_name_(g), frames_hint_(0)
   {
-    IMP_RMF_BEGIN_FILE;
-    IMP_RMF_BEGIN_OPERATION;
+    RMF_BEGIN_FILE;
+    RMF_BEGIN_OPERATION;
     open_things(create);
     if (create) {
         add_node("root", ROOT);
     } else {
-      IMP_RMF_USAGE_CHECK(get_name(0)=="root",
+      RMF_USAGE_CHECK(get_name(0)=="root",
                           "Root node is not so named");
     }
-    IMP_RMF_END_OPERATION("initializing");
-    IMP_RMF_END_FILE(get_file_name());
+    RMF_END_OPERATION("initializing");
+    RMF_END_FILE(get_file_name());
   }
 
     HDF5SharedData::~HDF5SharedData() {
@@ -147,14 +147,14 @@ namespace RMF {
     }
 
     void HDF5SharedData::check_node(unsigned int node) const {
-      IMP_RMF_USAGE_CHECK(node_names_.get_size()[0] > node,
+      RMF_USAGE_CHECK(node_names_.get_size()[0] > node,
                           get_error_message("Invalid node specified: ",
                                             node));
     }
     int HDF5SharedData::add_node(std::string name, unsigned int type) {
-      IMP_RMF_BEGIN_FILE;
+      RMF_BEGIN_FILE;
       int ret;
-      IMP_RMF_BEGIN_OPERATION;
+      RMF_BEGIN_OPERATION;
       if (free_ids_[0].empty()) {
         HDF5DataSetIndexD<1> nsz= node_names_.get_size();
         ret= nsz[0];
@@ -168,9 +168,9 @@ namespace RMF {
         ret= free_ids_[0].back();
         free_ids_[0].pop_back();
       }
-      IMP_RMF_END_OPERATION("figuring out where to add node " << name);
+      RMF_END_OPERATION("figuring out where to add node " << name);
       audit_node_name(name);
-      IMP_RMF_BEGIN_OPERATION
+      RMF_BEGIN_OPERATION
       node_names_.set_value(HDF5DataSetIndexD<1>(ret), name);
       node_data_[0].set_value(HDF5DataSetIndexD<2>(ret, TYPE), type);
       node_data_[0].set_value(HDF5DataSetIndexD<2>(ret, CHILD),
@@ -178,8 +178,8 @@ namespace RMF {
       node_data_[0].set_value(HDF5DataSetIndexD<2>(ret, SIBLING),
                            IndexTraits::get_null_value());
       return ret;
-      IMP_RMF_END_OPERATION("adding node data");
-      IMP_RMF_END_FILE(get_file_name());
+      RMF_END_OPERATION("adding node data");
+      RMF_END_FILE(get_file_name());
     }
     int HDF5SharedData::get_first_child(unsigned int node) const {
       check_node(node);
@@ -233,10 +233,10 @@ namespace RMF {
     }
 
   void HDF5SharedData::check_set(int arity, unsigned int index) const {
-    IMP_RMF_USAGE_CHECK(node_data_[arity-1] != HDF5IndexDataSet2D(),
+    RMF_USAGE_CHECK(node_data_[arity-1] != HDF5IndexDataSet2D(),
                         get_error_message("Invalid set arity requested: ",
                                           arity));
-    IMP_RMF_USAGE_CHECK(node_data_[arity-1]
+    RMF_USAGE_CHECK(node_data_[arity-1]
                         .get_value(HDF5DataSetIndexD<2>(index,
                                                         0))
                         >=0,
@@ -263,10 +263,10 @@ namespace RMF {
     return ct;
   }
   unsigned int HDF5SharedData::add_set( RMF::Indexes nis, int t) {
-    IMP_RMF_BEGIN_FILE;
+    RMF_BEGIN_FILE;
     std::sort(nis.begin(), nis.end());
     const int arity=nis.size();
-    IMP_RMF_BEGIN_OPERATION;
+    RMF_BEGIN_OPERATION;
     if (node_data_[arity-1]==HDF5IndexDataSet2D()) {
       std::string nm=get_set_data_data_set_name(arity);
       HDF5DataSetCreationPropertiesD<IndexTraits, 2> props;
@@ -274,28 +274,28 @@ namespace RMF {
       node_data_[arity-1]
         = file_.add_child_data_set<IndexTraits, 2>(nm, props);
     }
-    IMP_RMF_END_OPERATION("adding data set to store set");
+    RMF_END_OPERATION("adding data set to store set");
     int slot;
     if (free_ids_[arity-1].empty()) {
-      IMP_RMF_BEGIN_OPERATION
+      RMF_BEGIN_OPERATION
       slot= node_data_[arity-1].get_size()[0];
       int nsz=std::max<int>(arity+1, node_data_[arity-1].get_size()[1]);
       node_data_[arity-1].set_size(HDF5DataSetIndexD<2>(slot+1,
                                                         nsz));
-      IMP_RMF_END_OPERATION("allocating new slot for set");
+      RMF_END_OPERATION("allocating new slot for set");
     } else {
       slot= free_ids_[arity-1].back();
       free_ids_[arity-1].pop_back();
     }
-    IMP_RMF_BEGIN_OPERATION
+    RMF_BEGIN_OPERATION
     node_data_[arity-1].set_value(HDF5DataSetIndexD<2>(slot, 0), t);
     for ( int i=0; i< arity; ++i) {
       node_data_[arity-1].set_value(HDF5DataSetIndexD<2>(slot, i+1), nis[i]);
     }
-    IMP_RMF_END_OPERATION("storing set data");
+    RMF_END_OPERATION("storing set data");
     check_set(arity, slot);
     return slot;
-    IMP_RMF_END_FILE(get_file_name());
+    RMF_END_FILE(get_file_name());
   }
   unsigned int HDF5SharedData::get_set_member(int arity, unsigned int index,
                                             int member_index) const {
@@ -305,8 +305,8 @@ namespace RMF {
   }
 
   int HDF5SharedData::add_category(int Arity, std::string name) {
-    IMP_RMF_BEGIN_FILE;
-    IMP_RMF_INTERNAL_CHECK((!category_names_[Arity-1]
+    RMF_BEGIN_FILE;
+    RMF_INTERNAL_CHECK((!category_names_[Arity-1]
                             && category_names_cache_[Arity-1].empty())
                            || ( category_names_cache_[Arity-1].size()
                                 == category_names_[Arity-1].get_size()[0]),
@@ -318,15 +318,15 @@ namespace RMF {
                                              .get_size()[0]));
     if (category_names_[Arity-1]
         == HDF5DataSetD<StringTraits, 1>()) {
-      IMP_RMF_BEGIN_OPERATION;
+      RMF_BEGIN_OPERATION;
       std::string nm=get_category_name_data_set_name(Arity);
       HDF5DataSetCreationPropertiesD<StringTraits, 1> props;
       props.set_compression(GZIP_COMPRESSION);
       category_names_[Arity-1]
           =file_.add_child_data_set<StringTraits, 1>(nm, props);
-      IMP_RMF_END_OPERATION("add category list data set");
+      RMF_END_OPERATION("add category list data set");
     }
-    IMP_RMF_BEGIN_OPERATION
+    RMF_BEGIN_OPERATION
     // fill in later
     int sz= category_names_[Arity-1].get_size()[0];
     category_names_[Arity-1].set_size(HDF5DataSetIndex1D(sz+1));
@@ -336,15 +336,15 @@ namespace RMF {
                             category_names_cache_[Arity-1].size()));
     category_names_cache_[Arity-1][sz]=name;
     return sz;
-    IMP_RMF_END_OPERATION("adding category to list");
-    IMP_RMF_END_FILE(get_file_name());
+    RMF_END_OPERATION("adding category to list");
+    RMF_END_FILE(get_file_name());
   }
     unsigned int HDF5SharedData::get_number_of_categories(int Arity) const {
       unsigned int sz= category_names_cache_[Arity-1].size();
       return sz;
     }
 
-#define IMP_RMF_SEARCH_KEYS(lcname, Ucname, PassValue, ReturnValue, \
+#define RMF_SEARCH_KEYS(lcname, Ucname, PassValue, ReturnValue, \
                             PassValues, ReturnValues)               \
     {                                                               \
       unsigned int keys                                             \
@@ -360,7 +360,7 @@ namespace RMF {
       int ret=0;
       for (unsigned int i=0; i< cats; ++i) {
         CategoryD<1> cat(i);
-        IMP_RMF_FOREACH_TYPE(IMP_RMF_SEARCH_KEYS);
+        RMF_FOREACH_TYPE(RMF_SEARCH_KEYS);
       }
       return ret;
     }
@@ -372,7 +372,7 @@ namespace RMF {
       } else return get_group().get_char_attribute("description");
     }
     void HDF5SharedData::set_description(std::string str) {
-      IMP_RMF_USAGE_CHECK(str.empty()
+      RMF_USAGE_CHECK(str.empty()
                           || str[str.size()-1]=='\n',
                           "Description should end in a newline.");
       get_group().set_char_attribute("description", str);

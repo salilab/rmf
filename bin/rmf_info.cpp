@@ -61,7 +61,7 @@ void show_key_info(RMF::FileConstHandle rh,
 
 
 
-#define IMP_RMF_SHOW_TYPE_DATA_INFO(lcname, UCName, PassValue, ReturnValue, \
+#define RMF_SHOW_TYPE_DATA_INFO(lcname, UCName, PassValue, ReturnValue, \
                                     PassValues, ReturnValues)           \
   show_key_info<Arity, RMF::UCName##Traits>(rh, categories[i], #lcname, out);
 
@@ -80,7 +80,7 @@ void show_info(RMF::FileConstHandle rh, std::ostream &out) {
       = rh.get_categories<Arity>();
   for (unsigned int i=0; i < categories.size(); ++i) {
     out << "  " << rh.get_category_name(categories[i]) << ":" << std::endl;
-    IMP_RMF_FOREACH_TYPE(IMP_RMF_SHOW_TYPE_DATA_INFO);
+    RMF_FOREACH_TYPE(RMF_SHOW_TYPE_DATA_INFO);
   }
 }
 

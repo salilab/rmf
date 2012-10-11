@@ -29,7 +29,7 @@ namespace RMF {
       return intent==H5F_ACC_RDWR;
     }
 #endif
-    IMP_RMF_SHOWABLE(HDF5File, "HDF5File " << get_name());
+    RMF_SHOWABLE(HDF5File, "HDF5File " << get_name());
     HDF5File(){}
     std::string get_name() const;
     void flush();

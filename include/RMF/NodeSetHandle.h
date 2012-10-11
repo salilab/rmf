@@ -45,13 +45,13 @@ namespace RMF {
     typedef NodeSetConstHandle<D> P;
     friend class FileHandle;
     NodeSetHandle(int node, internal::SharedData *shared): P(node, shared){
-      IMP_RMF_INTERNAL_CHECK(node >=0, "Invalid node in init");
+      RMF_INTERNAL_CHECK(node >=0, "Invalid node in init");
     }
   public:
     NodeSetHandle(){
     }
     NodeHandle get_node(unsigned int i) const {
-      IMP_RMF_USAGE_CHECK( i< D,
+      RMF_USAGE_CHECK( i< D,
                            internal::get_error_message("Out of range index: ",
                                                        i));
       //return NodeHandle(share_->get_node(P::get_node_id(), i),
@@ -67,7 +67,7 @@ namespace RMF {
 
         @{
     */
-    IMP_RMF_FOREACH_TYPE(IMP_HDF5_NODE_SET_KEY_TYPE_METHODS);
+    RMF_FOREACH_TYPE(IMP_HDF5_NODE_SET_KEY_TYPE_METHODS);
     /** @} */
 
     FileHandle get_file() const;

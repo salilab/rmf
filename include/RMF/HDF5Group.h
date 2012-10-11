@@ -47,7 +47,7 @@ namespace RMF {
     }
 #endif
 
-    IMP_RMF_SHOWABLE(HDF5Group, "HDF5Group " << get_name());
+    RMF_SHOWABLE(HDF5Group, "HDF5Group " << get_name());
 
     // create from an existing group
     HDF5Group(HDF5Group parent, std::string name);
@@ -118,7 +118,7 @@ namespace RMF {
         below.
         @{
     */
-    IMP_RMF_FOREACH_TYPE(IMP_HDF5_DATA_SET_METHODS);
+    RMF_FOREACH_TYPE(IMP_HDF5_DATA_SET_METHODS);
     /** @} */
 
     HDF5Group get_child_group(unsigned int i) const;

@@ -99,7 +99,7 @@ namespace RMF {
       set_attribute< UCName##Traits>(nm, value);                        \
     }                                                                   \
 
-    IMP_RMF_FOREACH_SIMPLE_TYPE(IMP_HDF5_ATTRIBUTE);
+    RMF_FOREACH_SIMPLE_TYPE(IMP_HDF5_ATTRIBUTE);
     IMP_HDF5_ATTRIBUTE(char, Char, char, char, std::string, std::string);
     /** @} */
   };

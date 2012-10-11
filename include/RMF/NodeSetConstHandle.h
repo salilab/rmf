@@ -29,7 +29,7 @@
   */                                                                    \
 ReturnValue get_value(Key<UCName##Traits, D> k,                         \
                       unsigned int frame=0) const {                     \
-  IMP_RMF_USAGE_CHECK(get_has_value(k, frame), \
+  RMF_USAGE_CHECK(get_has_value(k, frame), \
                       internal::get_error_message("NodeSet ",           \
                        " does not have a value for key ",              \
                                                   shared_->get_name(k),\
@@ -92,14 +92,14 @@ namespace RMF {
 protected:
     NodeSetConstHandle(int node, internal::SharedData *shared): node_(node),
                                                              shared_(shared){
-      IMP_RMF_INTERNAL_CHECK(node >=0, "Invalid node in init");
+      RMF_INTERNAL_CHECK(node >=0, "Invalid node in init");
     }
   int get_node_id() const {return node_;}
   internal::SharedData* get_shared_data() const {return shared_.get();}
 #endif
   public:
-    IMP_RMF_COMPARISONS(NodeSetConstHandle);
-    IMP_RMF_HASHABLE(NodeSetConstHandle, return node_);
+    RMF_COMPARISONS(NodeSetConstHandle);
+    RMF_HASHABLE(NodeSetConstHandle, return node_);
     NodeSetConstHandle(): node_(-1){
     }
     //! get the type of this node
@@ -110,7 +110,7 @@ protected:
       return D;
     }
     NodeConstHandle get_node(unsigned int i) const {
-      IMP_RMF_USAGE_CHECK( i< D,
+      RMF_USAGE_CHECK( i< D,
                            internal::get_error_message("Out of range index: ",
                                                        i));
       return NodeConstHandle(shared_->get_set_member(D, node_, i),
@@ -126,9 +126,9 @@ protected:
 
         @{
     */
-    IMP_RMF_FOREACH_TYPE(IMP_HDF5_NODE_SET_CONST_KEY_TYPE_METHODS);
+    RMF_FOREACH_TYPE(IMP_HDF5_NODE_SET_CONST_KEY_TYPE_METHODS);
     /** @} */
-    IMP_RMF_SHOWABLE(NodeSetHandle, "(" << get_type() << " " << node_ << ")");
+    RMF_SHOWABLE(NodeSetHandle, "(" << get_type() << " " << node_ << ")");
 
     FileConstHandle get_file() const;
   };

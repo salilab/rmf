@@ -91,7 +91,7 @@
     return get_node_sets<D>();                                          \
     }                                                                   \
 
-#define IMP_RMF_CONST_CATEGORY_METHODS(Arity, prefix, Prefix)           \
+#define RMF_CONST_CATEGORY_METHODS(Arity, prefix, Prefix)           \
     bool get_has_##prefix##category(std::string name) const {           \
       return get_has_category<Arity>(name);                             \
     }                                                                   \
@@ -142,9 +142,9 @@ namespace RMF {
     FileConstHandle(internal::SharedData *shared_);
 #endif
   public:
-    IMP_RMF_COMPARISONS(FileConstHandle);
-    IMP_RMF_HASHABLE(FileConstHandle, return boost::hash_value(get_name()););
-    IMP_RMF_SHOWABLE(FileConstHandle, get_name());
+    RMF_COMPARISONS(FileConstHandle);
+    RMF_HASHABLE(FileConstHandle, return boost::hash_value(get_name()););
+    RMF_SHOWABLE(FileConstHandle, get_name());
     //! Empty root handle, no open file.
     FileConstHandle(){}
 #ifndef IMP_DOXYGEN
@@ -228,7 +228,7 @@ namespace RMF {
         bool pf=i >= num;
         unsigned int idx=pf? i-num: i;
         ret[i]= Key<TypeT, Arity>(category_id, idx, pf);
-        IMP_RMF_INTERNAL_CHECK(!get_name(ret[i]).empty(),
+        RMF_INTERNAL_CHECK(!get_name(ret[i]).empty(),
                                "No name for key");
       }
       return ret;
@@ -254,7 +254,7 @@ namespace RMF {
         @{
     */
 
-   IMP_RMF_FOREACH_TYPE(IMP_HDF5_ROOT_CONST_KEY_TYPE_METHODS);
+   RMF_FOREACH_TYPE(IMP_HDF5_ROOT_CONST_KEY_TYPE_METHODS);
 
     /** @} */
 #ifdef IMP_DOXYGEN
@@ -377,12 +377,12 @@ namespace RMF {
         @{
     */
 #ifndef IMP_DOXYGEN
-    IMP_RMF_CONST_CATEGORY_METHODS(1, ,);
-    IMP_RMF_CONST_CATEGORY_METHODS(2, pair_, Pair);
-    IMP_RMF_CONST_CATEGORY_METHODS(3, triplet_, Triplet);
-    IMP_RMF_CONST_CATEGORY_METHODS(4, quad_, Quad);
+    RMF_CONST_CATEGORY_METHODS(1, ,);
+    RMF_CONST_CATEGORY_METHODS(2, pair_, Pair);
+    RMF_CONST_CATEGORY_METHODS(3, triplet_, Triplet);
+    RMF_CONST_CATEGORY_METHODS(4, quad_, Quad);
 #else
-    IMP_RMF_CONST_CATEGORY_METHODS(1, arity_,Arity);
+    RMF_CONST_CATEGORY_METHODS(1, arity_,Arity);
 #endif
     /** @} */
 

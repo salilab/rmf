@@ -38,9 +38,9 @@ class NodeIDD {
   int get_index() const {
     return i_;
   }
-  IMP_RMF_SHOWABLE(NodeIDD, i_);
-  IMP_RMF_COMPARISONS(NodeIDD);
-  IMP_RMF_HASHABLE(NodeIDD, return i_);
+  RMF_SHOWABLE(NodeIDD, i_);
+  RMF_COMPARISONS(NodeIDD);
+  RMF_HASHABLE(NodeIDD, return i_);
 };
 #ifndef IMP_DOXYGEN
 typedef NodeIDD<1> NodeID;

@@ -98,7 +98,7 @@ class UniquenessValidator: public Validator {
   }
 };
 
-IMP_RMF_VALIDATOR(UniquenessValidator);
+RMF_VALIDATOR(UniquenessValidator);
 
 
 struct NonNegativeChecker {
@@ -208,24 +208,24 @@ class PhysicsValidator: public NodeValidator {
   }
 };
 
-IMP_RMF_VALIDATOR(PhysicsValidator);
+RMF_VALIDATOR(PhysicsValidator);
 
 
-#define IMP_RMF_DECLARE_KEYS(lcname, UCName, PassValue, ReturnValue, \
+#define RMF_DECLARE_KEYS(lcname, UCName, PassValue, ReturnValue, \
                              PassValues, ReturnValues)\
   vector<std::pair<Key<UCName##Traits, 1>, Key<UCName##Traits, 1> > >   \
   lcname##_pairs_;
 
-#define IMP_RMF_INIT_KEYS(lcname, UCName, PassValue, ReturnValue,       \
+#define RMF_INIT_KEYS(lcname, UCName, PassValue, ReturnValue,       \
                           PassValues, ReturnValues)                     \
   init(rh, categories[i], lcname##_pairs_)
 
-#define IMP_RMF_CHECK_KEYS(lcname, UCName, PassValue, ReturnValue,       \
+#define RMF_CHECK_KEYS(lcname, UCName, PassValue, ReturnValue,       \
                            PassValues, ReturnValues)                    \
   check(node, out, lcname##_pairs_)
 
 class KeyValidator: public NodeValidator {
-  IMP_RMF_FOREACH_TYPE(IMP_RMF_DECLARE_KEYS);
+  RMF_FOREACH_TYPE(RMF_DECLARE_KEYS);
 
   template <class Traits>
   void check(NodeConstHandle node,
@@ -260,9 +260,9 @@ class KeyValidator: public NodeValidator {
           Key<Traits, 1> ka= allkeys[j];
           Key<Traits, 1> kb= allkeys[k];
           if (rh.get_is_per_frame(kb)) std::swap(ka, kb);
-          IMP_RMF_INTERNAL_CHECK(rh.get_is_per_frame(ka),
+          RMF_INTERNAL_CHECK(rh.get_is_per_frame(ka),
                                  "Not");
-          IMP_RMF_INTERNAL_CHECK(!rh.get_is_per_frame(kb),
+          RMF_INTERNAL_CHECK(!rh.get_is_per_frame(kb),
                                  "Is");
           keys.push_back(std::make_pair(ka, kb));
           break;
@@ -276,16 +276,16 @@ class KeyValidator: public NodeValidator {
       NodeValidator(rh, name){
     Categories categories= rh.get_categories<1>();
     for (unsigned int i=0; i< categories.size(); ++i) {
-      IMP_RMF_FOREACH_TYPE(IMP_RMF_INIT_KEYS);
+      RMF_FOREACH_TYPE(RMF_INIT_KEYS);
     }
   }
   void write_errors_node(NodeConstHandle node,
                          const NodeConstHandles &,
                          std::ostream &out) const {
-    IMP_RMF_FOREACH_TYPE(IMP_RMF_CHECK_KEYS);
+    RMF_FOREACH_TYPE(RMF_CHECK_KEYS);
   }
 };
-IMP_RMF_VALIDATOR(KeyValidator);
+RMF_VALIDATOR(KeyValidator);
 
 
 } /* namespace RMF */

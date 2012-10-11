@@ -42,7 +42,7 @@ namespace RMF {
 #endif
   public:
     HDF5ConstGroup(){};
-    IMP_RMF_SHOWABLE(HDF5ConstGroup, "HDF5Group " << get_name());
+    RMF_SHOWABLE(HDF5ConstGroup, "HDF5Group " << get_name());
 
     // create from an existing group
     HDF5ConstGroup(HDF5ConstGroup parent, std::string name);
@@ -91,7 +91,7 @@ namespace RMF {
         below.
         @{
     */
-    IMP_RMF_FOREACH_TYPE(IMP_HDF5_DATA_SET_CONST_METHODS);
+    RMF_FOREACH_TYPE(IMP_HDF5_DATA_SET_CONST_METHODS);
     /** @} */
 
     unsigned int get_number_of_children() const;

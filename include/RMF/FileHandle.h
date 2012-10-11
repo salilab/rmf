@@ -69,7 +69,7 @@
       return add_node_set<D>(nh, tt);                                   \
     }
 
-#define IMP_RMF_CATEGORY_METHODS(Arity, prefix, Prefix)                 \
+#define RMF_CATEGORY_METHODS(Arity, prefix, Prefix)                 \
     Prefix##Category add_##prefix##category(std::string name) {         \
       return add_category<Arity>(name);                                 \
     }
@@ -146,7 +146,7 @@ namespace RMF {
         pair, triplet or quad.
         @{
     */
-    IMP_RMF_FOREACH_TYPE(IMP_HDF5_ROOT_KEY_TYPE_METHODS);
+    RMF_FOREACH_TYPE(IMP_HDF5_ROOT_KEY_TYPE_METHODS);
     /** @} */
 #ifdef IMP_DOXYGEN
     /** \name Python only
@@ -157,7 +157,7 @@ namespace RMF {
     template <int Arity>
       NodeSetHandle<Arity>  add_node_set(const NodeHandles &nh,
                                              NodeSetType tt) {
-      IMP_RMF_USAGE_CHECK(nh.size()==Arity, "Wrong size for handles list");
+      RMF_USAGE_CHECK(nh.size()==Arity, "Wrong size for handles list");
       Indexes ix(nh.size());
       for (unsigned int i=0; i< nh.size(); ++i) {
         ix[i]=nh[i].get_id().get_index();
@@ -228,7 +228,7 @@ namespace RMF {
     */
     template <int Arity>
       CategoryD<Arity> add_category(std::string name) {
-      IMP_RMF_USAGE_CHECK(!get_has_category<Arity>(name),
+      RMF_USAGE_CHECK(!get_has_category<Arity>(name),
                           "Category already exists");
       return CategoryD<Arity>(get_shared_data()->add_category(Arity, name));
     }
@@ -240,12 +240,12 @@ namespace RMF {
         @{
     */
 #ifndef IMP_DOXYGEN
-    IMP_RMF_CATEGORY_METHODS(1, ,);
-    IMP_RMF_CATEGORY_METHODS(2, pair_, Pair);
-    IMP_RMF_CATEGORY_METHODS(3, triplet_, Triplet);
-    IMP_RMF_CATEGORY_METHODS(4, quad_, Quad);
+    RMF_CATEGORY_METHODS(1, ,);
+    RMF_CATEGORY_METHODS(2, pair_, Pair);
+    RMF_CATEGORY_METHODS(3, triplet_, Triplet);
+    RMF_CATEGORY_METHODS(4, quad_, Quad);
 #else
-    IMP_RMF_CATEGORY_METHODS(1, arity_,Arity);
+    RMF_CATEGORY_METHODS(1, arity_,Arity);
 #endif
     /** @} */
   };
@@ -313,7 +313,7 @@ template <class TypeT, int D>
 Key<TypeT, D> get_key_always(FileHandle fh, CategoryD<D> cat,
                              std::string name, bool per_frame=false) {
   if (fh.get_has_key<TypeT, D>(cat, name, per_frame)) {
-    IMP_RMF_USAGE_CHECK(per_frame
+    RMF_USAGE_CHECK(per_frame
                         == fh.get_is_per_frame(fh.get_key<TypeT, D>(cat,
                                                                     name,
                                                                     per_frame)),
@@ -338,7 +338,7 @@ vector<Key<TypeT, D> > get_keys_always(FileHandle fh, CategoryD<D> cat,
 }
 
 
-#define IMP_RMF_GET_KEY_ALWAYS_CATEGORY(lcname, UCName, PassValue,      \
+#define RMF_GET_KEY_ALWAYS_CATEGORY(lcname, UCName, PassValue,      \
                                         ReturnValue,                    \
                                         PassValues, ReturnValues, D)    \
   inline Key<UCName##Traits, D> get_##lcname##_key_always(FileHandle rh, \
@@ -348,17 +348,17 @@ vector<Key<TypeT, D> > get_keys_always(FileHandle fh, CategoryD<D> cat,
                                                           = false) {    \
     return get_key_always<UCName##Traits, D>(rh, cat, name, per_frame); \
   }
-#define IMP_RMF_GET_KEY_ALWAYS(lcname, UCName, PassValue, ReturnValue,  \
+#define RMF_GET_KEY_ALWAYS(lcname, UCName, PassValue, ReturnValue,  \
                                PassValues, ReturnValues)                \
-  IMP_RMF_GET_KEY_ALWAYS_CATEGORY(lcname, UCName, PassValue, ReturnValue, \
+  RMF_GET_KEY_ALWAYS_CATEGORY(lcname, UCName, PassValue, ReturnValue, \
                                   PassValues, ReturnValues, 1);         \
-  IMP_RMF_GET_KEY_ALWAYS_CATEGORY(lcname, UCName, PassValue, ReturnValue, \
+  RMF_GET_KEY_ALWAYS_CATEGORY(lcname, UCName, PassValue, ReturnValue, \
                                   PassValues, ReturnValues, 2);         \
-  IMP_RMF_GET_KEY_ALWAYS_CATEGORY(lcname, UCName, PassValue, ReturnValue, \
+  RMF_GET_KEY_ALWAYS_CATEGORY(lcname, UCName, PassValue, ReturnValue, \
                                   PassValues, ReturnValues, 3);         \
-  IMP_RMF_GET_KEY_ALWAYS_CATEGORY(lcname, UCName, PassValue, ReturnValue, \
+  RMF_GET_KEY_ALWAYS_CATEGORY(lcname, UCName, PassValue, ReturnValue, \
                                   PassValues, ReturnValues, 4)
-IMP_RMF_FOREACH_TYPE(IMP_RMF_GET_KEY_ALWAYS);
+RMF_FOREACH_TYPE(RMF_GET_KEY_ALWAYS);
 /** @} */
 
 } /* namespace RMF */

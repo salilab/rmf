@@ -20,11 +20,11 @@
   struct PyPointer: boost::noncopyable {
     PyObject* ptr_;
     PyPointer(PyObject* ptr): ptr_(ptr){
-      IMP_RMF_INTERNAL_CHECK(ptr, "nullptr pointer passed");
+      RMF_INTERNAL_CHECK(ptr, "nullptr pointer passed");
       if (!REFED) {
         Py_INCREF(ptr_);
       } else {
-        IMP_RMF_INTERNAL_CHECK(ptr_->ob_refcnt >=1, "No refcount");
+        RMF_INTERNAL_CHECK(ptr_->ob_refcnt >=1, "No refcount");
       }
     }
     operator PyObject*() const{
@@ -34,7 +34,7 @@
       return ptr_;
     }
     PyObject *release() {
-      IMP_RMF_INTERNAL_CHECK(ptr_->ob_refcnt >=1, "No refcount");
+      RMF_INTERNAL_CHECK(ptr_->ob_refcnt >=1, "No refcount");
       PyObject *ret=ptr_;
       ptr_=NULL;
       return ret;
@@ -48,9 +48,9 @@
   typedef PyPointer<true> PyReceivePointer;
   typedef PyPointer<false> PyOwnerPointer;
 
-#define IMP_RMF_PYTHON_CALL(call) {int rc=call;                 \
+#define RMF_PYTHON_CALL(call) {int rc=call;                 \
     if (rc != 0) {                                              \
-      IMP_RMF_INTERNAL_CHECK(0, RMF::internal::get_error_message\
+      RMF_INTERNAL_CHECK(0, RMF::internal::get_error_message\
                              ("Python call failed: ", #call,    \
                               " with ", rc));                   \
     }                                                           \
@@ -146,10 +146,10 @@
       void *vp;
       int res=SWIG_ConvertPtr(o, &vp,st, 0 );
       if (!SWIG_IsOK(res)) {
-        IMP_RMF_THROW( "Wrong type.", std::runtime_error);
+        RMF_THROW( "Wrong type.", std::runtime_error);
       }
       if (!vp) {
-        IMP_RMF_THROW( "Wrong type.", std::runtime_error);
+        RMF_THROW( "Wrong type.", std::runtime_error);
       }
       return *reinterpret_cast<T*>(vp);
     }
@@ -213,7 +213,7 @@
         PyErr_SetString(PyExc_ValueError,"Expected a sequence");
       }
       unsigned int l= PySequence_Size(in);
-      IMP_RMF_INTERNAL_CHECK(in->ob_refcnt >0, "Freed sequence object found");
+      RMF_INTERNAL_CHECK(in->ob_refcnt >0, "Freed sequence object found");
       for (unsigned int i=0; i< l; ++i) {
         PyReceivePointer o(PySequence_GetItem(in,i));
         typename ValueOrObject<V>::store_type vs
@@ -239,7 +239,7 @@
     static T get_cpp_object(PyObject *o, SwigData st,
                             SwigData particle_st, SwigData decorator_st) {
       if (!get_is_cpp_object(o, st, particle_st, decorator_st)) {
-        IMP_RMF_THROW("Argument not of correct type", std::runtime_error);
+        RMF_THROW("Argument not of correct type", std::runtime_error);
       }
       T ret;
       Helper::fill(o, st, particle_st, decorator_st, ret);
@@ -257,7 +257,7 @@
       PyReceivePointer ret(PyTuple_New(T::static_size));
       for (unsigned int i=0; i< T::static_size; ++i) {
         PyReceivePointer o(Convert<VT>::create_python_object(t[i], st, OWN));
-        IMP_RMF_PYTHON_CALL(PyTuple_SetItem(ret,i,o.release()));
+        RMF_PYTHON_CALL(PyTuple_SetItem(ret,i,o.release()));
       }
       return ret.release();
     }
@@ -277,7 +277,7 @@
                                          SwigData particle_st,
                                          SwigData decorator_st) {
       if (!get_is_cpp_object(o, st, particle_st, decorator_st)) {
-        IMP_RMF_THROW("Argument not of correct type", std::runtime_error);
+        RMF_THROW("Argument not of correct type", std::runtime_error);
       }
       Intermediate im;
       Helper::fill(o, st, particle_st, decorator_st, im);
@@ -298,9 +298,9 @@
                                           SwigData st, int OWN) {
       PyReceivePointer ret(PyTuple_New(2));
       PyReceivePointer of(Convert<VT>::create_python_object(t.first, st, OWN));
-      IMP_RMF_PYTHON_CALL(PyTuple_SetItem(ret,0,of.release()));
+      RMF_PYTHON_CALL(PyTuple_SetItem(ret,0,of.release()));
       PyReceivePointer os(Convert<VT>::create_python_object(t.second, st, OWN));
-      IMP_RMF_PYTHON_CALL(PyTuple_SetItem(ret,1,os.release()));
+      RMF_PYTHON_CALL(PyTuple_SetItem(ret,1,os.release()));
       return ret.release();
     }
   };
@@ -314,7 +314,7 @@
     static T get_cpp_object(PyObject *o, SwigData st,
                             SwigData particle_st, SwigData decorator_st) {
       if (!get_is_cpp_object(o, st, particle_st, decorator_st)) {
-        IMP_RMF_THROW("Argument not of correct type", std::runtime_error);
+        RMF_THROW("Argument not of correct type", std::runtime_error);
       }
       T ret(PySequence_Size(o));
       Helper::fill(o, st, particle_st, decorator_st, ret);
@@ -331,7 +331,7 @@
       for (unsigned int i=0; i< t.size(); ++i) {
         PyReceivePointer o(ConvertT::create_python_object(t[i], st, OWN));
         // this does not increment the ref count
-        IMP_RMF_PYTHON_CALL(PyList_SetItem(ret, i, o.release()));
+        RMF_PYTHON_CALL(PyList_SetItem(ret, i, o.release()));
       }
       return ret.release();
     }
@@ -353,7 +353,7 @@
                                       SwigData particle_st,
                                       SwigData decorator_st) {
       if (!o || !PyString_Check(o)) {
-        IMP_RMF_THROW("Not all objects in list have correct type.",
+        RMF_THROW("Not all objects in list have correct type.",
                   std::runtime_error);
       } else {
         return std::string(PyString_AsString(o));
@@ -375,7 +375,7 @@
     static double get_cpp_object(PyObject *o, SwigData st,
                                  SwigData particle_st, SwigData decorator_st) {
       if (!o || !PyNumber_Check(o)) {
-        IMP_RMF_THROW("Not all objects in list have correct type.",
+        RMF_THROW("Not all objects in list have correct type.",
                   std::runtime_error);
       } else {
         return PyFloat_AsDouble(o);
@@ -413,7 +413,7 @@
     static int get_cpp_object(PyObject *o, SwigData st,
                               SwigData particle_st, SwigData decorator_st) {
       if (!PyInt_Check(o)) {
-        IMP_RMF_THROW("Not all objects in list have correct number type.",
+        RMF_THROW("Not all objects in list have correct number type.",
                   std::runtime_error);
       } else {
         return PyInt_AsLong(o);

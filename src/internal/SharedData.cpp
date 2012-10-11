@@ -54,32 +54,32 @@ namespace RMF {
 
     void SharedData::audit_key_name(std::string name) const {
       if (name.empty()) {
-        IMP_RMF_THROW("Empty key name", UsageException);
+        RMF_THROW("Empty key name", UsageException);
       }
       static const char *illegal="\\:=()[]{}\"'";
       const char *cur=illegal;
       while (*cur != '\0') {
         if (name.find(*cur) != std::string::npos) {
-          IMP_RMF_THROW(get_error_message("Key names can't contain ",
+          RMF_THROW(get_error_message("Key names can't contain ",
                                           *cur), UsageException);
         }
         ++cur;
       }
       if (name.find("  ") != std::string::npos) {
-        IMP_RMF_THROW("Key names can't contain two consecutive spaces",
+        RMF_THROW("Key names can't contain two consecutive spaces",
                       UsageException);
       }
     }
 
     void SharedData::audit_node_name(std::string name) const {
       if (name.empty()) {
-        IMP_RMF_THROW("Empty key name", UsageException);
+        RMF_THROW("Empty key name", UsageException);
       }
       static const char *illegal="\"";
       const char *cur=illegal;
       while (*cur != '\0') {
         if (name.find(*cur) != std::string::npos) {
-          IMP_RMF_THROW(get_error_message("Node names names can't contain \"",
+          RMF_THROW(get_error_message("Node names names can't contain \"",
                                           *cur,
                                           "\", but \"", name, "\" does."),
                         UsageException);
@@ -112,7 +112,7 @@ namespace RMF {
         ret= new ProtoBufSharedData(path, create);
 #endif
       } else {
-        IMP_RMF_THROW("Don't know how to open file", IOException);
+        RMF_THROW("Don't know how to open file", IOException);
       }
       cache[path]=ret;
       reverse_cache[ret]=path;
@@ -131,7 +131,7 @@ namespace RMF {
         ret= new ProtoBufSharedData(path, false);
 #endif
       } else {
-        IMP_RMF_THROW("Don't know how to open file", IOException);
+        RMF_THROW("Don't know how to open file", IOException);
       }
       cache[path]=ret;
       reverse_cache[ret]=path;

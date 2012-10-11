@@ -45,13 +45,13 @@ public:
   HDF5Handle(hid_t h, HDF5CloseFunction f, std::string operation):
     h_(h), f_(f) {
     if (h_<0) {
-      IMP_RMF_THROW(internal::get_error_message("Invalid handle returned from ",
+      RMF_THROW(internal::get_error_message("Invalid handle returned from ",
                                                 operation), IOException);
     }
   }
   HDF5Handle(): h_(-1), f_(NULL){}
   hid_t get_hid() const {
-    IMP_RMF_USAGE_CHECK(h_>=0, "Uninitialized handle used.");
+    RMF_USAGE_CHECK(h_>=0, "Uninitialized handle used.");
     return h_;
   }
   operator hid_t() const {
@@ -65,7 +65,7 @@ public:
       close();
     }
     h_=h;
-    IMP_RMF_USAGE_CHECK(h_>=0, "Invalid handle returned");
+    RMF_USAGE_CHECK(h_>=0, "Invalid handle returned");
     f_=f;
   }
   void close() {

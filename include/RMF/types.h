@@ -79,17 +79,17 @@ namespace RMF {
   typedef std::pair<Index, Index> IndexRange;
   typedef std::pair<Int, Int> IntRange;
 
-  IMP_RMF_SIMPLE_TRAITS(Int, Ints, int, 0, H5T_STD_I64LE, H5T_NATIVE_INT,
+  RMF_SIMPLE_TRAITS(Int, Ints, int, 0, H5T_STD_I64LE, H5T_NATIVE_INT,
                         H5T_NATIVE_INT, std::numeric_limits<int>::max());
 
-  IMP_RMF_SIMPLE_TRAITS(Float, Floats, float, 1, H5T_IEEE_F64LE,
+  RMF_SIMPLE_TRAITS(Float, Floats, float, 1, H5T_IEEE_F64LE,
                         H5T_NATIVE_DOUBLE,
                         H5T_NATIVE_DOUBLE, std::numeric_limits<double>::max());
 
-  IMP_RMF_SIMPLE_TRAITS(Index, Indexes, index, 2, H5T_STD_I64LE, H5T_NATIVE_INT,
+  RMF_SIMPLE_TRAITS(Index, Indexes, index, 2, H5T_STD_I64LE, H5T_NATIVE_INT,
                         H5T_NATIVE_INT, -1);
 
-  IMP_RMF_TRAITS(String, Strings, string, 3, internal::get_string_type(),
+  RMF_TRAITS(String, Strings, string, 3, internal::get_string_type(),
                  internal::get_string_type(), internal::get_string_type(),
                  String(),{
                    char *c;
@@ -113,24 +113,24 @@ namespace RMF {
                    free(c);
                  }
                  ,{
-                   IMP_RMF_UNUSED(d); IMP_RMF_UNUSED(is); IMP_RMF_UNUSED(s);
-                   IMP_RMF_NOT_IMPLEMENTED;
+                   RMF_UNUSED(d); RMF_UNUSED(is); RMF_UNUSED(s);
+                   RMF_NOT_IMPLEMENTED;
                  }
                  ,{
-                   IMP_RMF_UNUSED(d); IMP_RMF_UNUSED(is);
-                   IMP_RMF_UNUSED(sp); IMP_RMF_UNUSED(sz);
-                   IMP_RMF_NOT_IMPLEMENTED;
+                   RMF_UNUSED(d); RMF_UNUSED(is);
+                   RMF_UNUSED(sp); RMF_UNUSED(sz);
+                   RMF_NOT_IMPLEMENTED;
                  }
                  ,{
-                   IMP_RMF_UNUSED(a); IMP_RMF_UNUSED(v);
-                   IMP_RMF_NOT_IMPLEMENTED;
+                   RMF_UNUSED(a); RMF_UNUSED(v);
+                   RMF_NOT_IMPLEMENTED;
                  }
                  ,{
-                   IMP_RMF_UNUSED(a); IMP_RMF_UNUSED(sz);
-                   IMP_RMF_NOT_IMPLEMENTED;
+                   RMF_UNUSED(a); RMF_UNUSED(sz);
+                   RMF_NOT_IMPLEMENTED;
                  });
 
-  IMP_RMF_TRAITS(NodeID, NodeIDs, node_id, 4, IndexTraits::get_hdf5_disk_type(),
+  RMF_TRAITS(NodeID, NodeIDs, node_id, 4, IndexTraits::get_hdf5_disk_type(),
                  IndexTraits::get_hdf5_memory_type(),
                  IndexTraits::get_hdf5_fill_type(), NodeID(),
                  IndexTraits::write_value_dataset(d, is, s, v.get_index())
@@ -165,25 +165,25 @@ namespace RMF {
                    }
                  });
 
-  IMP_RMF_TRAITS_ONE(Char, Chars, char, 6, H5T_STD_I8LE,
+  RMF_TRAITS_ONE(Char, Chars, char, 6, H5T_STD_I8LE,
                  H5T_NATIVE_CHAR,H5T_NATIVE_CHAR, '\0',
                  {
-                   IMP_RMF_UNUSED(d); IMP_RMF_UNUSED(is); IMP_RMF_UNUSED(s);
-                   IMP_RMF_UNUSED(v);
-                   IMP_RMF_NOT_IMPLEMENTED;
+                   RMF_UNUSED(d); RMF_UNUSED(is); RMF_UNUSED(s);
+                   RMF_UNUSED(v);
+                   RMF_NOT_IMPLEMENTED;
                  },{
-                   IMP_RMF_UNUSED(d); IMP_RMF_UNUSED(is); IMP_RMF_UNUSED(sp);
-                   IMP_RMF_NOT_IMPLEMENTED;
+                   RMF_UNUSED(d); RMF_UNUSED(is); RMF_UNUSED(sp);
+                   RMF_NOT_IMPLEMENTED;
                    ret='\0';
                  }
                  ,{
-                   IMP_RMF_UNUSED(d); IMP_RMF_UNUSED(is); IMP_RMF_UNUSED(s);
-                   IMP_RMF_NOT_IMPLEMENTED;
+                   RMF_UNUSED(d); RMF_UNUSED(is); RMF_UNUSED(s);
+                   RMF_NOT_IMPLEMENTED;
                  }
                  ,{
-                   IMP_RMF_UNUSED(d); IMP_RMF_UNUSED(is);
-                   IMP_RMF_UNUSED(sp); IMP_RMF_UNUSED(sz);
-                   IMP_RMF_NOT_IMPLEMENTED;
+                   RMF_UNUSED(d); RMF_UNUSED(is);
+                   RMF_UNUSED(sp); RMF_UNUSED(sz);
+                   RMF_NOT_IMPLEMENTED;
                  }
                  ,{
                    IMP_HDF5_CALL(H5Awrite(a, H5T_NATIVE_CHAR, v.c_str()));

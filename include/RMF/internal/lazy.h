@@ -171,7 +171,7 @@ namespace RMF {
 
 #ifndef IMP_DOXYGEN
 
-#define IMP_RMF_DECLARE_LAZY_KEY(lcname, Ucname, PassValue, ReturnValue, \
+#define RMF_DECLARE_LAZY_KEY(lcname, Ucname, PassValue, ReturnValue, \
                                  PassValues, ReturnValues)              \
   typedef LazyKey<Ucname##Traits, 1> Ucname##LazyKey;                   \
   typedef LazyKey<Ucname##Traits, 2> Pair##Ucname##LazyKey;             \
@@ -198,7 +198,7 @@ namespace RMF {
     - IntsLazyKey: store a list of arbitrary integers
     @{
 */
-IMP_RMF_FOREACH_TYPE(IMP_RMF_DECLARE_LAZY_KEY);
+RMF_FOREACH_TYPE(RMF_DECLARE_LAZY_KEY);
 /** @} */
 #endif
   } /* namespace internal */

@@ -33,23 +33,23 @@ namespace RMF {
     }
   public:
     HDF5DataSetIndexD(const Ints &o) {
-      IMP_RMF_USAGE_CHECK(o.size()==D, "Wrong number of values");
+      RMF_USAGE_CHECK(o.size()==D, "Wrong number of values");
       std::copy(o.begin(), o.end(), d_);
     }
     HDF5DataSetIndexD() {
       std::fill(d_, d_+D, -1);
     }
     HDF5DataSetIndexD(unsigned int i) {
-      IMP_RMF_USAGE_CHECK(D==1, "Constructor does not match dimension.");
+      RMF_USAGE_CHECK(D==1, "Constructor does not match dimension.");
       d_[0]=i;
     }
     HDF5DataSetIndexD(unsigned int i, unsigned int j) {
-      IMP_RMF_USAGE_CHECK(D==2, "Constructor does not match dimension.");
+      RMF_USAGE_CHECK(D==2, "Constructor does not match dimension.");
       d_[0]=i;
       if (D>1) d_[1]=j;
     }
     HDF5DataSetIndexD(unsigned int i, unsigned int j, unsigned int k) {
-      IMP_RMF_USAGE_CHECK(D==3, "Constructor does not match dimension.");
+      RMF_USAGE_CHECK(D==3, "Constructor does not match dimension.");
       d_[0]=i;
       // for clang
       if (D>1) d_[1]=j;
@@ -57,13 +57,13 @@ namespace RMF {
     }
 #ifndef SWIG
     hsize_t& operator[](unsigned int i) {
-      IMP_RMF_USAGE_CHECK(i < D,
+      RMF_USAGE_CHECK(i < D,
                           internal::get_error_message("Index out of range: ",
                                                       i));
       return d_[i];
     }
     hsize_t operator[](unsigned int i) const {
-      IMP_RMF_USAGE_CHECK(i < D,
+      RMF_USAGE_CHECK(i < D,
                           internal::get_error_message("Index out of range: ",
                                                       i));
       return d_[i];
@@ -88,16 +88,16 @@ namespace RMF {
 #endif
     int __getitem__(unsigned int i) const {
       if (i >= D) {
-        IMP_RMF_THROW(internal::get_error_message("Bad index ", i),
+        RMF_THROW(internal::get_error_message("Bad index ", i),
                       std::runtime_error);
       }
       return operator[](i);
     }
 
     unsigned int get_dimension() const {return D;}
-    IMP_RMF_SHOWABLE(HDF5DataSetIndexD, Ints(d_, d_+D));
-    IMP_RMF_COMPARISONS(HDF5DataSetIndexD);
-    IMP_RMF_HASHABLE(HDF5DataSetIndexD,
+    RMF_SHOWABLE(HDF5DataSetIndexD, Ints(d_, d_+D));
+    RMF_COMPARISONS(HDF5DataSetIndexD);
+    RMF_HASHABLE(HDF5DataSetIndexD,
                      size_t ret=0;
                      for (unsigned int i=0; i< D; ++i) {
                        boost::hash_combine(ret, static_cast<size_t>(d_[i]));

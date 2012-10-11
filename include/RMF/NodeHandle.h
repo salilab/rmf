@@ -25,7 +25,7 @@
 */                                                                      \
 void set_value(UCName##Key k, PassValue v,                              \
                int frame =ALL_FRAMES) {                                 \
-  IMP_RMF_USAGE_CHECK(frame >=0 || !k.get_is_per_frame(),               \
+  RMF_USAGE_CHECK(frame >=0 || !k.get_is_per_frame(),               \
                       "No frame specified for per-frame data.");        \
   get_shared_data()->set_value(get_node_id(),                           \
                                k, v, frame);                            \
@@ -36,7 +36,7 @@ void set_value(UCName##Key k, PassValue v,                              \
 */                                                                      \
 void set_values(const UCName##Key##s& k, PassValues v,                  \
                 int frame =ALL_FRAMES) {                                \
-  IMP_RMF_USAGE_CHECK(frame >=0 || !k[0].get_is_per_frame(),            \
+  RMF_USAGE_CHECK(frame >=0 || !k[0].get_is_per_frame(),            \
                       "No frame specified for per-frame data.");        \
   get_shared_data()->set_values(get_node_id(),                          \
                                 k, v, frame);                           \
@@ -78,7 +78,7 @@ class RMFEXPORT NodeHandle: public NodeConstHandle {
 
       @{
   */
-  IMP_RMF_FOREACH_TYPE(IMP_HDF5_NODE_KEY_TYPE_METHODS);
+  RMF_FOREACH_TYPE(IMP_HDF5_NODE_KEY_TYPE_METHODS);
   /** @} */
 
   FileHandle get_file() const;

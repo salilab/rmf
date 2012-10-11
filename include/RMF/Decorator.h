@@ -72,7 +72,7 @@ class Decorator {
   Node get_node() const {
     return handle_;
   }
-  IMP_RMF_SHOWABLE(Decorator,
+  RMF_SHOWABLE(Decorator,
                    DecoratorType::get_decorator_type_name()
                    << get_node().get_name());
 };

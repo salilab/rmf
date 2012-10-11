@@ -44,12 +44,12 @@ public:
 #endif
   CategoryD(): i_(-1){}
   unsigned int get_index() const {
-    IMP_RMF_USAGE_CHECK(i_ >=0, "Invalid Category used");
+    RMF_USAGE_CHECK(i_ >=0, "Invalid Category used");
     return i_;
   }
-  IMP_RMF_HASHABLE(CategoryD, return i_);
-  IMP_RMF_COMPARISONS(CategoryD);
-  IMP_RMF_SHOWABLE(CategoryD, i_);
+  RMF_HASHABLE(CategoryD, return i_);
+  RMF_COMPARISONS(CategoryD);
+  RMF_SHOWABLE(CategoryD, i_);
 };
 
 #ifndef IMP_DOXYGEN

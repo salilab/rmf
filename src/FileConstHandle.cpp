@@ -71,7 +71,7 @@ bool FileConstHandle::get_supports_locking() const {
   return get_shared_data()->get_supports_locking();
 }
 bool FileConstHandle::set_is_locked(bool tf) {
-  IMP_RMF_USAGE_CHECK(get_supports_locking(),
+  RMF_USAGE_CHECK(get_supports_locking(),
                       "Locking not supported on this file");
   return get_shared_data()->set_is_locked(tf);
 }

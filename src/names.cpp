@@ -24,7 +24,7 @@ namespace RMF {
     std::string path_cat(std::string base,
                          std::string file_name) {
       if (file_name.empty() || file_name[0] == '/') {
-        IMP_RMF_THROW(internal::get_error_message(
+        RMF_THROW(internal::get_error_message(
                   "File name should be relative to the RMF directory and"
                   ," non-empty, not ", file_name),
                       std::runtime_error);
@@ -55,7 +55,7 @@ namespace RMF {
                                internal::rmf_example_path+"/RMF", file_name);
     std::ifstream in(path.c_str());
     if (!in) {
-      IMP_RMF_THROW(internal::get_error_message("Unable to find example file ",
+      RMF_THROW(internal::get_error_message("Unable to find example file ",
                                                 file_name, " at ", path,
                           ". RMF is not installed or set up correctly."),
                     std::runtime_error);
