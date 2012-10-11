@@ -94,16 +94,24 @@ the HDF5Group, HDF5DataSetD, HDF5File and helper classes.
 
 \section bins Helper programs
 
-   - \c rmf_show prints out the hierarchy written to the file.
+Several helper programs are provided. They all take the name of the RMF file as
+the first argument and an argument "-f" which is the frame to act on. Negative
+values for the frame are treated as every nth frame. That is, "-f -2" means take
+every other frame.
 
-   - \c rmf_pdb converts an rmf file to or from a PDB file, assuming all hierarchies
-   in the rmf file are atomic resolution.
+- \c rmf_show prints out the hierarchy written to the file.
 
-   - \c rmf_xml converts an rmf file to an XML files that can be opened in an XML viewer
+- \c rmf_xml converts an rmf file to an XML files that can be opened in an XML viewer
    (eg Google Chrome or Firefox). These viewers support collapsing of subtrees, which
    makes it much easier to get around large hierarchies.
 
-See the \ref application_rmf_tools "RMF tools" application for
-\imp-related helper programs.
+- \c rmf_info displays information about the attributes found in the RMF and how
+   much they are used.
+
+- \c rmf_slice creates a new rmf from frames selected from an existing one.
+
+- \c rmf_cat creates a new rmf concatenating several with the same structure.
+
+- \c rmf_validate checks for errors in an RMF file.
 
 */

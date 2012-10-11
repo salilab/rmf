@@ -110,7 +110,7 @@ residue parents and all of those get the chain identifier from their parent.
 
 When adding data to an %RMF file that is just to be used for
 internal consumption, one should create a new category. For
-example, \imp defines an ''imp'' category when arbitrary particle
+example, \external{http://www.integrativemodeling.org, IMP} defines an ''imp'' category when arbitrary particle
 data is stored.
 
 If, instead, the data is likely to be a general interest, it
