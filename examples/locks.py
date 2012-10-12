@@ -1,8 +1,7 @@
 import RMF
-import IMP
 import sys
 import time
-name=IMP.create_temporary_file_name("locks", ".rmf")
+name=RMF._get_temporary_file_path("locks.rmf")
 print "writing to file", name
 f= RMF.create_rmf_file(name)
 

@@ -381,4 +381,11 @@ def _get_test_input_file_path(name):
    import os.path
    dir= os.path.split(sys.argv[0])[0]
    return os.path.join(dir, "input", name)
+
+def get_example_path(name):
+   import sys
+   import os.path
+   dir= os.path.split(sys.argv[0])[0]
+   return os.path.join(dir, name)
+
 %}

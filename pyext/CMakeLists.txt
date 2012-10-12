@@ -12,7 +12,7 @@ SET(CMAKE_SWIG_FLAGS "-castmode" "-naturalvar" "-Wextra" "-fvirtual"
 "-DPySwigIterator=RMF_PySwigIterator" "-c++"
 "-DSwigPyIterator=RMF_SwigPyIterator" "-I${PROJECT_SOURCE_DIR}/pyext"
 "-DRMFEXPORT")
-#set(CMAKE_SWIG_OUTDIR "${PROJECT_BINARY_DIR}")
+set(CMAKE_SWIG_OUTDIR "${PROJECT_BINARY_DIR}")
 include_directories("${PROJECT_BINARY_DIR}/include"
 "${PROJECT_SOURCE_DIR}/include" ${HDF5_INCLUDE_DIRS})
 

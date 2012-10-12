@@ -1,4 +1,5 @@
 import RMF
+
 def traverse(nh, pf, frame):
     # check if the current node has coordinates and radius
     if pf.get_is(nh, frame):

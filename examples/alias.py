@@ -1,8 +1,7 @@
 import RMF
-import IMP.base
 
 # find the name for a temporary file to use to for writing the hdf5 file
-tfn=IMP.base.create_temporary_file_name("aliases", ".rmf")
+tfn=RMF._get_temporary_file_path("aliases.rmf")
 print "File is", tfn
 
 # open the temporary file, clearing any existing contents
