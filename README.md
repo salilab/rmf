@@ -1,6 +1,3 @@
-rmf
-===
+The RMF library provides support for reading and writing coarse grained molecular structures.
 
-This repository is an attempt to provide an independent version of the RMF library.
-
-You should use the copy in https://github.com/salilab/imp/tree/develop/modules/librmf instead.
+See http://salilab.github.com/rmf/ for more information.
