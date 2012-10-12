@@ -1,3 +1,6 @@
+## \example create.py
+## This example creates an RMF file that tries to exploit as many
+## capabilities of RMF as possible.
 import RMF
 
 rmf= RMF.create_rmf_file("example.rmf")

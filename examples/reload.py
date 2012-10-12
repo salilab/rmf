@@ -1,3 +1,5 @@
+## \example reload.py
+##This examples shows how to monitor an rmf file to see when it changed.
 import sys
 import RMF
 import time

@@ -1,3 +1,8 @@
+## \example locks.py
+## This example shows how to use the file locking support to regulate
+## access to a file. If you pass a command line argument, then the
+## script runs forever, to be used with a client program that is
+## reading the library.
 import RMF
 import sys
 import time

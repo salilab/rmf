@@ -1,3 +1,6 @@
+## \example adding_data.py
+## This example shows how to add some arbitrary data to an RMF file.
+## In this case, a per-frame score.
 import IMP.atom
 import RMF
 import IMP.rmf

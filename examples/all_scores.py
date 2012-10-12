@@ -1,3 +1,6 @@
+## \example all_scores.py
+## Show how to traverse an RMF file and print out all the scores in
+## bulk. \c inf is used as a placeholder for values that are not there.
 import RMF
 import sys
 import os.path
