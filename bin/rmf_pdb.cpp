@@ -133,7 +133,7 @@ namespace {
                   RMF::AtomConstFactory af,
                   RMF::ChainConstFactory cf,
                   RMF::ResidueConstFactory rf,
-                  char chain= '\0',
+                  char chain= -1,
                   int residue_index=-1,
                   std::string residue_type=std::string()) {
     if (cf.get_is(nh, frame)) {
@@ -149,18 +149,20 @@ namespace {
       RMF::Floats coords= a.get_coordinates();
       int element= a.get_element();
       // not safe
-      std::string element_name= element_names[element];
+      std::string element_name= element_names[element-1];
       std::string str= get_pdb_string( coords[0], coords[1], coords[2],
-                                       current_index++,
+                                       ++current_index,
                                        nh.get_name(), residue_type,
-                                       chain, residue_index,
+                                       (chain==-1?' ':(chain+'A')),
+                                       residue_index,
                                        ' ', 1.0,
                                        0.0, element_name);
+      out << str;
     }
     RMF::NodeConstHandles ch= nh.get_children();
     for (unsigned int i=0; i< ch.size(); ++i) {
-      current_index+=write_atoms(out, current_index,
-                                 frame, nh, af, cf, rf, chain, residue_index,
+      current_index=write_atoms(out, current_index,
+                                 frame, ch[i], af, cf, rf, chain, residue_index,
                                  residue_type);
     }
     return current_index;
@@ -183,6 +185,7 @@ int main(int argc, char **argv) {
     }
 
     RMF::FileConstHandle rh= RMF::open_rmf_file_read_only(input);
+    RMF::FileLock lock(rh);
     std::ostream *out;
     std::ofstream fout;
     if (!output.empty()) {
@@ -198,10 +201,11 @@ int main(int argc, char **argv) {
     RMF::AtomConstFactory af(rh);
     RMF::ChainConstFactory cf(rh);
     RMF::ResidueConstFactory rf(rh);
-    for (unsigned int i=0; i< rh.get_number_of_frames(); ++i) {
-      *out << (boost::format("MODEL%1$9d")%(i+1)) << std::endl;
-      write_atoms(*out, 1, i, rh.get_root_node(), af, cf, rf);
-      *out << "ENDMDL" << i+1 << std::endl;
+    RMF::NodeConstHandle rn=rh.get_root_node();
+    IMP_FOR_EACH_FRAME(rh.get_number_of_frames()) {
+      *out << (boost::format("MODEL%1$9d")%(frame_iteration+1)) << std::endl;
+      write_atoms(*out, 0, current_frame, rn, af, cf, rf);
+      *out << "ENDMDL" << frame_iteration+1 << std::endl;
     }
     return 0;
   } catch (const std::exception &e) {
