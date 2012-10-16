@@ -48,7 +48,6 @@
 #include "RMF/Validator.h"
 #include "RMF/Decorator.h"
 #include "RMF/Factory.h"
-#include "RMF/FileLock.h"
 #include "RMF/decorators.h"
 #include "RMF/decorator_utility.h"
 #include "RMF/utility.h"
@@ -183,7 +182,6 @@ IMP_RMF_SWIG_VALUE_TEMPLATE(RMF, HDF5MutableAttributes);
 IMP_RMF_SWIG_VALUE_INSTANCE(RMF, HDF5GroupAttributes,HDF5GroupAttributes, HDF5GroupAttributesList);
 IMP_RMF_SWIG_VALUE(RMF, HDF5Group, HDF5Groups);
 IMP_RMF_SWIG_VALUE(RMF, HDF5File, HDF5Files);
-IMP_RMF_SWIG_VALUE(RMF, FileLock, FileLocks);
 IMP_RMF_SWIG_VALUE_TEMPLATE(RMF, HDF5DataSetD);
 IMP_RMF_SWIG_VALUE_INSTANCE(RMF, HDF5DataSetIndex1D, HDF5DataSetIndex1D, HDF5DataSetIndex1Ds);
 IMP_RMF_SWIG_VALUE_INSTANCE(RMF, HDF5DataSetIndex2D, HDF5DataSetIndex2D, HDF5DataSetIndex2Ds);
@@ -340,7 +338,6 @@ IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DEFINE_TYPE);
 %include "RMF/Decorator.h"
 %include "RMF/Factory.h"
 
-%include "RMF/FileLock.h"
 
 
 IMP_RMF_DECORATOR(RMF, Particle);
