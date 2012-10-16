@@ -18,8 +18,7 @@ namespace RMF {
       tree and whose radii are as close as possible to the passed resolution.
   */
   RMFEXPORT NodeConstHandles get_particles_by_resolution(NodeConstHandle h,
-                                                         double resolution,
-                                                         int frame=0);
+                                                         double resolution);
 
 } /* namespace RMF */
 

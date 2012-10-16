@@ -13,7 +13,6 @@ import RMF
 
 # don't bother with command line arguments, to keep in simple
 file_name=RMF.get_example_path("simple.rmf")
-frame=0
 verbose=True
 
 # show the data with the specified key category
@@ -23,13 +22,13 @@ def show_data_xml(nh, kc, arity=1):
     keys= rh.get_keys(kc, arity)
     opened=False
     for k in keys:
-        if nh.get_has_value(k, frame):
+        if nh.get_has_value(k):
             if not opened:
                 print "<", rh.get_name(kc)
                 opened=True
             name=rh.get_name(k)
             name.replace(" ", "_")
-            print name,"=\""+str(nh.get_value(k, frame))+"\""
+            print name,"=\""+str(nh.get_value(k))+"\""
     if opened:
         print "/>"
 
@@ -49,6 +48,7 @@ def show_xml(nh, kcs):
 
 # open the file, and don't clear the contents
 rh= RMF.open_rmf_file(file_name);
+rh.set_current_frame(0)
 print "<?xml version=\"1.0\"?>"
 print "<rmf>"
 print "<path>"

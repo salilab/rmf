@@ -378,7 +378,7 @@ namespace RMF {
       get_group().set_char_attribute("description", str);
     }
 
-  void HDF5SharedData::set_frame_name(unsigned int frame, std::string str) {
+  void HDF5SharedData::set_frame_name(std::string str) {
     if (fame_names_== HDF5DataSetD<StringTraits, 1>()) {
       if (file_.get_has_child(get_frame_name_data_set_name())) {
         fame_names_
@@ -392,12 +392,12 @@ namespace RMF {
            (get_frame_name_data_set_name(), props);
       }
     }
-    if (fame_names_.get_size()[0] <= frame) {
-      fame_names_.set_size(HDF5DataSetIndexD<1>(frame+1));
+    if (fame_names_.get_size()[0] <= get_current_frame()) {
+      fame_names_.set_size(HDF5DataSetIndexD<1>(get_current_frame()+1));
     }
-    fame_names_.set_value(HDF5DataSetIndexD<1>(frame), str);
+    fame_names_.set_value(HDF5DataSetIndexD<1>(get_current_frame()), str);
   }
-  std::string HDF5SharedData::get_frame_name(unsigned int frame) const {
+  std::string HDF5SharedData::get_frame_name() const {
     if (fame_names_== HDF5DataSetD<StringTraits, 1>()) {
       if (file_.get_has_child(get_frame_name_data_set_name())) {
         fame_names_
@@ -407,8 +407,8 @@ namespace RMF {
         return std::string();
       }
     }
-    if (fame_names_.get_size()[0] > frame) {
-      return fame_names_.get_value(HDF5DataSetIndexD<1>(frame));
+    if (fame_names_.get_size()[0] > get_current_frame()) {
+      return fame_names_.get_value(HDF5DataSetIndexD<1>(get_current_frame()));
     } else {
       return std::string();
     }

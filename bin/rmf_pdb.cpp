@@ -128,7 +128,6 @@ namespace {
   }
 
   int write_atoms(std::ostream &out, int current_index,
-                  int frame,
                   RMF::NodeConstHandle nh,
                   RMF::AtomConstFactory af,
                   RMF::ChainConstFactory cf,
@@ -136,16 +135,16 @@ namespace {
                   char chain= -1,
                   int residue_index=-1,
                   std::string residue_type=std::string()) {
-    if (cf.get_is(nh, frame)) {
-      chain= cf.get(nh, frame).get_chain_id();
+    if (cf.get_is(nh)) {
+      chain= cf.get(nh).get_chain_id();
     }
-    if (rf.get_is(nh, frame)) {
-      RMF::ResidueConst r= rf.get(nh, frame);
+    if (rf.get_is(nh)) {
+      RMF::ResidueConst r= rf.get(nh);
       residue_index= r.get_index();
       residue_type= r.get_type();
     }
-    if (af.get_is(nh, frame)) {
-      RMF::AtomConst a= af.get(nh, frame);
+    if (af.get_is(nh)) {
+      RMF::AtomConst a= af.get(nh);
       RMF::Floats coords= a.get_coordinates();
       int element= a.get_element();
       // not safe
@@ -162,8 +161,8 @@ namespace {
     RMF::NodeConstHandles ch= nh.get_children();
     for (unsigned int i=0; i< ch.size(); ++i) {
       current_index=write_atoms(out, current_index,
-                                 frame, ch[i], af, cf, rf, chain, residue_index,
-                                 residue_type);
+                                ch[i], af, cf, rf, chain, residue_index,
+                                residue_type);
     }
     return current_index;
   }
@@ -202,8 +201,9 @@ int main(int argc, char **argv) {
     RMF::ResidueConstFactory rf(rh);
     RMF::NodeConstHandle rn=rh.get_root_node();
     IMP_FOR_EACH_FRAME(rh.get_number_of_frames()) {
+      rh.set_current_frame(current_frame);
       *out << (boost::format("MODEL%1$9d")%(frame_iteration+1)) << std::endl;
-      write_atoms(*out, 0, current_frame, rn, af, cf, rf);
+      write_atoms(*out, 0, rn, af, cf, rf);
       *out << "ENDMDL" << frame_iteration+1 << std::endl;
     }
     return 0;

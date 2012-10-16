@@ -17,9 +17,10 @@ class GenericTest(unittest.TestCase):
         ikfp= f.add_int_key(sc, "ik0", True)
         ik= f.add_int_key(sc, "ik0", False)
         on= r.add_child("oc", RMF.REPRESENTATION)
-        r.set_value(ikfp, 1, 10)
+        f.set_current_frame(10)
+        r.set_value(ikfp, 1)
         on.set_value(ik, 10)
-        print r.get_value(ikfp, 10)
+        print r.get_value(ikfp)
         print on.get_value(ik)
 
 if __name__ == '__main__':

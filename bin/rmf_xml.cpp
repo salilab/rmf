@@ -37,13 +37,14 @@ template <class TypeT, int Arity, class Handle>
       //std::cout << "key " << rh.get_name(keys[i]) << std::endl;
       if (rh.get_is_per_frame(keys[i])) {
         if (frame >=0) {
-          if (nh.get_has_value(keys[i], frame)) {
+          nh.get_file().set_current_frame(frame);
+          if (nh.get_has_value(keys[i])) {
             if (!opened) {
               out << "<" << nh.get_file().get_category_name(kc) << "\n";
               opened=true;
             }
             out  << get_as_attribute_name(rh.get_name(keys[i])) << "=\"";
-            out << nh.get_value(keys[i], frame) << "\"\n";
+            out << nh.get_value(keys[i]) << "\"\n";
           }
         } else {
           int skip=-frame;
@@ -53,8 +54,9 @@ template <class TypeT, int Arity, class Handle>
             if (j != 0) {
               oss << " ";
             }
-            if (nh.get_has_value(keys[i], j)) {
-              oss << nh.get_value(keys[i], j);
+            nh.get_file().set_current_frame(j);
+            if (nh.get_has_value(keys[i])) {
+              oss << nh.get_value(keys[i]);
               some=true;
             } else {
               oss << "-";
@@ -194,7 +196,6 @@ int main(int argc, char **argv) {
     *out << input <<std::endl;
     *out << "</path>\n";
     show_hierarchy(rh.get_root_node(), cs, frame_option, *out);
-
     show_sets<2>(rh, rh.get_categories<2>(), frame_option, *out);
     show_sets<3>(rh, rh.get_categories<3>(), frame_option, *out);
     show_sets<4>(rh, rh.get_categories<4>(), frame_option, *out);

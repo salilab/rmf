@@ -40,10 +40,11 @@ for i in range(0,5):
         sd= score_factory.get(bs)
         sd.set_representation([last,r])
     for j in range(0,nframes):
-        pdpf= particle_factory.get(r, j)
+        rmf.set_current_frame(j)
+        pdpf= particle_factory.get(r)
         pdpf.set_coordinates([0, j*i*4, j*2])
         if i >0:
-            sdpf= score_factory.get(bs, j)
+            sdpf= score_factory.get(bs)
             sdpf.set_score(j)
     last=r
 
@@ -119,7 +120,8 @@ for rdata in res_data:
         ad.set_mass(adata[2])
         ad.set_radius(adata[3])
         for i in range(0,nframes):
-            adpf= atom_factory.get(a, i)
+            rmf.set_current_frame(i)
+            adpf= atom_factory.get(a)
             adpf.set_coordinates([adata[4][0]+i,
                                   adata[4][1]+i,
                                   adata[4][2]+i])
@@ -148,15 +150,16 @@ sn= dg.add_child("segment", RMF.GEOMETRY)
 cd= colored_factory.get(bn)
 cd.set_rgb_color([float(5)/float(nframes),1,0])
 for i in range(1, nframes, 2):
-    bd= ball_factory.get(bn, i)
+    rmf.set_current_frame(i)
+    bd= ball_factory.get(bn)
     bd.set_radius(i)
     bd.set_coordinates([10+i, i, i])
     #cd= colored_factory.get(bn)
     #cd.set_rgb_color([float(i)/float(nframes),1,0])
-    cd= cylinder_factory.get(cn, i)
+    cd= cylinder_factory.get(cn)
     cd.set_radius(i)
     cd.set_coordinates([[10+i, 12+i], [i,i], [i,i]])
-    sd= segment_factory.get(sn, i)
+    sd= segment_factory.get(sn)
     sd.set_coordinates([[12+i, 14+i],[i, i], [i,i]])
 
 sg= rmf.get_root_node().add_child("static geometry", RMF.GEOMETRY)

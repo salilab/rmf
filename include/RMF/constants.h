@@ -16,10 +16,6 @@ namespace RMF {
       refers to all frames in the file.
   */
   static const int ALL_FRAMES=-1;
-  /** A constant used to denote that the particular operation
-      refers to any frame in the file.
-  */
-  static const int ANY_FRAME=-2;
 }
 
 #endif  /* IMPLIBRMF_CONSTANTS_H */

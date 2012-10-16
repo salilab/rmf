@@ -23,23 +23,17 @@
 /** \brief  set the value of the attribute k for this node
     If it is a per-frame attribute, frame must be specified.
 */                                                                      \
-void set_value(UCName##Key k, PassValue v,                              \
-               int frame =ALL_FRAMES) {                                 \
-  RMF_USAGE_CHECK(frame >=0 || !k.get_is_per_frame(),               \
-                      "No frame specified for per-frame data.");        \
+void set_value(UCName##Key k, PassValue v) {                            \
   get_shared_data()->set_value(get_node_id(),                           \
-                               k, v, frame);                            \
+                               k, v);                                   \
 }                                                                       \
 /** \brief  set the values of the attributes k for this node
     These keys must have been produced by the add_keys method.
     If it is a per-frame attribute, frame must be specified.
 */                                                                      \
-void set_values(const UCName##Key##s& k, PassValues v,                  \
-                int frame =ALL_FRAMES) {                                \
-  RMF_USAGE_CHECK(frame >=0 || !k[0].get_is_per_frame(),            \
-                      "No frame specified for per-frame data.");        \
+void set_values(const UCName##Key##s& k, PassValues v) {                \
   get_shared_data()->set_values(get_node_id(),                          \
-                                k, v, frame);                           \
+                                k, v);                                  \
 }
 
 namespace RMF {

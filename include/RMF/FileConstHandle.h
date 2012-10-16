@@ -235,6 +235,21 @@ namespace RMF {
     }
     /** @} */
 
+    /** The file always has a single frame that is currently active at any given
+        point.
+
+        A value of ALL_FRAMES means one is only dealing with static data.
+
+        @{
+    */
+    int get_current_frame() const {
+      return shared_->get_current_frame();
+    }
+    void set_current_frame(int frame) {
+      shared_->set_current_frame(frame);
+    }
+    /* @} */
+
     /** Return the number of frames in the file. Currently, this is the number
         of frames that the x-coordinate has, but it should be made more general.
     */
@@ -244,7 +259,7 @@ namespace RMF {
     /** Frames can have associated comments which can be used to label
         particular frames of interest. Returns an empty string if the
         frame doesn't have a name.*/
-    std::string get_frame_name(unsigned int frame) const;
+    std::string get_frame_name() const;
 
     /** \name Non-template versions for python
 
@@ -439,7 +454,6 @@ namespace RMF {
   */
   RMFEXPORT Floats get_values(const NodeConstHandles &nodes,
                               FloatKey k,
-                              unsigned int frame,
                               Float missing_value
                               =std::numeric_limits<double>::max());
   /** @} */

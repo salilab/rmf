@@ -53,9 +53,8 @@ namespace RMF {
 #define RMF_HDF5_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue, \
                                   PassValues, ReturnValues, Arity)      \
     Ucname##Traits::Type get_value(unsigned int node,                   \
-                                   Key<Ucname##Traits,Arity> k,         \
-                                   unsigned int frame) const {          \
-      return get_value_impl(node, k, frame);                            \
+                                   Key<Ucname##Traits,Arity> k) const { \
+      return get_value_impl(node, k, get_current_frame());              \
     }                                                                   \
     Ucname##Traits::Types get_all_value(unsigned int node,              \
                                         Key<Ucname##Traits,Arity> k) const { \
@@ -63,14 +62,13 @@ namespace RMF {
     }                                                                   \
     void set_value(unsigned int node,                                   \
                    Key<Ucname##Traits, Arity> k,                        \
-                        Ucname##Traits::Type v, unsigned int frame) {   \
-      return set_value_impl(node, k, v, frame);                         \
+                   Ucname##Traits::Type v) {                            \
+      return set_value_impl(node, k, v, get_current_frame());           \
     }                                                                   \
     virtual void set_values(unsigned int node,                          \
                             const vector<Key<Ucname##Traits, Arity> > &k, \
-                            const Ucname##Traits::Types v,              \
-                            unsigned int frame) {                       \
-      return set_values_impl(node, k, v, frame);                        \
+                            const Ucname##Traits::Types v) {            \
+      return set_values_impl(node, k, v, get_current_frame());          \
     }                                                                   \
     Key<Ucname##Traits, Arity> add_##lcname##_key_##Arity(int category_id, \
                                                           std::string name, \
@@ -733,8 +731,8 @@ namespace RMF {
       std::string get_description() const;
       void set_description(std::string str);
 
-      void set_frame_name(unsigned int frame, std::string str);
-      std::string get_frame_name(unsigned int frame) const;
+      void set_frame_name(std::string str);
+      std::string get_frame_name() const;
 
        bool get_supports_locking() const {return true;}
        bool set_is_locked(bool tf);

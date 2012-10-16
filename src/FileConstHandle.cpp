@@ -33,18 +33,17 @@ void FileConstHandle::flush() {
   shared_->flush();
 }
 
-std::string FileConstHandle::get_frame_name(unsigned int frame) const {
-  return shared_->get_frame_name(frame);
+std::string FileConstHandle::get_frame_name() const {
+  return shared_->get_frame_name();
 }
 
 Floats get_values(const NodeConstHandles &nodes,
                   FloatKey k,
-                  unsigned int frame,
                   Float missing_value) {
   Floats ret(nodes.size(), missing_value);
   for (unsigned int i=0; i< nodes.size(); ++i) {
-    if (nodes[i].get_has_value(k, frame)) {
-      ret[i]=nodes[i].get_value(k, frame);
+    if (nodes[i].get_has_value(k)) {
+      ret[i]=nodes[i].get_value(k);
     }
   }
   return ret;

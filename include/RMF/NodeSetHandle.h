@@ -24,11 +24,10 @@
 /** \brief  set the value of the attribute k for this node
     If it is a per-frame attribute, frame must be specified.
 */                                                                      \
-void set_value(Key<UCName##Traits, D> k, PassValue v,                   \
-               unsigned int frame =0) {                                 \
+void set_value(Key<UCName##Traits, D> k, PassValue v) {                 \
   P::get_shared_data()->set_value(P::get_node_id(),                     \
                                   k,                                    \
-                                  v, frame);                            \
+                                  v);                                   \
 }                                                                       \
 
 namespace RMF {

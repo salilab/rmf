@@ -24,19 +24,19 @@ class Factory {
   Factory(){}
   template <class Key, class Node>
   bool get_has_value(Node n, const Key &key,
-                     const Key &pf_key, int frame) const {
-    if (frame >=0) {
-      return n.get_has_value(pf_key, frame) || n.get_has_value(key);
+                     const Key &pf_key) const {
+    if (n.get_file().get_current_frame() >=0) {
+      return n.get_has_value(pf_key) || n.get_has_value(key);
     } else {
       return n.get_has_value(key);
     }
   }
   template <class Keys, class Node>
   bool get_has_values(Node n, const Keys &keys,
-                      const Keys &pf_keys, int frame) const {
-    if (frame >= 0) {
+                      const Keys &pf_keys) const {
+    if (n.get_file().get_current_frame() >= 0) {
       return (!keys.empty() && n.get_has_value(keys[0]))
-          || (!pf_keys.empty() && n.get_has_value(pf_keys[0], frame));
+          || (!pf_keys.empty() && n.get_has_value(pf_keys[0]));
     } else {
       return !keys.empty() && n.get_has_value(keys[0]);
     }

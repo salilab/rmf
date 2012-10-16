@@ -131,8 +131,9 @@ struct NonNegativeChecker {
     if (pfk_ != FloatKey()) {
       for (unsigned int i=0; i< node.get_file().get_number_of_frames();
            ++i) {
-        if (node.get_has_value(pfk_, i)) {
-          double v= node.get_value(pfk_, i);
+        node.get_file().set_current_frame(i);
+        if (node.get_has_value(pfk_)) {
+          double v= node.get_value(pfk_);
           if (v <=0) {
             out << node.get_name() << ": Value " << keyname_ << " in category "
                 << catname_
@@ -166,9 +167,10 @@ struct TieChecker {
     bool found=false;
     unsigned int nf=node.get_file().get_number_of_frames();
     for (unsigned int f=0; f< nf; ++f) {
+      node.get_file().set_current_frame(f);
       for (unsigned int i=0; i< ks_.size(); ++i) {
         bool cfound= node.get_has_value(ks_[i])
-          || node.get_has_value(pfks_[i], f);
+          || node.get_has_value(pfks_[i]);
         if (i > 0 && cfound != found) {
           out << node.get_name() << "A node must either have none or all of "
               << keynames_ << " in category " << catname_ << std::endl;
@@ -237,7 +239,8 @@ class KeyValidator: public NodeValidator {
       unsigned int fn
         =node.get_file().get_number_of_frames();
       for (unsigned int j=0; j< fn; ++j) {
-        if (node.get_has_value(keys[i].first, j)) {
+        node.get_file().set_current_frame(j);
+        if (node.get_has_value(keys[i].first)) {
           out << "Node " << node
               << " has non-per frame and per frame for "
               << node.get_file().get_name(keys[i].second)

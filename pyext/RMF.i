@@ -52,6 +52,7 @@
 #include "RMF/decorator_utility.h"
 #include "RMF/utility.h"
 #include <RMF/internal/swig_helpers.h>
+#include <RMF/SetCurrentFrame.h>
 %}
 %include "std_vector.i"
 %include "std_string.i"
@@ -167,6 +168,7 @@ IMP_RMF_SWIG_VALUE(RMF, NodeConstHandle, NodeConstHandles);
 IMP_RMF_SWIG_VALUE(RMF, FileConstHandle, FileConstHandles);
 IMP_RMF_SWIG_VALUE(RMF, NodeHandle, NodeHandles);
 IMP_RMF_SWIG_VALUE(RMF, FileHandle, FileHandles);
+IMP_RMF_SWIG_VALUE(RMF, SetCurrentFrame, SetCurrentFrames);
 IMP_RMF_SWIG_VALUE_TEMPLATE(RMF, CategoryD);
 IMP_RMF_SWIG_VALUE_INSTANCE(RMF, Category, Category, Categories);
 IMP_RMF_SWIG_VALUE_INSTANCE(RMF, PairCategory, PairCategory, PairCategories);
@@ -361,6 +363,8 @@ IMP_RMF_DECORATOR(RMF, Alias);
 %include "RMF/decorators.h"
 %include "RMF/decorator_utility.h"
 %include "RMF/utility.h"
+%include "RMF/SetCurrentFrame.h"
+
 
 %pythoncode %{
 _tmpdir=None

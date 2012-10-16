@@ -88,6 +88,7 @@ namespace {
                  std::string prefix) {
     using std::operator<<;
     for (unsigned int i=0; i< ks.size(); ++i) {
+      n.get_file().set_current_frame(frame);
       if (!n.get_file().get_is_per_frame(ks[i])
           && n.get_has_value(ks[i])) {
         out << std::endl << prefix
@@ -95,10 +96,10 @@ namespace {
             << Showable(n.get_value(ks[i]));
       } else if (end_frame==-1) {
         if (n.get_file().get_is_per_frame(ks[i])
-            && n.get_has_value(ks[i], frame)) {
+            && n.get_has_value(ks[i])) {
           out << std::endl << prefix
               << n.get_file().get_name(ks[i]) << ": "
-              << Showable(n.get_value(ks[i], frame));
+              << Showable(n.get_value(ks[i]));
         }
       } else {
         show_clean(prefix, n.get_file().get_name(ks[i]),
@@ -162,22 +163,23 @@ namespace {
     using std::operator<<;
     out<< "\"" << n.get_name() << "\" [" << get_type_name(n.get_type())
        << ": ";
-    if (ccf.get_is(n, frame)) out <<" color" ;
-    if (pcf.get_is(n, frame)) out <<" particle" ;
-    if (ipcf.get_is(n, frame)) out <<" iparticle" ;
-    if (rpcf.get_is(n, frame)) out <<" rigid" ;
-    if (scf.get_is(n, frame)) out <<" score" ;
-    if (bcf.get_is(n, frame)) out <<" ball" ;
-    if (cycf.get_is(n, frame)) out <<" cylinder" ;
-    if (segcf.get_is(n, frame)) out <<" segment" ;
-    if (rcf.get_is(n, frame)) out <<" residue" ;
-    if (acf.get_is(n, frame)) out <<" atom" ;
-    if (chaincf.get_is(n, frame)) out <<" chain" ;
-    if (fragcf.get_is(n, frame)) out <<" domain" ;
-    if (copycf.get_is(n, frame)) out <<" copy" ;
-    if (typedcf.get_is(n, frame)) out <<" typed" ;
-    if (diffusercf.get_is(n, frame)) out <<" diffuser" ;
-    if (aliascf.get_is(n, frame)) out <<" alias" ;
+    n.get_file().set_current_frame(frame);
+    if (ccf.get_is(n)) out <<" color" ;
+    if (pcf.get_is(n)) out <<" particle" ;
+    if (ipcf.get_is(n)) out <<" iparticle" ;
+    if (rpcf.get_is(n)) out <<" rigid" ;
+    if (scf.get_is(n)) out <<" score" ;
+    if (bcf.get_is(n)) out <<" ball" ;
+    if (cycf.get_is(n)) out <<" cylinder" ;
+    if (segcf.get_is(n)) out <<" segment" ;
+    if (rcf.get_is(n)) out <<" residue" ;
+    if (acf.get_is(n)) out <<" atom" ;
+    if (chaincf.get_is(n)) out <<" chain" ;
+    if (fragcf.get_is(n)) out <<" domain" ;
+    if (copycf.get_is(n)) out <<" copy" ;
+    if (typedcf.get_is(n)) out <<" typed" ;
+    if (diffusercf.get_is(n)) out <<" diffuser" ;
+    if (aliascf.get_is(n)) out <<" alias" ;
     out << "]";
   }
 

@@ -2,12 +2,12 @@
  *  \file RMF/decorators.h
  *  \brief Helper functions for manipulating RMF files.
  *
- *  Copyright 2007-2012 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2012 Daniel Russel. All rights reserved.
  *
  */
 
-#ifndef IMPLIBRMF_DECORATORS_H
-#define IMPLIBRMF_DECORATORS_H
+#ifndef RMF_DECORATORS_H
+#define RMF_DECORATORS_H
 
 #include <RMF/config.h>
 #include "infrastructure_macros.h"
@@ -34,10 +34,9 @@ namespace RMF {
     FloatKeys rgb_color_;
 FloatKeys rgb_color_pf_;
     ColoredConst(NodeConstHandle nh,
-                       int frame,
                   FloatKeys rgb_color,
 FloatKeys rgb_color_pf):
-       P(nh, frame),
+       P(nh),
 rgb_color_(rgb_color),
 rgb_color_pf_(rgb_color_pf) {
     ;
@@ -67,10 +66,9 @@ rgb_color_pf_(rgb_color_pf) {
     internal::FloatLazyKeys rgb_color_;
 internal::FloatLazyKeys rgb_color_pf_;
     Colored(NodeHandle nh,
-                       int frame,
                   internal::FloatLazyKeys rgb_color,
 internal::FloatLazyKeys rgb_color_pf):
-       P(nh, frame),
+       P(nh),
 rgb_color_(rgb_color),
 rgb_color_pf_(rgb_color_pf) {
     ;
@@ -119,24 +117,14 @@ internal::FloatLazyKeys rgb_color_pf_;
                                true);
 };
     }
-    Colored get(NodeHandle nh,
-                           int frame=ALL_FRAMES) const {
+    Colored get(NodeHandle nh) const {
       ;
-      return Colored(nh, frame, rgb_color_,
+      return Colored(nh, rgb_color_,
 rgb_color_pf_);
     }
-    bool get_is(NodeHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_values(nh, rgb_color_,
-                                     rgb_color_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_values(nh, rgb_color_,
-                                     rgb_color_pf_, frame);
-      }
+    bool get_is(NodeHandle nh) const {
+      return P::get_has_values(nh, rgb_color_,
+                                     rgb_color_pf_);
     }
     };
 
@@ -174,24 +162,14 @@ FloatKeys rgb_color_pf_;
                     true);
 };
     }
-    ColoredConst get(NodeConstHandle nh,
-                           int frame=ALL_FRAMES) const {
-      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
-      return ColoredConst(nh, frame, rgb_color_,
+    ColoredConst get(NodeConstHandle nh) const {
+      RMF_USAGE_CHECK(get_is(nh), "Node is not");
+      return ColoredConst(nh, rgb_color_,
 rgb_color_pf_);
     }
-    bool get_is(NodeConstHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_values(nh, rgb_color_,
-                                     rgb_color_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_values(nh, rgb_color_,
-                                     rgb_color_pf_, frame);
-      }
+    bool get_is(NodeConstHandle nh) const {
+      return P::get_has_values(nh, rgb_color_,
+                                     rgb_color_pf_);
     }
     };
 
@@ -215,14 +193,13 @@ FloatKey radius_pf_;
 FloatKey mass_;
 FloatKey mass_pf_;
     ParticleConst(NodeConstHandle nh,
-                       int frame,
                   FloatKeys coordinates,
 FloatKeys coordinates_pf,
 FloatKey radius,
 FloatKey radius_pf,
 FloatKey mass,
 FloatKey mass_pf):
-       P(nh, frame),
+       P(nh),
 coordinates_(coordinates),
 coordinates_pf_(coordinates_pf),
 radius_(radius),
@@ -274,14 +251,13 @@ internal::FloatLazyKey radius_pf_;
 internal::FloatLazyKey mass_;
 internal::FloatLazyKey mass_pf_;
     Particle(NodeHandle nh,
-                       int frame,
                   internal::FloatLazyKeys coordinates,
 internal::FloatLazyKeys coordinates_pf,
 internal::FloatLazyKey radius,
 internal::FloatLazyKey radius_pf,
 internal::FloatLazyKey mass,
 internal::FloatLazyKey mass_pf):
-       P(nh, frame),
+       P(nh),
 coordinates_(coordinates),
 coordinates_pf_(coordinates_pf),
 radius_(radius),
@@ -372,36 +348,22 @@ mass_pf_=internal::FloatLazyKey(fh, cat,
                                true);
 };
     }
-    Particle get(NodeHandle nh,
-                           int frame=ALL_FRAMES) const {
+    Particle get(NodeHandle nh) const {
       ;
-      return Particle(nh, frame, coordinates_,
+      return Particle(nh, coordinates_,
 coordinates_pf_,
 radius_,
 radius_pf_,
 mass_,
 mass_pf_);
     }
-    bool get_is(NodeHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
+    bool get_is(NodeHandle nh) const {
+      return P::get_has_values(nh, coordinates_,
+                                     coordinates_pf_)
     && P::get_has_value(nh, radius_,
-                            radius_pf_, frame)
+                            radius_pf_)
     && P::get_has_value(nh, mass_,
-                            mass_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
-    && P::get_has_value(nh, radius_,
-                            radius_pf_, frame)
-    && P::get_has_value(nh, mass_,
-                            mass_pf_, frame);
-      }
+                            mass_pf_);
     }
     };
 
@@ -459,36 +421,22 @@ mass_pf_=P::get_key<FloatTraits>(fh,
                    true);
 };
     }
-    ParticleConst get(NodeConstHandle nh,
-                           int frame=ALL_FRAMES) const {
-      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
-      return ParticleConst(nh, frame, coordinates_,
+    ParticleConst get(NodeConstHandle nh) const {
+      RMF_USAGE_CHECK(get_is(nh), "Node is not");
+      return ParticleConst(nh, coordinates_,
 coordinates_pf_,
 radius_,
 radius_pf_,
 mass_,
 mass_pf_);
     }
-    bool get_is(NodeConstHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
+    bool get_is(NodeConstHandle nh) const {
+      return P::get_has_values(nh, coordinates_,
+                                     coordinates_pf_)
     && P::get_has_value(nh, radius_,
-                            radius_pf_, frame)
+                            radius_pf_)
     && P::get_has_value(nh, mass_,
-                            mass_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
-    && P::get_has_value(nh, radius_,
-                            radius_pf_, frame)
-    && P::get_has_value(nh, mass_,
-                            mass_pf_, frame);
-      }
+                            mass_pf_);
     }
     };
 
@@ -510,12 +458,11 @@ FloatKeys coordinates_pf_;
 FloatKey radius_;
 FloatKey radius_pf_;
     IntermediateParticleConst(NodeConstHandle nh,
-                       int frame,
                   FloatKeys coordinates,
 FloatKeys coordinates_pf,
 FloatKey radius,
 FloatKey radius_pf):
-       P(nh, frame),
+       P(nh),
 coordinates_(coordinates),
 coordinates_pf_(coordinates_pf),
 radius_(radius),
@@ -556,12 +503,11 @@ internal::FloatLazyKeys coordinates_pf_;
 internal::FloatLazyKey radius_;
 internal::FloatLazyKey radius_pf_;
     IntermediateParticle(NodeHandle nh,
-                       int frame,
                   internal::FloatLazyKeys coordinates,
 internal::FloatLazyKeys coordinates_pf,
 internal::FloatLazyKey radius,
 internal::FloatLazyKey radius_pf):
-       P(nh, frame),
+       P(nh),
 coordinates_(coordinates),
 coordinates_pf_(coordinates_pf),
 radius_(radius),
@@ -631,30 +577,18 @@ radius_pf_=internal::FloatLazyKey(fh, cat,
                                true);
 };
     }
-    IntermediateParticle get(NodeHandle nh,
-                           int frame=ALL_FRAMES) const {
+    IntermediateParticle get(NodeHandle nh) const {
       ;
-      return IntermediateParticle(nh, frame, coordinates_,
+      return IntermediateParticle(nh, coordinates_,
 coordinates_pf_,
 radius_,
 radius_pf_);
     }
-    bool get_is(NodeHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
+    bool get_is(NodeHandle nh) const {
+      return P::get_has_values(nh, coordinates_,
+                                     coordinates_pf_)
     && P::get_has_value(nh, radius_,
-                            radius_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
-    && P::get_has_value(nh, radius_,
-                            radius_pf_, frame);
-      }
+                            radius_pf_);
     }
     };
 
@@ -702,30 +636,18 @@ radius_pf_=P::get_key<FloatTraits>(fh,
                    true);
 };
     }
-    IntermediateParticleConst get(NodeConstHandle nh,
-                           int frame=ALL_FRAMES) const {
-      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
-      return IntermediateParticleConst(nh, frame, coordinates_,
+    IntermediateParticleConst get(NodeConstHandle nh) const {
+      RMF_USAGE_CHECK(get_is(nh), "Node is not");
+      return IntermediateParticleConst(nh, coordinates_,
 coordinates_pf_,
 radius_,
 radius_pf_);
     }
-    bool get_is(NodeConstHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
+    bool get_is(NodeConstHandle nh) const {
+      return P::get_has_values(nh, coordinates_,
+                                     coordinates_pf_)
     && P::get_has_value(nh, radius_,
-                            radius_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
-    && P::get_has_value(nh, radius_,
-                            radius_pf_, frame);
-      }
+                            radius_pf_);
     }
     };
 
@@ -747,12 +669,11 @@ FloatKeys orientation_pf_;
 FloatKeys coordinates_;
 FloatKeys coordinates_pf_;
     RigidParticleConst(NodeConstHandle nh,
-                       int frame,
                   FloatKeys orientation,
 FloatKeys orientation_pf,
 FloatKeys coordinates,
 FloatKeys coordinates_pf):
-       P(nh, frame),
+       P(nh),
 orientation_(orientation),
 orientation_pf_(orientation_pf),
 coordinates_(coordinates),
@@ -789,12 +710,11 @@ internal::FloatLazyKeys orientation_pf_;
 internal::FloatLazyKeys coordinates_;
 internal::FloatLazyKeys coordinates_pf_;
     RigidParticle(NodeHandle nh,
-                       int frame,
                   internal::FloatLazyKeys orientation,
 internal::FloatLazyKeys orientation_pf,
 internal::FloatLazyKeys coordinates,
 internal::FloatLazyKeys coordinates_pf):
-       P(nh, frame),
+       P(nh),
 orientation_(orientation),
 orientation_pf_(orientation_pf),
 coordinates_(coordinates),
@@ -864,30 +784,18 @@ internal::FloatLazyKeys coordinates_pf_;
                                true);
 };
     }
-    RigidParticle get(NodeHandle nh,
-                           int frame=ALL_FRAMES) const {
+    RigidParticle get(NodeHandle nh) const {
       ;
-      return RigidParticle(nh, frame, orientation_,
+      return RigidParticle(nh, orientation_,
 orientation_pf_,
 coordinates_,
 coordinates_pf_);
     }
-    bool get_is(NodeHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_values(nh, orientation_,
-                                     orientation_pf_, frame)
+    bool get_is(NodeHandle nh) const {
+      return P::get_has_values(nh, orientation_,
+                                     orientation_pf_)
     && P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_values(nh, orientation_,
-                                     orientation_pf_, frame)
-    && P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame);
-      }
+                                     coordinates_pf_);
     }
     };
 
@@ -940,30 +848,18 @@ FloatKeys coordinates_pf_;
                     true);
 };
     }
-    RigidParticleConst get(NodeConstHandle nh,
-                           int frame=ALL_FRAMES) const {
-      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
-      return RigidParticleConst(nh, frame, orientation_,
+    RigidParticleConst get(NodeConstHandle nh) const {
+      RMF_USAGE_CHECK(get_is(nh), "Node is not");
+      return RigidParticleConst(nh, orientation_,
 orientation_pf_,
 coordinates_,
 coordinates_pf_);
     }
-    bool get_is(NodeConstHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_values(nh, orientation_,
-                                     orientation_pf_, frame)
+    bool get_is(NodeConstHandle nh) const {
+      return P::get_has_values(nh, orientation_,
+                                     orientation_pf_)
     && P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_values(nh, orientation_,
-                                     orientation_pf_, frame)
-    && P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame);
-      }
+                                     coordinates_pf_);
     }
     };
 
@@ -987,14 +883,13 @@ FloatKey radius_pf_;
 IndexKey type_;
 IndexKey type_pf_;
     BallConst(NodeConstHandle nh,
-                       int frame,
                   FloatKeys coordinates,
 FloatKeys coordinates_pf,
 FloatKey radius,
 FloatKey radius_pf,
 IndexKey type,
 IndexKey type_pf):
-       P(nh, frame),
+       P(nh),
 coordinates_(coordinates),
 coordinates_pf_(coordinates_pf),
 radius_(radius),
@@ -1006,14 +901,13 @@ type_pf_(type_pf) {
     public:
     Floats get_coordinates() const {
          Floats ret(3);
-         if (!coordinates_.empty()
-             && get_node().get_has_value(coordinates_[0])) {
+         if (!coordinates_.empty() && get_node().get_has_value(coordinates_[0])) {
            for (unsigned int i=0; i< 3; ++i) {
             ret[i]=get_node().get_value(coordinates_[i]);
            }
          } else {
            for (unsigned int i=0; i< 3; ++i) {
-            ret[i]=get_node().get_value(coordinates_pf_[i], get_frame());
+            ret[i]=get_node().get_value(coordinates_pf_[i]);
            }
          }
          return ret;
@@ -1050,14 +944,13 @@ internal::FloatLazyKey radius_pf_;
 internal::IndexLazyKey type_;
 internal::IndexLazyKey type_pf_;
     Ball(NodeHandle nh,
-                       int frame,
                   internal::FloatLazyKeys coordinates,
 internal::FloatLazyKeys coordinates_pf,
 internal::FloatLazyKey radius,
 internal::FloatLazyKey radius_pf,
 internal::IndexLazyKey type,
 internal::IndexLazyKey type_pf):
-       P(nh, frame),
+       P(nh),
 coordinates_(coordinates),
 coordinates_pf_(coordinates_pf),
 radius_(radius),
@@ -1075,7 +968,7 @@ type_pf_(type_pf) {
            }
          } else {
            for (unsigned int i=0; i< 3; ++i) {
-            ret[i]=get_node().get_value(coordinates_pf_[i], get_frame());
+            ret[i]=get_node().get_value(coordinates_pf_[i]);
            }
          }
          return ret;
@@ -1083,7 +976,7 @@ type_pf_(type_pf) {
 void set_coordinates(const Floats &v) {
            if (get_frame()>=0) {
              for (unsigned int i=0; i< 3; ++i) {
-                get_node().set_value(coordinates_pf_[i], v[i], get_frame());
+                get_node().set_value(coordinates_pf_[i], v[i]);
              }
            } else {
              for (unsigned int i=0; i< 3; ++i) {
@@ -1155,38 +1048,23 @@ type_pf_=internal::IndexLazyKey(fh, cat,
                                true);
 };
     }
-    Ball get(NodeHandle nh,
-                           int frame=ALL_FRAMES) const {
+    Ball get(NodeHandle nh) const {
       ;
-      return Ball(nh, frame, coordinates_,
+      return Ball(nh, coordinates_,
 coordinates_pf_,
 radius_,
 radius_pf_,
 type_,
 type_pf_);
     }
-    bool get_is(NodeHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
+    bool get_is(NodeHandle nh) const {
+      return P::get_has_values(nh, coordinates_,
+                                     coordinates_pf_)
     && P::get_has_value(nh, radius_,
-                            radius_pf_, frame)
+                            radius_pf_)
     && P::get_has_value(nh, type_,
-                            type_pf_, frame)
-    && nh.get_value(type_)==0) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
-    && P::get_has_value(nh, radius_,
-                            radius_pf_, frame)
-    && P::get_has_value(nh, type_,
-                            type_pf_, frame)
+                            type_pf_)
     && nh.get_value(type_)==0;
-      }
     }
     };
 
@@ -1244,38 +1122,23 @@ type_pf_=P::get_key<IndexTraits>(fh,
                    true);
 };
     }
-    BallConst get(NodeConstHandle nh,
-                           int frame=ALL_FRAMES) const {
-      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
-      return BallConst(nh, frame, coordinates_,
+    BallConst get(NodeConstHandle nh) const {
+      RMF_USAGE_CHECK(get_is(nh), "Node is not");
+      return BallConst(nh, coordinates_,
 coordinates_pf_,
 radius_,
 radius_pf_,
 type_,
 type_pf_);
     }
-    bool get_is(NodeConstHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
+    bool get_is(NodeConstHandle nh) const {
+      return P::get_has_values(nh, coordinates_,
+                                     coordinates_pf_)
     && P::get_has_value(nh, radius_,
-                            radius_pf_, frame)
+                            radius_pf_)
     && P::get_has_value(nh, type_,
-                            type_pf_, frame)
-    && nh.get_value(type_)==0) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
-    && P::get_has_value(nh, radius_,
-                            radius_pf_, frame)
-    && P::get_has_value(nh, type_,
-                            type_pf_, frame)
+                            type_pf_)
     && nh.get_value(type_)==0;
-      }
     }
     };
 
@@ -1299,14 +1162,13 @@ FloatKey radius_pf_;
 IndexKey type_;
 IndexKey type_pf_;
     CylinderConst(NodeConstHandle nh,
-                       int frame,
                   FloatsKeys coordinates,
 FloatsKeys coordinates_pf,
 FloatKey radius,
 FloatKey radius_pf,
 IndexKey type,
 IndexKey type_pf):
-       P(nh, frame),
+       P(nh),
 coordinates_(coordinates),
 coordinates_pf_(coordinates_pf),
 radius_(radius),
@@ -1318,14 +1180,13 @@ type_pf_(type_pf) {
     public:
     FloatsList get_coordinates() const {
          FloatsList ret(3);
-         if (!coordinates_.empty()
-             && get_node().get_has_value(coordinates_[0])) {
+         if (!coordinates_.empty() && get_node().get_has_value(coordinates_[0])) {
            for (unsigned int i=0; i< 3; ++i) {
             ret[i]=get_node().get_value(coordinates_[i]);
            }
          } else {
            for (unsigned int i=0; i< 3; ++i) {
-            ret[i]=get_node().get_value(coordinates_pf_[i], get_frame());
+            ret[i]=get_node().get_value(coordinates_pf_[i]);
            }
          }
          return ret;
@@ -1362,14 +1223,13 @@ internal::FloatLazyKey radius_pf_;
 internal::IndexLazyKey type_;
 internal::IndexLazyKey type_pf_;
     Cylinder(NodeHandle nh,
-                       int frame,
                   internal::FloatsLazyKeys coordinates,
 internal::FloatsLazyKeys coordinates_pf,
 internal::FloatLazyKey radius,
 internal::FloatLazyKey radius_pf,
 internal::IndexLazyKey type,
 internal::IndexLazyKey type_pf):
-       P(nh, frame),
+       P(nh),
 coordinates_(coordinates),
 coordinates_pf_(coordinates_pf),
 radius_(radius),
@@ -1387,7 +1247,7 @@ type_pf_(type_pf) {
            }
          } else {
            for (unsigned int i=0; i< 3; ++i) {
-            ret[i]=get_node().get_value(coordinates_pf_[i], get_frame());
+            ret[i]=get_node().get_value(coordinates_pf_[i]);
            }
          }
          return ret;
@@ -1395,7 +1255,7 @@ type_pf_(type_pf) {
 void set_coordinates(const FloatsList &v) {
            if (get_frame()>=0) {
              for (unsigned int i=0; i< 3; ++i) {
-                get_node().set_value(coordinates_pf_[i], v[i], get_frame());
+                get_node().set_value(coordinates_pf_[i], v[i]);
              }
            } else {
              for (unsigned int i=0; i< 3; ++i) {
@@ -1467,38 +1327,23 @@ type_pf_=internal::IndexLazyKey(fh, cat,
                                true);
 };
     }
-    Cylinder get(NodeHandle nh,
-                           int frame=ALL_FRAMES) const {
+    Cylinder get(NodeHandle nh) const {
       ;
-      return Cylinder(nh, frame, coordinates_,
+      return Cylinder(nh, coordinates_,
 coordinates_pf_,
 radius_,
 radius_pf_,
 type_,
 type_pf_);
     }
-    bool get_is(NodeHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
+    bool get_is(NodeHandle nh) const {
+      return P::get_has_values(nh, coordinates_,
+                                     coordinates_pf_)
     && P::get_has_value(nh, radius_,
-                            radius_pf_, frame)
+                            radius_pf_)
     && P::get_has_value(nh, type_,
-                            type_pf_, frame)
-    && nh.get_value(type_)==1) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
-    && P::get_has_value(nh, radius_,
-                            radius_pf_, frame)
-    && P::get_has_value(nh, type_,
-                            type_pf_, frame)
+                            type_pf_)
     && nh.get_value(type_)==1;
-      }
     }
     };
 
@@ -1556,38 +1401,23 @@ type_pf_=P::get_key<IndexTraits>(fh,
                    true);
 };
     }
-    CylinderConst get(NodeConstHandle nh,
-                           int frame=ALL_FRAMES) const {
-      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
-      return CylinderConst(nh, frame, coordinates_,
+    CylinderConst get(NodeConstHandle nh) const {
+      RMF_USAGE_CHECK(get_is(nh), "Node is not");
+      return CylinderConst(nh, coordinates_,
 coordinates_pf_,
 radius_,
 radius_pf_,
 type_,
 type_pf_);
     }
-    bool get_is(NodeConstHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
+    bool get_is(NodeConstHandle nh) const {
+      return P::get_has_values(nh, coordinates_,
+                                     coordinates_pf_)
     && P::get_has_value(nh, radius_,
-                            radius_pf_, frame)
+                            radius_pf_)
     && P::get_has_value(nh, type_,
-                            type_pf_, frame)
-    && nh.get_value(type_)==1) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
-    && P::get_has_value(nh, radius_,
-                            radius_pf_, frame)
-    && P::get_has_value(nh, type_,
-                            type_pf_, frame)
+                            type_pf_)
     && nh.get_value(type_)==1;
-      }
     }
     };
 
@@ -1609,12 +1439,11 @@ FloatsKeys coordinates_pf_;
 IndexKey type_;
 IndexKey type_pf_;
     SegmentConst(NodeConstHandle nh,
-                       int frame,
                   FloatsKeys coordinates,
 FloatsKeys coordinates_pf,
 IndexKey type,
 IndexKey type_pf):
-       P(nh, frame),
+       P(nh),
 coordinates_(coordinates),
 coordinates_pf_(coordinates_pf),
 type_(type),
@@ -1624,14 +1453,13 @@ type_pf_(type_pf) {
     public:
     FloatsList get_coordinates() const {
          FloatsList ret(3);
-         if (!coordinates_.empty()
-             && get_node().get_has_value(coordinates_[0])) {
+         if (!coordinates_.empty() && get_node().get_has_value(coordinates_[0])) {
            for (unsigned int i=0; i< 3; ++i) {
             ret[i]=get_node().get_value(coordinates_[i]);
            }
          } else {
            for (unsigned int i=0; i< 3; ++i) {
-            ret[i]=get_node().get_value(coordinates_pf_[i], get_frame());
+            ret[i]=get_node().get_value(coordinates_pf_[i]);
            }
          }
          return ret;
@@ -1659,12 +1487,11 @@ internal::FloatsLazyKeys coordinates_pf_;
 internal::IndexLazyKey type_;
 internal::IndexLazyKey type_pf_;
     Segment(NodeHandle nh,
-                       int frame,
                   internal::FloatsLazyKeys coordinates,
 internal::FloatsLazyKeys coordinates_pf,
 internal::IndexLazyKey type,
 internal::IndexLazyKey type_pf):
-       P(nh, frame),
+       P(nh),
 coordinates_(coordinates),
 coordinates_pf_(coordinates_pf),
 type_(type),
@@ -1680,7 +1507,7 @@ type_pf_(type_pf) {
            }
          } else {
            for (unsigned int i=0; i< 3; ++i) {
-            ret[i]=get_node().get_value(coordinates_pf_[i], get_frame());
+            ret[i]=get_node().get_value(coordinates_pf_[i]);
            }
          }
          return ret;
@@ -1688,7 +1515,7 @@ type_pf_(type_pf) {
 void set_coordinates(const FloatsList &v) {
            if (get_frame()>=0) {
              for (unsigned int i=0; i< 3; ++i) {
-                get_node().set_value(coordinates_pf_[i], v[i], get_frame());
+                get_node().set_value(coordinates_pf_[i], v[i]);
              }
            } else {
              for (unsigned int i=0; i< 3; ++i) {
@@ -1741,32 +1568,19 @@ type_pf_=internal::IndexLazyKey(fh, cat,
                                true);
 };
     }
-    Segment get(NodeHandle nh,
-                           int frame=ALL_FRAMES) const {
+    Segment get(NodeHandle nh) const {
       ;
-      return Segment(nh, frame, coordinates_,
+      return Segment(nh, coordinates_,
 coordinates_pf_,
 type_,
 type_pf_);
     }
-    bool get_is(NodeHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
+    bool get_is(NodeHandle nh) const {
+      return P::get_has_values(nh, coordinates_,
+                                     coordinates_pf_)
     && P::get_has_value(nh, type_,
-                            type_pf_, frame)
-    && nh.get_value(type_)==1) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
-    && P::get_has_value(nh, type_,
-                            type_pf_, frame)
+                            type_pf_)
     && nh.get_value(type_)==1;
-      }
     }
     };
 
@@ -1814,32 +1628,19 @@ type_pf_=P::get_key<IndexTraits>(fh,
                    true);
 };
     }
-    SegmentConst get(NodeConstHandle nh,
-                           int frame=ALL_FRAMES) const {
-      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
-      return SegmentConst(nh, frame, coordinates_,
+    SegmentConst get(NodeConstHandle nh) const {
+      RMF_USAGE_CHECK(get_is(nh), "Node is not");
+      return SegmentConst(nh, coordinates_,
 coordinates_pf_,
 type_,
 type_pf_);
     }
-    bool get_is(NodeConstHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
+    bool get_is(NodeConstHandle nh) const {
+      return P::get_has_values(nh, coordinates_,
+                                     coordinates_pf_)
     && P::get_has_value(nh, type_,
-                            type_pf_, frame)
-    && nh.get_value(type_)==1) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
-    && P::get_has_value(nh, type_,
-                            type_pf_, frame)
+                            type_pf_)
     && nh.get_value(type_)==1;
-      }
     }
     };
 
@@ -1867,7 +1668,6 @@ IntKey year_pf_;
 StringsKey authors_;
 StringsKey authors_pf_;
     JournalArticleConst(NodeConstHandle nh,
-                       int frame,
                   StringKey title,
 StringKey title_pf,
 StringKey journal,
@@ -1878,7 +1678,7 @@ IntKey year,
 IntKey year_pf,
 StringsKey authors,
 StringsKey authors_pf):
-       P(nh, frame),
+       P(nh),
 title_(title),
 title_pf_(title_pf),
 journal_(journal),
@@ -1956,7 +1756,6 @@ internal::IntLazyKey year_pf_;
 internal::StringsLazyKey authors_;
 internal::StringsLazyKey authors_pf_;
     JournalArticle(NodeHandle nh,
-                       int frame,
                   internal::StringLazyKey title,
 internal::StringLazyKey title_pf,
 internal::StringLazyKey journal,
@@ -1967,7 +1766,7 @@ internal::IntLazyKey year,
 internal::IntLazyKey year_pf,
 internal::StringsLazyKey authors,
 internal::StringsLazyKey authors_pf):
-       P(nh, frame),
+       P(nh),
 title_(title),
 title_pf_(title_pf),
 journal_(journal),
@@ -2101,10 +1900,9 @@ authors_pf_=internal::StringsLazyKey(fh, cat,
                                true);
 };
     }
-    JournalArticle get(NodeHandle nh,
-                           int frame=ALL_FRAMES) const {
+    JournalArticle get(NodeHandle nh) const {
       ;
-      return JournalArticle(nh, frame, title_,
+      return JournalArticle(nh, title_,
 title_pf_,
 journal_,
 journal_pf_,
@@ -2115,34 +1913,17 @@ year_pf_,
 authors_,
 authors_pf_);
     }
-    bool get_is(NodeHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_value(nh, title_,
-                            title_pf_, frame)
+    bool get_is(NodeHandle nh) const {
+      return P::get_has_value(nh, title_,
+                            title_pf_)
     && P::get_has_value(nh, journal_,
-                            journal_pf_, frame)
+                            journal_pf_)
     && P::get_has_value(nh, pubmed_id_,
-                            pubmed_id_pf_, frame)
+                            pubmed_id_pf_)
     && P::get_has_value(nh, year_,
-                            year_pf_, frame)
+                            year_pf_)
     && P::get_has_value(nh, authors_,
-                            authors_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_value(nh, title_,
-                            title_pf_, frame)
-    && P::get_has_value(nh, journal_,
-                            journal_pf_, frame)
-    && P::get_has_value(nh, pubmed_id_,
-                            pubmed_id_pf_, frame)
-    && P::get_has_value(nh, year_,
-                            year_pf_, frame)
-    && P::get_has_value(nh, authors_,
-                            authors_pf_, frame);
-      }
+                            authors_pf_);
     }
     };
 
@@ -2216,10 +1997,9 @@ authors_pf_=P::get_key<StringsTraits>(fh,
                    true);
 };
     }
-    JournalArticleConst get(NodeConstHandle nh,
-                           int frame=ALL_FRAMES) const {
-      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
-      return JournalArticleConst(nh, frame, title_,
+    JournalArticleConst get(NodeConstHandle nh) const {
+      RMF_USAGE_CHECK(get_is(nh), "Node is not");
+      return JournalArticleConst(nh, title_,
 title_pf_,
 journal_,
 journal_pf_,
@@ -2230,34 +2010,17 @@ year_pf_,
 authors_,
 authors_pf_);
     }
-    bool get_is(NodeConstHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_value(nh, title_,
-                            title_pf_, frame)
+    bool get_is(NodeConstHandle nh) const {
+      return P::get_has_value(nh, title_,
+                            title_pf_)
     && P::get_has_value(nh, journal_,
-                            journal_pf_, frame)
+                            journal_pf_)
     && P::get_has_value(nh, pubmed_id_,
-                            pubmed_id_pf_, frame)
+                            pubmed_id_pf_)
     && P::get_has_value(nh, year_,
-                            year_pf_, frame)
+                            year_pf_)
     && P::get_has_value(nh, authors_,
-                            authors_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_value(nh, title_,
-                            title_pf_, frame)
-    && P::get_has_value(nh, journal_,
-                            journal_pf_, frame)
-    && P::get_has_value(nh, pubmed_id_,
-                            pubmed_id_pf_, frame)
-    && P::get_has_value(nh, year_,
-                            year_pf_, frame)
-    && P::get_has_value(nh, authors_,
-                            authors_pf_, frame);
-      }
+                            authors_pf_);
     }
     };
 
@@ -2278,11 +2041,10 @@ authors_pf_);
 StringKey type_;
 StringKey type_pf_;
     ResidueConst(NodeConstHandle nh,
-                       int frame,
                   boost::array<IntKey, 2> index,
 StringKey type,
 StringKey type_pf):
-       P(nh, frame),
+       P(nh),
 index_(index),
 type_(type),
 type_pf_(type_pf) {
@@ -2290,7 +2052,7 @@ type_pf_(type_pf) {
     }
     public:
     Int get_index() const {
-  return get_node().get_value(index_[0], get_frame());
+  return get_node().get_value(index_[0]);
 }
 String get_type() const {
   return P::get_value(type_,
@@ -2321,11 +2083,10 @@ Strings get_all_types() const {
 internal::StringLazyKey type_;
 internal::StringLazyKey type_pf_;
     Residue(NodeHandle nh,
-                       int frame,
                   boost::array<internal::IntLazyKey, 2> index,
 internal::StringLazyKey type,
 internal::StringLazyKey type_pf):
-       P(nh, frame),
+       P(nh),
 index_(index),
 type_(type),
 type_pf_(type_pf) {
@@ -2333,11 +2094,11 @@ type_pf_(type_pf) {
     }
     public:
     Int get_index() const {
-  return get_node().get_value(index_[0], get_frame());
+  return get_node().get_value(index_[0]);
 }
 void set_index(Int v) {
-   get_node().set_value(index_[0], v, get_frame());
-   get_node().set_value(index_[1], v, get_frame());
+   get_node().set_value(index_[0], v);
+   get_node().set_value(index_[1], v);
 }
 String get_type() const {
   return P::get_value(type_,
@@ -2390,33 +2151,19 @@ type_pf_=internal::StringLazyKey(fh, cat,
                                true);
 };
     }
-    Residue get(NodeHandle nh,
-                           int frame=ALL_FRAMES) const {
+    Residue get(NodeHandle nh) const {
       ;
-      return Residue(nh, frame, index_,
+      return Residue(nh, index_,
 type_,
 type_pf_);
     }
-    bool get_is(NodeHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (nh.get_has_value(index_[0], frame)
-  && nh.get_has_value(index_[1], frame)
-  && nh.get_value(index_[0], frame)
-   ==nh.get_value(index_[1], frame)
+    bool get_is(NodeHandle nh) const {
+      return nh.get_has_value(index_[0])
+  && nh.get_has_value(index_[1])
+  && nh.get_value(index_[0])
+   ==nh.get_value(index_[1])
     && P::get_has_value(nh, type_,
-                            type_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return nh.get_has_value(index_[0], frame)
-  && nh.get_has_value(index_[1], frame)
-  && nh.get_value(index_[0], frame)
-   ==nh.get_value(index_[1], frame)
-    && P::get_has_value(nh, type_,
-                            type_pf_, frame);
-      }
+                            type_pf_);
     }
     };
 
@@ -2459,33 +2206,19 @@ type_pf_=P::get_key<StringTraits>(fh,
                    true);
 };
     }
-    ResidueConst get(NodeConstHandle nh,
-                           int frame=ALL_FRAMES) const {
-      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
-      return ResidueConst(nh, frame, index_,
+    ResidueConst get(NodeConstHandle nh) const {
+      RMF_USAGE_CHECK(get_is(nh), "Node is not");
+      return ResidueConst(nh, index_,
 type_,
 type_pf_);
     }
-    bool get_is(NodeConstHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (nh.get_has_value(index_[0], frame)
-  && nh.get_has_value(index_[1], frame)
-  && nh.get_value(index_[0], frame)
-   ==nh.get_value(index_[1], frame)
+    bool get_is(NodeConstHandle nh) const {
+      return nh.get_has_value(index_[0])
+  && nh.get_has_value(index_[1])
+  && nh.get_value(index_[0])
+   ==nh.get_value(index_[1])
     && P::get_has_value(nh, type_,
-                            type_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return nh.get_has_value(index_[0], frame)
-  && nh.get_has_value(index_[1], frame)
-  && nh.get_value(index_[0], frame)
-   ==nh.get_value(index_[1], frame)
-    && P::get_has_value(nh, type_,
-                            type_pf_, frame);
-      }
+                            type_pf_);
     }
     };
 
@@ -2511,7 +2244,6 @@ FloatKey mass_pf_;
 IndexKey element_;
 IndexKey element_pf_;
     AtomConst(NodeConstHandle nh,
-                       int frame,
                   FloatKeys coordinates,
 FloatKeys coordinates_pf,
 FloatKey radius,
@@ -2520,7 +2252,7 @@ FloatKey mass,
 FloatKey mass_pf,
 IndexKey element,
 IndexKey element_pf):
-       P(nh, frame),
+       P(nh),
 coordinates_(coordinates),
 coordinates_pf_(coordinates_pf),
 radius_(radius),
@@ -2583,7 +2315,6 @@ internal::FloatLazyKey mass_pf_;
 internal::IndexLazyKey element_;
 internal::IndexLazyKey element_pf_;
     Atom(NodeHandle nh,
-                       int frame,
                   internal::FloatLazyKeys coordinates,
 internal::FloatLazyKeys coordinates_pf,
 internal::FloatLazyKey radius,
@@ -2592,7 +2323,7 @@ internal::FloatLazyKey mass,
 internal::FloatLazyKey mass_pf,
 internal::IndexLazyKey element,
 internal::IndexLazyKey element_pf):
-       P(nh, frame),
+       P(nh),
 coordinates_(coordinates),
 coordinates_pf_(coordinates_pf),
 radius_(radius),
@@ -2704,10 +2435,9 @@ element_pf_=internal::IndexLazyKey(fh, cat,
                                true);
 };
     }
-    Atom get(NodeHandle nh,
-                           int frame=ALL_FRAMES) const {
+    Atom get(NodeHandle nh) const {
       ;
-      return Atom(nh, frame, coordinates_,
+      return Atom(nh, coordinates_,
 coordinates_pf_,
 radius_,
 radius_pf_,
@@ -2716,30 +2446,15 @@ mass_pf_,
 element_,
 element_pf_);
     }
-    bool get_is(NodeHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
+    bool get_is(NodeHandle nh) const {
+      return P::get_has_values(nh, coordinates_,
+                                     coordinates_pf_)
     && P::get_has_value(nh, radius_,
-                            radius_pf_, frame)
+                            radius_pf_)
     && P::get_has_value(nh, mass_,
-                            mass_pf_, frame)
+                            mass_pf_)
     && P::get_has_value(nh, element_,
-                            element_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
-    && P::get_has_value(nh, radius_,
-                            radius_pf_, frame)
-    && P::get_has_value(nh, mass_,
-                            mass_pf_, frame)
-    && P::get_has_value(nh, element_,
-                            element_pf_, frame);
-      }
+                            element_pf_);
     }
     };
 
@@ -2807,10 +2522,9 @@ element_pf_=P::get_key<IndexTraits>(fh,
                    true);
 };
     }
-    AtomConst get(NodeConstHandle nh,
-                           int frame=ALL_FRAMES) const {
-      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
-      return AtomConst(nh, frame, coordinates_,
+    AtomConst get(NodeConstHandle nh) const {
+      RMF_USAGE_CHECK(get_is(nh), "Node is not");
+      return AtomConst(nh, coordinates_,
 coordinates_pf_,
 radius_,
 radius_pf_,
@@ -2819,30 +2533,15 @@ mass_pf_,
 element_,
 element_pf_);
     }
-    bool get_is(NodeConstHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
+    bool get_is(NodeConstHandle nh) const {
+      return P::get_has_values(nh, coordinates_,
+                                     coordinates_pf_)
     && P::get_has_value(nh, radius_,
-                            radius_pf_, frame)
+                            radius_pf_)
     && P::get_has_value(nh, mass_,
-                            mass_pf_, frame)
+                            mass_pf_)
     && P::get_has_value(nh, element_,
-                            element_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_values(nh, coordinates_,
-                                     coordinates_pf_, frame)
-    && P::get_has_value(nh, radius_,
-                            radius_pf_, frame)
-    && P::get_has_value(nh, mass_,
-                            mass_pf_, frame)
-    && P::get_has_value(nh, element_,
-                            element_pf_, frame);
-      }
+                            element_pf_);
     }
     };
 
@@ -2862,10 +2561,9 @@ element_pf_);
     IndexKey chain_id_;
 IndexKey chain_id_pf_;
     ChainConst(NodeConstHandle nh,
-                       int frame,
                   IndexKey chain_id,
 IndexKey chain_id_pf):
-       P(nh, frame),
+       P(nh),
 chain_id_(chain_id),
 chain_id_pf_(chain_id_pf) {
     ;
@@ -2899,10 +2597,9 @@ Indexes get_all_chain_ids() const {
     internal::IndexLazyKey chain_id_;
 internal::IndexLazyKey chain_id_pf_;
     Chain(NodeHandle nh,
-                       int frame,
                   internal::IndexLazyKey chain_id,
 internal::IndexLazyKey chain_id_pf):
-       P(nh, frame),
+       P(nh),
 chain_id_(chain_id),
 chain_id_pf_(chain_id_pf) {
     ;
@@ -2952,24 +2649,14 @@ chain_id_pf_=internal::IndexLazyKey(fh, cat,
                                true);
 };
     }
-    Chain get(NodeHandle nh,
-                           int frame=ALL_FRAMES) const {
+    Chain get(NodeHandle nh) const {
       ;
-      return Chain(nh, frame, chain_id_,
+      return Chain(nh, chain_id_,
 chain_id_pf_);
     }
-    bool get_is(NodeHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_value(nh, chain_id_,
-                            chain_id_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_value(nh, chain_id_,
-                            chain_id_pf_, frame);
-      }
+    bool get_is(NodeHandle nh) const {
+      return P::get_has_value(nh, chain_id_,
+                            chain_id_pf_);
     }
     };
 
@@ -3003,24 +2690,14 @@ chain_id_pf_=P::get_key<IndexTraits>(fh,
                    true);
 };
     }
-    ChainConst get(NodeConstHandle nh,
-                           int frame=ALL_FRAMES) const {
-      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
-      return ChainConst(nh, frame, chain_id_,
+    ChainConst get(NodeConstHandle nh) const {
+      RMF_USAGE_CHECK(get_is(nh), "Node is not");
+      return ChainConst(nh, chain_id_,
 chain_id_pf_);
     }
-    bool get_is(NodeConstHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_value(nh, chain_id_,
-                            chain_id_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_value(nh, chain_id_,
-                            chain_id_pf_, frame);
-      }
+    bool get_is(NodeConstHandle nh) const {
+      return P::get_has_value(nh, chain_id_,
+                            chain_id_pf_);
     }
     };
 
@@ -3039,16 +2716,15 @@ chain_id_pf_);
     typedef Decorator<DomainConst, NodeConstHandle> P;
     boost::array<IntKey,2> indexes_;
     DomainConst(NodeConstHandle nh,
-                       int frame,
                   boost::array<IntKey, 2> indexes):
-       P(nh, frame),
+       P(nh),
 indexes_(indexes) {
     ;
     }
     public:
     IntRange get_indexes() const {
-  return std::make_pair(get_node().get_value(indexes_[0], get_frame()),
-                        get_node().get_value(indexes_[1], get_frame()));
+  return std::make_pair(get_node().get_value(indexes_[0]),
+                        get_node().get_value(indexes_[1]));
 }
     static std::string get_decorator_type_name() {
          return "DomainConst";
@@ -3070,20 +2746,19 @@ indexes_(indexes) {
     typedef Decorator<Domain, NodeHandle> P;
     boost::array<internal::IntLazyKey,2> indexes_;
     Domain(NodeHandle nh,
-                       int frame,
                   boost::array<internal::IntLazyKey, 2> indexes):
-       P(nh, frame),
+       P(nh),
 indexes_(indexes) {
     ;
     }
     public:
     IntRange get_indexes() const {
-  return std::make_pair(get_node().get_value(indexes_[0], get_frame()),
-                        get_node().get_value(indexes_[1], get_frame()));
+  return std::make_pair(get_node().get_value(indexes_[0]),
+                        get_node().get_value(indexes_[1]));
 }
 void set_indexes(Int v0, Int v1) {
-   get_node().set_value(indexes_[0], v0, get_frame());
-   get_node().set_value(indexes_[1], v1, get_frame());
+   get_node().set_value(indexes_[0], v0);
+   get_node().set_value(indexes_[1], v1);
 }
     static std::string get_decorator_type_name() {
          return "Domain";
@@ -3117,27 +2792,15 @@ indexes_[1]=internal::IntLazyKey(fh, cat,
                                false);
 };
     }
-    Domain get(NodeHandle nh,
-                           int frame=ALL_FRAMES) const {
+    Domain get(NodeHandle nh) const {
       ;
-      return Domain(nh, frame, indexes_);
+      return Domain(nh, indexes_);
     }
-    bool get_is(NodeHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (nh.get_has_value(indexes_[0], frame)
-  && nh.get_has_value(indexes_[1], frame)
-  && nh.get_value(indexes_[0], frame)
-   <nh.get_value(indexes_[1], frame)) return true;
-        }
-        return false;
-      } else {
-        return nh.get_has_value(indexes_[0], frame)
-  && nh.get_has_value(indexes_[1], frame)
-  && nh.get_value(indexes_[0], frame)
-   <nh.get_value(indexes_[1], frame);
-      }
+    bool get_is(NodeHandle nh) const {
+      return nh.get_has_value(indexes_[0])
+  && nh.get_has_value(indexes_[1])
+  && nh.get_value(indexes_[0])
+   <nh.get_value(indexes_[1]);
     }
     };
 
@@ -3170,27 +2833,15 @@ indexes_[1]=P::get_key<IntTraits>(fh,
                    false);
 };
     }
-    DomainConst get(NodeConstHandle nh,
-                           int frame=ALL_FRAMES) const {
-      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
-      return DomainConst(nh, frame, indexes_);
+    DomainConst get(NodeConstHandle nh) const {
+      RMF_USAGE_CHECK(get_is(nh), "Node is not");
+      return DomainConst(nh, indexes_);
     }
-    bool get_is(NodeConstHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (nh.get_has_value(indexes_[0], frame)
-  && nh.get_has_value(indexes_[1], frame)
-  && nh.get_value(indexes_[0], frame)
-   <nh.get_value(indexes_[1], frame)) return true;
-        }
-        return false;
-      } else {
-        return nh.get_has_value(indexes_[0], frame)
-  && nh.get_has_value(indexes_[1], frame)
-  && nh.get_value(indexes_[0], frame)
-   <nh.get_value(indexes_[1], frame);
-      }
+    bool get_is(NodeConstHandle nh) const {
+      return nh.get_has_value(indexes_[0])
+  && nh.get_has_value(indexes_[1])
+  && nh.get_value(indexes_[0])
+   <nh.get_value(indexes_[1]);
     }
     };
 
@@ -3210,10 +2861,9 @@ indexes_[1]=P::get_key<IntTraits>(fh,
     IndexKey copy_index_;
 IndexKey copy_index_pf_;
     CopyConst(NodeConstHandle nh,
-                       int frame,
                   IndexKey copy_index,
 IndexKey copy_index_pf):
-       P(nh, frame),
+       P(nh),
 copy_index_(copy_index),
 copy_index_pf_(copy_index_pf) {
     ;
@@ -3247,10 +2897,9 @@ Indexes get_all_copy_indexs() const {
     internal::IndexLazyKey copy_index_;
 internal::IndexLazyKey copy_index_pf_;
     Copy(NodeHandle nh,
-                       int frame,
                   internal::IndexLazyKey copy_index,
 internal::IndexLazyKey copy_index_pf):
-       P(nh, frame),
+       P(nh),
 copy_index_(copy_index),
 copy_index_pf_(copy_index_pf) {
     ;
@@ -3300,24 +2949,14 @@ copy_index_pf_=internal::IndexLazyKey(fh, cat,
                                true);
 };
     }
-    Copy get(NodeHandle nh,
-                           int frame=ALL_FRAMES) const {
+    Copy get(NodeHandle nh) const {
       ;
-      return Copy(nh, frame, copy_index_,
+      return Copy(nh, copy_index_,
 copy_index_pf_);
     }
-    bool get_is(NodeHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_value(nh, copy_index_,
-                            copy_index_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_value(nh, copy_index_,
-                            copy_index_pf_, frame);
-      }
+    bool get_is(NodeHandle nh) const {
+      return P::get_has_value(nh, copy_index_,
+                            copy_index_pf_);
     }
     };
 
@@ -3351,24 +2990,14 @@ copy_index_pf_=P::get_key<IndexTraits>(fh,
                    true);
 };
     }
-    CopyConst get(NodeConstHandle nh,
-                           int frame=ALL_FRAMES) const {
-      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
-      return CopyConst(nh, frame, copy_index_,
+    CopyConst get(NodeConstHandle nh) const {
+      RMF_USAGE_CHECK(get_is(nh), "Node is not");
+      return CopyConst(nh, copy_index_,
 copy_index_pf_);
     }
-    bool get_is(NodeConstHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_value(nh, copy_index_,
-                            copy_index_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_value(nh, copy_index_,
-                            copy_index_pf_, frame);
-      }
+    bool get_is(NodeConstHandle nh) const {
+      return P::get_has_value(nh, copy_index_,
+                            copy_index_pf_);
     }
     };
 
@@ -3388,10 +3017,9 @@ copy_index_pf_);
     FloatKey diffusion_coefficient_;
 FloatKey diffusion_coefficient_pf_;
     DiffuserConst(NodeConstHandle nh,
-                       int frame,
                   FloatKey diffusion_coefficient,
 FloatKey diffusion_coefficient_pf):
-       P(nh, frame),
+       P(nh),
 diffusion_coefficient_(diffusion_coefficient),
 diffusion_coefficient_pf_(diffusion_coefficient_pf) {
     ;
@@ -3425,10 +3053,9 @@ Floats get_all_diffusion_coefficients() const {
     internal::FloatLazyKey diffusion_coefficient_;
 internal::FloatLazyKey diffusion_coefficient_pf_;
     Diffuser(NodeHandle nh,
-                       int frame,
                   internal::FloatLazyKey diffusion_coefficient,
 internal::FloatLazyKey diffusion_coefficient_pf):
-       P(nh, frame),
+       P(nh),
 diffusion_coefficient_(diffusion_coefficient),
 diffusion_coefficient_pf_(diffusion_coefficient_pf) {
     ;
@@ -3478,24 +3105,14 @@ diffusion_coefficient_pf_=internal::FloatLazyKey(fh, cat,
                                true);
 };
     }
-    Diffuser get(NodeHandle nh,
-                           int frame=ALL_FRAMES) const {
+    Diffuser get(NodeHandle nh) const {
       ;
-      return Diffuser(nh, frame, diffusion_coefficient_,
+      return Diffuser(nh, diffusion_coefficient_,
 diffusion_coefficient_pf_);
     }
-    bool get_is(NodeHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_value(nh, diffusion_coefficient_,
-                            diffusion_coefficient_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_value(nh, diffusion_coefficient_,
-                            diffusion_coefficient_pf_, frame);
-      }
+    bool get_is(NodeHandle nh) const {
+      return P::get_has_value(nh, diffusion_coefficient_,
+                            diffusion_coefficient_pf_);
     }
     };
 
@@ -3529,24 +3146,14 @@ diffusion_coefficient_pf_=P::get_key<FloatTraits>(fh,
                    true);
 };
     }
-    DiffuserConst get(NodeConstHandle nh,
-                           int frame=ALL_FRAMES) const {
-      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
-      return DiffuserConst(nh, frame, diffusion_coefficient_,
+    DiffuserConst get(NodeConstHandle nh) const {
+      RMF_USAGE_CHECK(get_is(nh), "Node is not");
+      return DiffuserConst(nh, diffusion_coefficient_,
 diffusion_coefficient_pf_);
     }
-    bool get_is(NodeConstHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_value(nh, diffusion_coefficient_,
-                            diffusion_coefficient_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_value(nh, diffusion_coefficient_,
-                            diffusion_coefficient_pf_, frame);
-      }
+    bool get_is(NodeConstHandle nh) const {
+      return P::get_has_value(nh, diffusion_coefficient_,
+                            diffusion_coefficient_pf_);
     }
     };
 
@@ -3566,10 +3173,9 @@ diffusion_coefficient_pf_);
     StringKey type_name_;
 StringKey type_name_pf_;
     TypedConst(NodeConstHandle nh,
-                       int frame,
                   StringKey type_name,
 StringKey type_name_pf):
-       P(nh, frame),
+       P(nh),
 type_name_(type_name),
 type_name_pf_(type_name_pf) {
     ;
@@ -3603,10 +3209,9 @@ Strings get_all_type_names() const {
     internal::StringLazyKey type_name_;
 internal::StringLazyKey type_name_pf_;
     Typed(NodeHandle nh,
-                       int frame,
                   internal::StringLazyKey type_name,
 internal::StringLazyKey type_name_pf):
-       P(nh, frame),
+       P(nh),
 type_name_(type_name),
 type_name_pf_(type_name_pf) {
     ;
@@ -3656,24 +3261,14 @@ type_name_pf_=internal::StringLazyKey(fh, cat,
                                true);
 };
     }
-    Typed get(NodeHandle nh,
-                           int frame=ALL_FRAMES) const {
+    Typed get(NodeHandle nh) const {
       ;
-      return Typed(nh, frame, type_name_,
+      return Typed(nh, type_name_,
 type_name_pf_);
     }
-    bool get_is(NodeHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_value(nh, type_name_,
-                            type_name_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_value(nh, type_name_,
-                            type_name_pf_, frame);
-      }
+    bool get_is(NodeHandle nh) const {
+      return P::get_has_value(nh, type_name_,
+                            type_name_pf_);
     }
     };
 
@@ -3707,24 +3302,14 @@ type_name_pf_=P::get_key<StringTraits>(fh,
                    true);
 };
     }
-    TypedConst get(NodeConstHandle nh,
-                           int frame=ALL_FRAMES) const {
-      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
-      return TypedConst(nh, frame, type_name_,
+    TypedConst get(NodeConstHandle nh) const {
+      RMF_USAGE_CHECK(get_is(nh), "Node is not");
+      return TypedConst(nh, type_name_,
 type_name_pf_);
     }
-    bool get_is(NodeConstHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_value(nh, type_name_,
-                            type_name_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_value(nh, type_name_,
-                            type_name_pf_, frame);
-      }
+    bool get_is(NodeConstHandle nh) const {
+      return P::get_has_value(nh, type_name_,
+                            type_name_pf_);
     }
     };
 
@@ -3744,10 +3329,9 @@ type_name_pf_);
     NodeIDKey aliased_;
 NodeIDKey aliased_pf_;
     AliasConst(NodeConstHandle nh,
-                       int frame,
                   NodeIDKey aliased,
 NodeIDKey aliased_pf):
-       P(nh, frame),
+       P(nh),
 aliased_(aliased),
 aliased_pf_(aliased_pf) {
     ;
@@ -3758,7 +3342,7 @@ aliased_pf_(aliased_pf) {
   if (get_node().get_has_value(aliased_)) {
    id= get_node().get_value(aliased_);
   } else {
-   id= get_node().get_value(aliased_pf_, get_frame());
+   id= get_node().get_value(aliased_pf_);
   }
   return get_node().get_file().get_node_from_id(id);
 }
@@ -3783,10 +3367,9 @@ aliased_pf_(aliased_pf) {
     internal::NodeIDLazyKey aliased_;
 internal::NodeIDLazyKey aliased_pf_;
     Alias(NodeHandle nh,
-                       int frame,
                   internal::NodeIDLazyKey aliased,
 internal::NodeIDLazyKey aliased_pf):
-       P(nh, frame),
+       P(nh),
 aliased_(aliased),
 aliased_pf_(aliased_pf) {
     ;
@@ -3797,13 +3380,13 @@ aliased_pf_(aliased_pf) {
   if (get_node().get_has_value(aliased_)) {
    id= get_node().get_value(aliased_);
   } else {
-   id= get_node().get_value(aliased_pf_, get_frame());
+   id= get_node().get_value(aliased_pf_);
   }
   return get_node().get_file().get_node_from_id(id);
 }
 void set_aliased(NodeConstHandle v) {
   if (get_frame() >=0) {
-    get_node().set_value(aliased_pf_, v.get_id(), get_frame());
+    get_node().set_value(aliased_pf_, v.get_id());
   } else {
     return get_node().set_value(aliased_, v.get_id());
   }
@@ -3841,24 +3424,14 @@ aliased_pf_=internal::NodeIDLazyKey(fh, cat,
                                true);
 };
     }
-    Alias get(NodeHandle nh,
-                           int frame=ALL_FRAMES) const {
+    Alias get(NodeHandle nh) const {
       ;
-      return Alias(nh, frame, aliased_,
+      return Alias(nh, aliased_,
 aliased_pf_);
     }
-    bool get_is(NodeHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_value(nh, aliased_,
-                            aliased_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_value(nh, aliased_,
-                            aliased_pf_, frame);
-      }
+    bool get_is(NodeHandle nh) const {
+      return P::get_has_value(nh, aliased_,
+                            aliased_pf_);
     }
     };
 
@@ -3892,24 +3465,14 @@ aliased_pf_=P::get_key<NodeIDTraits>(fh,
                    true);
 };
     }
-    AliasConst get(NodeConstHandle nh,
-                           int frame=ALL_FRAMES) const {
-      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
-      return AliasConst(nh, frame, aliased_,
+    AliasConst get(NodeConstHandle nh) const {
+      RMF_USAGE_CHECK(get_is(nh), "Node is not");
+      return AliasConst(nh, aliased_,
 aliased_pf_);
     }
-    bool get_is(NodeConstHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_value(nh, aliased_,
-                            aliased_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_value(nh, aliased_,
-                            aliased_pf_, frame);
-      }
+    bool get_is(NodeConstHandle nh) const {
+      return P::get_has_value(nh, aliased_,
+                            aliased_pf_);
     }
     };
 
@@ -3930,11 +3493,10 @@ aliased_pf_);
 FloatKey score_;
 FloatKey score_pf_;
     ScoreConst(NodeConstHandle nh,
-                       int frame,
                   AliasConstFactory representation,
 FloatKey score,
 FloatKey score_pf):
-       P(nh, frame),
+       P(nh),
 representation_(representation),
 score_(score),
 score_pf_(score_pf) {
@@ -3980,11 +3542,10 @@ Floats get_all_scores() const {
 internal::FloatLazyKey score_;
 internal::FloatLazyKey score_pf_;
     Score(NodeHandle nh,
-                       int frame,
                   AliasFactory representation,
 internal::FloatLazyKey score,
 internal::FloatLazyKey score_pf):
-       P(nh, frame),
+       P(nh),
 representation_(representation),
 score_(score),
 score_pf_(score_pf) {
@@ -4056,25 +3617,15 @@ score_pf_=internal::FloatLazyKey(fh, cat,
                                true);
 };
     }
-    Score get(NodeHandle nh,
-                           int frame=ALL_FRAMES) const {
+    Score get(NodeHandle nh) const {
       ;
-      return Score(nh, frame, representation_,
+      return Score(nh, representation_,
 score_,
 score_pf_);
     }
-    bool get_is(NodeHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_value(nh, score_,
-                            score_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_value(nh, score_,
-                            score_pf_, frame);
-      }
+    bool get_is(NodeHandle nh) const {
+      return P::get_has_value(nh, score_,
+                            score_pf_);
     }
     };
 
@@ -4109,25 +3660,15 @@ score_pf_=P::get_key<FloatTraits>(fh,
                    true);
 };
     }
-    ScoreConst get(NodeConstHandle nh,
-                           int frame=ALL_FRAMES) const {
-      RMF_USAGE_CHECK(get_is(nh, frame), "Node is not");
-      return ScoreConst(nh, frame, representation_,
+    ScoreConst get(NodeConstHandle nh) const {
+      RMF_USAGE_CHECK(get_is(nh), "Node is not");
+      return ScoreConst(nh, representation_,
 score_,
 score_pf_);
     }
-    bool get_is(NodeConstHandle nh, int frame= ALL_FRAMES) const {
-      if (frame == ANY_FRAME) {
-        int num_frames=nh.get_file().get_number_of_frames();
-        for (frame=0; frame< num_frames; ++frame) {
-           if (P::get_has_value(nh, score_,
-                            score_pf_, frame)) return true;
-        }
-        return false;
-      } else {
-        return P::get_has_value(nh, score_,
-                            score_pf_, frame);
-      }
+    bool get_is(NodeConstHandle nh) const {
+      return P::get_has_value(nh, score_,
+                            score_pf_);
     }
     };
 
@@ -4136,4 +3677,4 @@ score_pf_);
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_DECORATORS_H */
+#endif /* RMF_DECORATORS_H */

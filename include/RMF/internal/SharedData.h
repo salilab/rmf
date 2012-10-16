@@ -40,37 +40,38 @@ namespace RMF {
                                   PassValues, ReturnValues, Arity)      \
     /** Return a value or the null value.*/                             \
     virtual Ucname##Traits::Type get_value(unsigned int node,           \
-                                           Key<Ucname##Traits,Arity> k, \
-                                           unsigned int frame) const=0; \
+                                           Key<Ucname##Traits,Arity> k) \
+      const=0;                                                          \
     virtual Ucname##Traits::Types                                       \
     get_values(unsigned int node,                                       \
-               const vector<Key<Ucname##Traits,Arity> >& k,             \
-               unsigned int frame) const {                              \
+               const vector<Key<Ucname##Traits,Arity> >& k) const {     \
       Ucname##Traits::Types ret(k.size());                              \
       for (unsigned int i=0; i< k.size(); ++i) {                        \
-        ret[i]= get_value(node, k[i], frame);                           \
+        ret[i]= get_value(node, k[i]);                                  \
       }                                                                 \
       return ret;                                                       \
     }                                                                   \
     virtual Ucname##Traits::Types                                       \
     get_all_values(unsigned int node,                                   \
-                   Key<Ucname##Traits,Arity> k) const {                 \
+                   Key<Ucname##Traits,Arity> k) {                       \
       unsigned int nf= get_number_of_frames();                          \
+      int start_frame=get_current_frame();                              \
       Ucname##Traits::Types ret(nf);                                    \
       for (unsigned int i=0; i< nf; ++i) {                              \
-        ret[i]= get_value(node, k, i);                                  \
+        set_current_frame(i);                                           \
+        ret[i]= get_value(node, k);                                     \
       }                                                                 \
+      set_current_frame(start_frame);                                   \
       return ret;                                                       \
     }                                                                   \
     virtual void set_value(unsigned int node,                           \
                            Key<Ucname##Traits, Arity> k,                \
-                           Ucname##Traits::Type v, unsigned int frame) =0; \
+                           Ucname##Traits::Type v) =0;                  \
     virtual void set_values(unsigned int node,                           \
                             const vector<Key<Ucname##Traits, Arity> > &k, \
-                            const Ucname##Traits::Types v,              \
-                            unsigned int frame) {                       \
+                            const Ucname##Traits::Types v) {            \
       for (unsigned int i=0; i< k.size(); ++i) {                        \
-        set_value(node, k[i], v[i], frame);                             \
+        set_value(node, k[i], v[i]);                                    \
       }                                                                 \
     }                                                                   \
     virtual Key<Ucname##Traits, Arity>                                  \
@@ -109,7 +110,7 @@ namespace RMF {
       map<uintptr_t, int> back_association_;
       map<int, boost::any> user_data_;
       int valid_;
-
+      int cur_frame_;
     protected:
       SharedData();
     public:
@@ -117,6 +118,13 @@ namespace RMF {
       bool get_is_per_frame(Key<TypeTraits, Arity> k) const {
         return k.get_is_per_frame();
       }
+      int get_current_frame() const {
+        return cur_frame_;
+      }
+      virtual void set_current_frame(int frame) {
+        cur_frame_=frame;
+      }
+
       RMF_FOREACH_TYPE(RMF_SHARED_TYPE);
       void audit_key_name(std::string name) const;
       void audit_node_name(std::string name) const;
@@ -208,8 +216,8 @@ namespace RMF {
       virtual std::string get_category_name(int Arity, unsigned int kc) const=0;
       virtual std::string get_description() const=0;
       virtual void set_description(std::string str)=0;
-      virtual void set_frame_name(unsigned int frame, std::string str)=0;
-      virtual std::string get_frame_name(unsigned int frame) const=0;
+      virtual void set_frame_name(std::string str)=0;
+      virtual std::string get_frame_name() const=0;
       virtual bool get_supports_locking() const {return false;}
       virtual bool set_is_locked(bool) {return false;}
       virtual void reload()=0;
