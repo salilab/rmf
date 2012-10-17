@@ -157,7 +157,6 @@ namespace {
                             CopyConstFactory copycf,
                             DiffuserConstFactory diffusercf,
                             TypedConstFactory typedcf,
-                            AliasConstFactory aliascf,
                             int frame,
                             std::string ) {
     using std::operator<<;
@@ -179,24 +178,23 @@ namespace {
     if (copycf.get_is(n)) out <<" copy" ;
     if (typedcf.get_is(n)) out <<" typed" ;
     if (diffusercf.get_is(n)) out <<" diffuser" ;
-    if (aliascf.get_is(n)) out <<" alias" ;
     out << "]";
   }
 
   template <class TypeT>
-  vector< Key<TypeT, 1> > get_keys(FileConstHandle f) {
+  vector< Key<TypeT> > get_keys(FileConstHandle f) {
     Categories kcs= f.get_categories();
-    vector<Key<TypeT, 1> > ret;
+    vector<Key<TypeT> > ret;
     for (unsigned int i=0; i< kcs.size(); ++i) {
-      vector<Key<TypeT, 1> > curp=f.get_keys<TypeT, 1>(kcs[i]);
+      vector<Key<TypeT> > curp=f.get_keys<TypeT>(kcs[i]);
       ret.insert(ret.end(), curp.begin(), curp.end());
     }
     return ret;
   }
 
 // Note that older g++ is confused by queue.back().get<2>()
-#define RMF_PRINT_TREE(stream, NodeType, start, num_children,       \
-                           get_children, show)                             \
+#define RMF_PRINT_TREE(stream, NodeType, start, num_children,           \
+                       get_children, show)                              \
   {                                                                     \
     vector<boost::tuple<std::string, std::string, NodeType> >           \
       queue;                                                            \
@@ -283,28 +281,14 @@ void show_hierarchy_with_decorators(NodeConstHandle root,
   CopyConstFactory copycf(root.get_file());
   DiffuserConstFactory diffusercf(root.get_file());
   TypedConstFactory typedcf(root.get_file());
-  AliasConstFactory aliascf(root.get_file());
   using std::operator<<;
   RMF_PRINT_TREE(out, NodeConstHandle, root, n.get_children().size(),
                  n.get_children(),
                      show_node_decorators(n, out, ccf, pcf, ipcf, rpcf, scf,
                                           bcf, cycf, segcf, rcf, acf,
                                           chaincf, fragcf, copycf,
-                                          diffusercf, typedcf, aliascf, frame,
+                                          diffusercf, typedcf, frame,
                            prefix0+"   "));
-}
-
-
-
-NodeConstHandles get_children_resolving_aliases(NodeConstHandle nh) {
-  AliasConstFactory saf(nh.get_file());
-  NodeConstHandles ret= nh.get_children();
-  for (unsigned int i=0; i< ret.size(); ++i) {
-    if (ret[i].get_type()== ALIAS && saf.get_is(ret[i])) {
-      ret[i]= saf.get(ret[i]).get_aliased();
-    }
-  }
-  return ret;
 }
 
 

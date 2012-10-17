@@ -62,17 +62,4 @@ print input
 print "</path>"
 kcs= rh.get_categories()
 show_xml(rh.get_root_node(), kcs)
-for i in range(2,5):
-    sets= rh.get_node_sets(i)
-    kcs= rh.get_set_categories(i)
-    if len(sets) >0:
-        print "<"+str(i)+"_sets>"
-        for t in sets:
-            print "<"+str(i)+"_set id=\""+str(t.get_id().get_index())+"\" type=\""\
-                + RMF.get_set_type_name(t.get_type())+"\" members=\""\
-                +",".join([str(t.get_node(x).get_id().get_index()) for x in range(0, t.get_arity())])+"\"/>"
-            if verbose:
-                for kc in kcs:
-                    show_data_xml(t, kc, i)
-        print "</"+str(i)+"_sets>"
 print "</rmf>";

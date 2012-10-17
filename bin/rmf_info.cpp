@@ -7,28 +7,15 @@
 
 std::string description("Print out information about categories and keys.");
 
-template <int Arity, class Traits>
-struct GetCount {
-  static int get_count(RMF::FileConstHandle rh,
-                       RMF::Key<Traits, Arity> k) {
-    RMF::vector<RMF::NodeSetConstHandle<Arity> > sets
-        = rh.get_node_sets<Arity>();
-    int found=0;
-    for (unsigned int i=0; i< sets.size(); ++i) {
-      if (sets[i].get_has_value(k)) ++found;
-    }
-    return found;
-  }
-};
 
 template <class Traits>
-struct GetCount<1, Traits> {
+struct GetCount {
   static int get_count(RMF::FileConstHandle rh,
-                       RMF::Key<Traits, 1> k) {
+                       RMF::Key<Traits> k) {
     return get_count(rh.get_root_node(), k);
   }
   static int get_count(RMF::NodeConstHandle rh,
-                       RMF::Key<Traits, 1> k) {
+                       RMF::Key<Traits> k) {
     int cur=0;
     if (rh.get_has_value(k)) ++cur;
     RMF::NodeConstHandles nhs = rh.get_children();
@@ -40,20 +27,20 @@ struct GetCount<1, Traits> {
 };
 
 
-template <int Arity, class Traits>
+template <class Traits>
 void show_key_info(RMF::FileConstHandle rh,
-                   RMF::CategoryD<Arity> cat,
+                   RMF::Category cat,
                    std::string name,
                    std::ostream &out) {
-  RMF::vector<RMF::Key<Traits, Arity> > keys = rh.get_keys<Traits>(cat);
+  RMF::vector<RMF::Key<Traits> > keys = rh.get_keys<Traits>(cat);
   for (unsigned int i=0; i< keys.size(); ++i) {
     out << "    " << rh.get_name(keys[i]);
     if (rh.get_is_per_frame(keys[i])) {
       out << ", frames";
     }
     out << ", " << name;
-    out << ", " << GetCount<Arity, Traits>::get_count(rh,
-                                                      keys[i]) << " uses"
+    out << ", " << GetCount<Traits>::get_count(rh,
+                                               keys[i]) << " uses"
         << std::endl;
   }
 }
@@ -61,24 +48,32 @@ void show_key_info(RMF::FileConstHandle rh,
 
 
 #define RMF_SHOW_TYPE_DATA_INFO(lcname, UCName, PassValue, ReturnValue, \
-                                    PassValues, ReturnValues)           \
-  show_key_info<Arity, RMF::UCName##Traits>(rh, categories[i], #lcname, out);
+                                PassValues, ReturnValues)               \
+  show_key_info<RMF::UCName##Traits>(rh, categories[i], #lcname, out);
 
-template <int Arity>
-void show_info(RMF::FileConstHandle rh, std::ostream &out) {
-  if (rh.get_number_of_node_sets<Arity>()==0) {
-    return;
-  }
-  if (Arity==1) {
-    out << "Nodes:" << std::endl;
+int count(RMF::NodeConstHandle nh, std::set<RMF::NodeConstHandle> &seen) {
+  int ret=0;
+  if (seen.find(nh)== seen.end()) {
+    ++ret;
+    seen.insert(nh);
   } else {
-    out << Arity << "-sets:" << std::endl;
+    return 0;
   }
-  out << "  number: " << rh.get_number_of_node_sets<Arity>() << std::endl;
-  RMF::vector<RMF::CategoryD<Arity> > categories
-      = rh.get_categories<Arity>();
+  RMF::NodeConstHandles ch= nh.get_children();
+  for (unsigned int i=0; i< ch.size(); ++i) {
+    ret+= count(ch[i], seen);
+  }
+  return ret;
+}
+
+void show_info(RMF::FileConstHandle rh, std::ostream &out) {
+  out << "Nodes:" << std::endl;
+  std::set<RMF::NodeConstHandle> seen;
+  out << "  number: " << count(rh.get_root_node(), seen) << std::endl;
+  RMF::vector<RMF::Category > categories
+    = rh.get_categories();
   for (unsigned int i=0; i < categories.size(); ++i) {
-    out << "  " << rh.get_category_name(categories[i]) << ":" << std::endl;
+    out << "  " << rh.get_name(categories[i]) << ":" << std::endl;
     RMF_FOREACH_TYPE(RMF_SHOW_TYPE_DATA_INFO);
   }
 }
@@ -99,10 +94,7 @@ int main(int argc, char **argv) {
       std::cout << "description: " << rh.get_description();
     }
     std::cout << "frames: " << rh.get_number_of_frames() << std::endl;
-    show_info<1>(rh, std::cout);
-    show_info<2>(rh, std::cout);
-    show_info<3>(rh, std::cout);
-    show_info<4>(rh, std::cout);
+    show_info(rh, std::cout);
     return 0;
   } catch (const std::exception &e) {
     std::cerr << "Error: " << e.what() << std::endl;

@@ -26,7 +26,7 @@ namespace RMF {
 
 /** A key referencing a particular piece of data. They are
  comparable, hashable and printable, but otherwise opaque.*/
-  template <class TypeTraitsT, int Arity>
+  template <class TypeTraitsT>
 class Key {
   friend class FileConstHandle;
   friend class NodeConstHandle;
@@ -34,7 +34,7 @@ class Key {
   friend class internal::SharedData;
     friend class internal::HDF5SharedData;
   int i_;
-  CategoryD<Arity> ci_;
+  Category ci_;
   bool pf_;
   int compare(const Key &o) const {
     if (i_ < o.i_) return -1;
@@ -47,21 +47,18 @@ class Key {
   }
 public:
 #if !defined(IMP_DOXYGEN) && !defined(SWIG)
-  Key(CategoryD<Arity> category_id,
+  Key(Category category_id,
       int i, bool pf): i_(i), ci_(category_id),
                        pf_(pf) {}
   bool get_is_per_frame() const {
     return pf_;
   }
-  CategoryD<Arity> get_category() const {
+  Category get_category() const {
     return ci_;
   }
   int get_index() const {
     return i_;
   }
-    int get_arity() const {
-      return Arity;
-    }
 #endif
   typedef TypeTraitsT TypeTraits;
   Key(): i_(-1), ci_(), pf_(false) {}
@@ -75,17 +72,10 @@ public:
 
 #ifndef IMP_DOXYGEN
 
-#define RMF_DECLARE_KEY(lcname, Ucname, PassValue, ReturnValue,     \
-                            PassValues, ReturnValues)                   \
-  typedef Key<Ucname##Traits, 1> Ucname##Key;                           \
-  typedef vector<Ucname##Key> Ucname##Keys;                        \
-  typedef Key<Ucname##Traits, 2> Pair##Ucname##Key;                     \
-  typedef vector<Pair##Ucname##Key> Pair##Ucname##Keys;            \
-  typedef Key<Ucname##Traits, 3> Triplet##Ucname##Key;                  \
-  typedef vector<Triplet##Ucname##Key> Triplet##Ucname##Keys;      \
-  typedef Key<Ucname##Traits, 4> Quad##Ucname##Key;                     \
-  typedef vector<Quad##Ucname##Key> Quad##Ucname##Keys
-
+#define RMF_DECLARE_KEY(lcname, Ucname, PassValue, ReturnValue,         \
+                        PassValues, ReturnValues)                       \
+  typedef Key<Ucname##Traits> Ucname##Key;                              \
+  typedef vector<Ucname##Key> Ucname##Keys
 
 
 /** \name Key types

@@ -104,7 +104,7 @@ internal::FloatLazyKeys rgb_color_pf_;
     ColoredFactory(FileHandle fh):
       P(){
     {
-  CategoryD<1> cat=get_category_always<1>(fh, "shape");
+  Category cat=get_category_always(fh, "shape");
         Strings  rgb_color_names;
         rgb_color_names.push_back("rgb color red");
         rgb_color_names.push_back("rgb color green");
@@ -147,7 +147,7 @@ FloatKeys rgb_color_pf_;
     ColoredConstFactory(FileConstHandle fh):
       P(){
     {
-  CategoryD<1> cat=fh.get_category<1>("shape");
+  Category cat=fh.get_category("shape");
         Strings  rgb_color_names;
         rgb_color_names.push_back("rgb color red");
         rgb_color_names.push_back("rgb color green");
@@ -323,7 +323,7 @@ internal::FloatLazyKey mass_pf_;
     ParticleFactory(FileHandle fh):
       P(){
     {
-  CategoryD<1> cat=get_category_always<1>(fh, "physics");
+  Category cat=get_category_always(fh, "physics");
         Strings  coordinates_names;
         coordinates_names.push_back("cartesian x");
         coordinates_names.push_back("cartesian y");
@@ -390,7 +390,7 @@ FloatKey mass_pf_;
     ParticleConstFactory(FileConstHandle fh):
       P(){
     {
-  CategoryD<1> cat=fh.get_category<1>("physics");
+  Category cat=fh.get_category("physics");
         Strings  coordinates_names;
         coordinates_names.push_back("cartesian x");
         coordinates_names.push_back("cartesian y");
@@ -558,7 +558,7 @@ internal::FloatLazyKey radius_pf_;
     IntermediateParticleFactory(FileHandle fh):
       P(){
     {
-  CategoryD<1> cat=get_category_always<1>(fh, "physics");
+  Category cat=get_category_always(fh, "physics");
         Strings  coordinates_names;
         coordinates_names.push_back("cartesian x");
         coordinates_names.push_back("cartesian y");
@@ -613,7 +613,7 @@ FloatKey radius_pf_;
     IntermediateParticleConstFactory(FileConstHandle fh):
       P(){
     {
-  CategoryD<1> cat=fh.get_category<1>("physics");
+  Category cat=fh.get_category("physics");
         Strings  coordinates_names;
         coordinates_names.push_back("cartesian x");
         coordinates_names.push_back("cartesian y");
@@ -760,7 +760,7 @@ internal::FloatLazyKeys coordinates_pf_;
     RigidParticleFactory(FileHandle fh):
       P(){
     {
-  CategoryD<1> cat=get_category_always<1>(fh, "physics");
+  Category cat=get_category_always(fh, "physics");
         Strings  orientation_names;
         orientation_names.push_back("orientation r");
         orientation_names.push_back("orientation i");
@@ -820,7 +820,7 @@ FloatKeys coordinates_pf_;
     RigidParticleConstFactory(FileConstHandle fh):
       P(){
     {
-  CategoryD<1> cat=fh.get_category<1>("physics");
+  Category cat=fh.get_category("physics");
         Strings  orientation_names;
         orientation_names.push_back("orientation r");
         orientation_names.push_back("orientation i");
@@ -1023,7 +1023,7 @@ internal::IndexLazyKey type_pf_;
     BallFactory(FileHandle fh):
       P(){
     {
-  CategoryD<1> cat=get_category_always<1>(fh, "shape");
+  Category cat=get_category_always(fh, "shape");
         Strings  coordinates_names;
         coordinates_names.push_back("cartesian x");
         coordinates_names.push_back("cartesian y");
@@ -1091,7 +1091,7 @@ IndexKey type_pf_;
     BallConstFactory(FileConstHandle fh):
       P(){
     {
-  CategoryD<1> cat=fh.get_category<1>("shape");
+  Category cat=fh.get_category("shape");
         Strings  coordinates_names;
         coordinates_names.push_back("cartesian x");
         coordinates_names.push_back("cartesian y");
@@ -1302,7 +1302,7 @@ internal::IndexLazyKey type_pf_;
     CylinderFactory(FileHandle fh):
       P(){
     {
-  CategoryD<1> cat=get_category_always<1>(fh, "shape");
+  Category cat=get_category_always(fh, "shape");
         Strings  coordinates_names;
         coordinates_names.push_back("cartesian xs");
         coordinates_names.push_back("cartesian ys");
@@ -1370,7 +1370,7 @@ IndexKey type_pf_;
     CylinderConstFactory(FileConstHandle fh):
       P(){
     {
-  CategoryD<1> cat=fh.get_category<1>("shape");
+  Category cat=fh.get_category("shape");
         Strings  coordinates_names;
         coordinates_names.push_back("cartesian xs");
         coordinates_names.push_back("cartesian ys");
@@ -1549,7 +1549,7 @@ internal::IndexLazyKey type_pf_;
     SegmentFactory(FileHandle fh):
       P(){
     {
-  CategoryD<1> cat=get_category_always<1>(fh, "shape");
+  Category cat=get_category_always(fh, "shape");
         Strings  coordinates_names;
         coordinates_names.push_back("cartesian xs");
         coordinates_names.push_back("cartesian ys");
@@ -1605,7 +1605,7 @@ IndexKey type_pf_;
     SegmentConstFactory(FileConstHandle fh):
       P(){
     {
-  CategoryD<1> cat=fh.get_category<1>("shape");
+  Category cat=fh.get_category("shape");
         Strings  coordinates_names;
         coordinates_names.push_back("cartesian xs");
         coordinates_names.push_back("cartesian ys");
@@ -1867,7 +1867,7 @@ internal::StringsLazyKey authors_pf_;
     JournalArticleFactory(FileHandle fh):
       P(){
     {
-  CategoryD<1> cat=get_category_always<1>(fh, "publication");
+  Category cat=get_category_always(fh, "publication");
 title_=internal::StringLazyKey(fh, cat,
                                "title",
                                false);
@@ -1954,7 +1954,7 @@ StringsKey authors_pf_;
     JournalArticleConstFactory(FileConstHandle fh):
       P(){
     {
-  CategoryD<1> cat=fh.get_category<1>("publication");
+  Category cat=fh.get_category("publication");
 title_=P::get_key<StringTraits>(fh,
                    cat,
                    "title",
@@ -2136,7 +2136,7 @@ internal::StringLazyKey type_pf_;
     ResidueFactory(FileHandle fh):
       P(){
     {
-  CategoryD<1> cat=get_category_always<1>(fh, "sequence");
+  Category cat=get_category_always(fh, "sequence");
 index_[0]=internal::IntLazyKey(fh, cat,
                                "first residue index",
                                false);
@@ -2187,7 +2187,7 @@ StringKey type_pf_;
     ResidueConstFactory(FileConstHandle fh):
       P(){
     {
-  CategoryD<1> cat=fh.get_category<1>("sequence");
+  Category cat=fh.get_category("sequence");
 index_[0]=P::get_key<IntTraits>(fh,
                    cat,
                    "first residue index",
@@ -2404,7 +2404,7 @@ internal::IndexLazyKey element_pf_;
     AtomFactory(FileHandle fh):
       P(){
     {
-  CategoryD<1> cat=get_category_always<1>(fh, "physics");
+  Category cat=get_category_always(fh, "physics");
         Strings  coordinates_names;
         coordinates_names.push_back("cartesian x");
         coordinates_names.push_back("cartesian y");
@@ -2483,7 +2483,7 @@ IndexKey element_pf_;
     AtomConstFactory(FileConstHandle fh):
       P(){
     {
-  CategoryD<1> cat=fh.get_category<1>("physics");
+  Category cat=fh.get_category("physics");
         Strings  coordinates_names;
         coordinates_names.push_back("cartesian x");
         coordinates_names.push_back("cartesian y");
@@ -2640,7 +2640,7 @@ internal::IndexLazyKey chain_id_pf_;
     ChainFactory(FileHandle fh):
       P(){
     {
-  CategoryD<1> cat=get_category_always<1>(fh, "sequence");
+  Category cat=get_category_always(fh, "sequence");
 chain_id_=internal::IndexLazyKey(fh, cat,
                                "chain id",
                                false);
@@ -2679,7 +2679,7 @@ IndexKey chain_id_pf_;
     ChainConstFactory(FileConstHandle fh):
       P(){
     {
-  CategoryD<1> cat=fh.get_category<1>("sequence");
+  Category cat=fh.get_category("sequence");
 chain_id_=P::get_key<IndexTraits>(fh,
                    cat,
                    "chain id",
@@ -2783,7 +2783,7 @@ void set_indexes(Int v0, Int v1) {
     DomainFactory(FileHandle fh):
       P(){
     {
-  CategoryD<1> cat=get_category_always<1>(fh, "sequence");
+  Category cat=get_category_always(fh, "sequence");
 indexes_[0]=internal::IntLazyKey(fh, cat,
                                "first residue index",
                                false);
@@ -2822,7 +2822,7 @@ indexes_[1]=internal::IntLazyKey(fh, cat,
     DomainConstFactory(FileConstHandle fh):
       P(){
     {
-  CategoryD<1> cat=fh.get_category<1>("sequence");
+  Category cat=fh.get_category("sequence");
 indexes_[0]=P::get_key<IntTraits>(fh,
                    cat,
                    "first residue index",
@@ -2940,7 +2940,7 @@ internal::IndexLazyKey copy_index_pf_;
     CopyFactory(FileHandle fh):
       P(){
     {
-  CategoryD<1> cat=get_category_always<1>(fh, "sequence");
+  Category cat=get_category_always(fh, "sequence");
 copy_index_=internal::IndexLazyKey(fh, cat,
                                "copy index",
                                false);
@@ -2979,7 +2979,7 @@ IndexKey copy_index_pf_;
     CopyConstFactory(FileConstHandle fh):
       P(){
     {
-  CategoryD<1> cat=fh.get_category<1>("sequence");
+  Category cat=fh.get_category("sequence");
 copy_index_=P::get_key<IndexTraits>(fh,
                    cat,
                    "copy index",
@@ -3096,7 +3096,7 @@ internal::FloatLazyKey diffusion_coefficient_pf_;
     DiffuserFactory(FileHandle fh):
       P(){
     {
-  CategoryD<1> cat=get_category_always<1>(fh, "physics");
+  Category cat=get_category_always(fh, "physics");
 diffusion_coefficient_=internal::FloatLazyKey(fh, cat,
                                "diffusion coefficient",
                                false);
@@ -3135,7 +3135,7 @@ FloatKey diffusion_coefficient_pf_;
     DiffuserConstFactory(FileConstHandle fh):
       P(){
     {
-  CategoryD<1> cat=fh.get_category<1>("physics");
+  Category cat=fh.get_category("physics");
 diffusion_coefficient_=P::get_key<FloatTraits>(fh,
                    cat,
                    "diffusion coefficient",
@@ -3252,7 +3252,7 @@ internal::StringLazyKey type_name_pf_;
     TypedFactory(FileHandle fh):
       P(){
     {
-  CategoryD<1> cat=get_category_always<1>(fh, "sequence");
+  Category cat=get_category_always(fh, "sequence");
 type_name_=internal::StringLazyKey(fh, cat,
                                "type name",
                                false);
@@ -3291,7 +3291,7 @@ StringKey type_name_pf_;
     TypedConstFactory(FileConstHandle fh):
       P(){
     {
-  CategoryD<1> cat=fh.get_category<1>("sequence");
+  Category cat=fh.get_category("sequence");
 type_name_=P::get_key<StringTraits>(fh,
                    cat,
                    "type name",
@@ -3316,169 +3316,6 @@ type_name_pf_);
     typedef vector<TypedConstFactory>
             TypedConstFactories;
 
-/** Store a reference to another node as an alias.
-
-       \see Alias
-       \see AliasConstFactory
-     */
-    class AliasConst:
-        public Decorator<AliasConst, NodeConstHandle> {
-    friend class AliasConstFactory;
-    private:
-    typedef Decorator<AliasConst, NodeConstHandle> P;
-    NodeIDKey aliased_;
-NodeIDKey aliased_pf_;
-    AliasConst(NodeConstHandle nh,
-                  NodeIDKey aliased,
-NodeIDKey aliased_pf):
-       P(nh),
-aliased_(aliased),
-aliased_pf_(aliased_pf) {
-    ;
-    }
-    public:
-    NodeConstHandle get_aliased() const {
-  NodeID id;
-  if (get_node().get_has_value(aliased_)) {
-   id= get_node().get_value(aliased_);
-  } else {
-   id= get_node().get_value(aliased_pf_);
-  }
-  return get_node().get_file().get_node_from_id(id);
-}
-    static std::string get_decorator_type_name() {
-         return "AliasConst";
-    }
-    };
-
-    typedef vector<AliasConst>
-            AliasConsts;
-
-/** Store a reference to another node as an alias.
-
-       \see AliasConst
-       \see AliasFactory
-     */
-    class Alias:
-        public Decorator<Alias, NodeHandle> {
-    friend class AliasFactory;
-    private:
-    typedef Decorator<Alias, NodeHandle> P;
-    internal::NodeIDLazyKey aliased_;
-internal::NodeIDLazyKey aliased_pf_;
-    Alias(NodeHandle nh,
-                  internal::NodeIDLazyKey aliased,
-internal::NodeIDLazyKey aliased_pf):
-       P(nh),
-aliased_(aliased),
-aliased_pf_(aliased_pf) {
-    ;
-    }
-    public:
-    NodeHandle get_aliased() const {
-  NodeID id;
-  if (get_node().get_has_value(aliased_)) {
-   id= get_node().get_value(aliased_);
-  } else {
-   id= get_node().get_value(aliased_pf_);
-  }
-  return get_node().get_file().get_node_from_id(id);
-}
-void set_aliased(NodeConstHandle v) {
-  if (get_frame() >=0) {
-    get_node().set_value(aliased_pf_, v.get_id());
-  } else {
-    return get_node().set_value(aliased_, v.get_id());
-  }
-}
-    static std::string get_decorator_type_name() {
-         return "Alias";
-    }
-    };
-
-    typedef vector<Alias>
-            Aliass;
-
-/** Create decorators of type Alias.
-
-       \see Alias
-       \see AliasConstFactory
-    */
-    class AliasFactory:
-       public Factory<Alias>
-                 {
-    private:
-    typedef Factory<Alias> P;
-    internal::NodeIDLazyKey aliased_;
-internal::NodeIDLazyKey aliased_pf_;
-    public:
-    AliasFactory(FileHandle fh):
-      P(){
-    {
-  CategoryD<1> cat=get_category_always<1>(fh, "alias");
-aliased_=internal::NodeIDLazyKey(fh, cat,
-                               "aliased",
-                               false);
-aliased_pf_=internal::NodeIDLazyKey(fh, cat,
-                               "aliased",
-                               true);
-};
-    }
-    Alias get(NodeHandle nh) const {
-      ;
-      return Alias(nh, aliased_,
-aliased_pf_);
-    }
-    bool get_is(NodeHandle nh) const {
-      return P::get_has_value(nh, aliased_,
-                            aliased_pf_);
-    }
-    };
-
-    typedef vector<AliasFactory>
-            AliasFactories;
-
-/** Create decorators of type Alias.
-
-       \see AliasConst
-       \see AliasFactory
-    */
-    class AliasConstFactory:
-       public Factory<AliasConst>
-                 {
-    private:
-    typedef Factory<AliasConst> P;
-    NodeIDKey aliased_;
-NodeIDKey aliased_pf_;
-    public:
-    AliasConstFactory(FileConstHandle fh):
-      P(){
-    {
-  CategoryD<1> cat=fh.get_category<1>("alias");
-aliased_=P::get_key<NodeIDTraits>(fh,
-                   cat,
-                   "aliased",
-                   false);
-aliased_pf_=P::get_key<NodeIDTraits>(fh,
-                   cat,
-                   "aliased",
-                   true);
-};
-    }
-    AliasConst get(NodeConstHandle nh) const {
-      RMF_USAGE_CHECK(get_is(nh), "Node is not");
-      return AliasConst(nh, aliased_,
-aliased_pf_);
-    }
-    bool get_is(NodeConstHandle nh) const {
-      return P::get_has_value(nh, aliased_,
-                            aliased_pf_);
-    }
-    };
-
-    typedef vector<AliasConstFactory>
-            AliasConstFactories;
-
 /** Associate a score with some set of particles.
 
        \see Score
@@ -3489,15 +3326,12 @@ aliased_pf_);
     friend class ScoreConstFactory;
     private:
     typedef Decorator<ScoreConst, NodeConstHandle> P;
-    AliasConstFactory representation_;
-FloatKey score_;
+    FloatKey score_;
 FloatKey score_pf_;
     ScoreConst(NodeConstHandle nh,
-                  AliasConstFactory representation,
-FloatKey score,
+                  FloatKey score,
 FloatKey score_pf):
        P(nh),
-representation_(representation),
 score_(score),
 score_pf_(score_pf) {
     ;
@@ -3507,8 +3341,8 @@ score_pf_(score_pf) {
   NodeConstHandles typed=get_node().get_children();
   NodeConstHandles ret;
   for (unsigned int i=0; i< typed.size(); ++i) {
-     if (representation_.get_is(typed[i])) {
-        ret.push_back(representation_.get(typed[i]).get_aliased());
+     if (typed[i].get_type()== REPRESENTATION) {
+        ret.push_back(typed[i]);
      }
   }
   return ret;
@@ -3538,15 +3372,12 @@ Floats get_all_scores() const {
     friend class ScoreFactory;
     private:
     typedef Decorator<Score, NodeHandle> P;
-    AliasFactory representation_;
-internal::FloatLazyKey score_;
+    internal::FloatLazyKey score_;
 internal::FloatLazyKey score_pf_;
     Score(NodeHandle nh,
-                  AliasFactory representation,
-internal::FloatLazyKey score,
+                  internal::FloatLazyKey score,
 internal::FloatLazyKey score_pf):
        P(nh),
-representation_(representation),
 score_(score),
 score_pf_(score_pf) {
     ;
@@ -3556,20 +3387,20 @@ score_pf_(score_pf) {
   NodeHandles typed=get_node().get_children();
   NodeHandles ret;
   for (unsigned int i=0; i< typed.size(); ++i) {
-     if (representation_.get_is(typed[i])) {
-        ret.push_back(representation_.get(typed[i]).get_aliased());
+     if (typed[i].get_type()== REPRESENTATION) {
+        ret.push_back(typed[i]);
      }
   }
   return ret;
 }
 void set_representation(NodeConstHandles v) {
    for (unsigned int i=0; i< v.size(); ++i) {
-       add_child_alias(get_node(), v[i]);
+       get_node().add_child(v[i]);
    }
 }
 void set_representation(NodeHandles v) {
    for (unsigned int i=0; i< v.size(); ++i) {
-       add_child_alias(get_node(), v[i]);
+       get_node().add_child(v[i]);
    }
 }
 Float get_score() const {
@@ -3601,14 +3432,13 @@ void set_score(Float v) {
                  {
     private:
     typedef Factory<Score> P;
-    AliasFactory representation_;
-internal::FloatLazyKey score_;
+    internal::FloatLazyKey score_;
 internal::FloatLazyKey score_pf_;
     public:
     ScoreFactory(FileHandle fh):
-      P(), representation_(fh){
+      P(){
     {
-  CategoryD<1> cat=get_category_always<1>(fh, "feature");
+  Category cat=get_category_always(fh, "feature");
 score_=internal::FloatLazyKey(fh, cat,
                                "score",
                                false);
@@ -3619,8 +3449,7 @@ score_pf_=internal::FloatLazyKey(fh, cat,
     }
     Score get(NodeHandle nh) const {
       ;
-      return Score(nh, representation_,
-score_,
+      return Score(nh, score_,
 score_pf_);
     }
     bool get_is(NodeHandle nh) const {
@@ -3642,14 +3471,13 @@ score_pf_);
                  {
     private:
     typedef Factory<ScoreConst> P;
-    AliasConstFactory representation_;
-FloatKey score_;
+    FloatKey score_;
 FloatKey score_pf_;
     public:
     ScoreConstFactory(FileConstHandle fh):
-      P(), representation_(fh){
+      P(){
     {
-  CategoryD<1> cat=fh.get_category<1>("feature");
+  Category cat=fh.get_category("feature");
 score_=P::get_key<FloatTraits>(fh,
                    cat,
                    "score",
@@ -3662,8 +3490,7 @@ score_pf_=P::get_key<FloatTraits>(fh,
     }
     ScoreConst get(NodeConstHandle nh) const {
       RMF_USAGE_CHECK(get_is(nh), "Node is not");
-      return ScoreConst(nh, representation_,
-score_,
+      return ScoreConst(nh, score_,
 score_pf_);
     }
     bool get_is(NodeConstHandle nh) const {

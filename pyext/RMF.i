@@ -40,8 +40,6 @@
 #include "RMF/Category.h"
 #include "RMF/NodeConstHandle.h"
 #include "RMF/NodeHandle.h"
-#include "RMF/NodeSetConstHandle.h"
-#include "RMF/NodeSetHandle.h"
 #include "RMF/FileConstHandle.h"
 #include "RMF/FileHandle.h"
 #include "RMF/names.h"
@@ -110,9 +108,6 @@ namespace RMF {
 }
 
 IMP_RMF_SWIG_VALUE_INSTANCE(RMF, Ucname##Key, Ucname##Key, Ucname##Keys);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF, Pair##Ucname##Key, Pair##Ucname##Key, Pair##Ucname##Keys);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF, Triplet##Ucname##Key, Triplet##Ucname##Key, Triplet##Ucname##Keys);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF, Quad##Ucname##Key, Quad##Ucname##Key, Quad##Ucname##Keys);
 IMP_RMF_SWIG_VALUE_INSTANCE(RMF, HDF5##Ucname##DataSet1D, HDF5##Ucname##DataSet1D, HDF5##Ucname##DataSet1Ds);
 IMP_RMF_SWIG_VALUE_INSTANCE(RMF, HDF5##Ucname##DataSet2D, HDF5##Ucname##DataSet2D, HDF5##Ucname##DataSet2Ds);
 IMP_RMF_SWIG_VALUE_INSTANCE(RMF, HDF5##Ucname##DataSet3D, HDF5##Ucname##DataSet3D, HDF5##Ucname##DataSet3Ds);
@@ -140,16 +135,10 @@ _types_list.append(#lcname)
 %template(HDF5##Ucname##DataSet1D) RMF::HDF5DataSetD<RMF::Ucname##Traits, 1>;
 %template(HDF5##Ucname##DataSet2D) RMF::HDF5DataSetD<RMF::Ucname##Traits, 2>;
 %template(HDF5##Ucname##DataSet3D) RMF::HDF5DataSetD<RMF::Ucname##Traits, 3>;
-%template(Ucname##Key) RMF::Key<RMF::Ucname##Traits, 1>;
-%template(Pair##Ucname##Key) RMF::Key<RMF::Ucname##Traits, 2>;
-%template(Triplet##Ucname##Key) RMF::Key<RMF::Ucname##Traits, 3>;
-%template(Quad##Ucname##Key) RMF::Key<RMF::Ucname##Traits, 4>;
+%template(Ucname##Key) RMF::Key<RMF::Ucname##Traits>;
 %enddef
 
 IMP_RMF_SWIG_VALUE_INSTANCE(RMF, NodeID, NodeID, NodeIDs);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF, NodePairID, NodePairID, NodePairIDs);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF, NodeTripletID, NodeTripletID, NodeTripletIDs);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF, NodeQuadID, NodeQuadID, NodeQuadIDs);
 
 IMP_RMF_SWIG_NATIVE_VALUES_LIST(RMF, double, Floats, FloatsList);
 IMP_RMF_SWIG_NATIVE_VALUES_LIST(RMF, int, Ints, IntsList);
@@ -169,11 +158,7 @@ IMP_RMF_SWIG_VALUE(RMF, FileConstHandle, FileConstHandles);
 IMP_RMF_SWIG_VALUE(RMF, NodeHandle, NodeHandles);
 IMP_RMF_SWIG_VALUE(RMF, FileHandle, FileHandles);
 IMP_RMF_SWIG_VALUE(RMF, SetCurrentFrame, SetCurrentFrames);
-IMP_RMF_SWIG_VALUE_TEMPLATE(RMF, CategoryD);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF, Category, Category, Categories);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF, PairCategory, PairCategory, PairCategories);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF, TripletCategory, TripletCategory, TripletCategories);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF, QuadCategory, QuadCategory, QuadCategories);
+IMP_RMF_SWIG_VALUE(RMF, Category, Categories);
 IMP_RMF_SWIG_VALUE_TEMPLATE(RMF, Key);
 IMP_RMF_SWIG_VALUE(RMF, HDF5Object, HDF5Objects);
 IMP_RMF_SWIG_VALUE_TEMPLATE(RMF, HDF5ConstAttributes);
@@ -188,11 +173,6 @@ IMP_RMF_SWIG_VALUE_TEMPLATE(RMF, HDF5DataSetD);
 IMP_RMF_SWIG_VALUE_INSTANCE(RMF, HDF5DataSetIndex1D, HDF5DataSetIndex1D, HDF5DataSetIndex1Ds);
 IMP_RMF_SWIG_VALUE_INSTANCE(RMF, HDF5DataSetIndex2D, HDF5DataSetIndex2D, HDF5DataSetIndex2Ds);
 IMP_RMF_SWIG_VALUE_INSTANCE(RMF, HDF5DataSetIndex3D, HDF5DataSetIndex3D, HDF5DataSetIndex3Ds);
-IMP_RMF_SWIG_VALUE_TEMPLATE(RMF, NodeSetConstHandle);
-IMP_RMF_SWIG_VALUE_TEMPLATE(RMF, NodeSetHandle);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF, NodePairHandle, NodePairHandle, NodePairHandles);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF, NodeTripletHandle, NodeTripletHandle, NodeTripletHandles);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF, NodeQuadHandle, NodeQuadHandle, NodeQuadHandles);
 IMP_RMF_SWIG_PAIR(RMF, NodeConstHandle, BondPair, BondPairs)
 IMP_RMF_SWIG_PAIR(RMF, Index, IndexRange, IndexRanges)
 IMP_RMF_SWIG_PAIR(RMF, Int, IntRange, IntRanges)
@@ -298,9 +278,6 @@ IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DEFINE_INTERMEDIATE_TYPE);
 %include "RMF/HDF5DataSetD.h"
 
 %template(NodeID) RMF::NodeIDD<1>;
-%template(NodePairID) RMF::NodeIDD<2>;
-%template(NodeTripletID) RMF::NodeIDD<3>;
-%template(NodeQuadID) RMF::NodeIDD<4>;
 
 
 %include "RMF/Key.h"
@@ -308,10 +285,6 @@ IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DEFINE_TYPE);
 
 
 %include "RMF/Category.h"
-%template(Category) RMF::CategoryD<1>;
-%template(PairCategory) RMF::CategoryD<2>;
-%template(TripletCategory) RMF::CategoryD<3>;
-%template(QuadCategory) RMF::CategoryD<4>;
 
 %include "RMF/names.h"
 
@@ -323,17 +296,6 @@ IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DEFINE_TYPE);
 
 %include "RMF/NodeConstHandle.h"
 %include "RMF/NodeHandle.h"
-
-%include "RMF/NodeSetConstHandle.h"
-%template(NodePairConstHandle) RMF::NodeSetConstHandle<2>;
-%template(NodeTripletConstHandle) RMF::NodeSetConstHandle<3>;
-%template(NodeQuadConstHandle) RMF::NodeSetConstHandle<4>;
-
-%include "RMF/NodeSetHandle.h"
-%template(NodePairHandle) RMF::NodeSetHandle<2>;
-%template(NodeTripletHandle) RMF::NodeSetHandle<3>;
-%template(NodeQuadHandle) RMF::NodeSetHandle<4>;
-
 %include "RMF/FileConstHandle.h"
 %include "RMF/FileHandle.h"
 %include "RMF/Validator.h"
@@ -358,7 +320,6 @@ IMP_RMF_DECORATOR(RMF, Domain);
 IMP_RMF_DECORATOR(RMF, Copy);
 IMP_RMF_DECORATOR(RMF, Diffuser);
 IMP_RMF_DECORATOR(RMF, Typed);
-IMP_RMF_DECORATOR(RMF, Alias);
 
 %include "RMF/decorators.h"
 %include "RMF/decorator_utility.h"

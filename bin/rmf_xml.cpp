@@ -26,13 +26,13 @@ namespace {
     return std::string(data.begin(), data.end());
   }
 
-template <class TypeT, int Arity, class Handle>
+template <class TypeT, class Handle>
   bool show_type_data_xml(Handle nh,
-                          RMF::CategoryD<Arity> kc,
+                          RMF::Category kc,
                           bool opened, int frame, std::ostream &out) {
     using RMF::operator<<;
     RMF::FileConstHandle rh= nh.get_file();
-    std::vector<RMF::Key<TypeT, Arity> > keys= rh.get_keys<TypeT>(kc);
+    std::vector<RMF::Key<TypeT> > keys= rh.get_keys<TypeT>(kc);
     for (unsigned int i=0; i< keys.size(); ++i) {
       //std::cout << "key " << rh.get_name(keys[i]) << std::endl;
       if (rh.get_is_per_frame(keys[i])) {
@@ -40,7 +40,7 @@ template <class TypeT, int Arity, class Handle>
           nh.get_file().set_current_frame(frame);
           if (nh.get_has_value(keys[i])) {
             if (!opened) {
-              out << "<" << nh.get_file().get_category_name(kc) << "\n";
+              out << "<" << nh.get_file().get_name(kc) << "\n";
               opened=true;
             }
             out  << get_as_attribute_name(rh.get_name(keys[i])) << "=\"";
@@ -64,7 +64,7 @@ template <class TypeT, int Arity, class Handle>
           }
           if (some) {
             if (!opened) {
-              out << "<" << nh.get_file().get_category_name(kc)  << "\n";
+              out << "<" << nh.get_file().get_name(kc)  << "\n";
               opened=true;
             }
             out << get_as_attribute_name(rh.get_name(keys[i])) << "=\"";
@@ -78,7 +78,7 @@ template <class TypeT, int Arity, class Handle>
       } else {
         if (nh.get_has_value(keys[i])) {
           if (!opened) {
-            out << "<" << nh.get_file().get_category_name(kc) << "\n";
+            out << "<" << nh.get_file().get_name(kc) << "\n";
             opened=true;
           }
           out  << get_as_attribute_name(rh.get_name(keys[i])) << "=\"";
@@ -90,12 +90,12 @@ template <class TypeT, int Arity, class Handle>
   }
 #define RMF_SHOW_TYPE_DATA_XML(lcname, UCName, PassValue, ReturnValue, \
                                    PassValues, ReturnValues)            \
-  opened=show_type_data_xml<RMF::UCName##Traits, Arity>(nh, kc, opened, frame, \
-                                                        out);
+  opened=show_type_data_xml<RMF::UCName##Traits>(nh, kc, opened, frame, \
+                                                 out);
 
-template <int Arity, class Handle>
+  template <class Handle>
   void show_data_xml(Handle nh,
-                     RMF::CategoryD<Arity> kc,
+                     RMF::Category kc,
                      int frame,
                      std::ostream &out) {
     bool opened=false;
@@ -107,57 +107,29 @@ template <int Arity, class Handle>
 
   void show_hierarchy(RMF::NodeConstHandle nh,
                       const RMF::Categories& cs, int frame,
+                      std::set<RMF::NodeConstHandle> &seen,
                       std::ostream &out) {
     out << "<node name=\"" << nh.get_name() << "\" id=\""
         << nh.get_id() << "\" "
         << "type=\"" << RMF::get_type_name(nh.get_type())
         << "\">\n";
-    if (verbose) {
-      for (unsigned int i=0; i< cs.size(); ++i) {
-        show_data_xml<1>(nh, cs[i], frame, out);
+    if (seen.find(nh) ==seen.end()) {
+      if (verbose) {
+        for (unsigned int i=0; i< cs.size(); ++i) {
+          show_data_xml(nh, cs[i], frame, out);
+        }
       }
-    }
-    RMF::NodeConstHandles children= nh.get_children();
-    for (unsigned int i=0; i< children.size(); ++i) {
-      out << "<child>\n";
-      show_hierarchy(children[i],cs,  frame, out);
-      out << "</child>\n";
+      RMF::NodeConstHandles children= nh.get_children();
+      for (unsigned int i=0; i< children.size(); ++i) {
+        out << "<child>\n";
+        show_hierarchy(children[i],cs,  frame, seen, out);
+        out << "</child>\n";
+      }
+      seen.insert(nh);
     }
     out << "</node>" << std::endl;
   }
 }
-
-
-template <int Arity>
-void show_sets(RMF::FileConstHandle rh,
-               const RMF::vector<RMF::CategoryD<Arity> >& cs,
-               int frame,
-               std::ostream &out) {
-  std::vector<RMF::NodeSetConstHandle<Arity> > sets= rh.get_node_sets<Arity>();
-  if (!sets.empty()) {
-    out << "<sets" << Arity << ">" << std::endl;
-    for (unsigned int i=0; i< sets.size(); ++i) {
-      out << "<set id=\"" << sets[i].get_id().get_index()
-          << "\" type=\"" << RMF::get_set_type_name(sets[i].get_type())
-          << "\" members=\"";
-      for (unsigned int j=0; j< Arity; ++j) {
-        if (j >0) {
-          out << ", ";
-        }
-        out << sets[i].get_node(j).get_id().get_index();
-      }
-      out << "\">" << std::endl;
-      if (verbose) {
-        for (unsigned int j=0; j< cs.size(); ++j) {
-          show_data_xml<Arity>(sets[i], cs[j], frame, out);
-        }
-      }
-      out << "</set>" << std::endl;
-    }
-    out << "</sets"<< Arity << ">" << std::endl;
-  }
-}
-
 
 
 
@@ -195,10 +167,8 @@ int main(int argc, char **argv) {
     *out << "<path>\n";
     *out << input <<std::endl;
     *out << "</path>\n";
-    show_hierarchy(rh.get_root_node(), cs, frame_option, *out);
-    show_sets<2>(rh, rh.get_categories<2>(), frame_option, *out);
-    show_sets<3>(rh, rh.get_categories<3>(), frame_option, *out);
-    show_sets<4>(rh, rh.get_categories<4>(), frame_option, *out);
+    std::set<RMF::NodeConstHandle> seen;
+    show_hierarchy(rh.get_root_node(), cs, frame_option, seen, *out);
     *out << "</rmf>\n";
     return 0;
   } catch (const std::exception &e) {

@@ -55,52 +55,6 @@ struct NodeIDsEqual {
 };
 }
 
-class UniquenessValidator: public Validator {
-  template <int Arity>
-  void validate_one(FileConstHandle rh,
-                    std::ostream &out) const {
-    vector<NodeSetConstHandle<Arity> > all= rh.get_node_sets<Arity>();
-    if (all.empty()) return;
-    typedef vector<NodeConstHandles> Seen;
-    Seen seen(all.size());
-    for (unsigned int i=0; i< all.size(); ++i) {
-      NodeConstHandles cur(Arity);
-      for (unsigned int j=0; j< Arity; ++j) {
-        cur[j]= all[i].get_node(j);
-        if (j >0 && cur[j] <= cur[j-1]) {
-          out << "Not all the sets of size " << Arity
-              << " are properly sorted: " << all[i]
-              << " is not." << std::endl;
-        }
-      }
-      seen[i]=cur;
-    }
-    std::sort(seen.begin(), seen.end(), NodeIDsLess());
-    Seen::const_iterator dup=std::adjacent_find(seen.begin(),
-                                                seen.end(),
-                                                NodeIDsEqual());
-    if (dup != seen.end()) {
-      std::sort(all.begin(), all.end());
-      out << "Not all sets of size " << Arity << " are unique. "
-          << " Of " << all.size() << " there were "
-          << all.size() - seen.size() << " redundant eg: "
-          << *dup << " in " << Showable(all)
-          << std::endl;
-    }
-  }
- public:
-  UniquenessValidator(FileConstHandle rh, std::string name):
-      Validator(rh, name){}
-  void write_errors(std::ostream &out) const {
-    validate_one<2>(get_file(), out);
-    validate_one<3>(get_file(), out);
-    validate_one<4>(get_file(), out);
-  }
-};
-
-RMF_VALIDATOR(UniquenessValidator);
-
-
 struct NonNegativeChecker {
   FloatKey k_, pfk_;
   std::string catname_;
@@ -108,7 +62,7 @@ struct NonNegativeChecker {
   NonNegativeChecker(){}
   NonNegativeChecker(FileConstHandle rh, Category c, std::string name) {
     if (c != Category()) {
-      catname_= rh.get_category_name(c);
+      catname_= rh.get_name(c);
       keyname_=name;
       if (rh.get_has_key<FloatTraits>(c, name, false)) {
         k_=rh.get_key<FloatTraits>(c, name, false);
@@ -158,7 +112,7 @@ struct TieChecker {
         ks_.push_back(rh.get_key<FloatTraits>(c, names[i], false));
         pfks_.push_back(rh.get_key<FloatTraits>(c, names[i], true));
       }
-      catname_= rh.get_category_name(c);
+      catname_= rh.get_name(c);
     }
     keynames_=name;
   }
@@ -214,16 +168,16 @@ RMF_VALIDATOR(PhysicsValidator);
 
 
 #define RMF_DECLARE_KEYS(lcname, UCName, PassValue, ReturnValue, \
-                             PassValues, ReturnValues)\
-  vector<std::pair<Key<UCName##Traits, 1>, Key<UCName##Traits, 1> > >   \
+                         PassValues, ReturnValues)               \
+  vector<std::pair<Key<UCName##Traits>, Key<UCName##Traits> > >  \
   lcname##_pairs_;
 
-#define RMF_INIT_KEYS(lcname, UCName, PassValue, ReturnValue,       \
-                          PassValues, ReturnValues)                     \
+#define RMF_INIT_KEYS(lcname, UCName, PassValue, ReturnValue,           \
+                      PassValues, ReturnValues)                         \
   init(rh, categories[i], lcname##_pairs_)
 
 #define RMF_CHECK_KEYS(lcname, UCName, PassValue, ReturnValue,       \
-                           PassValues, ReturnValues)                    \
+                       PassValues, ReturnValues)                     \
   check(node, out, lcname##_pairs_)
 
 class KeyValidator: public NodeValidator {
@@ -232,8 +186,8 @@ class KeyValidator: public NodeValidator {
   template <class Traits>
   void check(NodeConstHandle node,
              std::ostream &out,
-             const vector<std::pair<Key<Traits, 1>,
-             Key<Traits, 1> > >  &keys) const {
+             const vector<std::pair<Key<Traits>,
+                                    Key<Traits> > >  &keys) const {
     for (unsigned int i=0; i< keys.size(); ++i) {
       if (!node.get_has_value(keys[i].second)) continue;
       unsigned int fn
@@ -252,16 +206,16 @@ class KeyValidator: public NodeValidator {
 
   template <class Traits>
   void init(FileConstHandle rh,
-            CategoryD<1> cat,
-            vector<std::pair<Key<Traits, 1>,
-            Key<Traits, 1> > >  &keys) {
-    vector<Key<Traits, 1> > allkeys
+            Category cat,
+            vector<std::pair<Key<Traits>,
+                             Key<Traits> > >  &keys) {
+    vector<Key<Traits> > allkeys
       = rh.get_keys<Traits>(cat);
     for (unsigned int j=0; j< allkeys.size(); ++j) {
       for (unsigned int k=0; k < j; ++k) {
         if (rh.get_name(allkeys[j]) == rh.get_name(allkeys[k])) {
-          Key<Traits, 1> ka= allkeys[j];
-          Key<Traits, 1> kb= allkeys[k];
+          Key<Traits> ka= allkeys[j];
+          Key<Traits> kb= allkeys[k];
           if (rh.get_is_per_frame(kb)) std::swap(ka, kb);
           RMF_INTERNAL_CHECK(rh.get_is_per_frame(ka),
                                  "Not");
@@ -277,7 +231,7 @@ class KeyValidator: public NodeValidator {
  public:
   KeyValidator(FileConstHandle rh, std::string name):
       NodeValidator(rh, name){
-    Categories categories= rh.get_categories<1>();
+    Categories categories= rh.get_categories();
     for (unsigned int i=0; i< categories.size(); ++i) {
       RMF_FOREACH_TYPE(RMF_INIT_KEYS);
     }

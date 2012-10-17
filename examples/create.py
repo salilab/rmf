@@ -132,13 +132,16 @@ bond_data=[(1,4),(0,1),(1,2),(2,3),(4,5),(5,6),(6,7),(2,8),(9,12),(8,9),(9,10),
 
 bond_scores=chain.add_child("bond scores", RMF.FEATURE)
 
+bonds= rmf.get_root_node().add_child("bonds", RMF.ORGANIZATIONAL)
+
 for b in bond_data:
-    eps=[atoms[b[0]], atoms[b[1]]]
-    rmf.add_node_pair(eps, RMF.BOND)
+    bd= bonds.add_child("bond", RMF.BOND)
+    bd.add_child(atoms[b[0]])
+    bd.add_child(atoms[b[1]])
     bd= bond_scores.add_child(str(b), RMF.FEATURE)
     sd= score_factory.get(bd)
     sd.set_score(0)
-    sd.set_representation(eps)
+    sd.set_representation([atoms[b[0]], atoms[b[1]]])
 
 # now add some geometry floating around
 #group it for kicks

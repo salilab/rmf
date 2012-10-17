@@ -64,6 +64,9 @@ class RMFEXPORT NodeHandle: public NodeConstHandle {
    */
   NodeHandle add_child(std::string name, NodeType t);
 
+  /** Add an existing node as a child.*/
+  void add_child(NodeConstHandle nh);
+
   NodeHandles get_children() const;
 
   /** \name Functions to access attributes
@@ -77,13 +80,6 @@ class RMFEXPORT NodeHandle: public NodeConstHandle {
 
   FileHandle get_file() const;
 };
-
-/** See get_children_resolving_aliases(NodeConstHandle).*/
-RMFEXPORT NodeHandles get_children_resolving_aliases(NodeHandle nh);
-
-/** Add a child to the node that is an alias to another node.*/
-RMFEXPORT NodeHandle add_child_alias(NodeHandle parent,
-                                     NodeConstHandle alias);
 } /* namespace RMF */
 
 #endif /* IMPLIBRMF_NODE_HANDLE_H */

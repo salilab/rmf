@@ -36,15 +36,15 @@ namespace RMF {
 
 
 
-#define RMF_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue, \
-                                  PassValues, ReturnValues, Arity)      \
+#define RMF_SHARED_TYPE(lcname, Ucname, PassValue, ReturnValue,         \
+                              PassValues, ReturnValues)                 \
     /** Return a value or the null value.*/                             \
     virtual Ucname##Traits::Type get_value(unsigned int node,           \
-                                           Key<Ucname##Traits,Arity> k) \
+                                           Key<Ucname##Traits> k)       \
       const=0;                                                          \
     virtual Ucname##Traits::Types                                       \
     get_values(unsigned int node,                                       \
-               const vector<Key<Ucname##Traits,Arity> >& k) const {     \
+               const vector<Key<Ucname##Traits> >& k) const {           \
       Ucname##Traits::Types ret(k.size());                              \
       for (unsigned int i=0; i< k.size(); ++i) {                        \
         ret[i]= get_value(node, k[i]);                                  \
@@ -53,7 +53,7 @@ namespace RMF {
     }                                                                   \
     virtual Ucname##Traits::Types                                       \
     get_all_values(unsigned int node,                                   \
-                   Key<Ucname##Traits,Arity> k) {                       \
+                   Key<Ucname##Traits> k) {                             \
       unsigned int nf= get_number_of_frames();                          \
       int start_frame=get_current_frame();                              \
       Ucname##Traits::Types ret(nf);                                    \
@@ -65,34 +65,23 @@ namespace RMF {
       return ret;                                                       \
     }                                                                   \
     virtual void set_value(unsigned int node,                           \
-                           Key<Ucname##Traits, Arity> k,                \
+                           Key<Ucname##Traits> k,                       \
                            Ucname##Traits::Type v) =0;                  \
-    virtual void set_values(unsigned int node,                           \
-                            const vector<Key<Ucname##Traits, Arity> > &k, \
+    virtual void set_values(unsigned int node,                          \
+                            const vector<Key<Ucname##Traits> > &k,      \
                             const Ucname##Traits::Types v) {            \
       for (unsigned int i=0; i< k.size(); ++i) {                        \
         set_value(node, k[i], v[i]);                                    \
       }                                                                 \
     }                                                                   \
-    virtual Key<Ucname##Traits, Arity>                                  \
-    add_##lcname##_key_##Arity(int category_id,                         \
-                               std::string name,                        \
-                               bool per_frame) =0;                      \
+    virtual Key<Ucname##Traits>                                         \
+    add_##lcname##_key(int category_id,                                 \
+                       std::string name,                                \
+                       bool per_frame) =0;                              \
     virtual unsigned int                                                \
-    get_number_of_##lcname##_keys_##Arity(int category_id,              \
-                                          bool per_frame) const=0;      \
-    virtual std::string get_name(Key<Ucname##Traits, Arity> k) const =0
-
-#define RMF_SHARED_TYPE(lcname, Ucname, PassValue, ReturnValue,     \
-                            PassValues, ReturnValues)                   \
-    RMF_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue,   \
-                              PassValues, ReturnValues, 1);             \
-    RMF_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue,   \
-                              PassValues, ReturnValues, 2);             \
-    RMF_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue,   \
-                              PassValues, ReturnValues, 3);             \
-    RMF_SHARED_TYPE_ARITY(lcname, Ucname, PassValue, ReturnValue,   \
-                              PassValues, ReturnValues, 4)
+    get_number_of_##lcname##_keys(int category_id,                      \
+                                  bool per_frame) const=0;              \
+    virtual std::string get_name(Key<Ucname##Traits> k) const =0
 
 
     /**
@@ -114,8 +103,8 @@ namespace RMF {
     protected:
       SharedData();
     public:
-      template <class TypeTraits, int Arity>
-      bool get_is_per_frame(Key<TypeTraits, Arity> k) const {
+      template <class TypeTraits>
+      bool get_is_per_frame(Key<TypeTraits> k) const {
         return k.get_is_per_frame();
       }
       int get_current_frame() const {
@@ -200,20 +189,16 @@ namespace RMF {
       //SharedData(HDF5Group g, bool create);
       virtual ~SharedData();
       virtual std::string get_name(unsigned int node) const=0;
-      virtual unsigned int get_type(unsigned int Arity,
-                                    unsigned int node) const=0;
+      virtual unsigned int get_type(unsigned int node) const=0;
 
       virtual int add_child(int node, std::string name, int t)=0;
+      virtual void add_child(int node, int child_node)=0;
       virtual Ints get_children(int node) const=0;
       virtual void save_frames_hint(int i)=0;
 
-      virtual unsigned int get_number_of_sets(int arity) const=0;
-      virtual unsigned int add_set( RMF::Indexes nis, int t)=0;
-      virtual unsigned int get_set_member(int Arity, unsigned int index,
-                                          int member_index) const=0;
-      virtual int add_category(int Arity, std::string name)=0;
-      virtual unsigned int get_number_of_categories(int Arity) const=0;
-      virtual std::string get_category_name(int Arity, unsigned int kc) const=0;
+      virtual int add_category(std::string name)=0;
+      virtual unsigned int get_number_of_categories() const=0;
+      virtual std::string get_category_name(unsigned int kc) const=0;
       virtual std::string get_description() const=0;
       virtual void set_description(std::string str)=0;
       virtual void set_frame_name(std::string str)=0;
@@ -224,47 +209,37 @@ namespace RMF {
       void validate(std::ostream &out) const;
     };
 
-    template <class Traits, int Arity>
+    template <class Traits>
     class GenericSharedData {
     };
-    template <class Traits, int Arity>
+    template <class Traits>
     class ConstGenericSharedData {
     };
 
-#define RMF_GENERIC_SHARED_ARITY(lcname, Ucname, PassValue, ReturnValue, \
-                                     PassValues, ReturnValues, Arity)   \
+#define RMF_GENERIC_SHARED(lcname, Ucname, PassValue, ReturnValue,      \
+                                 PassValues, ReturnValues)              \
     template <>                                                         \
-    class ConstGenericSharedData<Ucname##Traits, Arity> {               \
+    class ConstGenericSharedData<Ucname##Traits> {                      \
     public:                                                             \
-    typedef Key<Ucname##Traits, Arity> K;                               \
+    typedef Key<Ucname##Traits> K;                                      \
     typedef vector<K > Ks;                                              \
     static unsigned int get_number_of_keys( const SharedData *p,        \
                                             int category_id,            \
                                             bool per_frame) {           \
-      return p->get_number_of_##lcname##_keys_##Arity(category_id,      \
-                                                      per_frame);       \
+      return p->get_number_of_##lcname##_keys(category_id,              \
+                                              per_frame);               \
     }                                                                   \
     };                                                                  \
     template <>                                                         \
-    class GenericSharedData<Ucname##Traits, Arity> {                    \
+    class GenericSharedData<Ucname##Traits> {                           \
     public:                                                             \
-    typedef Key<Ucname##Traits, Arity> K;                               \
+    typedef Key<Ucname##Traits> K;                                      \
     typedef vector<K > Ks;                                              \
     static K add_key(SharedData *p_, int category_id,                   \
                      std::string name, bool mf) {                       \
-      return p_->add_##lcname##_key_##Arity(category_id, name, mf);     \
+      return p_->add_##lcname##_key(category_id, name, mf);             \
     }                                                                   \
     };
-#define RMF_GENERIC_SHARED(lcname, Ucname, PassValue, ReturnValue,  \
-                               PassValues, ReturnValues)                \
-    RMF_GENERIC_SHARED_ARITY(lcname, Ucname, PassValue, ReturnValue, \
-                                 PassValues, ReturnValues, 1);          \
-    RMF_GENERIC_SHARED_ARITY(lcname, Ucname, PassValue, ReturnValue, \
-                                 PassValues, ReturnValues, 2);          \
-    RMF_GENERIC_SHARED_ARITY(lcname, Ucname, PassValue, ReturnValue, \
-                                 PassValues, ReturnValues, 3);          \
-    RMF_GENERIC_SHARED_ARITY(lcname, Ucname, PassValue, ReturnValue, \
-                                 PassValues, ReturnValues, 4)
 
     RMF_FOREACH_TYPE(RMF_GENERIC_SHARED);
 

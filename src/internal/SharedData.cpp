@@ -8,7 +8,6 @@
 
 #include <RMF/internal/SharedData.h>
 #include <RMF/NodeHandle.h>
-#include <RMF/NodeSetHandle.h>
 #include <RMF/Validator.h>
 #include <RMF/internal/set.h>
 #include <RMF/HDF5File.h>

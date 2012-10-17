@@ -87,16 +87,25 @@ GEOMETRY,
     nodes.
 */
 FEATURE,
+#ifndef IMP_DOXYGEN
 /** Store a reference to another node. This node should
     be an alias decorator node and have no other data,
     at least for now.
 */
 ALIAS,
+#endif
 //! Arbitrary data that is not standardized
 /** Programs can use these keys to store any extra data
     they want to put into the file.
 */
-CUSTOM};
+CUSTOM,
+//! A link between two atoms
+/** These are mostly for display purposes eg to show a wireframe
+    view of the molecule. */
+BOND,
+//! A node that is purely there for organizational purposes
+ORGANIZATIONAL
+};
 
 /** Return a string version of the type name.*/
 RMFEXPORT
@@ -138,9 +147,9 @@ class RMFEXPORT NodeConstHandle {
   }
 #if !defined(SWIG) && !defined(IMP_DOXYGEN)
 protected:
-  int get_node_id() const {return node_;}
   internal::SharedData* get_shared_data() const {return shared_.get();}
  public:
+  int get_node_id() const {return node_;}
   NodeConstHandle(int node, internal::SharedData *shared);
 #endif
 
@@ -191,7 +200,7 @@ protected:
 
   //! get the type of this node
   NodeType get_type() const {
-    return NodeType(shared_->get_type(1, node_));
+    return NodeType(shared_->get_type(node_));
   }
   //! get a unique id for this node
   NodeID get_id() const {
@@ -234,10 +243,6 @@ RMFEXPORT void show_hierarchy_with_decorators(NodeConstHandle root,
                                               unsigned int frame=0,
                                               std::ostream &out= std::cout);
 
-
-/** Aliases are nodes that refer to other nodes. Resolving them can
-      result in a graph that is no longer a tree or even a DAG.*/
-RMFEXPORT NodeConstHandles get_children_resolving_aliases(NodeConstHandle nh);
 
 } /* namespace RMF */
 

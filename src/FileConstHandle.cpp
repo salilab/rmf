@@ -53,19 +53,6 @@ Floats get_values(const NodeConstHandles &nodes,
     return FileConstHandle(path);
   }
 
-
-  BondPairs FileConstHandle::get_bonds()const {
-    NodePairConstHandles nhs= get_node_pairs();
-    BondPairs ret;
-    for (unsigned int i=0; i< nhs.size(); ++i) {
-      if (nhs[i].get_type()==BOND) {
-        ret.push_back(BondPair(nhs[i].get_node(0),
-                               nhs[i].get_node(1)));
-      }
-    }
-    return ret;
-  }
-
 bool FileConstHandle::get_supports_locking() const {
   return get_shared_data()->get_supports_locking();
 }
