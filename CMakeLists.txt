@@ -38,15 +38,16 @@ configure_file (
   "${PROJECT_BINARY_DIR}/include/RMF/config.h"
   )
 
+ADD_SUBDIRECTORY(data)
 
 FILE(GLOB SOURCES "src/*.cpp" "src/internal/*.cpp")
 FILE(GLOB HEADERS "include/RMF/*.h" "include/internal/RMF/*.h")
 
+
 include_directories("${PROJECT_BINARY_DIR}/include"
 "${PROJECT_SOURCE_DIR}/include" ${HDF5_INCLUDE_DIRS} "${PROJECT_BINARY_DIR}")
 
-add_library(RMF SHARED ${SOURCES} ${protobuf_source}
-${protobuf_header} ${HEADERS})
+add_library(RMF SHARED ${SOURCES} ${HEADERS} ${decorators} ${json_headers})
 
 target_link_libraries(RMF
     ${Boost_FILESYSTEM_LIBRARY}
@@ -55,6 +56,8 @@ target_link_libraries(RMF
     ${PROTOBUF_LIBRARY}
     ${HDF5_LIBRARIES}
 )
+
+#add_dependencies(RMF ${json_headers} ${decorators})
 
 if (DEFINED CMAKE_INSTALL_PYTHONDIR)
   message(STATUS "CMAKE_INSTALL_PYTHONDIR defined as ${CMAKE_INSTALL_PYTHONDIR}")

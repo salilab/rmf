@@ -11,7 +11,7 @@
 
 #include <RMF/config.h>
 #include "NodeConstHandle.h"
-#include "decorators.h"
+#include <RMF/decorators.h>
 namespace RMF {
 
   /** Return a list of Particle NodeHandles that forms a slice through the
