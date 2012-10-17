@@ -27,17 +27,12 @@
       attribute, and frame is not specified then frame 0 is
       used.
   */                                                                    \
-ReturnValue get_value(UCName##Key k,                                    \
-                      int frame=ALL_FRAMES) const {                     \
-  RMF_USAGE_CHECK(frame >=0 || !k.get_is_per_frame(),               \
-                      "No frame specified for per-frame data.");        \
-  RMF_USAGE_CHECK(get_has_value(k, frame),                          \
+ReturnValue get_value(UCName##Key k) const {                            \
+  RMF_USAGE_CHECK(get_has_value(k),                                     \
                       internal::get_error_message("Node ", get_name(),  \
                                      " does not have a value for key ", \
-                                                  shared_->get_name(k), \
-                                                  " on frame ",         \
-                                                  frame));              \
-  return get_value_always(k, frame);                                    \
+                                                  shared_->get_name(k))); \
+  return get_value_always(k);                                           \
 }                                                                       \
 /** \brief  Return the value of the attribute for every frame in the file.
     The null value is returned for frames that don't have the value.
@@ -48,33 +43,25 @@ ReturnValues get_all_values(UCName##Key k) const {                      \
 /** Return the attribute value or TypeTraits::get_null_value() if the
     node does not have the attribute. In python the method a value equal to
     eg RMF.NullFloat if the attribute is not there.*/                   \
-ReturnValue get_value_always(UCName##Key k,                             \
-                             unsigned int frame=0) const {              \
+ReturnValue get_value_always(UCName##Key k) const {                     \
   if (k== UCName##Key()) return UCName##Traits::get_null_value();       \
-  return shared_->get_value(node_, k, frame);                           \
+  return shared_->get_value(node_, k);                                  \
 }                                                                       \
 /** If the default key is passed, false is returned.*/                  \
-bool get_has_value(UCName##Key k, unsigned int frame=0) const {         \
+bool get_has_value(UCName##Key k) const {                               \
   if (k== UCName##Key()) return false;                                  \
-  return !UCName##Traits::get_is_null_value(get_value_always(k,         \
-                                                             frame));   \
+  return !UCName##Traits::get_is_null_value(get_value_always(k));       \
 }                                                                       \
-ReturnValues get_values_always(const UCName##Key##s& k,                 \
-                               unsigned int frame=0) const {            \
+ReturnValues get_values_always(const UCName##Key##s& k) const {         \
   if (k.empty()) return ReturnValues();                                 \
-  return shared_->get_values(node_, k, frame);                          \
+  return shared_->get_values(node_, k);                                 \
 }                                                                       \
-ReturnValues get_values(const UCName##Key##s& k,                        \
-                        int frame=ALL_FRAMES) const {                   \
-  RMF_USAGE_CHECK(frame >=0 || !k[0].get_is_per_frame(),            \
-                      "No frame specified for per-frame data.");        \
-  RMF_USAGE_CHECK(get_has_value(k[0], frame),                       \
+ReturnValues get_values(const UCName##Key##s& k) const {                \
+  RMF_USAGE_CHECK(get_has_value(k[0]),                                  \
                       internal::get_error_message("Node ", get_name(),  \
                                      " does not have a value for key ", \
-                                                  shared_->get_name(k[0]), \
-                                                  " on frame ",         \
-                                                  frame));              \
-  return get_values_always(k, frame);                                   \
+                                                  shared_->get_name(k[0]))); \
+  return get_values_always(k);                                          \
 }                                                                       \
 
 
@@ -100,16 +87,25 @@ GEOMETRY,
     nodes.
 */
 FEATURE,
+#ifndef IMP_DOXYGEN
 /** Store a reference to another node. This node should
     be an alias decorator node and have no other data,
     at least for now.
 */
 ALIAS,
+#endif
 //! Arbitrary data that is not standardized
 /** Programs can use these keys to store any extra data
     they want to put into the file.
 */
-CUSTOM};
+CUSTOM,
+//! A link between two atoms
+/** These are mostly for display purposes eg to show a wireframe
+    view of the molecule. */
+BOND,
+//! A node that is purely there for organizational purposes
+ORGANIZATIONAL
+};
 
 /** Return a string version of the type name.*/
 RMFEXPORT
@@ -151,9 +147,9 @@ class RMFEXPORT NodeConstHandle {
   }
 #if !defined(SWIG) && !defined(IMP_DOXYGEN)
 protected:
-  int get_node_id() const {return node_;}
   internal::SharedData* get_shared_data() const {return shared_.get();}
  public:
+  int get_node_id() const {return node_;}
   NodeConstHandle(int node, internal::SharedData *shared);
 #endif
 
@@ -204,7 +200,7 @@ protected:
 
   //! get the type of this node
   NodeType get_type() const {
-    return NodeType(shared_->get_type(1, node_));
+    return NodeType(shared_->get_type(node_));
   }
   //! get a unique id for this node
   NodeID get_id() const {
@@ -247,10 +243,6 @@ RMFEXPORT void show_hierarchy_with_decorators(NodeConstHandle root,
                                               unsigned int frame=0,
                                               std::ostream &out= std::cout);
 
-
-/** Aliases are nodes that refer to other nodes. Resolving them can
-      result in a graph that is no longer a tree or even a DAG.*/
-RMFEXPORT NodeConstHandles get_children_resolving_aliases(NodeConstHandle nh);
 
 } /* namespace RMF */
 

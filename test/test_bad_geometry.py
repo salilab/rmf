@@ -12,7 +12,7 @@ class GenericTest(unittest.TestCase):
         """Test example where fill was bad"""
         nm= RMF._get_temporary_file_path("bad_geom.rmf")
         rmf= RMF.create_rmf_file(nm)
-        nframes=2
+        rmf.set_current_frame(RMF.ALL_FRAMES)
         colored_factory= RMF.ColoredFactory(rmf)
         ball_factory = RMF.BallFactory(rmf)
         cylinder_factory = RMF.CylinderFactory(rmf)
@@ -25,6 +25,11 @@ class GenericTest(unittest.TestCase):
         cd.set_rgb_color([.5,.75,.95])
         sc= rmf.get_category("shape")
         rk= rmf.get_float_key(sc, "rgb color red", False)
+        print "stuff"
+        print rmf.get_float_keys(sc)
+        print rk
+        print rmf.get_float_key(sc, "rgb color red", True)
+        self.assert_(rk != RMF.FloatKey())
         self.assert_(bn.get_has_value(rk))
         self.assertFalse(cn.get_has_value(rk))
 

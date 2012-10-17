@@ -13,7 +13,6 @@ import RMF
 
 # don't bother with command line arguments, to keep in simple
 file_name=RMF.get_example_path("simple.rmf")
-frame=0
 verbose=True
 
 # show the data with the specified key category
@@ -23,13 +22,13 @@ def show_data_xml(nh, kc, arity=1):
     keys= rh.get_keys(kc, arity)
     opened=False
     for k in keys:
-        if nh.get_has_value(k, frame):
+        if nh.get_has_value(k):
             if not opened:
                 print "<", rh.get_name(kc)
                 opened=True
             name=rh.get_name(k)
             name.replace(" ", "_")
-            print name,"=\""+str(nh.get_value(k, frame))+"\""
+            print name,"=\""+str(nh.get_value(k))+"\""
     if opened:
         print "/>"
 
@@ -49,6 +48,7 @@ def show_xml(nh, kcs):
 
 # open the file, and don't clear the contents
 rh= RMF.open_rmf_file(file_name);
+rh.set_current_frame(0)
 print "<?xml version=\"1.0\"?>"
 print "<rmf>"
 print "<path>"
@@ -62,17 +62,4 @@ print input
 print "</path>"
 kcs= rh.get_categories()
 show_xml(rh.get_root_node(), kcs)
-for i in range(2,5):
-    sets= rh.get_node_sets(i)
-    kcs= rh.get_set_categories(i)
-    if len(sets) >0:
-        print "<"+str(i)+"_sets>"
-        for t in sets:
-            print "<"+str(i)+"_set id=\""+str(t.get_id().get_index())+"\" type=\""\
-                + RMF.get_set_type_name(t.get_type())+"\" members=\""\
-                +",".join([str(t.get_node(x).get_id().get_index()) for x in range(0, t.get_arity())])+"\"/>"
-            if verbose:
-                for kc in kcs:
-                    show_data_xml(t, kc, i)
-        print "</"+str(i)+"_sets>"
 print "</rmf>";

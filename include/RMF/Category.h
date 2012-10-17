@@ -29,38 +29,30 @@ namespace internal {
     quads of nodes, named Category, PairCategory, TripletCategory and
     QuadCategory as well as typedefs for lists of them with names like
     Categories.*/
-template <int Arity>
-class CategoryD {
+class Category {
   int i_;
   friend class FileHandle;
-  int compare(const CategoryD<Arity> &o) const {
+  int compare(const Category &o) const {
     if (i_ < o.i_) return -1;
     else if (i_ > o.i_) return 1;
     else return 0;
   }
 public:
 #ifndef IMP_DOXYGEN
-  CategoryD(unsigned int i): i_(i){}
+  Category(unsigned int i): i_(i){}
 #endif
-  CategoryD(): i_(-1){}
+  Category(): i_(-1){}
   unsigned int get_index() const {
     RMF_USAGE_CHECK(i_ >=0, "Invalid Category used");
     return i_;
   }
-  RMF_HASHABLE(CategoryD, return i_);
-  RMF_COMPARISONS(CategoryD);
-  RMF_SHOWABLE(CategoryD, i_);
+  RMF_HASHABLE(Category, return i_);
+  RMF_COMPARISONS(Category);
+  RMF_SHOWABLE(Category, i_);
 };
 
 #ifndef IMP_DOXYGEN
-typedef CategoryD<1> Category;
-typedef CategoryD<2> PairCategory;
-typedef CategoryD<3> TripletCategory;
-typedef CategoryD<4> QuadCategory;
-typedef vector<CategoryD<1> > Categories;
-typedef vector<CategoryD<2> > PairCategories;
-typedef vector<CategoryD<3> > TripletCategories;
-typedef vector<CategoryD<4> > QuadCategories;
+typedef vector<Category > Categories;
 #endif
 
 

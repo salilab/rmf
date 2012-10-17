@@ -8,12 +8,10 @@
 
 #include <RMF/internal/SharedData.h>
 #include <RMF/NodeHandle.h>
-#include <RMF/NodeSetHandle.h>
 #include <RMF/Validator.h>
 #include <RMF/internal/set.h>
 #include <RMF/HDF5File.h>
 #include <RMF/internal/HDF5SharedData.h>
-#include <RMF/internal/ProtoBufSharedData.h>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/scoped_ptr.hpp>
 
@@ -40,7 +38,7 @@ namespace RMF {
     };
     CacheCheck checker;
     }
-    SharedData::SharedData(): valid_(11111) {
+    SharedData::SharedData(): valid_(11111), cur_frame_(0) {
     };
     SharedData::~SharedData() {
       valid_=-66666;
@@ -107,10 +105,6 @@ namespace RMF {
       }
       if (boost::algorithm::ends_with(path, ".rmf")) {
         ret= new HDF5SharedData(path, create);
-#if RMF_USE_PROTOBUF
-      } else if (boost::algorithm::ends_with(path, ".prmf")) {
-        ret= new ProtoBufSharedData(path, create);
-#endif
       } else {
         RMF_THROW("Don't know how to open file", IOException);
       }
@@ -126,10 +120,6 @@ namespace RMF {
       }
       if (boost::algorithm::ends_with(path, ".rmf")) {
         ret= new HDF5SharedData(path, false);
-#if RMF_USE_PROTOBUF
-      } else if (boost::algorithm::ends_with(path, ".prmf")) {
-        ret= new ProtoBufSharedData(path, false);
-#endif
       } else {
         RMF_THROW("Don't know how to open file", IOException);
       }

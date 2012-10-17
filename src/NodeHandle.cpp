@@ -23,6 +23,10 @@ NodeHandle NodeHandle::add_child(std::string name, NodeType t) {
                     get_shared_data());
 }
 
+void NodeHandle::add_child(NodeConstHandle nh) {
+  get_shared_data()->add_child(get_node_id(), nh.get_node_id());
+}
+
 
 FileHandle NodeHandle::get_file() const {
   return FileHandle(get_shared_data());
@@ -37,25 +41,6 @@ vector<NodeHandle> NodeHandle::get_children() const {
   return ret;
 }
 
-NodeHandles get_children_resolving_aliases(NodeHandle nh) {
-  AliasFactory saf(nh.get_file());
-  NodeHandles ret= nh.get_children();
-  for (unsigned int i=0; i< ret.size(); ++i) {
-    if (ret[i].get_type()== ALIAS && saf.get_is(ret[i])) {
-      ret[i]= saf.get(ret[i]).get_aliased();
-    }
-  }
-  return ret;
-}
-
-NodeHandle add_child_alias(NodeHandle parent,
-                           NodeConstHandle alias) {
-  NodeHandle nh=parent.add_child(alias.get_name() + " alias",
-                                 ALIAS);
-  AliasFactory saf(parent.get_file());
-  saf.get(nh).set_aliased(alias);
-  return nh;
-}
 
 
 } /* namespace RMF */

@@ -47,8 +47,8 @@ greenh= crh.add_child("green", RMF.REPRESENTATION)
 blueh= crh.add_child("blue", RMF.REPRESENTATION)
 
 for r in red:
-    RMF.add_child_alias(redh, r)
+    redh.add_child( r)
 for g in green:
-    RMF.add_child_alias(greenh, g)
+    greenh.add_child(g)
 for b in blue:
-    RMF.add_child_alias(blueh, b)
+    blueh.add_child( b)

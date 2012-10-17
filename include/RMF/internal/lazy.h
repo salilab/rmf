@@ -16,22 +16,22 @@
 #include "../Key.h"
 namespace RMF {
   namespace internal {
-  template <class TypeTraitsT, int Arity>
+  template <class TypeTraitsT>
     struct LazyKeyData: boost::intrusive_ptr_object {
       std::string file_name;
       std::string name;
-      CategoryD<Arity> category;
+      Category category;
       bool per_frame;
-      mutable Key<TypeTraitsT, Arity> key;
+      mutable Key<TypeTraitsT> key;
     };
-  template <class TypeTraitsT, int Arity>
-  inline void intrusive_ptr_add_ref(LazyKeyData<TypeTraitsT, Arity> *a)
+  template <class TypeTraitsT>
+  inline void intrusive_ptr_add_ref(LazyKeyData<TypeTraitsT> *a)
   {
     (a)->add_ref();
   }
 
-  template <class TypeTraitsT, int Arity>
-  inline void intrusive_ptr_release(LazyKeyData<TypeTraitsT, Arity> *a)
+    template <class TypeTraitsT>
+  inline void intrusive_ptr_release(LazyKeyData<TypeTraitsT> *a)
     {
     bool del=(a)->release();
     if (del) {
@@ -43,9 +43,9 @@ namespace RMF {
       the key is actually used. This is currently only used for factory
       classes and should probably be considered unstable.
   */
-  template <class TypeTraitsT, int Arity>
+  template <class TypeTraitsT>
   class LazyKey {
-    typedef LazyKeyData<TypeTraitsT, Arity> Data;
+    typedef LazyKeyData<TypeTraitsT> Data;
     boost::intrusive_ptr<Data> data_;
     void init_key() {
       FileHandle fh= open_rmf_file(data_->file_name);
@@ -63,7 +63,7 @@ namespace RMF {
   public:
     typedef TypeTraitsT TypeTraits;
     LazyKey(FileHandle file,
-            CategoryD<Arity> category,
+            Category category,
             std::string name,
             bool per_frame):
       data_(new Data) {
@@ -77,37 +77,37 @@ namespace RMF {
                                         data_->per_frame);
     }
     LazyKey(){}
-    operator Key<TypeTraits, Arity>() {
-      if (data_->key==  Key<TypeTraits, Arity>()) {
+    operator Key<TypeTraits>() {
+      if (data_->key==  Key<TypeTraits>()) {
         init_key();
       }
       return data_->key;
     }
-    operator Key<TypeTraits, Arity>() const {
+    operator Key<TypeTraits>() const {
       // keys might have been added by other uses of the file
-      if (data_->key==  Key<TypeTraits, Arity>()) {
+      if (data_->key==  Key<TypeTraits>()) {
         check_key();
       }
       return data_->key;
     }
   };
 
-  template <class TypeTraits, int Arity>
+  template <class TypeTraits>
     struct LazyKeysData: boost::intrusive_ptr_object {
       std::string file_name;
       Strings names;
-      CategoryD<Arity> category;
+      Category category;
       bool per_frame;
-      vector<Key<TypeTraits, Arity> > keys;
+      vector<Key<TypeTraits> > keys;
     };
-  template <class TypeTraitsT, int Arity>
-  inline void intrusive_ptr_add_ref(LazyKeysData<TypeTraitsT, Arity> *a)
+  template <class TypeTraitsT>
+  inline void intrusive_ptr_add_ref(LazyKeysData<TypeTraitsT> *a)
   {
     (a)->add_ref();
   }
 
-  template <class TypeTraitsT, int Arity>
-  inline void intrusive_ptr_release(LazyKeysData<TypeTraitsT, Arity> *a)
+  template <class TypeTraitsT>
+  inline void intrusive_ptr_release(LazyKeysData<TypeTraitsT> *a)
     {
     bool del=(a)->release();
     if (del) {
@@ -119,15 +119,15 @@ namespace RMF {
       the key is actually used. This is currently only used for factory
       classes and should probably be considered unstable.
   */
-  template <class TypeTraits, int Arity>
+  template <class TypeTraits>
   class LazyKeys {
-    typedef LazyKeysData<TypeTraits, Arity> Data;
+    typedef LazyKeysData<TypeTraits> Data;
     boost::intrusive_ptr<Data> data_;
   public:
     // to look like vector
-    typedef LazyKey<TypeTraits, Arity> value_type;
+    typedef LazyKey<TypeTraits> value_type;
     LazyKeys(FileHandle file,
-            CategoryD<Arity> category,
+            Category category,
             const Strings & names,
             bool per_frame):
       data_(new Data) {
@@ -141,7 +141,7 @@ namespace RMF {
                                           data_->per_frame);
     }
     LazyKeys(){}
-    operator vector<Key<TypeTraits, Arity> >() {
+    operator vector<Key<TypeTraits> >() {
       if (data_->keys.empty()) {
         FileHandle fh= open_rmf_file(data_->file_name);
         data_->keys=get_keys_always<TypeTraits>(fh,
@@ -151,17 +151,17 @@ namespace RMF {
       }
       return data_->keys;
     }
-    operator vector<Key<TypeTraits, Arity> >() const {
+    operator vector<Key<TypeTraits> >() const {
       return data_->keys;
     }
-    Key<TypeTraits, Arity> operator[](unsigned int i) {
-      return static_cast< vector<Key<TypeTraits, Arity> > >(*this)[i];
+    Key<TypeTraits> operator[](unsigned int i) {
+      return static_cast< vector<Key<TypeTraits> > >(*this)[i];
     }
-    Key<TypeTraits, Arity> operator[](unsigned int i) const {
+    Key<TypeTraits> operator[](unsigned int i) const {
       if ( data_->keys.size() > i) {
         return data_->keys[i];
       } else {
-        return Key<TypeTraits, Arity>();
+        return Key<TypeTraits>();
       }
     }
     bool empty() const {
@@ -171,17 +171,10 @@ namespace RMF {
 
 #ifndef IMP_DOXYGEN
 
-#define RMF_DECLARE_LAZY_KEY(lcname, Ucname, PassValue, ReturnValue, \
-                                 PassValues, ReturnValues)              \
-  typedef LazyKey<Ucname##Traits, 1> Ucname##LazyKey;                   \
-  typedef LazyKey<Ucname##Traits, 2> Pair##Ucname##LazyKey;             \
-  typedef LazyKey<Ucname##Traits, 3> Triplet##Ucname##LazyKey;          \
-  typedef LazyKey<Ucname##Traits, 4> Quad##Ucname##LazyKey;             \
-  typedef LazyKeys<Ucname##Traits, 1> Ucname##LazyKeys;                 \
-  typedef LazyKeys<Ucname##Traits, 2> Pair##Ucname##LazyKeys;           \
-  typedef LazyKeys<Ucname##Traits, 3> Triplet##Ucname##LazyKeys;        \
-  typedef LazyKeys<Ucname##Traits, 4> Quad##Ucname##LazyKeys
-
+#define RMF_DECLARE_LAZY_KEY(lcname, Ucname, PassValue, ReturnValue,    \
+                             PassValues, ReturnValues)                  \
+    typedef LazyKey<Ucname##Traits> Ucname##LazyKey;                    \
+    typedef LazyKeys<Ucname##Traits> Ucname##LazyKeys
 
 
 /** \name LazyKey types

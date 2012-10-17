@@ -5,8 +5,8 @@ import RMF
 class GenericTest(unittest.TestCase):
     def _do_test_type(self, nh, k, v):
         print k, v
-        nh.set_value(k, v, 0)
-        vo= nh.get_value(k, 0)
+        nh.set_value(k, v)
+        vo= nh.get_value(k)
         self.assertEqual(vo, v)
     def _do_test_types(self, f, pccc):
         nh= f.get_root_node().add_child("testn", RMF.REPRESENTATION)

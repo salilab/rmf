@@ -23,23 +23,17 @@
 /** \brief  set the value of the attribute k for this node
     If it is a per-frame attribute, frame must be specified.
 */                                                                      \
-void set_value(UCName##Key k, PassValue v,                              \
-               int frame =ALL_FRAMES) {                                 \
-  RMF_USAGE_CHECK(frame >=0 || !k.get_is_per_frame(),               \
-                      "No frame specified for per-frame data.");        \
+void set_value(UCName##Key k, PassValue v) {                            \
   get_shared_data()->set_value(get_node_id(),                           \
-                               k, v, frame);                            \
+                               k, v);                                   \
 }                                                                       \
 /** \brief  set the values of the attributes k for this node
     These keys must have been produced by the add_keys method.
     If it is a per-frame attribute, frame must be specified.
 */                                                                      \
-void set_values(const UCName##Key##s& k, PassValues v,                  \
-                int frame =ALL_FRAMES) {                                \
-  RMF_USAGE_CHECK(frame >=0 || !k[0].get_is_per_frame(),            \
-                      "No frame specified for per-frame data.");        \
+void set_values(const UCName##Key##s& k, PassValues v) {                \
   get_shared_data()->set_values(get_node_id(),                          \
-                                k, v, frame);                           \
+                                k, v);                                  \
 }
 
 namespace RMF {
@@ -70,6 +64,9 @@ class RMFEXPORT NodeHandle: public NodeConstHandle {
    */
   NodeHandle add_child(std::string name, NodeType t);
 
+  /** Add an existing node as a child.*/
+  void add_child(NodeConstHandle nh);
+
   NodeHandles get_children() const;
 
   /** \name Functions to access attributes
@@ -83,13 +80,6 @@ class RMFEXPORT NodeHandle: public NodeConstHandle {
 
   FileHandle get_file() const;
 };
-
-/** See get_children_resolving_aliases(NodeConstHandle).*/
-RMFEXPORT NodeHandles get_children_resolving_aliases(NodeHandle nh);
-
-/** Add a child to the node that is an alias to another node.*/
-RMFEXPORT NodeHandle add_child_alias(NodeHandle parent,
-                                     NodeConstHandle alias);
 } /* namespace RMF */
 
 #endif /* IMPLIBRMF_NODE_HANDLE_H */

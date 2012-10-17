@@ -17,15 +17,15 @@ namespace {
     return nm.get_index();
   }
 
-template <class TypeT, int Arity>
+template <class TypeT>
   double show_type_data_xml(RMF::NodeConstHandle nh,
                             RMF::Category kc) {
     double ret=0;
     RMF::FileConstHandle rh= nh.get_file();
-    std::vector< RMF::Key<TypeT, Arity> > keys= rh.get_keys<TypeT, Arity>(kc);
+    std::vector< RMF::Key<TypeT> > keys= rh.get_keys<TypeT>(kc);
     for (unsigned int i=0; i< keys.size(); ++i) {
-      if (nh.get_has_value(keys[i], 0)) {
-        ret+= count(nh.get_value(keys[i], 0));
+      if (nh.get_has_value(keys[i])) {
+        ret+= count(nh.get_value(keys[i]));
         ret+= rh.get_name(keys[i]).size();
       }
     }
@@ -34,11 +34,11 @@ template <class TypeT, int Arity>
   double show_data_xml(RMF::NodeConstHandle nh,
                      RMF::Category kc) {
     double ret=0;
-    ret+=show_type_data_xml< RMF::IntTraits, 1>(nh, kc);
-    ret+=show_type_data_xml< RMF::FloatTraits, 1>(nh, kc);
-    ret+=show_type_data_xml< RMF::IndexTraits, 1>(nh, kc);
-    ret+=show_type_data_xml< RMF::StringTraits, 1>(nh, kc);
-    ret+=show_type_data_xml< RMF::NodeIDTraits, 1>(nh, kc);
+    ret+=show_type_data_xml< RMF::IntTraits>(nh, kc);
+    ret+=show_type_data_xml< RMF::FloatTraits>(nh, kc);
+    ret+=show_type_data_xml< RMF::IndexTraits>(nh, kc);
+    ret+=show_type_data_xml< RMF::StringTraits>(nh, kc);
+    ret+=show_type_data_xml< RMF::NodeIDTraits>(nh, kc);
     return ret;
   }
 
@@ -62,15 +62,8 @@ double show_xml(RMF::NodeConstHandle nh,
 double traverse(std::string name) {
   double ret=0;
   RMF::FileConstHandle rh= RMF::open_rmf_file_read_only(name);
-  RMF::Categories kcs= rh.get_categories<1>();
+  RMF::Categories kcs= rh.get_categories();
   ret+=show_xml(rh.get_root_node(), kcs);
-  RMF::NodePairConstHandles ps= rh.get_node_sets<2>();
-  for (unsigned int i=0; i< ps.size(); ++i) {
-    std::pair< RMF::NodeConstHandle, RMF::NodeConstHandle> handles
-        (ps[i].get_node(0),ps[i].get_node(1));
-    ret+=handles.first.get_id().get_index();
-    ret+=handles.second.get_id().get_index();
-  }
   return ret;
 }
 

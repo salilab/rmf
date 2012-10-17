@@ -33,18 +33,17 @@ void FileConstHandle::flush() {
   shared_->flush();
 }
 
-std::string FileConstHandle::get_frame_name(unsigned int frame) const {
-  return shared_->get_frame_name(frame);
+std::string FileConstHandle::get_frame_name() const {
+  return shared_->get_frame_name();
 }
 
 Floats get_values(const NodeConstHandles &nodes,
                   FloatKey k,
-                  unsigned int frame,
                   Float missing_value) {
   Floats ret(nodes.size(), missing_value);
   for (unsigned int i=0; i< nodes.size(); ++i) {
-    if (nodes[i].get_has_value(k, frame)) {
-      ret[i]=nodes[i].get_value(k, frame);
+    if (nodes[i].get_has_value(k)) {
+      ret[i]=nodes[i].get_value(k);
     }
   }
   return ret;
@@ -52,19 +51,6 @@ Floats get_values(const NodeConstHandles &nodes,
 
   FileConstHandle open_rmf_file_read_only(std::string path) {
     return FileConstHandle(path);
-  }
-
-
-  BondPairs FileConstHandle::get_bonds()const {
-    NodePairConstHandles nhs= get_node_pairs();
-    BondPairs ret;
-    for (unsigned int i=0; i< nhs.size(); ++i) {
-      if (nhs[i].get_type()==BOND) {
-        ret.push_back(BondPair(nhs[i].get_node(0),
-                               nhs[i].get_node(1)));
-      }
-    }
-    return ret;
   }
 
 bool FileConstHandle::get_supports_locking() const {

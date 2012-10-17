@@ -13,100 +13,41 @@
 #include "internal/SharedData.h"
 #include "Key.h"
 #include "NodeHandle.h"
-#include "NodeSetHandle.h"
 #include <boost/functional/hash.hpp>
 #include <boost/intrusive_ptr.hpp>
 
 
-#define IMP_HDF5_ROOT_CONST_KEY_TYPE_METHODS_INNER(lcname, UCName,      \
-                                             arityname, ArityName,      \
+#define IMP_HDF5_ROOT_CONST_KEY_TYPE_METHODS(lcname, UCName,            \
                                              PassValue,                 \
                                              ReturnValue,               \
-                                             PassValues, ReturnValues,  \
-                                                   Arity)               \
-  ArityName##UCName##Key                                                \
-  get_##lcname##_key(ArityName##Category category_id,                   \
+                                             PassValues,                \
+                                             ReturnValues)              \
+  UCName##Key                                                           \
+  get_##lcname##_key(Category category_id,                              \
                      std::string nm,                                    \
                      bool per_frame) const {                            \
-    return get_key<UCName##Traits, Arity>(category_id, nm, per_frame);  \
+    return get_key<UCName##Traits>(category_id, nm, per_frame);         \
   }                                                                     \
-  bool get_has_##lcname##_key(ArityName##Category category_id,          \
+  bool get_has_##lcname##_key(Category category_id,                     \
                               std::string nm, bool per_frame) const {   \
-    return get_has_key<UCName##Traits, Arity>(category_id, nm,          \
-                                              per_frame);               \
+    return get_has_key<UCName##Traits>(category_id, nm,                 \
+                                       per_frame);                      \
   }                                                                     \
-  std::string get_name(ArityName##UCName##Key k) const {                \
+  std::string get_name(UCName##Key k) const {                           \
     return shared_->get_name(k);                                        \
   }                                                                     \
-  ArityName##Category get_category(ArityName##UCName##Key k) const {    \
+  Category get_category(UCName##Key k) const {                          \
     return k.get_category();                                            \
   }                                                                     \
-  ArityName##UCName##Key##s                                             \
-  get_##lcname##_keys(ArityName##Category category_id) const {          \
-    return get_keys<UCName##Traits, Arity>(category_id);                \
+  UCName##Key##s                                                        \
+  get_##lcname##_keys(Category category_id) const {                     \
+    return get_keys<UCName##Traits>(category_id);                       \
   }                                                                     \
-  bool get_is_per_frame(ArityName##UCName##Key k) const {               \
+  bool get_is_per_frame(UCName##Key k) const {                          \
     return shared_->get_is_per_frame(k);                                \
   }
 
-#ifndef IMP_DOXYGEN
-#define IMP_HDF5_ROOT_CONST_KEY_TYPE_METHODS(lcname, UCName, PassValue,\
-                                             ReturnValue,               \
-                                       PassValues, ReturnValues)        \
-  IMP_HDF5_ROOT_CONST_KEY_TYPE_METHODS_INNER(lcname, UCName, , ,        \
-                                         PassValue, ReturnValue,        \
-                                         PassValues, ReturnValues, 1)   \
-    IMP_HDF5_ROOT_CONST_KEY_TYPE_METHODS_INNER(lcname, UCName,          \
-                                           pair_, Pair,                 \
-                                           PassValue, ReturnValue,      \
-                                           PassValues, ReturnValues,    \
-                                           2)                           \
-    IMP_HDF5_ROOT_CONST_KEY_TYPE_METHODS_INNER(lcname, UCName,          \
-                                           triplet_, Triplet,           \
-                                           PassValue,                   \
-                                           ReturnValue,                 \
-                                           PassValues, ReturnValues,    \
-                                           3)                           \
-    IMP_HDF5_ROOT_CONST_KEY_TYPE_METHODS_INNER(lcname, UCName,          \
-                                           quad_, Quad,                 \
-                                           PassValue, ReturnValue,      \
-                                           PassValues, ReturnValues,    \
-                                           4)
-#else
-#define IMP_HDF5_ROOT_CONST_KEY_TYPE_METHODS(lcname, UCName, PassValue,\
-                                             ReturnValue,               \
-                                             PassValues, ReturnValues)  \
-  IMP_HDF5_ROOT_CONST_KEY_TYPE_METHODS_INNER(lcname, UCName, arity_, Arity, \
-                                         PassValue, ReturnValue,        \
-                                         PassValues, ReturnValues, 1)   \
 
-#endif
-
-
-#define IMP_HDF5_ROOT_CONST_KEY_SET_METHODS(lcset, UCSet, D)            \
-  unsigned int get_number_of_node_##lcset##s() const {                  \
-      return get_number_of_node_sets<D>();                              \
-    }                                                                   \
-  Node##UCSet##ConstHandles get_node_##lcset##s() const {               \
-    return get_node_sets<D>();                                          \
-    }                                                                   \
-
-#define RMF_CONST_CATEGORY_METHODS(Arity, prefix, Prefix)           \
-    bool get_has_##prefix##category(std::string name) const {           \
-      return get_has_category<Arity>(name);                             \
-    }                                                                   \
-    Prefix##Category get_##prefix##category(std::string name) const {   \
-      return get_category<Arity>(name);                                 \
-    }                                                                   \
-    std::string get_name(Prefix##Category kc) const {                   \
-      return get_category_name<Arity>(kc);                              \
-    }                                                                   \
-    Prefix##Categories get_##prefix##categories() const {               \
-      return get_categories<Arity>();                                   \
-    }                                                                   \
-    std::string get_prefix##category_name(Prefix##Category kc) const {  \
-      return get_category_name<Arity>(kc);                              \
-    }
 
 
 namespace RMF {
@@ -149,7 +90,6 @@ namespace RMF {
     FileConstHandle(){}
 #ifndef IMP_DOXYGEN
     FileConstHandle(std::string name);
-    BondPairs get_bonds()const;
 #endif
 
     //! Return the root of the hierarchy
@@ -170,70 +110,85 @@ namespace RMF {
     /** Get an existing key that has the given name of the
         given type or Key() if the key is not found.
     */
-    template <class TypeT, int Arity>
-      Key<TypeT, Arity> get_key(CategoryD<Arity> category_id,
-                                std::string name, bool per_frame) const {
-      if (category_id == CategoryD<Arity>()) {
-        return Key<TypeT, Arity>();
+    template <class TypeT>
+      Key<TypeT> get_key(Category category_id,
+                         std::string name, bool per_frame) const {
+      if (category_id == Category()) {
+        return Key<TypeT>();
       } else {
         unsigned int num
-          =internal::ConstGenericSharedData<TypeT, Arity>
+          =internal::ConstGenericSharedData<TypeT>
           ::get_number_of_keys(shared_.get(), category_id.get_index(),
                                per_frame);
         for (unsigned int i=0; i< num; ++i) {
-          Key<TypeT, Arity> k(category_id, i, per_frame);
+          Key<TypeT> k(category_id, i, per_frame);
           if (shared_->get_name(k) == name) return k;
         }
-        return Key<TypeT, Arity> ();
+        return Key<TypeT> ();
       }
     }
-    template <class TypeT, int Arity>
-        vector<Key<TypeT, Arity> > get_keys(CategoryD<Arity> category_id,
-                                            const Strings& names,
-                                            bool per_frame) const {
-      vector<Key<TypeT, Arity> > ret(names.size());
+    template <class TypeT>
+      vector<Key<TypeT> > get_keys(Category category_id,
+                                   const Strings& names,
+                                   bool per_frame) const {
+      vector<Key<TypeT> > ret(names.size());
       for (unsigned int i=0; i< names.size(); ++i) {
         ret[i]= get_key<TypeT>(category_id, names[i], per_frame);
-        if (ret[i]==Key<TypeT, Arity>()) {
+        if (ret[i]==Key<TypeT>()) {
           ret.clear();
           return ret;
         }
       }
       return ret;
     }
-    template <class TypeT, int Arity>
-      bool get_has_key(CategoryD<Arity> category_id,
+    template <class TypeT>
+      bool get_has_key(Category category_id,
                        std::string name, bool per_frame) const {
-      return get_key<TypeT, Arity>(category_id, name, per_frame)
-        != Key<TypeT, Arity>();
+      return get_key<TypeT>(category_id, name, per_frame)
+        != Key<TypeT>();
     }
     /** Return true if it has all the passed keys as a block.*/
-    template <class TypeT, int Arity>
-        bool get_has_keys(CategoryD<Arity> category_id,
+    template <class TypeT>
+        bool get_has_keys(Category category_id,
                        const Strings& names, bool per_frame) const {
-      return get_key<TypeT, Arity>(category_id, names[0], per_frame)
-          != Key<TypeT, Arity>();
+      return get_key<TypeT>(category_id, names[0], per_frame)
+          != Key<TypeT>();
     }
     /** Get a list of all keys of the given type,
      */
-    template <class TypeT, int Arity>
-      vector<Key<TypeT, Arity> > get_keys(CategoryD<Arity> category_id) const {
-      if (category_id==CategoryD<Arity>()) return vector<Key<TypeT, Arity> >();
-      unsigned int num=internal::ConstGenericSharedData<TypeT, Arity>
+    template <class TypeT>
+      vector<Key<TypeT> > get_keys(Category category_id) const {
+      if (category_id==Category()) return vector<Key<TypeT> >();
+      unsigned int num=internal::ConstGenericSharedData<TypeT>
         ::get_number_of_keys(shared_.get(), category_id.get_index(), false);
-      unsigned int numpf=internal::ConstGenericSharedData<TypeT, Arity>
+      unsigned int numpf=internal::ConstGenericSharedData<TypeT>
         ::get_number_of_keys(shared_.get(), category_id.get_index(), true);
-      vector<Key<TypeT, Arity> > ret(num+numpf);
+      vector<Key<TypeT> > ret(num+numpf);
       for (unsigned int i=0; i< ret.size(); ++i) {
         bool pf=i >= num;
         unsigned int idx=pf? i-num: i;
-        ret[i]= Key<TypeT, Arity>(category_id, idx, pf);
+        ret[i]= Key<TypeT>(category_id, idx, pf);
         RMF_INTERNAL_CHECK(!get_name(ret[i]).empty(),
                                "No name for key");
       }
       return ret;
     }
     /** @} */
+
+    /** The file always has a single frame that is currently active at any given
+        point.
+
+        A value of ALL_FRAMES means one is only dealing with static data.
+
+        @{
+    */
+    int get_current_frame() const {
+      return shared_->get_current_frame();
+    }
+    void set_current_frame(int frame) {
+      shared_->set_current_frame(frame);
+    }
+    /* @} */
 
     /** Return the number of frames in the file. Currently, this is the number
         of frames that the x-coordinate has, but it should be made more general.
@@ -244,13 +199,11 @@ namespace RMF {
     /** Frames can have associated comments which can be used to label
         particular frames of interest. Returns an empty string if the
         frame doesn't have a name.*/
-    std::string get_frame_name(unsigned int frame) const;
+    std::string get_frame_name() const;
 
     /** \name Non-template versions for python
 
-        Type is one of the \ref rmf_types "standard types"
-        an arity is one of the empty string (for single nodes),
-        pair, triplet or quad.
+        Type is one of the \ref rmf_types "standard types".
         @{
     */
 
@@ -263,12 +216,7 @@ namespace RMF {
         @{
     */
     //! Return a list with all the keys from that category
-    /** If arity>1 then the keys for the appropriate sets are
-        returned.
-    */
-    PythonList get_keys(Category c, int arity=1) const;
-    //! Return all sets of that arity
-    PythonList get_node_sets(int arity) const;
+    PythonList get_keys(Category c) const;
     /** @} */
 #endif
 #ifndef SWIG
@@ -308,25 +256,6 @@ namespace RMF {
       return shared_->get_has_user_data(index);
     }
 
-    template <int Arity>
-      unsigned int get_number_of_node_sets() const {
-      return shared_->get_number_of_sets(Arity);
-    }
-    template <int Arity>
-      vector<NodeSetConstHandle<Arity> > get_node_sets() const {
-      unsigned int num= shared_->get_number_of_sets(Arity);
-      vector<NodeSetConstHandle<Arity> > ret(num);
-      for (unsigned int i=0; i< num; ++i) {
-        ret[i]=NodeSetConstHandle<Arity>(i, shared_.get());
-      }
-      return ret;
-    }
-
-
-    IMP_HDF5_ROOT_CONST_KEY_SET_METHODS(pair, Pair, 2);
-    IMP_HDF5_ROOT_CONST_KEY_SET_METHODS(triplet, Triplet, 3);
-    IMP_HDF5_ROOT_CONST_KEY_SET_METHODS(quad, Quad, 4);
-
     /** \name Descriptions
         Each RMF structure has an associated description. This should
         consist of unstructured text describing the contents of the RMF
@@ -339,51 +268,32 @@ namespace RMF {
     /** @} */
 
 
-    /** \name Key categories template methods
+    /** \name Key categories methods
         Methods for managing the key categories in this RMF.
         @{
     */
-    template <int Arity>
-      bool get_has_category(std::string name) const {
-      return get_category<Arity>(name) != CategoryD<Arity>();
+    bool get_has_category(std::string name) const {
+      return get_category(name) != Category();
     }
-    template <int Arity>
-      CategoryD<Arity> get_category(std::string name) const {
-      for (unsigned int i=0; i< shared_->get_number_of_categories(Arity);++i) {
-        if (shared_->get_category_name(Arity, i)==name) {
-          return CategoryD<Arity>(i);
+    Category get_category(std::string name) const {
+      for (unsigned int i=0; i< shared_->get_number_of_categories();++i) {
+        if (shared_->get_category_name(i)==name) {
+          return Category(i);
         }
       }
-      return CategoryD<Arity>();
+      return Category();
     }
-    template <int Arity>
-      vector<CategoryD<Arity> > get_categories() const {
-      unsigned int r= shared_->get_number_of_categories(Arity);
-      vector<CategoryD<Arity> > ret(r);
+    Categories get_categories() const {
+      unsigned int r= shared_->get_number_of_categories();
+      vector<Category > ret(r);
       for (unsigned int i=0; i< r; ++i) {
-        ret[i]= CategoryD<Arity>(i);
+        ret[i]= Category(i);
       }
       return ret;
     }
-    template <int Arity>
-      std::string get_category_name(CategoryD<Arity> kc) const {
-      return shared_->get_category_name(Arity, kc.get_index());
-    }
-    /** @} */
-    /** \name Key categories non-template methods
-        We also provide non-template methods for use in \c Python or
-        environments where templates are not convenient. Arity is one
-        of the empty string, pair, triplet, or quad.
-        @{
-    */
-#ifndef IMP_DOXYGEN
-    RMF_CONST_CATEGORY_METHODS(1, ,);
-    RMF_CONST_CATEGORY_METHODS(2, pair_, Pair);
-    RMF_CONST_CATEGORY_METHODS(3, triplet_, Triplet);
-    RMF_CONST_CATEGORY_METHODS(4, quad_, Quad);
-#else
-    RMF_CONST_CATEGORY_METHODS(1, arity_,Arity);
-#endif
+  std::string get_name(Category kc) const {
+    return shared_->get_category_name(kc.get_index());
+  }
     /** @} */
 
     /** Make sure all data gets written to disk. Once flush is called, it
@@ -439,16 +349,10 @@ namespace RMF {
   */
   RMFEXPORT Floats get_values(const NodeConstHandles &nodes,
                               FloatKey k,
-                              unsigned int frame,
                               Float missing_value
                               =std::numeric_limits<double>::max());
   /** @} */
 
-
-  template <int D>
-  inline FileConstHandle NodeSetConstHandle<D>::get_file() const {
-    return get_node(0).get_file();
-  }
 
 } /* namespace RMF */
 
