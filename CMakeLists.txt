@@ -12,24 +12,12 @@ include(GNUInstallDirs)
 include(FindHDF5)
 find_package(HDF5 REQUIRED)
 
-include(FindProtobuf)
-find_package(Protobuf)
-include_directories(${PROTOBUF_INCLUDE_DIR})
-#lib_directories(${PROTOBUF_LIB_DIR})
-
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR})
 
 set (RMF_VERSION_MAJOR 0)
 set (RMF_VERSION_MINOR 9)
-
-if (PROTOBUF_FOUND)
-  set(PROTOBUF_FOUND_INT 1)
-  PROTOBUF_GENERATE_CPP(protobuf_source protobuf_header "data/RMF.proto")
-else(PROTOBUF_FOUND)
-  set(PROTOBUF_FOUND_INT 0)
-endif(PROTOBUF_FOUND)
 
 # configure a header file to pass some of the CMake settings
 # to the source code
@@ -38,26 +26,16 @@ configure_file (
   "${PROJECT_BINARY_DIR}/include/RMF/config.h"
   )
 
-ADD_SUBDIRECTORY(data)
-
-FILE(GLOB SOURCES "src/*.cpp" "src/internal/*.cpp")
-FILE(GLOB HEADERS "include/RMF/*.h" "include/internal/RMF/*.h")
-
-
 include_directories("${PROJECT_BINARY_DIR}/include"
 "${PROJECT_SOURCE_DIR}/include" ${HDF5_INCLUDE_DIRS} "${PROJECT_BINARY_DIR}")
 
-add_library(RMF SHARED ${SOURCES} ${HEADERS} ${decorators} ${json_headers})
 
-target_link_libraries(RMF
-    ${Boost_FILESYSTEM_LIBRARY}
-    ${Boost_SYSTEM_LIBRARY}
-    ${Boost_THREAD_LIBRARY}
-    ${PROTOBUF_LIBRARY}
-    ${HDF5_LIBRARIES}
-)
 
-#add_dependencies(RMF ${json_headers} ${decorators})
+include(data/CMakeLists.txt)
+include(include/CMakeLists.txt)
+include(src/CMakeLists.txt)
+include(bin/CMakeLists.txt)
+# swig support is a little broken
 
 if (DEFINED CMAKE_INSTALL_PYTHONDIR)
   message(STATUS "CMAKE_INSTALL_PYTHONDIR defined as ${CMAKE_INSTALL_PYTHONDIR}")
@@ -65,13 +43,10 @@ else()
   set(CMAKE_INSTALL_PYTHONDIR "${CMAKE_INSTALL_LIBDIR}/python/site_packages")
 endif()
 
-ADD_SUBDIRECTORY(bin)
-ADD_SUBDIRECTORY(pyext)
-ADD_SUBDIRECTORY(test)
-ADD_SUBDIRECTORY(examples)
-ADD_SUBDIRECTORY(benchmark)
-ADD_SUBDIRECTORY(doc)
 
-INSTALL(TARGETS RMF DESTINATION ${CMAKE_INSTALL_LIBDIR})
-INSTALL(DIRECTORY ${PROJECT_SOURCE_DIR}/include/RMF  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-INSTALL(DIRECTORY ${PROJECT_BINARY_DIR}/include/RMF  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+ADD_SUBDIRECTORY(pyext)
+
+include(test/CMakeLists.txt)
+include(examples/CMakeLists.txt)
+include(benchmark/CMakeLists.txt)
+include(doc/CMakeLists.txt)

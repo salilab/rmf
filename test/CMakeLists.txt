@@ -1,5 +1,5 @@
 
-file(GLOB python_tests "test_*.py")
+file(GLOB python_tests "test/test_*.py")
 
 foreach (test ${python_tests})
    GET_FILENAME_COMPONENT(name ${test} NAME_WE)
@@ -9,11 +9,12 @@ foreach (test ${python_tests})
   #add_dependencies(${name} RMFPython)
 endforeach()
 
-file(GLOB cpp_tests "test_*.cpp")
+file(GLOB cpp_tests "test/test_*.cpp")
 
 foreach (test ${cpp_tests})
    GET_FILENAME_COMPONENT(name ${test} NAME_WE)
-   add_executable(${name} ${test})
+   add_executable("${name}" ${test})
    target_link_libraries(${name} RMF)
-   add_test(${name} ${name})
+   set_target_properties(${name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tests")
+   add_test(${name} "${CMAKE_BINARY_DIR}/tests/${name}")
 endforeach()

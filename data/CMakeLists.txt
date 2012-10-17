@@ -1,4 +1,7 @@
-FILE(GLOB jsons "*.json")
+
+FILE(GLOB jsons "${PROJECT_SOURCE_DIR}/data/*.json")
+set(decorators "${PROJECT_BINARY_DIR}/include/RMF/decorators.h")
+
 
 set(json_headers)
 foreach (json ${jsons})
@@ -11,7 +14,6 @@ foreach (json ${jsons})
    list(APPEND json_headers ${header})
 endforeach()
 
-set(decorators "${PROJECT_BINARY_DIR}/include/RMF/decorators.h")
 add_custom_command(OUTPUT ${decorators}
                                         COMMAND "python" "${PROJECT_SOURCE_DIR}/data/make-decorators.py" ">" ${decorators}
-                                        DEPENDS "make-decorators.py")
+                                        DEPENDS "${PROJECT_SOURCE_DIR}/data/make-decorators.py")
