@@ -473,8 +473,7 @@ class Decorator:
         ret=[]
         classstr="""/** %(description)s
 
-       \see %(name)s%(NOTCONST)s
-       \see %(name)s%(CONST)sFactory
+       See also %(name)s%(NOTCONST)s and %(name)s%(CONST)sFactory.
      */
     class %(name)s%(CONST)s:
         public Decorator<%(name)s%(CONST)s, Node%(CONST)sHandle> {
@@ -515,8 +514,7 @@ class Decorator:
                              "init":"\n".join(self.init_function)})
         factstr="""/** Create decorators of type %(name)s.
 
-       \see %(name)s%(CONST)s
-       \see %(name)s%(NOTCONST)sFactory
+       See also %(name)s%(CONST)s and %(name)s%(NOTCONST)sFactory.
     */
     class %(name)s%(CONST)sFactory:
        public Factory<%(name)s%(CONST)s>
