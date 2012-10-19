@@ -21,7 +21,7 @@ node in the hierarchy has the appropriate data stored along with
 it: a chain node has the chain identifier, and a residue
 node has the type of the residue stored and atom nodes have coordinates,
 atom type and elements. Bonds between atoms or coarser elements are stored
-explicity as dealing with external databases to generate bonds is the source
+explicitly as dealing with external databases to generate bonds is the source
 of much of the difficulty of dealing with other formats such as PDB.
 
 The file might also include a pair for storing the r-value for a
@@ -100,11 +100,28 @@ using the same mechanism. Currently, the library API supports sets up to
 size 4, but we can add arbitrary sized sets when needed.
 
 Attributes on a parent node should be thought of as being inherited by their
-children when appropiate unless the child overrides it with a value of its own.
+children when appropriate unless the child overrides it with a value of its own.
 For example, if a node in the hierarchy has a color stored in it, the children
 should be considered as having the same color unless they have a different color
 of their own. Similarly, atoms inherit their residue index and type from their
 residue parents and all of those get the chain identifier from their parent.
+
+\section inheritance Inheritance of properties
+Certain nodes modify how their children should behave. This modification can be either
+through inheritance (eg all descendent assumed to have the property unless they explicitly
+override it) or composition (the descendent's property is the ancestors composed
+with theirs). Note that since a given node can be reached through multiple path in the
+hierarchy, a given view of the file might have to have multiple objects (eg graphics) for
+a single node.
+
+Current examples are
+- RMF::Color is inherited. That is, a node that is not an RMF::Color node, has the color
+of its closest RMF::Color ancestor.
+- RMF::RigidBody transforms are composed with the coordinates of their ancestors. That is,
+a node that is a RMF::Particle or RMF::Ball with an ancestor that is an RMF::RigidBody has
+global coordinates at the RMF::RigidBody's transformation applied to its coordinates. You
+can use the RMF::ReferenceFrame to help with this. See the example rigid_bodies.py.
+
 
 \section adding Adding custom data to an RMF
 
