@@ -48,6 +48,7 @@
 #include "RMF/Factory.h"
 #include "RMF/decorators.h"
 #include "RMF/decorator_utility.h"
+#include "RMF/ReferenceFrame.h"
 #include "RMF/utility.h"
 #include <RMF/internal/swig_helpers.h>
 #include <RMF/SetCurrentFrame.h>
@@ -176,6 +177,9 @@ IMP_RMF_SWIG_VALUE_INSTANCE(RMF, HDF5DataSetIndex3D, HDF5DataSetIndex3D, HDF5Dat
 IMP_RMF_SWIG_PAIR(RMF, NodeConstHandle, BondPair, BondPairs)
 IMP_RMF_SWIG_PAIR(RMF, Index, IndexRange, IndexRanges)
 IMP_RMF_SWIG_PAIR(RMF, Int, IntRange, IntRanges)
+
+IMP_RMF_SWIG_VALUE(RMF, ReferenceFrame, ReferenceFrames);
+
 
 IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DECLARE_TYPE);
 
@@ -325,6 +329,7 @@ IMP_RMF_DECORATOR(RMF, Typed);
 %include "RMF/decorator_utility.h"
 %include "RMF/utility.h"
 %include "RMF/SetCurrentFrame.h"
+%include "RMF/ReferenceFrame.h"
 
 
 %pythoncode %{

@@ -1,5 +1,5 @@
 
-file(GLOB python_tests "*.py")
+file(GLOB python_tests "examples/*.py")
 
 foreach (test ${python_tests})
    GET_FILENAME_COMPONENT(name ${test} NAME_WE)

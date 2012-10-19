@@ -10,6 +10,7 @@
 #define IMPLIBRMF_INTERNAL_TYPES_H
 
 #include <RMF/config.h>
+#include "../infrastructure_macros.h"
 #include <hdf5.h>
 
 
