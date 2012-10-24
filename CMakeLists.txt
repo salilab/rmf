@@ -35,7 +35,7 @@ include_directories("${PROJECT_BINARY_DIR}/include"
 include(data/CMakeLists.txt)
 include(include/CMakeLists.txt)
 include(src/CMakeLists.txt)
-include(bin/CMakeLists.txt)
+ADD_SUBDIRECTORY(bin)
 # swig support is a little broken
 
 if (DEFINED CMAKE_INSTALL_PYTHONDIR)
