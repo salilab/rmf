@@ -27,7 +27,8 @@ configure_file (
   )
 
 include_directories("${PROJECT_BINARY_DIR}/include"
-"${PROJECT_SOURCE_DIR}/include" ${HDF5_INCLUDE_DIRS} "${PROJECT_BINARY_DIR}")
+                                "${PROJECT_SOURCE_DIR}/include" ${HDF5_INCLUDE_DIRS}
+                                ${BOOST_INCLUDE_DIRS} "${PROJECT_BINARY_DIR}")
 
 
 
