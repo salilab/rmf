@@ -67,7 +67,7 @@ namespace RMF {
             std::string name,
             bool per_frame):
       data_(new Data) {
-      data_->file_name=file.get_name();
+      data_->file_name=file.get_path();
       data_->category=category;
       data_->name=name;
       data_->per_frame=per_frame;
@@ -131,7 +131,7 @@ namespace RMF {
             const Strings & names,
             bool per_frame):
       data_(new Data) {
-      data_->file_name=file.get_name();
+      data_->file_name=file.get_path();
       data_->category=category;
       data_->names=names;
       data_->per_frame=per_frame;

@@ -39,7 +39,7 @@ namespace RMF {
   }
   void HDF5SharedData::open_things(bool create) {
     if (create) {
-      file_=create_hdf5_file(file_name_);
+      file_=create_hdf5_file(get_file_path());
       RMF_OPERATION(
           file_.set_attribute<CharTraits>("version", std::string("rmf 1")),
           "adding version string to file.");
@@ -61,7 +61,7 @@ namespace RMF {
             "adding node data data set to file.");
       }
     } else {
-      file_=open_hdf5_file(file_name_);
+      file_=open_hdf5_file(get_file_path());
       std::string version;
       RMF_OPERATION(
           version=file_.get_attribute<CharTraits>("version"),
@@ -124,7 +124,7 @@ namespace RMF {
   }
 
   HDF5SharedData::HDF5SharedData(std::string g, bool create):
-  file_name_(g), frames_hint_(0), alias_category_(-1)
+  SharedData(g), frames_hint_(0), alias_category_(-1)
   {
     RMF_BEGIN_FILE;
     RMF_BEGIN_OPERATION;

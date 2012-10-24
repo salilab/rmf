@@ -101,6 +101,10 @@ namespace RMF {
       return shared_->get_file_name();
     }
 
+    std::string get_path() const {
+      return shared_->get_file_path();
+    }
+
     /** \name Methods for manipulating keys
         When using C++ it is most convenient to specify types
         when adding and using keys through template arguments. For python

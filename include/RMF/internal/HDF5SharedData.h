@@ -91,7 +91,6 @@ namespace RMF {
       // indexed first by per frame, then by
       // TypeInfo::get_index() then by ID
       // then by key.get_index()
-      std::string file_name_;
       mutable HDF5Group file_;
       HDF5DataSetD<StringTraits, 1> node_names_;
       mutable HDF5DataSetD<StringTraits, 1> fame_names_;
@@ -690,9 +689,6 @@ namespace RMF {
       void flush() const {
         IMP_HDF5_CALL(H5Fflush(file_.get_handle(), H5F_SCOPE_GLOBAL));
         //SharedData::validate();
-      }
-      std::string get_file_name() const {
-        return file_.get_file().get_name();
       }
 
       /**
