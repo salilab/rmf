@@ -236,10 +236,14 @@ namespace RMF {
                                         NULL));
       IMP_HDF5_HANDLE(input, H5Screate_simple(1, &total,
                                         NULL), &H5Sclose);
-      return TypeTraits::read_values_dataset(HDF5Object::get_handle(),
-                                             input,
-                                             get_data_space(),
-                                             total);
+      typename TypeTraits::Types ret
+        = TypeTraits::read_values_dataset(HDF5Object::get_handle(),
+                                          input,
+                                          get_data_space(),
+                                          total);
+      RMF_INTERNAL_CHECK(ret.size() == total,
+                         "Size mismatch");
+      return ret;
     }
     RMF_COMPARISONS(HDF5ConstDataSetD);
   };

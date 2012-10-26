@@ -128,7 +128,7 @@ namespace RMF {
                  ,{
                    RMF_UNUSED(a); RMF_UNUSED(sz);
                    RMF_NOT_IMPLEMENTED;
-                 });
+             }, false);
 
   RMF_TRAITS(NodeID, NodeIDs, node_id, 4, IndexTraits::get_hdf5_disk_type(),
                  IndexTraits::get_hdf5_memory_type(),
@@ -163,7 +163,7 @@ namespace RMF {
                    for (unsigned int i=0; i< ret.size(); ++i) {
                      ret[i]=NodeID(is[i]);
                    }
-                 });
+             }, true);
 
   RMF_TRAITS_ONE(Char, Chars, char, 6, H5T_STD_I8LE,
                  H5T_NATIVE_CHAR,H5T_NATIVE_CHAR, '\0',
@@ -192,7 +192,7 @@ namespace RMF {
                    vector<char> v(sz);
                    IMP_HDF5_CALL(H5Aread(a, H5T_NATIVE_CHAR, &v[0]));
                    ret=std::string(&v[0], v.size());
-                 });
+                 }, false);
 #endif
 
 } /* namespace RMF */

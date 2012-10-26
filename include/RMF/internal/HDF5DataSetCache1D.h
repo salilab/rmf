@@ -19,7 +19,7 @@ namespace RMF {
   namespace internal {
 
     template <class TypeTraits>
-    class HDF5DataSetCacheD<TypeTraits, 1>: public boost::noncopyable {
+    class HDF5DataSetCacheD<TypeTraits, 1>/*: public boost::noncopyable*/ {
       typedef HDF5DataSetD<TypeTraits, 1> DS;
       typedef typename TypeTraits::Types array_type;
       array_type cache_;
@@ -33,8 +33,15 @@ namespace RMF {
         HDF5DataSetIndexD<1> sz=ds_.get_size();
         HDF5DataSetIndexD<1> lb(0);
         if (sz != lb) {
-          typename TypeTraits::Types all= ds_.get_block(lb, sz);
-          std::swap(cache_, all);
+          if (TypeTraits::BatchOperations) {
+            typename TypeTraits::Types all= ds_.get_block(lb, sz);
+            std::swap(cache_, all);
+          } else {
+            cache_.resize(sz[0]);
+            for (unsigned int i=0; i< cache_.size(); ++i) {
+              cache_[i]= ds_.get_value(HDF5DataSetIndexD<1>(i));
+            }
+          }
         }
       }
     public:
@@ -57,9 +64,15 @@ namespace RMF {
       }
       void flush() {
         if (!dirty_) return;
-        HDF5DataSetIndexD<1> sz=ds_.get_size();
-        HDF5DataSetIndexD<1> lb(0);
-        ds_.set_block(lb, sz, cache_);
+        if (TypeTraits::BatchOperations) {
+          HDF5DataSetIndexD<1> sz=ds_.get_size();
+          HDF5DataSetIndexD<1> lb(0);
+          ds_.set_block(lb, sz, cache_);
+        } else {
+          for (unsigned int i=0; i< cache_.size(); ++i) {
+            ds_.set_value(HDF5DataSetIndexD<1>(i), cache_[i]);
+          }
+        }
         dirty_=false;
       }
       void set_size(const HDF5DataSetIndexD<1> &ijk) {
@@ -81,75 +94,6 @@ namespace RMF {
         dirty_=true;
       }
       typename TypeTraits::Type get_value(const HDF5DataSetIndexD<1> &ijk) const {
-        return cache_[ijk[0]];
-      }
-      HDF5DataSetIndexD<1> get_size() const {
-        return HDF5DataSetIndexD<1>(cache_.size());
-      }
-    };
-
-    template <>
-    class HDF5DataSetCacheD<StringTraits, 1>: public boost::noncopyable {
-      typedef HDF5DataSetD<StringTraits, 1> DS;
-      typedef typename StringTraits::Types array_type;
-      array_type cache_;
-      bool dirty_;
-      DS ds_;
-      // to create on demand
-      HDF5Group parent_;
-      std::string name_;
-      void initialize(DS ds) {
-        ds_=ds;
-        HDF5DataSetIndexD<1> sz=ds_.get_size();
-        cache_.resize(sz[0]);
-        for (unsigned int i=0; i< cache_.size(); ++i) {
-          cache_[i]= ds_.get_value(HDF5DataSetIndexD<1>(i));
-        }
-      }
-    public:
-      HDF5DataSetCacheD(): dirty_(false) {}
-      ~HDF5DataSetCacheD() {
-        flush();
-      }
-      void set(HDF5Group parent, std::string name) {
-        dirty_=false;
-        parent_=parent;
-        name_=name;
-        if (parent_.get_has_child(name_)) {
-          initialize(parent_.get_child_data_set<StringTraits, 1>(name_));
-        }
-      }
-      void reset() {
-        flush();
-        ds_= DS();
-        cache_.clear();
-      }
-      void flush() {
-        if (!dirty_) return;
-        for (unsigned int i=0; i< cache_.size(); ++i) {
-          ds_.set_value(HDF5DataSetIndexD<1>(i), cache_[i]);
-        }
-        dirty_=false;
-      }
-      void set_size(const HDF5DataSetIndexD<1> &ijk) {
-        RMF_INTERNAL_CHECK(!name_.empty(),
-                           "Name never set");
-        if (ds_== DS()) {
-          ds_= parent_.add_child_data_set<StringTraits, 1>(name_);
-        } else {
-          flush();
-        }
-        ds_.set_size(ijk);
-        initialize(ds_);
-      }
-      void set_value(const HDF5DataSetIndexD<1> &ijk,
-                     typename StringTraits::Type value) {
-        RMF_USAGE_CHECK(ijk[0] < cache_.size(),
-                        "Not big enough");
-        cache_[ijk[0]]=value;
-        dirty_=true;
-      }
-      typename StringTraits::Type get_value(const HDF5DataSetIndexD<1> &ijk) const {
         return cache_[ijk[0]];
       }
       HDF5DataSetIndexD<1> get_size() const {

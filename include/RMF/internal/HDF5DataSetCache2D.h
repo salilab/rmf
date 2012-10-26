@@ -19,7 +19,7 @@ namespace RMF {
   namespace internal {
 
     template <class TypeTraits>
-    class HDF5DataSetCacheD<TypeTraits, 2>: public boost::noncopyable {
+    class HDF5DataSetCacheD<TypeTraits, 2>/*: public boost::noncopyable*/ {
       typedef HDF5DataSetD<TypeTraits, 2> DS;
       typedef boost::multi_array<typename TypeTraits::Type, 2> array_type;
       typedef typename array_type::index index;
@@ -35,13 +35,21 @@ namespace RMF {
         cache_.resize(boost::extents[sz[0]][sz[1]]);
         HDF5DataSetIndexD<2> lb(0,0);
         if (sz != lb) {
-          typename TypeTraits::Types all= ds_.get_block(lb, sz);
-          for (unsigned int i=0; i< sz[0]; ++i) {
-            for (unsigned int j=0; j< sz[1]; ++j) {
-              cache_[i][j]= all[i*sz[1]+j];
-              RMF_INTERNAL_CHECK(cache_[i][j]
-                                 ==ds_.get_value(HDF5DataSetIndexD<2>(i,j)),
-                                 "Values don't match");
+          if (TypeTraits::BatchOperations) {
+            typename TypeTraits::Types all= ds_.get_block(lb, sz);
+            for (unsigned int i=0; i< sz[0]; ++i) {
+              for (unsigned int j=0; j< sz[1]; ++j) {
+                cache_[i][j]= all[i*sz[1]+j];
+                RMF_INTERNAL_CHECK(cache_[i][j]
+                                   ==ds_.get_value(HDF5DataSetIndexD<2>(i,j)),
+                                   "Values don't match");
+              }
+            }
+          } else {
+            for (unsigned int i=0; i< sz[0]; ++i) {
+              for (unsigned int j=0; j< sz[1]; ++j) {
+                cache_[i][j]= ds_.get_value(HDF5DataSetIndexD<2>(i,j));
+              }
             }
           }
         }
@@ -66,15 +74,23 @@ namespace RMF {
       }
       void flush() {
         if (!dirty_) return;
-        HDF5DataSetIndexD<2> sz=ds_.get_size();
-        typename TypeTraits::Types data(sz[0]*sz[1]);
-        HDF5DataSetIndexD<2> lb(0,0);
-        for (unsigned int i=0; i< sz[0]; ++i) {
-          for (unsigned int j=0; j< sz[1]; ++j) {
-            data[i*sz[1]+j] = cache_[i][j];
+        HDF5DataSetIndexD<2> sz=get_size();
+        if (TypeTraits::BatchOperations) {
+          typename TypeTraits::Types data(sz[0]*sz[1]);
+          HDF5DataSetIndexD<2> lb(0,0);
+          for (unsigned int i=0; i< sz[0]; ++i) {
+            for (unsigned int j=0; j< sz[1]; ++j) {
+              data[i*sz[1]+j] = cache_[i][j];
+            }
+          }
+          ds_.set_block(lb, sz, data);
+        } else {
+          for (unsigned int i=0; i< sz[0]; ++i) {
+            for (unsigned int j=0; j< sz[1]; ++j) {
+              ds_.set_value(HDF5DataSetIndexD<2>(i,j), cache_[i][j]);
+            }
           }
         }
-        ds_.set_block(lb, sz, data);
         dirty_=false;
       }
       void set_size(const HDF5DataSetIndexD<2> &ijk) {

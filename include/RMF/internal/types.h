@@ -26,24 +26,25 @@ namespace RMF {
       return ret;
     }
 
-    template <class T, class Ts, int Index>
-  struct BaseTraits {
-    typedef T Type;
-    typedef Ts Types;
-    static int get_index() {
-      return Index;
-    }
-    static const T& get_fill_value() {
-      return get_null_value();
-    }
-    static bool get_is_null_value(const T& f) {
-      return f== get_null_value();
-    }
-    static const T& get_null_value() {
-      static const T ret;
-      return ret;
-    }
-  };
+    template <class T, class Ts, int Index, bool Multiple>
+    struct BaseTraits {
+      typedef T Type;
+      typedef Ts Types;
+      static const bool BatchOperations=Multiple;
+      static int get_index() {
+        return Index;
+      }
+      static const T& get_fill_value() {
+        return get_null_value();
+      }
+      static bool get_is_null_value(const T& f) {
+        return f== get_null_value();
+      }
+      static const T& get_null_value() {
+        static const T ret;
+        return ret;
+      }
+    };
 
   } // namespace internal
 } /* namespace RMF */
