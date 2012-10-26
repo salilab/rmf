@@ -13,6 +13,9 @@
 #include "SharedData.h"
 #include "../HDF5Group.h"
 #include "../HDF5File.h"
+#include "HDF5DataSetCacheD.h"
+#include "HDF5DataSetCache2D.h"
+#include "HDF5DataSetCache1D.h"
 #include "../infrastructure_macros.h"
 #include "map.h"
 #include "set.h"
@@ -92,11 +95,10 @@ namespace RMF {
       // TypeInfo::get_index() then by ID
       // then by key.get_index()
       mutable HDF5Group file_;
-      HDF5DataSetD<StringTraits, 1> node_names_;
-      mutable HDF5DataSetD<StringTraits, 1> fame_names_;
-      boost::array<HDF5DataSetD<StringTraits, 1>, 4> category_names_;
-      boost::array<Strings, 4> category_names_cache_;
-      boost::array<HDF5DataSetD<IndexTraits, 2>, 4> node_data_;
+      HDF5DataSetCacheD<StringTraits, 1> node_names_;
+      HDF5DataSetCacheD<StringTraits, 1> frame_names_;
+      boost::array<HDF5DataSetCacheD<StringTraits, 1>, 4> category_names_;
+      boost::array<HDF5DataSetCacheD<IndexTraits, 2>, 4> node_data_;
       boost::array<Ints,4> free_ids_;
       unsigned int frames_hint_;
 
@@ -686,10 +688,7 @@ namespace RMF {
       HDF5Group get_group() const {
         return file_;
       }
-      void flush() const {
-        IMP_HDF5_CALL(H5Fflush(file_.get_handle(), H5F_SCOPE_GLOBAL));
-        //SharedData::validate();
-      }
+      void flush() ;
 
       /**
          constructs HDF5SharedData for the RMF file g, either creating
@@ -715,12 +714,9 @@ namespace RMF {
       int add_category(std::string name);
       unsigned int get_number_of_categories() const;
       std::string get_category_name(unsigned int kc) const  {
-        RMF_USAGE_CHECK(category_names_cache_.size()
-                            >= static_cast<unsigned int>(1),
-                            "No categories");
-        RMF_USAGE_CHECK(category_names_cache_[0].size() > kc,
+        RMF_USAGE_CHECK(category_names_[0].get_size()[0] > kc,
                         "No such category.");
-        return category_names_cache_[0][kc];
+        return category_names_[0].get_value(kc);
       }
 
       std::string get_description() const;

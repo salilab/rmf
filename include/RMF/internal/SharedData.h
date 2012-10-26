@@ -184,7 +184,7 @@ namespace RMF {
       int get_associated_node(const T &d) const {
         return back_association_.find(get_uint(d))->second;
       }
-      virtual void flush() const=0;
+      virtual void flush()=0;
       std::string get_file_name() const;
 
       virtual unsigned int get_number_of_frames() const=0;

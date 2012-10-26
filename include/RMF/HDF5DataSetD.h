@@ -32,6 +32,7 @@ namespace RMF {
     public HDF5MutableAttributes<HDF5ConstDataSetD<TypeTraits, D> > {
     typedef HDF5MutableAttributes<HDF5ConstDataSetD<TypeTraits, D> >  P;
     friend class HDF5Group;
+  protected:
     typedef HDF5DataSetCreationPropertiesD<TypeTraits, D> CreationProperties;
     typedef HDF5DataSetAccessPropertiesD<TypeTraits, D> AccessProperties;
 

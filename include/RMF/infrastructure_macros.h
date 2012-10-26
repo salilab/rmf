@@ -14,7 +14,7 @@
 #include <string>
 #include "exceptions.h"
 
-#include <vector>
+#include <debug/vector>
 
 #ifdef NDEBUG
 #define RMF_NDEBUG
@@ -331,7 +331,7 @@
 
 namespace RMF {
 #if !defined(SWIG)
-  using std::vector;
+  using  __gnu_debug::vector;
 #else
   template <class T>
   class vector{};
