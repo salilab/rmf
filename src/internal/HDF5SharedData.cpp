@@ -137,7 +137,7 @@ namespace RMF {
     }
 
     void HDF5SharedData::flush() {
-      IMP_HDF5_CALL(H5Fflush(file_.get_handle(), H5F_SCOPE_GLOBAL));
+      RMF_HDF5_CALL(H5Fflush(file_.get_handle(), H5F_SCOPE_GLOBAL));
       //SharedData::validate();
       node_names_.flush();
       frame_names_.flush();

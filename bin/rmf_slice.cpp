@@ -11,16 +11,16 @@ description("Slice an rmf file into one or more files based on frames");
 
 int main(int argc, char **argv) {
   try {
-    IMP_ADD_INPUT_FILE("rmf");
-    IMP_ADD_OUTPUT_FILE("rmf");
-    IMP_ADD_FRAMES;
+    RMF_ADD_INPUT_FILE("rmf");
+    RMF_ADD_OUTPUT_FILE("rmf");
+    RMF_ADD_FRAMES;
     process_options(argc, argv);
 
     RMF::FileConstHandle rh= RMF::open_rmf_file_read_only(input);
     RMF::FileHandle orh= RMF::create_rmf_file(output);
     RMF::copy_structure(rh, orh);
 
-    IMP_FOR_EACH_FRAME(rh.get_number_of_frames()) {
+    RMF_FOR_EACH_FRAME(rh.get_number_of_frames()) {
       RMF::copy_frame(rh, orh, current_frame, frame_iteration);
     }
     return 0;

@@ -11,8 +11,8 @@ int main(int argc, char **argv) {
   try {
     options.add_options()
       ("decorators,d", "Show what decorators recognize each node.");
-    IMP_ADD_INPUT_FILE("rmf");
-    IMP_ADD_FRAMES;
+    RMF_ADD_INPUT_FILE("rmf");
+    RMF_ADD_FRAMES;
     boost::program_options::variables_map vm(process_options(argc, argv));
     RMF::FileConstHandle rh= RMF::open_rmf_file_read_only(input);
     std::string descr= rh.get_description();

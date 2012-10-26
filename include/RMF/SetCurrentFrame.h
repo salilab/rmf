@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_SET_CURRENT_FRAME_H
-#define IMPLIBRMF_SET_CURRENT_FRAME_H
+#ifndef RMF__SET_CURRENT_FRAME_H
+#define RMF__SET_CURRENT_FRAME_H
 
 #include <RMF/config.h>
 #include "FileConstHandle.h"
@@ -39,4 +39,4 @@ namespace RMF {
 #endif
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_SET_CURRENT_FRAME_H */
+#endif /* RMF__SET_CURRENT_FRAME_H */

@@ -20,7 +20,7 @@ HDF5Object::HDF5Object(HDF5SharedHandle *h): h_(h) {
 
 
 HDF5File HDF5Object::get_file() const {
-  IMP_HDF5_NEW_HANDLE(h, H5Iget_file_id(get_handle()), &H5Fclose);
+  RMF_HDF5_NEW_HANDLE(h, H5Iget_file_id(get_handle()), &H5Fclose);
   return HDF5File(h.get());
 }
 
@@ -51,7 +51,7 @@ HDF5Group HDF5Group::add_child_group(std::string name) {
   RMF_USAGE_CHECK(!H5Lexists(get_handle(), name.c_str(), H5P_DEFAULT),
                       internal::get_error_message("Child named ",
                                                   name, " already exists"));
-  IMP_HDF5_HANDLE(, H5Gcreate2(get_handle(), name.c_str(),
+  RMF_HDF5_HANDLE(, H5Gcreate2(get_handle(), name.c_str(),
                         H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT),
                   &H5Gclose);
   return HDF5Group(*this, name);
@@ -65,7 +65,7 @@ unsigned int HDF5ConstGroup::get_number_of_children() const {
 std::string HDF5ConstGroup::get_child_name(unsigned int i) const {
   static const int max_len=1000;
   char buf[max_len];
-  IMP_HDF5_CALL(H5Lget_name_by_idx(get_handle(), ".",
+  RMF_HDF5_CALL(H5Lget_name_by_idx(get_handle(), ".",
                                    H5_INDEX_NAME, H5_ITER_NATIVE, (hsize_t)i,
                                    buf, max_len, H5P_DEFAULT));
   return std::string(buf);
@@ -75,9 +75,9 @@ bool HDF5ConstGroup::get_has_child(std::string name) const {
 }
 bool HDF5ConstGroup::get_child_is_group(unsigned int i) const {
   H5O_info_t info;
-  IMP_HDF5_HANDLE(c, H5Oopen(get_handle(), get_child_name(i).c_str(),
+  RMF_HDF5_HANDLE(c, H5Oopen(get_handle(), get_child_name(i).c_str(),
                        H5P_DEFAULT), &H5Oclose);
-  IMP_HDF5_CALL(H5Oget_info(c, &info));
+  RMF_HDF5_CALL(H5Oget_info(c, &info));
   return info.type== H5O_TYPE_GROUP; //H5O_TYPE_DATASET
 }
 HDF5ConstGroup HDF5ConstGroup::get_child_group(unsigned int i) const {
@@ -95,9 +95,9 @@ HDF5Group HDF5Group::get_child_group(unsigned int i) const {
 }
 bool HDF5ConstGroup::get_child_is_data_set(unsigned int i) const {
   H5O_info_t info;
-  IMP_HDF5_HANDLE(c, H5Oopen(get_handle(), get_child_name(i).c_str(),
+  RMF_HDF5_HANDLE(c, H5Oopen(get_handle(), get_child_name(i).c_str(),
                              H5P_DEFAULT), &H5Oclose);
-  IMP_HDF5_CALL(H5Oget_info(c, &info));
+  RMF_HDF5_CALL(H5Oget_info(c, &info));
   return info.type== H5O_TYPE_DATASET; //H5O_TYPE_DATASET
 }
 
@@ -107,9 +107,9 @@ bool HDF5ConstGroup::get_child_is_data_set(unsigned int i) const {
 namespace {
 hid_t get_parameters() {
   hid_t plist= H5Pcreate(H5P_FILE_ACCESS);
-  IMP_HDF5_CALL(H5Pset_sieve_buf_size(plist, 1000000));
-  IMP_HDF5_CALL(H5Pset_cache(plist, 0, 10000, 10000000, 0.0));
-  IMP_HDF5_CALL(H5Pset_libver_bounds(plist, H5F_LIBVER_18, H5F_LIBVER_LATEST));
+  RMF_HDF5_CALL(H5Pset_sieve_buf_size(plist, 1000000));
+  RMF_HDF5_CALL(H5Pset_cache(plist, 0, 10000, 10000000, 0.0));
+  RMF_HDF5_CALL(H5Pset_libver_bounds(plist, H5F_LIBVER_18, H5F_LIBVER_LATEST));
   return plist;
 }
 herr_t error_function(hid_t, void *) {
@@ -123,30 +123,30 @@ herr_t error_function(hid_t, void *) {
 
 // throws RMF::IOException on error
 HDF5File create_hdf5_file(std::string name) {
-  IMP_HDF5_CALL(H5open());
-  IMP_HDF5_CALL(H5Eset_auto2(H5E_DEFAULT, &error_function, NULL));
-  IMP_HDF5_HANDLE(plist, get_parameters(), H5Pclose);
-  IMP_HDF5_NEW_HANDLE(h, H5Fcreate(name.c_str(),
+  RMF_HDF5_CALL(H5open());
+  RMF_HDF5_CALL(H5Eset_auto2(H5E_DEFAULT, &error_function, NULL));
+  RMF_HDF5_HANDLE(plist, get_parameters(), H5Pclose);
+  RMF_HDF5_NEW_HANDLE(h, H5Fcreate(name.c_str(),
                                    H5F_ACC_TRUNC, H5P_DEFAULT,
                                    plist), &H5Fclose);
   return HDF5File(h.get());
 }
 
 HDF5File open_hdf5_file(std::string name) {
-  IMP_HDF5_CALL(H5open());
-  IMP_HDF5_CALL(H5Eset_auto2(H5E_DEFAULT, &error_function, NULL));
-  IMP_HDF5_HANDLE(plist, get_parameters(), H5Pclose);
-  IMP_HDF5_NEW_HANDLE(h, H5Fopen(name.c_str(),
+  RMF_HDF5_CALL(H5open());
+  RMF_HDF5_CALL(H5Eset_auto2(H5E_DEFAULT, &error_function, NULL));
+  RMF_HDF5_HANDLE(plist, get_parameters(), H5Pclose);
+  RMF_HDF5_NEW_HANDLE(h, H5Fopen(name.c_str(),
                                  H5F_ACC_RDWR, plist),
                       &H5Fclose);
   return HDF5File(h.get());
 }
 
 HDF5ConstFile open_hdf5_file_read_only(std::string name) {
-  IMP_HDF5_CALL(H5open());
-  IMP_HDF5_CALL(H5Eset_auto2(H5E_DEFAULT, &error_function, NULL));
-  IMP_HDF5_HANDLE(plist, get_parameters(), H5Pclose);
-  IMP_HDF5_NEW_HANDLE(h, H5Fopen(name.c_str(),
+  RMF_HDF5_CALL(H5open());
+  RMF_HDF5_CALL(H5Eset_auto2(H5E_DEFAULT, &error_function, NULL));
+  RMF_HDF5_HANDLE(plist, get_parameters(), H5Pclose);
+  RMF_HDF5_NEW_HANDLE(h, H5Fopen(name.c_str(),
                                  H5F_ACC_RDONLY, plist),
                       &H5Fclose);
   return HDF5File(h.get());
@@ -159,25 +159,25 @@ HDF5ConstFile::HDF5ConstFile(HDF5SharedHandle *h): HDF5ConstGroup(h) {}
     HDF5ConstGroup(h.get_shared_handle()) {}
 
 void HDF5File::flush() {
-  IMP_HDF5_CALL(H5Fflush(get_handle(), H5F_SCOPE_LOCAL));
+  RMF_HDF5_CALL(H5Fflush(get_handle(), H5F_SCOPE_LOCAL));
 }
 
   /*bool HDF5File::get_is_writable() const {
   unsigned int intent;
-  IMP_HDF5_CALL(H5Fget_intent(get_handle(), &intent));
+  RMF_HDF5_CALL(H5Fget_intent(get_handle(), &intent));
   return intent==H5F_ACC_RDWR;
   }*/
 
 std::string HDF5ConstFile::get_name() const {
   int sz=H5Fget_name(get_handle(), NULL, 0);
   boost::scoped_array<char> buf(new char[sz+1]);
-  IMP_HDF5_CALL(H5Fget_name(get_handle(), buf.get(), sz+1));
+  RMF_HDF5_CALL(H5Fget_name(get_handle(), buf.get(), sz+1));
   return std::string(buf.get());
 }
 std::string HDF5File::get_name() const {
   int sz=H5Fget_name(get_handle(), NULL, 0);
   boost::scoped_array<char> buf(new char[sz+1]);
-  IMP_HDF5_CALL(H5Fget_name(get_handle(), buf.get(), sz+1));
+  RMF_HDF5_CALL(H5Fget_name(get_handle(), buf.get(), sz+1));
   return std::string(buf.get());
 }
 

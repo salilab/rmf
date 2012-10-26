@@ -35,8 +35,8 @@
    could not get that one to work reliably and it introduced various
    overhead with dynamic casts and things.  */
 
-#ifndef IMPLIBRMF_INTRUSIVE_PTR_OBJECT_H
-#define IMPLIBRMF_INTRUSIVE_PTR_OBJECT_H
+#ifndef RMF__INTRUSIVE_PTR_OBJECT_H
+#define RMF__INTRUSIVE_PTR_OBJECT_H
 
 #include "../infrastructure_macros.h"
 #include "../exceptions.h"
@@ -131,4 +131,4 @@ namespace boost
 } // namespace boost
 #include <boost/intrusive_ptr.hpp>
 
-#endif /* IMPLIBRMF_INTRUSIVE_PTR_OBJECT_H */
+#endif /* RMF__INTRUSIVE_PTR_OBJECT_H */

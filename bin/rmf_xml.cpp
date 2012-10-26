@@ -136,9 +136,9 @@ template <class TypeT, class Handle>
 
 int main(int argc, char **argv) {
   try {
-    IMP_ADD_INPUT_FILE("rmf");
-    IMP_ADD_OUTPUT_FILE("xml");
-    IMP_ADD_FRAMES;
+    RMF_ADD_INPUT_FILE("rmf");
+    RMF_ADD_OUTPUT_FILE("xml");
+    RMF_ADD_FRAMES;
     process_options(argc, argv);
 
     if (0) {

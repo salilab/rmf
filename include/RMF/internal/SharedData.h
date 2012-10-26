@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_INTERNAL_SHARED_DATA_H
-#define IMPLIBRMF_INTERNAL_SHARED_DATA_H
+#ifndef RMF__INTERNAL_SHARED_DATA_H
+#define RMF__INTERNAL_SHARED_DATA_H
 
 #include <RMF/config.h>
 #include "../Key.h"
@@ -292,4 +292,4 @@ namespace RMF {
 } /* namespace RMF */
 
 
-#endif /* IMPLIBRMF_INTERNAL_SHARED_DATA_H */
+#endif /* RMF__INTERNAL_SHARED_DATA_H */

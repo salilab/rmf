@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_NODE_ID_H
-#define IMPLIBRMF_NODE_ID_H
+#ifndef RMF__NODE_ID_H
+#define RMF__NODE_ID_H
 
 #include <RMF/config.h>
 #include "infrastructure_macros.h"
@@ -42,7 +42,7 @@ class NodeIDD {
   RMF_COMPARISONS(NodeIDD);
   RMF_HASHABLE(NodeIDD, return i_);
 };
-#ifndef IMP_DOXYGEN
+#ifndef RMF_DOXYGEN
 typedef NodeIDD<1> NodeID;
 typedef vector<NodeID> NodeIDs;
 typedef NodeIDD<2> NodePairID;
@@ -57,4 +57,4 @@ typedef vector<NodeQuadID> NodeQuadIDs;
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_NODE_ID_H */
+#endif /* RMF__NODE_ID_H */

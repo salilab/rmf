@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_HDF_5CONST_ATTRIBUTES_H
-#define IMPLIBRMF_HDF_5CONST_ATTRIBUTES_H
+#ifndef RMF__HDF_5CONST_ATTRIBUTES_H
+#define RMF__HDF_5CONST_ATTRIBUTES_H
 
 #include <RMF/config.h>
 #include "types.h"
@@ -44,12 +44,12 @@ namespace RMF {
       if (!H5Aexists(Base::get_shared_handle()->get_hid(), name.c_str())) {
         return typename TypeTraits::Types();
       } else {
-        IMP_HDF5_HANDLE(a, H5Aopen(Base::get_shared_handle()->get_hid(),
+        RMF_HDF5_HANDLE(a, H5Aopen(Base::get_shared_handle()->get_hid(),
                                    name.c_str(), H5P_DEFAULT),
                      &H5Aclose);
-        IMP_HDF5_HANDLE(s, H5Aget_space(a), &H5Sclose);
+        RMF_HDF5_HANDLE(s, H5Aget_space(a), &H5Sclose);
         hsize_t dim, maxdim;
-        IMP_HDF5_CALL(H5Sget_simple_extent_dims(s, &dim, &maxdim));
+        RMF_HDF5_CALL(H5Sget_simple_extent_dims(s, &dim, &maxdim));
         typename TypeTraits::Types ret
           = TypeTraits::read_values_attribute(a, dim);
         return ret;
@@ -69,18 +69,18 @@ namespace RMF {
         attribute manipulation methods.
         @{
     */
-#define IMP_HDF5_CONST_ATTRIBUTE(lcname, UCName, PassValue, ReturnValue, \
+#define RMF_HDF5_CONST_ATTRIBUTE(lcname, UCName, PassValue, ReturnValue, \
                            PassValues, ReturnValues)                    \
     ReturnValues                                                        \
       get_##lcname##_attribute(std::string nm) const {                  \
       return get_attribute< UCName##Traits>(nm);                        \
     }                                                                   \
 
-    RMF_FOREACH_SIMPLE_TYPE(IMP_HDF5_CONST_ATTRIBUTE);
-    IMP_HDF5_CONST_ATTRIBUTE(char, Char, char, char, std::string, std::string);
+    RMF_FOREACH_SIMPLE_TYPE(RMF_HDF5_CONST_ATTRIBUTE);
+    RMF_HDF5_CONST_ATTRIBUTE(char, Char, char, char, std::string, std::string);
     /** @} */
   };
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_HDF_5CONST_ATTRIBUTES_H */
+#endif /* RMF__HDF_5CONST_ATTRIBUTES_H */

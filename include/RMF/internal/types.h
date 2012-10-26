@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_INTERNAL_TYPES_H
-#define IMPLIBRMF_INTERNAL_TYPES_H
+#ifndef RMF__INTERNAL_TYPES_H
+#define RMF__INTERNAL_TYPES_H
 
 #include <RMF/config.h>
 #include "../infrastructure_macros.h"
@@ -18,7 +18,7 @@ namespace RMF {
   namespace internal {
     inline hid_t create_string_type() {
       hid_t tid1 = H5Tcopy (H5T_C_S1);
-      IMP_HDF5_CALL(H5Tset_size (tid1,H5T_VARIABLE));
+      RMF_HDF5_CALL(H5Tset_size (tid1,H5T_VARIABLE));
       return tid1;
     }
     inline hid_t get_string_type() {
@@ -50,4 +50,4 @@ namespace RMF {
 } /* namespace RMF */
 
 
-#endif /* IMPLIBRMF_INTERNAL_TYPES_H */
+#endif /* RMF__INTERNAL_TYPES_H */

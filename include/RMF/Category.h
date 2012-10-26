@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_KEY_CATEGORY_H
-#define IMPLIBRMF_KEY_CATEGORY_H
+#ifndef RMF__KEY_CATEGORY_H
+#define RMF__KEY_CATEGORY_H
 
 #include <RMF/config.h>
 #include "infrastructure_macros.h"
@@ -15,7 +15,7 @@
 
 namespace RMF {
 
-#if !defined(SWIG) && !defined(IMP_DOXYGEN)
+#if !defined(SWIG) && !defined(RMF_DOXYGEN)
 namespace internal {
   class SharedData;
 }
@@ -38,7 +38,7 @@ class Category {
     else return 0;
   }
 public:
-#ifndef IMP_DOXYGEN
+#ifndef RMF_DOXYGEN
   Category(unsigned int i): i_(i){}
 #endif
   Category(): i_(-1){}
@@ -51,11 +51,11 @@ public:
   RMF_SHOWABLE(Category, i_);
 };
 
-#ifndef IMP_DOXYGEN
+#ifndef RMF_DOXYGEN
 typedef vector<Category > Categories;
 #endif
 
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_KEY_CATEGORY_H */
+#endif /* RMF__KEY_CATEGORY_H */

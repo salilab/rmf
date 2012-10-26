@@ -3,8 +3,8 @@
  * Copyright 2007-2012 IMP Inventors. All rights reserved.
  */
 
-#ifndef IMP_COMMON_H
-#define IMP_COMMON_H
+#ifndef RMF_COMMON_H
+#define RMF_COMMON_H
 #include <boost/program_options.hpp>
 #include <RMF/profile.h>
 #include <RMF/utility.h>
@@ -71,7 +71,7 @@ void increment_frames(int &current_frame, const int frame_step,
 }
 
 
-#define IMP_ADD_INPUT_FILE(type)                \
+#define RMF_ADD_INPUT_FILE(type)                \
   std::string input;                            \
   positional_names.push_back(type);                                     \
   positional_options.add_options()                                      \
@@ -81,7 +81,7 @@ void increment_frames(int &current_frame, const int frame_step,
    " file");                                                            \
   positional_options_description.add("input-file", 1)
 
-#define IMP_ADD_OUTPUT_FILE(type)                                       \
+#define RMF_ADD_OUTPUT_FILE(type)                                       \
   std::string output;                                                   \
   positional_names.push_back(type);                                     \
   positional_options.add_options()                                      \
@@ -91,14 +91,14 @@ void increment_frames(int &current_frame, const int frame_step,
    " file");                                                            \
   positional_options_description.add("output-file", 1)
 
-#define IMP_ADD_FRAMES                                                  \
+#define RMF_ADD_FRAMES                                                  \
   int frame_option=0;                                                   \
   int begin_frame, end_frame, frame_step;                               \
   options.add_options()("frame,f",                                      \
                         boost::program_options::value< int >(&frame_option), \
                         "Frame to use, if negative, use every kth frame");
 
-#define IMP_FOR_EACH_FRAME(nf)                                          \
+#define RMF_FOR_EACH_FRAME(nf)                                          \
   if (frame_option >=0) {                                               \
     begin_frame=frame_option;                                           \
     end_frame=begin_frame+1;                                            \
@@ -113,4 +113,4 @@ void increment_frames(int &current_frame, const int frame_step,
   for (int current_frame=begin_frame, frame_iteration=0;                \
        current_frame < end_frame;                                       \
        increment_frames(current_frame, frame_step, frame_iteration))
-#endif  /* IMP_COMMON_H */
+#endif  /* RMF_COMMON_H */

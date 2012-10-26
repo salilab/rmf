@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_NAMES_H
-#define IMPLIBRMF_NAMES_H
+#ifndef RMF__NAMES_H
+#define RMF__NAMES_H
 
 #include <RMF/config.h>
 #include "types.h"
@@ -22,7 +22,7 @@ namespace RMF {
       return the names for the various data sets.
       @{
   */
-#ifndef IMP_DOXYGEN
+#ifndef RMF_DOXYGEN
   inline String get_per_frame_name(bool per_frame) {
     return per_frame? "dynamic" : "static";
   }
@@ -106,4 +106,4 @@ namespace RMF {
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_NAMES_H */
+#endif /* RMF__NAMES_H */

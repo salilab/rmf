@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_NODE_CONST_HANDLE_H
-#define IMPLIBRMF_NODE_CONST_HANDLE_H
+#ifndef RMF__NODE_CONST_HANDLE_H
+#define RMF__NODE_CONST_HANDLE_H
 
 #include <RMF/config.h>
 #include "HDF5Group.h"
@@ -19,7 +19,7 @@
 
 
 
-#define IMP_HDF5_NODE_CONST_KEY_TYPE_METHODS(lcname, UCName, PassValue, \
+#define RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS(lcname, UCName, PassValue, \
                                              ReturnValue,               \
                                              PassValues, ReturnValues)  \
   /** \brief get the value of the attribute k from this node
@@ -74,7 +74,7 @@ typedef vector<NodeConstHandle> NodeConstHandles;
 
 //! The types of the nodes.
 enum NodeType {
-#if !defined(IMP_DOXYGEN) && !defined(SWIG)
+#if !defined(RMF_DOXYGEN) && !defined(SWIG)
 ROOT,
 #endif
 //! Represent part of a molecule
@@ -87,7 +87,7 @@ GEOMETRY,
     nodes.
 */
 FEATURE,
-#ifndef IMP_DOXYGEN
+#ifndef RMF_DOXYGEN
 /** Store a reference to another node. This node should
     be an alias decorator node and have no other data,
     at least for now.
@@ -113,7 +113,7 @@ std::string get_type_name(NodeType t);
 
 
 
-#if !defined(IMP_DOXYGEN) && !defined(SWIG)
+#if !defined(RMF_DOXYGEN) && !defined(SWIG)
 inline std::ostream &operator<<(std::ostream &out,
                                 NodeType t) {
   using std::operator<<;
@@ -145,7 +145,7 @@ class RMFEXPORT NodeConstHandle {
     else if (shared_.get() > o.shared_.get()) return 1;
     else return 0;
   }
-#if !defined(SWIG) && !defined(IMP_DOXYGEN)
+#if !defined(SWIG) && !defined(RMF_DOXYGEN)
 protected:
   internal::SharedData* get_shared_data() const {return shared_.get();}
  public:
@@ -213,7 +213,7 @@ protected:
 
       @{
   */
-  RMF_FOREACH_TYPE(IMP_HDF5_NODE_CONST_KEY_TYPE_METHODS);
+  RMF_FOREACH_TYPE(RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS);
   /** @} */
   RMF_SHOWABLE(NodeHandle,
                    get_name() << "(" << get_type() << ", " << node_ << ")");
@@ -246,4 +246,4 @@ RMFEXPORT void show_hierarchy_with_decorators(NodeConstHandle root,
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_NODE_CONST_HANDLE_H */
+#endif /* RMF__NODE_CONST_HANDLE_H */

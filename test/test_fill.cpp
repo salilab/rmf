@@ -17,7 +17,7 @@
   }
 
 #define HDF5_HANDLE(name, cmd, cleanup) hid_t name= cmd
-//#define HDF5_HANDLE(name, cmd, cleanup) IMP_HDF5_HANDLE(name, cmd, cleanup)
+//#define HDF5_HANDLE(name, cmd, cleanup) RMF_HDF5_HANDLE(name, cmd, cleanup)
 const int D=2;
 void set_size(hid_t ds,
               int i, int j) {

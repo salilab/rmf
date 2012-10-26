@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_LAZY_H
-#define IMPLIBRMF_LAZY_H
+#ifndef RMF__LAZY_H
+#define RMF__LAZY_H
 
 #include <RMF/config.h>
 #include "intrusive_ptr_object.h"
@@ -169,7 +169,7 @@ namespace RMF {
     }
   };
 
-#ifndef IMP_DOXYGEN
+#ifndef RMF_DOXYGEN
 
 #define RMF_DECLARE_LAZY_KEY(lcname, Ucname, PassValue, ReturnValue,    \
                              PassValues, ReturnValues)                  \
@@ -197,4 +197,4 @@ RMF_FOREACH_TYPE(RMF_DECLARE_LAZY_KEY);
   } /* namespace internal */
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_LAZY_H */
+#endif /* RMF__LAZY_H */

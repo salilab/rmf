@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_VALIDATOR_H
-#define IMPLIBRMF_VALIDATOR_H
+#ifndef RMF__VALIDATOR_H
+#define RMF__VALIDATOR_H
 
 #include <RMF/config.h>
 #include "FileHandle.h"
@@ -49,7 +49,7 @@ protected:
 };
 
 
-#if !defined(IMP_DOXYGEN) && !defined(SWIG)
+#if !defined(RMF_DOXYGEN) && !defined(SWIG)
 struct Creator: public boost::intrusive_ptr_object {
   std::string name_;
   Creator(std::string name): name_(name){}
@@ -93,4 +93,4 @@ struct Registrar {
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_VALIDATOR_H */
+#endif /* RMF__VALIDATOR_H */

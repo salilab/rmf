@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_INTERNAL_PATHS_H
-#define IMPLIBRMF_INTERNAL_PATHS_H
+#ifndef RMF__INTERNAL_PATHS_H
+#define RMF__INTERNAL_PATHS_H
 
 #include <RMF/config.h>
 #include <string>
@@ -22,4 +22,4 @@ namespace RMF {
 } /* namespace RMF */
 
 
-#endif /* IMPLIBRMF_INTERNAL_PATHS_H */
+#endif /* RMF__INTERNAL_PATHS_H */

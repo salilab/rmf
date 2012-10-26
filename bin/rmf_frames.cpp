@@ -10,7 +10,7 @@ std::string description("Print out information about frames");
 
 int main(int argc, char **argv) {
   try {
-    IMP_ADD_INPUT_FILE("rmf");
+    RMF_ADD_INPUT_FILE("rmf");
     process_options(argc, argv);
 
 

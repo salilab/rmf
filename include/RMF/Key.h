@@ -6,14 +6,14 @@
  *
  */
 
-#ifndef IMPLIBRMF_KEY_H
-#define IMPLIBRMF_KEY_H
+#ifndef RMF__KEY_H
+#define RMF__KEY_H
 
 #include <RMF/config.h>
 #include "Category.h"
 #include "types.h"
 #include "HDF5DataSetD.h"
-#if !defined(SWIG) && !defined(IMP_DOXYGEN)
+#if !defined(SWIG) && !defined(RMF_DOXYGEN)
 namespace RMF {
   namespace internal {
     class SharedData;
@@ -46,7 +46,7 @@ class Key {
     else return -1;
   }
 public:
-#if !defined(IMP_DOXYGEN) && !defined(SWIG)
+#if !defined(RMF_DOXYGEN) && !defined(SWIG)
   Key(Category category_id,
       int i, bool pf): i_(i), ci_(category_id),
                        pf_(pf) {}
@@ -70,7 +70,7 @@ public:
 };
 
 
-#ifndef IMP_DOXYGEN
+#ifndef RMF_DOXYGEN
 
 #define RMF_DECLARE_KEY(lcname, Ucname, PassValue, ReturnValue,         \
                         PassValues, ReturnValues)                       \
@@ -98,4 +98,4 @@ RMF_FOREACH_TYPE(RMF_DECLARE_KEY);
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_KEY_H */
+#endif /* RMF__KEY_H */

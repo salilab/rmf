@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_UTILITY_H
-#define IMPLIBRMF_UTILITY_H
+#ifndef RMF__UTILITY_H
+#define RMF__UTILITY_H
 
 #include <RMF/config.h>
 #include "internal/intrusive_ptr_object.h"
@@ -66,4 +66,4 @@ RMFEXPORT void copy_structure(const NodeConstHandles& input, FileHandle output);
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_UTILITY_H */
+#endif /* RMF__UTILITY_H */

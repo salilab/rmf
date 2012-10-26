@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_INFRASTRUCTURE_MACROS_H
-#define IMPLIBRMF_INFRASTRUCTURE_MACROS_H
+#ifndef RMF__INFRASTRUCTURE_MACROS_H
+#define RMF__INFRASTRUCTURE_MACROS_H
 
 #include <sstream>
 #include <iostream>
@@ -24,7 +24,7 @@
 #define RMF_NDEBUG
 #endif
 
-#if defined(IMP_DOXYGEN)
+#if defined(RMF_DOXYGEN)
 /** \name Comparisons
     Helper macros for implementing comparisons in terms of
     either member variables or a member compare function.
@@ -102,7 +102,7 @@
 
 
 
-#ifdef IMP_DOXYGEN
+#ifdef RMF_DOXYGEN
 
 //! Implement a hash function for the class
 #define RMF_HASHABLE(name, hashret)
@@ -119,7 +119,7 @@
 /** @} */
 
 
-#ifdef IMP_DOXYGEN
+#ifdef RMF_DOXYGEN
 //! Define a graph object in \imp
 /** The docs for the graph should appear before the macro
     invocation.
@@ -225,7 +225,7 @@
     RMF::internal::handle_error<e>(m)
 
 /** Call a function and throw an RMF::IOException if the return values is bad */
-#define IMP_HDF5_CALL(v)                                                \
+#define RMF_HDF5_CALL(v)                                                \
     if ((v)<0) {                                                        \
       RMF_THROW(internal::get_error_message("HDF5 call failed: ",   \
                                                 #v),                    \
@@ -233,11 +233,11 @@
     }
 
 /** Create new HDF5 SharedData.handle.*/
-#define IMP_HDF5_NEW_HANDLE(name, cmd, cleanup)         \
+#define RMF_HDF5_NEW_HANDLE(name, cmd, cleanup)         \
   boost::intrusive_ptr<RMF::HDF5SharedHandle> name      \
   = new RMF::HDF5SharedHandle(cmd, cleanup, #cmd)
 
-#define IMP_HDF5_HANDLE(name, cmd, cleanup)     \
+#define RMF_HDF5_HANDLE(name, cmd, cleanup)     \
   RMF::HDF5Handle name(cmd, cleanup, #cmd)
 
 /** Apply the macro to each supported constant size type (eg int as opposed
@@ -253,7 +253,7 @@
   macroname(index, Index, int, int,             \
             const Ints&, Ints)
 
-#ifndef IMP_DOXYGEN
+#ifndef RMF_DOXYGEN
 /** Expand to applying the macro to each type supported by
     the rmf library. The macro should take six argments
     - the lower case name of the type
@@ -345,7 +345,7 @@ namespace RMF {
   class vector{};
 #endif
 
-#if !defined(IMP_DOXYGEN) && !defined(SWIG)
+#if !defined(RMF_DOXYGEN) && !defined(SWIG)
 struct Showable;
 inline std::ostream &
 operator<<(std::ostream &out, const Showable &t);
@@ -468,13 +468,13 @@ operator<<(std::ostream &out, const Showable &t);
   struct UCNames##Traits:                                               \
     public internal::BaseTraits<UCNames, vector<UCNames>, index+7, false> { \
     static hid_t get_hdf5_disk_type() {                                 \
-      static IMP_HDF5_HANDLE(ints_type, H5Tvlen_create                  \
+      static RMF_HDF5_HANDLE(ints_type, H5Tvlen_create                  \
                              (UCName##Traits::get_hdf5_disk_type()),    \
                              H5Tclose);                                 \
       return ints_type;                                                 \
     }                                                                   \
     static hid_t get_hdf5_memory_type() {                               \
-      static IMP_HDF5_HANDLE(ints_type,  H5Tvlen_create                 \
+      static RMF_HDF5_HANDLE(ints_type,  H5Tvlen_create                 \
                              (UCName##Traits::get_hdf5_memory_type()),  \
                              H5Tclose);                                 \
       return ints_type;                                                 \
@@ -489,7 +489,7 @@ operator<<(std::ostream &out, const Showable &t);
       } else {                                                          \
         data.p=NULL;                                                    \
       }                                                                 \
-      IMP_HDF5_CALL(H5Dwrite(d,                                         \
+      RMF_HDF5_CALL(H5Dwrite(d,                                         \
                              get_hdf5_memory_type(), is, s,             \
                              H5P_DEFAULT, &data));                      \
     }                                                                   \
@@ -541,21 +541,21 @@ operator<<(std::ostream &out, const Showable &t);
                               hdf5_memory, hdf5_fill, null_value)       \
   RMF_TRAITS(UCName, UCNames, lcname, index, hdf5_disk,             \
              hdf5_memory, hdf5_fill, null_value,                        \
-             IMP_HDF5_CALL(H5Dwrite(d,                                  \
+             RMF_HDF5_CALL(H5Dwrite(d,                                  \
                                     get_hdf5_memory_type(), is, s,      \
                                     H5P_DEFAULT, &v)),                  \
-             IMP_HDF5_CALL(H5Dread(d,                                   \
+             RMF_HDF5_CALL(H5Dread(d,                                   \
                                    get_hdf5_memory_type(),              \
                                    is, sp, H5P_DEFAULT, &ret)),         \
-             IMP_HDF5_CALL(H5Dwrite(d,                                  \
+             RMF_HDF5_CALL(H5Dwrite(d,                                  \
                                     get_hdf5_memory_type(), is, s,      \
                                     H5P_DEFAULT,                        \
                                     const_cast<UCName*>(&v[0]))),       \
-             IMP_HDF5_CALL(H5Dread(d,                                   \
+             RMF_HDF5_CALL(H5Dread(d,                                   \
                                    get_hdf5_memory_type(),              \
                                    is, sp, H5P_DEFAULT, &ret[0])),      \
-             IMP_HDF5_CALL(H5Awrite(a, get_hdf5_memory_type(), &v[0])), \
-             IMP_HDF5_CALL(H5Aread(a, get_hdf5_memory_type(), &ret[0])),\
+             RMF_HDF5_CALL(H5Awrite(a, get_hdf5_memory_type(), &v[0])), \
+             RMF_HDF5_CALL(H5Aread(a, get_hdf5_memory_type(), &ret[0])),\
              true)
 
 
@@ -602,4 +602,4 @@ operator<<(std::ostream &out, const Showable &t);
 
 #include "internal/errors.h"
 
-#endif  /* IMPLIBRMF_INFRASTRUCTURE_MACROS_H */
+#endif  /* RMF__INFRASTRUCTURE_MACROS_H */
