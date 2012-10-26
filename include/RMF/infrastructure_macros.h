@@ -14,7 +14,7 @@
 #include <string>
 #include "exceptions.h"
 
-#ifdef RMF_USE_DEBUG_VECTOR
+#if RMF_USE_DEBUG_VECTOR
 #include <debug/vector>
 #else
 #include <vector>
@@ -335,7 +335,7 @@
 
 namespace RMF {
 #if !defined(SWIG)
-#ifdef RMF_USE_DEBUG_VECTOR
+#if RMF_USE_DEBUG_VECTOR
   using  __gnu_debug::vector;
 #else
   using std::vector;
