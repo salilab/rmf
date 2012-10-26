@@ -80,23 +80,6 @@ namespace RMF {
         cache_[ijk[0]]=value;
         dirty_=true;
       }
-      void set_row( const typename DS::RowIndex& ijkr,
-                    const typename TypeTraits::Types& value) {
-        bool do_not_use;
-      }
-      void set_block(const typename DS::Index&lb,
-                     const typename DS::Index &size,
-                     const typename TypeTraits::Types& value) {
-        bool do_not_use;
-        dirty_=true;
-      }
-      typename TypeTraits::Types get_block( const typename DS::Index &lb,
-                                            const typename DS::Index &size) const {
-        bool do_not_use;
-      }
-      typename TypeTraits::Types get_row( const typename DS::RowIndex ijkr) const {
-        bool do_not_use;
-      }
       typename TypeTraits::Type get_value(const HDF5DataSetIndexD<1> &ijk) const {
         return cache_[ijk[0]];
       }
@@ -165,25 +148,6 @@ namespace RMF {
                         "Not big enough");
         cache_[ijk[0]]=value;
         dirty_=true;
-      }
-      void set_row( const typename DS::RowIndex& ijkr,
-                    const typename StringTraits::Types& value) {
-        RMF_NOT_IMPLEMENTED;
-      }
-      void set_block(const typename DS::Index&lb,
-                     const typename DS::Index &size,
-                     const typename StringTraits::Types& value) {
-        bool do_not_use;
-        RMF_NOT_IMPLEMENTED;
-      }
-      typename StringTraits::Types get_block( const typename DS::Index &lb,
-                                            const typename DS::Index &size) const {
-        bool do_not_use;
-        RMF_NOT_IMPLEMENTED;
-      }
-      typename StringTraits::Types get_row( const typename DS::RowIndex ijkr) const {
-        bool do_not_use;
-        RMF_NOT_IMPLEMENTED;
       }
       typename StringTraits::Type get_value(const HDF5DataSetIndexD<1> &ijk) const {
         return cache_[ijk[0]];

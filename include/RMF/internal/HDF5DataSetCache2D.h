@@ -93,43 +93,6 @@ namespace RMF {
         cache_[ijk[0]][ijk[1]]=value;
         dirty_=true;
       }
-      void set_row( const typename DS::RowIndex& ijkr,
-                    const typename TypeTraits::Types& value) {
-        for (unsigned int i=0; i< value.size(); ++i) {
-          cache_[ijkr[0]][i]=value[i];
-        }
-        dirty_=true;
-      }
-      void set_block(const typename DS::Index&lb, const typename DS::Index &size,
-                     const typename TypeTraits::Types& value) {
-        int c=0;
-        for (unsigned int i=lb[0]; i< size[0]; ++i) {
-          for (unsigned int j=lb[1]; j < size[1]; ++j) {
-            cache_[i][j]=value[c];
-            ++c;
-          }
-        }
-        dirty_=true;
-      }
-      typename TypeTraits::Types get_block( const typename DS::Index &lb,
-                                            const typename DS::Index &size) const {
-        typename TypeTraits::Types ret((size[1]-lb[1])*(size[0]-lb[0]));
-        int c=0;
-        for (unsigned int i=lb[0]; i< size[0]; ++i) {
-          for (unsigned int j=lb[1]; j < size[1]; ++j) {
-            ret[c]=cache_[i][j];
-            ++c;
-          }
-        }
-        return ret;
-      }
-      typename TypeTraits::Types get_row( const typename DS::RowIndex ijkr) const {
-        typename TypeTraits::Types ret(get_size()[0]);
-        for (unsigned int i=0; i< ret.size(); ++i) {
-          ret[i]= cache_[ijkr[0]][i];
-        }
-        return ret;
-      }
       typename TypeTraits::Type get_value(const HDF5DataSetIndexD<2> &ijk) const {
         typename TypeTraits::Type ret= cache_[ijk[0]][ijk[1]];
         return ret;
