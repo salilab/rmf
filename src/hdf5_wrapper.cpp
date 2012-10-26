@@ -109,6 +109,7 @@ hid_t get_parameters() {
   hid_t plist= H5Pcreate(H5P_FILE_ACCESS);
   IMP_HDF5_CALL(H5Pset_sieve_buf_size(plist, 1000000));
   IMP_HDF5_CALL(H5Pset_cache(plist, 0, 10000, 10000000, 0.0));
+  IMP_HDF5_CALL(H5Pset_libver_bounds(plist, H5F_LIBVER_18, H5F_LIBVER_LATEST));
   return plist;
 }
 herr_t error_function(hid_t, void *) {
