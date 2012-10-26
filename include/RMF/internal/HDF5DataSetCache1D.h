@@ -76,10 +76,13 @@ namespace RMF {
         dirty_=false;
       }
       void set_size(const HDF5DataSetIndexD<1> &ijk) {
-       RMF_INTERNAL_CHECK(!name_.empty(),
+        RMF_INTERNAL_CHECK(!name_.empty(),
                            "Name never set");
         if (ds_== DS()) {
-          ds_= parent_.add_child_data_set<TypeTraits, 1>(name_);
+          HDF5DataSetCreationPropertiesD<TypeTraits, 1> props;
+          props.set_chunk_size(HDF5DataSetIndexD<1>(256));
+          props.set_compression(GZIP_COMPRESSION);
+          ds_= parent_.add_child_data_set<TypeTraits, 1>(name_, props);
         } else {
           flush();
         }

@@ -97,7 +97,10 @@ namespace RMF {
         RMF_INTERNAL_CHECK(!name_.empty(),
                            "Name never set");
         if (ds_== DS()) {
-          ds_= parent_.add_child_data_set<TypeTraits, 2>(name_);
+          HDF5DataSetCreationPropertiesD<TypeTraits, 2> props;
+          props.set_chunk_size(HDF5DataSetIndexD<2>(256, 4));
+          props.set_compression(GZIP_COMPRESSION);
+          ds_= parent_.add_child_data_set<TypeTraits, 2>(name_, props);
         } else {
           flush();
         }
