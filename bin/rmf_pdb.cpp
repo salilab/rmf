@@ -174,9 +174,9 @@ namespace {
 
 int main(int argc, char **argv) {
   try {
-    IMP_ADD_INPUT_FILE("rmf");
-    IMP_ADD_OUTPUT_FILE("pdb");
-    IMP_ADD_FRAMES;
+    RMF_ADD_INPUT_FILE("rmf");
+    RMF_ADD_OUTPUT_FILE("pdb");
+    RMF_ADD_FRAMES;
     process_options(argc, argv);
 
     if (0) {
@@ -200,7 +200,7 @@ int main(int argc, char **argv) {
     RMF::ChainConstFactory cf(rh);
     RMF::ResidueConstFactory rf(rh);
     RMF::NodeConstHandle rn=rh.get_root_node();
-    IMP_FOR_EACH_FRAME(rh.get_number_of_frames()) {
+    RMF_FOR_EACH_FRAME(rh.get_number_of_frames()) {
       rh.set_current_frame(current_frame);
       *out << (boost::format("MODEL%1$9d")%(frame_iteration+1)) << std::endl;
       write_atoms(*out, 0, rn, af, cf, rf);

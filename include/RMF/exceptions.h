@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_EXCEPTIONS_H
-#define IMPLIBRMF_EXCEPTIONS_H
+#ifndef RMF__EXCEPTIONS_H
+#define RMF__EXCEPTIONS_H
 
 #include <RMF/config.h>
 #include <string>
@@ -64,4 +64,4 @@ class RMFEXPORT InternalException: public virtual Exception {
 
 }
 
-#endif  /* IMPLIBRMF_EXCEPTIONS_H */
+#endif  /* RMF__EXCEPTIONS_H */

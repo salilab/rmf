@@ -14,7 +14,7 @@ std::string description
 
 int main(int argc, char **argv) {
   try {
-    IMP_ADD_INPUT_FILE("rmf");
+    RMF_ADD_INPUT_FILE("rmf");
     process_options(argc, argv);
     RMF::FileConstHandle rh= RMF::open_rmf_file_read_only(input);
     rh.validate(std::cerr);

@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_HDF_5FILE_H
-#define IMPLIBRMF_HDF_5FILE_H
+#ifndef RMF__HDF_5FILE_H
+#define RMF__HDF_5FILE_H
 
 #include <RMF/config.h>
 #include "HDF5Group.h"
@@ -20,12 +20,12 @@ namespace RMF {
   the HDF5 manual} for more information.*/
   class RMFEXPORT HDF5File: public HDF5Group {
   public:
-#if !defined(IMP_DOXYGEN) && !defined(SWIG)
+#if !defined(RMF_DOXYGEN) && !defined(SWIG)
     HDF5File(HDF5SharedHandle *h);
     // silliness to make RMF easier to implement
     bool get_is_writable() const {
       unsigned int intent;
-      IMP_HDF5_CALL(H5Fget_intent(get_handle(), &intent));
+      RMF_HDF5_CALL(H5Fget_intent(get_handle(), &intent));
       return intent==H5F_ACC_RDWR;
     }
 #endif
@@ -57,4 +57,4 @@ namespace RMF {
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_HDF_5FILE_H */
+#endif /* RMF__HDF_5FILE_H */

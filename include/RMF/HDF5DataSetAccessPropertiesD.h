@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_HDF_5DATA_SET_ACCESS_PROPERTIES_D_H
-#define IMPLIBRMF_HDF_5DATA_SET_ACCESS_PROPERTIES_D_H
+#ifndef RMF__HDF_5DATA_SET_ACCESS_PROPERTIES_D_H
+#define RMF__HDF_5DATA_SET_ACCESS_PROPERTIES_D_H
 
 #include <RMF/config.h>
 #include "types.h"
@@ -35,7 +35,7 @@ class HDF5DataSetAccessPropertiesD {
   void set_chunk_cache_size(unsigned int entries,
                             unsigned int size_bytes,
                             double policy=.75) {
-    IMP_HDF5_CALL(H5Pset_chunk_cache(get_handle(), entries,
+    RMF_HDF5_CALL(H5Pset_chunk_cache(get_handle(), entries,
                                      size_bytes, policy));
   }
   HDF5DataSetAccessPropertiesD():
@@ -46,4 +46,4 @@ class HDF5DataSetAccessPropertiesD {
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_HDF_5DATA_SET_ACCESS_PROPERTIES_D_H */
+#endif /* RMF__HDF_5DATA_SET_ACCESS_PROPERTIES_D_H */

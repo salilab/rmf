@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_DECORATOR_H
-#define IMPLIBRMF_DECORATOR_H
+#ifndef RMF__DECORATOR_H
+#define RMF__DECORATOR_H
 
 #include <RMF/config.h>
 #include "internal/lazy.h"
@@ -77,4 +77,4 @@ class Decorator {
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_DECORATOR_H */
+#endif /* RMF__DECORATOR_H */

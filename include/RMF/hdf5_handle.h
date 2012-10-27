@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_HDF_5_HANDLE_H
-#define IMPLIBRMF_HDF_5_HANDLE_H
+#ifndef RMF__HDF_5_HANDLE_H
+#define RMF__HDF_5_HANDLE_H
 
 #include <RMF/config.h>
 #include "NodeID.h"
@@ -70,13 +70,13 @@ public:
   }
   void close() {
     if (h_ != -1) {
-      IMP_HDF5_CALL(f_(h_));
+      RMF_HDF5_CALL(f_(h_));
     }
     h_=-1;
   }
   ~HDF5Handle() {
     if (h_ != -1) {
-      IMP_HDF5_CALL(f_(h_));
+      RMF_HDF5_CALL(f_(h_));
     }
   }
 };
@@ -96,7 +96,7 @@ public:
  };
 
 
-#ifndef IMP_DOXYGEN
+#ifndef RMF_DOXYGEN
   // needed for correctness imposed by clang as the functions must be visible
   // by ADL
   inline void intrusive_ptr_add_ref(HDF5SharedHandle *a)
@@ -120,4 +120,4 @@ public:
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_HDF_5_HANDLE_H */
+#endif /* RMF__HDF_5_HANDLE_H */

@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_HDF_5CONST_FILE_H
-#define IMPLIBRMF_HDF_5CONST_FILE_H
+#ifndef RMF__HDF_5CONST_FILE_H
+#define RMF__HDF_5CONST_FILE_H
 
 #include <RMF/config.h>
 #include "HDF5ConstGroup.h"
@@ -22,7 +22,7 @@ namespace RMF {
   */
   class RMFEXPORT HDF5ConstFile: public HDF5ConstGroup {
   public:
-#if !defined(IMP_DOXYGEN) && !defined(SWIG)
+#if !defined(RMF_DOXYGEN) && !defined(SWIG)
     HDF5ConstFile(HDF5SharedHandle *h);
 #endif
     HDF5ConstFile(HDF5File f);
@@ -53,4 +53,4 @@ namespace RMF {
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_HDF_5CONST_FILE_H */
+#endif /* RMF__HDF_5CONST_FILE_H */

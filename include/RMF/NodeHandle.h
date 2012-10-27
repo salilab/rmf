@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_NODE_HANDLE_H
-#define IMPLIBRMF_NODE_HANDLE_H
+#ifndef RMF__NODE_HANDLE_H
+#define RMF__NODE_HANDLE_H
 
 #include <RMF/config.h>
 #include "HDF5Group.h"
@@ -18,7 +18,7 @@
 
 
 
-#define IMP_HDF5_NODE_KEY_TYPE_METHODS(lcname, UCName, PassValue, ReturnValue, \
+#define RMF_HDF5_NODE_KEY_TYPE_METHODS(lcname, UCName, PassValue, ReturnValue, \
                                        PassValues, ReturnValues)        \
 /** \brief  set the value of the attribute k for this node
     If it is a per-frame attribute, frame must be specified.
@@ -53,7 +53,7 @@ class FileHandle;
 */
 class RMFEXPORT NodeHandle: public NodeConstHandle {
   friend class FileHandle;
-#if !defined(SWIG) && !defined(IMP_DOXYGEN)
+#if !defined(SWIG) && !defined(RMF_DOXYGEN)
  public:
   NodeHandle(int node, internal::SharedData *shared);
 #endif
@@ -75,11 +75,11 @@ class RMFEXPORT NodeHandle: public NodeConstHandle {
 
       @{
   */
-  RMF_FOREACH_TYPE(IMP_HDF5_NODE_KEY_TYPE_METHODS);
+  RMF_FOREACH_TYPE(RMF_HDF5_NODE_KEY_TYPE_METHODS);
   /** @} */
 
   FileHandle get_file() const;
 };
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_NODE_HANDLE_H */
+#endif /* RMF__NODE_HANDLE_H */

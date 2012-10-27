@@ -19,6 +19,8 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR})
 set (RMF_VERSION_MAJOR 0)
 set (RMF_VERSION_MINOR 9)
 
+set (RMF_USE_DEBUG_VECTOR 0 CACHE BOOL "Whether to use a bounds checked vector")
+
 # configure a header file to pass some of the CMake settings
 # to the source code
 configure_file (
@@ -35,7 +37,7 @@ include_directories("${PROJECT_BINARY_DIR}/include"
 include(data/CMakeLists.txt)
 include(include/CMakeLists.txt)
 include(src/CMakeLists.txt)
-include(bin/CMakeLists.txt)
+ADD_SUBDIRECTORY(bin)
 # swig support is a little broken
 
 if (DEFINED CMAKE_INSTALL_PYTHONDIR)

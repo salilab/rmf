@@ -11,6 +11,7 @@
 #include <RMF/Validator.h>
 #include <RMF/internal/set.h>
 #include <RMF/HDF5File.h>
+#include <boost/filesystem/path.hpp>
 #include <RMF/internal/HDF5SharedData.h>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/scoped_ptr.hpp>
@@ -38,7 +39,8 @@ namespace RMF {
     };
     CacheCheck checker;
     }
-    SharedData::SharedData(): valid_(11111), cur_frame_(0) {
+    SharedData::SharedData(std::string path): valid_(11111), cur_frame_(0),
+                                              path_(path){
     };
     SharedData::~SharedData() {
       valid_=-66666;
@@ -86,6 +88,9 @@ namespace RMF {
       }
     }
 
+    std::string SharedData::get_file_name() const {
+      return boost::filesystem::path(path_).filename().string();
+    }
 
   void SharedData::validate(std::ostream &out) const {
     Creators cs= get_validators();

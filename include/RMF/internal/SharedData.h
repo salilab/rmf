@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_INTERNAL_SHARED_DATA_H
-#define IMPLIBRMF_INTERNAL_SHARED_DATA_H
+#ifndef RMF__INTERNAL_SHARED_DATA_H
+#define RMF__INTERNAL_SHARED_DATA_H
 
 #include <RMF/config.h>
 #include "../Key.h"
@@ -100,9 +100,13 @@ namespace RMF {
       map<int, boost::any> user_data_;
       int valid_;
       int cur_frame_;
+      std::string path_;
     protected:
-      SharedData();
+      SharedData(std::string path);
     public:
+      std::string get_file_path() const {
+        return path_;
+      }
       template <class TypeTraits>
       bool get_is_per_frame(Key<TypeTraits> k) const {
         return k.get_is_per_frame();
@@ -180,9 +184,8 @@ namespace RMF {
       int get_associated_node(const T &d) const {
         return back_association_.find(get_uint(d))->second;
       }
-
-      virtual void flush() const=0;
-      virtual std::string get_file_name() const=0;
+      virtual void flush()=0;
+      std::string get_file_name() const;
 
       virtual unsigned int get_number_of_frames() const=0;
 
@@ -289,4 +292,4 @@ namespace RMF {
 } /* namespace RMF */
 
 
-#endif /* IMPLIBRMF_INTERNAL_SHARED_DATA_H */
+#endif /* RMF__INTERNAL_SHARED_DATA_H */

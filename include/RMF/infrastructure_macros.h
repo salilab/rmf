@@ -6,21 +6,25 @@
  *
  */
 
-#ifndef IMPLIBRMF_INFRASTRUCTURE_MACROS_H
-#define IMPLIBRMF_INFRASTRUCTURE_MACROS_H
+#ifndef RMF__INFRASTRUCTURE_MACROS_H
+#define RMF__INFRASTRUCTURE_MACROS_H
 
 #include <sstream>
 #include <iostream>
 #include <string>
 #include "exceptions.h"
 
+#if RMF_USE_DEBUG_VECTOR
+#include <debug/vector>
+#else
 #include <vector>
+#endif
 
 #ifdef NDEBUG
 #define RMF_NDEBUG
 #endif
 
-#if defined(IMP_DOXYGEN)
+#if defined(RMF_DOXYGEN)
 /** \name Comparisons
     Helper macros for implementing comparisons in terms of
     either member variables or a member compare function.
@@ -98,7 +102,7 @@
 
 
 
-#ifdef IMP_DOXYGEN
+#ifdef RMF_DOXYGEN
 
 //! Implement a hash function for the class
 #define RMF_HASHABLE(name, hashret)
@@ -115,7 +119,7 @@
 /** @} */
 
 
-#ifdef IMP_DOXYGEN
+#ifdef RMF_DOXYGEN
 //! Define a graph object in \imp
 /** The docs for the graph should appear before the macro
     invocation.
@@ -221,7 +225,7 @@
     RMF::internal::handle_error<e>(m)
 
 /** Call a function and throw an RMF::IOException if the return values is bad */
-#define IMP_HDF5_CALL(v)                                                \
+#define RMF_HDF5_CALL(v)                                                \
     if ((v)<0) {                                                        \
       RMF_THROW(internal::get_error_message("HDF5 call failed: ",   \
                                                 #v),                    \
@@ -229,11 +233,11 @@
     }
 
 /** Create new HDF5 SharedData.handle.*/
-#define IMP_HDF5_NEW_HANDLE(name, cmd, cleanup)         \
+#define RMF_HDF5_NEW_HANDLE(name, cmd, cleanup)         \
   boost::intrusive_ptr<RMF::HDF5SharedHandle> name      \
   = new RMF::HDF5SharedHandle(cmd, cleanup, #cmd)
 
-#define IMP_HDF5_HANDLE(name, cmd, cleanup)     \
+#define RMF_HDF5_HANDLE(name, cmd, cleanup)     \
   RMF::HDF5Handle name(cmd, cleanup, #cmd)
 
 /** Apply the macro to each supported constant size type (eg int as opposed
@@ -249,7 +253,7 @@
   macroname(index, Index, int, int,             \
             const Ints&, Ints)
 
-#ifndef IMP_DOXYGEN
+#ifndef RMF_DOXYGEN
 /** Expand to applying the macro to each type supported by
     the rmf library. The macro should take six argments
     - the lower case name of the type
@@ -331,13 +335,17 @@
 
 namespace RMF {
 #if !defined(SWIG)
+#if RMF_USE_DEBUG_VECTOR
+  using  __gnu_debug::vector;
+#else
   using std::vector;
+#endif
 #else
   template <class T>
   class vector{};
 #endif
 
-#if !defined(IMP_DOXYGEN) && !defined(SWIG)
+#if !defined(RMF_DOXYGEN) && !defined(SWIG)
 struct Showable;
 inline std::ostream &
 operator<<(std::ostream &out, const Showable &t);
@@ -389,11 +397,12 @@ operator<<(std::ostream &out, const Showable &t);
 }
 
 #ifndef SWIG
-#define RMF_TRAITS_ONE(UCName, UCNames, lcname, index, hdf5_disk,\
-                           hdf5_memory,hdf5_fill, null_value,           \
-                           wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a)  \
+#define RMF_TRAITS_ONE(UCName, UCNames, lcname, index, hdf5_disk,       \
+                       hdf5_memory,hdf5_fill, null_value,               \
+                       wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a,      \
+                       multiple)                                        \
   struct RMFEXPORT UCName##Traits:                                      \
-    public internal::BaseTraits<UCName, UCNames, index> {               \
+    public internal::BaseTraits<UCName, UCNames, index, multiple> {     \
     static hid_t get_hdf5_disk_type() {                                 \
       return hdf5_disk;                                                 \
     }                                                                   \
@@ -452,20 +461,20 @@ operator<<(std::ostream &out, const Showable &t);
 /** Declare a type traits*/
 #define RMF_TRAITS(UCName, UCNames, lcname, index, hdf5_disk, hdf5_memory, \
                        hdf5_fill, null_value,                           \
-                       wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a)      \
+                   wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a, batch)   \
   RMF_TRAITS_ONE(UCName, UCNames, lcname, index, hdf5_disk, hdf5_memory, \
                      hdf5_fill, null_value,                             \
-                     wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a);       \
+                 wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a, batch);    \
   struct UCNames##Traits:                                               \
-    public internal::BaseTraits<UCNames, vector<UCNames>, index+7> {    \
+    public internal::BaseTraits<UCNames, vector<UCNames>, index+7, false> { \
     static hid_t get_hdf5_disk_type() {                                 \
-      static IMP_HDF5_HANDLE(ints_type, H5Tvlen_create                  \
+      static RMF_HDF5_HANDLE(ints_type, H5Tvlen_create                  \
                              (UCName##Traits::get_hdf5_disk_type()),    \
                              H5Tclose);                                 \
       return ints_type;                                                 \
     }                                                                   \
     static hid_t get_hdf5_memory_type() {                               \
-      static IMP_HDF5_HANDLE(ints_type,  H5Tvlen_create                 \
+      static RMF_HDF5_HANDLE(ints_type,  H5Tvlen_create                 \
                              (UCName##Traits::get_hdf5_memory_type()),  \
                              H5Tclose);                                 \
       return ints_type;                                                 \
@@ -475,8 +484,12 @@ operator<<(std::ostream &out, const Showable &t);
                                     const UCNames& v) {                 \
       hvl_t data;                                                       \
       data.len=v.size();                                                \
+      if (data.len > 0) {                                               \
       data.p= const_cast< UCName*>(&v[0]);                              \
-      IMP_HDF5_CALL(H5Dwrite(d,                                         \
+      } else {                                                          \
+        data.p=NULL;                                                    \
+      }                                                                 \
+      RMF_HDF5_CALL(H5Dwrite(d,                                         \
                              get_hdf5_memory_type(), is, s,             \
                              H5P_DEFAULT, &data));                      \
     }                                                                   \
@@ -527,31 +540,32 @@ operator<<(std::ostream &out, const Showable &t);
 #define RMF_SIMPLE_TRAITS(UCName, UCNames, lcname, index, hdf5_disk, \
                               hdf5_memory, hdf5_fill, null_value)       \
   RMF_TRAITS(UCName, UCNames, lcname, index, hdf5_disk,             \
-                 hdf5_memory, hdf5_fill, null_value,                    \
-                 IMP_HDF5_CALL(H5Dwrite(d,                              \
-                                        get_hdf5_memory_type(), is, s,  \
-                                        H5P_DEFAULT, &v)),              \
-                 IMP_HDF5_CALL(H5Dread(d,                               \
-                                       get_hdf5_memory_type(),          \
-                                       is, sp, H5P_DEFAULT, &ret)),     \
-                 IMP_HDF5_CALL(H5Dwrite(d,                              \
-                                        get_hdf5_memory_type(), is, s,  \
-                                        H5P_DEFAULT,                    \
-                                        const_cast<UCName*>(&v[0]))),   \
-                 IMP_HDF5_CALL(H5Dread(d,                               \
-                                       get_hdf5_memory_type(),          \
-                                       is, sp, H5P_DEFAULT, &ret[0])),  \
-                 IMP_HDF5_CALL(H5Awrite(a, get_hdf5_memory_type(), &v[0])), \
-                 IMP_HDF5_CALL(H5Aread(a, get_hdf5_memory_type(), &ret[0])) \
-                 )
+             hdf5_memory, hdf5_fill, null_value,                        \
+             RMF_HDF5_CALL(H5Dwrite(d,                                  \
+                                    get_hdf5_memory_type(), is, s,      \
+                                    H5P_DEFAULT, &v)),                  \
+             RMF_HDF5_CALL(H5Dread(d,                                   \
+                                   get_hdf5_memory_type(),              \
+                                   is, sp, H5P_DEFAULT, &ret)),         \
+             RMF_HDF5_CALL(H5Dwrite(d,                                  \
+                                    get_hdf5_memory_type(), is, s,      \
+                                    H5P_DEFAULT,                        \
+                                    const_cast<UCName*>(&v[0]))),       \
+             RMF_HDF5_CALL(H5Dread(d,                                   \
+                                   get_hdf5_memory_type(),              \
+                                   is, sp, H5P_DEFAULT, &ret[0])),      \
+             RMF_HDF5_CALL(H5Awrite(a, get_hdf5_memory_type(), &v[0])), \
+             RMF_HDF5_CALL(H5Aread(a, get_hdf5_memory_type(), &ret[0])),\
+             true)
 
 
 #else
 
-#define RMF_TRAITS_ONE(UCName, UCNames, lcname, index, hdf5_disk,   \
-                           hdf5_memory,                                 \
-                           hdf5_fill, null_value,                       \
-                           wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a)  \
+#define RMF_TRAITS_ONE(UCName, UCNames, lcname, index, hdf5_disk,       \
+                       hdf5_memory,                                     \
+                       hdf5_fill, null_value,                           \
+                       wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a,      \
+                       multiple)                                        \
   struct UCName##Traits{                                                \
     typedef UCName Type;                                                \
     typedef UCNames Types;                                              \
@@ -560,7 +574,7 @@ operator<<(std::ostream &out, const Showable &t);
 
 #define RMF_TRAITS(UCName, UCNames, lcname, index, hdf5_disk, hdf5_memory, \
                        hdf5_fill, null_value,                           \
-                       wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a)      \
+                   wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a, batch)   \
   struct UCName##Traits{                                                \
     typedef UCName Type;                                                \
     typedef UCNames Types;                                              \
@@ -588,4 +602,4 @@ operator<<(std::ostream &out, const Showable &t);
 
 #include "internal/errors.h"
 
-#endif  /* IMPLIBRMF_INFRASTRUCTURE_MACROS_H */
+#endif  /* RMF__INFRASTRUCTURE_MACROS_H */

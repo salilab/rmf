@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_PROFILE_H
-#define IMPLIBRMF_PROFILE_H
+#ifndef RMF__PROFILE_H
+#define RMF__PROFILE_H
 
 #include <RMF/config.h>
 #include <string>
@@ -34,4 +34,4 @@ RMFEXPORT void set_is_profiling(bool tf);
 
 }
 
-#endif  /* IMPLIBRMF_PROFILE_H */
+#endif  /* RMF__PROFILE_H */

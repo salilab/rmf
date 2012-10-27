@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_HDF_5OBJECT_H
-#define IMPLIBRMF_HDF_5OBJECT_H
+#ifndef RMF__HDF_5OBJECT_H
+#define RMF__HDF_5OBJECT_H
 
 #include <RMF/config.h>
 #include "types.h"
@@ -41,7 +41,7 @@ class HDF5File;
   public:
     std::string get_name() const {
       char buf[10000];
-      IMP_HDF5_CALL(H5Iget_name(h_->get_hid(), buf, 10000));
+      RMF_HDF5_CALL(H5Iget_name(h_->get_hid(), buf, 10000));
       return std::string(buf);
     }
 
@@ -55,7 +55,7 @@ class HDF5File;
       return h_->get_hid();
     }
 
-#if !defined(IMP_DOXYGEN) && !defined(SWIG)
+#if !defined(RMF_DOXYGEN) && !defined(SWIG)
     typedef void (HDF5Object::*bool_type)() const;
     void this_type_does_not_support_comparisons() const {}
     operator bool_type() const {
@@ -65,7 +65,7 @@ class HDF5File;
 #endif
   };
 
-#ifndef IMP_DOXYGEN
+#ifndef RMF_DOXYGEN
   /** \ingroup hdf5 */
   typedef vector<HDF5Object> HDF5Objects;
 #ifndef SWIG
@@ -80,4 +80,4 @@ inline std::ostream &operator<<(std::ostream& out,
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_HDF_5OBJECT_H */
+#endif /* RMF__HDF_5OBJECT_H */

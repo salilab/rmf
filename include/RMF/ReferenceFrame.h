@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_REFERENCE_FRAME_H
-#define IMPLIBRMF_REFERENCE_FRAME_H
+#ifndef RMF__REFERENCE_FRAME_H
+#define RMF__REFERENCE_FRAME_H
 
 #include <RMF/config.h>
 #include "internal/Transform.h"
@@ -35,4 +35,4 @@ namespace RMF {
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_REFERENCE_FRAME_H */
+#endif /* RMF__REFERENCE_FRAME_H */

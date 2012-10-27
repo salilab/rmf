@@ -171,6 +171,33 @@ class NodeAttribute(Attribute):
                         "}"])
         return ret
 
+class PathAttribute(Attribute):
+    def __init__(self, *args):
+        Attribute.__init__(self, *args)
+    def get_methods(self, const):
+        ret=[]
+        ret.extend(["String get_"+self.nice_name+"() const {",
+                    " String relpath;"
+                    " if (get_node().get_has_value("+self.nice_name+"_)) {",
+                    "   relpath= get_node().get_value("+self.nice_name+"_);",
+                    "  } else {",
+                    "   relpath= get_node().get_value("+self.nice_name+"_pf_);",
+                    "  }",
+                    "  String filepath=get_node().get_file().get_path();",
+                    "  return internal::get_absolute_path(filepath, relpath);",
+                    "}"])
+        if not const:
+            ret.extend(["void set_"+self.nice_name+"(String path) {",
+                        "  String filename= get_node().get_file().get_path();",
+                        "  String relpath= internal::get_relative_path(filename, path);",
+                        "  if (get_frame() >=0) {",
+                        "    get_node().set_value("+self.nice_name+"_pf_, relpath);",
+                        "  } else {",
+                        "    return get_node().set_value("+self.nice_name+"_, relpath);",
+                        "  }",
+                        "}"])
+        return ret
+
 class SingletonRangeAttribute:
     def __init__(self, type, nice_name, attribute_name_begin, attribute_name_end,
                  per_frame=False):
@@ -662,6 +689,9 @@ diffuser= Decorator("Diffuser", "Information regarding diffusion coefficients.",
 typed= Decorator("Typed", "A numeric tag for keeping track of types of molecules.",
                    [DecoratorCategory("sequence", [Attribute("String", "type_name", "type name")])],
                    "")
+external= Decorator("External", "A reference to something in an external file.",
+                   [DecoratorCategory("external", [PathAttribute("String", "path", "path")])],
+                   "")
 
 
 print """/**
@@ -684,6 +714,7 @@ print """/**
 #include <RMF/constants.h>
 #include <RMF/internal/utility.h>
 #include <RMF/internal/lazy.h>
+#include <RMF/internal/paths.h>
 #include <boost/array.hpp>
 namespace RMF {
 """
@@ -703,6 +734,7 @@ print copy.get()
 print diffuser.get()
 print typed.get()
 print score.get()
+print external.get()
 print """} /* namespace RMF */
 
 #endif /* RMF_DECORATORS_H */"""

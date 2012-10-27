@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_HDF_5CONST_GROUP_H
-#define IMPLIBRMF_HDF_5CONST_GROUP_H
+#ifndef RMF__HDF_5CONST_GROUP_H
+#define RMF__HDF_5CONST_GROUP_H
 
 #include <RMF/config.h>
 #include "HDF5Object.h"
@@ -19,7 +19,7 @@
 namespace RMF {
 
   typedef HDF5ConstAttributes<HDF5Object>  HDF5ConstGroupAttributes;
-#ifndef IMP_DOXYGEN
+#ifndef RMF_DOXYGEN
   typedef vector<HDF5ConstGroupAttributes> HDF5ConstGroupAttributesList;
 #endif
 
@@ -32,7 +32,7 @@ namespace RMF {
     friend class HDF5ConstFile;
     unsigned int get_number_of_links() const {
       H5G_info_t info;
-      IMP_HDF5_CALL(H5Gget_info(get_handle(), &info));
+      RMF_HDF5_CALL(H5Gget_info(get_handle(), &info));
       unsigned int n= info.nlinks;
       return n;
     }
@@ -60,7 +60,7 @@ namespace RMF {
       return HDF5ConstDataSetD<TypeTraits, D>(get_shared_handle(), name, props);
     }
 
-#define IMP_HDF5_DATA_SET_CONST_METHODS_D(lcname, UCName, PassValue,    \
+#define RMF_HDF5_DATA_SET_CONST_METHODS_D(lcname, UCName, PassValue,    \
                                           ReturnValue,                  \
                                           PassValues, ReturnValues, D)  \
     HDF5ConstDataSetD<UCName##Traits, D>                                \
@@ -76,14 +76,14 @@ namespace RMF {
     }
 
 
-#define IMP_HDF5_DATA_SET_CONST_METHODS(lcname, UCName, PassValue,      \
+#define RMF_HDF5_DATA_SET_CONST_METHODS(lcname, UCName, PassValue,      \
                                         ReturnValue,                    \
                                         PassValues, ReturnValues)       \
-    IMP_HDF5_DATA_SET_CONST_METHODS_D(lcname, UCName, PassValue, ReturnValue, \
+    RMF_HDF5_DATA_SET_CONST_METHODS_D(lcname, UCName, PassValue, ReturnValue, \
                                 PassValues, ReturnValues, 1);           \
-    IMP_HDF5_DATA_SET_CONST_METHODS_D(lcname, UCName, PassValue, ReturnValue, \
+    RMF_HDF5_DATA_SET_CONST_METHODS_D(lcname, UCName, PassValue, ReturnValue, \
                                 PassValues, ReturnValues, 2);           \
-    IMP_HDF5_DATA_SET_CONST_METHODS_D(lcname, UCName, PassValue, ReturnValue, \
+    RMF_HDF5_DATA_SET_CONST_METHODS_D(lcname, UCName, PassValue, ReturnValue, \
                                 PassValues, ReturnValues, 3)
 
     /** \name Untemplated methods
@@ -91,7 +91,7 @@ namespace RMF {
         below.
         @{
     */
-    RMF_FOREACH_TYPE(IMP_HDF5_DATA_SET_CONST_METHODS);
+    RMF_FOREACH_TYPE(RMF_HDF5_DATA_SET_CONST_METHODS);
     /** @} */
 
     unsigned int get_number_of_children() const;
@@ -104,4 +104,4 @@ namespace RMF {
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_HDF_5CONST_GROUP_H */
+#endif /* RMF__HDF_5CONST_GROUP_H */

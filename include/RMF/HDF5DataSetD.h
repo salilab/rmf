@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_HDF_5DATA_SET_D_H
-#define IMPLIBRMF_HDF_5DATA_SET_D_H
+#ifndef RMF__HDF_5DATA_SET_D_H
+#define RMF__HDF_5DATA_SET_D_H
 
 #include <RMF/config.h>
 #include "types.h"
@@ -32,6 +32,7 @@ namespace RMF {
     public HDF5MutableAttributes<HDF5ConstDataSetD<TypeTraits, D> > {
     typedef HDF5MutableAttributes<HDF5ConstDataSetD<TypeTraits, D> >  P;
     friend class HDF5Group;
+  protected:
     typedef HDF5DataSetCreationPropertiesD<TypeTraits, D> CreationProperties;
     typedef HDF5DataSetAccessPropertiesD<TypeTraits, D> AccessProperties;
 
@@ -44,7 +45,7 @@ namespace RMF {
         P(parent, name, props) {
     }
   public:
-#if !defined(SWIG) && !defined(IMP_DOXYGEN)
+#if !defined(SWIG) && !defined(RMF_DOXYGEN)
     HDF5DataSetD(hid_t file, std::string name,
                  AccessProperties props): P(file, name, props) {
     }
@@ -57,8 +58,8 @@ namespace RMF {
       RMF_IF_CHECK {
         P::check_index(ijk);
       }
-      //IMP_HDF5_HANDLE(sel, H5Dget_space(h_->get_hid()), &H5Sclose);
-      IMP_HDF5_CALL(H5Sselect_hyperslab(P::get_data_space(),
+      //RMF_HDF5_HANDLE(sel, H5Dget_space(h_->get_hid()), &H5Sclose);
+      RMF_HDF5_CALL(H5Sselect_hyperslab(P::get_data_space(),
                                         H5S_SELECT_SET, ijk.get(),
                                         P::get_ones(), P::get_ones(),
                                         NULL));
@@ -80,8 +81,8 @@ namespace RMF {
       }
       hsize_t size[D]; std::fill(size, size+D-1, 1);
       size[D-1]= P::get_size()[D-1]; // set last to size of row
-      //IMP_HDF5_HANDLE(sel, H5Dget_space(h_->get_hid()), &H5Sclose);
-      IMP_HDF5_CALL(H5Sselect_hyperslab(P::get_data_space(),
+      //RMF_HDF5_HANDLE(sel, H5Dget_space(h_->get_hid()), &H5Sclose);
+      RMF_HDF5_CALL(H5Sselect_hyperslab(P::get_data_space(),
                                         H5S_SELECT_SET, ijk.get(),
                                         P::get_ones(), &size[0],
                                         NULL));
@@ -109,13 +110,13 @@ namespace RMF {
                                                         " values"));
         P::check_index(last);
       }
-      //IMP_HDF5_HANDLE(sel, H5Dget_space(h_->get_hid()), &H5Sclose);
-      IMP_HDF5_CALL(H5Sselect_hyperslab(P::get_data_space(),
+      //RMF_HDF5_HANDLE(sel, H5Dget_space(h_->get_hid()), &H5Sclose);
+      RMF_HDF5_CALL(H5Sselect_hyperslab(P::get_data_space(),
                                         H5S_SELECT_SET, lb.get(),
                                         P::get_ones(), size.get(),
                                         NULL));
       hsize_t sz= value.size();
-      IMP_HDF5_HANDLE(input, H5Screate_simple(1, &sz,
+      RMF_HDF5_HANDLE(input, H5Screate_simple(1, &sz,
                                         NULL), &H5Sclose);
       TypeTraits::write_values_dataset(HDF5Object::get_handle(),
                                        input,
@@ -123,7 +124,7 @@ namespace RMF {
     }
     void set_size(const HDF5DataSetIndexD<D> &ijk) {
       hsize_t nd[D]; std::copy(ijk.begin(), ijk.end(), nd);;
-      IMP_HDF5_CALL(H5Dset_extent(HDF5Object::get_handle(),
+      RMF_HDF5_CALL(H5Dset_extent(HDF5Object::get_handle(),
                                   &nd[0]));
       P::initialize_handles();
     }
@@ -131,7 +132,7 @@ namespace RMF {
 
 
 
-#ifndef IMP_DOXYGEN
+#ifndef RMF_DOXYGEN
 
 #define RMF_DECLARE_DATA_SET(lcname, Ucname, PassValue, ReturnValue, \
                                  PassValues, ReturnValues)              \
@@ -164,4 +165,4 @@ namespace RMF {
 #endif
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_HDF_5DATA_SET_D_H */
+#endif /* RMF__HDF_5DATA_SET_D_H */

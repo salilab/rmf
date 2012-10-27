@@ -3,9 +3,9 @@
  * Copyright 2007-2012 IMP Inventors. All rights reserved.
  */
 #include <RMF/profile.h>
-#if defined(IMP_BENCHMARK_USE_GPERFTOOLS)
+#if defined(RMF_BENCHMARK_USE_GPERFTOOLS)
 #include <gperftools/profiler.h>
-#elif defined(IMP_BENCHMARK_USE_GOOGLEPERFTOOLS)
+#elif defined(RMF_BENCHMARK_USE_GOOGLEPERFTOOLS)
 #include <google/profiler.h>
 #endif
 
@@ -24,8 +24,8 @@ void set_profile_name(std::string name) {
   last_prof=-1;
 }
 
-#if defined(IMP_BENCHMARK_USE_GPERFTOOLS)\
-  || defined(IMP_BENCHMARK_USE_GOOGLEPERFTOOLS)
+#if defined(RMF_BENCHMARK_USE_GPERFTOOLS)\
+  || defined(RMF_BENCHMARK_USE_GOOGLEPERFTOOLS)
 void set_is_profiling(bool tf) {
   if (tf) {
     ++last_prof;

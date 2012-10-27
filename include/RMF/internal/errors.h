@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_INTERNAL_ERRORS_H
-#define IMPLIBRMF_INTERNAL_ERRORS_H
+#ifndef RMF__INTERNAL_ERRORS_H
+#define RMF__INTERNAL_ERRORS_H
 
 #include <RMF/config.h>
 #include "../infrastructure_macros.h"
@@ -139,4 +139,4 @@ extern RMFEXPORT bool show_hdf5_errors;
 } // namespace internal
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_INTERNAL_ERRORS_H */
+#endif /* RMF__INTERNAL_ERRORS_H */

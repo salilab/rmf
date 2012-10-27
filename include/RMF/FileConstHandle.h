@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_FILE_CONST_HANDLE_H
-#define IMPLIBRMF_FILE_CONST_HANDLE_H
+#ifndef RMF__FILE_CONST_HANDLE_H
+#define RMF__FILE_CONST_HANDLE_H
 
 #include <RMF/config.h>
 #include "internal/SharedData.h"
@@ -17,7 +17,7 @@
 #include <boost/intrusive_ptr.hpp>
 
 
-#define IMP_HDF5_ROOT_CONST_KEY_TYPE_METHODS(lcname, UCName,            \
+#define RMF_HDF5_ROOT_CONST_KEY_TYPE_METHODS(lcname, UCName,            \
                                              PassValue,                 \
                                              ReturnValue,               \
                                              PassValues,                \
@@ -54,7 +54,7 @@ namespace RMF {
 
   class NodeConstHandle;
 
-#ifndef IMP_DOXYGEN
+#ifndef RMF_DOXYGEN
   typedef std::pair<NodeConstHandle, NodeConstHandle> BondPair;
   typedef vector<BondPair> BondPairs;
 #endif
@@ -77,7 +77,7 @@ namespace RMF {
       else if (get_name() > o.get_name()) return 1;
       else return 0;
     }
-#if !defined(SWIG) && !defined(IMP_DOXYGEN)
+#if !defined(SWIG) && !defined(RMF_DOXYGEN)
  protected:
     internal::SharedData* get_shared_data() const {return shared_.get();}
     FileConstHandle(internal::SharedData *shared_);
@@ -88,7 +88,7 @@ namespace RMF {
     RMF_SHOWABLE(FileConstHandle, get_name());
     //! Empty root handle, no open file.
     FileConstHandle(){}
-#ifndef IMP_DOXYGEN
+#ifndef RMF_DOXYGEN
     FileConstHandle(std::string name);
 #endif
 
@@ -99,6 +99,10 @@ namespace RMF {
 
     std::string get_name() const {
       return shared_->get_file_name();
+    }
+
+    std::string get_path() const {
+      return shared_->get_file_path();
     }
 
     /** \name Methods for manipulating keys
@@ -207,10 +211,10 @@ namespace RMF {
         @{
     */
 
-   RMF_FOREACH_TYPE(IMP_HDF5_ROOT_CONST_KEY_TYPE_METHODS);
+   RMF_FOREACH_TYPE(RMF_HDF5_ROOT_CONST_KEY_TYPE_METHODS);
 
     /** @} */
-#ifdef IMP_DOXYGEN
+#ifdef RMF_DOXYGEN
     /** \name Python only
         The following methods are only available in python.
         @{
@@ -356,4 +360,4 @@ namespace RMF {
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_FILE_CONST_HANDLE_H */
+#endif /* RMF__FILE_CONST_HANDLE_H */

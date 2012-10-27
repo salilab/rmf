@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_HDF_5DATA_SET_CREATION_PROPERTIES_D_H
-#define IMPLIBRMF_HDF_5DATA_SET_CREATION_PROPERTIES_D_H
+#ifndef RMF__HDF_5DATA_SET_CREATION_PROPERTIES_D_H
+#define RMF__HDF_5DATA_SET_CREATION_PROPERTIES_D_H
 
 #include <RMF/config.h>
 #include "HDF5DataSetAccessPropertiesD.h"
@@ -25,9 +25,9 @@ struct HDF5DataSetCreationPropertiesD:
   using HDF5DataSetAccessPropertiesD<TypeTraits, D>::get_handle;
   void set_compression(Compression comp) {
     if (comp == GZIP_COMPRESSION) {
-      IMP_HDF5_CALL(H5Pset_deflate(get_handle(), 9));
+      RMF_HDF5_CALL(H5Pset_deflate(get_handle(), 9));
     } else if (comp == SLIB_COMPRESSION) {
-      IMP_HDF5_CALL(H5Pset_szip (get_handle(), H5_SZIP_NN_OPTION_MASK,
+      RMF_HDF5_CALL(H5Pset_szip (get_handle(), H5_SZIP_NN_OPTION_MASK,
                                  32));
     }
   }
@@ -39,7 +39,7 @@ struct HDF5DataSetCreationPropertiesD:
     for (unsigned int i=0; i< D; ++i) {
       cdims[i]=chunk_size[i];
     }
-    IMP_HDF5_CALL(H5Pset_chunk(get_handle(), D, cdims));
+    RMF_HDF5_CALL(H5Pset_chunk(get_handle(), D, cdims));
   }
   HDF5DataSetCreationPropertiesD():
       HDF5DataSetAccessPropertiesD<TypeTraits, D>(H5P_DATASET_CREATE) {
@@ -51,16 +51,16 @@ struct HDF5DataSetCreationPropertiesD:
     if (D >1) {
       cdims[D-1]=1;
     }
-    IMP_HDF5_CALL(H5Pset_chunk(get_handle(), D, cdims));
-    IMP_HDF5_CALL(H5Pset_fill_value(get_handle(),
+    RMF_HDF5_CALL(H5Pset_chunk(get_handle(), D, cdims));
+    RMF_HDF5_CALL(H5Pset_fill_value(get_handle(),
                                     TypeTraits::get_hdf5_fill_type(),
                                       &TypeTraits::get_fill_value()));
-    IMP_HDF5_CALL(H5Pset_fill_time(get_handle(), H5D_FILL_TIME_ALLOC));
-    IMP_HDF5_CALL(H5Pset_alloc_time(get_handle(), H5D_ALLOC_TIME_INCR));
+    RMF_HDF5_CALL(H5Pset_fill_time(get_handle(), H5D_FILL_TIME_ALLOC));
+    RMF_HDF5_CALL(H5Pset_alloc_time(get_handle(), H5D_ALLOC_TIME_INCR));
 
   }
 };
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_HDF_5DATA_SET_CREATION_PROPERTIES_D_H */
+#endif /* RMF__HDF_5DATA_SET_CREATION_PROPERTIES_D_H */

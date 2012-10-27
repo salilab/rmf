@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_HDF_5DATA_SET_INDEX_D_H
-#define IMPLIBRMF_HDF_5DATA_SET_INDEX_D_H
+#ifndef RMF__HDF_5DATA_SET_INDEX_D_H
+#define RMF__HDF_5DATA_SET_INDEX_D_H
 
 #include <RMF/config.h>
 #include "types.h"
@@ -105,7 +105,7 @@ namespace RMF {
                      return ret;);
   };
 
-#ifndef IMP_DOXYGEN
+#ifndef RMF_DOXYGEN
   typedef HDF5DataSetIndexD<1> HDF5DataSetIndex1D;
   typedef vector<HDF5DataSetIndex1D> HDF5DataSetIndex1Ds;
   typedef HDF5DataSetIndexD<2> HDF5DataSetIndex2D;
@@ -116,4 +116,4 @@ namespace RMF {
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_HDF_5DATA_SET_INDEX_D_H */
+#endif /* RMF__HDF_5DATA_SET_INDEX_D_H */

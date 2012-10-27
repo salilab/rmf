@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_CONSTANTS_H
-#define IMPLIBRMF_CONSTANTS_H
+#ifndef RMF__CONSTANTS_H
+#define RMF__CONSTANTS_H
 
 #include <RMF/config.h>
 
@@ -18,4 +18,4 @@ namespace RMF {
   static const int ALL_FRAMES=-1;
 }
 
-#endif  /* IMPLIBRMF_CONSTANTS_H */
+#endif  /* RMF__CONSTANTS_H */

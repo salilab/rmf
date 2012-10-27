@@ -85,7 +85,7 @@ int main(int argc, char **argv) {
     options.add_options()
       ("frame,f", boost::program_options::value< int >(&frame),
        "Frame to use");
-    IMP_ADD_INPUT_FILE("rmf");
+    RMF_ADD_INPUT_FILE("rmf");
     process_options(argc, argv);
 
 

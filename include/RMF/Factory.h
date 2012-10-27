@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_FACTORY_H
-#define IMPLIBRMF_FACTORY_H
+#ifndef RMF__FACTORY_H
+#define RMF__FACTORY_H
 
 #include <RMF/config.h>
 namespace RMF {
@@ -70,4 +70,4 @@ class Factory {
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_FACTORY_H */
+#endif /* RMF__FACTORY_H */

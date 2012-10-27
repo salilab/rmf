@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_TYPES_H
-#define IMPLIBRMF_TYPES_H
+#ifndef RMF__TYPES_H
+#define RMF__TYPES_H
 
 #include <RMF/config.h>
 #include "NodeID.h"
@@ -23,7 +23,7 @@
 
 namespace RMF {
 
-#ifdef IMP_DOXYGEN
+#ifdef RMF_DOXYGEN
   /** The RMF library uses containers that have the same interfaces as, but
       not necessarily the same type as, std::vector to store lists of
       values. (The reason the types are not necessarily the same is that,
@@ -34,7 +34,7 @@ namespace RMF {
   class vector {};
 #endif
 
-#ifndef IMP_DOXYGEN
+#ifndef RMF_DOXYGEN
   /** \defgroup hdf5 HDF Support
       These functions provide low level support for reading and writing HDF5
       files. As such, they aren't really part of the RMF library itself, but
@@ -99,14 +99,14 @@ namespace RMF {
                      static char empty='\0';
                      c=&empty;
                    }
-                   IMP_HDF5_CALL(H5Dwrite(d, get_hdf5_memory_type(), is, s,
+                   RMF_HDF5_CALL(H5Dwrite(d, get_hdf5_memory_type(), is, s,
                                           H5P_DEFAULT, &c));
                  }
                  ,{
                    char *c=NULL;
-                   IMP_HDF5_HANDLE( mt,internal::create_string_type(),
+                   RMF_HDF5_HANDLE( mt,internal::create_string_type(),
                                     H5Tclose);
-                   IMP_HDF5_CALL(H5Dread(d,  mt, is, sp, H5P_DEFAULT, &c));
+                   RMF_HDF5_CALL(H5Dread(d,  mt, is, sp, H5P_DEFAULT, &c));
                    if (c) {
                      ret=std::string(c);
                    }
@@ -128,7 +128,7 @@ namespace RMF {
                  ,{
                    RMF_UNUSED(a); RMF_UNUSED(sz);
                    RMF_NOT_IMPLEMENTED;
-                 });
+             }, false);
 
   RMF_TRAITS(NodeID, NodeIDs, node_id, 4, IndexTraits::get_hdf5_disk_type(),
                  IndexTraits::get_hdf5_memory_type(),
@@ -163,7 +163,7 @@ namespace RMF {
                    for (unsigned int i=0; i< ret.size(); ++i) {
                      ret[i]=NodeID(is[i]);
                    }
-                 });
+             }, true);
 
   RMF_TRAITS_ONE(Char, Chars, char, 6, H5T_STD_I8LE,
                  H5T_NATIVE_CHAR,H5T_NATIVE_CHAR, '\0',
@@ -186,15 +186,15 @@ namespace RMF {
                    RMF_NOT_IMPLEMENTED;
                  }
                  ,{
-                   IMP_HDF5_CALL(H5Awrite(a, H5T_NATIVE_CHAR, v.c_str()));
+                   RMF_HDF5_CALL(H5Awrite(a, H5T_NATIVE_CHAR, v.c_str()));
                  }
                  ,{
                    vector<char> v(sz);
-                   IMP_HDF5_CALL(H5Aread(a, H5T_NATIVE_CHAR, &v[0]));
+                   RMF_HDF5_CALL(H5Aread(a, H5T_NATIVE_CHAR, &v[0]));
                    ret=std::string(&v[0], v.size());
-                 });
+                 }, false);
 #endif
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_TYPES_H */
+#endif /* RMF__TYPES_H */

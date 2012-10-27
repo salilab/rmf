@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef IMPLIBRMF_FILE_HANDLE_H
-#define IMPLIBRMF_FILE_HANDLE_H
+#ifndef RMF__FILE_HANDLE_H
+#define RMF__FILE_HANDLE_H
 
 #include <RMF/config.h>
 #include "internal/SharedData.h"
@@ -15,7 +15,7 @@
 #include "FileConstHandle.h"
 
 
-#define IMP_HDF5_ROOT_KEY_TYPE_METHODS(lcname, UCName,                  \
+#define RMF_HDF5_ROOT_KEY_TYPE_METHODS(lcname, UCName,                  \
                                              PassValue,                 \
                                              ReturnValue,               \
                                              PassValues, ReturnValues)  \
@@ -50,7 +50,7 @@ namespace RMF {
   public:
     //! Empty file handle, no open file.
     FileHandle(){}
-#ifndef IMP_DOXYGEN
+#ifndef RMF_DOXYGEN
     FileHandle(std::string name, bool create);
 #endif
 
@@ -97,7 +97,7 @@ namespace RMF {
         Type is one of the \ref rmf_types "standard types".
         @{
     */
-    RMF_FOREACH_TYPE(IMP_HDF5_ROOT_KEY_TYPE_METHODS);
+    RMF_FOREACH_TYPE(RMF_HDF5_ROOT_KEY_TYPE_METHODS);
     /** @} */
 
     NodeHandle get_root_node() const {
@@ -231,4 +231,4 @@ RMF_FOREACH_TYPE(RMF_GET_KEY_ALWAYS);
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_FILE_HANDLE_H */
+#endif /* RMF__FILE_HANDLE_H */
