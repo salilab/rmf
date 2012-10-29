@@ -8,6 +8,8 @@
 
 #include <RMF/HDF5Group.h>
 #include <RMF/HDF5File.h>
+#include <H5Fpublic.h>
+#include <H5public.h>
 #include <boost/scoped_array.hpp>
 
 namespace RMF {
@@ -109,7 +111,10 @@ hid_t get_parameters() {
   hid_t plist= H5Pcreate(H5P_FILE_ACCESS);
   RMF_HDF5_CALL(H5Pset_sieve_buf_size(plist, 1000000));
   RMF_HDF5_CALL(H5Pset_cache(plist, 0, 10000, 10000000, 0.0));
+#if defined(H5_VERS_MAJOR) && H5_VERS_MAJOR >= 1                        \
+  && H5_VERS_MINOR >= 8 && H5_VERS_RELEASE>=6
   RMF_HDF5_CALL(H5Pset_libver_bounds(plist, H5F_LIBVER_18, H5F_LIBVER_LATEST));
+#endif
   return plist;
 }
 herr_t error_function(hid_t, void *) {
