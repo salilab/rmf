@@ -1,0 +1,22 @@
+{
+    "type": "record",
+    "name": "All",
+    "doc": "Store an rmf file as a single json record.",
+    "fields" : [
+        {
+            "name" : "file",
+            "type" :  @RMF_JSON_FILE@
+        },
+        {
+            "name" : "hierarchy",
+            "type" : @RMF_JSON_HIERARCHY@
+        },
+        {
+            "name" : "data",
+            "type" : {
+                "type" : "array",
+                "items" : @RMF_JSON_DATA@
+            }
+        }
+    ]
+}
