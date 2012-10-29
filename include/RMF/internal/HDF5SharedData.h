@@ -70,13 +70,13 @@ namespace RMF {
                                            std::string name,            \
                                            bool per_frame) {            \
       return add_key_impl<Ucname##Traits>(category_id,                  \
-                                                 name, per_frame);      \
+                                          name, per_frame);             \
     }                                                                   \
     unsigned int                                                        \
     get_number_of_##lcname##_keys(int category_id,                      \
                                   bool per_frame) const {               \
       return get_number_of_keys_impl<Ucname##Traits>(category_id,       \
-                                                            per_frame); \
+                                                     per_frame);        \
     }                                                                   \
     std::string get_name(Key<Ucname##Traits> k) const {                 \
       return get_name_impl(k);                                          \
