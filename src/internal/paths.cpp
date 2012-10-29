@@ -7,7 +7,6 @@
  */
 
 #include <RMF/internal/paths.h>
-#define BOOST_FILESYSTEM_VERSION 3
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <stdexcept>
@@ -21,9 +20,14 @@ namespace RMF {
     }
     std::string get_absolute_path(std::string base,
                                   std::string file) {
+#if BOOST_VERSION >= 104800
       return boost::filesystem::canonical(boost::filesystem::path(base)
                                           /boost::filesystem::path(file))
         .string();
+#else
+      return (boost::filesystem::path(base)/boost::filesystem::path(file))
+        .string();
+#endif
     }
   } // namespace internal
 } /* namespace RMF */
