@@ -12,10 +12,15 @@
             "type" : @RMF_JSON_HIERARCHY@
         },
         {
-            "name" : "data",
+            "name" : "categories",
             "type" : {
-                "type" : "array",
-                "items" : @RMF_JSON_DATA@
+                "type": "map",
+                "doc" : "categories by name",
+                "values" : {
+                    "type" : "map",
+                    "doc" : "frames by index",
+                    "values" : @RMF_JSON_DATA@
+                }
             }
         }
     ]
