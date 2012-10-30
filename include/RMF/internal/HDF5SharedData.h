@@ -57,8 +57,8 @@ namespace RMF {
                                    Key<Ucname##Traits> k) const {       \
       return get_value_impl(node, k, get_current_frame());              \
     }                                                                   \
-    Ucname##Traits::Types get_all_value(unsigned int node,              \
-                                        Key<Ucname##Traits> k) const {  \
+    Ucname##Traits::Types get_all_values(unsigned int node,             \
+                                         Key<Ucname##Traits> k)  {      \
       return get_all_values_impl(node, k);                              \
     }                                                                   \
     void set_value(unsigned int node,                                   \
