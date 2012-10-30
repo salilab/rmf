@@ -1,0 +1,23 @@
+{
+    "type": "record",
+    "name": "Frames",
+    "doc": "Store the category-independent frame data",
+    "fields": [
+        {
+            "name": "data",
+            "type": {
+                "type": "map",
+                "values": {
+                    "type": "record",
+                    "name": "data",
+                    "fields" : [
+                        {
+                            "name": "name",
+                            "type": "string"
+                        }k
+                    ]
+                }
+            }
+        }
+    ]
+}

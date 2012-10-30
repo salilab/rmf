@@ -7,7 +7,7 @@
             "name": "hierarchy",
             "type": {
                 "type":"array",
-                "items": {
+                "items  ": {
                     "type": "record",
                     "name": "Node",
                     "doc": "Store a node in the hierarchy.",
