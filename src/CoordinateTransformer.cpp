@@ -6,12 +6,12 @@
  *
  */
 
-#include <RMF/ReferenceFrame.h>
+#include <RMF/CoordinateTransformer.h>
 #include <RMF/decorators.h>
 
 namespace RMF {
-  ReferenceFrame::ReferenceFrame(ReferenceFrame base,
-                                 RigidParticleConst rb):
+  CoordinateTransformer::CoordinateTransformer(CoordinateTransformer base,
+                                               ReferenceFrameConst rb):
     transform_(base.transform_,
                internal::Transform(internal::Rotation(rb.get_orientation()),
                                    rb.get_coordinates())){

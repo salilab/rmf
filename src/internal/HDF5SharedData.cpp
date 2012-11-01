@@ -103,7 +103,7 @@ namespace RMF {
     }
 
     HDF5SharedData::HDF5SharedData(std::string g, bool create):
-    SharedData(g), frames_hint_(0), alias_category_(-1)
+    SharedData(g), frames_hint_(0), link_category_(-1)
     {
       RMF_BEGIN_FILE;
       RMF_BEGIN_OPERATION;
@@ -114,16 +114,16 @@ namespace RMF {
         RMF_USAGE_CHECK(get_name(0)=="root",
                         "Root node is not so named");
         for (unsigned int i=0; i< get_number_of_categories(); ++i) {
-          if (get_category_name(i)== "alias") {
-            alias_category_=i; break;
+          if (get_category_name(i)== "link") {
+            link_category_=i; break;
           }
         }
-        if (alias_category_!=-1) {
-          alias_key_= get_key_impl<NodeIDTraits>(alias_category_,
-                                                 "aliased",
+        if (link_category_!=-1) {
+          link_key_= get_key_impl<NodeIDTraits>(link_category_,
+                                                 "linked",
                                                  false);
-          RMF_INTERNAL_CHECK(alias_key_ != NodeIDKey(),
-                             "Bad alias key found in init");
+          RMF_INTERNAL_CHECK(link_key_ != NodeIDKey(),
+                             "Bad link key found in init");
         }
       }
       RMF_END_OPERATION("initializing");
@@ -228,31 +228,31 @@ namespace RMF {
     void HDF5SharedData::add_child(int node, int child_node) {
       RMF_INTERNAL_CHECK(-1 != child_node,
                          "Bad child being added");
-      init_alias();
-      int alias= add_child(node, "alias", ALIAS);
-      set_value_impl(alias, alias_key_, NodeID(child_node), -1);
-      RMF_INTERNAL_CHECK(get_aliased(alias)== child_node,
+      init_link();
+      int link= add_child(node, "link", LINK);
+      set_value_impl(link, link_key_, NodeID(child_node), -1);
+      RMF_INTERNAL_CHECK(get_linked(link)== child_node,
                          "Return does not match");
     }
 
-    void HDF5SharedData::init_alias() {
-      if (alias_category_ !=-1) {
-        RMF_INTERNAL_CHECK(alias_key_ != NodeIDKey(),
-                           "Invalid alias key");
+    void HDF5SharedData::init_link() {
+      if (link_category_ !=-1) {
+        RMF_INTERNAL_CHECK(link_key_ != NodeIDKey(),
+                           "Invalid link key");
         return;
       }
-      alias_category_=add_category("alias");
-      alias_key_= add_key_impl<NodeIDTraits>(alias_category_,
-                                             "aliased", false);
-      RMF_INTERNAL_CHECK(alias_key_ != NodeIDKey(),
-                         "Invalid alias key after add");
+      link_category_=add_category("link");
+      link_key_= add_key_impl<NodeIDTraits>(link_category_,
+                                             "linked", false);
+      RMF_INTERNAL_CHECK(link_key_ != NodeIDKey(),
+                         "Invalid link key after add");
     }
 
-    int HDF5SharedData::get_aliased(int node) const {
-      RMF_INTERNAL_CHECK(alias_category_==-1 || alias_key_ != NodeIDKey(),
-                         "Invalid alias key but valid category");
-      int ret= get_value(node, alias_key_).get_index();
-      RMF_INTERNAL_CHECK(ret >= 0, "Bad alias value found");
+    int HDF5SharedData::get_linked(int node) const {
+      RMF_INTERNAL_CHECK(link_category_==-1 || link_key_ != NodeIDKey(),
+                         "Invalid link key but valid category");
+      int ret= get_value(node, link_key_).get_index();
+      RMF_INTERNAL_CHECK(ret >= 0, "Bad link value found");
       return ret;
     }
 
@@ -261,11 +261,11 @@ namespace RMF {
         int cur= get_first_child(node);
         Ints ret;
         while (!IndexTraits::get_is_null_value(cur)) {
-          if (get_type(cur) != ALIAS) {
+          if (get_type(cur) != LINK) {
             ret.push_back(cur);
             cur= get_sibling(cur);
           } else {
-            ret.push_back(get_aliased(cur));
+            ret.push_back(get_linked(cur));
             cur= get_sibling(cur);
           }
         }

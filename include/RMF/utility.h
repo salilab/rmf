@@ -17,6 +17,9 @@ namespace RMF {
 
   class FileConstHandle;
   class FileHandle;
+  class AliasFactory;
+  class NodeHandle;
+  class NodeConstHandle;
 
   /** \name Copy functions
 
@@ -63,6 +66,13 @@ RMFEXPORT void copy_structure(const NodeConstHandles& input, FileHandle output);
   RMFEXPORT bool get_equal_frame(FileConstHandle input, FileConstHandle out,
                                  unsigned int inframe, unsigned int outframe,
                                  bool print_diff=false);
+
+
+  /** Add the child node as an alias child of the parent. */
+  RMFEXPORT void add_child_alias(AliasFactory af,
+                                 NodeHandle parent,
+                                 NodeConstHandle child);
+
 
 } /* namespace RMF */
 

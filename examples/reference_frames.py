@@ -7,10 +7,10 @@ def print_coordinates(reference_frame, coords):
     print reference_frame.get_global_coordinates(coords)
 
 # walk through the hierarchy visiting each node and extracting coordinates
-def visit(node, reference_frame, rigid_body_factory, particle_factory,
+def visit(node, reference_frame, reference_frame_factory, particle_factory,
           segment_factory, ball_factory):
-    if rigid_body_factory.get_is(node):
-        reference_frame= RMF.ReferenceFrame(reference_frame, rigid_body_factory.get(node))
+    if reference_frame_factory.get_is(node):
+        reference_frame= RMF.CoordinateTransformer(reference_frame, reference_frame_factory.get(node))
         print "reference frame is now", reference_frame
     elif segment_factory.get_is(node):
         segment= segment_factory.get(node)
@@ -28,14 +28,14 @@ def visit(node, reference_frame, rigid_body_factory, particle_factory,
         particle= ball_factory.get(node)
         print "ball", node.get_name(), print_coordinates(reference_frame, particle.get_coordinates())
     for c in node.get_children():
-        visit(c, reference_frame, rigid_body_factory, particle_factory,
+        visit(c, reference_frame, reference_frame_factory, particle_factory,
               segment_factory, ball_factory);
 
-fh = RMF.open_rmf_file_read_only(RMF.get_example_path("rigid_bodies.rmf"))
+fh = RMF.open_rmf_file_read_only(RMF.get_example_path("reference_frames.rmf"))
 
 
-visit(fh.get_root_node(), RMF.ReferenceFrame(),
-      RMF.RigidParticleConstFactory(fh),
+visit(fh.get_root_node(), RMF.CoordinateTransformer(),
+      RMF.ReferenceFrameConstFactory(fh),
       RMF.ParticleConstFactory(fh),
       RMF.SegmentConstFactory(fh),
       RMF.BallConstFactory(fh))

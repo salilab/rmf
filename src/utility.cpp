@@ -12,6 +12,9 @@
 #include <RMF/FileConstHandle.h>
 #include <RMF/FileHandle.h>
 #include <RMF/internal/set.h>
+#include <RMF/internal/utility.h>
+#include <RMF/decorators.h>
+
 namespace RMF {
   unsigned int get_uint(NodeConstHandle nh);
   unsigned int get_uint(NodeHandle nh);
@@ -277,4 +280,13 @@ namespace RMF {
     ret= get_equal_node_frame(in, out, print_diff) && ret;
     return ret;
   }
+
+
+
+ void add_child_alias(AliasFactory af,
+                      NodeHandle parent,
+                      NodeConstHandle child) {
+   internal::add_child_alias(af, parent, child);
+ }
+
 } /* namespace RMF */

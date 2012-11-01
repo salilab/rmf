@@ -95,8 +95,8 @@ namespace RMF {
       boost::array<Ints,4> free_ids_;
       unsigned int frames_hint_;
 
-      int alias_category_;
-      Key<NodeIDTraits> alias_key_;
+      int link_category_;
+      Key<NodeIDTraits> link_key_;
 
       // caches
       typedef vector< vector<int> > IndexCache;
@@ -611,8 +611,8 @@ namespace RMF {
       unsigned int get_number_of_sets(int arity) const;
       unsigned int get_set_member(int Arity, unsigned int index,
                                   int member_index) const;
-      int get_aliased(int node) const;
-      void init_alias();
+      int get_linked(int node) const;
+      void init_link();
     public:
       RMF_FOREACH_TYPE(RMF_HDF5_SHARED_TYPE);
 

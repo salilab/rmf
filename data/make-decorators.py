@@ -42,9 +42,9 @@ class Children:
         self.nice_name=nice_name
     def get_key_members(self, const):
         if (const):
-            return []
+            return ["AliasConstFactory "+self.nice_name+"_;"]
         else:
-            return []
+            return ["AliasFactory "+self.nice_name+"_;"]
     def get_methods(self, const):
         ret=[]
         if const:
@@ -55,8 +55,8 @@ class Children:
         ret.append("  "+nht+"s typed=get_node().get_children();")
         ret.append("  "+nht+"s ret;")
         ret.append("  for (unsigned int i=0; i< typed.size(); ++i) {")
-        ret.append("     if (typed[i].get_type()== REPRESENTATION) {")
-        ret.append("        ret.push_back(typed[i]);")
+        ret.append("     if ("+self.nice_name+"_.get_is(typed[i])) {")
+        ret.append("        ret.push_back("+self.nice_name+"_.get(typed[i]).get_aliased());")
         ret.append("     }");
         ret.append("  }");
         ret.append("  return ret;")
@@ -64,23 +64,29 @@ class Children:
         if not const:
             ret.append("void set_"+self.nice_name+"(NodeConstHandles v) {")
             ret.append("   for (unsigned int i=0; i< v.size(); ++i) {")
-            ret.append("       get_node().add_child(v[i]);")
+            ret.append("       internal::add_child_alias("+self.nice_name+"_, get_node(), v[i]);")
             ret.append("   }")
             ret.append("}")
             ret.append("void set_"+self.nice_name+"(NodeHandles v) {")
             ret.append("   for (unsigned int i=0; i< v.size(); ++i) {")
-            ret.append("       get_node().add_child(v[i]);")
+            ret.append("       internal::add_child_alias("+self.nice_name+"_, get_node(), v[i]);")
             ret.append("   }")
             ret.append("}")
         return ret
     def get_key_arguments(self, const):
-        return []
+        if (const):
+            return ["AliasConstFactory "+self.nice_name+""]
+        else:
+            return ["AliasFactory "+self.nice_name+""]
     def get_key_pass(self, const):
-        return []
+        return [self.nice_name+"_"]
     def get_key_saves(self, const):
-        return []
+        return [self.nice_name+"_("+self.nice_name+")"]
     def get_initialize(self, const):
-        return []
+        if (const):
+            return [self.nice_name+"_(fh)"]
+        else:
+            return [self.nice_name+"_(fh)"]
     def get_construct(self, const):
         return []
     def get_check(self, const):
@@ -617,6 +623,18 @@ pparticle= Decorator("RigidParticle", "These particles has associated coordinate
                                                                                 "cartesian y",
                                                                                 "cartesian z"])])],
                    "")
+refframe= Decorator("ReferenceFrame", "Define a reference frame to the child particles.",
+                   [DecoratorCategory("physics",
+                                      [Attributes("Float", "Floats",
+                                                  "orientation", ["reference frame orientation r",
+                                                                  "reference frame orientation i",
+                                                                  "reference frame orientation j",
+                                                                  "reference frame orientation k"]),
+                                        Attributes("Float", "Floats",
+                                                   "coordinates", ["reference frame cartesian x",
+                                                                   "reference frame cartesian y",
+                                                                   "reference frame cartesian z"])])],
+    "")
 
 score= Decorator("Score", "Associate a score with some set of particles.",
                    [DecoratorCategory("feature", [Children("representation"),
@@ -689,6 +707,10 @@ diffuser= Decorator("Diffuser", "Information regarding diffusion coefficients.",
 typed= Decorator("Typed", "A numeric tag for keeping track of types of molecules.",
                    [DecoratorCategory("sequence", [Attribute("String", "type_name", "type name")])],
                    "")
+
+salias= Decorator("Alias", "Store a reference to another node as an alias.",
+                  [DecoratorCategory("alias", [NodeAttribute("NodeID", "aliased", "aliased")])],
+                   "")
 external= Decorator("External", "A reference to something in an external file.",
                    [DecoratorCategory("external", [PathAttribute("String", "path", "path")])],
                    "")
@@ -730,9 +752,11 @@ print residue.get()
 print atom.get()
 print chain.get()
 print fragment.get()
+print refframe.get()
 print copy.get()
 print diffuser.get()
 print typed.get()
+print salias.get()
 print score.get()
 print external.get()
 print """} /* namespace RMF */

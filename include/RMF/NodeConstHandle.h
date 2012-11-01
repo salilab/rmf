@@ -72,40 +72,41 @@ class NodeConstHandle;
 // for children
 typedef vector<NodeConstHandle> NodeConstHandles;
 
-//! The types of the nodes.
-enum NodeType {
-#if !defined(RMF_DOXYGEN) && !defined(SWIG)
-ROOT,
-#endif
-//! Represent part of a molecule
-REPRESENTATION,
-//! Store a geometric object
-GEOMETRY,
-//! Store information about some feature of the system
-/** For example, the particles involved in scoring
-    functions and their score can be encoded as feature
-    nodes.
-*/
-FEATURE,
+  //! The types of the nodes.
+  enum NodeType {
+    //! The root node
+    ROOT,
+    //! Represent part of a molecule
+    REPRESENTATION,
+    //! Store a geometric object
+    GEOMETRY,
+    //! Store information about some feature of the system
+    /** For example, the particles involved in scoring
+        functions and their score can be encoded as feature
+        nodes.
+    */
+    FEATURE,
+    /** Store a reference to another node. This node should
+        be an alias decorator node and have no other data,
+        at least for now.
+    */
+    ALIAS,
+    //! Arbitrary data that is not standardized
+    /** Programs can use these keys to store any extra data
+        they want to put into the file.
+    */
+    CUSTOM,
+    //! A link between two atoms
+    /** These are mostly for display purposes eg to show a wireframe
+        view of the molecule. */
+    BOND,
+    //! A node that is purely there for organizational purposes
+    ORGANIZATIONAL,
 #ifndef RMF_DOXYGEN
-/** Store a reference to another node. This node should
-    be an alias decorator node and have no other data,
-    at least for now.
-*/
-ALIAS,
+    //! An internal link to another node
+    LINK
 #endif
-//! Arbitrary data that is not standardized
-/** Programs can use these keys to store any extra data
-    they want to put into the file.
-*/
-CUSTOM,
-//! A link between two atoms
-/** These are mostly for display purposes eg to show a wireframe
-    view of the molecule. */
-BOND,
-//! A node that is purely there for organizational purposes
-ORGANIZATIONAL
-};
+  };
 
 /** Return a string version of the type name.*/
 RMFEXPORT

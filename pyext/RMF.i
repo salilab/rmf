@@ -48,7 +48,7 @@
 #include "RMF/Factory.h"
 #include "RMF/decorators.h"
 #include "RMF/decorator_utility.h"
-#include "RMF/ReferenceFrame.h"
+#include "RMF/CoordinateTransformer.h"
 #include "RMF/utility.h"
 #include <RMF/internal/swig_helpers.h>
 #include <RMF/SetCurrentFrame.h>
@@ -318,8 +318,10 @@ IMP_RMF_DECORATOR(RMF, Cylinder);
 IMP_RMF_DECORATOR(RMF, Segment);
 IMP_RMF_DECORATOR(RMF, Score);
 IMP_RMF_DECORATOR(RMF, RigidParticle);
+IMP_RMF_DECORATOR(RMF, ReferenceFrame);
 IMP_RMF_DECORATOR(RMF, Residue);
 IMP_RMF_DECORATOR(RMF, Atom);
+IMP_RMF_DECORATOR(RMF, Alias);
 IMP_RMF_DECORATOR(RMF, Chain);
 IMP_RMF_DECORATOR(RMF, Domain);
 IMP_RMF_DECORATOR(RMF, Copy);
@@ -330,7 +332,7 @@ IMP_RMF_DECORATOR(RMF, Typed);
 %include "RMF/decorator_utility.h"
 %include "RMF/utility.h"
 %include "RMF/SetCurrentFrame.h"
-%include "RMF/ReferenceFrame.h"
+%include "RMF/CoordinateTransformer.h"
 
 
 %pythoncode %{
