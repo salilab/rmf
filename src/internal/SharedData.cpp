@@ -15,6 +15,7 @@
 #include <RMF/internal/HDF5SharedData.h>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/scoped_ptr.hpp>
+#include <boost/version.hpp>
 
 namespace RMF {
   namespace internal {
@@ -89,7 +90,11 @@ namespace RMF {
     }
 
     std::string SharedData::get_file_name() const {
+#if BOOST_VERSION >= 104600
       return boost::filesystem::path(path_).filename().string();
+#else
+      return boost::filesystem::path(path_).filename();
+#endif
     }
 
   void SharedData::validate(std::ostream &out) const {
