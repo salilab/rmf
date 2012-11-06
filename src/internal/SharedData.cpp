@@ -109,7 +109,7 @@ namespace RMF {
         return cache.find(path)->second;
       }
       if (boost::algorithm::ends_with(path, ".rmf")) {
-        ret= new HDF5SharedData(path, create);
+        ret= new HDF5SharedData(path, create, false);
       } else {
         RMF_THROW("Don't know how to open file", IOException);
       }
@@ -124,7 +124,7 @@ namespace RMF {
         return cache.find(path)->second;
       }
       if (boost::algorithm::ends_with(path, ".rmf")) {
-        ret= new HDF5SharedData(path, false);
+        ret= new HDF5SharedData(path, false, true);
       } else {
         RMF_THROW("Don't know how to open file", IOException);
       }
