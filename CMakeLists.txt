@@ -4,6 +4,7 @@ project(RMF)
 # needs to be in main CMakeLists.txt
 ENABLE_TESTING()
 
+set(Boost_NO_BOOST_CMAKE ON)
 find_package(Boost COMPONENTS system filesystem thread program_options
 REQUIRED)
 
