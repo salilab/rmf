@@ -62,8 +62,9 @@ namespace RMF {
         }
       }
     public:
-      HDF5DataSetCacheD(): dirty_(false), current_frame_(0),
-                           extents_(0,0,0){}
+      HDF5DataSetCacheD(): extents_(0,0,0),
+                           dirty_(false),
+                           current_frame_(0){}
       ~HDF5DataSetCacheD() {
         flush();
       }
