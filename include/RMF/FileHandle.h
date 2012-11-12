@@ -100,6 +100,8 @@ namespace RMF {
     RMF_FOREACH_TYPE(RMF_HDF5_ROOT_KEY_TYPE_METHODS);
     /** @} */
 
+    /** Return the root of the hierarchy stored in the file.
+     */
     NodeHandle get_root_node() const {
       return NodeHandle(0, get_shared_data());
     }
@@ -120,6 +122,8 @@ namespace RMF {
 #else
     NodeHandle get_node_from_association(void*d) const ;
 #endif
+    /** Return a NodeHandle from a NodeID. The NodeID must refer
+        to a valid NodeHandle.*/
     NodeHandle get_node_from_id(NodeID id) const;
     /** Suggest how many frames the file is likely to have. This can
         make writing more efficient as space will be preallocated.
