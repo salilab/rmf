@@ -323,6 +323,10 @@ namespace RMF {
         encounted.*/
     void validate(std::ostream &out) const;
 
+    /** Like validate(std::ostream&) except it returns a sting describing
+        the errors.*/
+    std::string validate() const;
+
     /** Reread the file.
         \note This may invalidate various thing (eg the number of nodes may
         vary). Be careful.

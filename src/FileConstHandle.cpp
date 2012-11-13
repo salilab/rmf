@@ -8,6 +8,7 @@
 
 #include <RMF/FileConstHandle.h>
 #include <RMF/internal/SharedData.h>
+#include <sstream>
 
 namespace RMF {
 
@@ -65,6 +66,12 @@ bool FileConstHandle::set_is_locked(bool tf) {
 
 void FileConstHandle::validate(std::ostream &out=std::cerr) const {
   get_shared_data()->validate(out);
+}
+
+std::string FileConstHandle::validate() const {
+  std::ostringstream oss;
+  get_shared_data()->validate(oss);
+  return oss.str();
 }
 
 void FileConstHandle::reload() {
