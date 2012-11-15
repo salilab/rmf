@@ -115,13 +115,13 @@ namespace RMF {
         given type or Key() if the key is not found.
     */
     template <class TypeT>
-      Key<TypeT> get_key(Category category_id,
+      Key<TypeT> get_key(Category category,
                          std::string name, bool per_frame) const {
-      if (category_id == Category()) {
+      if (category == Category()) {
         return Key<TypeT>();
       } else {
         return internal::ConstGenericSharedData<TypeT>
-          ::get_key(shared_.get(), category_id.get_index(),
+          ::get_key(shared_.get(), category,
                     name,
                     per_frame);
       }
@@ -156,10 +156,10 @@ namespace RMF {
     /** Get a list of all keys of the given type,
      */
     template <class TypeT>
-      vector<Key<TypeT> > get_keys(Category category_id) const {
-      if (category_id==Category()) return vector<Key<TypeT> >();
+      vector<Key<TypeT> > get_keys(Category category) const {
+      if (category==Category()) return vector<Key<TypeT> >();
       return internal::ConstGenericSharedData<TypeT>
-        ::get_keys(shared_.get(), category_id.get_index());
+        ::get_keys(shared_.get(), category);
     }
     /** @} */
 
@@ -270,7 +270,7 @@ namespace RMF {
       return shared_->get_categories();
     }
   std::string get_name(Category kc) const {
-    return shared_->get_category_name(kc.get_index());
+    return shared_->get_category_name(kc);
   }
     /** @} */
 

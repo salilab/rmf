@@ -39,7 +39,7 @@ class Category {
   }
 public:
 #ifndef RMF_DOXYGEN
-  Category(unsigned int i): i_(i){}
+  explicit Category(unsigned int i): i_(i){}
 #endif
   Category(): i_(-1){}
   unsigned int get_index() const {

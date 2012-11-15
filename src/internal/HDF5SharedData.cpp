@@ -117,16 +117,11 @@ namespace RMF {
       } else {
         RMF_USAGE_CHECK(get_name(0)=="root",
                         "Root node is not so named");
-        Categories cats= get_categories();
-        for (unsigned int i=0; i< cats.size(); ++i) {
-          if (get_category_name(i)== "link") {
-            link_category_=i; break;
-          }
-        }
-        if (link_category_!=-1) {
-          link_key_= get_key_impl<NodeIDTraits>(link_category_,
-                                                 "linked",
-                                                 false);
+        link_category_= get_category("link");
+        if (link_category_!=Category()) {
+          link_key_= get_node_id_key(link_category_,
+                                                "linked",
+                                                false);
           RMF_INTERNAL_CHECK(link_key_ != NodeIDKey(),
                              "Bad link key found in init");
         }
@@ -244,20 +239,20 @@ namespace RMF {
     }
 
     void HDF5SharedData::init_link() {
-      if (link_category_ !=-1) {
+      if (link_category_ !=Category()) {
         RMF_INTERNAL_CHECK(link_key_ != NodeIDKey(),
                            "Invalid link key");
         return;
       }
       link_category_=add_category("link");
-      link_key_= add_key_impl<NodeIDTraits>(link_category_,
-                                             "linked", false);
+      link_key_= add_node_id_key(link_category_,
+                                 "linked", false);
       RMF_INTERNAL_CHECK(link_key_ != NodeIDKey(),
                          "Invalid link key after add");
     }
 
     int HDF5SharedData::get_linked(int node) const {
-      RMF_INTERNAL_CHECK(link_category_==-1 || link_key_ != NodeIDKey(),
+      RMF_INTERNAL_CHECK(link_category_==Category() || link_key_ != NodeIDKey(),
                          "Invalid link key but valid category");
       int ret= get_value(node, link_key_).get_index();
       RMF_INTERNAL_CHECK(ret >= 0, "Bad link value found");
@@ -334,7 +329,7 @@ namespace RMF {
     Category HDF5SharedData::get_category(std::string name) const {
       Categories all=get_categories();
       for (unsigned int i=0; i< all.size(); ++i) {
-        if (get_category_name(all[i].get_index())==name) {
+        if (get_category_name(all[i])==name) {
           return all[i];
         }
       }
@@ -346,7 +341,7 @@ namespace RMF {
                         PassValues, ReturnValues)                       \
     {                                                                   \
       ret=std::max<int>(ret,                                            \
-                        get_number_of_frames<Ucname##Traits>(cats[i])); \
+                        get_number_of_frames<Ucname##Traits>(cats[i].get_index())); \
     }
 
     unsigned int HDF5SharedData::get_number_of_frames() const {

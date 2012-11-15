@@ -19,11 +19,11 @@
                                              PassValue,                 \
                                              ReturnValue,               \
                                              PassValues, ReturnValues)  \
-  UCName##Key add_##lcname##_key(Category category_id,                  \
+  UCName##Key add_##lcname##_key(Category category,                     \
                                  std::string nm,                        \
                                  bool per_frame) const {                \
     return internal::GenericSharedData<UCName##Traits>                  \
-      ::add_key(get_shared_data(), category_id.get_index(), nm, per_frame); \
+      ::add_key(get_shared_data(), category, nm, per_frame);            \
   }
 
 
@@ -64,11 +64,11 @@ namespace RMF {
         already be a key with the same name of any type.
     */
     template <class TypeT>
-      Key<TypeT> add_key(Category category_id,
+      Key<TypeT> add_key(Category category,
                          std::string name, bool per_frame) const {
       return internal::GenericSharedData<TypeT>::
         add_key(get_shared_data(),
-                category_id.get_index(),
+                category,
                 name, per_frame);
     }
     /** Create new key for a type of data. There must not
