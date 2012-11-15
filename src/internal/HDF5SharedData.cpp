@@ -230,7 +230,9 @@ namespace RMF {
                          "Bad child being added");
       init_link();
       int link= add_child(node, "link", LINK);
-      set_value_impl<NodeIDTraits>(link, link_key_.get_category().get_index(),
+      int link_category_index= get_category_index(link_category_);
+
+      set_value_impl<NodeIDTraits>(link, link_category_index,
                                    link_key_.get_index(),
                                    link_key_.get_is_per_frame(),
                                    NodeID(child_node), -1);
@@ -340,8 +342,9 @@ namespace RMF {
 #define RMF_SEARCH_KEYS(lcname, Ucname, PassValue, ReturnValue,         \
                         PassValues, ReturnValues)                       \
     {                                                                   \
+      int category_index= get_category_index(cats[i]);                  \
       ret=std::max<int>(ret,                                            \
-                        get_number_of_frames<Ucname##Traits>(cats[i].get_index())); \
+                        get_number_of_frames<Ucname##Traits>(category_index)); \
     }
 
     unsigned int HDF5SharedData::get_number_of_frames() const {

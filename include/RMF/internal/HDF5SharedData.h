@@ -55,24 +55,33 @@ namespace RMF {
                                    PassValues, ReturnValues)            \
     Ucname##Traits::Type get_value(unsigned int node,                   \
                                    Key<Ucname##Traits> k) const {       \
+      int category_index= get_category_index(k.get_category());         \
+      if (category_index==-1) {                                         \
+        return Ucname##Traits::get_null_value();                        \
+      }                                                                 \
       return get_value_impl<Ucname##Traits>(node,                       \
-                                            k.get_category().get_index(), \
+                                            category_index,             \
                                             k.get_index(),              \
                                             k.get_is_per_frame(),       \
                                             get_current_frame());       \
     }                                                                   \
     Ucname##Traits::Types get_all_values(unsigned int node,             \
                                          Key<Ucname##Traits> k)  {      \
+      int category_index= get_category_index(k.get_category());         \
+      if (category_index==-1) {                                         \
+        return Ucname##Traits::Types();                                 \
+      }                                                                 \
       return get_all_values_impl<Ucname##Traits>(node,                  \
-                                                 k.get_category().get_index(), \
+                                                 category_index,        \
                                                  k.get_index(),         \
                                                  k.get_is_per_frame()); \
     }                                                                   \
     void set_value(unsigned int node,                                   \
                    Key<Ucname##Traits> k,                               \
                    Ucname##Traits::Type v) {                            \
+      int category_index= get_category_index_create(k.get_category());  \
       set_value_impl<Ucname##Traits>(node,                              \
-                                     k.get_category().get_index(),      \
+                                     category_index,                    \
                                      k.get_index(),                     \
                                      k.get_is_per_frame(),              \
                                      v, get_current_frame());           \
@@ -80,23 +89,33 @@ namespace RMF {
     Key<Ucname##Traits> add_##lcname##_key(Category category,           \
                                            std::string name,            \
                                            bool per_frame) {            \
-      return add_key_impl<Ucname##Traits>(category.get_index(),         \
+      int category_index= get_category_index_create(category);          \
+      return add_key_impl<Ucname##Traits>(category_index,               \
                                           name, per_frame);             \
     }                                                                   \
     vector<Key<Ucname##Traits> >                                        \
     get_##lcname##_keys(Category category) const {                      \
-      return get_keys_impl<Ucname##Traits>(category.get_index());       \
+      int category_index= get_category_index(category);                 \
+      if (category_index==-1) {                                         \
+        return vector<Key<Ucname##Traits> >();                          \
+      }                                                                 \
+      return get_keys_impl<Ucname##Traits>(category_index);             \
     }                                                                   \
     Key<Ucname##Traits>                                                 \
     get_##lcname##_key(Category category,                               \
                        std::string name,                                \
                        bool per_frame) const {                          \
-      return get_key_impl<Ucname##Traits>(category.get_index(),         \
+      int category_index= get_category_index(category);                 \
+      if (category_index==-1) {                                         \
+        return Key<Ucname##Traits>();                                   \
+      }                                                                 \
+      return get_key_impl<Ucname##Traits>(category_index,               \
                                           name,                         \
                                           per_frame);                   \
     }                                                                   \
     std::string get_name(Key<Ucname##Traits> k) const {                 \
-      return get_name_impl<Ucname##Traits>(k.get_category().get_index(), \
+      int category_index= get_category_index(k.get_category());         \
+      return get_name_impl<Ucname##Traits>(category_index,              \
                                            k.get_index(),               \
                                            k.get_is_per_frame());       \
     }
@@ -658,6 +677,13 @@ namespace RMF {
                         "No such category.");
         return category_names_.get_value(category_index);
       }
+
+      int get_category_index(Category cat) const {
+        return cat.get_index();
+      }
+      int get_category_index_create(Category cat) {
+        return cat.get_index();
+      }
     public:
       RMF_FOREACH_TYPE(RMF_HDF5_SHARED_TYPE);
 
@@ -691,7 +717,8 @@ namespace RMF {
       Categories get_categories() const;
       Category get_category(std::string name) const;
       std::string get_category_name(Category kc) const  {
-        return get_category_name_impl(kc.get_index());
+        int category_index= get_category_index(kc);
+        return get_category_name_impl(category_index);
       }
 
       std::string get_description() const;
