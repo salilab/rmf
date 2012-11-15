@@ -13,7 +13,7 @@ class GenericTest(unittest.TestCase):
         f= RMF.create_rmf_file(RMF._get_temporary_file_path("multikey.rmf"))
         r= f.get_root_node()
         print r.get_type()
-        sc= f.add_category("multikey")
+        sc= f.get_category("multikey")
         ikfp= f.add_int_key(sc, "ik0", True)
         ik= f.add_int_key(sc, "ik0", False)
         on= r.add_child("oc", RMF.REPRESENTATION)

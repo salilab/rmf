@@ -260,10 +260,7 @@ namespace RMF {
         Methods for managing the key categories in this RMF.
         @{
     */
-    bool get_has_category(std::string name) const {
-      return get_category(name) != Category();
-    }
-    Category get_category(std::string name) const {
+    Category get_category(std::string name) {
       return shared_->get_category(name);
     }
     Categories get_categories() const {

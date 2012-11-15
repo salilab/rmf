@@ -66,7 +66,7 @@ public:
                      << " per frame: " << (pf_?'T':'F')
                      << " index: " << i_ << ")");
   RMF_COMPARISONS(Key);
-  RMF_HASHABLE(Key, return i_*ci_.get_index());
+  RMF_HASHABLE(Key, return i_*ci_.get_id());
 };
 
 

@@ -13,7 +13,7 @@ class GenericTest(unittest.TestCase):
         f= RMF.create_rmf_file(RMF._get_temporary_file_path("test_file.rmf"))
         r= f.get_root_node()
         print r.get_type()
-        sc= f.add_category("sequence")
+        sc= f.get_category("sequence")
         ik= f.add_int_key(sc, "ik0", True)
         f.set_current_frame(0)
         r.set_value(ik, 1)

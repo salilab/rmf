@@ -202,9 +202,8 @@ namespace RMF {
       virtual Ints get_children(int node) const=0;
       virtual void save_frames_hint(int i)=0;
 
-      virtual Category add_category(std::string name)=0;
       virtual Categories get_categories() const=0;
-      virtual Category get_category(std::string name) const =0;
+      virtual Category get_category(std::string name) =0;
       virtual std::string get_category_name(Category kc) const=0;
       virtual std::string get_description() const=0;
       virtual void set_description(std::string str)=0;

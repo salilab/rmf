@@ -145,16 +145,6 @@ namespace RMF {
     /*HDF5Group get_hdf5_group() const {
       return get_shared_data()->get_group();
       }*/
-    /** \name Key categories template methods
-        Methods for managing the key categories in this RMF.
-        @{
-    */
-    Category add_category(std::string name) {
-      RMF_USAGE_CHECK(!get_has_category(name),
-                          "Category already exists");
-      return Category(get_shared_data()->add_category(name));
-    }
-    /** @} */
   };
 
   typedef vector<FileHandle> FileHandles;
@@ -175,20 +165,6 @@ namespace RMF {
 */
   RMFEXPORT FileHandle open_rmf_file(std::string path);
 
-
-/** \name Helper functions
-    These functions help make working with keys and categories easier,
-    by allowing you to assume that the key/category is always
-    there.
-    @{
-*/
-inline Category get_category_always(FileHandle fh, std::string name) {
-  if (fh.get_has_category(name)) {
-    return fh.get_category(name);
-  } else {
-    return fh.add_category(name);
-  }
-}
 
 
 template <class TypeT>

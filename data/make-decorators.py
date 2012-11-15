@@ -486,8 +486,7 @@ class Decorator:
                 rhs="fh.get_category(\""\
                     +cd.category+"\");"
             else:
-                rhs="get_category_always(fh, \""\
-                    +cd.category+"\");"
+                rhs="fh.get_category(\""+cd.category+"\");"
             ret.append(lhs+rhs)
             for a in cd.attributes+cd.internal_attributes:
                 ret.extend(a.get_construct(const))

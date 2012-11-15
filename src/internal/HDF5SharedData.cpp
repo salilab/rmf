@@ -79,13 +79,10 @@ namespace RMF {
       }
       node_names_.set(file_, get_node_name_data_set_name());
       node_data_[0].set(file_, get_node_data_data_set_name());
-      {
-        std::string nm=get_category_name_data_set_name();
-        category_names_.set(file_, nm);
-      }
       for (unsigned int i=0; i< 4; ++i) {
         initialize_keys(i);
       }
+      initialize_categories();
       initialize_free_nodes();
       std::string frn=get_frame_name_data_set_name();
       frame_names_.set(file_, frn);
@@ -106,25 +103,34 @@ namespace RMF {
       }
     }
 
+    void HDF5SharedData::initialize_categories() {
+        std::string nm=get_category_name_data_set_name();
+        category_names_.set(file_, nm);
+        HDF5DataSetIndex1D sz= category_names_.get_size();
+        for (unsigned int i=0; i< sz[0]; ++i) {
+          std::string name= category_names_.get_value(HDF5DataSetIndex1D(i));
+          Category cat(i);
+          name_category_map_[name]=cat;
+          category_data_map_[cat].name=name;
+          category_data_map_[cat].index=i;
+        }
+    }
+
     HDF5SharedData::HDF5SharedData(std::string g, bool create, bool read_only):
     SharedData(g), frames_hint_(0), link_category_(-1)
     {
       RMF_BEGIN_FILE;
       RMF_BEGIN_OPERATION;
       open_things(create, read_only);
+      link_category_= get_category("link");
       if (create) {
         add_node("root", ROOT);
       } else {
         RMF_USAGE_CHECK(get_name(0)=="root",
                         "Root node is not so named");
-        link_category_= get_category("link");
-        if (link_category_!=Category()) {
-          link_key_= get_node_id_key(link_category_,
-                                                "linked",
-                                                false);
-          RMF_INTERNAL_CHECK(link_key_ != NodeIDKey(),
-                             "Bad link key found in init");
-        }
+        link_key_= get_node_id_key(link_category_,
+                                   "linked",
+                                   false);
       }
       RMF_END_OPERATION("initializing");
       RMF_END_FILE(get_file_name());
@@ -230,8 +236,7 @@ namespace RMF {
                          "Bad child being added");
       init_link();
       int link= add_child(node, "link", LINK);
-      int link_category_index= get_category_index(link_category_);
-
+      int link_category_index= get_category_index_create(link_category_);
       set_value_impl<NodeIDTraits>(link, link_category_index,
                                    link_key_.get_index(),
                                    link_key_.get_is_per_frame(),
@@ -241,21 +246,15 @@ namespace RMF {
     }
 
     void HDF5SharedData::init_link() {
-      if (link_category_ !=Category()) {
-        RMF_INTERNAL_CHECK(link_key_ != NodeIDKey(),
-                           "Invalid link key");
-        return;
+      if (link_key_== NodeIDKey()) {
+        link_key_= add_node_id_key(link_category_,
+                                   "linked", false);
       }
-      link_category_=add_category("link");
-      link_key_= add_node_id_key(link_category_,
-                                 "linked", false);
       RMF_INTERNAL_CHECK(link_key_ != NodeIDKey(),
                          "Invalid link key after add");
     }
 
     int HDF5SharedData::get_linked(int node) const {
-      RMF_INTERNAL_CHECK(link_category_==Category() || link_key_ != NodeIDKey(),
-                         "Invalid link key but valid category");
       int ret= get_value(node, link_key_).get_index();
       RMF_INTERNAL_CHECK(ret >= 0, "Bad link value found");
       return ret;
@@ -304,38 +303,38 @@ namespace RMF {
       return node_data_[arity-1].get_value(HDF5DataSetIndexD<2>(index,
                                                                 member_index+1));
     }
-    Category HDF5SharedData::add_category_impl(std::string name) {
+    unsigned int HDF5SharedData::add_category_impl(std::string name) {
       RMF_BEGIN_FILE;
       RMF_BEGIN_OPERATION
         // fill in later
         int sz= category_names_.get_size()[0];
       category_names_.set_size(HDF5DataSetIndex1D(sz+1));
       category_names_.set_value(HDF5DataSetIndex1D(sz), name);
-      return Category(sz);
+      return sz;
       RMF_END_OPERATION("adding category to list");
       RMF_END_FILE(get_file_name());
     }
 
-    Category HDF5SharedData::add_category(std::string name) {
-      return add_category_impl(name);
-    }
     Categories HDF5SharedData::get_categories() const {
-      unsigned int sz= category_names_.get_size()[0];
-      Categories ret(sz);
-      for (unsigned int i=0; i< sz; ++i) {
-        ret[i]= Category(i);
+      Categories ret;
+      for (CategoryDataMap::const_iterator it= category_data_map_.begin();
+           it != category_data_map_.end(); ++it) {
+        ret.push_back(it->first);
       }
       return ret;
     }
 
-    Category HDF5SharedData::get_category(std::string name) const {
-      Categories all=get_categories();
-      for (unsigned int i=0; i< all.size(); ++i) {
-        if (get_category_name(all[i])==name) {
-          return all[i];
-        }
+    Category HDF5SharedData::get_category(std::string name) {
+      NameCategoryMap::const_iterator it= name_category_map_.find(name);
+      if (it == name_category_map_.end()) {
+        Category cat(name_category_map_.size());
+        name_category_map_[name]=cat;
+        category_data_map_[cat].index=-1;
+        category_data_map_[cat].name=name;
+        return cat;
+      } else {
+        return it->second;
       }
-      return Category();
     }
 
 
@@ -343,6 +342,7 @@ namespace RMF {
                         PassValues, ReturnValues)                       \
     {                                                                   \
       int category_index= get_category_index(cats[i]);                  \
+      if (category_index==-1) continue;                                 \
       ret=std::max<int>(ret,                                            \
                         get_number_of_frames<Ucname##Traits>(category_index)); \
     }

@@ -142,7 +142,7 @@ class PhysicsValidator: public NodeValidator {
  public:
   PhysicsValidator(FileConstHandle rh, std::string name):
       NodeValidator(rh, name){
-    if (rh.get_has_category("physics")) {
+    {
       Category c= rh.get_category("physics");
       m_= NonNegativeChecker(rh, c, "mass");
       r_= NonNegativeChecker(rh, c, "radius");

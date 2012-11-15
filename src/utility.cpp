@@ -118,8 +118,7 @@ namespace RMF {
       Categories incats= in.get_categories();
       Categories outcats;
       for (unsigned int i=0; i< incats.size(); ++i) {
-        outcats.push_back(get_category_always(out,
-                                              in.get_name(incats[i])));
+        outcats.push_back(out.get_category(in.get_name(incats[i])));
       }
       RMF_FOREACH_TYPE(RMF_COPY_FRAME_1);
     }

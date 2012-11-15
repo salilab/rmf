@@ -42,7 +42,7 @@ public:
   explicit Category(unsigned int i): i_(i){}
 #endif
   Category(): i_(-1){}
-  unsigned int get_index() const {
+  unsigned int get_id() const {
     RMF_USAGE_CHECK(i_ >=0, "Invalid Category used");
     return i_;
   }

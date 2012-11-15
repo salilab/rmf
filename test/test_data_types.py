@@ -10,7 +10,7 @@ class GenericTest(unittest.TestCase):
         self.assertEqual(vo, v)
     def _do_test_types(self, f, pccc):
         nh= f.get_root_node().add_child("testn", RMF.REPRESENTATION)
-        cat= f.add_category("mine"+str(pccc))
+        cat= f.get_category("mine"+str(pccc))
         #g= f.get_hdf5_group()
         #print g
         #ds= g.add_child_float_data_set_2d("ds"+str(pccc))

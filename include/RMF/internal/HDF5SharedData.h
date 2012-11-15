@@ -90,8 +90,9 @@ namespace RMF {
                                            std::string name,            \
                                            bool per_frame) {            \
       int category_index= get_category_index_create(category);          \
-      return add_key_impl<Ucname##Traits>(category_index,               \
-                                          name, per_frame);             \
+      unsigned int index= add_key_impl<Ucname##Traits>(category_index,  \
+                                                       name, per_frame); \
+      return Key<Ucname##Traits>(category, index, per_frame);           \
     }                                                                   \
     vector<Key<Ucname##Traits> >                                        \
     get_##lcname##_keys(Category category) const {                      \
@@ -99,7 +100,7 @@ namespace RMF {
       if (category_index==-1) {                                         \
         return vector<Key<Ucname##Traits> >();                          \
       }                                                                 \
-      return get_keys_impl<Ucname##Traits>(category_index);             \
+      return get_keys_impl<Ucname##Traits>(category, category_index);   \
     }                                                                   \
     Key<Ucname##Traits>                                                 \
     get_##lcname##_key(Category category,                               \
@@ -109,9 +110,11 @@ namespace RMF {
       if (category_index==-1) {                                         \
         return Key<Ucname##Traits>();                                   \
       }                                                                 \
-      return get_key_impl<Ucname##Traits>(category_index,               \
-                                          name,                         \
-                                          per_frame);                   \
+      int index= get_key_impl<Ucname##Traits>(category_index,           \
+                                              name,                     \
+                                              per_frame);               \
+      if (index==-1) return Key<Ucname##Traits>();                      \
+      return Key<Ucname##Traits>(category, index, per_frame);           \
     }                                                                   \
     std::string get_name(Key<Ucname##Traits> k) const {                 \
       int category_index= get_category_index(k.get_category());         \
@@ -134,8 +137,15 @@ namespace RMF {
       boost::array<Ints,4> free_ids_;
       unsigned int frames_hint_;
 
-      map<Category, unsigned int> category_map_;
-      map<std::string, Category> mapped_categories_;
+      struct CategoryData {
+        int index;
+        std::string name;
+      };
+
+      typedef map<Category, CategoryData> CategoryDataMap;
+      CategoryDataMap category_data_map_;
+      typedef map<std::string, Category> NameCategoryMap;
+      NameCategoryMap name_category_map_;
 
       Category link_category_;
       Key<NodeIDTraits> link_key_;
@@ -567,7 +577,7 @@ namespace RMF {
       }
 
       template <class TypeTraits>
-        Key<TypeTraits> add_key_impl(unsigned int category_index,
+        unsigned int add_key_impl(unsigned int category_index,
                                      std::string name, bool per_frame) {
         audit_key_name(name);
         // check that it is unique
@@ -596,14 +606,15 @@ namespace RMF {
         nameds.set_size(sz);
         --sz[0];
         nameds.set_value(sz, name);
-        return Key<TypeTraits>(Category(category_index), ret_index, per_frame);
+        return ret_index;
         RMF_END_OPERATION("appending key to list")
       }
 
       // create the data sets and add rows to the table
       template <class TypeTraits>
         vector<Key<TypeTraits> >
-        get_keys_impl(unsigned int category_index) const {
+        get_keys_impl(Category cat,
+                      unsigned int category_index) const {
         vector<Key<TypeTraits> > ret;
         for (int pf=0; pf<2; ++pf) {
           bool per_frame=(pf==1);
@@ -612,7 +623,7 @@ namespace RMF {
                                                 per_frame);
           HDF5DataSetIndexD<1> sz= nameds.get_size();
           for (unsigned int i=0; i< sz[0]; ++i) {
-            ret.push_back(Key<TypeTraits>(Category(category_index),
+            ret.push_back(Key<TypeTraits>(cat,
                                           i, per_frame));
           }
         }
@@ -630,7 +641,7 @@ namespace RMF {
         return nameds.get_value(index);
       }
       template <class TypeTraits>
-        Key<TypeTraits> get_key_impl(unsigned int category_index,
+        int get_key_impl(unsigned int category_index,
                                      std::string name,
                                      bool per_frame) const {
         HDF5DataSetCacheD<StringTraits, 1>& nameds
@@ -641,14 +652,15 @@ namespace RMF {
           HDF5DataSetIndexD<1> index(j);
           std::string cur=nameds.get_value(index);
           if (cur== name) {
-            return Key<TypeTraits>(Category(category_index), j, per_frame);
+            return j;
           }
         }
-        return Key<TypeTraits>();
+        return -1;
       }
 
       void initialize_keys(int i);
       void initialize_free_nodes();
+      void initialize_categories();
 
       int get_first_child(unsigned int node) const;
       int get_sibling(unsigned int node) const;
@@ -670,7 +682,7 @@ namespace RMF {
                                   int member_index) const;
       int get_linked(int node) const;
       void init_link();
-      Category add_category_impl(std::string name);
+      unsigned int add_category_impl(std::string name);
       std::string get_category_name_impl(unsigned int category_index) const  {
         RMF_USAGE_CHECK(category_names_.get_size()[0]
                         > category_index,
@@ -679,10 +691,15 @@ namespace RMF {
       }
 
       int get_category_index(Category cat) const {
-        return cat.get_index();
+        CategoryDataMap::const_iterator it= category_data_map_.find(cat);
+        return it->second.index;
       }
       int get_category_index_create(Category cat) {
-        return cat.get_index();
+        CategoryDataMap::iterator it= category_data_map_.find(cat);
+        if (it->second.index==-1) {
+          it->second.index=add_category_impl(it->second.name);
+        }
+        return it->second.index;
       }
     public:
       RMF_FOREACH_TYPE(RMF_HDF5_SHARED_TYPE);
@@ -712,13 +729,10 @@ namespace RMF {
         frames_hint_=i;
       }
       unsigned int get_number_of_frames() const;
-      //
-      Category add_category(std::string name);
       Categories get_categories() const;
-      Category get_category(std::string name) const;
+      Category get_category(std::string name);
       std::string get_category_name(Category kc) const  {
-        int category_index= get_category_index(kc);
-        return get_category_name_impl(category_index);
+        return category_data_map_.find(kc)->second.name;
       }
 
       std::string get_description() const;
