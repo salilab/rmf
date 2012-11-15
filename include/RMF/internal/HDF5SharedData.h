@@ -134,7 +134,7 @@ namespace RMF {
       HDF5DataSetCacheD<StringTraits, 1> frame_names_;
       HDF5DataSetCacheD<StringTraits, 1> category_names_;
       boost::array<HDF5DataSetCacheD<IndexTraits, 2>, 4> node_data_;
-      boost::array<Ints,4> free_ids_;
+      Ints free_ids_;
       unsigned int frames_hint_;
 
       struct CategoryData {

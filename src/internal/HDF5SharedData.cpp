@@ -22,9 +22,9 @@ namespace RMF {
 
     void HDF5SharedData::close_things() {
       node_names_.reset();
+      free_ids_.clear();
       for (unsigned int i=0; i< 4; ++i) {
         node_data_[i].reset();
-        free_ids_[i].clear();
         index_cache_[i]=IndexCache();
         key_name_data_sets_[i]= KeyNameDataSetCache();
       }
@@ -98,7 +98,7 @@ namespace RMF {
         if (IndexTraits::
             get_is_null_value(node_data_[0].get_value(HDF5DataSetIndexD<2>(i,
                                                                            0)))) {
-          free_ids_[0].push_back(i);
+          free_ids_.push_back(i);
         }
       }
     }
@@ -163,7 +163,7 @@ namespace RMF {
       RMF_BEGIN_FILE;
       int ret;
       RMF_BEGIN_OPERATION;
-      if (free_ids_[0].empty()) {
+      if (free_ids_.empty()) {
         HDF5DataSetIndexD<1> nsz= node_names_.get_size();
         ret= nsz[0];
         ++nsz[0];
@@ -173,8 +173,8 @@ namespace RMF {
         dsz[1]= std::max<hsize_t>(3, dsz[1]);
         node_data_[0].set_size(dsz);
       } else {
-        ret= free_ids_[0].back();
-        free_ids_[0].pop_back();
+        ret= free_ids_.back();
+        free_ids_.pop_back();
       }
       RMF_END_OPERATION("figuring out where to add node " << name);
       audit_node_name(name);
