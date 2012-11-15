@@ -236,7 +236,10 @@ namespace RMF {
                          "Bad child being added");
       init_link();
       int link= add_child(node, "link", LINK);
-      set_value_impl(link, link_key_, NodeID(child_node), -1);
+      set_value_impl<NodeIDTraits>(link, link_key_.get_category().get_index(),
+                                   link_key_.get_index(),
+                                   link_key_.get_is_per_frame(),
+                                   NodeID(child_node), -1);
       RMF_INTERNAL_CHECK(get_linked(link)== child_node,
                          "Return does not match");
     }
@@ -322,15 +325,19 @@ namespace RMF {
       return sz;
     }
 
-#define RMF_SEARCH_KEYS(lcname, Ucname, PassValue, ReturnValue, \
-                        PassValues, ReturnValues)               \
-    {                                                           \
-      unsigned int keys                                         \
-        = get_number_of_keys_impl<Ucname##Traits>(i, true);     \
-      for (unsigned int j=0; j< keys; ++j) {                    \
-        Key<Ucname##Traits> k(cat, j, true);                    \
-        ret=std::max<int>(ret, get_number_of_frames(k));        \
-      }                                                         \
+#define RMF_SEARCH_KEYS(lcname, Ucname, PassValue, ReturnValue,         \
+                        PassValues, ReturnValues)                       \
+    {                                                                   \
+      unsigned int keys                                                 \
+        = get_number_of_keys_impl<Ucname##Traits>(i, true);             \
+      for (unsigned int j=0; j< keys; ++j) {                            \
+        Key<Ucname##Traits> k(cat, j, true);                            \
+        ret=std::max<int>(ret,                                          \
+                          get_number_of_frames<Ucname##Traits>          \
+                          (k.get_category().get_index(),                \
+                           k.get_index(),                               \
+                           k.get_is_per_frame()));                      \
+      }                                                                 \
     }
 
     unsigned int HDF5SharedData::get_number_of_frames() const {
