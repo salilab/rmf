@@ -113,7 +113,10 @@ namespace RMF {
       boost::array<Ints,4> free_ids_;
       unsigned int frames_hint_;
 
-      int link_category_;
+      map<Category, unsigned int> category_map_;
+      map<std::string, Category> mapped_categories_;
+
+      Category link_category_;
       Key<NodeIDTraits> link_key_;
 
       // caches
@@ -642,6 +645,7 @@ namespace RMF {
                                   int member_index) const;
       int get_linked(int node) const;
       void init_link();
+      Category add_category_impl(std::string name);
     public:
       RMF_FOREACH_TYPE(RMF_HDF5_SHARED_TYPE);
 
@@ -671,7 +675,7 @@ namespace RMF {
       }
       unsigned int get_number_of_frames() const;
       //
-      int add_category(std::string name);
+      Category add_category(std::string name);
       Categories get_categories() const;
       Category get_category(std::string name) const;
       std::string get_category_name(Category kc) const  {

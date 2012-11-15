@@ -309,17 +309,20 @@ namespace RMF {
       return node_data_[arity-1].get_value(HDF5DataSetIndexD<2>(index,
                                                                 member_index+1));
     }
-
-    int HDF5SharedData::add_category(std::string name) {
+    Category HDF5SharedData::add_category_impl(std::string name) {
       RMF_BEGIN_FILE;
       RMF_BEGIN_OPERATION
         // fill in later
         int sz= category_names_[1-1].get_size()[0];
       category_names_[1-1].set_size(HDF5DataSetIndex1D(sz+1));
       category_names_[1-1].set_value(HDF5DataSetIndex1D(sz), name);
-      return sz;
+      return Category(sz);
       RMF_END_OPERATION("adding category to list");
       RMF_END_FILE(get_file_name());
+    }
+
+    Category HDF5SharedData::add_category(std::string name) {
+      return add_category_impl(name);
     }
     Categories HDF5SharedData::get_categories() const {
       unsigned int sz= category_names_[1-1].get_size()[0];
