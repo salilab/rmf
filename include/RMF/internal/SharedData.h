@@ -78,9 +78,13 @@ namespace RMF {
     add_##lcname##_key(int category_id,                                 \
                        std::string name,                                \
                        bool per_frame) =0;                              \
-    virtual unsigned int                                                \
-    get_number_of_##lcname##_keys(int category_id,                      \
-                                  bool per_frame) const=0;              \
+    virtual vector<Key<Ucname##Traits> >                                \
+    get_##lcname##_keys(int category_id,                                \
+                        bool per_frame) const=0;                        \
+    virtual Key<Ucname##Traits>                                         \
+    get_##lcname##_key(int category_id,                                 \
+                       std::string name,                                \
+                       bool per_frame) const=0;                         \
     virtual std::string get_name(Key<Ucname##Traits> k) const =0
 
 
@@ -200,7 +204,8 @@ namespace RMF {
       virtual void save_frames_hint(int i)=0;
 
       virtual int add_category(std::string name)=0;
-      virtual unsigned int get_number_of_categories() const=0;
+      virtual Categories get_categories() const=0;
+      virtual Category get_category(std::string name) const =0;
       virtual std::string get_category_name(unsigned int kc) const=0;
       virtual std::string get_description() const=0;
       virtual void set_description(std::string str)=0;
@@ -226,11 +231,19 @@ namespace RMF {
     public:                                                             \
     typedef Key<Ucname##Traits> K;                                      \
     typedef vector<K > Ks;                                              \
-    static unsigned int get_number_of_keys( const SharedData *p,        \
-                                            int category_id,            \
-                                            bool per_frame) {           \
-      return p->get_number_of_##lcname##_keys(category_id,              \
-                                              per_frame);               \
+    static Ks get_keys( const SharedData *p,                            \
+                        int category_id,                                \
+                        bool per_frame) {                               \
+      return p->get_##lcname##_keys(category_id,                        \
+                                    per_frame);                         \
+    }                                                                   \
+    static K get_key( const SharedData *p,                              \
+                      int category_id,                                  \
+                      std::string name,                                 \
+                      bool per_frame) {                                 \
+      return p->get_##lcname##_key(category_id,                         \
+                                   name,                                \
+                                   per_frame);                          \
     }                                                                   \
     };                                                                  \
     template <>                                                         \

@@ -83,11 +83,19 @@ namespace RMF {
       return add_key_impl<Ucname##Traits>(category_id,                  \
                                           name, per_frame);             \
     }                                                                   \
-    unsigned int                                                        \
-    get_number_of_##lcname##_keys(int category_id,                      \
-                                  bool per_frame) const {               \
-      return get_number_of_keys_impl<Ucname##Traits>(category_id,       \
-                                                     per_frame);        \
+    vector<Key<Ucname##Traits> >                                        \
+    get_##lcname##_keys(int category_id,                                \
+                        bool per_frame) const {                         \
+      return get_keys_impl<Ucname##Traits>(category_id,                 \
+                                           per_frame);                  \
+    }                                                                   \
+    Key<Ucname##Traits>                                                 \
+    get_##lcname##_key(int category_id,                                 \
+                       std::string name,                                \
+                       bool per_frame) const {                          \
+      return get_key_impl<Ucname##Traits>(category_id,                  \
+                                        name,                           \
+                                        per_frame);                     \
     }                                                                   \
     std::string get_name(Key<Ucname##Traits> k) const {                 \
       return get_name_impl(k);                                          \
@@ -566,13 +574,17 @@ namespace RMF {
 
       // create the data sets and add rows to the table
       template <class TypeTraits>
-        unsigned int
-        get_number_of_keys_impl(int category_id, bool per_frame) const {
+        vector<Key<TypeTraits> >
+        get_keys_impl(int category_id, bool per_frame) const {
         HDF5DataSetCacheD<StringTraits, 1>& nameds
           = get_key_list_data_set<TypeTraits>(category_id, 1,
                                               per_frame);
         HDF5DataSetIndexD<1> sz= nameds.get_size();
-        return sz[0];
+        vector<Key<TypeTraits> > ret(sz[0]);
+        for (unsigned int i=0; i< ret.size(); ++i) {
+          ret[i]= Key<TypeTraits>(Category(category_id), i, per_frame);
+        }
+        return ret;
       }
 
       template <class TypeTraits>
@@ -656,7 +668,8 @@ namespace RMF {
       unsigned int get_number_of_frames() const;
       //
       int add_category(std::string name);
-      unsigned int get_number_of_categories() const;
+      Categories get_categories() const;
+      Category get_category(std::string name) const;
       std::string get_category_name(unsigned int kc) const  {
         RMF_USAGE_CHECK(category_names_[0].get_size()[0] > kc,
                         "No such category.");

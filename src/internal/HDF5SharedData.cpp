@@ -119,7 +119,8 @@ namespace RMF {
       } else {
         RMF_USAGE_CHECK(get_name(0)=="root",
                         "Root node is not so named");
-        for (unsigned int i=0; i< get_number_of_categories(); ++i) {
+        Categories cats= get_categories();
+        for (unsigned int i=0; i< cats.size(); ++i) {
           if (get_category_name(i)== "link") {
             link_category_=i; break;
           }
@@ -320,18 +321,33 @@ namespace RMF {
       RMF_END_OPERATION("adding category to list");
       RMF_END_FILE(get_file_name());
     }
-    unsigned int HDF5SharedData::get_number_of_categories() const {
+    Categories HDF5SharedData::get_categories() const {
       unsigned int sz= category_names_[1-1].get_size()[0];
-      return sz;
+      Categories ret(sz);
+      for (unsigned int i=0; i< sz; ++i) {
+        ret[i]= Category(i);
+      }
+      return ret;
     }
+
+    Category HDF5SharedData::get_category(std::string name) const {
+      Categories all=get_categories();
+      for (unsigned int i=0; i< all.size(); ++i) {
+        if (get_category_name(all[i].get_index())==name) {
+          return all[i];
+        }
+      }
+      return Category();
+    }
+
 
 #define RMF_SEARCH_KEYS(lcname, Ucname, PassValue, ReturnValue,         \
                         PassValues, ReturnValues)                       \
     {                                                                   \
-      unsigned int keys                                                 \
-        = get_number_of_keys_impl<Ucname##Traits>(i, true);             \
-      for (unsigned int j=0; j< keys; ++j) {                            \
-        Key<Ucname##Traits> k(cat, j, true);                            \
+      vector<Key<Ucname##Traits> > keys                                 \
+        = get_keys_impl<Ucname##Traits>(i, true);                       \
+      for (unsigned int j=0; j< keys.size(); ++j) {                     \
+        Key<Ucname##Traits> k=keys[j];                                  \
         ret=std::max<int>(ret,                                          \
                           get_number_of_frames<Ucname##Traits>          \
                           (k.get_category().get_index(),                \
@@ -341,10 +357,10 @@ namespace RMF {
     }
 
     unsigned int HDF5SharedData::get_number_of_frames() const {
-      unsigned int cats= get_number_of_categories();
+      Categories cats= get_categories();
       int ret=0;
-      for (unsigned int i=0; i< cats; ++i) {
-        Category cat(i);
+      for (unsigned int i=0; i< cats.size(); ++i) {
+        Category cat= cats[i];
         RMF_FOREACH_TYPE(RMF_SEARCH_KEYS);
       }
       return ret;

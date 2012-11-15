@@ -120,15 +120,10 @@ namespace RMF {
       if (category_id == Category()) {
         return Key<TypeT>();
       } else {
-        unsigned int num
-          =internal::ConstGenericSharedData<TypeT>
-          ::get_number_of_keys(shared_.get(), category_id.get_index(),
-                               per_frame);
-        for (unsigned int i=0; i< num; ++i) {
-          Key<TypeT> k(category_id, i, per_frame);
-          if (shared_->get_name(k) == name) return k;
-        }
-        return Key<TypeT> ();
+        return internal::ConstGenericSharedData<TypeT>
+          ::get_key(shared_.get(), category_id.get_index(),
+                    name,
+                    per_frame);
       }
     }
     template <class TypeT>
@@ -163,18 +158,13 @@ namespace RMF {
     template <class TypeT>
       vector<Key<TypeT> > get_keys(Category category_id) const {
       if (category_id==Category()) return vector<Key<TypeT> >();
-      unsigned int num=internal::ConstGenericSharedData<TypeT>
-        ::get_number_of_keys(shared_.get(), category_id.get_index(), false);
-      unsigned int numpf=internal::ConstGenericSharedData<TypeT>
-        ::get_number_of_keys(shared_.get(), category_id.get_index(), true);
-      vector<Key<TypeT> > ret(num+numpf);
-      for (unsigned int i=0; i< ret.size(); ++i) {
-        bool pf=i >= num;
-        unsigned int idx=pf? i-num: i;
-        ret[i]= Key<TypeT>(category_id, idx, pf);
-        RMF_INTERNAL_CHECK(!get_name(ret[i]).empty(),
-                               "No name for key");
-      }
+      vector<Key<TypeT> > ret;
+      vector<Key<TypeT> > ret0=internal::ConstGenericSharedData<TypeT>
+        ::get_keys(shared_.get(), category_id.get_index(), false);
+      vector<Key<TypeT> > ret1=internal::ConstGenericSharedData<TypeT>
+        ::get_keys(shared_.get(), category_id.get_index(), true);
+      ret.insert(ret.end(), ret0.begin(), ret0.end());
+      ret.insert(ret.end(), ret1.begin(), ret1.end());
       return ret;
     }
     /** @} */
@@ -280,20 +270,10 @@ namespace RMF {
       return get_category(name) != Category();
     }
     Category get_category(std::string name) const {
-      for (unsigned int i=0; i< shared_->get_number_of_categories();++i) {
-        if (shared_->get_category_name(i)==name) {
-          return Category(i);
-        }
-      }
-      return Category();
+      return shared_->get_category(name);
     }
     Categories get_categories() const {
-      unsigned int r= shared_->get_number_of_categories();
-      vector<Category > ret(r);
-      for (unsigned int i=0; i< r; ++i) {
-        ret[i]= Category(i);
-      }
-      return ret;
+      return shared_->get_categories();
     }
   std::string get_name(Category kc) const {
     return shared_->get_category_name(kc.get_index());
