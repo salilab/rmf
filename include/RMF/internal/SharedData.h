@@ -79,8 +79,7 @@ namespace RMF {
                        std::string name,                                \
                        bool per_frame) =0;                              \
     virtual vector<Key<Ucname##Traits> >                                \
-    get_##lcname##_keys(Category category,                                \
-                        bool per_frame) const=0;                        \
+    get_##lcname##_keys(Category category) const=0;                     \
     virtual Key<Ucname##Traits>                                         \
     get_##lcname##_key(Category category,                                 \
                        std::string name,                                \
@@ -232,10 +231,8 @@ namespace RMF {
     typedef Key<Ucname##Traits> K;                                      \
     typedef vector<K > Ks;                                              \
     static Ks get_keys( const SharedData *p,                            \
-                        Category category,                              \
-                        bool per_frame) {                               \
-      return p->get_##lcname##_keys(category,                           \
-                                    per_frame);                         \
+                        Category category) {                            \
+      return p->get_##lcname##_keys(category);                          \
     }                                                                   \
     static K get_key( const SharedData *p,                              \
                       Category category,                                \

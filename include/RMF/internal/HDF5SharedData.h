@@ -84,10 +84,8 @@ namespace RMF {
                                           name, per_frame);             \
     }                                                                   \
     vector<Key<Ucname##Traits> >                                        \
-    get_##lcname##_keys(Category category,                              \
-                        bool per_frame) const {                         \
-      return get_keys_impl<Ucname##Traits>(category,                    \
-                                           per_frame);                  \
+    get_##lcname##_keys(Category category) const {                      \
+      return get_keys_impl<Ucname##Traits>(category);                   \
     }                                                                   \
     Key<Ucname##Traits>                                                 \
     get_##lcname##_key(Category category,                               \
@@ -406,9 +404,7 @@ namespace RMF {
         RMF_END_FILE(get_file_name());
       }
       template <class TypeTraits>
-        unsigned int get_number_of_frames(Category kc,
-                                          unsigned int key_index,
-                                          bool per_frame) const {
+        unsigned int get_number_of_frames(Category kc) const {
         HDF5DataSetCacheD<TypeTraits, 3> &ds
           =get_per_frame_data_data_set<TypeTraits>(kc,
                                                    1);
@@ -580,14 +576,17 @@ namespace RMF {
       // create the data sets and add rows to the table
       template <class TypeTraits>
         vector<Key<TypeTraits> >
-        get_keys_impl(Category category, bool per_frame) const {
-        HDF5DataSetCacheD<StringTraits, 1>& nameds
-          = get_key_list_data_set<TypeTraits>(category, 1,
-                                              per_frame);
-        HDF5DataSetIndexD<1> sz= nameds.get_size();
-        vector<Key<TypeTraits> > ret(sz[0]);
-        for (unsigned int i=0; i< ret.size(); ++i) {
-          ret[i]= Key<TypeTraits>(category, i, per_frame);
+        get_keys_impl(Category category) const {
+        vector<Key<TypeTraits> > ret;
+        for (int pf=0; pf<2; ++pf) {
+          bool per_frame=(pf==1);
+          HDF5DataSetCacheD<StringTraits, 1>& nameds
+            = get_key_list_data_set<TypeTraits>(category, 1,
+                                                per_frame);
+          HDF5DataSetIndexD<1> sz= nameds.get_size();
+          for (unsigned int i=0; i< sz[0]; ++i) {
+            ret.push_back(Key<TypeTraits>(category, i, per_frame));
+          }
         }
         return ret;
       }

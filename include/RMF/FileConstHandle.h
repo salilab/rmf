@@ -158,14 +158,8 @@ namespace RMF {
     template <class TypeT>
       vector<Key<TypeT> > get_keys(Category category_id) const {
       if (category_id==Category()) return vector<Key<TypeT> >();
-      vector<Key<TypeT> > ret;
-      vector<Key<TypeT> > ret0=internal::ConstGenericSharedData<TypeT>
-        ::get_keys(shared_.get(), category_id.get_index(), false);
-      vector<Key<TypeT> > ret1=internal::ConstGenericSharedData<TypeT>
-        ::get_keys(shared_.get(), category_id.get_index(), true);
-      ret.insert(ret.end(), ret0.begin(), ret0.end());
-      ret.insert(ret.end(), ret1.begin(), ret1.end());
-      return ret;
+      return internal::ConstGenericSharedData<TypeT>
+        ::get_keys(shared_.get(), category_id.get_index());
     }
     /** @} */
 

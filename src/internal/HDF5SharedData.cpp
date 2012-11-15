@@ -344,23 +344,14 @@ namespace RMF {
 #define RMF_SEARCH_KEYS(lcname, Ucname, PassValue, ReturnValue,         \
                         PassValues, ReturnValues)                       \
     {                                                                   \
-      vector<Key<Ucname##Traits> > keys                                 \
-        = get_keys_impl<Ucname##Traits>(i, true);                       \
-      for (unsigned int j=0; j< keys.size(); ++j) {                     \
-        Key<Ucname##Traits> k=keys[j];                                  \
-        ret=std::max<int>(ret,                                          \
-                          get_number_of_frames<Ucname##Traits>          \
-                          (k.get_category().get_index(),                \
-                           k.get_index(),                               \
-                           k.get_is_per_frame()));                      \
-      }                                                                 \
+      ret=std::max<int>(ret,                                            \
+                        get_number_of_frames<Ucname##Traits>(cats[i])); \
     }
 
     unsigned int HDF5SharedData::get_number_of_frames() const {
       Categories cats= get_categories();
       int ret=0;
       for (unsigned int i=0; i< cats.size(); ++i) {
-        Category cat= cats[i];
         RMF_FOREACH_TYPE(RMF_SEARCH_KEYS);
       }
       return ret;
