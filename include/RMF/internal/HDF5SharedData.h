@@ -108,7 +108,7 @@ namespace RMF {
       bool read_only_;
       HDF5DataSetCacheD<StringTraits, 1> node_names_;
       HDF5DataSetCacheD<StringTraits, 1> frame_names_;
-      boost::array<HDF5DataSetCacheD<StringTraits, 1>, 4> category_names_;
+      HDF5DataSetCacheD<StringTraits, 1> category_names_;
       boost::array<HDF5DataSetCacheD<IndexTraits, 2>, 4> node_data_;
       boost::array<Ints,4> free_ids_;
       unsigned int frames_hint_;
@@ -621,7 +621,6 @@ namespace RMF {
         return Key<TypeTraits>();
       }
 
-      void initialize_categories(int i, bool create);
       void initialize_keys(int i);
       void initialize_free_nodes();
 
@@ -679,10 +678,10 @@ namespace RMF {
       Categories get_categories() const;
       Category get_category(std::string name) const;
       std::string get_category_name(Category kc) const  {
-        RMF_USAGE_CHECK(category_names_[0].get_size()[0]
+        RMF_USAGE_CHECK(category_names_.get_size()[0]
                         > kc.get_index(),
                         "No such category.");
-        return category_names_[0].get_value(kc.get_index());
+        return category_names_.get_value(kc.get_index());
       }
 
       std::string get_description() const;

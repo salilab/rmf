@@ -27,8 +27,8 @@ namespace RMF {
         free_ids_[i].clear();
         index_cache_[i]=IndexCache();
         key_name_data_sets_[i]= KeyNameDataSetCache();
-        category_names_[i].reset();
       }
+      category_names_.reset();
       frame_names_.reset();
       max_cache_.clear();
       RMF_FOREACH_TYPE(RMF_CLOSE);
@@ -79,18 +79,16 @@ namespace RMF {
       }
       node_names_.set(file_, get_node_name_data_set_name());
       node_data_[0].set(file_, get_node_data_data_set_name());
+      {
+        std::string nm=get_category_name_data_set_name();
+        category_names_.set(file_, nm);
+      }
       for (unsigned int i=0; i< 4; ++i) {
-        initialize_categories(i, create);
         initialize_keys(i);
       }
       initialize_free_nodes();
       std::string frn=get_frame_name_data_set_name();
       frame_names_.set(file_, frn);
-    }
-
-    void HDF5SharedData::initialize_categories(int i, bool) {
-      std::string nm=get_category_name_data_set_name(i+1);
-      category_names_[i].set(file_, nm);
     }
 
     void HDF5SharedData::initialize_keys(int i) {
@@ -148,8 +146,8 @@ namespace RMF {
       //SharedData::validate();
       node_names_.flush();
       frame_names_.flush();
+      category_names_.flush();
       for (unsigned int i=0; i< 4; ++i) {
-        category_names_[i].flush();
         node_data_[i].flush();
       }
     }
@@ -313,9 +311,9 @@ namespace RMF {
       RMF_BEGIN_FILE;
       RMF_BEGIN_OPERATION
         // fill in later
-        int sz= category_names_[1-1].get_size()[0];
-      category_names_[1-1].set_size(HDF5DataSetIndex1D(sz+1));
-      category_names_[1-1].set_value(HDF5DataSetIndex1D(sz), name);
+        int sz= category_names_.get_size()[0];
+      category_names_.set_size(HDF5DataSetIndex1D(sz+1));
+      category_names_.set_value(HDF5DataSetIndex1D(sz), name);
       return Category(sz);
       RMF_END_OPERATION("adding category to list");
       RMF_END_FILE(get_file_name());
@@ -325,7 +323,7 @@ namespace RMF {
       return add_category_impl(name);
     }
     Categories HDF5SharedData::get_categories() const {
-      unsigned int sz= category_names_[1-1].get_size()[0];
+      unsigned int sz= category_names_.get_size()[0];
       Categories ret(sz);
       for (unsigned int i=0; i< sz; ++i) {
         ret[i]= Category(i);
