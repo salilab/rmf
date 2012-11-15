@@ -75,14 +75,14 @@ namespace RMF {
       }                                                                 \
     }                                                                   \
     virtual Key<Ucname##Traits>                                         \
-    add_##lcname##_key(int category_id,                                 \
+    add_##lcname##_key(Category category,                                 \
                        std::string name,                                \
                        bool per_frame) =0;                              \
     virtual vector<Key<Ucname##Traits> >                                \
-    get_##lcname##_keys(int category_id,                                \
+    get_##lcname##_keys(Category category,                                \
                         bool per_frame) const=0;                        \
     virtual Key<Ucname##Traits>                                         \
-    get_##lcname##_key(int category_id,                                 \
+    get_##lcname##_key(Category category,                                 \
                        std::string name,                                \
                        bool per_frame) const=0;                         \
     virtual std::string get_name(Key<Ucname##Traits> k) const =0
@@ -206,7 +206,7 @@ namespace RMF {
       virtual int add_category(std::string name)=0;
       virtual Categories get_categories() const=0;
       virtual Category get_category(std::string name) const =0;
-      virtual std::string get_category_name(unsigned int kc) const=0;
+      virtual std::string get_category_name(Category kc) const=0;
       virtual std::string get_description() const=0;
       virtual void set_description(std::string str)=0;
       virtual void set_frame_name(std::string str)=0;
@@ -232,16 +232,16 @@ namespace RMF {
     typedef Key<Ucname##Traits> K;                                      \
     typedef vector<K > Ks;                                              \
     static Ks get_keys( const SharedData *p,                            \
-                        int category_id,                                \
+                        Category category,                              \
                         bool per_frame) {                               \
-      return p->get_##lcname##_keys(category_id,                        \
+      return p->get_##lcname##_keys(category,                           \
                                     per_frame);                         \
     }                                                                   \
     static K get_key( const SharedData *p,                              \
-                      int category_id,                                  \
+                      Category category,                                \
                       std::string name,                                 \
                       bool per_frame) {                                 \
-      return p->get_##lcname##_key(category_id,                         \
+      return p->get_##lcname##_key(category,                            \
                                    name,                                \
                                    per_frame);                          \
     }                                                                   \
@@ -251,9 +251,9 @@ namespace RMF {
     public:                                                             \
     typedef Key<Ucname##Traits> K;                                      \
     typedef vector<K > Ks;                                              \
-    static K add_key(SharedData *p_, int category_id,                   \
+    static K add_key(SharedData *p_, Category category,                 \
                      std::string name, bool mf) {                       \
-      return p_->add_##lcname##_key(category_id, name, mf);             \
+      return p_->add_##lcname##_key(category, name, mf);                \
     }                                                                   \
     };
 
