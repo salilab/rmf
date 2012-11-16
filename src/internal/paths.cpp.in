@@ -31,17 +31,18 @@ namespace RMF {
     }
 
     std::string get_data_path(std::string file) {
-      boost::filesystem::path builddir("@CMAKE_SOURCE_DIR@");
-      boost::filesystem::path installdir("@CMAKE_INSTALL_PREFIX@");
+      boost::filesystem::path dirs=
+        {boost::filesystem::path("@CMAKE_SOURCE_DIR@/")/"data",
+         boost::filesystem::path("@CMAKE_BINARY_DIR@")/"data",
+         boost::filesystem::path("@CMAKE_INSTALL_PREFIX@")
+        / "@CMAKE_INSTALL_DATADIR@"/"rmf"}
+      int ndirs= sizeof(dirs)/sizeof(boost::filesystem::path);
 
-      boost::filesystem::path buildpath=builddir/"data"/file;
-      if (boost::filesystem::exists(buildpath)) {
-        return buildpath.string();
-      }
-      boost::filesystem::path installpath=installdir
-        /"@CMAKE_INSTALL_DATADIR@"/"rmf"/file;
-      if (boost::filesystem::exists(installpath)) {
-        return installpath.string();
+      for (int i=0; i< ndirs; ++i) {
+        boost::filesystem::path path=dirs[i]/file;
+        if (boost::filesystem::exists(path)) {
+          return path.string();
+        }
       }
       return std::string();
     }

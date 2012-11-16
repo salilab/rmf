@@ -8,9 +8,9 @@ class GenericTest(unittest.TestCase):
         for i in range(0, g.get_number_of_children()):
             print i, g.get_child_name(i), g.get_child_is_group(i)
     """Test the python code"""
-    def test_perturbed(self):
+    def _do_test(self, suffix):
         """Test creating a simple hierarchy file with multiple keys"""
-        f= RMF.create_rmf_file(RMF._get_temporary_file_path("multikey.rmf"))
+        f= RMF.create_rmf_file(RMF._get_temporary_file_path("multikey."+suffix))
         r= f.get_root_node()
         print r.get_type()
         sc= f.get_category("multikey")
@@ -22,6 +22,11 @@ class GenericTest(unittest.TestCase):
         on.set_value(ik, 10)
         print r.get_value(ikfp)
         print on.get_value(ik)
+    def test_multiparent(self):
+        """Test creating a simple hierarchy file with multiple keys"""
+        for i in ["rmf", "prmf"]:
+            self._do_test(i);
+
 
 if __name__ == '__main__':
     unittest.main()

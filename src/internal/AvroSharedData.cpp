@@ -21,7 +21,15 @@ namespace RMF {
     AvroSharedData::AvroSharedData(std::string g, bool create,
                                    bool read_only):
       SharedData(g), read_only_(read_only) {
-      reload();
+      if (!create) {
+        reload();
+      } else {
+        initialize_categories();
+        initialize_node_keys();
+        // write to disk
+        dirty_=true;
+        flush();
+      }
     }
     AvroSharedData::~AvroSharedData() {
       flush();
