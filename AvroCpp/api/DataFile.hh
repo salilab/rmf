@@ -76,7 +76,7 @@ public:
      * Returns the current encoder for this writer.
      */
     Encoder& encoder() const { return *encoderPtr_; }
-    
+
     /**
      * Returns true if the buffer has sufficient data for a sync to be
      * inserted.
@@ -93,7 +93,7 @@ public:
      * Constructs a data file writer with the given sync interval and name.
      */
     DataFileWriterBase(const char* filename, const ValidSchema& schema,
-        size_t syncInterval);
+                       size_t syncInterval, bool append=false);
 
     ~DataFileWriterBase();
     /**
@@ -124,8 +124,8 @@ public:
      * Constructs a new data file.
      */
     DataFileWriter(const char* filename, const ValidSchema& schema,
-        size_t syncInterval = 16 * 1024) :
-        base_(new DataFileWriterBase(filename, schema, syncInterval)) { }
+                   size_t syncInterval = 16 * 1024, bool append=false) :
+      base_(new DataFileWriterBase(filename, schema, syncInterval, append)) { }
 
     /**
      * Writes the given piece of data into the file.
@@ -315,5 +315,3 @@ public:
 
 }   // namespace avro
 #endif
-
-

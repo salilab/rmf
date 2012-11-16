@@ -329,6 +329,9 @@ AVRO_DECL bool compileJsonSchema(std::istream &is, ValidSchema &schema, std::str
         error = e.what();
         return false;
     }
+}
+
+AVRO_DECL ValidSchema compileJsonSchemaFromFile(const char* filename) {
 
 }
 

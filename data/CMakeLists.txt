@@ -5,11 +5,14 @@ set(decorators "${PROJECT_BINARY_DIR}/include/RMF/decorators.h")
 file(READ "data/Hierarchy.json" RMF_JSON_HIERARCHY)
 file(READ "data/File.json" RMF_JSON_FILE)
 file(READ "data/Data.json" RMF_JSON_DATA)
+file(READ "data/FrameHierarchy.json" RMF_JSON_FRAME_HIERARCHY)
 
 configure_file (
   "${PROJECT_SOURCE_DIR}/data/All.json.in"
   "${PROJECT_BINARY_DIR}/data/All.json"
   )
+
+INSTALL(DIRECTORY ${PROJECT_BINARY_DIR}/data  DESTINATION ${CMAKE_INSTALL_DATADIR}/rmf)
 
 set(json_headers)
 add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/include/RMF/internal/AllJSON.h"

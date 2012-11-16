@@ -119,11 +119,10 @@ std::string get_type_name(NodeType t);
 
 
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
-inline std::ostream &operator<<(std::ostream &out,
-                                NodeType t) {
-  using std::operator<<;
-  return out << get_type_name(t);
-}
+  RMFEXPORT std::ostream &operator<<(std::ostream &out,
+                                     NodeType t);
+  RMFEXPORT std::istream &operator>>(std::istream &in,
+                                     NodeType t);
 #endif
 
 

@@ -284,4 +284,23 @@ void show_hierarchy_with_decorators(NodeConstHandle root,
 }
 
 
+  std::ostream &operator<<(std::ostream &out,
+                           NodeType t) {
+    using std::operator<<;
+    return out << get_type_name(t);
+  }
+  std::istream &operator>>(std::istream &in,
+                           NodeType t) {
+    std::string str;
+    in >> str;
+    for (NodeType i=ROOT; i<= LINK; ++i) {
+      if (get_type_name(i)== str) {
+        t= i;
+        break;
+      }
+    }
+    return in;
+  }
+
+
 } /* namespace RMF */

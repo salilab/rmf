@@ -40,14 +40,52 @@ namespace RMF {
     Key<Ucname##Traits>                                                 \
     get_##lcname##_key(Category category,                               \
                        std::string name) {                              \
+      return get_key_helper<Ucname##Traits>(category, name);            \
     }                                                                   \
     std::string get_name(Key<Ucname##Traits> k) const {                 \
+      return key_data_map_.find(k.get_id())->second.name;               \
     }                                                                   \
-    Category get_category(Key<Ucname##Traits> key) const {              \
+    Category get_category(Key<Ucname##Traits> k) const {              \
+      return key_data_map_.find(k.get_id())->second.category;           \
     }
 
     class RMFEXPORT AvroSharedData: public SharedData {
-      RMF_internal::All file_;
+      RMF_internal::All all_;
+      bool dirty_;
+
+      typedef map<Category, std::string> CategoryNameMap;
+      typedef map<std::string, Category> NameCategoryMap;
+      CategoryNameMap category_name_map_;
+      NameCategoryMap name_category_map_;
+      struct KeyData {
+        std::string name;
+        Category category;
+        int type_index;
+      };
+      typedef map<unsigned int, KeyData> KeyDataMap;
+      KeyDataMap key_data_map_;
+      typedef map<std::string, unsigned int> NameKeyInnerMap;
+      typedef map<Category, NameKeyInnerMap> NameKeyMap;
+      NameKeyMap name_key_map_;
+
+
+      template <class TypeTraits>
+    Key<TypeTraits>
+        get_key_helper(Category category,
+                       std::string name) {
+        typename NameKeyInnerMap::iterator it
+          = name_key_map_[category].find(name);
+        if (it == name_key_map_[category].end()) {
+          unsigned int id= key_data_map_.size();
+          key_data_map_[id].name=name;
+          key_data_map_[id].category=category;
+          key_data_map_[id].type_index=TypeTraits::get_index();
+          name_key_map_[category][name]=id;
+          return Key<TypeTraits>(id);
+        } else {
+          return it->second;
+        }
+      }
 
       /*
       template <class Map, class Traits>
@@ -112,13 +150,9 @@ namespace RMF {
 
       AvroSharedData(std::string g, bool create);
       ~AvroSharedData();
-      void flush() const;
-      //!
-      std::string get_name(unsigned int node) const {
-      }
-      //!
-      unsigned int get_type(unsigned int node) const {
-      }
+      void flush();
+      std::string get_name(unsigned int node) const;
+      unsigned int get_type(unsigned int node) const;
       int add_child(int node, std::string name, int t);
       void add_child(int node, int child_node);
       Ints get_children(int node) const;

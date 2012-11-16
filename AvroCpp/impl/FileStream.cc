@@ -106,7 +106,7 @@ struct FileBufferCopyIn : public BufferCopyIn {
         return false;
     }
 #endif
-  
+
 };
 
 struct IStreamBufferCopyIn : public BufferCopyIn {
@@ -203,6 +203,24 @@ public:
 };
 
 namespace {
+#ifdef _WIN32
+  HANDLE get_out_file(const char *filename, bool append) {
+    if (!append) {
+      return ::CreateFile(filename, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL)
+    } else {
+      return ::CreateFile(filename, FILE_APPEND_DATA , FILE_SHARE_WRITE & FILE_SHARE_READ,
+                          NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    }
+#else
+  int get_out_mode(bool append) {
+    if (!append) {
+      return  O_WRONLY | O_CREAT | O_TRUNC | O_BINARY;
+    } else {
+      return  O_WRONLY | O_APPEND | O_BINARY;
+    }
+  }
+#endif
+
 struct BufferCopyOut {
     virtual ~BufferCopyOut() { }
     virtual void write(const uint8_t* b, size_t len) = 0;
@@ -211,8 +229,8 @@ struct BufferCopyOut {
 struct FileBufferCopyOut : public BufferCopyOut {
 #ifdef _WIN32
     HANDLE h_;
-    FileBufferCopyOut(const char* filename) :
-        h_(::CreateFile(filename, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL)) {
+  FileBufferCopyOut(const char* filename, bool append) :
+    h_(get_out_file(filename, append)) {
         if (h_ == INVALID_HANDLE_VALUE) {
             throw Exception(boost::format("Cannot open file: %1%") % ::GetLastError());
         }
@@ -235,8 +253,8 @@ struct FileBufferCopyOut : public BufferCopyOut {
 #else
     const int fd_;
 
-    FileBufferCopyOut(const char* filename) :
-        fd_(::open(filename, O_WRONLY | O_CREAT | O_TRUNC | O_BINARY, 0644)) {
+  FileBufferCopyOut(const char* filename, bool append) :
+    fd_(::open(filename, get_out_mode(append), 0644)) {
 
         if (fd_ < 0) {
             throw Exception(boost::format("Cannot open file: %1%") %
@@ -255,7 +273,7 @@ struct FileBufferCopyOut : public BufferCopyOut {
         }
     }
 #endif
-  
+
 };
 
 struct OStreamBufferCopyOut : public BufferCopyOut {
@@ -337,9 +355,9 @@ auto_ptr<InputStream> istreamInputStream(istream& is,
 }
 
 auto_ptr<OutputStream> fileOutputStream(const char* filename,
-    size_t bufferSize)
+                                        size_t bufferSize, bool append)
 {
-    auto_ptr<BufferCopyOut> out(new FileBufferCopyOut(filename));
+  auto_ptr<BufferCopyOut> out(new FileBufferCopyOut(filename, append));
     return auto_ptr<OutputStream>(new BufferCopyOutputStream(out, bufferSize));
 }
 

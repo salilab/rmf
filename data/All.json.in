@@ -8,11 +8,16 @@
             "type" :  @RMF_JSON_FILE@
         },
         {
-            "name" : "hierarchy",
+            "name" : "nodes",
             "type" : @RMF_JSON_HIERARCHY@
         },
         {
-            "name" : "categories",
+            "name" : "frames",
+            "doc" : "the hierarchy of the frames",
+            "type" : @RMF_JSON_FRAME_HIERARCHY@
+        },
+        {
+            "name" : "data",
             "type" : {
                 "type": "map",
                 "doc" : "categories by name",

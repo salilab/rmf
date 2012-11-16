@@ -50,10 +50,11 @@ static string toString(const ValidSchema& schema)
 }
 
 DataFileWriterBase::DataFileWriterBase(const char* filename,
-    const ValidSchema& schema, size_t syncInterval) :
+                                       const ValidSchema& schema,
+                                       size_t syncInterval, bool append) :
     filename_(filename), schema_(schema), encoderPtr_(binaryEncoder()),
     syncInterval_(syncInterval),
-    stream_(fileOutputStream(filename)),
+    stream_(fileOutputStream(filename, 8 * 1024, append)),
     buffer_(memoryOutputStream()),
     sync_(makeSync()), objectCount_(0)
 {
@@ -66,7 +67,7 @@ DataFileWriterBase::DataFileWriterBase(const char* filename,
 
     setMetadata(AVRO_SCHEMA_KEY, toString(schema));
 
-    writeHeader();
+    if (!append) writeHeader();
     encoderPtr_->init(*buffer_);
 }
 
