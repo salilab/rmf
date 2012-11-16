@@ -12,6 +12,7 @@
 #include <RMF/config.h>
 #include "SharedData.h"
 #include "../infrastructure_macros.h"
+#include "../constants.h"
 #include "map.h"
 #include "set.h"
 #include <RMF/internal/AllJSON.h>
@@ -29,6 +30,16 @@ namespace RMF {
     typedef std::vector<double> AvroFloats;
     typedef std::vector<int32_t> AvroIndexes;
     typedef std::vector<int32_t> AvroNodeIDs;
+
+    template <class Out, class In>
+    inline Out get_native_value(In in) {
+      return Out(in);
+    }
+
+    template <class Out, class In>
+    inline Out get_native_value(const std::vector<In> &v) {
+      return Out(v.begin(), v.end());
+    }
 
 #define RMF_AVRO_SHARED_TYPE(lcname, Ucname, PassValue, ReturnValue,    \
                                    PassValues, ReturnValues)            \
@@ -65,9 +76,30 @@ namespace RMF {
     public:                                                             \
     Ucname##Traits::Type get_value(unsigned int node,                   \
                                    Key<Ucname##Traits> k) const {       \
+      Category cat= get_category(k);                                    \
+      std::string cat_name= get_category_name(cat);                     \
+      const Ucname##Data &data= get_frame_##lcname##_data(node,         \
+                                                          cat_name,      \
+                                                          get_current_frame()); \
+      Ucname##Data::const_iterator it= data.find(get_key_string(k));    \
+      if (it != data.end()) {                                           \
+        return get_native_value<Ucname##Traits::Type>(it->second);      \
+      }                                                                 \
+      if (get_current_frame() == ALL_FRAMES) {                          \
+        return Ucname##Traits::get_null_value();                        \
+      }                                                                 \
+      const Ucname##Data &staticdata= get_frame_##lcname##_data(node,   \
+                                                                cat_name, \
+                                                                ALL_FRAMES); \
+      Ucname##Data::const_iterator staticit= staticdata.find(get_key_string(k)); \
+      if (staticit != staticdata.end()) {                               \
+        return get_native_value<Ucname##Traits::Type>(it->second);       \
+      }                                                                 \
+      return Ucname##Traits::get_null_value();                          \
     }                                                                   \
     Ucname##Traits::Types get_all_values(unsigned int node,             \
                                          Key<Ucname##Traits> k)  {      \
+      return Ucname##Traits::Types();                                   \
     }                                                                   \
     void set_value(unsigned int node,                                   \
                    Key<Ucname##Traits> k,                               \
@@ -75,9 +107,11 @@ namespace RMF {
     }                                                                   \
     bool get_has_frame_value(unsigned int node,                         \
                              Key<Ucname##Traits> k) const {             \
+      return false;                                                     \
     }                                                                   \
     vector<Key<Ucname##Traits> >                                        \
     get_##lcname##_keys(Category category) const {                      \
+      return vector<Key<Ucname##Traits> >();                            \
     }                                                                   \
     Key<Ucname##Traits>                                                 \
     get_##lcname##_key(Category category,                               \
@@ -132,6 +166,11 @@ namespace RMF {
 
       const std::string &get_node_string(int node) const {
         return node_keys_[node];
+      }
+
+      template <class TypeTraits>
+        const std::string &get_key_string(Key<TypeTraits> k) const {
+        return key_data_map_.find(k.get_id())->second.name;
       }
 
       void initialize_categories();
