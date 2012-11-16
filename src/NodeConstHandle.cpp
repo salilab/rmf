@@ -293,7 +293,7 @@ void show_hierarchy_with_decorators(NodeConstHandle root,
                            NodeType t) {
     std::string str;
     in >> str;
-    for (NodeType i=ROOT; i<= LINK; ++i) {
+    for (NodeType i=ROOT; i<= LINK; i= NodeType(i+1)) {
       if (get_type_name(i)== str) {
         t= i;
         break;
