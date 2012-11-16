@@ -14,10 +14,7 @@
 #include "../infrastructure_macros.h"
 #include "map.h"
 #include "set.h"
-#include <RMF/internal/Hierarchy.h>
-#include <RMF/internal/Data.h>
-#include <RMF/internal/File.h>
-#include <RMF/internal/Keys.h>
+#include <RMF/internal/AllJSON.h>
 
 namespace RMF {
 
@@ -29,40 +26,31 @@ namespace RMF {
                                    PassValues, ReturnValues)            \
     Ucname##Traits::Type get_value(unsigned int node,                   \
                                    Key<Ucname##Traits> k) const {       \
-      return get_value_impl(node, k);                                   \
+    }                                                                   \
+    Ucname##Traits::Types get_all_values(unsigned int node,             \
+                                         Key<Ucname##Traits> k)  {      \
     }                                                                   \
     void set_value(unsigned int node,                                   \
                    Key<Ucname##Traits> k,                               \
                    Ucname##Traits::Type v) {                            \
-      return set_value_impl(node, k, v);                                \
     }                                                                   \
-    Key<Ucname##Traits> add_##lcname##_key(int category_id,             \
-                                           std::string name,            \
-                                           bool) {                      \
-      Data *data=get_data_always(category_id);                          \
-      int ret=data->lcname##_keys.size();                               \
-      data->lcname##_keys.push_back(name);                              \
-      return ret;                                                       \
+    bool get_has_frame_value(unsigned int node,                         \
+                             Key<Ucname##Traits> k) const {             \
     }                                                                   \
-    unsigned int                                                        \
-    get_number_of_##lcname##_keys(int category_id,                      \
-                                  bool per_frame) const {               \
-      if (!per_frame) return 0;                                         \
-      else {                                                            \
-        ensure_correct_frame(category_id);                              \
-        Data *d= get_data(category_id);                                 \
-        if (!d) return 0;                                               \
-        else return d->keys_.lcname##_keys.size();                      \
-      }                                                                 \
+    vector<Key<Ucname##Traits> >                                        \
+    get_##lcname##_keys(Category category) const {                      \
+    }                                                                   \
+    Key<Ucname##Traits>                                                 \
+    get_##lcname##_key(Category category,                               \
+                       std::string name) {                              \
     }                                                                   \
     std::string get_name(Key<Ucname##Traits> k) const {                 \
-      Data *d= get_data(category_id);                                   \
-      return d->keys_.lcname##_keys[k.get_index()]);                    \
-  }
+    }                                                                   \
+    Category get_category(Key<Ucname##Traits> key) const {              \
+    }
 
 
     class RMFEXPORT AvroSharedData: public SharedData {
-      std::string root_path_;
       RMF_internal::File file_;
       bool file_data_dirty_;
       RMF_internal::Hierarchy hierarchy_;
@@ -84,7 +72,7 @@ namespace RMF {
       map<int, std::string> category_id_to_name_;
       map<int, std::string> node_keys_;
 
-
+      /*
       template <class Map, class Traits>
         Traits::Type get_value_from_map(const Map &m,
                                         Key<Traits> k) const {
@@ -141,15 +129,14 @@ namespace RMF {
         } else {
           return it->second;
         }
-      }
+        }*/
     public:
+      RMF_FOREACH_TYPE(RMF_AVRO_SHARED_TYPE);
+
       AvroSharedData(std::string g, bool create);
       ~AvroSharedData();
       RMF_FOREACH_TYPE(RMF_AVRO_SHARED_TYPE);
       void flush() const;
-      std::string get_file_name() const {
-        return root_path_;
-      }
       //!
       std::string get_name(unsigned int node) const {
          return hierarchy_.hierarchy.find(node)->name;
@@ -167,11 +154,10 @@ namespace RMF {
         return file_.number_of_frames();
       }
       int add_category(std::string name);
-      unsigned int get_number_of_categories() const {
-        return category_name_to_id_.size();
-      }
-      std::string get_category_name(unsigned int kc) const {
-        return category_id_to_name_[kc];
+      Categories get_categories() const;
+      Category get_category(std::string name);
+      std::string get_category_name(Category kc) const  {
+        return category_data_map_.find(kc)->second.name;
       }
 
       std::string get_description() const {
@@ -187,7 +173,8 @@ namespace RMF {
       }
       std::string get_frame_name() const;
 
-       void reload();
+      void reload();
+      void set_current_frame(int frame);
     };
 
   } // namespace internal

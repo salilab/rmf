@@ -17,9 +17,9 @@
                 "type": "map",
                 "doc" : "categories by name",
                 "values" : {
-                    "type" : "map",
+                    "type" : "array",
                     "doc" : "frames by index",
-                    "values" : @RMF_JSON_DATA@
+                    "items" : @RMF_JSON_DATA@
                 }
             }
         }
