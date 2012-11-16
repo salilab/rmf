@@ -89,18 +89,10 @@ namespace {
     using std::operator<<;
     for (unsigned int i=0; i< ks.size(); ++i) {
       n.get_file().set_current_frame(frame);
-      if (!n.get_file().get_is_per_frame(ks[i])
-          && n.get_has_value(ks[i])) {
+      if (n.get_has_value(ks[i])) {
         out << std::endl << prefix
             << n.get_file().get_name(ks[i]) << ": "
             << Showable(n.get_value(ks[i]));
-      } else if (end_frame==-1) {
-        if (n.get_file().get_is_per_frame(ks[i])
-            && n.get_has_value(ks[i])) {
-          out << std::endl << prefix
-              << n.get_file().get_name(ks[i]) << ": "
-              << Showable(n.get_value(ks[i]));
-        }
       } else {
         show_clean(prefix, n.get_file().get_name(ks[i]),
                    n.get_all_values(ks[i]), KT::TypeTraits::get_null_value(),

@@ -64,6 +64,8 @@ namespace RMF {
       set_current_frame(start_frame);                                   \
       return ret;                                                       \
     }                                                                   \
+    virtual bool get_has_frame_value(unsigned int node,                 \
+                                     Key<Ucname##Traits> k) const =0;   \
     virtual void set_value(unsigned int node,                           \
                            Key<Ucname##Traits> k,                       \
                            Ucname##Traits::Type v) =0;                  \
@@ -74,13 +76,13 @@ namespace RMF {
         set_value(node, k[i], v[i]);                                    \
       }                                                                 \
     }                                                                   \
+    virtual vector<Key<Ucname##Traits> >                                \
+    get_##lcname##_keys(Category category) const=0;                     \
+    virtual Category                                                    \
+    get_category(Key<Ucname##Traits> k) const=0;                        \
     virtual Key<Ucname##Traits>                                         \
-    add_##lcname##_key(int category_id,                                 \
-                       std::string name,                                \
-                       bool per_frame) =0;                              \
-    virtual unsigned int                                                \
-    get_number_of_##lcname##_keys(int category_id,                      \
-                                  bool per_frame) const=0;              \
+    get_##lcname##_key(Category category,                               \
+                       std::string name) =0;                            \
     virtual std::string get_name(Key<Ucname##Traits> k) const =0
 
 
@@ -106,10 +108,6 @@ namespace RMF {
     public:
       std::string get_file_path() const {
         return path_;
-      }
-      template <class TypeTraits>
-      bool get_is_per_frame(Key<TypeTraits> k) const {
-        return k.get_is_per_frame();
       }
       int get_current_frame() const {
         return cur_frame_;
@@ -199,9 +197,9 @@ namespace RMF {
       virtual Ints get_children(int node) const=0;
       virtual void save_frames_hint(int i)=0;
 
-      virtual int add_category(std::string name)=0;
-      virtual unsigned int get_number_of_categories() const=0;
-      virtual std::string get_category_name(unsigned int kc) const=0;
+      virtual Categories get_categories() const=0;
+      virtual Category get_category(std::string name) =0;
+      virtual std::string get_category_name(Category kc) const=0;
       virtual std::string get_description() const=0;
       virtual void set_description(std::string str)=0;
       virtual void set_frame_name(std::string str)=0;
@@ -209,7 +207,6 @@ namespace RMF {
       virtual bool get_supports_locking() const {return false;}
       virtual bool set_is_locked(bool) {return false;}
       virtual void reload()=0;
-      void validate(std::ostream &out) const;
     };
 
     template <class Traits>
@@ -226,11 +223,9 @@ namespace RMF {
     public:                                                             \
     typedef Key<Ucname##Traits> K;                                      \
     typedef vector<K > Ks;                                              \
-    static unsigned int get_number_of_keys( const SharedData *p,        \
-                                            int category_id,            \
-                                            bool per_frame) {           \
-      return p->get_number_of_##lcname##_keys(category_id,              \
-                                              per_frame);               \
+    static Ks get_keys( const SharedData *p,                            \
+                        Category category) {                            \
+      return p->get_##lcname##_keys(category);                          \
     }                                                                   \
     };                                                                  \
     template <>                                                         \
@@ -238,9 +233,11 @@ namespace RMF {
     public:                                                             \
     typedef Key<Ucname##Traits> K;                                      \
     typedef vector<K > Ks;                                              \
-    static K add_key(SharedData *p_, int category_id,                   \
-                     std::string name, bool mf) {                       \
-      return p_->add_##lcname##_key(category_id, name, mf);             \
+    static K get_key( SharedData *p,                                    \
+                      Category category,                                \
+                      std::string name) {                               \
+      return p->get_##lcname##_key(category,                            \
+                                   name);                               \
     }                                                                   \
     };
 

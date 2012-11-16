@@ -41,6 +41,4 @@ vector<NodeHandle> NodeHandle::get_children() const {
   return ret;
 }
 
-
-
 } /* namespace RMF */

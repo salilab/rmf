@@ -24,11 +24,11 @@ class GenericTest(unittest.TestCase):
         cd= colored_factory.get(bn)
         cd.set_rgb_color([.5,.75,.95])
         sc= rmf.get_category("shape")
-        rk= rmf.get_float_key(sc, "rgb color red", False)
+        rk= rmf.get_float_key(sc, "rgb color red")
         print "stuff"
         print rmf.get_float_keys(sc)
         print rk
-        print rmf.get_float_key(sc, "rgb color red", True)
+        print rmf.get_float_key(sc, "rgb color red")
         self.assert_(rk != RMF.FloatKey())
         self.assert_(bn.get_has_value(rk))
         self.assertFalse(cn.get_has_value(rk))
@@ -48,7 +48,7 @@ class GenericTest(unittest.TestCase):
         self.assert_(bn.get_has_value(rk))
         self.assertFalse(cn.get_has_value(rk))
         self.assertFalse(bns.get_has_value(rk))
-        radk=rmf.add_float_key(sc, "radius", False)
+        radk=rmf.get_float_key(sc, "radius")
         bns.set_value(radk, 3)
         #bd.set_radius(3)
         self.assert_(bn.get_has_value(rk))

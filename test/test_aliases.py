@@ -3,8 +3,8 @@ import unittest
 import RMF
 
 class GenericTest(unittest.TestCase):
-    def test_aliases(self):
-        """Test that aliases can be used and resolve"""
+    def test_multiparent(self):
+        """Test that nodes with multiple parents can be used and resolve"""
         path=RMF._get_temporary_file_path("alias.rmf")
         print path
         fh= RMF.create_rmf_file(path)
@@ -15,6 +15,21 @@ class GenericTest(unittest.TestCase):
         self.assertEqual(len(ch), 1)
         print ch
         self.assertEqual(ch[0], rh)
+
+    def test_aliases(self):
+        """Test that aliases can be used and resolve"""
+        path=RMF._get_temporary_file_path("alias.rmf")
+        print path
+        fh= RMF.create_rmf_file(path)
+        af= RMF.AliasFactory(fh)
+        rh= fh.get_root_node()
+        nh= rh.add_child("hi", RMF.REPRESENTATION)
+        RMF.add_child_alias(af, nh, rh)
+        ch= nh.get_children()
+        self.assertEqual(len(ch), 1)
+        print ch
+        self.assertEqual(af.get(ch[0]).get_aliased(), rh)
+
 
 if __name__ == '__main__':
     unittest.main()

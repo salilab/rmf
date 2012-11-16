@@ -8,13 +8,13 @@
 
 #include <RMF/internal/SharedData.h>
 #include <RMF/NodeHandle.h>
-#include <RMF/Validator.h>
 #include <RMF/internal/set.h>
 #include <RMF/HDF5File.h>
 #include <boost/filesystem/path.hpp>
 #include <RMF/internal/HDF5SharedData.h>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/scoped_ptr.hpp>
+#include <boost/version.hpp>
 
 namespace RMF {
   namespace internal {
@@ -89,17 +89,13 @@ namespace RMF {
     }
 
     std::string SharedData::get_file_name() const {
+#if BOOST_VERSION >= 104600
       return boost::filesystem::path(path_).filename().string();
+#else
+      return boost::filesystem::path(path_).filename();
+#endif
     }
 
-  void SharedData::validate(std::ostream &out) const {
-    Creators cs= get_validators();
-    for (unsigned int i=0; i< cs.size(); ++i) {
-      boost::scoped_ptr<Validator>
-          ptr(cs[i]->create(FileHandle(const_cast<SharedData*>(this))));
-      ptr->write_errors(out);
-    }
-  }
 
     // throws RMF::IOException if couldn't create file or unsupported file
     // format
@@ -109,7 +105,7 @@ namespace RMF {
         return cache.find(path)->second;
       }
       if (boost::algorithm::ends_with(path, ".rmf")) {
-        ret= new HDF5SharedData(path, create);
+        ret= new HDF5SharedData(path, create, false);
       } else {
         RMF_THROW("Don't know how to open file", IOException);
       }
@@ -124,7 +120,7 @@ namespace RMF {
         return cache.find(path)->second;
       }
       if (boost::algorithm::ends_with(path, ".rmf")) {
-        ret= new HDF5SharedData(path, false);
+        ret= new HDF5SharedData(path, false, true);
       } else {
         RMF_THROW("Don't know how to open file", IOException);
       }

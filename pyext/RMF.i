@@ -48,7 +48,7 @@
 #include "RMF/Factory.h"
 #include "RMF/decorators.h"
 #include "RMF/decorator_utility.h"
-#include "RMF/ReferenceFrame.h"
+#include "RMF/CoordinateTransformer.h"
 #include "RMF/utility.h"
 #include <RMF/internal/swig_helpers.h>
 #include <RMF/SetCurrentFrame.h>
@@ -139,7 +139,7 @@ _types_list.append(#lcname)
 %template(Ucname##Key) RMF::Key<RMF::Ucname##Traits>;
 %enddef
 
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF, NodeID, NodeID, NodeIDs);
+IMP_RMF_SWIG_VALUE(RMF, NodeID, NodeIDs);
 
 IMP_RMF_SWIG_NATIVE_VALUES_LIST(RMF, double, Floats, FloatsList);
 IMP_RMF_SWIG_NATIVE_VALUES_LIST(RMF, int, Ints, IntsList);
@@ -202,18 +202,6 @@ namespace RMF {
            ret.extend(fn(kc))
         return ret
   %}
-   %pythoncode %{
-    def get_node_sets(self, arity):
-        ret=[]
-        if arity==2:
-          return self.get_node_pairs()
-        elif arity==3:
-          return self.get_node_triplets()
-        elif arity==4:
-          return self.get_node_quads()
-        else:
-          return []
-  %}
   %pythoncode %{
     def get_set_categories(self, arity):
         ret=[]
@@ -231,18 +219,6 @@ namespace RMF {
 }
 
 %extend RMF::FileHandle {
-   %pythoncode %{
-    def add_node_set(self, set, tp):
-        ret=[]
-        if len(set)==2:
-          return self.add_node_pair(set, tp)
-        elif len(set)==3:
-          return self.add_node_triplet(set, tp)
-        elif len(set)==4:
-          return self.add_node_quad(set, tp)
-        else:
-          return []
-  %}
   %pythoncode %{
     def add_category(self, name, arity=1):
         ret=[]
@@ -281,8 +257,6 @@ namespace RMF {
 IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DEFINE_INTERMEDIATE_TYPE);
 %include "RMF/HDF5DataSetD.h"
 
-%template(NodeID) RMF::NodeIDD<1>;
-
 
 %include "RMF/Key.h"
 IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DEFINE_TYPE);
@@ -318,8 +292,10 @@ IMP_RMF_DECORATOR(RMF, Cylinder);
 IMP_RMF_DECORATOR(RMF, Segment);
 IMP_RMF_DECORATOR(RMF, Score);
 IMP_RMF_DECORATOR(RMF, RigidParticle);
+IMP_RMF_DECORATOR(RMF, ReferenceFrame);
 IMP_RMF_DECORATOR(RMF, Residue);
 IMP_RMF_DECORATOR(RMF, Atom);
+IMP_RMF_DECORATOR(RMF, Alias);
 IMP_RMF_DECORATOR(RMF, Chain);
 IMP_RMF_DECORATOR(RMF, Domain);
 IMP_RMF_DECORATOR(RMF, Copy);
@@ -330,7 +306,7 @@ IMP_RMF_DECORATOR(RMF, Typed);
 %include "RMF/decorator_utility.h"
 %include "RMF/utility.h"
 %include "RMF/SetCurrentFrame.h"
-%include "RMF/ReferenceFrame.h"
+%include "RMF/CoordinateTransformer.h"
 
 
 %pythoncode %{

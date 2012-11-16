@@ -70,7 +70,7 @@ defined by a unique combination of
 - a \ref rmf_types "type".
 
 - a \ref categories "category" such as \ref catphysics "physics", identified by
-an RMF::CategoryD.
+an RMF::Category.
 
 - a name string
 
@@ -118,8 +118,8 @@ Current examples are
 - RMF::Colored is inherited. That is, a node that is not an RMF::Colored node, has the color
 of its closest RMF::Colored ancestor.
 - RMF::RigidParticle transforms are composed with the coordinates of their ancestors. That is,
-a node that is a RMF::Particle or RMF::Ball with an ancestor that is an RMF::RigidParticle has
-global coordinates at the RMF::RigidParticle's transformation applied to its coordinates. You
+a node that is a RMF::Particle or RMF::Ball with an ancestor that is an RMF::ReferenceFrame has
+global coordinates at the RMF::ReferenceFrame's transformation applied to its coordinates. You
 can use the RMF::ReferenceFrame to help with this. See the example rigid_bodies.py.
 
 
