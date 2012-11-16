@@ -17,7 +17,7 @@
             "type" : @RMF_JSON_FRAME_HIERARCHY@
         },
         {
-            "name" : "data",
+            "name" : "category",
             "type" : {
                 "type": "map",
                 "doc" : "categories by name",

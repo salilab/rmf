@@ -43,6 +43,9 @@ namespace RMF {
       all_.nodes.data.back().type= boost::lexical_cast<std::string>(NodeType(t));
       all_.nodes.data.back().index=index;
       add_child(node, index);
+      std::ostringstream oss;
+      oss << index;
+      node_keys_.push_back(oss.str());
       dirty_=true;
       return index;
     }
@@ -80,11 +83,11 @@ namespace RMF {
     }
     void AvroSharedData::set_frame_name(std::string str) {
       // offset for static data
-      all_.frames.data[get_current_frame()-1].name=str;
+      all_.frames.data[get_current_frame()+1].name=str;
       dirty_=true;
      }
     std::string AvroSharedData::get_frame_name() const{
-      return all_.frames.data[get_current_frame()-1].name;
+      return all_.frames.data[get_current_frame()+1].name;
     }
     std::string AvroSharedData::get_description() const {
       return all_.file.description;
@@ -109,6 +112,7 @@ namespace RMF {
       }
 
       initialize_categories();
+      initialize_node_keys();
       dirty_=false;
     }
     void AvroSharedData::set_current_frame(int frame){
@@ -120,8 +124,17 @@ namespace RMF {
 
     void AvroSharedData::initialize_categories() {
       for (std::map<std::string, std::vector<RMF_internal::Data > >::const_iterator
-             it= all_.data.begin(); it != all_.data.end(); ++it) {
+             it= all_.category.begin(); it != all_.category.end(); ++it) {
         get_category(it->first);
+      }
+    }
+
+    void AvroSharedData::initialize_node_keys() {
+      node_keys_.resize(all_.nodes.data.size());
+      for (unsigned int i=0; i< node_keys_.size(); ++i) {
+        std::ostringstream oss;
+        oss << i;
+        node_keys_[i]=oss.str();
       }
     }
 

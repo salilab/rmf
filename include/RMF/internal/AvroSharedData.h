@@ -19,8 +19,50 @@
 namespace RMF {
   namespace internal {
 
+    typedef int32_t AvroInt;
+    typedef double AvroFloat;
+    typedef std::string AvroString;
+    typedef int32_t AvroIndex;
+    typedef int32_t AvroNodeID;
+    typedef std::vector<std::string> AvroStrings;
+    typedef std::vector<int32_t> AvroInts;
+    typedef std::vector<double> AvroFloats;
+    typedef std::vector<int32_t> AvroIndexes;
+    typedef std::vector<int32_t> AvroNodeIDs;
+
 #define RMF_AVRO_SHARED_TYPE(lcname, Ucname, PassValue, ReturnValue,    \
                                    PassValues, ReturnValues)            \
+    private:                                                            \
+    typedef std::map<std::string, Avro##Ucname> Ucname##Data;           \
+    Ucname##Data empty_##lcname##_data_;                                \
+    const Ucname##Data &                                                \
+    get_frame_##lcname##_data(unsigned int node,                        \
+                              std::string category,                     \
+                              int frame) const {                        \
+      std::map<std::string, std::vector<RMF_internal::Data > >::const_iterator it \
+        = all_.category.find(category);                                 \
+      if (it== all_.category.end()                                      \
+          || it->second.size() <= frame+1){                             \
+        return empty_##lcname##_data_;                                  \
+      }                                                                 \
+      std::map<std::string, RMF_internal::NodeData>::const_iterator     \
+        nit= it->second[frame+1].data.find(get_node_string(node));      \
+      if (nit == it->second[frame+1].data.end()) {                      \
+        return empty_##lcname##_data_;                                  \
+      } else {                                                          \
+        return nit->second.lcname##_data;                               \
+      }                                                                 \
+    }                                                                   \
+    Ucname##Data &                                                      \
+    access_frame_##lcname##_data(unsigned int node,                     \
+                                 std::string category, int frame) {     \
+      if (all_.category[category].size() <= frame+1) {                 \
+        all_.category[category].resize(frame+1);                       \
+      }                                                                 \
+      return all_.category[category][frame+1].data[get_node_string(node)] \
+        .lcname##_data;                                                 \
+    }                                                                   \
+    public:                                                             \
     Ucname##Traits::Type get_value(unsigned int node,                   \
                                    Key<Ucname##Traits> k) const {       \
     }                                                                   \
@@ -68,6 +110,7 @@ namespace RMF {
       typedef map<Category, NameKeyInnerMap> NameKeyMap;
       NameKeyMap name_key_map_;
 
+      vector<std::string> node_keys_;
 
       template <class TypeTraits>
     Key<TypeTraits>
@@ -87,66 +130,12 @@ namespace RMF {
         }
       }
 
-      /*
-      template <class Map, class Traits>
-        Traits::Type get_value_from_map(const Map &m,
-                                        Key<Traits> k) const {
-        std::string sk= get_node_key(k);
-        if (m.find(sk) == m.end()) return Traits::get_null_value();
-        else return m.find(sk)->second;
+      const std::string &get_node_string(int node) const {
+        return node_keys_[node];
       }
-      template <class Traits>
-        Traits::Type get_value_from_data(unsigned int node,
-                                         Key<Traits> k,
-                                         const RMF_internal::Data&data) const {
-        std::string nk= get_node_key(node);
-        if (data.nodes.find(nk)== data.nodes.end()) {
-          return Traits::get_null_value();
-        } else {
-          return get_value_from_map(data.nodes.find(nk)->second.lcname##_data,
-                         k);
-        }
-      }
-      template <class Traits>
-        void set_value_in_data(unsigned int node,
-                               Key<Traits> k,
-                               Traits::Type v,
-                               RMF_internal::Data&data) {
-        data.nodes[get_node_key(node)].lcname##_data[get_key_key(k)]=v;
-      }
-      template <class TraitsT>
-        typename TraitsT::Type get_value_impl(unsigned int node,
-                                              Key<TraitsT> k) const {
-        Data *data=get_data(k.get_category());
-        if (!data) return TraitsT::get_null_value();
-        typename TraitsT::Type ret= get_value(node, k, data->frame_data_);
-        if (!TraitsT::get_is_null(ret)) return ret;
-        else return get_value(node, k, data->static_data_);
-      }
-      template <class TraitsT>
-        void set_value_impl(unsigned int node,
-                            Key<TraitsT> k,
-                            typename TraitsT::Type v) {
-        Data *data=get_data_always(k.get_category());
-        if (get_current_frame() == ALL_FRAMES) {
-          set_value(node, k, v, data->static_data_);
-        } else {
-          set_value(node, k, v, data->frame_data_);
-        }
-      }
-      std::string get_node_key(unsigned int n) {
-        map<int, std::string>::iterator it= node_keys_.find(n);
-        if (it == node_keys_.end()) {
-          std::sstringstream ss;
-          ss << n;
-          node_keys_[n]=ss.str();
-          return ss.str();
-        } else {
-          return it->second;
-        }
-        }*/
 
       void initialize_categories();
+      void initialize_node_keys();
     public:
       RMF_FOREACH_TYPE(RMF_AVRO_SHARED_TYPE);
 

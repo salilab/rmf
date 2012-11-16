@@ -34,6 +34,21 @@
                             }
                         },
                         {
+                            "name": "index_data", "type":{
+                                "type": "map",
+                                "values": "int"
+                            }
+                        },
+                        {
+                            "name": "indexes_data", "type":{
+                                "type": "map",
+                                "values": {
+                                    "type": "array",
+                                    "items": "int"
+                                }
+                            }
+                        },
+                        {
                             "name": "float_data", "type":{
                                 "type": "map",
                                 "values": "double"
