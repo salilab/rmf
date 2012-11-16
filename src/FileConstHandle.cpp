@@ -80,9 +80,9 @@ void FileConstHandle::validate(std::ostream &out=std::cerr) {
   }
 }
 
-std::string FileConstHandle::validate() const {
+std::string FileConstHandle::validate() {
   std::ostringstream oss;
-  get_shared_data()->validate(oss);
+  validate(oss);
   return oss.str();
 }
 

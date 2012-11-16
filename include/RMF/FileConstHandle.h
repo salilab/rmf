@@ -275,7 +275,7 @@ namespace RMF {
 
     /** Like validate(std::ostream&) except it returns a sting describing
         the errors.*/
-    std::string validate() const;
+    std::string validate();
 
     /** Reread the file.
         \note This may invalidate various thing (eg the number of nodes may
