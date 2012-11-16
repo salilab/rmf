@@ -122,10 +122,7 @@ namespace RMF {
     }
   }
 
-  void copy_frame(FileConstHandle in, FileHandle out,
-                  unsigned int inframe, unsigned int outframe) {
-    in.set_current_frame(inframe);
-    out.set_current_frame(outframe);
+  void copy_frame(FileConstHandle in, FileHandle out) {
     copy_node_frame(in, out);
   }
 
@@ -134,7 +131,9 @@ namespace RMF {
   void copy_values(FileConstHandle in, FileHandle out) {
     // do something less dumb pater
     for (unsigned int i=0; i< in.get_number_of_frames(); ++i) {
-      copy_frame(in, out, i, i);
+      in.set_current_frame(i);
+      out.set_current_frame(i);
+      copy_frame(in, out);
     }
   }
 
@@ -205,7 +204,7 @@ namespace RMF {
       bool ret=true;
       for (unsigned int i=0; i< inkeys.size(); ++i) {
         if (in.get_has_frame_value(inkeys[i])
-            != out.get_has_value(outkeys[i])) {
+            != out.get_has_frame_value(outkeys[i])) {
           if (print_diff) {
             std::cout << "Node differ about having value "
                       << in.get_file().get_name(inkeys[i]) << " at "
@@ -268,11 +267,8 @@ namespace RMF {
 
 
   bool get_equal_frame(FileConstHandle in, FileConstHandle out,
-                       unsigned int inframe, unsigned int outframe,
                        bool print_diff) {
     bool ret=true;
-    in.set_current_frame(inframe);
-    out.set_current_frame(outframe);
     ret= get_equal_node_frame(in, out, print_diff) && ret;
     return ret;
   }

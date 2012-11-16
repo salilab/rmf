@@ -109,9 +109,6 @@ namespace RMF {
         } else {                                                        \
           id= it->second;                                               \
         }                                                               \
-        std::cout << "found key " << name << " in category "            \
-                  << get_category_name(cats[i])                         \
-                  << " given id " << id << std::endl;                   \
         if (per_frame) {                                                \
           key_data_map_[id].per_frame_index=j;                          \
         } else {                                                        \
