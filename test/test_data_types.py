@@ -15,17 +15,17 @@ class GenericTest(unittest.TestCase):
         #print g
         #ds= g.add_child_float_data_set_2d("ds"+str(pccc))
         #dsi= g.add_child_index_data_set_2d("dsi"+str(pccc))
-        lst=[(f.add_int_key, 4),
-             (f.add_float_key, 3.1415),
-             (f.add_node_id_key, nh.get_id()),
-             (f.add_node_ids_key, [nh.get_id()]),
-             (f.add_string_key, "there"),
-             (f.add_index_key, 3),
-             (f.add_ints_key, [3,4,5,6])]
+        lst=[(f.get_int_key, 4),
+             (f.get_float_key, 3.1415),
+             (f.get_node_id_key, nh.get_id()),
+             (f.get_node_ids_key, [nh.get_id()]),
+             (f.get_string_key, "there"),
+             (f.get_index_key, 3),
+             (f.get_ints_key, [3,4,5,6])]
         self.assertEqual(len(lst),len(RMF.get_data_types())-3)
-        for p in lst:
+        for i, p in enumerate(lst):
             print p[0]
-            k = p[0](cat, "hi", pccc)
+            k = p[0](cat, "hi"+str(i), pccc)
             self._do_test_type(nh, k, p[1])
     def test_data_types(self):
         """Test that the various data types work"""
