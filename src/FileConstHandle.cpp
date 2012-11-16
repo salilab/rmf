@@ -10,6 +10,7 @@
 #include <RMF/internal/SharedData.h>
 #include <RMF/Validator.h>
 #include <boost/ptr_container/ptr_vector.hpp>
+#include <sstream>
 
 namespace RMF {
 
@@ -70,13 +71,19 @@ void FileConstHandle::validate(std::ostream &out=std::cerr) {
   boost::ptr_vector<Validator> validators;
   for (unsigned int i=0; i< cs.size(); ++i) {
     validators.push_back(cs[i]->create(*this));
-  }
+}
   for ( int frame=-1; frame < get_number_of_frames(); ++frame) {
     set_current_frame(frame);
     for (unsigned int i=0; i< cs.size(); ++i) {
       validators[i].write_errors(out);
     }
   }
+}
+
+std::string FileConstHandle::validate() const {
+  std::ostringstream oss;
+  get_shared_data()->validate(oss);
+  return oss.str();
 }
 
 void FileConstHandle::reload() {
