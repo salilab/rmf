@@ -33,6 +33,8 @@
   Category get_category(UCName##Key k) const {                          \
     return shared_->get_category(k);                                    \
   }                                                                     \
+  /** This returns all the keys that are used in the current frame.
+      Other frames may have different ones.*/                           \
   UCName##Key##s                                                        \
   get_##lcname##_keys(Category category_id) const {                     \
     return get_keys<UCName##Traits>(category_id);                       \
@@ -238,6 +240,8 @@ namespace RMF {
     Category get_category(std::string name) {
       return shared_->get_category(name);
     }
+    /** This returns all the categories that are used in the current frame.
+        Other frames may have different ones.*/
     Categories get_categories() const {
       return shared_->get_categories();
     }
