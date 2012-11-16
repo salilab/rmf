@@ -1,37 +1,30 @@
 {
-    "type": "record",
-    "name": "Frames",
-    "doc": "Store a hierarchy on the frames.",
-    "fields" : [
-        {
-            "name": "data",
-            "type": {
-                "type":"array",
-                "doc" : "store all the nodes by index",
-                "items" : {
-                    "type" : "record",
-                    "name" : "Frame",
-                    "doc": "Store a node in the hierarchy.",
-                    "fields" : [
-                        {
-                            "name" : "name",
-                            "type" : "string"
-                        },
-                        {
-                            "name" : "index",
-                            "type" : "int"
-                        },
-                        {
-                            "name" : "children",
-                            "type" : {
-                                "type" : "array",
-                                "doc" : "Store the indexes of the children frames.",
-                                "items" : "int"
-                            }
-                        }
-                    ]
+    "name": "frames",
+    "type": {
+        "type":"array",
+        "doc" : "store all the nodes by index",
+        "items" : {
+            "type" : "record",
+            "name" : "Frame",
+            "doc": "Store a node in the hierarchy.",
+            "fields" : [
+                {
+                    "name" : "name",
+                    "type" : "string"
+                },
+                {
+                    "name" : "index",
+                    "type" : "int"
+                },
+                {
+                    "name" : "children",
+                    "type" : {
+                        "type" : "array",
+                        "doc" : "Store the indexes of the children frames.",
+                        "items" : "int"
+                    }
                 }
-            }
+            ]
         }
-    ]
+    }
 }

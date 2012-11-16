@@ -35,10 +35,10 @@ namespace RMF {
       flush();
     }
     std::string AvroSharedData::get_name(unsigned int node) const {
-      return all_.nodes.data[node].name;
+      return all_.nodes[node].name;
     }
     unsigned int AvroSharedData::get_type(unsigned int node) const {
-      std::string string_type= all_.nodes.data[node].type;
+      std::string string_type= all_.nodes[node].type;
       unsigned int ret_type= boost::lexical_cast<NodeType>(string_type);
       return ret_type;
     }
@@ -46,11 +46,11 @@ namespace RMF {
       return all_.file.number_of_frames;
     }
     int AvroSharedData::add_child(int node, std::string name, int t){
-      int index= all_.nodes.data.size();
-      all_.nodes.data.push_back(RMF_internal::Node());
-      all_.nodes.data.back().name=name;
-      all_.nodes.data.back().type= boost::lexical_cast<std::string>(NodeType(t));
-      all_.nodes.data.back().index=index;
+      int index= all_.nodes.size();
+      all_.nodes.push_back(RMF_internal::Node());
+      all_.nodes.back().name=name;
+      all_.nodes.back().type= boost::lexical_cast<std::string>(NodeType(t));
+      all_.nodes.back().index=index;
       add_child(node, index);
       std::ostringstream oss;
       oss << index;
@@ -59,12 +59,12 @@ namespace RMF {
       return index;
     }
     void AvroSharedData::add_child(int node, int child_node){
-      all_.nodes.data[node].children.push_back(child_node);
+      all_.nodes[node].children.push_back(child_node);
       dirty_=true;
     }
     Ints AvroSharedData::get_children(int node) const{
-      return Ints(all_.nodes.data[node].children.begin(),
-                  all_.nodes.data[node].children.end());
+      return Ints(all_.nodes[node].children.begin(),
+                  all_.nodes[node].children.end());
     }
     Categories AvroSharedData::get_categories() const {
       Categories ret;
@@ -92,11 +92,11 @@ namespace RMF {
     }
     void AvroSharedData::set_frame_name(std::string str) {
       // offset for static data
-      all_.frames.data[get_current_frame()+1].name=str;
+      all_.frames[get_current_frame()+1].name=str;
       dirty_=true;
      }
     std::string AvroSharedData::get_frame_name() const{
-      return all_.frames.data[get_current_frame()+1].name;
+      return all_.frames[get_current_frame()+1].name;
     }
     std::string AvroSharedData::get_description() const {
       return all_.file.description;
@@ -142,7 +142,7 @@ namespace RMF {
     }
 
     void AvroSharedData::initialize_node_keys() {
-      node_keys_.resize(all_.nodes.data.size());
+      node_keys_.resize(all_.nodes.size());
       for (unsigned int i=0; i< node_keys_.size(); ++i) {
         std::ostringstream oss;
         oss << i;

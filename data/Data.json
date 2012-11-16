@@ -9,7 +9,7 @@
             "type": "int"
         },
         {
-            "name": "data",
+            "name": "nodes",
             "doc": "The actual data indexed by the node indexes",
             "type": {
                 "type": "map",

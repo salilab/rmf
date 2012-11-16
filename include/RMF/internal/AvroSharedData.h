@@ -85,8 +85,8 @@ namespace RMF {
         return empty_##lcname##_data_;                                  \
       }                                                                 \
       std::map<std::string, RMF_internal::NodeData>::const_iterator     \
-        nit= it->second[frame+1].data.find(get_node_string(node));      \
-      if (nit == it->second[frame+1].data.end()) {                      \
+        nit= it->second[frame+1].nodes.find(get_node_string(node));      \
+      if (nit == it->second[frame+1].nodes.end()) {                      \
         return empty_##lcname##_data_;                                  \
       } else {                                                          \
         return nit->second.lcname##_data;                               \
@@ -98,7 +98,7 @@ namespace RMF {
       if (all_.category[category].size() <= frame+1) {                 \
         all_.category[category].resize(frame+1);                       \
       }                                                                 \
-      return all_.category[category][frame+1].data[get_node_string(node)] \
+      return all_.category[category][frame+1].nodes[get_node_string(node)] \
         .lcname##_data;                                                 \
     }                                                                   \
     public:                                                             \

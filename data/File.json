@@ -1,6 +1,6 @@
 {
     "type": "record",
-    "name": "File",
+    "name": "file",
     "doc": "Store information about the whole RMF.",
     "fields" : [
         {

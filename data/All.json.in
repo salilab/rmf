@@ -5,17 +5,11 @@
     "fields" : [
         {
             "name" : "file",
-            "type" :  @RMF_JSON_FILE@
+            "doc" : "data concerning the whole file",
+            "type" : @RMF_JSON_FILE@
         },
-        {
-            "name" : "nodes",
-            "type" : @RMF_JSON_HIERARCHY@
-        },
-        {
-            "name" : "frames",
-            "doc" : "the hierarchy of the frames",
-            "type" : @RMF_JSON_FRAME_HIERARCHY@
-        },
+        @RMF_JSON_HIERARCHY@,
+        @RMF_JSON_FRAME_HIERARCHY@,
         {
             "name" : "category",
             "type" : {
