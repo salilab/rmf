@@ -18,8 +18,9 @@
 namespace RMF {
   namespace internal {
 
-    AvroSharedData::AvroSharedData(std::string g, bool create):
-      SharedData(g) {
+    AvroSharedData::AvroSharedData(std::string g, bool create,
+                                   bool read_only):
+      SharedData(g), read_only_(read_only) {
       reload();
     }
     AvroSharedData::~AvroSharedData() {
@@ -98,6 +99,7 @@ namespace RMF {
 
 
     void AvroSharedData::flush() {
+      if (read_only_) return;
       avro::DataFileWriter<RMF_internal::All>
         rd(get_file_name().c_str(), get_all_schema());
       rd.write(all_);
@@ -117,6 +119,8 @@ namespace RMF {
     }
     void AvroSharedData::set_current_frame(int frame){
       SharedData::set_current_frame(frame);
+      all_.file.number_of_frames=frame;
+      dirty_=true;
     }
 
 

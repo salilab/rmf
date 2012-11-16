@@ -12,6 +12,7 @@
 #include <RMF/HDF5File.h>
 #include <boost/filesystem/path.hpp>
 #include <RMF/internal/HDF5SharedData.h>
+#include <RMF/internal/AvroSharedData.h>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/version.hpp>
@@ -106,6 +107,8 @@ namespace RMF {
       }
       if (boost::algorithm::ends_with(path, ".rmf")) {
         ret= new HDF5SharedData(path, create, false);
+      } else if (boost::algorithm::ends_with(path, ".rmf2")) {
+        ret= new AvroSharedData(path, create, false);
       } else {
         RMF_THROW("Don't know how to open file", IOException);
       }
@@ -121,6 +124,8 @@ namespace RMF {
       }
       if (boost::algorithm::ends_with(path, ".rmf")) {
         ret= new HDF5SharedData(path, false, true);
+      } else if (boost::algorithm::ends_with(path, ".rmf2")) {
+        ret= new AvroSharedData(path, false, true);
       } else {
         RMF_THROW("Don't know how to open file", IOException);
       }

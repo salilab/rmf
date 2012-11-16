@@ -177,6 +177,7 @@ namespace RMF {
     class RMFEXPORT AvroSharedData: public SharedData {
       RMF_internal::All all_;
       bool dirty_;
+      bool read_only_;
 
       typedef map<Category, std::string> CategoryNameMap;
       typedef map<std::string, Category> NameCategoryMap;
@@ -227,7 +228,7 @@ namespace RMF {
     public:
       RMF_FOREACH_TYPE(RMF_AVRO_SHARED_TYPE);
 
-      AvroSharedData(std::string g, bool create);
+      AvroSharedData(std::string g, bool create, bool read_only);
       ~AvroSharedData();
       void flush();
       std::string get_name(unsigned int node) const;
