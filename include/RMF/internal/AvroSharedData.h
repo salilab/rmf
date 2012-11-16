@@ -45,7 +45,7 @@ namespace RMF {
     std::string get_name(Key<Ucname##Traits> k) const {                 \
       return key_data_map_.find(k.get_id())->second.name;               \
     }                                                                   \
-    Category get_category(Key<Ucname##Traits> k) const {              \
+    Category get_category(Key<Ucname##Traits> k) const {                \
       return key_data_map_.find(k.get_id())->second.category;           \
     }
 
@@ -145,6 +145,8 @@ namespace RMF {
           return it->second;
         }
         }*/
+
+      void initialize_categories();
     public:
       RMF_FOREACH_TYPE(RMF_AVRO_SHARED_TYPE);
 
@@ -157,10 +159,7 @@ namespace RMF {
       void add_child(int node, int child_node);
       Ints get_children(int node) const;
       void save_frames_hint(int) {}
-      //!
-      unsigned int get_number_of_frames() const {
-      }
-      int add_category(std::string name);
+      unsigned int get_number_of_frames() const;
       Categories get_categories() const;
       Category get_category(std::string name);
       std::string get_category_name(Category kc) const;

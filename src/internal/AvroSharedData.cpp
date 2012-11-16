@@ -33,21 +33,65 @@ namespace RMF {
       unsigned int ret_type= boost::lexical_cast<NodeType>(string_type);
       return ret_type;
     }
-    int AvroSharedData::add_child(int node, std::string name, int t){}
-    void AvroSharedData::add_child(int node, int child_node){}
-    Ints AvroSharedData::get_children(int node) const{}
-    int AvroSharedData::add_category(std::string name){}
-    Categories AvroSharedData::get_categories() const{}
-    Category AvroSharedData::get_category(std::string name){}
-    std::string AvroSharedData::get_category_name(Category kc) const  {
+    unsigned int AvroSharedData::get_number_of_frames() const {
+      return all_.file.number_of_frames;
     }
-
+    int AvroSharedData::add_child(int node, std::string name, int t){
+      int index= all_.nodes.data.size();
+      all_.nodes.data.push_back(RMF_internal::Node());
+      all_.nodes.data.back().name=name;
+      all_.nodes.data.back().type= boost::lexical_cast<std::string>(NodeType(t));
+      all_.nodes.data.back().index=index;
+      add_child(node, index);
+      dirty_=true;
+      return index;
+    }
+    void AvroSharedData::add_child(int node, int child_node){
+      all_.nodes.data[node].children.push_back(child_node);
+      dirty_=true;
+    }
+    Ints AvroSharedData::get_children(int node) const{
+      return Ints(all_.nodes.data[node].children.begin(),
+                  all_.nodes.data[node].children.end());
+    }
+    Categories AvroSharedData::get_categories() const {
+      Categories ret;
+      for (CategoryNameMap::const_iterator
+             it= category_name_map_.begin(); it != category_name_map_.end();
+           ++it) {
+        ret.push_back(it->first);
+      }
+      return ret;
+    }
+    Category AvroSharedData::get_category(std::string name){
+      NameCategoryMap::iterator it=name_category_map_.find(name);
+      if (it== name_category_map_.end()) {
+        unsigned int id= category_name_map_.size();
+        Category ret(id);
+        name_category_map_[name]=ret;
+        category_name_map_[ret]=name;
+        return ret;
+      } else {
+        return it->second;
+      }
+    }
+    std::string AvroSharedData::get_category_name(Category kc) const  {
+      return category_name_map_.find(kc)->second;
+    }
     void AvroSharedData::set_frame_name(std::string str) {
-      all_.frames.data[get_current_frame()].name=str;
+      // offset for static data
+      all_.frames.data[get_current_frame()-1].name=str;
+      dirty_=true;
      }
-    std::string AvroSharedData::get_frame_name() const{}
-    std::string AvroSharedData::get_description() const {}
-    void AvroSharedData::set_description(std::string str) {}
+    std::string AvroSharedData::get_frame_name() const{
+      return all_.frames.data[get_current_frame()-1].name;
+    }
+    std::string AvroSharedData::get_description() const {
+      return all_.file.description;
+    }    void AvroSharedData::set_description(std::string str) {
+      all_.file.description=str;
+      dirty_=true;
+    }
 
 
     void AvroSharedData::flush() {
@@ -63,10 +107,22 @@ namespace RMF {
       if (!ok) {
         throw IOException("Can't read input file on reload");
       }
+
+      initialize_categories();
       dirty_=false;
     }
     void AvroSharedData::set_current_frame(int frame){
       SharedData::set_current_frame(frame);
+    }
+
+
+
+
+    void AvroSharedData::initialize_categories() {
+      for (std::map<std::string, std::vector<RMF_internal::Data > >::const_iterator
+             it= all_.data.begin(); it != all_.data.end(); ++it) {
+        get_category(it->first);
+      }
     }
 
   } // namespace internal
