@@ -4,39 +4,24 @@ def get_string(type, name, const, per_frame=False):
         pfs="true"
     else:
         pfs="false"
-    if const:
-        return """P::get_key<%(type)sTraits>(fh,
-                   cat,
-                   \"%(name)s\",
+    return """P::get_key<%(type)sTraits>(fh,
+    cat,
+          \"%(name)s\",
                    %(pfs)s)"""%{ "name":name,
                                                     "type": type,
                                                     "pfs":pfs}
-    else:
-        return """internal::%(type)sLazyKey(fh, cat,
-                               \"%(name)s\",
-                               %(pfs)s)"""%{ "name":name,
-                                             "type": type,
-                                             "pfs":pfs}
-
 
 def gets_string(type, name, const, per_frame=False):
     if per_frame:
         pfs="true"
     else:
         pfs="false"
-    if const:
-        return """P::get_keys<%(type)sTraits>(fh,
+    return """P::get_keys<%(type)sTraits>(fh,
                    cat,
                     %(name)s,
                     %(pfs)s)"""%{ "name":name,
                                                    "type": type,
                                                    "pfs":pfs}
-    else:
-        return """internal::%(type)sLazyKeys(fh, cat,
-                               %(name)s,
-                               %(pfs)s)"""%{ "name":name,
-                                             "type": type,
-                                             "pfs":pfs}
 class Children:
     def __init__(self, nice_name):
         self.nice_name=nice_name
@@ -105,12 +90,8 @@ class Attribute:
         self.nice_name=nice_name
         self.attribute_name=attribute_name
     def get_key_members(self, const):
-        if const:
-            return [self.type+"Key "+self.nice_name+"_;",
-                    self.type+"Key "+self.nice_name+"_pf_;"]
-        else:
-            return ["internal::"+self.type+"LazyKey "+self.nice_name+"_;",
-                    "internal::"+self.type+"LazyKey "+self.nice_name+"_pf_;"]
+        return [self.type+"Key "+self.nice_name+"_;",
+                self.type+"Key "+self.nice_name+"_pf_;"]
     def get_methods(self, const):
         ret=[]
         ret.extend([self.type+" get_"+self.nice_name+"() const {",
@@ -127,12 +108,8 @@ class Attribute:
                         "}"])
         return ret
     def get_key_arguments(self, const):
-        if const:
-            return [self.type+"Key "+self.nice_name,
-                    self.type+"Key "+self.nice_name+"_pf"]
-        else:
-            return ["internal::"+self.type+"LazyKey "+self.nice_name,
-                    "internal::"+self.type+"LazyKey "+self.nice_name+"_pf"]
+        return [self.type+"Key "+self.nice_name,
+                self.type+"Key "+self.nice_name+"_pf"]
     def get_key_pass(self, const):
         return [self.nice_name+"_",
                 self.nice_name+"_pf_"]
@@ -213,10 +190,7 @@ class SingletonRangeAttribute:
         self.attribute_name_begin=attribute_name_begin
         self.attribute_name_end=attribute_name_end
     def get_key_members(self, const):
-        if const:
-            return ["boost::array<"+self.type+"Key,2> "+self.nice_name+"_;"]
-        else:
-            return ["boost::array<internal::"+self.type+"LazyKey,2> "+self.nice_name+"_;"]
+        return ["boost::array<"+self.type+"Key,2> "+self.nice_name+"_;"]
     def get_methods(self, const):
         ret=[]
         ret.append(self.type+" get_"+self.nice_name+"() const {")
@@ -229,10 +203,7 @@ class SingletonRangeAttribute:
             ret.append("}")
         return ret
     def get_key_arguments(self, const):
-        if const:
-            return ["boost::array<"+self.type+"Key, 2> "+self.nice_name]
-        else:
-            return ["boost::array<internal::"+self.type+"LazyKey, 2> "+self.nice_name]
+        return ["boost::array<"+self.type+"Key, 2> "+self.nice_name]
     def get_key_pass(self, const):
         return [self.nice_name+"_"]
     def get_key_saves(self, const):
@@ -258,10 +229,7 @@ class RangeAttribute:
         self.attribute_name_begin=attribute_name_begin
         self.attribute_name_end=attribute_name_end
     def get_key_members(self, const):
-        if const:
-            return ["boost::array<"+self.type+"Key,2> "+self.nice_name+"_;"]
-        else:
-            return ["boost::array<internal::"+self.type+"LazyKey,2> "+self.nice_name+"_;"]
+        return ["boost::array<"+self.type+"Key,2> "+self.nice_name+"_;"]
     def get_methods(self, const):
         ret=[]
         ret.append(self.type+"Range get_"+self.nice_name+"() const {")
@@ -276,10 +244,7 @@ class RangeAttribute:
 
         return ret
     def get_key_arguments(self, const):
-        if const:
-            return ["boost::array<"+self.type+"Key, 2> "+self.nice_name]
-        else:
-            return ["boost::array<internal::"+self.type+"LazyKey, 2> "+self.nice_name]
+        return ["boost::array<"+self.type+"Key, 2> "+self.nice_name]
     def get_key_pass(self, const):
         return [self.nice_name+"_"]
     def get_key_saves(self, const):
@@ -301,12 +266,8 @@ class Attributes:
         self.ptype=ptype
         self.attribute_names=attribute_names
     def get_key_members(self, const):
-        if const:
-            return [self.type+"Keys "+self.nice_name+"_;",
-                    self.type+"Keys "+self.nice_name+"_pf_;"]
-        else:
-            return ["internal::"+self.type+"LazyKeys "+self.nice_name+"_;",
-                    "internal::"+self.type+"LazyKeys "+self.nice_name+"_pf_;"]
+        return [self.type+"Keys "+self.nice_name+"_;",
+                self.type+"Keys "+self.nice_name+"_pf_;"]
     def get_methods(self, const):
         ret=[]
         if not const:
@@ -334,12 +295,8 @@ class Attributes:
             "key":self.nice_name+"_"})
         return ret
     def get_key_arguments(self, const):
-        if const:
-            return [self.type+"Keys "+self.nice_name,
-                    self.type+"Keys "+self.nice_name+"_pf"]
-        else:
-            return ["internal::"+self.type+"LazyKeys "+self.nice_name,
-                    "internal::"+self.type+"LazyKeys "+self.nice_name+"_pf"]
+        return [self.type+"Keys "+self.nice_name,
+                self.type+"Keys "+self.nice_name+"_pf"]
     def get_key_pass(self, const):
         return [self.nice_name+"_", self.nice_name+"_pf_"]
     def get_key_saves(self, const):
@@ -734,7 +691,6 @@ print """/**
 #include <RMF/Factory.h>
 #include <RMF/constants.h>
 #include <RMF/internal/utility.h>
-#include <RMF/internal/lazy.h>
 #include <RMF/internal/paths.h>
 #include <boost/array.hpp>
 namespace RMF {

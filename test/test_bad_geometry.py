@@ -48,7 +48,7 @@ class GenericTest(unittest.TestCase):
         self.assert_(bn.get_has_value(rk))
         self.assertFalse(cn.get_has_value(rk))
         self.assertFalse(bns.get_has_value(rk))
-        radk=rmf.add_float_key(sc, "radius", False)
+        radk=rmf.get_float_key(sc, "radius", False)
         bns.set_value(radk, 3)
         #bd.set_radius(3)
         self.assert_(bn.get_has_value(rk))

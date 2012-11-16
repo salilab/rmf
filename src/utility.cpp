@@ -104,10 +104,9 @@ namespace RMF {
         vector<Key<TypeTraits> > cinkeys= in.get_keys<TypeTraits>(incats[i]);
         inkeys.insert(inkeys.end(), cinkeys.begin(), cinkeys.end());
         for (unsigned int j=0; j < cinkeys.size(); ++j) {
-          outkeys.push_back(get_key_always<TypeTraits>
-                            (out, outcats[i],
-                             in.get_name(cinkeys[j]),
-                             cinkeys[j].get_is_per_frame()));
+          outkeys.push_back(out.get_key<TypeTraits>(outcats[i],
+                                                    in.get_name(cinkeys[j]),
+                                                    cinkeys[j].get_is_per_frame()));
         }
       }
       copy_node_frame_type_node(in.get_root_node(), out.get_root_node(),

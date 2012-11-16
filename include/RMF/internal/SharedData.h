@@ -74,16 +74,12 @@ namespace RMF {
         set_value(node, k[i], v[i]);                                    \
       }                                                                 \
     }                                                                   \
-    virtual Key<Ucname##Traits>                                         \
-    add_##lcname##_key(Category category,                                 \
-                       std::string name,                                \
-                       bool per_frame) =0;                              \
     virtual vector<Key<Ucname##Traits> >                                \
     get_##lcname##_keys(Category category) const=0;                     \
     virtual Key<Ucname##Traits>                                         \
-    get_##lcname##_key(Category category,                                 \
+    get_##lcname##_key(Category category,                               \
                        std::string name,                                \
-                       bool per_frame) const=0;                         \
+                       bool per_frame) =0;                              \
     virtual std::string get_name(Key<Ucname##Traits> k) const =0
 
 
@@ -233,23 +229,19 @@ namespace RMF {
                         Category category) {                            \
       return p->get_##lcname##_keys(category);                          \
     }                                                                   \
-    static K get_key( const SharedData *p,                              \
-                      Category category,                                \
-                      std::string name,                                 \
-                      bool per_frame) {                                 \
-      return p->get_##lcname##_key(category,                            \
-                                   name,                                \
-                                   per_frame);                          \
-    }                                                                   \
     };                                                                  \
     template <>                                                         \
     class GenericSharedData<Ucname##Traits> {                           \
     public:                                                             \
     typedef Key<Ucname##Traits> K;                                      \
     typedef vector<K > Ks;                                              \
-    static K add_key(SharedData *p_, Category category,                 \
-                     std::string name, bool mf) {                       \
-      return p_->add_##lcname##_key(category, name, mf);                \
+    static K get_key( SharedData *p,                                    \
+                      Category category,                                \
+                      std::string name,                                 \
+                      bool per_frame) {                                 \
+      return p->get_##lcname##_key(category,                            \
+                                   name,                                \
+                                   per_frame);                          \
     }                                                                   \
     };
 

@@ -120,7 +120,7 @@ namespace RMF {
       if (category == Category()) {
         return Key<TypeT>();
       } else {
-        return internal::ConstGenericSharedData<TypeT>
+        return internal::GenericSharedData<TypeT>
           ::get_key(shared_.get(), category,
                     name,
                     per_frame);

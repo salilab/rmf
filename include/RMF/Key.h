@@ -56,7 +56,7 @@ public:
   Category get_category() const {
     return ci_;
   }
-  int get_index() const {
+  int get_id() const {
     return i_;
   }
 #endif

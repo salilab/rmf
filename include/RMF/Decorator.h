@@ -10,7 +10,6 @@
 #define RMF__DECORATOR_H
 
 #include <RMF/config.h>
-#include "internal/lazy.h"
 namespace RMF {
 
 /** Decorators in RMF provide high level routines to manipulate attributes

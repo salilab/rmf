@@ -79,17 +79,53 @@ namespace RMF {
       }
       node_names_.set(file_, get_node_name_data_set_name());
       node_data_[0].set(file_, get_node_data_data_set_name());
-      for (unsigned int i=0; i< 4; ++i) {
-        initialize_keys(i);
-      }
       initialize_categories();
       initialize_free_nodes();
+      initialize_keys(0);
       std::string frn=get_frame_name_data_set_name();
       frame_names_.set(file_, frn);
     }
 
-    void HDF5SharedData::initialize_keys(int i) {
-      std::string nm=get_set_data_data_set_name(i+1);
+#define RMF_LIST_KEYS(lcname, Ucname, PassValue, ReturnValue,           \
+                      PassValues, ReturnValues)                         \
+    for (int pf=0; pf<2; ++pf) {                                        \
+      bool per_frame=(pf==1);                                           \
+      HDF5DataSetCacheD<StringTraits, 1>& nameds                        \
+        = get_key_list_data_set<Ucname##Traits>(cats[i], 1,             \
+                                            per_frame);                 \
+      HDF5DataSetIndexD<1> sz= nameds.get_size();                       \
+      for (unsigned int j=0; j< sz[0]; ++j) {                           \
+        std::string name= nameds.get_value(HDF5DataSetIndexD<1>(j));    \
+        int id;                                                         \
+        NameKeyInnerMap::iterator it=name_key_map_[cats[i]].find(name); \
+        if (it == name_key_map_[cats[i]].end()) {                       \
+          id = key_data_map_.size();                                    \
+          name_key_map_[cats[i]][name]=id;                              \
+          key_data_map_[id].name=name;                                  \
+          key_data_map_[id].type_index=Ucname##Traits::get_index();     \
+          key_data_map_[id].per_frame_index=-1;                         \
+          key_data_map_[id].static_index=-1;                            \
+        } else {                                                        \
+          id= it->second;                                               \
+        }                                                               \
+        std::cout << "found key " << name << " in category "            \
+                  << get_category_name(cats[i])                         \
+                  << " given id " << id << std::endl;                   \
+        if (per_frame) {                                                \
+          key_data_map_[id].per_frame_index=j;                          \
+        } else {                                                        \
+          key_data_map_[id].static_index=j;                             \
+        }                                                               \
+      }                                                                 \
+    }                                                                   \
+
+
+
+    void HDF5SharedData::initialize_keys(int ) {
+      Categories cats= get_categories();
+      for (unsigned int i=0; i< cats.size(); ++i) {
+        RMF_FOREACH_TYPE(RMF_LIST_KEYS);
+      }
     }
 
     void HDF5SharedData::initialize_free_nodes() {
@@ -123,14 +159,13 @@ namespace RMF {
       RMF_BEGIN_OPERATION;
       open_things(create, read_only);
       link_category_= get_category("link");
+      link_key_= get_node_id_key(link_category_,
+                                 "linked", false);
       if (create) {
         add_node("root", ROOT);
       } else {
         RMF_USAGE_CHECK(get_name(0)=="root",
                         "Root node is not so named");
-        link_key_= get_node_id_key(link_category_,
-                                   "linked",
-                                   false);
       }
       RMF_END_OPERATION("initializing");
       RMF_END_FILE(get_file_name());
@@ -234,24 +269,12 @@ namespace RMF {
     void HDF5SharedData::add_child(int node, int child_node) {
       RMF_INTERNAL_CHECK(-1 != child_node,
                          "Bad child being added");
-      init_link();
       int link= add_child(node, "link", LINK);
       int link_category_index= get_category_index_create(link_category_);
-      set_value_impl<NodeIDTraits>(link, link_category_index,
-                                   link_key_.get_index(),
-                                   link_key_.get_is_per_frame(),
-                                   NodeID(child_node), -1);
+      set_value(link, link_key_,
+                NodeID(child_node));
       RMF_INTERNAL_CHECK(get_linked(link)== child_node,
                          "Return does not match");
-    }
-
-    void HDF5SharedData::init_link() {
-      if (link_key_== NodeIDKey()) {
-        link_key_= add_node_id_key(link_category_,
-                                   "linked", false);
-      }
-      RMF_INTERNAL_CHECK(link_key_ != NodeIDKey(),
-                         "Invalid link key after add");
     }
 
     int HDF5SharedData::get_linked(int node) const {
