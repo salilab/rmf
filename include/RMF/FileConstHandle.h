@@ -28,11 +28,6 @@
                      bool per_frame) const {                            \
     return get_key<UCName##Traits>(category_id, nm, per_frame);         \
   }                                                                     \
-  bool get_has_##lcname##_key(Category category_id,                     \
-                              std::string nm, bool per_frame) const {   \
-    return get_has_key<UCName##Traits>(category_id, nm,                 \
-                                       per_frame);                      \
-  }                                                                     \
   std::string get_name(UCName##Key k) const {                           \
     return shared_->get_name(k);                                        \
   }                                                                     \
@@ -139,19 +134,6 @@ namespace RMF {
         }
       }
       return ret;
-    }
-    template <class TypeT>
-      bool get_has_key(Category category_id,
-                       std::string name, bool per_frame) const {
-      return get_key<TypeT>(category_id, name, per_frame)
-        != Key<TypeT>();
-    }
-    /** Return true if it has all the passed keys as a block.*/
-    template <class TypeT>
-        bool get_has_keys(Category category_id,
-                       const Strings& names, bool per_frame) const {
-      return get_key<TypeT>(category_id, names[0], per_frame)
-          != Key<TypeT>();
     }
     /** Get a list of all keys of the given type,
      */

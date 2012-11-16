@@ -45,21 +45,13 @@ class Factory {
   Key<TypeTraits>
   get_key(FileConstHandle fh, Category cat, const char* name,
           bool per_frame) const {
-    if (fh.get_has_key<TypeTraits> (cat, name, per_frame)) {
-      return fh.get_key<TypeTraits>(cat, name, per_frame);
-    } else {
-      return Key<TypeTraits>();
-    }
+    return fh.get_key<TypeTraits>(cat, name, per_frame);
   }
   template <class TypeTraits>
   vector<Key<TypeTraits> >
   get_keys(FileConstHandle fh, Category cat, const Strings &names,
            bool per_frame) const {
-    if (fh.get_has_key<TypeTraits> (cat, names[0], per_frame)) {
-      return fh.get_keys<TypeTraits>(cat, names, per_frame);
-    } else {
-      return vector<Key<TypeTraits> >();
-    }
+    return fh.get_keys<TypeTraits>(cat, names, per_frame);
   }
  public:
   typedef DecoratorType Decorator;

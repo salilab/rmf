@@ -64,12 +64,8 @@ struct NonNegativeChecker {
     if (c != Category()) {
       catname_= rh.get_name(c);
       keyname_=name;
-      if (rh.get_has_key<FloatTraits>(c, name, false)) {
-        k_=rh.get_key<FloatTraits>(c, name, false);
-      }
-      if (rh.get_has_key<FloatTraits>(c, name, true)) {
-        pfk_=rh.get_key<FloatTraits>(c, name, true);
-      }
+      k_=rh.get_key<FloatTraits>(c, name, false);
+      pfk_=rh.get_key<FloatTraits>(c, name, true);
     }
   }
   void write_errors(NodeConstHandle node,
