@@ -112,15 +112,15 @@ namespace RMF {
 
 
     void AvroSharedData::flush() {
-      if (read_only_) return;
+      if (read_only_ || !dirty_) return;
       avro::DataFileWriter<RMF_internal::All>
-        rd(get_file_name().c_str(), get_all_schema());
+        rd(get_file_path().c_str(), get_all_schema());
       rd.write(all_);
       dirty_=false;
     }
     void AvroSharedData::reload() {
       avro::DataFileReader<RMF_internal::All>
-        rd(get_file_name().c_str(), get_all_schema());
+        rd(get_file_path().c_str(), get_all_schema());
       bool ok=rd.read(all_);
       if (!ok) {
         throw IOException("Can't read input file on reload");
@@ -132,13 +132,11 @@ namespace RMF {
     }
     void AvroSharedData::set_current_frame(int frame){
       SharedData::set_current_frame(frame);
-      all_.file.number_of_frames=std::max(all_.file.number_of_frames,
-                                          frame+1);
-      dirty_=true;
+      if (all_.file.number_of_frames < frame+1) {
+        all_.file.number_of_frames=frame+1;
+        dirty_=true;
+      }
     }
-
-
-
 
     void AvroSharedData::initialize_categories() {
       for (std::map<std::string, std::vector<RMF_internal::Data > >::const_iterator

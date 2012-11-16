@@ -82,11 +82,15 @@ namespace RMF {
         = all_.category.find(category);                                 \
       if (it== all_.category.end()                                      \
           || it->second.size() <= frame+1){                             \
+        RMF_INTERNAL_CHECK(empty_##lcname##_data_.empty(),              \
+                           "Empty is not empty");                       \
         return empty_##lcname##_data_;                                  \
       }                                                                 \
       std::map<std::string, RMF_internal::NodeData>::const_iterator     \
         nit= it->second[frame+1].nodes.find(get_node_string(node));      \
       if (nit == it->second[frame+1].nodes.end()) {                      \
+        RMF_INTERNAL_CHECK(empty_##lcname##_data_.empty(),              \
+                           "Empty is not empty");                       \
         return empty_##lcname##_data_;                                  \
       } else {                                                          \
         return nit->second.lcname##_data;                               \
@@ -160,27 +164,25 @@ namespace RMF {
     }                                                                   \
     vector<Key<Ucname##Traits> >                                        \
     get_##lcname##_keys(Category cat) {                                 \
-      vector<Key<Ucname##Traits> > ret;                                 \
+      set<Key<Ucname##Traits> > ret;                                    \
       std::string cat_name= get_category_name(cat);                     \
-       for (unsigned int node= 0; node < all_.nodes.size(); ++node) {   \
-         const Ucname##Data &data= get_frame_##lcname##_data(node,      \
-                                                             cat_name,  \
-                                                             get_current_frame()); \
-         for (Ucname##Data::const_iterator it= data.begin();            \
-              it != data.end(); ++it) {                                 \
-           ret.push_back(get_##lcname##_key(cat, it->first));           \
-         }                                                              \
-         const Ucname##Data &staticdata= get_frame_##lcname##_data(node, \
-                                                                   cat_name, \
-                                                                   ALL_FRAMES); \
-         for (Ucname##Data::const_iterator it= staticdata.begin();      \
-              it != staticdata.end(); ++it) {                           \
-           ret.push_back(get_##lcname##_key(cat, it->first));           \
-         }                                                              \
-       }                                                                \
-      std::sort(ret.begin(), ret.end());                                \
-      ret.erase(std::unique(ret.begin(), ret.end()), ret.end());        \
-      return ret;                                                       \
+      for (unsigned int node= 0; node < all_.nodes.size(); ++node) {    \
+        const Ucname##Data &data= get_frame_##lcname##_data(node,       \
+                                                            cat_name,   \
+                                                            get_current_frame()); \
+        for (Ucname##Data::const_iterator it= data.begin();             \
+             it != data.end(); ++it) {                                  \
+          ret.insert(get_##lcname##_key(cat, it->first));            \
+        }                                                               \
+        const Ucname##Data &staticdata= get_frame_##lcname##_data(node, \
+                                                                  cat_name, \
+                                                                  ALL_FRAMES); \
+        for (Ucname##Data::const_iterator it= staticdata.begin();       \
+             it != staticdata.end(); ++it) {                            \
+          ret.insert(get_##lcname##_key(cat, it->first));               \
+        }                                                               \
+      }                                                                 \
+      return vector<Key<Ucname##Traits> >(ret.begin(), ret.end());      \
     }                                                                   \
     Key<Ucname##Traits>                                                 \
     get_##lcname##_key(Category category,                               \
@@ -220,7 +222,7 @@ namespace RMF {
     Key<TypeTraits>
         get_key_helper(Category category,
                        std::string name) {
-        typename NameKeyInnerMap::iterator it
+        typename NameKeyInnerMap::const_iterator it
           = name_key_map_[category].find(name);
         if (it == name_key_map_[category].end()) {
           unsigned int id= key_data_map_.size();
@@ -228,9 +230,16 @@ namespace RMF {
           key_data_map_[id].category=category;
           key_data_map_[id].type_index=TypeTraits::get_index();
           name_key_map_[category][name]=id;
+          RMF_INTERNAL_CHECK(get_key_helper<TypeTraits>(category,
+                                                        name)
+                             == Key<TypeTraits>(id),
+                             "Keys don't match");
           return Key<TypeTraits>(id);
         } else {
-          return it->second;
+          int id= it->second;
+          RMF_INTERNAL_CHECK(name==it->first,
+                             "Odd names");
+          return Key<TypeTraits>(id);
         }
       }
 
@@ -240,6 +249,8 @@ namespace RMF {
 
       template <class TypeTraits>
         const std::string &get_key_string(Key<TypeTraits> k) const {
+        RMF_INTERNAL_CHECK(k.get_id() >=0,
+                           "Bad key");
         return key_data_map_.find(k.get_id())->second.name;
       }
 
