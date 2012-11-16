@@ -17,10 +17,7 @@
 #include <RMF/internal/AllJSON.h>
 
 namespace RMF {
-
-
   namespace internal {
-
 
 #define RMF_AVRO_SHARED_TYPE(lcname, Ucname, PassValue, ReturnValue,    \
                                    PassValues, ReturnValues)            \
@@ -49,28 +46,8 @@ namespace RMF {
     Category get_category(Key<Ucname##Traits> key) const {              \
     }
 
-
     class RMFEXPORT AvroSharedData: public SharedData {
-      RMF_internal::File file_;
-      bool file_data_dirty_;
-      RMF_internal::Hierarchy hierarchy_;
-      bool hierarchy_dirty_;
-      RMF_internal::Frames frames_;
-      bool frames_dirty_;
-      struct Data {
-        RMF_internal::Data frame_data_;
-        bool frame_data_dirty_;
-        RMF_internal::Data static_data_;
-        bool static_data_dirty_;
-        avro::DataFileReader<RMF_internal::Data> frame_data_reader_;
-        avro::DataFileWriter<RMF_internal::Data> frame_data_writer_;
-        RMF_internal::Keys keys_;
-        bool keys_dirty_;
-      };
-      map<int, Data> category_data_;
-      map<std::string, int> category_name_to_id_;
-      map<int, std::string> category_id_to_name_;
-      map<int, std::string> node_keys_;
+      RMF_internal::All file_;
 
       /*
       template <class Map, class Traits>
@@ -135,15 +112,12 @@ namespace RMF {
 
       AvroSharedData(std::string g, bool create);
       ~AvroSharedData();
-      RMF_FOREACH_TYPE(RMF_AVRO_SHARED_TYPE);
       void flush() const;
       //!
       std::string get_name(unsigned int node) const {
-         return hierarchy_.hierarchy.find(node)->name;
       }
       //!
       unsigned int get_type(unsigned int node) const {
-        return boost::lexical_cast<NodeType>(hierarchy_.hierarchy.find(node)->type);
       }
       int add_child(int node, std::string name, int t);
       void add_child(int node, int child_node);
@@ -151,26 +125,15 @@ namespace RMF {
       void save_frames_hint(int) {}
       //!
       unsigned int get_number_of_frames() const {
-        return file_.number_of_frames();
       }
       int add_category(std::string name);
       Categories get_categories() const;
       Category get_category(std::string name);
-      std::string get_category_name(Category kc) const  {
-        return category_data_map_.find(kc)->second.name;
-      }
+      std::string get_category_name(Category kc) const;
+      std::string get_description() const;
+      void set_description(std::string str);
 
-      std::string get_description() const {
-        return file_.description;
-      }
-      void set_description(std::string str) {
-        file_.description=str;
-        file_dirty_=true;
-      }
-
-      void set_frame_name(std::string str) {
-        return
-      }
+      void set_frame_name(std::string str);
       std::string get_frame_name() const;
 
       void reload();

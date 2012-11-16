@@ -15,9 +15,10 @@
 namespace RMF {
   namespace internal {
 
-    AvroSharedData::AvroSharedData(std::string g, bool create) {}
+    AvroSharedData::AvroSharedData(std::string g, bool create):
+      SharedData(g) {}
     AvroSharedData::~AvroSharedData() {}
-    void AvroSharedDataflush() const{}
+    void AvroSharedData::flush() const{}
     int AvroSharedData::add_child(int node, std::string name, int t){}
     void AvroSharedData::add_child(int node, int child_node){}
     Ints AvroSharedData::get_children(int node) const{}
@@ -25,12 +26,14 @@ namespace RMF {
     Categories AvroSharedData::get_categories() const{}
     Category AvroSharedData::get_category(std::string name){}
     std::string AvroSharedData::get_category_name(Category kc) const  {
-      return category_data_map_.find(kc)->second.name;
     }
 
     void AvroSharedData::set_frame_name(std::string str) {
      }
     std::string AvroSharedData::get_frame_name() const{}
+    std::string AvroSharedData::get_description() const {}
+    void AvroSharedData::set_description(std::string str) {}
+
 
     void AvroSharedData::reload(){}
     void AvroSharedData::set_current_frame(int frame){}
