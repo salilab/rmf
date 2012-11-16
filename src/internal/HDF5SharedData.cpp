@@ -105,6 +105,7 @@ namespace RMF {
           key_data_map_[id].type_index=Ucname##Traits::get_index();     \
           key_data_map_[id].per_frame_index=-1;                         \
           key_data_map_[id].static_index=-1;                            \
+          key_data_map_[id].category=cats[i];                           \
         } else {                                                        \
           id= it->second;                                               \
         }                                                               \

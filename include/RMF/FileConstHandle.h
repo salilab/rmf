@@ -37,7 +37,7 @@
     return shared_->get_name(k);                                        \
   }                                                                     \
   Category get_category(UCName##Key k) const {                          \
-    return k.get_category();                                            \
+    return shared_->get_category(k);                                    \
   }                                                                     \
   UCName##Key##s                                                        \
   get_##lcname##_keys(Category category_id) const {                     \

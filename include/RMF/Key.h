@@ -34,39 +34,31 @@ class Key {
   friend class internal::SharedData;
     friend class internal::HDF5SharedData;
   int i_;
-  Category ci_;
   bool pf_;
   int compare(const Key &o) const {
     if (i_ < o.i_) return -1;
     else if (i_ > o.i_) return 1;
-    else if (ci_ < o.ci_) return -1;
-    else if (ci_ > o.ci_) return 1;
     else if (pf_ == o.pf_) return 0;
     else if (!pf_) return 1;
     else return -1;
   }
 public:
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
-  Key(Category category_id,
-      int i, bool pf): i_(i), ci_(category_id),
+    Key(int i, bool pf): i_(i),
                        pf_(pf) {}
   bool get_is_per_frame() const {
     return pf_;
-  }
-  Category get_category() const {
-    return ci_;
   }
   int get_id() const {
     return i_;
   }
 #endif
   typedef TypeTraitsT TypeTraits;
-  Key(): i_(-1), ci_(), pf_(false) {}
-    RMF_SHOWABLE(Key, "(Category index: " << ci_
-                     << " per frame: " << (pf_?'T':'F')
-                     << " index: " << i_ << ")");
+  Key(): i_(-1), pf_(false) {}
+    RMF_SHOWABLE(Key, "(per frame: " << (pf_?'T':'F')
+                     << " id: " << i_ << ")");
   RMF_COMPARISONS(Key);
-  RMF_HASHABLE(Key, return i_*ci_.get_id());
+  RMF_HASHABLE(Key, return i_);
 };
 
 

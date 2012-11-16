@@ -76,6 +76,8 @@ namespace RMF {
     }                                                                   \
     virtual vector<Key<Ucname##Traits> >                                \
     get_##lcname##_keys(Category category) const=0;                     \
+    virtual Category                                                    \
+    get_category(Key<Ucname##Traits> k) const=0;                        \
     virtual Key<Ucname##Traits>                                         \
     get_##lcname##_key(Category category,                               \
                        std::string name,                                \

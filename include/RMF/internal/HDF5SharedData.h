@@ -78,7 +78,11 @@ namespace RMF {
     }                                                                   \
     std::string get_name(Key<Ucname##Traits> k) const {                 \
       return key_data_map_.find(k.get_id())->second.name;               \
+    }                                                                   \
+    Category get_category(Key<Ucname##Traits> key) const {              \
+      return key_data_map_.find(key.get_id())->second.category;         \
     }
+
 
 
     class RMFEXPORT HDF5SharedData: public SharedData {
@@ -307,7 +311,7 @@ namespace RMF {
     template <class TypeTraits>
       typename TypeTraits::Type get_value_helper(unsigned int node,
                                                  Key<TypeTraits> k) const {
-      int category_index= get_category_index(k.get_category());
+      int category_index= get_category_index(get_category(k));
       if (category_index==-1) {
         return TypeTraits::get_null_value();
       }
@@ -324,7 +328,7 @@ namespace RMF {
     template <class TypeTraits>
       typename TypeTraits::Types get_all_values_helper(unsigned int node,
                                                        Key<TypeTraits> k)  {
-      int category_index= get_category_index(k.get_category());
+      int category_index= get_category_index(get_category(k));
       if (category_index==-1) {
         return typename TypeTraits::Types();
       }
@@ -341,7 +345,7 @@ namespace RMF {
     void set_value_helper(unsigned int node,
                           Key<TypeTraits> k,
                           typename TypeTraits::Type v) {
-      int category_index= get_category_index_create(k.get_category());
+      int category_index= get_category_index_create(get_category(k));
       int key_index= get_key_index_create(k);
       set_value_impl<TypeTraits>(node,
                                  category_index,
@@ -368,12 +372,13 @@ namespace RMF {
         key_data_map_[id].per_frame_index=-1;
         key_data_map_[id].static_index=-1;
         key_data_map_[id].type_index=TypeTraits::get_index();
-        return Key<TypeTraits>(category, id, per_frame);
+        key_data_map_[id].category=category;
+        return Key<TypeTraits>(id, per_frame);
       } else {
         RMF_USAGE_CHECK(key_data_map_.find(it->second)->second.type_index
                       == TypeTraits::get_index(),
         "Key already defined with a different type in that category.");
-        return Key<TypeTraits>(category, it->second, per_frame);
+        return Key<TypeTraits>(it->second, per_frame);
       }
     }
 
@@ -665,40 +670,12 @@ namespace RMF {
                =oit->second.begin(); it != oit->second.end(); ++it) {
           if (key_data_map_.find(it->second)->second.type_index
               == TypeTraits::get_index()) {
-            ret.push_back(Key<TypeTraits>(cat, it->second, true));
-            ret.push_back(Key<TypeTraits>(cat, it->second, false));
+            ret.push_back(Key<TypeTraits>(it->second, true));
+            ret.push_back(Key<TypeTraits>(it->second, false));
           }
         }
         return ret;
       }
-
-      /*template <class TypeTraits>
-        std::string get_name_impl(unsigned int category_index,
-                                  unsigned int key_index,
-                                  bool per_frame) const {
-        HDF5DataSetCacheD<StringTraits, 1>& nameds
-          = get_key_list_data_set<TypeTraits>(category_index, 1,
-                                              per_frame);
-        HDF5DataSetIndexD<1> index(key_index);
-        return nameds.get_value(index);
-        }
-      template <class TypeTraits>
-        int get_key_impl(unsigned int category_index,
-                                     std::string name,
-                                     bool per_frame) const {
-        HDF5DataSetCacheD<StringTraits, 1>& nameds
-          = get_key_list_data_set<TypeTraits>(category_index, 1,
-                                              per_frame);
-        HDF5DataSetIndexD<1> size= nameds.get_size();
-        for (unsigned int j=0; j< size[0]; ++j) {
-          HDF5DataSetIndexD<1> index(j);
-          std::string cur=nameds.get_value(index);
-          if (cur== name) {
-            return j;
-          }
-        }
-        return -1;
-        }*/
 
       void initialize_keys(int i);
       void initialize_free_nodes();
@@ -758,7 +735,7 @@ namespace RMF {
         KeyDataMap::iterator it= key_data_map_.find(key.get_id());
         if (key.get_is_per_frame()) {
           if (it->second.per_frame_index==-1) {
-            int index= add_key_impl<TypeTraits>(key.get_category(),
+            int index= add_key_impl<TypeTraits>(get_category(key),
                                                 key_data_map_[key.get_id()].name,
                                                 true);
             it->second.per_frame_index=index;
@@ -768,7 +745,7 @@ namespace RMF {
           }
         } else {
           if (it->second.static_index==-1) {
-            int index= add_key_impl<TypeTraits>(key.get_category(),
+            int index= add_key_impl<TypeTraits>(get_category(key),
                                                 key_data_map_[key.get_id()].name,
                                                 false);
             it->second.static_index=index;
