@@ -83,7 +83,7 @@ namespace RMF {
                                    const vector<Key<TypeTraits> > &outkeys) {
       if (!in.get_has_association()) return;
       for (unsigned int i=0; i< inkeys.size(); ++i) {
-        if (in.get_has_value(inkeys[i])) {
+        if (in.get_has_frame_value(inkeys[i])) {
           out.set_value(outkeys[i], in.get_value(inkeys[i]));
         }
       }
@@ -105,8 +105,7 @@ namespace RMF {
         inkeys.insert(inkeys.end(), cinkeys.begin(), cinkeys.end());
         for (unsigned int j=0; j < cinkeys.size(); ++j) {
           outkeys.push_back(out.get_key<TypeTraits>(outcats[i],
-                                                    in.get_name(cinkeys[j]),
-                                                    cinkeys[j].get_is_per_frame()));
+                                                    in.get_name(cinkeys[j])));
         }
       }
       copy_node_frame_type_node(in.get_root_node(), out.get_root_node(),
@@ -205,7 +204,7 @@ namespace RMF {
                                           bool print_diff) {
       bool ret=true;
       for (unsigned int i=0; i< inkeys.size(); ++i) {
-        if (in.get_has_value(inkeys[i])
+        if (in.get_has_frame_value(inkeys[i])
             != out.get_has_value(outkeys[i])) {
           if (print_diff) {
             std::cout << "Node differ about having value "
@@ -213,7 +212,7 @@ namespace RMF {
                       << in << " and " << out << std::endl;
           }
           ret=false;
-        } else if (in.get_has_value(inkeys[i])
+        } else if (in.get_has_frame_value(inkeys[i])
                    && in.get_value(inkeys[i])
                    != out.get_value(outkeys[i])) {
           if (print_diff) {
@@ -245,8 +244,7 @@ namespace RMF {
         for (unsigned int j=0; j < cinkeys.size(); ++j) {
           outkeys.push_back(out.get_key<TypeTraits>
                             ( outcats[i],
-                              in.get_name(cinkeys[j]),
-                              cinkeys[j].get_is_per_frame()));
+                              in.get_name(cinkeys[j])));
         }
       }
       return get_equal_node_frame_type_node(in.get_root_node(),

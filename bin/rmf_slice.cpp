@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
     RMF::FileConstHandle rh= RMF::open_rmf_file_read_only(input);
     RMF::FileHandle orh= RMF::create_rmf_file(output);
     RMF::copy_structure(rh, orh);
-
+    RMF::copy_frame(rh, orh, RMF::ALL_FRAMES, RMF::ALL_FRAMES);
     RMF_FOR_EACH_FRAME(rh.get_number_of_frames()) {
       RMF::copy_frame(rh, orh, current_frame, frame_iteration);
     }

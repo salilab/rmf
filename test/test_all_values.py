@@ -14,7 +14,7 @@ class GenericTest(unittest.TestCase):
         r= f.get_root_node()
         print r.get_type()
         sc= f.get_category("sequence")
-        ik= f.get_int_key(sc, "ik0", True)
+        ik= f.get_int_key(sc, "ik0")
         f.set_current_frame(0)
         r.set_value(ik, 1)
         f.set_current_frame(1)

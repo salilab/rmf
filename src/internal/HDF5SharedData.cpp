@@ -161,7 +161,7 @@ namespace RMF {
       open_things(create, read_only);
       link_category_= get_category("link");
       link_key_= get_node_id_key(link_category_,
-                                 "linked", false);
+                                 "linked");
       if (create) {
         add_node("root", ROOT);
       } else {

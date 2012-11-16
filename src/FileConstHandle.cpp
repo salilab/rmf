@@ -8,6 +8,8 @@
 
 #include <RMF/FileConstHandle.h>
 #include <RMF/internal/SharedData.h>
+#include <RMF/Validator.h>
+#include <boost/ptr_container/ptr_vector.hpp>
 
 namespace RMF {
 
@@ -63,8 +65,18 @@ bool FileConstHandle::set_is_locked(bool tf) {
 }
 
 
-void FileConstHandle::validate(std::ostream &out=std::cerr) const {
-  get_shared_data()->validate(out);
+void FileConstHandle::validate(std::ostream &out=std::cerr) {
+  Creators cs= get_validators();
+  boost::ptr_vector<Validator> validators;
+  for (unsigned int i=0; i< cs.size(); ++i) {
+    validators.push_back(cs[i]->create(*this));
+  }
+  for ( int frame=-1; frame < get_number_of_frames(); ++frame) {
+    set_current_frame(frame);
+    for (unsigned int i=0; i< cs.size(); ++i) {
+      validators[i].write_errors(out);
+    }
+  }
 }
 
 void FileConstHandle::reload() {

@@ -64,6 +64,8 @@ namespace RMF {
       set_current_frame(start_frame);                                   \
       return ret;                                                       \
     }                                                                   \
+    virtual bool get_has_frame_value(unsigned int node,                 \
+                                     Key<Ucname##Traits> k) const =0;   \
     virtual void set_value(unsigned int node,                           \
                            Key<Ucname##Traits> k,                       \
                            Ucname##Traits::Type v) =0;                  \
@@ -80,8 +82,7 @@ namespace RMF {
     get_category(Key<Ucname##Traits> k) const=0;                        \
     virtual Key<Ucname##Traits>                                         \
     get_##lcname##_key(Category category,                               \
-                       std::string name,                                \
-                       bool per_frame) =0;                              \
+                       std::string name) =0;                            \
     virtual std::string get_name(Key<Ucname##Traits> k) const =0
 
 
@@ -107,10 +108,6 @@ namespace RMF {
     public:
       std::string get_file_path() const {
         return path_;
-      }
-      template <class TypeTraits>
-      bool get_is_per_frame(Key<TypeTraits> k) const {
-        return k.get_is_per_frame();
       }
       int get_current_frame() const {
         return cur_frame_;
@@ -210,7 +207,6 @@ namespace RMF {
       virtual bool get_supports_locking() const {return false;}
       virtual bool set_is_locked(bool) {return false;}
       virtual void reload()=0;
-      void validate(std::ostream &out) const;
     };
 
     template <class Traits>
@@ -239,11 +235,9 @@ namespace RMF {
     typedef vector<K > Ks;                                              \
     static K get_key( SharedData *p,                                    \
                       Category category,                                \
-                      std::string name,                                 \
-                      bool per_frame) {                                 \
+                      std::string name) {                               \
       return p->get_##lcname##_key(category,                            \
-                                   name,                                \
-                                   per_frame);                          \
+                                   name);                               \
     }                                                                   \
     };
 

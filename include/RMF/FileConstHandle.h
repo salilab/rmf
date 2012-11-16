@@ -24,9 +24,8 @@
                                              ReturnValues)              \
   UCName##Key                                                           \
   get_##lcname##_key(Category category_id,                              \
-                     std::string nm,                                    \
-                     bool per_frame) const {                            \
-    return get_key<UCName##Traits>(category_id, nm, per_frame);         \
+                     std::string nm) const {                            \
+    return get_key<UCName##Traits>(category_id, nm);                    \
   }                                                                     \
   std::string get_name(UCName##Key k) const {                           \
     return shared_->get_name(k);                                        \
@@ -37,11 +36,7 @@
   UCName##Key##s                                                        \
   get_##lcname##_keys(Category category_id) const {                     \
     return get_keys<UCName##Traits>(category_id);                       \
-  }                                                                     \
-  bool get_is_per_frame(UCName##Key k) const {                          \
-    return shared_->get_is_per_frame(k);                                \
   }
-
 
 
 
@@ -111,23 +106,21 @@ namespace RMF {
     */
     template <class TypeT>
       Key<TypeT> get_key(Category category,
-                         std::string name, bool per_frame) const {
+                         std::string name) const {
       if (category == Category()) {
         return Key<TypeT>();
       } else {
         return internal::GenericSharedData<TypeT>
           ::get_key(shared_.get(), category,
-                    name,
-                    per_frame);
+                    name);
       }
     }
     template <class TypeT>
       vector<Key<TypeT> > get_keys(Category category_id,
-                                   const Strings& names,
-                                   bool per_frame) const {
+                                   const Strings& names) const {
       vector<Key<TypeT> > ret(names.size());
       for (unsigned int i=0; i< names.size(); ++i) {
-        ret[i]= get_key<TypeT>(category_id, names[i], per_frame);
+        ret[i]= get_key<TypeT>(category_id, names[i]);
         if (ret[i]==Key<TypeT>()) {
           ret.clear();
           return ret;
@@ -274,7 +267,7 @@ namespace RMF {
     /** Run the various validators that attempt to check that the RMF file
         is correct. Print messages to the provided stream if errors are
         encounted.*/
-    void validate(std::ostream &out) const;
+    void validate(std::ostream &out);
 
     /** Reread the file.
         \note This may invalidate various thing (eg the number of nodes may

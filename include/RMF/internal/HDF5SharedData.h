@@ -18,6 +18,7 @@
 #include "HDF5DataSetCache1D.h"
 #include "HDF5DataSetCache3D.h"
 #include "../infrastructure_macros.h"
+#include "../constants.h"
 #include "map.h"
 #include "set.h"
 #include <boost/array.hpp>
@@ -66,15 +67,18 @@ namespace RMF {
                    Ucname##Traits::Type v) {                            \
       return set_value_helper<Ucname##Traits>(node, k, v);              \
     }                                                                   \
+    bool get_has_frame_value(unsigned int node,                         \
+                             Key<Ucname##Traits> k) const {             \
+      return get_has_frame_value_helper(node, k);                       \
+    }                                                                   \
     vector<Key<Ucname##Traits> >                                        \
     get_##lcname##_keys(Category category) const {                      \
       return get_keys_helper<Ucname##Traits>(category);                 \
     }                                                                   \
     Key<Ucname##Traits>                                                 \
     get_##lcname##_key(Category category,                               \
-                       std::string name,                                \
-                       bool per_frame) {                                \
-      return get_key_helper<Ucname##Traits>(category, name, per_frame); \
+                       std::string name) {                              \
+      return get_key_helper<Ucname##Traits>(category, name);            \
     }                                                                   \
     std::string get_name(Key<Ucname##Traits> k) const {                 \
       return key_data_map_.find(k.get_id())->second.name;               \
@@ -307,7 +311,28 @@ namespace RMF {
         return mx;
       }
 
-
+   template <class TypeTraits>
+     bool get_has_frame_value_helper(unsigned int node,
+                                     Key<TypeTraits> k) const {
+      int category_index= get_category_index(get_category(k));
+      if (category_index==-1) {
+        return false;
+      }
+      int key_index= get_key_index(k);
+      if (key_index ==-1) {
+        return false;
+      }
+      typename TypeTraits::Type ret= get_value_impl<TypeTraits>(node,
+                                                                category_index,
+                                                                key_index,
+                                                                get_current_frame()
+                                                                != ALL_FRAMES,
+                                                                get_current_frame());
+      if (ret== TypeTraits::get_null_value()) {
+        return false;
+      }
+      return true;
+    }
     template <class TypeTraits>
       typename TypeTraits::Type get_value_helper(unsigned int node,
                                                  Key<TypeTraits> k) const {
@@ -316,14 +341,28 @@ namespace RMF {
         return TypeTraits::get_null_value();
       }
       int key_index= get_key_index(k);
-      if (key_index ==-1) {
+      bool per_frame=(get_current_frame() != ALL_FRAMES);
+      if (key_index !=-1) {
+        typename TypeTraits::Type ret= get_value_impl<TypeTraits>(node,
+                                                                category_index,
+                                                                key_index,
+                                                                per_frame,
+                                                                get_current_frame());
+        if (ret != TypeTraits::get_null_value()) {
+          return ret;
+        }
+      }
+      if (per_frame) {
+        // check for a static value
+        key_index= get_key_index(k, false);
+        return get_value_impl<TypeTraits>(node,
+                                          category_index,
+                                          key_index,
+                                          false,
+                                          get_current_frame());
+      } else {
         return TypeTraits::get_null_value();
       }
-      return get_value_impl<TypeTraits>(node,
-                                            category_index,
-                                            key_index,
-                                            k.get_is_per_frame(),
-                                            get_current_frame());
     }
     template <class TypeTraits>
       typename TypeTraits::Types get_all_values_helper(unsigned int node,
@@ -332,14 +371,14 @@ namespace RMF {
       if (category_index==-1) {
         return typename TypeTraits::Types();
       }
-      int key_index= get_key_index(k);
+      // we always want the per-frame variant
+      int key_index= get_key_index(k, true);
       if (key_index ==-1) {
         return typename TypeTraits::Types();
       }
       return get_all_values_impl<TypeTraits>(node,
-                                                 category_index,
-                                                 key_index,
-                                                 k.get_is_per_frame());
+                                             category_index,
+                                             key_index);
     }
     template <class TypeTraits>
     void set_value_helper(unsigned int node,
@@ -350,7 +389,7 @@ namespace RMF {
       set_value_impl<TypeTraits>(node,
                                  category_index,
                                  key_index,
-                                 k.get_is_per_frame(),
+                                 get_current_frame()!= ALL_FRAMES,
                                  v, get_current_frame());
     }
     template <class TypeTraits>
@@ -361,8 +400,7 @@ namespace RMF {
     template <class TypeTraits>
     Key<TypeTraits>
     get_key_helper(Category category,
-                       std::string name,
-                       bool per_frame) {
+                   std::string name) {
       NameKeyInnerMap::iterator it
         = name_key_map_[category].find(name);
       if (it== name_key_map_[category].end()) {
@@ -373,24 +411,21 @@ namespace RMF {
         key_data_map_[id].static_index=-1;
         key_data_map_[id].type_index=TypeTraits::get_index();
         key_data_map_[id].category=category;
-        return Key<TypeTraits>(id, per_frame);
+        return Key<TypeTraits>(id);
       } else {
         RMF_USAGE_CHECK(key_data_map_.find(it->second)->second.type_index
                       == TypeTraits::get_index(),
         "Key already defined with a different type in that category.");
-        return Key<TypeTraits>(it->second, per_frame);
+        return Key<TypeTraits>(it->second);
       }
     }
 
       template <class TypeTraits>
         typename TypeTraits::Types get_all_values_impl(unsigned int node,
                                                        unsigned int category_index,
-                                                       unsigned int key_index,
-                                                       bool per_frame)
+                                                       unsigned int key_index)
         const {
         RMF_BEGIN_FILE
-          RMF_USAGE_CHECK(per_frame,
-                      "Using get_all_values on a key that is not per_frame.");
         int vi=get_index_from_cache<1>(node, category_index);
         if (IndexTraits::get_is_null_value(vi)) {
           RMF_BEGIN_OPERATION
@@ -670,8 +705,7 @@ namespace RMF {
                =oit->second.begin(); it != oit->second.end(); ++it) {
           if (key_data_map_.find(it->second)->second.type_index
               == TypeTraits::get_index()) {
-            ret.push_back(Key<TypeTraits>(it->second, true));
-            ret.push_back(Key<TypeTraits>(it->second, false));
+            ret.push_back(Key<TypeTraits>(it->second));
           }
         }
         return ret;
@@ -720,20 +754,25 @@ namespace RMF {
         return it->second.index;
       }
 
-
       template <class TypeTraits>
-        int get_key_index(Key<TypeTraits> key) const {
+        int get_key_index(Key<TypeTraits> key,
+                          bool per_frame) const {
         KeyDataMap::const_iterator it= key_data_map_.find(key.get_id());
-        if (key.get_is_per_frame()) {
+        if (per_frame) {
           return it->second.per_frame_index;
         } else {
           return it->second.static_index;
         }
       }
+
+      template <class TypeTraits>
+        int get_key_index(Key<TypeTraits> key) const {
+        return get_key_index(key, get_current_frame()!= ALL_FRAMES);
+      }
      template <class TypeTraits>
        int get_key_index_create(Key<TypeTraits> key) {
         KeyDataMap::iterator it= key_data_map_.find(key.get_id());
-        if (key.get_is_per_frame()) {
+        if (get_current_frame()!= ALL_FRAMES) {
           if (it->second.per_frame_index==-1) {
             int index= add_key_impl<TypeTraits>(get_category(key),
                                                 key_data_map_[key.get_id()].name,

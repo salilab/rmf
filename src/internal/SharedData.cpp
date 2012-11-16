@@ -8,7 +8,6 @@
 
 #include <RMF/internal/SharedData.h>
 #include <RMF/NodeHandle.h>
-#include <RMF/Validator.h>
 #include <RMF/internal/set.h>
 #include <RMF/HDF5File.h>
 #include <boost/filesystem/path.hpp>
@@ -97,14 +96,6 @@ namespace RMF {
 #endif
     }
 
-  void SharedData::validate(std::ostream &out) const {
-    Creators cs= get_validators();
-    for (unsigned int i=0; i< cs.size(); ++i) {
-      boost::scoped_ptr<Validator>
-          ptr(cs[i]->create(FileHandle(const_cast<SharedData*>(this))));
-      ptr->write_errors(out);
-    }
-  }
 
     // throws RMF::IOException if couldn't create file or unsupported file
     // format

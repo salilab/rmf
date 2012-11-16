@@ -1,27 +1,15 @@
 #!/usr/bin/python
-def get_string(type, name, const, per_frame=False):
-    if per_frame:
-        pfs="true"
-    else:
-        pfs="false"
+def get_string(type, name, const):
     return """P::get_key<%(type)sTraits>(fh,
     cat,
-          \"%(name)s\",
-                   %(pfs)s)"""%{ "name":name,
-                                                    "type": type,
-                                                    "pfs":pfs}
+          \"%(name)s\")"""%{ "name":name,
+                                 "type": type}
 
-def gets_string(type, name, const, per_frame=False):
-    if per_frame:
-        pfs="true"
-    else:
-        pfs="false"
-    return """P::get_keys<%(type)sTraits>(fh,
+def gets_string(type, name, const):
+   return """P::get_keys<%(type)sTraits>(fh,
                    cat,
-                    %(name)s,
-                    %(pfs)s)"""%{ "name":name,
-                                                   "type": type,
-                                                   "pfs":pfs}
+                    %(name)s)"""%{ "name":name,
+                                  "type": type}
 class Children:
     def __init__(self, nice_name):
         self.nice_name=nice_name
@@ -90,40 +78,33 @@ class Attribute:
         self.nice_name=nice_name
         self.attribute_name=attribute_name
     def get_key_members(self, const):
-        return [self.type+"Key "+self.nice_name+"_;",
-                self.type+"Key "+self.nice_name+"_pf_;"]
+        return [self.type+"Key "+self.nice_name+"_;"]
     def get_methods(self, const):
         ret=[]
         ret.extend([self.type+" get_"+self.nice_name+"() const {",
-                    "  return P::get_value("+self.nice_name+"_,",
-                    "                       "+self.nice_name+"_pf_);",
+                    "  return P::get_value("+self.nice_name+"_);",
                    "}"])
         ret.extend([self.plural_type+" get_all_"+self.nice_name+"s() const {",
-                    "  return P::get_all_values("+self.nice_name+"_pf_);",
+                    "  return P::get_all_values("+self.nice_name+"_);",
                    "}"])
         if not const:
             ret.extend(["void set_"+self.nice_name+"("+self.type+" v) {",
                         "  P::set_value("+self.nice_name+"_,",
-                        "            "+self.nice_name+"_pf_, v);",
+                        "            v);",
                         "}"])
         return ret
     def get_key_arguments(self, const):
-        return [self.type+"Key "+self.nice_name,
-                self.type+"Key "+self.nice_name+"_pf"]
+        return [self.type+"Key "+self.nice_name]
     def get_key_pass(self, const):
-        return [self.nice_name+"_",
-                self.nice_name+"_pf_"]
+        return [self.nice_name+"_"]
     def get_key_saves(self, const):
-        return [self.nice_name+"_("+self.nice_name+")",
-                self.nice_name+"_pf_("+self.nice_name+"_pf)"]
+        return [self.nice_name+"_("+self.nice_name+")"]
     def get_construct(self, const):
-        return [self.nice_name+"_="+get_string(self.type, self.attribute_name, const, False)+";",
-                self.nice_name+"_pf_="+get_string(self.type, self.attribute_name, const, True)+";"]
+        return [self.nice_name+"_="+get_string(self.type, self.attribute_name, const)+";"]
     def get_initialize(self, const):
         return []
     def get_check(self, const):
-        return ["""P::get_has_value(nh, %(nn)s_,
-                            %(nn)s_pf_)"""%{"nn":self.nice_name}]
+        return ["""P::get_has_value(nh, %(nn)s_)"""%{"nn":self.nice_name}]
 
 
 class NodeAttribute(Attribute):
@@ -137,20 +118,12 @@ class NodeAttribute(Attribute):
             nht= "NodeHandle"
         ret.extend([nht+" get_"+self.nice_name+"() const {",
                     "  NodeID id;",
-                    "  if (get_node().get_has_value("+self.nice_name+"_)) {",
                     "   id= get_node().get_value("+self.nice_name+"_);",
-                    "  } else {",
-                    "   id= get_node().get_value("+self.nice_name+"_pf_);",
-                    "  }",
                     "  return get_node().get_file().get_node_from_id(id);",
                     "}"])
         if not const:
             ret.extend(["void set_"+self.nice_name+"(NodeConstHandle v) {",
-                        "  if (get_frame() >=0) {",
-                        "    get_node().set_value("+self.nice_name+"_pf_, v.get_id());",
-                        "  } else {",
-                        "    return get_node().set_value("+self.nice_name+"_, v.get_id());",
-                        "  }",
+                        "    get_node().set_value("+self.nice_name+"_, v.get_id());",
                         "}"])
         return ret
 
@@ -161,11 +134,7 @@ class PathAttribute(Attribute):
         ret=[]
         ret.extend(["String get_"+self.nice_name+"() const {",
                     " String relpath;"
-                    " if (get_node().get_has_value("+self.nice_name+"_)) {",
                     "   relpath= get_node().get_value("+self.nice_name+"_);",
-                    "  } else {",
-                    "   relpath= get_node().get_value("+self.nice_name+"_pf_);",
-                    "  }",
                     "  String filepath=get_node().get_file().get_path();",
                     "  return internal::get_absolute_path(filepath, relpath);",
                     "}"])
@@ -173,20 +142,14 @@ class PathAttribute(Attribute):
             ret.extend(["void set_"+self.nice_name+"(String path) {",
                         "  String filename= get_node().get_file().get_path();",
                         "  String relpath= internal::get_relative_path(filename, path);",
-                        "  if (get_frame() >=0) {",
-                        "    get_node().set_value("+self.nice_name+"_pf_, relpath);",
-                        "  } else {",
                         "    return get_node().set_value("+self.nice_name+"_, relpath);",
-                        "  }",
                         "}"])
         return ret
 
 class SingletonRangeAttribute:
-    def __init__(self, type, nice_name, attribute_name_begin, attribute_name_end,
-                 per_frame=False):
+    def __init__(self, type, nice_name, attribute_name_begin, attribute_name_end):
         self.type=type
         self.nice_name=nice_name
-        self.per_frame=per_frame
         self.attribute_name_begin=attribute_name_begin
         self.attribute_name_end=attribute_name_end
     def get_key_members(self, const):
@@ -211,8 +174,8 @@ class SingletonRangeAttribute:
     def get_initialize(self, const):
         return []
     def get_construct(self, const):
-        return [self.nice_name+"_[0]="+get_string(self.type, self.attribute_name_begin, const, self.per_frame)+\
-            ";\n"+self.nice_name+"_[1]="+get_string(self.type, self.attribute_name_end, const, self.per_frame)+";"]
+        return [self.nice_name+"_[0]="+get_string(self.type, self.attribute_name_begin, const)+\
+            ";\n"+self.nice_name+"_[1]="+get_string(self.type, self.attribute_name_end, const)+";"]
     def get_check(self, const):
         return ["nh.get_has_value("+self.nice_name+"_[0])"+\
             "\n  && nh.get_has_value("+self.nice_name+"_[1])"+\
@@ -222,10 +185,9 @@ class SingletonRangeAttribute:
 
 class RangeAttribute:
     def __init__(self, type, nice_name, attribute_name_begin,
-                 attribute_name_end, per_frame=False):
+                 attribute_name_end):
         self.type=type
         self.nice_name=nice_name
-        self.per_frame=per_frame
         self.attribute_name_begin=attribute_name_begin
         self.attribute_name_end=attribute_name_end
     def get_key_members(self, const):
@@ -252,8 +214,8 @@ class RangeAttribute:
     def get_initialize(self, const):
         return []
     def get_construct(self, const):
-        return [self.nice_name+"_[0]="+get_string(self.type, self.attribute_name_begin, const, self.per_frame)+\
-            ";\n"+self.nice_name+"_[1]="+get_string(self.type, self.attribute_name_end, const, self.per_frame)+";"]
+        return [self.nice_name+"_[0]="+get_string(self.type, self.attribute_name_begin, const)+\
+            ";\n"+self.nice_name+"_[1]="+get_string(self.type, self.attribute_name_end, const)+";"]
     def get_check(self, const):
         return ["nh.get_has_value("+self.nice_name+"_[0])"+\
             "\n  && nh.get_has_value("+self.nice_name+"_[1])"+\
@@ -266,20 +228,19 @@ class Attributes:
         self.ptype=ptype
         self.attribute_names=attribute_names
     def get_key_members(self, const):
-        return [self.type+"Keys "+self.nice_name+"_;",
-                self.type+"Keys "+self.nice_name+"_pf_;"]
+        return [self.type+"Keys "+self.nice_name+"_;"]
     def get_methods(self, const):
         ret=[]
         if not const:
             ret.append("""%(ptype)s get_%(name)s() const {
-             return P::get_values(%(key)s, %(key)spf_);
+             return P::get_values(%(key)s);
            }"""%{"type":self.type,
             "ptype":self.ptype,
             "name":self.nice_name,
             "len":len(self.attribute_names),
             "key":self.nice_name+"_"})
             ret.append("""void set_%(name)s(const %(ptype)s &v) {
-           P::set_values(%(key)s, %(key)spf_, v);
+           P::set_values(%(key)s, v);
         }"""%{"type":self.type,
               "ptype":self.ptype,
               "name":self.nice_name,
@@ -287,7 +248,7 @@ class Attributes:
               "key":self.nice_name+"_"})
         else:
             ret.append("""%(ptype)s get_%(name)s() const {
-             return P::get_values(%(key)s, %(key)spf_);
+             return P::get_values(%(key)s);
            }"""%{"type":self.type,
             "ptype":self.ptype,
             "name":self.nice_name,
@@ -295,13 +256,11 @@ class Attributes:
             "key":self.nice_name+"_"})
         return ret
     def get_key_arguments(self, const):
-        return [self.type+"Keys "+self.nice_name,
-                self.type+"Keys "+self.nice_name+"_pf"]
+        return [self.type+"Keys "+self.nice_name]
     def get_key_pass(self, const):
-        return [self.nice_name+"_", self.nice_name+"_pf_"]
+        return [self.nice_name+"_"]
     def get_key_saves(self, const):
-        return [self.nice_name+"_("+self.nice_name+")",
-                self.nice_name+"_pf_("+self.nice_name+"_pf)"]
+        return [self.nice_name+"_("+self.nice_name+")"]
     def get_initialize(self, const):
         return []
     def get_construct(self, const):
@@ -313,15 +272,10 @@ class Attributes:
         ret.append("""      %(name)s_=%(get)s;"""%{"name":self.nice_name,
                                                    "get":gets_string(self.type,
                                                                      "%(name)s_names"%{"name":self.nice_name},
-                                                                     const, False)})
-        ret.append("""      %(name)s_pf_=%(get)s;"""%{"name":self.nice_name,
-                                                      "get":gets_string(self.type,
-                                                                        "%(name)s_names"%{"name":self.nice_name},
-                                                                        const, True)})
+                                                                     const)})
         return ret
     def get_check(self, const):
-        return ["""P::get_has_values(nh, %(nn)s_,
-                                     %(nn)s_pf_)"""%{"nn":self.nice_name}]
+        return ["""P::get_has_values(nh, %(nn)s_)"""%{"nn":self.nice_name}]
 
 # currently writing multiple plural attributes is not supported
 class PluralAttributes(Attributes):
@@ -330,15 +284,9 @@ class PluralAttributes(Attributes):
         if not const:
             ret.append("""%(ptype)s get_%(name)s() const {
          %(ptype)s ret(%(len)s);
-         if (get_node().get_has_value(%(key)s[0])) {
            for (unsigned int i=0; i< %(len)s; ++i) {
             ret[i]=get_node().get_value(%(key)s[i]);
            }
-         } else {
-           for (unsigned int i=0; i< %(len)s; ++i) {
-            ret[i]=get_node().get_value(%(key)spf_[i]);
-           }
-         }
          return ret;
       }"""%{"type":self.type,
             "ptype":self.ptype,
@@ -346,15 +294,9 @@ class PluralAttributes(Attributes):
             "len":len(self.attribute_names),
             "key":self.nice_name+"_"})
             ret.append("""void set_%(name)s(const %(ptype)s &v) {
-           if (get_frame()>=0) {
-             for (unsigned int i=0; i< %(len)s; ++i) {
-                get_node().set_value(%(key)spf_[i], v[i]);
-             }
-           } else {
              for (unsigned int i=0; i< %(len)s; ++i) {
                 get_node().set_value(%(key)s[i], v[i]);
              }
-           }
         }"""%{"type":self.type,
               "ptype":self.ptype,
               "name":self.nice_name,
@@ -363,15 +305,9 @@ class PluralAttributes(Attributes):
         else:
             ret.append("""%(ptype)s get_%(name)s() const {
          %(ptype)s ret(%(len)s);
-         if (!%(key)s.empty() && get_node().get_has_value(%(key)s[0])) {
            for (unsigned int i=0; i< %(len)s; ++i) {
             ret[i]=get_node().get_value(%(key)s[i]);
            }
-         } else {
-           for (unsigned int i=0; i< %(len)s; ++i) {
-            ret[i]=get_node().get_value(%(key)spf_[i]);
-           }
-         }
          return ret;
       }"""%{"type":self.type,
             "ptype":self.ptype,

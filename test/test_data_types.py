@@ -8,9 +8,9 @@ class GenericTest(unittest.TestCase):
         nh.set_value(k, v)
         vo= nh.get_value(k)
         self.assertEqual(vo, v)
-    def _do_test_types(self, f, pccc):
+    def _do_test_types(self, f):
         nh= f.get_root_node().add_child("testn", RMF.REPRESENTATION)
-        cat= f.get_category("mine"+str(pccc))
+        cat= f.get_category("mine")
         #g= f.get_hdf5_group()
         #print g
         #ds= g.add_child_float_data_set_2d("ds"+str(pccc))
@@ -25,15 +25,14 @@ class GenericTest(unittest.TestCase):
         self.assertEqual(len(lst),len(RMF.get_data_types())-3)
         for i, p in enumerate(lst):
             print p[0]
-            k = p[0](cat, "hi"+str(i), pccc)
+            k = p[0](cat, "hi"+str(i))
             self._do_test_type(nh, k, p[1])
     def test_data_types(self):
         """Test that the various data types work"""
         print "testing types"
         name=RMF._get_temporary_file_path("test_data_types.rmf")
         f= RMF.create_rmf_file(name)
-        self._do_test_types(f, False)
-        self._do_test_types(f, True)
+        self._do_test_types(f)
 
 if __name__ == '__main__':
     unittest.main()
