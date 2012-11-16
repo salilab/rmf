@@ -26,8 +26,9 @@ namespace RMF {
       } else {
         initialize_categories();
         initialize_node_keys();
+        all_.file.number_of_frames=0;
         // write to disk
-        dirty_=true;
+        add_child(-1, "root", ROOT);
         flush();
       }
     }
@@ -51,11 +52,15 @@ namespace RMF {
       all_.nodes.back().name=name;
       all_.nodes.back().type= boost::lexical_cast<std::string>(NodeType(t));
       all_.nodes.back().index=index;
-      add_child(node, index);
+      if (node >=0) {
+        add_child(node, index);
+      }
       std::ostringstream oss;
       oss << index;
       node_keys_.push_back(oss.str());
       dirty_=true;
+      RMF_INTERNAL_CHECK(get_type(index) ==t,
+                         "Types don't match");
       return index;
     }
     void AvroSharedData::add_child(int node, int child_node){
@@ -127,7 +132,8 @@ namespace RMF {
     }
     void AvroSharedData::set_current_frame(int frame){
       SharedData::set_current_frame(frame);
-      all_.file.number_of_frames=frame;
+      all_.file.number_of_frames=std::max(all_.file.number_of_frames,
+                                          frame+1);
       dirty_=true;
     }
 

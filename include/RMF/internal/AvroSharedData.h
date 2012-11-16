@@ -96,7 +96,7 @@ namespace RMF {
     access_frame_##lcname##_data(unsigned int node,                     \
                                  std::string category, int frame) {     \
       if (all_.category[category].size() <= frame+1) {                 \
-        all_.category[category].resize(frame+1);                       \
+        all_.category[category].resize(frame+2);                       \
       }                                                                 \
       return all_.category[category][frame+1].nodes[get_node_string(node)] \
         .lcname##_data;                                                 \
@@ -159,8 +159,28 @@ namespace RMF {
       return (it != data.end());                                        \
     }                                                                   \
     vector<Key<Ucname##Traits> >                                        \
-    get_##lcname##_keys(Category category) const {                      \
-      return vector<Key<Ucname##Traits> >();                            \
+    get_##lcname##_keys(Category cat) {                                 \
+      vector<Key<Ucname##Traits> > ret;                                 \
+      std::string cat_name= get_category_name(cat);                     \
+       for (unsigned int node= 0; node < all_.nodes.size(); ++node) {   \
+         const Ucname##Data &data= get_frame_##lcname##_data(node,      \
+                                                             cat_name,  \
+                                                             get_current_frame()); \
+         for (Ucname##Data::const_iterator it= data.begin();            \
+              it != data.end(); ++it) {                                 \
+           ret.push_back(get_##lcname##_key(cat, it->first));           \
+         }                                                              \
+         const Ucname##Data &staticdata= get_frame_##lcname##_data(node, \
+                                                                   cat_name, \
+                                                                   ALL_FRAMES); \
+         for (Ucname##Data::const_iterator it= staticdata.begin();      \
+              it != staticdata.end(); ++it) {                           \
+           ret.push_back(get_##lcname##_key(cat, it->first));           \
+         }                                                              \
+       }                                                                \
+      std::sort(ret.begin(), ret.end());                                \
+      ret.erase(std::unique(ret.begin(), ret.end()), ret.end());        \
+      return ret;                                                       \
     }                                                                   \
     Key<Ucname##Traits>                                                 \
     get_##lcname##_key(Category category,                               \

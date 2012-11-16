@@ -77,7 +77,7 @@ namespace RMF {
       }                                                                 \
     }                                                                   \
     virtual vector<Key<Ucname##Traits> >                                \
-    get_##lcname##_keys(Category category) const=0;                     \
+    get_##lcname##_keys(Category category)=0;                           \
     virtual Category                                                    \
     get_category(Key<Ucname##Traits> k) const=0;                        \
     virtual Key<Ucname##Traits>                                         \
@@ -223,16 +223,16 @@ namespace RMF {
     public:                                                             \
     typedef Key<Ucname##Traits> K;                                      \
     typedef vector<K > Ks;                                              \
-    static Ks get_keys( const SharedData *p,                            \
-                        Category category) {                            \
-      return p->get_##lcname##_keys(category);                          \
-    }                                                                   \
     };                                                                  \
     template <>                                                         \
     class GenericSharedData<Ucname##Traits> {                           \
     public:                                                             \
     typedef Key<Ucname##Traits> K;                                      \
     typedef vector<K > Ks;                                              \
+    static Ks get_keys(  SharedData *p,                                 \
+                        Category category) {                            \
+      return p->get_##lcname##_keys(category);                          \
+    }                                                                   \
     static K get_key( SharedData *p,                                    \
                       Category category,                                \
                       std::string name) {                               \

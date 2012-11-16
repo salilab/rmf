@@ -122,7 +122,7 @@ std::string get_type_name(NodeType t);
   RMFEXPORT std::ostream &operator<<(std::ostream &out,
                                      NodeType t);
   RMFEXPORT std::istream &operator>>(std::istream &in,
-                                     NodeType t);
+                                     NodeType &t);
 #endif
 
 

@@ -7,9 +7,9 @@ class GenericTest(unittest.TestCase):
     def _show(self, g):
         for i in range(0, g.get_number_of_children()):
             print i, g.get_child_name(i), g.get_child_is_group(i)
-    def _copy_to(self, last_frame):
+    def _copy_to(self, last_frame, suffix):
         nm= RMF._get_test_input_file_path("sink.rmf")
-        onm= RMF._get_temporary_file_path("sink_out.rmf")
+        onm= RMF._get_temporary_file_path("sink_out."+suffix)
         print nm, onm
         f= RMF.open_rmf_file_read_only(nm)
         of= RMF.create_rmf_file(onm)
@@ -27,8 +27,9 @@ class GenericTest(unittest.TestCase):
             self.assert_(RMF.get_equal_frame(f, of, True))
     def test_perturbed(self):
         """Test copying an rmf file"""
-        self._copy_to(-1)
-        self._copy_to(1)
+        for suffix in ["rmf", "rmf2"]:
+            self._copy_to(-1, suffix)
+            self._copy_to(1, suffix)
 
 if __name__ == '__main__':
     unittest.main()

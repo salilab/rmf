@@ -72,7 +72,7 @@ namespace RMF {
       return get_has_frame_value_helper(node, k);                       \
     }                                                                   \
     vector<Key<Ucname##Traits> >                                        \
-    get_##lcname##_keys(Category category) const {                      \
+    get_##lcname##_keys(Category category) {                            \
       return get_keys_helper<Ucname##Traits>(category);                 \
     }                                                                   \
     Key<Ucname##Traits>                                                 \
@@ -394,7 +394,7 @@ namespace RMF {
     }
     template <class TypeTraits>
     vector<Key<TypeTraits> >
-    get_keys_helper(Category category) const {
+    get_keys_helper(Category category) {
       return get_keys_impl<TypeTraits>(category);
     }
     template <class TypeTraits>
@@ -697,7 +697,7 @@ namespace RMF {
 
       template <class TypeTraits>
         vector<Key<TypeTraits> >
-        get_keys_impl(Category cat) const {
+        get_keys_impl(Category cat) {
         vector<Key<TypeTraits> > ret;
         typename NameKeyMap::const_iterator oit= name_key_map_.find(cat);
         if (oit== name_key_map_.end()) return ret;

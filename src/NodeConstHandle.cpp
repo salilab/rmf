@@ -43,10 +43,31 @@ std::string get_type_name(NodeType t) {
     return "feat";
   case ALIAS:
     return "alias";
+  case ORGANIZATIONAL:
+    return "organizational";
   default:
     return "unknown";
   }
 }
+
+  std::ostream &operator<<(std::ostream &out,
+                           NodeType t) {
+    out << get_type_name(t);
+    return out;
+  }
+   std::istream &operator>>(std::istream &in,
+                            NodeType &t) {
+     std::string token;
+     in >> token;
+     for (NodeType i=ROOT; i< LINK; i= NodeType(i+1)) {
+       if (token == get_type_name(i)) {
+         t= i;
+         return in;
+       }
+     }
+     t= CUSTOM;
+     return in;
+   }
 
 namespace {
   template <class Types, class Type>
@@ -282,25 +303,5 @@ void show_hierarchy_with_decorators(NodeConstHandle root,
                                           diffusercf, typedcf, frame,
                            prefix0+"   "));
 }
-
-
-  std::ostream &operator<<(std::ostream &out,
-                           NodeType t) {
-    using std::operator<<;
-    return out << get_type_name(t);
-  }
-  std::istream &operator>>(std::istream &in,
-                           NodeType t) {
-    std::string str;
-    in >> str;
-    for (NodeType i=ROOT; i<= LINK; i= NodeType(i+1)) {
-      if (get_type_name(i)== str) {
-        t= i;
-        break;
-      }
-    }
-    return in;
-  }
-
 
 } /* namespace RMF */
