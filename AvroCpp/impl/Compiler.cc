@@ -332,7 +332,8 @@ AVRO_DECL bool compileJsonSchema(std::istream &is, ValidSchema &schema, std::str
 }
 
 AVRO_DECL ValidSchema compileJsonSchemaFromFile(const char* filename) {
-
+  std::auto_ptr<InputStream> is= fileInputStream(filename);
+  return compileJsonSchemaFromStream(*is);
 }
 
 } // namespace avro
