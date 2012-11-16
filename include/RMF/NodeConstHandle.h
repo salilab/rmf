@@ -63,7 +63,11 @@ ReturnValues get_values(const UCName##Key##s& k) const {                \
                                                   shared_->get_name(k[0]))); \
   return get_values_always(k);                                          \
 }                                                                       \
-
+/** Return true if the node has data for that key that is specific
+    to the current frame, as opposed to static data.*/           \
+bool get_has_frame_value(UCName##Key k) const {                  \
+  return shared_->get_has_frame_value(node_, k);                 \
+}
 
 namespace RMF {
 

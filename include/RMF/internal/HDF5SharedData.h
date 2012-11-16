@@ -18,6 +18,7 @@
 #include "HDF5DataSetCache1D.h"
 #include "HDF5DataSetCache3D.h"
 #include "../infrastructure_macros.h"
+#include "../constants.h"
 #include "map.h"
 #include "set.h"
 #include <boost/array.hpp>
@@ -37,15 +38,15 @@ namespace RMF {
     DataDataSetCache3D<Ucname##Traits> per_frame_##lcname##_data_sets_; \
     HDF5DataSetCacheD<Ucname##Traits, 2>&                               \
     get_data_set_i(Ucname##Traits,                                      \
-                   int kc, int arity) const {                           \
+                   unsigned int kc, int arity) const {                  \
       return lcname##_data_sets_.get(file_, kc,                         \
-                                     get_category_name(kc),arity);      \
+                                     get_category_name_impl(kc),arity); \
     }                                                                   \
     HDF5DataSetCacheD<Ucname##Traits, 3>&                               \
     get_per_frame_data_set_i(Ucname##Traits,                            \
-                             int kc, int arity) const {                 \
+                             unsigned int kc, int arity) const {        \
       return per_frame_##lcname##_data_sets_.get(file_, kc,             \
-                                                 get_category_name(kc), \
+                                                 get_category_name_impl(kc), \
                                                  arity);                \
     }
 
@@ -55,32 +56,37 @@ namespace RMF {
                                    PassValues, ReturnValues)            \
     Ucname##Traits::Type get_value(unsigned int node,                   \
                                    Key<Ucname##Traits> k) const {       \
-      return get_value_impl(node, k, get_current_frame());              \
+      return get_value_helper<Ucname##Traits>(node, k);                 \
     }                                                                   \
     Ucname##Traits::Types get_all_values(unsigned int node,             \
                                          Key<Ucname##Traits> k)  {      \
-      return get_all_values_impl(node, k);                              \
+      return get_all_values_helper<Ucname##Traits>(node, k);            \
     }                                                                   \
     void set_value(unsigned int node,                                   \
                    Key<Ucname##Traits> k,                               \
                    Ucname##Traits::Type v) {                            \
-      return set_value_impl(node, k, v, get_current_frame());           \
+      return set_value_helper<Ucname##Traits>(node, k, v);              \
     }                                                                   \
-    Key<Ucname##Traits> add_##lcname##_key(int category_id,             \
-                                           std::string name,            \
-                                           bool per_frame) {            \
-      return add_key_impl<Ucname##Traits>(category_id,                  \
-                                          name, per_frame);             \
+    bool get_has_frame_value(unsigned int node,                         \
+                             Key<Ucname##Traits> k) const {             \
+      return get_has_frame_value_helper(node, k);                       \
     }                                                                   \
-    unsigned int                                                        \
-    get_number_of_##lcname##_keys(int category_id,                      \
-                                  bool per_frame) const {               \
-      return get_number_of_keys_impl<Ucname##Traits>(category_id,       \
-                                                     per_frame);        \
+    vector<Key<Ucname##Traits> >                                        \
+    get_##lcname##_keys(Category category) const {                      \
+      return get_keys_helper<Ucname##Traits>(category);                 \
+    }                                                                   \
+    Key<Ucname##Traits>                                                 \
+    get_##lcname##_key(Category category,                               \
+                       std::string name) {                              \
+      return get_key_helper<Ucname##Traits>(category, name);            \
     }                                                                   \
     std::string get_name(Key<Ucname##Traits> k) const {                 \
-      return get_name_impl(k);                                          \
+      return key_data_map_.find(k.get_id())->second.name;               \
+    }                                                                   \
+    Category get_category(Key<Ucname##Traits> key) const {              \
+      return key_data_map_.find(key.get_id())->second.category;         \
     }
+
 
 
     class RMFEXPORT HDF5SharedData: public SharedData {
@@ -91,12 +97,36 @@ namespace RMF {
       bool read_only_;
       HDF5DataSetCacheD<StringTraits, 1> node_names_;
       HDF5DataSetCacheD<StringTraits, 1> frame_names_;
-      boost::array<HDF5DataSetCacheD<StringTraits, 1>, 4> category_names_;
+      HDF5DataSetCacheD<StringTraits, 1> category_names_;
       boost::array<HDF5DataSetCacheD<IndexTraits, 2>, 4> node_data_;
-      boost::array<Ints,4> free_ids_;
+      Ints free_ids_;
       unsigned int frames_hint_;
 
-      int link_category_;
+      struct CategoryData {
+        int index;
+        std::string name;
+      };
+
+      typedef map<Category, CategoryData> CategoryDataMap;
+      CategoryDataMap category_data_map_;
+      typedef map<std::string, Category> NameCategoryMap;
+      NameCategoryMap name_category_map_;
+
+      struct KeyData {
+        int static_index, per_frame_index;
+        std::string name;
+        Category category;
+        int type_index;
+      };
+
+      typedef map<unsigned int, KeyData> KeyDataMap;
+      KeyDataMap key_data_map_;
+      typedef  map<std::string, unsigned int> NameKeyInnerMap;
+      typedef map<Category,NameKeyInnerMap > NameKeyMap;
+      NameKeyMap name_key_map_;
+
+
+      Category link_category_;
       Key<NodeIDTraits> link_key_;
 
       // caches
@@ -121,13 +151,13 @@ namespace RMF {
       public:
         DataDataSetCache3D(): frame_(0) {}
         HDF5DataSetCacheD<TypeTraits,3>& get(HDF5Group file,
-                                             unsigned int kc,
+                                             unsigned int category_index,
                                              std::string kcname,
                                              int arity) const {
           bool found=true;
-          if (cache_.size() <= kc) {
+          if (cache_.size() <= category_index) {
             found=false;
-          } else if (cache_.is_null(kc)) {
+          } else if (cache_.is_null(category_index)) {
             found=false;
           }
           if (!found) {
@@ -135,12 +165,13 @@ namespace RMF {
                                                   TypeTraits::get_name(),
                                                   true);
             cache_.resize(std::max(cache_.size(),
-                                   static_cast<size_t>(kc+1)), NULL);
-            cache_.replace(kc, new DS());
-            cache_[kc].set_current_frame(frame_);
-            cache_[kc].set(file, nm);
+                                   static_cast<size_t>(category_index+1)),
+                          NULL);
+            cache_.replace(category_index, new DS());
+            cache_[category_index].set_current_frame(frame_);
+            cache_[category_index].set(file, nm);
           }
-          return cache_[kc];
+          return cache_[category_index];
         }
         void set_current_frame(unsigned int f) {
           frame_=f;
@@ -157,13 +188,13 @@ namespace RMF {
         mutable boost::ptr_vector<boost::nullable<DS> > cache_;
       public:
         HDF5DataSetCacheD<TypeTraits,2>& get(HDF5Group file,
-                                             unsigned int kc,
+                                             unsigned int category_index,
                                              std::string kcname,
                                              int arity) const {
           bool found=true;
-          if (cache_.size() <= kc) {
+          if (cache_.size() <= category_index) {
             found=false;
-          } else if (cache_.is_null(kc)) {
+          } else if (cache_.is_null(category_index)) {
             found=false;
           }
           if (!found) {
@@ -171,11 +202,12 @@ namespace RMF {
                                                   TypeTraits::get_name(),
                                                   false);
             cache_.resize(std::max(cache_.size(),
-                                   static_cast<size_t>(kc+1)), NULL);
-            cache_.replace(kc, new DS());
-            cache_[kc].set(file, nm);
+                                   static_cast<size_t>(category_index+1)),
+                          NULL);
+            cache_.replace(category_index, new DS());
+            cache_[category_index].set(file, nm);
           }
-          return cache_[kc];
+          return cache_[category_index];
         }
       };
       class KeyNameDataSetCache {
@@ -186,7 +218,7 @@ namespace RMF {
         mutable vector<Pair > cache_;
       public:
         HDF5DataSetCacheD<StringTraits, 1>& get(HDF5Group file,
-                                                unsigned int kc,
+                                                Category cat,
                                                 std::string kcname,
                                                 int Arity,
                                                 unsigned int type_index,
@@ -194,11 +226,11 @@ namespace RMF {
                                                 bool per_frame) const {
           int pfi= per_frame?1:0;
           bool found=true;
-          if (cache_.size() <= kc) {
+          if (cache_.size() <= cat.get_id()) {
             found=false;
-          } else if (cache_[kc][pfi].size() <= type_index) {
+          } else if (cache_[cat.get_id()][pfi].size() <= type_index) {
             found=false;
-          } else if (cache_[kc][pfi].is_null(type_index)) {
+          } else if (cache_[cat.get_id()][pfi].is_null(type_index)) {
             found=false;
           }
           if (!found) {
@@ -207,14 +239,15 @@ namespace RMF {
                                                        type_name,
                                                        per_frame);
             cache_.resize(std::max(cache_.size(),
-                                   static_cast<size_t>(kc+1)));
-            cache_[kc][pfi].resize(std::max(cache_[kc][pfi].size(),
+                                   static_cast<size_t>(cat.get_id()+1)));
+            cache_[cat.get_id()][pfi].resize(std::max(cache_[cat.get_id()]
+                                                        [pfi].size(),
                                             static_cast<size_t>(type_index+1)),
                                    NULL);
-            cache_[kc][pfi].replace(type_index, new DS());
-            cache_[kc][pfi][type_index].set(file, nm);
+            cache_[cat.get_id()][pfi].replace(type_index, new DS());
+            cache_[cat.get_id()][pfi][type_index].set(file, nm);
           }
-          return cache_[kc][pfi][type_index];
+          return cache_[cat.get_id()][pfi][type_index];
         }
       };
       mutable Ints max_cache_;
@@ -224,11 +257,11 @@ namespace RMF {
 
       template <class TypeTraits>
         HDF5DataSetCacheD<StringTraits, 1>&
-        get_key_list_data_set(unsigned int kc,
+        get_key_list_data_set(Category cat,
                               int arity,
                               bool per_frame) const {
-        return key_name_data_sets_[arity-1].get(file_, kc,
-                                                get_category_name(kc),
+        return key_name_data_sets_[arity-1].get(file_, cat,
+                                                get_category_name(cat),
                                                 arity,
                                                 TypeTraits::get_index(),
                                                 TypeTraits::get_name(),
@@ -237,58 +270,166 @@ namespace RMF {
 
       template <class TypeTraits>
         HDF5DataSetCacheD<TypeTraits, 2>&
-        get_data_data_set(unsigned int kc, int arity) const {
-        return get_data_set_i(TypeTraits(), kc, arity);
+        get_data_data_set(unsigned int category_index, int arity) const {
+        return get_data_set_i(TypeTraits(), category_index, arity);
       }
       template <class TypeTraits>
         HDF5DataSetCacheD<TypeTraits, 3>&
-        get_per_frame_data_data_set(unsigned int kc, int arity) const {
-        return get_per_frame_data_set_i(TypeTraits(), kc, arity);
+        get_per_frame_data_data_set(unsigned int category_index,
+                                    int arity) const {
+        return get_per_frame_data_set_i(TypeTraits(), category_index, arity);
       }
 
       enum Indexes {TYPE=0, CHILD=1, SIBLING=2, FIRST_KEY=3};
 
-      unsigned int get_index(int Arity, unsigned int kc) const {
+      unsigned int get_index(int Arity, unsigned int category_index) const {
         switch (Arity) {
         case 1:
-          return kc+FIRST_KEY;
+          return category_index+FIRST_KEY;
         default:
-          return 1+Arity+kc;
+          return 1+Arity+category_index;
         }
       }
       void check_node(unsigned int node) const;
       template <int Arity>
-        unsigned int get_column_maximum(unsigned int kc) const {
-        if (max_cache_.size() > kc
-            && max_cache_[kc]>-2) {
-          return max_cache_[kc];
+        unsigned int get_column_maximum(unsigned int category_index) const {
+        if (max_cache_.size() > category_index
+            && max_cache_[category_index]>-2) {
+          return max_cache_[category_index];
         }
         HDF5DataSetIndexD<2> sz= node_data_[Arity-1].get_size();
         int mx=-1;
-        int index= get_index(Arity, kc);
+        int index= get_index(Arity, category_index);
         for (unsigned int i=0; i< sz[0]; ++i) {
           mx= std::max(mx,
                        node_data_[Arity-1]
                        .get_value(HDF5DataSetIndexD<2>(i, index)));
         }
         max_cache_.resize(std::max(max_cache_.size(),
-                                   static_cast<size_t>(kc+1)), -2);
-        max_cache_[kc]=mx;
+                                   static_cast<size_t>(category_index+1)), -2);
+        max_cache_[category_index]=mx;
         return mx;
       }
 
+   template <class TypeTraits>
+     bool get_has_frame_value_helper(unsigned int node,
+                                     Key<TypeTraits> k) const {
+      int category_index= get_category_index(get_category(k));
+      if (category_index==-1) {
+        return false;
+      }
+      int key_index= get_key_index(k);
+      if (key_index ==-1) {
+        return false;
+      }
+      typename TypeTraits::Type ret= get_value_impl<TypeTraits>(node,
+                                                                category_index,
+                                                                key_index,
+                                                                get_current_frame()
+                                                                != ALL_FRAMES,
+                                                                get_current_frame());
+      if (ret== TypeTraits::get_null_value()) {
+        return false;
+      }
+      return true;
+    }
+    template <class TypeTraits>
+      typename TypeTraits::Type get_value_helper(unsigned int node,
+                                                 Key<TypeTraits> k) const {
+      int category_index= get_category_index(get_category(k));
+      if (category_index==-1) {
+        return TypeTraits::get_null_value();
+      }
+      int key_index= get_key_index(k);
+      bool per_frame=(get_current_frame() != ALL_FRAMES);
+      if (key_index !=-1) {
+        typename TypeTraits::Type ret= get_value_impl<TypeTraits>(node,
+                                                                category_index,
+                                                                key_index,
+                                                                per_frame,
+                                                                get_current_frame());
+        if (ret != TypeTraits::get_null_value()) {
+          return ret;
+        }
+      }
+      if (per_frame) {
+        // check for a static value
+        key_index= get_key_index(k, false);
+        return get_value_impl<TypeTraits>(node,
+                                          category_index,
+                                          key_index,
+                                          false,
+                                          get_current_frame());
+      } else {
+        return TypeTraits::get_null_value();
+      }
+    }
+    template <class TypeTraits>
+      typename TypeTraits::Types get_all_values_helper(unsigned int node,
+                                                       Key<TypeTraits> k)  {
+      int category_index= get_category_index(get_category(k));
+      if (category_index==-1) {
+        return typename TypeTraits::Types();
+      }
+      // we always want the per-frame variant
+      int key_index= get_key_index(k, true);
+      if (key_index ==-1) {
+        return typename TypeTraits::Types();
+      }
+      return get_all_values_impl<TypeTraits>(node,
+                                             category_index,
+                                             key_index);
+    }
+    template <class TypeTraits>
+    void set_value_helper(unsigned int node,
+                          Key<TypeTraits> k,
+                          typename TypeTraits::Type v) {
+      int category_index= get_category_index_create(get_category(k));
+      int key_index= get_key_index_create(k);
+      set_value_impl<TypeTraits>(node,
+                                 category_index,
+                                 key_index,
+                                 get_current_frame()!= ALL_FRAMES,
+                                 v, get_current_frame());
+    }
+    template <class TypeTraits>
+    vector<Key<TypeTraits> >
+    get_keys_helper(Category category) const {
+      return get_keys_impl<TypeTraits>(category);
+    }
+    template <class TypeTraits>
+    Key<TypeTraits>
+    get_key_helper(Category category,
+                   std::string name) {
+      NameKeyInnerMap::iterator it
+        = name_key_map_[category].find(name);
+      if (it== name_key_map_[category].end()) {
+        int id= key_data_map_.size();
+        name_key_map_[category][name]=id;
+        key_data_map_[id].name=name;
+        key_data_map_[id].per_frame_index=-1;
+        key_data_map_[id].static_index=-1;
+        key_data_map_[id].type_index=TypeTraits::get_index();
+        key_data_map_[id].category=category;
+        return Key<TypeTraits>(id);
+      } else {
+        RMF_USAGE_CHECK(key_data_map_.find(it->second)->second.type_index
+                      == TypeTraits::get_index(),
+        "Key already defined with a different type in that category.");
+        return Key<TypeTraits>(it->second);
+      }
+    }
+
       template <class TypeTraits>
         typename TypeTraits::Types get_all_values_impl(unsigned int node,
-                                                      Key<TypeTraits> k)
+                                                       unsigned int category_index,
+                                                       unsigned int key_index)
         const {
         RMF_BEGIN_FILE
-          RMF_USAGE_CHECK(k.get_is_per_frame(),
-                      "Using get_all_values on a key that is not per_frame.");
-        unsigned int kc=k.get_category().get_index();
-        int vi=get_index_from_cache<1>(node, kc);
+        int vi=get_index_from_cache<1>(node, category_index);
         if (IndexTraits::get_is_null_value(vi)) {
           RMF_BEGIN_OPERATION
-          int index= get_index(1, kc);
+          int index= get_index(1, category_index);
           HDF5DataSetIndexD<2> nsz= node_data_[1-1].get_size();
           RMF_USAGE_CHECK(static_cast<unsigned int>(nsz[0]) > node,
                               "Invalid node used");
@@ -300,21 +441,21 @@ namespace RMF {
           if (IndexTraits::get_is_null_value(vi)) {
             return typename TypeTraits::Types();
           } else {
-            add_index_to_cache<1>(node, kc, vi);
+            add_index_to_cache<1>(node, category_index, vi);
           }
           RMF_END_OPERATION("getting value index");
         }
         {
           RMF_BEGIN_OPERATION
             HDF5DataSetCacheD<TypeTraits, 3> &ds
-            = get_per_frame_data_data_set<TypeTraits>(kc,
+            = get_per_frame_data_data_set<TypeTraits>(category_index,
                                                       1);
           HDF5DataSetIndexD<3> sz= ds.get_size();
           if (static_cast<hsize_t>(vi) >= sz[0]
-              || static_cast<hsize_t>(k.get_index()) >= sz[1]) {
+              || static_cast<hsize_t>(key_index) >= sz[1]) {
             return typename TypeTraits::Types();
           } else {
-            return ds.get_row(HDF5DataSetIndexD<2>(vi, k.get_index()));
+            return ds.get_row(HDF5DataSetIndexD<2>(vi, key_index));
           }
           RMF_END_OPERATION("fetching data from per frame data set");
         }
@@ -323,15 +464,15 @@ namespace RMF {
 
       template <class TypeTraits>
         typename TypeTraits::Type get_value_impl(unsigned int node,
-                                                 Key<TypeTraits> k,
+                                                 unsigned int category_index,
+                                                 unsigned int key_index,
+                                                 bool per_frame,
                                                  unsigned int frame) const {
         RMF_BEGIN_FILE
-        unsigned int kc=k.get_category().get_index();
-        bool per_frame= k.get_is_per_frame();
-        int vi=get_index_from_cache<1>(node, kc);
+        int vi=get_index_from_cache<1>(node, category_index);
         if (IndexTraits::get_is_null_value(vi)) {
           RMF_BEGIN_OPERATION
-          int index= get_index(1, kc);
+          int index= get_index(1, category_index);
           HDF5DataSetIndexD<2> nsz= node_data_[1-1].get_size();
           // deal with nodes added for sets
           if (static_cast<unsigned int>(nsz[0]) <= node) {
@@ -345,7 +486,7 @@ namespace RMF {
           if (IndexTraits::get_is_null_value(vi)) {
             return TypeTraits::get_null_value();
           } else {
-            add_index_to_cache<1>(node, kc, vi);
+            add_index_to_cache<1>(node, category_index, vi);
           }
           RMF_END_OPERATION("getting value index");
         }
@@ -353,29 +494,29 @@ namespace RMF {
           if (per_frame) {
             RMF_BEGIN_OPERATION
             HDF5DataSetCacheD<TypeTraits, 3> &ds
-              = get_per_frame_data_data_set<TypeTraits>(kc,
+              = get_per_frame_data_data_set<TypeTraits>(category_index,
                                                         1);
             HDF5DataSetIndexD<3> sz= ds.get_size();
             if (static_cast<hsize_t>(vi) >= sz[0]
-                || static_cast<hsize_t>(k.get_index()) >= sz[1]
+                || static_cast<hsize_t>(key_index) >= sz[1]
                 || (frame >= static_cast<unsigned int>(sz[2]))) {
               return TypeTraits::get_null_value();
             } else {
-              return ds.get_value(HDF5DataSetIndexD<3>(vi, k.get_index(),
+              return ds.get_value(HDF5DataSetIndexD<3>(vi, key_index,
                                                        frame));
             }
             RMF_END_OPERATION("fetching data from per frame data set")
           } else {
             RMF_BEGIN_OPERATION
             HDF5DataSetCacheD<TypeTraits,2> &ds
-              = get_data_data_set<TypeTraits>(kc,
+              = get_data_data_set<TypeTraits>(category_index,
                                               1);
             HDF5DataSetIndexD<2> sz= ds.get_size();
             if (static_cast<hsize_t>(vi) >= sz[0]
-                || static_cast<hsize_t>(k.get_index()) >= sz[1]) {
+                || static_cast<hsize_t>(key_index) >= sz[1]) {
               return TypeTraits::get_null_value();
             } else {
-              return ds.get_value(HDF5DataSetIndexD<2>(vi, k.get_index()));
+              return ds.get_value(HDF5DataSetIndexD<2>(vi, key_index));
             }
             RMF_END_OPERATION("fetching data from data set");
           }
@@ -383,45 +524,41 @@ namespace RMF {
         RMF_END_FILE(get_file_name());
       }
       template <class TypeTraits>
-        unsigned int get_number_of_frames(Key<TypeTraits> k) const {
-        unsigned int kc= k.get_category().get_index();
-        if (!get_is_per_frame(k)) {
-          RMF_THROW(get_error_message("Attribue ", get_name(k),
-                                          " does not have frames."),
-                        UsageException);
-          RMF_NO_RETURN(int);
-        } else {
-          HDF5DataSetCacheD<TypeTraits, 3> &ds
-            =get_per_frame_data_data_set<TypeTraits>(kc,
-                                                     1);
-          HDF5DataSetIndexD<3> sz= ds.get_size();
-          return sz[2];
-        }
+        unsigned int get_number_of_frames(unsigned int category_index) const {
+        HDF5DataSetCacheD<TypeTraits, 3> &ds
+          =get_per_frame_data_data_set<TypeTraits>(category_index,
+                                                   1);
+        HDF5DataSetIndexD<3> sz= ds.get_size();
+        return sz[2];
       }
       template <int Arity>
-          int get_index_from_cache(unsigned int node, unsigned int kc) const {
+          int get_index_from_cache(unsigned int node,
+                                   unsigned int category_index) const {
         if (index_cache_[Arity-1].size() <= node) return -1;
-        else if (index_cache_[Arity-1][node].size() <= kc) return -1;
-        return index_cache_[Arity-1][node][kc];
+        else if (index_cache_[Arity-1][node].size() <= category_index){
+          return -1;
+        }
+        return index_cache_[Arity-1][node][category_index];
       }
       template <int Arity>
-          void add_index_to_cache(unsigned int node, unsigned int kc,
-                                    int index) const {
+          void add_index_to_cache(unsigned int node,
+                                  unsigned int category_index,
+                                  int index) const {
         if (index_cache_[Arity-1].size() <= node) {
           index_cache_[Arity-1].resize(node+1, vector<int>());
         }
-        if (index_cache_[Arity-1][node].size() <= kc) {
-          index_cache_[Arity-1][node].resize(kc+1, -1);
+        if (index_cache_[Arity-1][node].size() <= category_index) {
+          index_cache_[Arity-1][node].resize(category_index+1, -1);
         }
-        index_cache_[Arity-1][node][kc] =index;
+        index_cache_[Arity-1][node][category_index] =index;
       }
 
       template <int Arity>
-        int get_index_set(unsigned int node, unsigned int kc) {
-        int vi=get_index_from_cache<Arity>(node, kc);
+        int get_index_set(unsigned int node, unsigned int category_index) {
+        int vi=get_index_from_cache<Arity>(node, category_index);
         if (vi==-1) {
           RMF_BEGIN_OPERATION;
-          unsigned int index= get_index(Arity, kc);
+          unsigned int index= get_index(Arity, category_index);
           HDF5DataSetIndexD<2> nsz= node_data_[Arity-1].get_size();
           RMF_USAGE_CHECK(static_cast<unsigned int>(nsz[0]) > node,
                               "Invalid node used");
@@ -438,12 +575,12 @@ namespace RMF {
           // now we have the index and the data set is there
           vi= node_data_[Arity-1].get_value(HDF5DataSetIndexD<2>(node, index));
           if (IndexTraits::get_is_null_value(vi)) {
-            vi= get_column_maximum<Arity>(kc)+1;
+            vi= get_column_maximum<Arity>(category_index)+1;
             node_data_[Arity-1].set_value(HDF5DataSetIndexD<2>(node,
                                                                index), vi);
-            max_cache_[kc]=vi;
+            max_cache_[category_index]=vi;
           }
-          add_index_to_cache<Arity>(node, kc, vi);
+          add_index_to_cache<Arity>(node, category_index, vi);
           RMF_END_OPERATION("figuring out where to store value");
         }
         return vi;
@@ -452,15 +589,18 @@ namespace RMF {
       template <class TypeTraits>
         void make_fit( HDF5DataSetCacheD<TypeTraits, 3> &ds,
                        int vi,
-                       Key<TypeTraits> k, unsigned int frame) {
+                       unsigned int category_index,
+                       unsigned int key_index,
+                       bool per_frame,
+                       unsigned int frame) {
         HDF5DataSetIndexD<3> sz= ds.get_size();
         bool delta=false;
         if (sz[0] <= static_cast<hsize_t>(vi)) {
           sz[0] = vi+1;
           delta=true;
         }
-        if (sz[1] <= static_cast<hsize_t>(k.get_index())) {
-          sz[1]= k.get_index()+1;
+        if (sz[1] <= static_cast<hsize_t>(key_index)) {
+          sz[1]= key_index+1;
           delta=true;
         }
         if (static_cast<unsigned int>(sz[2]) <= frame) {
@@ -474,15 +614,17 @@ namespace RMF {
       template <class TypeTraits>
         void make_fit( HDF5DataSetCacheD<TypeTraits, 2> &ds,
                        int vi,
-                       Key<TypeTraits> k) {
+                       unsigned int category_index,
+                       unsigned int key_index,
+                       bool per_frame) {
         HDF5DataSetIndexD<2> sz= ds.get_size();
         bool delta=false;
         if (sz[0] <= static_cast<hsize_t>(vi)) {
           sz[0] = vi+1;
           delta=true;
         }
-        if (sz[1] <= static_cast<hsize_t>(k.get_index())) {
-          sz[1]= k.get_index()+1;
+        if (sz[1] <= static_cast<hsize_t>(key_index)) {
+          sz[1]= key_index+1;
           delta=true;
         }
         if (delta) {
@@ -490,27 +632,28 @@ namespace RMF {
         }
       }
       template <class TypeTraits>
-        void set_value_impl(unsigned int node, Key<TypeTraits> k,
+        void set_value_impl(unsigned int node,
+                            unsigned int category_index,
+                            unsigned int key_index,
+                            bool per_frame,
                             typename TypeTraits::Type v, unsigned int frame) {
         RMF_USAGE_CHECK(!TypeTraits::get_is_null_value(v),
                         "Cannot write sentry value to an RMF file.");
-        unsigned int kc= k.get_category().get_index();
-        bool per_frame= get_is_per_frame(k);
-        int vi=get_index_set<1>(node, kc);
+        int vi=get_index_set<1>(node, category_index);
         if (per_frame) {
           RMF_BEGIN_OPERATION
             HDF5DataSetCacheD<TypeTraits, 3> &ds
-            =get_per_frame_data_data_set<TypeTraits>(kc,
+            =get_per_frame_data_data_set<TypeTraits>(category_index,
                                                      1);
-          make_fit(ds, vi, k, frame);
-          ds.set_value(HDF5DataSetIndexD<3>(vi, k.get_index(), frame), v);
+          make_fit(ds, vi, category_index, key_index, per_frame, frame);
+          ds.set_value(HDF5DataSetIndexD<3>(vi, key_index, frame), v);
           RMF_END_OPERATION("storing per frame value");
         } else {
           RMF_BEGIN_OPERATION
           HDF5DataSetCacheD<TypeTraits, 2> &ds
-            =get_data_data_set<TypeTraits>(kc, 1);
-          make_fit(ds, vi, k);
-          ds.set_value(HDF5DataSetIndexD<2>(vi, k.get_index()), v);
+            =get_data_data_set<TypeTraits>(category_index, 1);
+          make_fit(ds, vi, category_index, key_index, per_frame);
+          ds.set_value(HDF5DataSetIndexD<2>(vi, key_index), v);
           RMF_END_OPERATION("storing single value")
         }
         /*RMF_INTERNAL_CHECK(get_value(node, k, frame) ==v,
@@ -519,14 +662,14 @@ namespace RMF {
       }
 
       template <class TypeTraits>
-        Key<TypeTraits> add_key_impl(int category_id,
-                                       std::string name, bool per_frame) {
+        unsigned int add_key_impl(Category cat,
+                                  std::string name, bool per_frame) {
         audit_key_name(name);
         // check that it is unique
         RMF_BEGIN_OPERATION;
         {
           HDF5DataSetCacheD<StringTraits, 1> &nameds
-            = get_key_list_data_set<TypeTraits>(category_id, 1,
+            = get_key_list_data_set<TypeTraits>(cat, 1,
                                                 per_frame);
           unsigned int sz= nameds.get_size()[0];
           HDF5DataSetIndexD<1> index;
@@ -540,7 +683,7 @@ namespace RMF {
         RMF_END_OPERATION("checking that key is unique");
         RMF_BEGIN_OPERATION;
         HDF5DataSetCacheD<StringTraits, 1>& nameds
-          = get_key_list_data_set<TypeTraits>(category_id, 1,
+          = get_key_list_data_set<TypeTraits>(cat, 1,
                                               per_frame);
         HDF5DataSetIndexD<1> sz= nameds.get_size();
         int ret_index= sz[0];
@@ -548,51 +691,29 @@ namespace RMF {
         nameds.set_size(sz);
         --sz[0];
         nameds.set_value(sz, name);
-        return Key<TypeTraits>(category_id, ret_index, per_frame);
+        return ret_index;
         RMF_END_OPERATION("appending key to list")
       }
 
-      // create the data sets and add rows to the table
       template <class TypeTraits>
-        unsigned int
-        get_number_of_keys_impl(int category_id, bool per_frame) const {
-        HDF5DataSetCacheD<StringTraits, 1>& nameds
-          = get_key_list_data_set<TypeTraits>(category_id, 1,
-                                              per_frame);
-        HDF5DataSetIndexD<1> sz= nameds.get_size();
-        return sz[0];
-      }
-
-      template <class TypeTraits>
-        std::string get_name_impl(Key<TypeTraits> k) const {
-        unsigned int kc=k.get_category().get_index();
-        HDF5DataSetCacheD<StringTraits, 1>& nameds
-          = get_key_list_data_set<TypeTraits>(kc, 1,
-                                              k.get_is_per_frame());
-        HDF5DataSetIndexD<1> index(k.get_index());
-        return nameds.get_value(index);
-      }
-      template <class TypeTraits>
-        Key<TypeTraits> get_key_impl(int category_id,
-                                     std::string name,
-                                     bool per_frame) const {
-        HDF5DataSetCacheD<StringTraits, 1>& nameds
-          = get_key_list_data_set<TypeTraits>(category_id, 1,
-                                              per_frame);
-        HDF5DataSetIndexD<1> size= nameds.get_size();
-        for (unsigned int j=0; j< size[0]; ++j) {
-          HDF5DataSetIndexD<1> index(j);
-          std::string cur=nameds.get_value(index);
-          if (cur== name) {
-            return Key<TypeTraits>(category_id, j, per_frame);
+        vector<Key<TypeTraits> >
+        get_keys_impl(Category cat) const {
+        vector<Key<TypeTraits> > ret;
+        typename NameKeyMap::const_iterator oit= name_key_map_.find(cat);
+        if (oit== name_key_map_.end()) return ret;
+        for (NameKeyInnerMap::const_iterator it
+               =oit->second.begin(); it != oit->second.end(); ++it) {
+          if (key_data_map_.find(it->second)->second.type_index
+              == TypeTraits::get_index()) {
+            ret.push_back(Key<TypeTraits>(it->second));
           }
         }
-        return Key<TypeTraits>();
+        return ret;
       }
 
-      void initialize_categories(int i, bool create);
       void initialize_keys(int i);
       void initialize_free_nodes();
+      void initialize_categories();
 
       int get_first_child(unsigned int node) const;
       int get_sibling(unsigned int node) const;
@@ -613,7 +734,67 @@ namespace RMF {
       unsigned int get_set_member(int Arity, unsigned int index,
                                   int member_index) const;
       int get_linked(int node) const;
-      void init_link();
+      unsigned int add_category_impl(std::string name);
+      std::string get_category_name_impl(unsigned int category_index) const  {
+        RMF_USAGE_CHECK(category_names_.get_size()[0]
+                        > category_index,
+                        "No such category.");
+        return category_names_.get_value(category_index);
+      }
+
+      int get_category_index(Category cat) const {
+        CategoryDataMap::const_iterator it= category_data_map_.find(cat);
+        return it->second.index;
+      }
+      int get_category_index_create(Category cat) {
+        CategoryDataMap::iterator it= category_data_map_.find(cat);
+        if (it->second.index==-1) {
+          it->second.index=add_category_impl(it->second.name);
+        }
+        return it->second.index;
+      }
+
+      template <class TypeTraits>
+        int get_key_index(Key<TypeTraits> key,
+                          bool per_frame) const {
+        KeyDataMap::const_iterator it= key_data_map_.find(key.get_id());
+        if (per_frame) {
+          return it->second.per_frame_index;
+        } else {
+          return it->second.static_index;
+        }
+      }
+
+      template <class TypeTraits>
+        int get_key_index(Key<TypeTraits> key) const {
+        return get_key_index(key, get_current_frame()!= ALL_FRAMES);
+      }
+     template <class TypeTraits>
+       int get_key_index_create(Key<TypeTraits> key) {
+        KeyDataMap::iterator it= key_data_map_.find(key.get_id());
+        if (get_current_frame()!= ALL_FRAMES) {
+          if (it->second.per_frame_index==-1) {
+            int index= add_key_impl<TypeTraits>(get_category(key),
+                                                key_data_map_[key.get_id()].name,
+                                                true);
+            it->second.per_frame_index=index;
+            return index;
+          } else {
+            return it->second.per_frame_index;
+          }
+        } else {
+          if (it->second.static_index==-1) {
+            int index= add_key_impl<TypeTraits>(get_category(key),
+                                                key_data_map_[key.get_id()].name,
+                                                false);
+            it->second.static_index=index;
+            return index;
+          } else {
+            return it->second.static_index;
+          }
+        }
+      }
+
     public:
       RMF_FOREACH_TYPE(RMF_HDF5_SHARED_TYPE);
 
@@ -642,13 +823,10 @@ namespace RMF {
         frames_hint_=i;
       }
       unsigned int get_number_of_frames() const;
-      //
-      int add_category(std::string name);
-      unsigned int get_number_of_categories() const;
-      std::string get_category_name(unsigned int kc) const  {
-        RMF_USAGE_CHECK(category_names_[0].get_size()[0] > kc,
-                        "No such category.");
-        return category_names_[0].get_value(kc);
+      Categories get_categories() const;
+      Category get_category(std::string name);
+      std::string get_category_name(Category kc) const  {
+        return category_data_map_.find(kc)->second.name;
       }
 
       std::string get_description() const;
