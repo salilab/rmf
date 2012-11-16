@@ -37,11 +37,13 @@ class Key {
   int compare(const Key &o) const {
     if (i_ < o.i_) return -1;
     else if (i_ > o.i_) return 1;
-    else return -1;
+    else return 0;
   }
 public:
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
-    Key(int i): i_(i) {}
+    Key(int i): i_(i) {
+      RMF_USAGE_CHECK(i>=0, "Initialzing with invalid index");
+    }
   int get_id() const {
     return i_;
   }
