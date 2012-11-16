@@ -32,14 +32,42 @@ namespace RMF {
     typedef std::vector<int32_t> AvroNodeIDs;
 
     template <class Out, class In>
-    inline Out get_native_value(In in) {
-      return Out(in);
+    void avro_assign(Out &out, In in) {
+      out=in;
     }
 
-    template <class Out, class In>
-    inline Out get_native_value(const std::vector<In> &v) {
-      return Out(v.begin(), v.end());
+    inline void avro_assign(NodeID &out, int32_t in) {
+      out= NodeID(in);
     }
+    inline void avro_assign(int32_t &out, NodeID in) {
+      out=in.get_index();
+    }
+
+#if RMF_USE_DEBUG_VECTOR
+    template <class Out, class In>
+    void avro_assign(std::vector<Out> &out, vector<In> in) {
+      out.resize(in.size());
+      for (unsigned int i=0; i< in.size(); ++i) {
+        avro_assign(out[i], in[i]);
+      }
+    }
+    template <class Out, class In>
+    void avro_assign(vector<Out> &out, std::vector<In> in) {
+     out.resize(in.size());
+      for (unsigned int i=0; i< in.size(); ++i) {
+        avro_assign(out[i], in[i]);
+      }
+    }
+#else
+     template <class Out, class In>
+     void avro_assign(std::vector<Out> &out, const std::vector<In>& in) {
+       out.resize(in.size());
+       for (unsigned int i=0; i< in.size(); ++i) {
+         avro_assign(out[i], in[i]);
+       }
+     }
+#endif
+
 
 #define RMF_AVRO_SHARED_TYPE(lcname, Ucname, PassValue, ReturnValue,    \
                                    PassValues, ReturnValues)            \
@@ -79,11 +107,13 @@ namespace RMF {
       Category cat= get_category(k);                                    \
       std::string cat_name= get_category_name(cat);                     \
       const Ucname##Data &data= get_frame_##lcname##_data(node,         \
-                                                          cat_name,      \
+                                                          cat_name,     \
                                                           get_current_frame()); \
       Ucname##Data::const_iterator it= data.find(get_key_string(k));    \
       if (it != data.end()) {                                           \
-        return get_native_value<Ucname##Traits::Type>(it->second);      \
+        Ucname##Traits::Type ret;                                       \
+        avro_assign(ret, it->second);                                   \
+        return ret;                                                     \
       }                                                                 \
       if (get_current_frame() == ALL_FRAMES) {                          \
         return Ucname##Traits::get_null_value();                        \
@@ -93,21 +123,40 @@ namespace RMF {
                                                                 ALL_FRAMES); \
       Ucname##Data::const_iterator staticit= staticdata.find(get_key_string(k)); \
       if (staticit != staticdata.end()) {                               \
-        return get_native_value<Ucname##Traits::Type>(it->second);       \
+        Ucname##Traits::Type ret;                                       \
+        avro_assign(ret, staticit->second);                             \
+        return ret;                                                     \
       }                                                                 \
       return Ucname##Traits::get_null_value();                          \
     }                                                                   \
     Ucname##Traits::Types get_all_values(unsigned int node,             \
                                          Key<Ucname##Traits> k)  {      \
-      return Ucname##Traits::Types();                                   \
+      Ucname##Traits::Types ret;                                        \
+      for (unsigned int i=0; i< get_number_of_frames(); ++i) {          \
+        set_current_frame(i);                                           \
+        ret.push_back(get_value(node, k));                              \
+      }                                                                 \
+      return ret;                                                       \
     }                                                                   \
     void set_value(unsigned int node,                                   \
                    Key<Ucname##Traits> k,                               \
                    Ucname##Traits::Type v) {                            \
+      Category cat= get_category(k);                                    \
+      std::string cat_name= get_category_name(cat);                     \
+      Ucname##Data &data= access_frame_##lcname##_data(node, cat_name,  \
+                                                       get_current_frame());\
+      avro_assign(data[get_key_string(k)], v);                          \
+      dirty_=true;                                                      \
     }                                                                   \
     bool get_has_frame_value(unsigned int node,                         \
                              Key<Ucname##Traits> k) const {             \
-      return false;                                                     \
+      Category cat= get_category(k);                                    \
+      std::string cat_name= get_category_name(cat);                     \
+      const Ucname##Data &data= get_frame_##lcname##_data(node,         \
+                                                          cat_name,     \
+                                                          get_current_frame()); \
+      Ucname##Data::const_iterator it= data.find(get_key_string(k));    \
+      return (it != data.end());                                        \
     }                                                                   \
     vector<Key<Ucname##Traits> >                                        \
     get_##lcname##_keys(Category category) const {                      \
