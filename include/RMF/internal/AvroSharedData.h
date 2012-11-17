@@ -78,32 +78,14 @@ namespace RMF {
     get_frame_##lcname##_data(unsigned int node,                        \
                               std::string category,                     \
                               int frame) const {                        \
-      std::map<std::string, std::vector<RMF_internal::Data > >::const_iterator it \
-        = all_.category.find(category);                                 \
-      if (it== all_.category.end()                                      \
-          || it->second.size() <= frame+1){                             \
-        RMF_INTERNAL_CHECK(empty_##lcname##_data_.empty(),              \
-                           "Empty is not empty");                       \
-        return empty_##lcname##_data_;                                  \
-      }                                                                 \
-      std::map<std::string, RMF_internal::NodeData>::const_iterator     \
-        nit= it->second[frame+1].nodes.find(get_node_string(node));      \
-      if (nit == it->second[frame+1].nodes.end()) {                      \
-        RMF_INTERNAL_CHECK(empty_##lcname##_data_.empty(),              \
-                           "Empty is not empty");                       \
-        return empty_##lcname##_data_;                                  \
-      } else {                                                          \
-        return nit->second.lcname##_data;                               \
-      }                                                                 \
+      const RMF_internal::NodeData &data= get_node_frame_data(node,           \
+                                                        category, frame); \
+      return data.lcname##_data;                                        \
     }                                                                   \
     Ucname##Data &                                                      \
     access_frame_##lcname##_data(unsigned int node,                     \
                                  std::string category, int frame) {     \
-      if (all_.category[category].size() <= frame+1) {                 \
-        all_.category[category].resize(frame+2);                       \
-      }                                                                 \
-      return all_.category[category][frame+1].nodes[get_node_string(node)] \
-        .lcname##_data;                                                 \
+      return access_node_data(node, category, frame).lcname##_data;     \
     }                                                                   \
     public:                                                             \
     Ucname##Traits::Type get_value(unsigned int node,                   \
@@ -166,20 +148,24 @@ namespace RMF {
     get_##lcname##_keys(Category cat) {                                 \
       set<Key<Ucname##Traits> > ret;                                    \
       std::string cat_name= get_category_name(cat);                     \
-      for (unsigned int node= 0; node < all_.nodes.size(); ++node) {    \
-        const Ucname##Data &data= get_frame_##lcname##_data(node,       \
-                                                            cat_name,   \
-                                                            get_current_frame()); \
-        for (Ucname##Data::const_iterator it= data.begin();             \
-             it != data.end(); ++it) {                                  \
-          ret.insert(get_##lcname##_key(cat, it->first));            \
+      const RMF_internal::Data &data= get_frame_data(cat_name,          \
+                                                     get_current_frame()); \
+      for ( std::map<std::string, RMF_internal::NodeData>::const_iterator it \
+              = data.nodes.begin(); it != data.nodes.end(); ++it) {     \
+        for (std::map<std::string, Avro##Ucname>::const_iterator iti     \
+               = it->second.lcname##_data.begin();                      \
+             iti != it->second.lcname##_data.end(); ++iti) {              \
+          ret.insert(get_##lcname##_key(cat, iti->first));               \
         }                                                               \
-        const Ucname##Data &staticdata= get_frame_##lcname##_data(node, \
-                                                                  cat_name, \
-                                                                  ALL_FRAMES); \
-        for (Ucname##Data::const_iterator it= staticdata.begin();       \
-             it != staticdata.end(); ++it) {                            \
-          ret.insert(get_##lcname##_key(cat, it->first));               \
+      }                                                                 \
+      const RMF_internal::Data &staticdata= get_frame_data(cat_name,    \
+                                                           ALL_FRAMES); \
+      for ( std::map<std::string, RMF_internal::NodeData>::const_iterator it \
+              = staticdata.nodes.begin(); it != staticdata.nodes.end(); ++it) { \
+        for (std::map<std::string, Avro##Ucname>::const_iterator iti    \
+               = it->second.lcname##_data.begin();                      \
+             iti != it->second.lcname##_data.end(); ++iti) {              \
+          ret.insert(get_##lcname##_key(cat, iti->first));               \
         }                                                               \
       }                                                                 \
       return vector<Key<Ucname##Traits> >(ret.begin(), ret.end());      \
@@ -217,6 +203,93 @@ namespace RMF {
       NameKeyMap name_key_map_;
 
       vector<std::string> node_keys_;
+
+      RMF_internal::Data null_frame_data_;
+
+      const RMF_internal::Data &get_frame_data(std::string category,
+                                 int frame) const {
+        std::map<std::string, RMF::vector<RMF_internal::Data > >::const_iterator
+          it= all_.category.find(category);
+        if (it==all_.category.end()) {
+          return null_frame_data_;
+        }
+        if (it->second.size() <= (frame+1)) {
+          return null_frame_data_;
+        } else {
+          return it->second[frame+1];
+        }
+      }
+
+      const RMF_internal::Node &get_node(unsigned int node) const {
+        return all_.nodes[node];
+      }
+
+      const std::vector<RMF_internal::Node> &get_nodes_data() const {
+        return all_.nodes;
+      }
+
+      RMF_internal::Node &access_node(unsigned int node) {
+        dirty_=true;
+        if (all_.nodes.size() <= node) {
+          all_.nodes.resize(node+1);
+        }
+        return all_.nodes[node];
+      }
+
+      const RMF_internal::File &get_file() const {
+        return all_.file;
+      }
+
+      RMF_internal::File &access_file() {
+        dirty_=true;
+        return all_.file;
+      }
+
+      RMF_internal::NodeData null_node_data_;
+
+      const RMF_internal::NodeData &get_node_frame_data(int node,
+                                    std::string category,
+                                    int frame) const {
+        const RMF_internal::Data &data= get_frame_data(category, frame);
+        std::map<std::string, RMF_internal::NodeData>::const_iterator
+          nit= data.nodes.find(get_node_string(node));
+        if (nit == data.nodes.end()) {
+          return null_node_data_;
+        } else {
+          return nit->second;
+        }
+      }
+
+      const RMF_internal::Frame& get_frame(int i) const {
+        return all_.frames[i+1];
+      }
+
+      RMF_internal::Frame& access_frame(int i) {
+        dirty_=true;
+        if (all_.frames.size() <= i+1) {
+          all_.frames.resize(i+1);
+        }
+        return all_.frames[i];
+      }
+
+      RMF_internal::Data &access_frame_data(std::string category,
+                              int frame) {
+        dirty_=true;
+        if (all_.category[category].size() <= (frame+1)) {
+          all_.category[category].resize(frame+2);
+          dirty_=true;
+        }
+        return all_.category[category][frame+1];
+      }
+
+
+      RMF_internal::NodeData &access_node_data(int node,
+                                 std::string category,
+                                 int frame) {
+        dirty_=true;
+        RMF_internal::Data &data= access_frame_data(category, frame);
+        return data.nodes[get_node_string(node)];
+      }
 
       template <class TypeTraits>
     Key<TypeTraits>

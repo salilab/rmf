@@ -26,7 +26,7 @@ namespace RMF {
       } else {
         initialize_categories();
         initialize_node_keys();
-        all_.file.number_of_frames=0;
+        access_file().number_of_frames=0;
         // write to disk
         add_child(-1, "root", ROOT);
         flush();
@@ -36,40 +36,37 @@ namespace RMF {
       flush();
     }
     std::string AvroSharedData::get_name(unsigned int node) const {
-      return all_.nodes[node].name;
+      return get_node(node).name;
     }
     unsigned int AvroSharedData::get_type(unsigned int node) const {
-      std::string string_type= all_.nodes[node].type;
+      std::string string_type= get_node(node).type;
       unsigned int ret_type= boost::lexical_cast<NodeType>(string_type);
       return ret_type;
     }
     unsigned int AvroSharedData::get_number_of_frames() const {
-      return all_.file.number_of_frames;
+      return get_file().number_of_frames;
     }
     int AvroSharedData::add_child(int node, std::string name, int t){
-      int index= all_.nodes.size();
-      all_.nodes.push_back(RMF_internal::Node());
-      all_.nodes.back().name=name;
-      all_.nodes.back().type= boost::lexical_cast<std::string>(NodeType(t));
-      all_.nodes.back().index=index;
+      int index= get_nodes_data().size();
+      access_node(index).name=name;
+      access_node(index).type= boost::lexical_cast<std::string>(NodeType(t));
+      access_node(index).index=index;
       if (node >=0) {
         add_child(node, index);
       }
       std::ostringstream oss;
       oss << index;
       node_keys_.push_back(oss.str());
-      dirty_=true;
       RMF_INTERNAL_CHECK(get_type(index) ==t,
                          "Types don't match");
       return index;
     }
     void AvroSharedData::add_child(int node, int child_node){
-      all_.nodes[node].children.push_back(child_node);
-      dirty_=true;
+      access_node(node).children.push_back(child_node);
     }
     Ints AvroSharedData::get_children(int node) const{
-      return Ints(all_.nodes[node].children.begin(),
-                  all_.nodes[node].children.end());
+      return Ints(get_node(node).children.begin(),
+                  get_node(node).children.end());
     }
     Categories AvroSharedData::get_categories() const {
       Categories ret;
@@ -97,17 +94,16 @@ namespace RMF {
     }
     void AvroSharedData::set_frame_name(std::string str) {
       // offset for static data
-      all_.frames[get_current_frame()+1].name=str;
-      dirty_=true;
+      access_frame(get_current_frame()).name=str;
      }
     std::string AvroSharedData::get_frame_name() const{
-      return all_.frames[get_current_frame()+1].name;
+      return get_frame(get_current_frame()).name;
     }
     std::string AvroSharedData::get_description() const {
-      return all_.file.description;
-    }    void AvroSharedData::set_description(std::string str) {
-      all_.file.description=str;
-      dirty_=true;
+      return get_file().description;
+    }
+    void AvroSharedData::set_description(std::string str) {
+      access_file().description=str;
     }
 
 
@@ -133,8 +129,7 @@ namespace RMF {
     void AvroSharedData::set_current_frame(int frame){
       SharedData::set_current_frame(frame);
       if (all_.file.number_of_frames < frame+1) {
-        all_.file.number_of_frames=frame+1;
-        dirty_=true;
+        access_file().number_of_frames=frame+1;
       }
     }
 
