@@ -109,10 +109,10 @@ namespace RMF {
     // format
     SharedData* create_shared_data(std::string path, bool create) {
       SharedData *ret;
-      if (cache.find(path) != cache.end()) {
-        return cache.find(path)->second;
-      }
       if (boost::algorithm::ends_with(path, ".rmf")) {
+        if (cache.find(path) != cache.end()) {
+          return cache.find(path)->second;
+        }
         ret= new HDF5SharedData(path, create, false);
       } else if (boost::algorithm::ends_with(path, ".rmfa")) {
         ret= new SingleAvroShareData(path, create, false);
@@ -128,10 +128,10 @@ namespace RMF {
 
     SharedData* create_read_only_shared_data(std::string path) {
       SharedData *ret;
-      if (cache.find(path) != cache.end()) {
-        return cache.find(path)->second;
-      }
       if (boost::algorithm::ends_with(path, ".rmf")) {
+        if (cache.find(path) != cache.end()) {
+          return cache.find(path)->second;
+        }
         ret= new HDF5SharedData(path, false, true);
       } else if (boost::algorithm::ends_with(path, ".rmfa")) {
         ret= new SingleAvroShareData(path, false, true);
