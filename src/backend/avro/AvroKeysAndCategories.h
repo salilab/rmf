@@ -82,6 +82,10 @@ namespace RMF {
         return key_data_map_.find(k.get_id())->second.name;
       }
 
+      void clear_node_keys() {
+        node_keys_.clear();
+      }
+
       void add_node_key() {
         std::ostringstream oss;
         oss << node_keys_.size();

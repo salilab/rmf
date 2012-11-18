@@ -13,7 +13,6 @@
 #include <RMF/NodeHandle.h>
 #include <RMF/Validator.h>
 #include <RMF/internal/set.h>
-#include <RMF/internal/avro_schemas.h>
 #include <boost/lexical_cast.hpp>
 #include <avro/DataFile.hh>
 #include <algorithm>

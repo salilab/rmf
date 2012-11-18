@@ -13,7 +13,11 @@
 
 namespace RMF {
   namespace internal {
-    RMFEXPORT avro::ValidSchema get_all_schema();
+    RMFEXPORT avro::ValidSchema get_All_schema();
+    RMFEXPORT avro::ValidSchema get_File_schema();
+    RMFEXPORT avro::ValidSchema get_Node_schema();
+    RMFEXPORT avro::ValidSchema get_Frame_schema();
+    RMFEXPORT avro::ValidSchema get_Data_schema();
   }
 }
 

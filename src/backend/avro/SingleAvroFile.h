@@ -113,39 +113,12 @@ namespace RMF {
       }
 
 
-      void initialize_categories() {
-        for (std::map<std::string, std::vector<RMF_internal::Data > >::const_iterator
-               it= all_.category.begin(); it != all_.category.end(); ++it) {
-          get_category(it->first);
-        }
-      }
-
-      void initialize_node_keys() {
-        for (unsigned int i=0; i< all_.nodes.size(); ++i) {
-          add_node_key();
-        }
-      }
+      void initialize_categories();
+      void initialize_node_keys();
     public:
 
-      void flush() {
-        if (!dirty_) return;
-        avro::DataFileWriter<RMF_internal::All>
-          rd(get_file_path().c_str(), get_all_schema());
-        rd.write(all_);
-        dirty_=false;
-      }
-      void reload() {
-        avro::DataFileReader<RMF_internal::All>
-          rd(get_file_path().c_str(), get_all_schema());
-        bool ok=rd.read(all_);
-        if (!ok) {
-          throw IOException("Can't read input file on reload");
-        }
-
-        initialize_categories();
-        initialize_node_keys();
-        dirty_=false;
-      }
+      void flush();
+      void reload();
       void set_current_frame(int frame){
         SharedData::set_current_frame(frame);
         if (all_.file.number_of_frames < frame+1) {
