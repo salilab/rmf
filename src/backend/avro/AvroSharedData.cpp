@@ -6,7 +6,7 @@
  *
  */
 
-#include <RMF/internal/AvroSharedData.h>
+#include "AvroSharedData.h"
 #include <RMF/NodeHandle.h>
 #include <RMF/Validator.h>
 #include <RMF/internal/set.h>

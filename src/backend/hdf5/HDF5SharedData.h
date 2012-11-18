@@ -10,17 +10,18 @@
 #define RMF__INTERNAL_HDF_5SHARED_DATA_H
 
 #include <RMF/config.h>
-#include "SharedData.h"
-#include "../HDF5Group.h"
-#include "../HDF5File.h"
+#include <RMF/internal/SharedData.h>
+#include <RMF/HDF5Group.h>
+#include <RMF/HDF5File.h>
+#include <RMF/infrastructure_macros.h>
+#include <RMF/constants.h>
+#include <RMF/internal/map.h>
+#include <RMF/internal/set.h>
+
 #include "HDF5DataSetCacheD.h"
 #include "HDF5DataSetCache2D.h"
 #include "HDF5DataSetCache1D.h"
 #include "HDF5DataSetCache3D.h"
-#include "../infrastructure_macros.h"
-#include "../constants.h"
-#include "map.h"
-#include "set.h"
 #include <boost/array.hpp>
 #include <hdf5.h>
 #include <algorithm>

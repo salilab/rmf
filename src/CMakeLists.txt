@@ -1,4 +1,4 @@
-FILE(GLOB SOURCES "src/*.cpp" "src/internal/*.cpp")
+FILE(GLOB SOURCES "src/*.cpp" "src/internal/*.cpp" "src/backend/*/*.cpp")
 
 message(STATUS "decorators" ${decorators})
 message(STATUS "json" ${json_headers})

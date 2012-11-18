@@ -11,11 +11,11 @@
 #include <RMF/internal/set.h>
 #include <RMF/HDF5File.h>
 #include <boost/filesystem/path.hpp>
-#include <RMF/internal/HDF5SharedData.h>
-#include <RMF/internal/AvroSharedData.h>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/version.hpp>
+#include "../backend/hdf5/HDF5SharedData.h"
+#include "../backend/avro/AvroSharedData.h"
 
 namespace RMF {
   namespace internal {

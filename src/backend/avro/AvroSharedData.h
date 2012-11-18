@@ -10,11 +10,11 @@
 #define RMF__INTERNAL_AVRO_SHARED_DATA_H
 
 #include <RMF/config.h>
-#include "SharedData.h"
-#include "../infrastructure_macros.h"
-#include "../constants.h"
-#include "map.h"
-#include "set.h"
+#include <RMF/internal/SharedData.h>
+#include <RMF/infrastructure_macros.h>
+#include <RMF/constants.h>
+#include <RMF/internal/map.h>
+#include <RMF/internal/set.h>
 #include <RMF/internal/AllJSON.h>
 
 namespace RMF {
