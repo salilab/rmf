@@ -18,7 +18,8 @@ class GenericTest(unittest.TestCase):
             f.set_current_frame(i)
             of.set_current_frame(i)
             RMF.copy_frame(f, of)
-
+        del of
+        of= RMF.open_rmf_file_read_only(onm)
         self.assert_(RMF.get_equal_structure(f, of, True))
         for i in range(-1, last_frame+1):
             print i

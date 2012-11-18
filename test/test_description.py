@@ -17,7 +17,7 @@ class GenericTest(unittest.TestCase):
             self.assertEqual(f.get_description(), "")
             f.set_description(descr)
             del f
-            f= RMF.open_rmf_file(fn)
+            f= RMF.open_rmf_file_read_only(fn)
             odescr= f.get_description()
             self.assertEqual(descr, odescr)
 if __name__ == '__main__':

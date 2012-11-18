@@ -10,8 +10,9 @@ class GenericTest(unittest.TestCase):
     """Test the python code"""
     def test_frames(self):
         """Test getting all values for an attribute"""
-        for suffix in RMF.suffixes
-            f= RMF.create_rmf_file(RMF._get_temporary_file_path("test_file_frames."+suffix))
+        for suffix in RMF.suffixes:
+            path=RMF._get_temporary_file_path("test_file_frames."+suffix)
+            f= RMF.create_rmf_file(path)
             r= f.get_root_node()
             print r.get_type()
             sc= f.get_category("sequence")
@@ -22,12 +23,17 @@ class GenericTest(unittest.TestCase):
             r.set_value(ik, 2)
             f.set_current_frame(3)
             r.set_value(ik, 4)
+            del r
+            del f
+            f= RMF.open_rmf_file_read_only(path)
+            r= f.get_root_node();
             av= r.get_all_values(ik)
             self.assertEqual(av, [1,2,RMF.NullInt,4])
     def test_decorators(self):
         """Test getting all values through a decorator"""
-        for suffix in RMF.suffixes
-            f= RMF.create_rmf_file(RMF._get_temporary_file_path("test_file_decorator."+suffix))
+        for suffix in RMF.suffixes:
+            path=RMF._get_temporary_file_path("test_file_decorator."+suffix)
+            f= RMF.create_rmf_file(path)
             r= f.get_root_node()
             fact= RMF.ScoreFactory(f)
             sn= r.add_child("feature", RMF.FEATURE)
@@ -36,6 +42,14 @@ class GenericTest(unittest.TestCase):
                 d= fact.get(sn)
                 d.set_score(frame)
             f.set_current_frame(RMF.ALL_FRAMES)
+            del r
+            del f
+            del d
+            del sn
+            f= RMF.open_rmf_file_read_only(path)
+            r= f.get_root_node();
+            fact= RMF.ScoreConstFactory(f)
+            sn= r.get_children()[0]
             all_d= fact.get(sn)
             all_values= all_d.get_all_scores()
             print all_values
