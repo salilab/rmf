@@ -23,7 +23,6 @@ namespace RMF {
       bool dirty_;
 
       RMF_internal::Data null_frame_data_;
-      RMF_internal::NodeData null_node_data_;
 
       // begin specific data
     protected:
@@ -67,19 +66,6 @@ namespace RMF {
         return all_.file;
       }
 
-      const RMF_internal::NodeData &get_node_frame_data(int node,
-                                                        Category cat,
-                                                        int frame) const {
-        const RMF_internal::Data &data= get_frame_data(cat, frame);
-        std::map<std::string, RMF_internal::NodeData>::const_iterator
-          nit= data.nodes.find(get_node_string(node));
-        if (nit == data.nodes.end()) {
-          return null_node_data_;
-        } else {
-          return nit->second;
-        }
-      }
-
       const RMF_internal::Frame& get_frame(int i) const {
         return all_.frames[i+1];
       }
@@ -104,27 +90,12 @@ namespace RMF {
       }
 
 
-      RMF_internal::NodeData &access_node_data(int node,
-                                               Category cat,
-                                               int frame) {
-        dirty_=true;
-        RMF_internal::Data &data= access_frame_data(cat, frame);
-        return data.nodes[get_node_string(node)];
-      }
-
-
       void initialize_categories();
       void initialize_node_keys();
     public:
 
       void flush();
       void reload();
-      void set_current_frame(int frame){
-        SharedData::set_current_frame(frame);
-        if (all_.file.number_of_frames < frame+1) {
-          access_file().number_of_frames=frame+1;
-        }
-      }
 
       SingleAvroFile(std::string path): AvroKeysAndCategories(path){}
 
