@@ -8,8 +8,16 @@
             "doc" : "data concerning the whole file",
             "type" : @RMF_JSON_FILE@
         },
-        @RMF_JSON_NODES@,
-        @RMF_JSON_FRAMES@,
+        {
+            "name" : "nodes",
+            "doc" : "data about nodes",
+            "type" : @RMF_JSON_NODES@
+        },
+        {
+            "name" : "frames",
+            "doc" : "data about frames",
+            "type" : @RMF_JSON_FRAMES@
+        },
         {
             "name" : "category",
             "type" : {
