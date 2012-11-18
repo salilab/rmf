@@ -27,7 +27,7 @@ class GenericTest(unittest.TestCase):
             self.assert_(RMF.get_equal_frame(f, of, True))
     def test_perturbed(self):
         """Test copying an rmf file"""
-        for suffix in ["rmf", "rmfa"]:
+        for suffix in RMF.suffixes:
             self._copy_to(-1, suffix)
             self._copy_to(1, suffix)
 

@@ -13,7 +13,8 @@ class GenericTest(unittest.TestCase):
         self.assertEqual(f.get_frame_name(), "hi")
     def test_open_2x(self):
         """Test frame comments"""
-        self._test_one(RMF._get_temporary_file_path("comments.rmf"))
+        for suffix in RMF.suffixes:
+            self._test_one(RMF._get_temporary_file_path("comments"+suffixes))
 
 if __name__ == '__main__':
     unittest.main()

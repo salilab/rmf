@@ -24,7 +24,7 @@ class GenericTest(unittest.TestCase):
         print on.get_value(ik)
     def test_multiparent(self):
         """Test creating a simple hierarchy file with multiple keys"""
-        for i in ["rmf", "rmfa"]:
+        for i in RMF.suffixes:
             self._do_test(i);
 
 

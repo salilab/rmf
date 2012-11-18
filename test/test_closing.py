@@ -27,7 +27,7 @@ class Tests(unittest.TestCase):
             self.assertEqual(len(names), 0)
     def test_perturbed_2(self):
         """Test reopening an RMF file"""
-        for suffix in ["rmf", "rmfa"]:
+        for suffix in RMF.suffixes:
             name=RMF._get_temporary_file_path("test_file."+suffix)
             print name
             f= RMF.create_rmf_file(name)

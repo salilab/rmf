@@ -10,7 +10,7 @@ class GenericTest(unittest.TestCase):
     """Test the python code"""
     def test_perturbed(self):
         """Test the description of an rmf file"""
-        for suffix in ["rmf", "rmfa"]:
+        for suffix in RMF.suffixes:
             fn=RMF._get_temporary_file_path("test_file_perturbed."+suffix)
             f= RMF.create_rmf_file(fn)
             descr= "hi there\n"

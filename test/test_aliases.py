@@ -5,7 +5,7 @@ import RMF
 class GenericTest(unittest.TestCase):
     def test_multiparent(self):
         """Test that nodes with multiple parents can be used and resolve"""
-        for suffix in ["rmf", "rmfa"]:
+        for suffix in RMF.suffixes:
             path=RMF._get_temporary_file_path("alias2."+suffix)
             print path
             fh= RMF.create_rmf_file(path)
@@ -19,7 +19,7 @@ class GenericTest(unittest.TestCase):
 
     def test_aliases(self):
         """Test that aliases can be used and resolve"""
-        for suffix in ["rmf", "rmfa"]:
+        for suffix in RMF.suffixes:
             path=RMF._get_temporary_file_path("alias."+suffix)
             print path
             fh= RMF.create_rmf_file(path)

@@ -10,7 +10,7 @@ class Tests(unittest.TestCase):
     """Test the python code"""
     def test_perturbed(self):
         """Test creating a simple hierarchy file"""
-        for suffix in ["rmf", "rmfa"]:
+        for suffix in RMF.suffixes:
             f= RMF.create_rmf_file(RMF._get_temporary_file_path("test_file_perturbed."+suffix))
             r= f.get_root_node()
             print r.get_type()
@@ -22,7 +22,7 @@ class Tests(unittest.TestCase):
             self.assertEqual(r.get_value(ik), 1)
     def test_frames(self):
         """Test creating a simple hierarchy file with frames"""
-        for suffix in ["rmf", "rmfa"]:
+        for suffix in RMF.suffixes:
             f= RMF.create_rmf_file(RMF._get_temporary_file_path("test_file_frames."+suffix))
             r= f.get_root_node()
             print r.get_type()
@@ -39,7 +39,7 @@ class Tests(unittest.TestCase):
             self.assertEqual(f.get_number_of_frames(), 2)
     def test_perturbed_values(self):
         """Test null values"""
-        for suffix in ["rmf", "rmfa"]:
+        for suffix in RMF.suffixes:
             f= RMF.create_rmf_file(RMF._get_temporary_file_path("test_file."+suffix))
             r= f.get_root_node()
             print r.get_type()

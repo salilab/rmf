@@ -10,7 +10,7 @@ class GenericTest(unittest.TestCase):
     """Test the python code"""
     def test_perturbed(self):
         """Test example where fill was bad"""
-        for suffix in ["rmf", "rmfa"]:
+        for suffix in RMF.suffixes:
             nm= RMF._get_temporary_file_path("bad_geom."+suffix)
             rmf= RMF.create_rmf_file(nm)
             rmf.set_current_frame(RMF.ALL_FRAMES)
