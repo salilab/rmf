@@ -24,6 +24,8 @@ namespace RMF {
 
       RMF_internal::Data null_frame_data_;
 
+      RMF_internal::Frame null_frame_real_data_;
+
       // begin specific data
     protected:
       const RMF_internal::Data &get_frame_data(Category cat,
@@ -67,12 +69,19 @@ namespace RMF {
       }
 
       const RMF_internal::Frame& get_frame(int i) const {
-        return all_.frames[i+1];
+        if (i==-1) {
+          return null_frame_real_data_;
+        }
+        return all_.frames[i];
       }
 
       RMF_internal::Frame& access_frame(int i) {
+        if (i==-1) {
+          RMF_USAGE_CHECK(false, "Can't modify static frame data");
+          return null_frame_real_data_;
+        }
         dirty_=true;
-        if (all_.frames.size() <= i+1) {
+        if (all_.frames.size() <= i) {
           all_.frames.resize(i+1);
         }
         return all_.frames[i];
@@ -97,7 +106,9 @@ namespace RMF {
       void flush();
       void reload();
 
-      SingleAvroFile(std::string path): AvroKeysAndCategories(path){}
+      SingleAvroFile(std::string path,bool create,
+                     bool read_only);
+      ~SingleAvroFile() { flush();}
 
     };
 

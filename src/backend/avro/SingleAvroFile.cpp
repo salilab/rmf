@@ -15,6 +15,21 @@
 
 namespace RMF {
   namespace internal {
+
+    SingleAvroFile::SingleAvroFile(std::string path, bool create,
+                                   bool read_only): AvroKeysAndCategories(path){
+      if (!create) {
+        reload();
+      } else {
+        initialize_categories();
+        initialize_node_keys();
+        access_file().number_of_frames=0;
+        // write to disk
+        add_child(-1, "root", ROOT);
+        flush();
+      }
+    }
+
     void SingleAvroFile::initialize_categories() {
       for (std::map<std::string, std::vector<RMF_internal::Data > >::const_iterator
              it= all_.category.begin(); it != all_.category.end(); ++it) {

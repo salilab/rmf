@@ -23,7 +23,6 @@ namespace RMF {
     template <class Base>
     class AvroSharedData: public Base {
       typedef Base P;
-      bool read_only_;
       RMF_internal::NodeData null_node_data_;
 
       const RMF_internal::NodeData &get_node_frame_data(int node,
@@ -52,7 +51,6 @@ namespace RMF {
       RMF_FOREACH_TYPE(RMF_AVRO_SHARED_TYPE);
 
       AvroSharedData(std::string g, bool create, bool read_only);
-      ~AvroSharedData();
       std::string get_name(unsigned int node) const;
       unsigned int get_type(unsigned int node) const;
       int add_child(int node, std::string name, int t);
@@ -68,10 +66,10 @@ namespace RMF {
       std::string get_frame_name() const;
 
       void set_current_frame(int frame){
-        P::set_current_frame(frame);
         if (P::get_file().number_of_frames < frame+1) {
           P::access_file().number_of_frames=frame+1;
         }
+        P::set_current_frame(frame);
       }
     };
 

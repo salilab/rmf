@@ -23,22 +23,10 @@ namespace RMF {
     template <class Base>
     AvroSharedData<Base>::AvroSharedData(std::string g, bool create,
                                    bool read_only):
-      Base(g), read_only_(read_only) {
-      if (!create) {
-        P::reload();
-      } else {
-        P::initialize_categories();
-        P::initialize_node_keys();
-        P::access_file().number_of_frames=0;
-        // write to disk
-        add_child(-1, "root", ROOT);
-        P::flush();
-      }
+      Base(g, create, read_only) {
+
     }
-    template <class Base>
-    AvroSharedData<Base>::~AvroSharedData() {
-      P::flush();
-    }
+
     template <class Base>
     std::string AvroSharedData<Base>::get_name(unsigned int node) const {
       return P::get_node(node).name;
