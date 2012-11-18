@@ -98,6 +98,8 @@ namespace RMF {
     }
 
 
+    typedef AvroSharedData<EmptyAvroShareData> AvroShareDataImpl;
+
     // throws RMF::IOException if couldn't create file or unsupported file
     // format
     SharedData* create_shared_data(std::string path, bool create) {
@@ -108,7 +110,7 @@ namespace RMF {
       if (boost::algorithm::ends_with(path, ".rmf")) {
         ret= new HDF5SharedData(path, create, false);
       } else if (boost::algorithm::ends_with(path, ".rmf2")) {
-        ret= new AvroSharedData(path, create, false);
+        ret= new AvroShareDataImpl(path, create, false);
       } else {
         RMF_THROW("Don't know how to open file", IOException);
       }
@@ -125,7 +127,7 @@ namespace RMF {
       if (boost::algorithm::ends_with(path, ".rmf")) {
         ret= new HDF5SharedData(path, false, true);
       } else if (boost::algorithm::ends_with(path, ".rmf2")) {
-        ret= new AvroSharedData(path, false, true);
+        ret= new AvroShareDataImpl(path, false, true);
       } else {
         RMF_THROW("Don't know how to open file", IOException);
       }

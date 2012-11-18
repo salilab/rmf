@@ -1,10 +1,13 @@
 /**
- *  \file RMF/Category.h
+ *  \file RMF/internal/SharedData.h
  *  \brief Handle read/write of Model data from/to files.
  *
  *  Copyright 2007-2012 IMP Inventors. All rights reserved.
  *
  */
+
+#ifndef RMF_INTERNAL_AVRO_SHARED_DATA_IMPL_H
+#define RMF_INTERNAL_AVRO_SHARED_DATA_IMPL_H
 
 #include "AvroSharedData.h"
 #include <RMF/NodeHandle.h>
@@ -18,9 +21,10 @@
 namespace RMF {
   namespace internal {
 
-    AvroSharedData::AvroSharedData(std::string g, bool create,
+    template <class Base>
+    AvroSharedData<Base>::AvroSharedData(std::string g, bool create,
                                    bool read_only):
-      SharedData(g), read_only_(read_only) {
+      Base(g), read_only_(read_only) {
       if (!create) {
         reload();
       } else {
@@ -32,21 +36,26 @@ namespace RMF {
         flush();
       }
     }
-    AvroSharedData::~AvroSharedData() {
+    template <class Base>
+    AvroSharedData<Base>::~AvroSharedData() {
       flush();
     }
-    std::string AvroSharedData::get_name(unsigned int node) const {
+    template <class Base>
+    std::string AvroSharedData<Base>::get_name(unsigned int node) const {
       return get_node(node).name;
     }
-    unsigned int AvroSharedData::get_type(unsigned int node) const {
+    template <class Base>
+    unsigned int AvroSharedData<Base>::get_type(unsigned int node) const {
       std::string string_type= get_node(node).type;
       unsigned int ret_type= boost::lexical_cast<NodeType>(string_type);
       return ret_type;
     }
-    unsigned int AvroSharedData::get_number_of_frames() const {
+    template <class Base>
+    unsigned int AvroSharedData<Base>::get_number_of_frames() const {
       return get_file().number_of_frames;
     }
-    int AvroSharedData::add_child(int node, std::string name, int t){
+    template <class Base>
+    int AvroSharedData<Base>::add_child(int node, std::string name, int t){
       int index= get_nodes_data().size();
       access_node(index).name=name;
       access_node(index).type= boost::lexical_cast<std::string>(NodeType(t));
@@ -61,14 +70,17 @@ namespace RMF {
                          "Types don't match");
       return index;
     }
-    void AvroSharedData::add_child(int node, int child_node){
+    template <class Base>
+    void AvroSharedData<Base>::add_child(int node, int child_node){
       access_node(node).children.push_back(child_node);
     }
-    Ints AvroSharedData::get_children(int node) const{
+    template <class Base>
+    Ints AvroSharedData<Base>::get_children(int node) const{
       return Ints(get_node(node).children.begin(),
                   get_node(node).children.end());
     }
-    Categories AvroSharedData::get_categories() const {
+    template <class Base>
+    Categories AvroSharedData<Base>::get_categories() const {
       Categories ret;
       for (CategoryNameMap::const_iterator
              it= category_name_map_.begin(); it != category_name_map_.end();
@@ -77,7 +89,8 @@ namespace RMF {
       }
       return ret;
     }
-    Category AvroSharedData::get_category(std::string name){
+    template <class Base>
+    Category AvroSharedData<Base>::get_category(std::string name){
       NameCategoryMap::iterator it=name_category_map_.find(name);
       if (it== name_category_map_.end()) {
         unsigned int id= category_name_map_.size();
@@ -89,34 +102,41 @@ namespace RMF {
         return it->second;
       }
     }
-    std::string AvroSharedData::get_category_name(Category kc) const  {
+    template <class Base>
+    std::string AvroSharedData<Base>::get_category_name(Category kc) const  {
       return category_name_map_.find(kc)->second;
     }
-    void AvroSharedData::set_frame_name(std::string str) {
+    template <class Base>
+    void AvroSharedData<Base>::set_frame_name(std::string str) {
       // offset for static data
-      access_frame(get_current_frame()).name=str;
+      access_frame(P::get_current_frame()).name=str;
      }
-    std::string AvroSharedData::get_frame_name() const{
-      return get_frame(get_current_frame()).name;
+    template <class Base>
+    std::string AvroSharedData<Base>::get_frame_name() const{
+      return get_frame(P::get_current_frame()).name;
     }
-    std::string AvroSharedData::get_description() const {
+    template <class Base>
+    std::string AvroSharedData<Base>::get_description() const {
       return get_file().description;
     }
-    void AvroSharedData::set_description(std::string str) {
+    template <class Base>
+    void AvroSharedData<Base>::set_description(std::string str) {
       access_file().description=str;
     }
 
 
-    void AvroSharedData::flush() {
+    template <class Base>
+    void AvroSharedData<Base>::flush() {
       if (read_only_ || !dirty_) return;
       avro::DataFileWriter<RMF_internal::All>
-        rd(get_file_path().c_str(), get_all_schema());
+        rd(P::get_file_path().c_str(), get_all_schema());
       rd.write(all_);
       dirty_=false;
     }
-    void AvroSharedData::reload() {
+    template <class Base>
+    void AvroSharedData<Base>::reload() {
       avro::DataFileReader<RMF_internal::All>
-        rd(get_file_path().c_str(), get_all_schema());
+        rd(P::get_file_path().c_str(), get_all_schema());
       bool ok=rd.read(all_);
       if (!ok) {
         throw IOException("Can't read input file on reload");
@@ -126,21 +146,24 @@ namespace RMF {
       initialize_node_keys();
       dirty_=false;
     }
-    void AvroSharedData::set_current_frame(int frame){
+    template <class Base>
+    void AvroSharedData<Base>::set_current_frame(int frame){
       SharedData::set_current_frame(frame);
       if (all_.file.number_of_frames < frame+1) {
         access_file().number_of_frames=frame+1;
       }
     }
 
-    void AvroSharedData::initialize_categories() {
+    template <class Base>
+    void AvroSharedData<Base>::initialize_categories() {
       for (std::map<std::string, std::vector<RMF_internal::Data > >::const_iterator
              it= all_.category.begin(); it != all_.category.end(); ++it) {
         get_category(it->first);
       }
     }
 
-    void AvroSharedData::initialize_node_keys() {
+    template <class Base>
+    void AvroSharedData<Base>::initialize_node_keys() {
       node_keys_.resize(all_.nodes.size());
       for (unsigned int i=0; i< node_keys_.size(); ++i) {
         std::ostringstream oss;
@@ -151,3 +174,4 @@ namespace RMF {
 
   } // namespace internal
 } /* namespace RMF */
+#endif /* RMF__INTERNAL_AVRO_SHARED_DATA_IMPL_H */
