@@ -13,7 +13,7 @@
 #include <RMF/internal/SharedData.h>
 #include <RMF/infrastructure_macros.h>
 #include "AvroKeysAndCategories.h"
-#include <RMF/internal/AllJSON.h>
+#include <backend/avro/AllJSON.h>
 
 namespace RMF {
   namespace internal {

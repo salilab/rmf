@@ -15,13 +15,15 @@ configure_file (
 INSTALL(DIRECTORY ${PROJECT_BINARY_DIR}/data  DESTINATION ${CMAKE_INSTALL_DATADIR}/rmf)
 
 set(json_headers)
-add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/include/RMF/internal/AllJSON.h"
-     COMMAND "mkdir" "-p" "${PROJECT_BINARY_DIR}/include/RMF/internal"
+add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/backend/avro/AllJSON.h"
+     COMMAND "mkdir" "-p" "${PROJECT_BINARY_DIR}/src/backend/avro"
      COMMAND "${PROJECT_BINARY_DIR}/AvroCpp/avrogencpp" "--input" "${PROJECT_BINARY_DIR}/data/All.json"
-     "--output" "${PROJECT_BINARY_DIR}/include/RMF/internal/AllJSON.h" "--namespace" "RMF_internal"
+     "--output" "${PROJECT_BINARY_DIR}/src/backend/avro/AllJSON.h" "--namespace" "RMF_internal"
      DEPENDS "${PROJECT_BINARY_DIR}/data/All.json" COMMENT "Creating json header")
+
 add_custom_target("AllJSON.h" ALL DEPENDS "${PROJECT_BINARY_DIR}/data/All.json")
-list(APPEND json_headers "${PROJECT_BINARY_DIR}/include/RMF/internal/AllJSON.h")
+list(APPEND json_headers "${PROJECT_BINARY_DIR}/src/backend/avro/AllJSON.h")
+
 #foreach (json ${jsons})
 #   GET_FILENAME_COMPONENT(name ${json} NAME_WE)
 #   set(header ${PROJECT_BINARY_DIR}/include/RMF/internal/${name}.h)

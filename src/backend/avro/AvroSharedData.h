@@ -15,7 +15,6 @@
 #include <RMF/constants.h>
 #include <RMF/internal/map.h>
 #include <RMF/internal/set.h>
-#include <RMF/internal/AllJSON.h>
 #include "AvroSharedData.types.h"
 
 namespace RMF {

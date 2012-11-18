@@ -11,7 +11,7 @@
 
 #include <RMF/config.h>
 #include <RMF/constants.h>
-#include <RMF/internal/AllJSON.h>
+#include <backend/avro/AllJSON.h>
 
 namespace RMF {
   namespace internal {
