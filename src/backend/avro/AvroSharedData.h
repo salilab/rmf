@@ -29,6 +29,8 @@ namespace RMF {
                                                         Category cat,
                                                         int frame) const {
         const RMF_internal::Data &data= P::get_frame_data(cat, frame);
+        RMF_INTERNAL_CHECK(data.frame==frame,
+                           "Bad frame returned");
         std::map<std::string, RMF_internal::NodeData>::const_iterator
           nit= data.nodes.find(P::get_node_string(node));
         if (nit == data.nodes.end()) {
@@ -44,6 +46,8 @@ namespace RMF {
                                                      Category cat,
                                                      int frame) {
         RMF_internal::Data &data= P::access_frame_data(cat, frame);
+        RMF_INTERNAL_CHECK(data.frame==frame,
+                           "Bad frame returned");
         return data.nodes[P::get_node_string(node)];
       }
 

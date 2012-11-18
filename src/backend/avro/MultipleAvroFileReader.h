@@ -30,8 +30,6 @@ namespace RMF {
 
       vector<CategoryData> categories_;
 
-      RMF_internal::Data null_frame_data_;
-
       void add_category_data(Category cat);
       void load_category_frame(Category cat,
                                int frame);
@@ -43,13 +41,13 @@ namespace RMF {
           if (static_categories_.size() > cat.get_id()) {
             return static_categories_[cat.get_id()];
           } else {
-            return null_frame_data_;
+            return null_static_data_;
           }
         } else {
           if (categories_.size() > cat.get_id()) {
             return categories_[cat.get_id()].data;
           } else {
-            return null_frame_data_;
+            return null_data_;
           }
         }
       }

@@ -40,7 +40,11 @@ namespace RMF {
       StaticData static_categories_;
 
       RMF_internal::Frame null_frame_data_;
+
       RMF_internal::Data null_data_;
+      RMF_internal::Data null_static_data_;
+
+
 
       const RMF_internal::Node &get_node(unsigned int node) const {
         return nodes_[node];
@@ -78,6 +82,10 @@ namespace RMF {
       std::string get_nodes_file_path() const;
       std::string get_static_file_path() const;
       std::string get_frames_file_path() const;
+
+      void set_current_frame(int frame) {
+        null_data_.frame=frame;
+      }
 
       MultipleAvroFileBase(std::string path);
     };

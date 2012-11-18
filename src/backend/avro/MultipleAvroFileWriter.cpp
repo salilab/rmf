@@ -19,6 +19,7 @@ namespace RMF {
   namespace internal {
 
     void MultipleAvroFileWriter::set_current_frame(int frame) {
+      if (frame == get_current_frame()) return;
       RMF_USAGE_CHECK(frame== get_current_frame()+1,
                       "Can only advance frames by one");
       commit();

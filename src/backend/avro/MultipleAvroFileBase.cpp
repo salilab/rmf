@@ -50,7 +50,10 @@ namespace RMF {
     }
 
     MultipleAvroFileBase::MultipleAvroFileBase(std::string path):
-      AvroKeysAndCategories(path){}
+      AvroKeysAndCategories(path){
+      null_static_data_.frame=ALL_FRAMES;
+      null_data_.frame=0;
+    }
 
   } // namespace internal
 } /* namespace RMF */

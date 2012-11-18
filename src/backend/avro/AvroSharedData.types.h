@@ -126,6 +126,10 @@ namespace RMF {
       Ucname##Data &data= access_frame_##lcname##_data(node, cat,       \
                                                        P::get_current_frame()); \
       avro_assign(data[P::get_key_string(k)], v);                       \
+      RMF_INTERNAL_CHECK(get_value(node, k)==v,                         \
+                         "Can't get the value back");                   \
+      RMF_INTERNAL_CHECK(get_has_frame_value(node, k),                  \
+                         "Value not there");                            \
     }                                                                   \
     bool get_has_frame_value(unsigned int node,                         \
                              Key<Ucname##Traits> k) const {             \

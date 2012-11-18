@@ -36,7 +36,7 @@ namespace RMF {
       vector<CategoryData> categories_;
 
       RMF_internal::Data null_frame_data_;
-
+      RMF_internal::Data null_static_frame_data_;
     protected:
       const RMF_internal::Data &get_frame_data(Category cat,
                                                int frame) const {
@@ -44,13 +44,13 @@ namespace RMF {
           if (static_categories_.size() > cat.get_id()) {
             return static_categories_[cat.get_id()];
           } else {
-            return null_frame_data_;
+            return null_static_data_;
           }
         } else {
           if (categories_.size() > cat.get_id()) {
             return categories_[cat.get_id()].data;
           } else {
-            return null_frame_data_;
+            return null_data_;
           }
         }
       }
