@@ -22,8 +22,8 @@ namespace RMF {
 
     RMF_SCHEMA(All);
     RMF_SCHEMA(File);
-    RMF_SCHEMA(Node);
-    RMF_SCHEMA(Frame);
+    RMF_SCHEMA(Nodes);
+    RMF_SCHEMA(Frames);
     RMF_SCHEMA(Data);
 
 

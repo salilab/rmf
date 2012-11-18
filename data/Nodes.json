@@ -13,10 +13,6 @@
                     "type" : "string"
                 },
                 {
-                    "name" : "index",
-                    "type" : "int"
-                },
-                {
                     "name" : "type",
                     "type" : "string"
                 },

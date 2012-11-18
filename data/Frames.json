@@ -1,23 +1,26 @@
 {
-    "type": "record",
-    "name": "Frames",
-    "doc": "Store the category-independent frame data",
-    "fields": [
-        {
-            "name": "data",
-            "type": {
-                "type": "map",
-                "values": {
-                    "type": "record",
-                    "name": "data",
-                    "fields" : [
-                        {
-                            "name": "name",
-                            "type": "string"
-                        }k
-                    ]
+    "name": "frames",
+    "type": {
+        "type":"array",
+        "doc" : "store all the nodes by index",
+        "items" : {
+            "type" : "record",
+            "name" : "Frame",
+            "doc": "Store a node in the hierarchy.",
+            "fields" : [
+                {
+                    "name" : "name",
+                    "type" : "string"
+                },
+                {
+                    "name" : "children",
+                    "type" : {
+                        "type" : "array",
+                        "doc" : "Store the indexes of the children frames.",
+                        "items" : "int"
+                    }
                 }
-            }
+            ]
         }
-    ]
+    }
 }

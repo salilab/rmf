@@ -2,10 +2,10 @@
 FILE(GLOB jsons "${PROJECT_SOURCE_DIR}/data/*.json")
 set(decorators "${PROJECT_BINARY_DIR}/include/RMF/decorators.h")
 
-file(READ "data/Hierarchy.json" RMF_JSON_HIERARCHY)
+file(READ "data/Nodes.json" RMF_JSON_NODES)
 file(READ "data/File.json" RMF_JSON_FILE)
 file(READ "data/Data.json" RMF_JSON_DATA)
-file(READ "data/FrameHierarchy.json" RMF_JSON_FRAME_HIERARCHY)
+file(READ "data/Frames.json" RMF_JSON_FRAMES)
 
 configure_file (
   "${PROJECT_SOURCE_DIR}/data/All.json.in"
