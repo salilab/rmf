@@ -30,7 +30,7 @@ class GenericTest(unittest.TestCase):
     def test_data_types(self):
         """Test that the various data types work"""
         print "testing types"
-        for suffix in ["rmf", "rmf2"]:
+        for suffix in ["rmf", "rmfa"]:
             name=RMF._get_temporary_file_path("test_data_types."+suffix)
             f= RMF.create_rmf_file(name)
             self._do_test_types(f)

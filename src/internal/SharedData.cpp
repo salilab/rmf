@@ -17,6 +17,8 @@
 #include "../backend/hdf5/HDF5SharedData.h"
 #include "../backend/avro/AvroSharedData.h"
 #include "../backend/avro/SingleAvroFile.h"
+#include "../backend/avro/MultipleAvroFileWriter.h"
+#include "../backend/avro/MultipleAvroFileReader.h"
 
 namespace RMF {
   namespace internal {
@@ -100,6 +102,8 @@ namespace RMF {
 
 
     typedef AvroSharedData<SingleAvroFile> SingleAvroShareData;
+    typedef AvroSharedData<MultipleAvroFileWriter> AvroWriterShareData;
+    typedef AvroSharedData<MultipleAvroFileReader> AvroReaderShareData;
 
     // throws RMF::IOException if couldn't create file or unsupported file
     // format
@@ -110,8 +114,10 @@ namespace RMF {
       }
       if (boost::algorithm::ends_with(path, ".rmf")) {
         ret= new HDF5SharedData(path, create, false);
-      } else if (boost::algorithm::ends_with(path, ".rmf2")) {
+      } else if (boost::algorithm::ends_with(path, ".rmfa")) {
         ret= new SingleAvroShareData(path, create, false);
+      } else if (create && boost::algorithm::ends_with(path, ".rmf2")) {
+        ret= new AvroWriterShareData(path, create, false);
       } else {
         RMF_THROW("Don't know how to open file", IOException);
       }
@@ -127,8 +133,10 @@ namespace RMF {
       }
       if (boost::algorithm::ends_with(path, ".rmf")) {
         ret= new HDF5SharedData(path, false, true);
-      } else if (boost::algorithm::ends_with(path, ".rmf2")) {
+      } else if (boost::algorithm::ends_with(path, ".rmfa")) {
         ret= new SingleAvroShareData(path, false, true);
+      } else if (boost::algorithm::ends_with(path, ".rmf2")) {
+        ret= new AvroReaderShareData(path, false, true);
       } else {
         RMF_THROW("Don't know how to open file", IOException);
       }

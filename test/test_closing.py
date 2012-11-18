@@ -10,7 +10,7 @@ class Tests(unittest.TestCase):
     """Test the python code"""
     def test_perturbed(self):
         """Test closing an RMF file"""
-        for suffix in ["rmf", "rmf2"]:
+        for suffix in ["rmf", "rmfa"]:
             f= RMF.create_rmf_file(RMF._get_temporary_file_path("test_file."+suffix))
             r= f.get_root_node()
             print r.get_type()
@@ -27,7 +27,7 @@ class Tests(unittest.TestCase):
             self.assertEqual(len(names), 0)
     def test_perturbed_2(self):
         """Test reopening an RMF file"""
-        for suffix in ["rmf", "rmf2"]:
+        for suffix in ["rmf", "rmfa"]:
             name=RMF._get_temporary_file_path("test_file."+suffix)
             print name
             f= RMF.create_rmf_file(name)

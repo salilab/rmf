@@ -10,7 +10,7 @@ class GenericTest(unittest.TestCase):
     """Test the python code"""
     def test_frames(self):
         """Test getting all values for an attribute"""
-        for suffix in ["rmf", "rmf2"]:
+        for suffix in ["rmf", "rmfa"]:
             f= RMF.create_rmf_file(RMF._get_temporary_file_path("test_file_frames."+suffix))
             r= f.get_root_node()
             print r.get_type()
@@ -26,7 +26,7 @@ class GenericTest(unittest.TestCase):
             self.assertEqual(av, [1,2,RMF.NullInt,4])
     def test_decorators(self):
         """Test getting all values through a decorator"""
-        for suffix in ["rmf", "rmf2"]:
+        for suffix in ["rmf", "rmfa"]:
             f= RMF.create_rmf_file(RMF._get_temporary_file_path("test_file_decorator."+suffix))
             r= f.get_root_node()
             fact= RMF.ScoreFactory(f)
