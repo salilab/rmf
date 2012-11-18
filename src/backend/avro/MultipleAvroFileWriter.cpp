@@ -19,13 +19,14 @@ namespace RMF {
   namespace internal {
 
     void MultipleAvroFileWriter::set_current_frame(int frame) {
-      RMF_USAGE_CHECK(frame= get_current_frame()+1,
+      RMF_USAGE_CHECK(frame== get_current_frame()+1,
                       "Can only advance frames by one");
       commit();
       for (unsigned int i=0; i< categories_.size(); ++i) {
         categories_[i].data=RMF_internal::Data();
         categories_[i].data.frame=frame;
       }
+      MultipleAvroFileWriter::set_current_frame(frame);
     }
 
     MultipleAvroFileWriter::MultipleAvroFileWriter(std::string path,
