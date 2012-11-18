@@ -24,9 +24,6 @@ namespace RMF {
         initialize_categories();
         initialize_node_keys();
         access_file().number_of_frames=0;
-        // write to disk
-        add_child(-1, "root", ROOT);
-        flush();
       }
     }
 

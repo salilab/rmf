@@ -24,7 +24,9 @@ namespace RMF {
     AvroSharedData<Base>::AvroSharedData(std::string g, bool create,
                                    bool read_only):
       Base(g, create, read_only) {
-
+      if (create) {
+        add_child(-1, "root", ROOT);
+      }
     }
 
     template <class Base>
