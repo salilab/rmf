@@ -127,7 +127,8 @@ namespace RMF {
 
     template <class Base>
     void AvroSharedData<Base>::flush() {
-      if (read_only_ || !dirty_) return;
+      if (!dirty_) return;
+      RMF_INTERNAL_CHECK(!read_only_, "Trying to write read-only file");
       avro::DataFileWriter<RMF_internal::All>
         rd(P::get_file_path().c_str(), get_all_schema());
       rd.write(all_);
