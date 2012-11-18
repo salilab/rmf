@@ -28,7 +28,7 @@ class Tests(unittest.TestCase):
     def test_perturbed_2(self):
         """Test reopening an RMF file"""
         for suffix in RMF.suffixes:
-            name=RMF._get_temporary_file_path("test_file."+suffix)
+            name=RMF._get_temporary_file_path("test_file2."+suffix)
             print name
             f= RMF.create_rmf_file(name)
             r= f.get_root_node()
