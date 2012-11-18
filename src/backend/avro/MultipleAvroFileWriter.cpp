@@ -26,7 +26,7 @@ namespace RMF {
         categories_[i].data=RMF_internal::Data();
         categories_[i].data.frame=frame;
       }
-      MultipleAvroFileWriter::set_current_frame(frame);
+      MultipleAvroFileBase::set_current_frame(frame);
     }
 
     MultipleAvroFileWriter::MultipleAvroFileWriter(std::string path,
