@@ -206,6 +206,8 @@ namespace RMF {
 
       RMF_internal::Data null_frame_data_;
 
+      // begin specific data
+
       const RMF_internal::Data &get_frame_data(std::string category,
                                  int frame) const {
         std::map<std::string, RMF::vector<RMF_internal::Data > >::const_iterator
@@ -330,11 +332,15 @@ namespace RMF {
       void initialize_categories();
       void initialize_node_keys();
     public:
+      void set_current_frame(int frame);
+      void flush();
+      void reload();
+      // end specific functions
+
       RMF_FOREACH_TYPE(RMF_AVRO_SHARED_TYPE);
 
       AvroSharedData(std::string g, bool create, bool read_only);
       ~AvroSharedData();
-      void flush();
       std::string get_name(unsigned int node) const;
       unsigned int get_type(unsigned int node) const;
       int add_child(int node, std::string name, int t);
@@ -347,12 +353,8 @@ namespace RMF {
       std::string get_category_name(Category kc) const;
       std::string get_description() const;
       void set_description(std::string str);
-
       void set_frame_name(std::string str);
       std::string get_frame_name() const;
-
-      void reload();
-      void set_current_frame(int frame);
     };
 
   } // namespace internal
