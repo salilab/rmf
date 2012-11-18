@@ -210,7 +210,7 @@ namespace RMF {
 
       const RMF_internal::Data &get_frame_data(std::string category,
                                  int frame) const {
-        std::map<std::string, RMF::vector<RMF_internal::Data > >::const_iterator
+        std::map<std::string, std::vector<RMF_internal::Data > >::const_iterator
           it= all_.category.find(category);
         if (it==all_.category.end()) {
           return null_frame_data_;
