@@ -70,10 +70,13 @@ namespace RMF {
       std::string get_frame_name() const;
 
       void set_current_frame(int frame){
+        P::set_current_frame(frame);
+        // must be after so right number is written to disk
         if (P::get_file().number_of_frames < frame+1) {
           P::access_file().number_of_frames=frame+1;
         }
-        P::set_current_frame(frame);
+        RMF_INTERNAL_CHECK(P::get_current_frame()==frame,
+                           "Didn't set frame");
       }
     };
 

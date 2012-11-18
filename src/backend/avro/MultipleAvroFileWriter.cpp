@@ -20,12 +20,16 @@ namespace RMF {
 
     void MultipleAvroFileWriter::set_current_frame(int frame) {
       if (frame == get_current_frame()) return;
-      RMF_USAGE_CHECK(frame== get_current_frame()+1,
-                      "Can only advance frames by one");
-      commit();
-      for (unsigned int i=0; i< categories_.size(); ++i) {
-        categories_[i].data=RMF_internal::Data();
-        categories_[i].data.frame=frame;
+      if (frame == get_file().number_of_frames) {
+        commit();
+        for (unsigned int i=0; i< categories_.size(); ++i) {
+          categories_[i].data=RMF_internal::Data();
+          categories_[i].data.frame=frame;
+        }
+      } else {
+        RMF_USAGE_CHECK(frame == ALL_FRAMES
+                        || frame == get_file().number_of_frames,
+                        "Bad frame set");
       }
       MultipleAvroFileBase::set_current_frame(frame);
     }
@@ -37,10 +41,11 @@ namespace RMF {
       RMF_INTERNAL_CHECK(!read_only, "Can only create files");
       boost::filesystem::remove_all(path);
       boost::filesystem::create_directory(path);
+      file_.number_of_frames=0;
     }
 
     MultipleAvroFileWriter::~MultipleAvroFileWriter() {
-      set_current_frame(get_current_frame()+1);
+      set_current_frame(get_file().number_of_frames);
     }
 
 #define RMF_COMMIT(UCName, lcname)                                       \

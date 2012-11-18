@@ -68,11 +68,13 @@ namespace RMF {
     template <class Base>
     void AvroSharedData<Base>::set_frame_name(std::string str) {
       // offset for static data
-      P::access_frame(P::get_current_frame()).name=str;
+      RMF_internal::Frame & fr=P::access_frame(P::get_current_frame());
+      fr.name=str;
      }
     template <class Base>
     std::string AvroSharedData<Base>::get_frame_name() const{
-      return P::get_frame(P::get_current_frame()).name;
+      const RMF_internal::Frame &frame=P::get_frame(P::get_current_frame());
+      return frame.name;
     }
     template <class Base>
     std::string AvroSharedData<Base>::get_description() const {

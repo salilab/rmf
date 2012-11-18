@@ -23,6 +23,7 @@ namespace RMF {
       bool dirty_;
 
       RMF_internal::Data null_frame_data_;
+      RMF_internal::Data null_static_frame_data_;
 
       RMF_internal::Frame null_frame_real_data_;
 
@@ -34,13 +35,25 @@ namespace RMF {
         std::map<std::string, std::vector<RMF_internal::Data > >::const_iterator
           it= all_.category.find(category);
         if (it==all_.category.end()) {
-          return null_frame_data_;
+          return frame==ALL_FRAMES? null_static_frame_data_: null_frame_data_;
         }
         if (it->second.size() <= (frame+1)) {
-          return null_frame_data_;
+          return frame==ALL_FRAMES? null_static_frame_data_: null_frame_data_;
         } else {
           return it->second[frame+1];
         }
+      }
+
+      RMF_internal::Data &access_frame_data(Category cat,
+                                            int frame) {
+        std::string category= get_category_name(cat);
+        dirty_=true;
+        while (all_.category[category].size() <= (frame+1)) {
+          int cur= all_.category[category].size()-1;
+          all_.category[category].push_back(RMF_internal::Data());
+          all_.category[category].back().frame=cur;
+        }
+        return all_.category[category][frame+1];
       }
 
       const RMF_internal::Node &get_node(unsigned int node) const {
@@ -69,7 +82,7 @@ namespace RMF {
       }
 
       const RMF_internal::Frame& get_frame(int i) const {
-        if (i==-1) {
+        if (i==-1 || i>= all_.frames.size()) {
           return null_frame_real_data_;
         }
         return all_.frames[i];
@@ -87,21 +100,14 @@ namespace RMF {
         return all_.frames[i];
       }
 
-      RMF_internal::Data &access_frame_data(Category cat,
-                                            int frame) {
-        std::string category= get_category_name(cat);
-        dirty_=true;
-        if (all_.category[category].size() <= (frame+1)) {
-          all_.category[category].resize(frame+2);
-          dirty_=true;
-        }
-        return all_.category[category][frame+1];
-      }
-
-
       void initialize_categories();
       void initialize_node_keys();
     public:
+
+      void set_current_frame(int frame) {
+        null_frame_data_.frame=frame;
+        AvroKeysAndCategories::set_current_frame(frame);
+      }
 
       void flush();
       void reload();

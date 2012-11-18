@@ -43,7 +43,7 @@ namespace RMF {
     };
     CacheCheck checker;
     }
-    SharedData::SharedData(std::string path): valid_(11111), cur_frame_(0),
+    SharedData::SharedData(std::string path): valid_(11111), cur_frame_(ALL_FRAMES),
                                               path_(path){
     };
     SharedData::~SharedData() {

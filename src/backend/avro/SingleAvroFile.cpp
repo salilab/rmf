@@ -25,6 +25,7 @@ namespace RMF {
         initialize_node_keys();
         access_file().number_of_frames=0;
       }
+      null_static_frame_data_.frame=ALL_FRAMES;
     }
 
     void SingleAvroFile::initialize_categories() {

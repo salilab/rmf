@@ -129,9 +129,9 @@ namespace RMF {
         categories_[cat.get_id()].reader
           .reset(new avro::DataFileReader<RMF_internal::Data>(dynamic_path.c_str(),
                                                               get_Data_schema()));
-        categories_[cat.get_id()].data.frame=-2;
+        categories_[cat.get_id()].reader->read(categories_[cat.get_id()].data);
       } else {
-        categories_[cat.get_id()].data.frame=-2;
+        categories_[cat.get_id()].data.frame=0;
       }
 
       std::string static_path=get_category_static_file_path(cat);

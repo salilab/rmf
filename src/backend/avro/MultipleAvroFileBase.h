@@ -32,9 +32,9 @@ namespace RMF {
     protected:
       typedef RMF_internal::File File;
       File file_;
-      typedef std::vector<RMF_internal::Node> Nodes;
+      typedef RMF::vector<RMF_internal::Node> Nodes;
       Nodes nodes_;
-      typedef std::vector<RMF_internal::Frame > Frames;
+      typedef RMF::vector<RMF_internal::Frame > Frames;
       Frames frames_;
       typedef vector<RMF_internal::Data> StaticData;
       StaticData static_categories_;
@@ -50,7 +50,7 @@ namespace RMF {
         return nodes_[node];
       }
 
-      const std::vector<RMF_internal::Node> &get_nodes_data() const {
+      const RMF::vector<RMF_internal::Node> &get_nodes_data() const {
         return nodes_;
       }
 
@@ -59,7 +59,7 @@ namespace RMF {
       }
 
       const RMF_internal::Frame& get_frame(int i) const {
-        if (i==ALL_FRAMES) {
+        if (i==ALL_FRAMES || i>= frames_.size()) {
           return null_frame_data_;
         }
         return frames_[i];
@@ -85,6 +85,7 @@ namespace RMF {
 
       void set_current_frame(int frame) {
         null_data_.frame=frame;
+        AvroKeysAndCategories::set_current_frame(frame);
       }
 
       MultipleAvroFileBase(std::string path);
