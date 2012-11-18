@@ -833,6 +833,10 @@ namespace RMF {
       std::string get_description() const;
       void set_description(std::string str);
 
+      std::string get_producer() const;
+      void set_producer(std::string str);
+
+
       void set_frame_name(std::string str);
       std::string get_frame_name() const;
 

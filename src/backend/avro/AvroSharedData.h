@@ -41,9 +41,9 @@ namespace RMF {
 
 
 
-      RMF_internal::NodeData &access_node_data(int node,
-                                               Category cat,
-                                               int frame) {
+      RMF_internal::NodeData &access_node_frame_data(int node,
+                                                     Category cat,
+                                                     int frame) {
         RMF_internal::Data &data= P::access_frame_data(cat, frame);
         return data.nodes[P::get_node_string(node)];
       }
@@ -62,6 +62,8 @@ namespace RMF {
       unsigned int get_number_of_frames() const;
       std::string get_description() const;
       void set_description(std::string str);
+      std::string get_producer() const;
+      void set_producer(std::string str);
       void set_frame_name(std::string str);
       std::string get_frame_name() const;
 

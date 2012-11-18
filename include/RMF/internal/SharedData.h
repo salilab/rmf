@@ -202,6 +202,8 @@ namespace RMF {
       virtual std::string get_category_name(Category kc) const=0;
       virtual std::string get_description() const=0;
       virtual void set_description(std::string str)=0;
+      virtual std::string get_producer() const=0;
+      virtual void set_producer(std::string str)=0;
       virtual void set_frame_name(std::string str)=0;
       virtual std::string get_frame_name() const=0;
       virtual bool get_supports_locking() const {return false;}

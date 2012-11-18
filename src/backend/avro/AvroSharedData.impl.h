@@ -58,7 +58,6 @@ namespace RMF {
       int index= P::get_nodes_data().size();
       P::access_node(index).name=name;
       P::access_node(index).type= boost::lexical_cast<std::string>(NodeType(t));
-      P::access_node(index).index=index;
       if (node >=0) {
         add_child(node, index);
       }
@@ -92,6 +91,14 @@ namespace RMF {
     template <class Base>
     void AvroSharedData<Base>::set_description(std::string str) {
       P::access_file().description=str;
+    }
+    template <class Base>
+    std::string AvroSharedData<Base>::get_producer() const {
+      return P::get_file().producer;
+    }
+    template <class Base>
+    void AvroSharedData<Base>::set_producer(std::string str) {
+      P::access_file().producer=str;
     }
 
   } // namespace internal

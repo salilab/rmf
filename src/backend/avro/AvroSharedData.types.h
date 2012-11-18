@@ -74,14 +74,14 @@ namespace RMF {
     get_frame_##lcname##_data(unsigned int node,                        \
                               Category category,                        \
                               int frame) const {                        \
-      const RMF_internal::NodeData &data= P::get_node_frame_data(node,  \
+      const RMF_internal::NodeData &data= get_node_frame_data(node,     \
                                                         category, frame); \
       return data.lcname##_data;                                        \
     }                                                                   \
     Ucname##Data &                                                      \
     access_frame_##lcname##_data(unsigned int node,                     \
                                  Category category, int frame) {        \
-      return P::access_node_data(node, category, frame).lcname##_data;  \
+      return access_node_frame_data(node, category, frame).lcname##_data; \
     }                                                                   \
     public:                                                             \
     Ucname##Traits::Type get_value(unsigned int node,                   \

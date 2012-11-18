@@ -221,17 +221,18 @@ namespace RMF {
       return shared_->get_has_user_data(index);
     }
 
-    /** \name Descriptions
-        Each RMF structure has an associated description. This should
+    /** Each RMF structure has an associated description. This should
         consist of unstructured text describing the contents of the RMF
         data. Conventionally. this description can consist of multiple
         paragraphs, each separated by a newline character and should end
         in a newline.
-        @{
     */
     std::string get_description() const;
-    /** @} */
 
+    /** Each RMF structure has an associated field that the code that
+        produced the file can use to describe itself.
+    */
+    std::string get_producer() const;
 
     /** \name Key categories methods
         Methods for managing the key categories in this RMF.

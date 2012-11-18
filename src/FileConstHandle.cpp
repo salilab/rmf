@@ -32,6 +32,11 @@ std::string FileConstHandle::get_description() const {
   return shared_->get_description();
 }
 
+
+std::string FileConstHandle::get_producer() const {
+  return shared_->get_producer();
+}
+
 void FileConstHandle::flush() {
   shared_->flush();
 }

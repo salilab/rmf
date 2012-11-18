@@ -390,6 +390,18 @@ namespace RMF {
       get_group().set_char_attribute("description", str);
     }
 
+    std::string HDF5SharedData::get_producer() const {
+      if (!get_group().get_has_attribute("producer")) {
+        return std::string();
+      } else return get_group().get_char_attribute("producer");
+    }
+    void HDF5SharedData::set_producer(std::string str) {
+      RMF_USAGE_CHECK(str.empty()
+                      || str[str.size()-1]=='\n',
+                      "Producer should end in a newline.");
+      get_group().set_char_attribute("producer", str);
+    }
+
     void HDF5SharedData::set_frame_name(std::string str) {
       if (frame_names_.get_size()[0] <= get_current_frame()) {
         frame_names_.set_size(HDF5DataSetIndexD<1>(get_current_frame()+1));

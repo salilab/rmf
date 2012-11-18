@@ -75,16 +75,19 @@ namespace RMF {
     void set_number_of_frames_hint(unsigned int i) {
       get_shared_data()->save_frames_hint(i);
     }
-    /** \name Descriptions
-        Each RMF structure has an associated description. This should
+    /** Each RMF structure has an associated description. This should
         consist of unstructured text describing the contents of the RMF
         data. Conventionally. this description can consist of multiple
         paragraphs, each separated by a newline character and should end
         in a newline.
-        @{
     */
     void set_description(std::string descr);
-    /** @} */
+
+    /** Each RMF structure has an associated field that the code that
+        produced the file can use to describe itself.
+    */
+    void set_producer(std::string);
+
 
     /*HDF5Group get_hdf5_group() const {
       return get_shared_data()->get_group();
