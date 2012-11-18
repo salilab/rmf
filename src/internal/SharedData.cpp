@@ -16,6 +16,7 @@
 #include <boost/version.hpp>
 #include "../backend/hdf5/HDF5SharedData.h"
 #include "../backend/avro/AvroSharedData.h"
+#include "../backend/avro/SingleAvroFile.h"
 
 namespace RMF {
   namespace internal {
@@ -98,7 +99,7 @@ namespace RMF {
     }
 
 
-    typedef AvroSharedData<EmptyAvroShareData> AvroShareDataImpl;
+    typedef AvroSharedData<SingleAvroFile> SingleAvroShareData;
 
     // throws RMF::IOException if couldn't create file or unsupported file
     // format
@@ -110,7 +111,7 @@ namespace RMF {
       if (boost::algorithm::ends_with(path, ".rmf")) {
         ret= new HDF5SharedData(path, create, false);
       } else if (boost::algorithm::ends_with(path, ".rmf2")) {
-        ret= new AvroShareDataImpl(path, create, false);
+        ret= new SingleAvroShareData(path, create, false);
       } else {
         RMF_THROW("Don't know how to open file", IOException);
       }
@@ -127,7 +128,7 @@ namespace RMF {
       if (boost::algorithm::ends_with(path, ".rmf")) {
         ret= new HDF5SharedData(path, false, true);
       } else if (boost::algorithm::ends_with(path, ".rmf2")) {
-        ret= new AvroShareDataImpl(path, false, true);
+        ret= new SingleAvroShareData(path, false, true);
       } else {
         RMF_THROW("Don't know how to open file", IOException);
       }

@@ -74,24 +74,24 @@ namespace RMF {
     get_frame_##lcname##_data(unsigned int node,                        \
                               std::string category,                     \
                               int frame) const {                        \
-      const RMF_internal::NodeData &data= get_node_frame_data(node,           \
+      const RMF_internal::NodeData &data= P::get_node_frame_data(node,  \
                                                         category, frame); \
       return data.lcname##_data;                                        \
     }                                                                   \
     Ucname##Data &                                                      \
     access_frame_##lcname##_data(unsigned int node,                     \
                                  std::string category, int frame) {     \
-      return access_node_data(node, category, frame).lcname##_data;     \
+      return P::access_node_data(node, category, frame).lcname##_data;  \
     }                                                                   \
     public:                                                             \
     Ucname##Traits::Type get_value(unsigned int node,                   \
                                    Key<Ucname##Traits> k) const {       \
       Category cat= get_category(k);                                    \
-      std::string cat_name= get_category_name(cat);                     \
+      std::string cat_name= P::get_category_name(cat);                  \
       const Ucname##Data &data= get_frame_##lcname##_data(node,         \
                                                           cat_name,     \
                                                           P::get_current_frame()); \
-      Ucname##Data::const_iterator it= data.find(get_key_string(k));    \
+      Ucname##Data::const_iterator it= data.find(P::get_key_string(k)); \
       if (it != data.end()) {                                           \
         Ucname##Traits::Type ret;                                       \
         avro_assign(ret, it->second);                                   \
@@ -103,7 +103,7 @@ namespace RMF {
       const Ucname##Data &staticdata= get_frame_##lcname##_data(node,   \
                                                                 cat_name, \
                                                                 ALL_FRAMES); \
-      Ucname##Data::const_iterator staticit= staticdata.find(get_key_string(k)); \
+      Ucname##Data::const_iterator staticit= staticdata.find(P::get_key_string(k)); \
       if (staticit != staticdata.end()) {                               \
         Ucname##Traits::Type ret;                                       \
         avro_assign(ret, staticit->second);                             \
@@ -115,7 +115,7 @@ namespace RMF {
                                          Key<Ucname##Traits> k)  {      \
       Ucname##Traits::Types ret;                                        \
       for (unsigned int i=0; i< get_number_of_frames(); ++i) {          \
-        set_current_frame(i);                                           \
+        P::set_current_frame(i);                                        \
         ret.push_back(get_value(node, k));                              \
       }                                                                 \
       return ret;                                                       \
@@ -124,27 +124,26 @@ namespace RMF {
                    Key<Ucname##Traits> k,                               \
                    Ucname##Traits::Type v) {                            \
       Category cat= get_category(k);                                    \
-      std::string cat_name= get_category_name(cat);                     \
+      std::string cat_name= P::get_category_name(cat);                  \
       Ucname##Data &data= access_frame_##lcname##_data(node, cat_name,  \
                                                        P::get_current_frame()); \
-      avro_assign(data[get_key_string(k)], v);                          \
-      dirty_=true;                                                      \
+      avro_assign(data[P::get_key_string(k)], v);                       \
     }                                                                   \
     bool get_has_frame_value(unsigned int node,                         \
                              Key<Ucname##Traits> k) const {             \
       Category cat= get_category(k);                                    \
-      std::string cat_name= get_category_name(cat);                     \
+      std::string cat_name= P::get_category_name(cat);                  \
       const Ucname##Data &data= get_frame_##lcname##_data(node,         \
                                                           cat_name,     \
                                                           P::get_current_frame()); \
-      Ucname##Data::const_iterator it= data.find(get_key_string(k));    \
+      Ucname##Data::const_iterator it= data.find(P::get_key_string(k)); \
       return (it != data.end());                                        \
     }                                                                   \
     vector<Key<Ucname##Traits> >                                        \
     get_##lcname##_keys(Category cat) {                                 \
       set<Key<Ucname##Traits> > ret;                                    \
-      std::string cat_name= get_category_name(cat);                     \
-      const RMF_internal::Data &data= get_frame_data(cat_name,          \
+      std::string cat_name= P::get_category_name(cat);                  \
+      const RMF_internal::Data &data= P::get_frame_data(cat_name,       \
                                                      P::get_current_frame()); \
       for ( std::map<std::string, RMF_internal::NodeData>::const_iterator it \
               = data.nodes.begin(); it != data.nodes.end(); ++it) {     \
@@ -154,7 +153,7 @@ namespace RMF {
           ret.insert(get_##lcname##_key(cat, iti->first));               \
         }                                                               \
       }                                                                 \
-      const RMF_internal::Data &staticdata= get_frame_data(cat_name,    \
+      const RMF_internal::Data &staticdata= P::get_frame_data(cat_name, \
                                                            ALL_FRAMES); \
       for ( std::map<std::string, RMF_internal::NodeData>::const_iterator it \
               = staticdata.nodes.begin(); it != staticdata.nodes.end(); ++it) { \
@@ -169,13 +168,13 @@ namespace RMF {
     Key<Ucname##Traits>                                                 \
     get_##lcname##_key(Category category,                               \
                        std::string name) {                              \
-      return get_key_helper<Ucname##Traits>(category, name);            \
+      return P::template get_key_helper<Ucname##Traits>(category, name); \
     }                                                                   \
     std::string get_name(Key<Ucname##Traits> k) const {                 \
-      return key_data_map_.find(k.get_id())->second.name;               \
+      return P::get_key_name(k.get_id());                               \
     }                                                                   \
     Category get_category(Key<Ucname##Traits> k) const {                \
-      return key_data_map_.find(k.get_id())->second.category;           \
+      return P::get_category(k.get_id());                               \
     }
 
 
