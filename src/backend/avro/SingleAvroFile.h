@@ -23,12 +23,13 @@ namespace RMF {
       bool dirty_;
 
       RMF_internal::Data null_frame_data_;
-     RMF_internal::NodeData null_node_data_;
+      RMF_internal::NodeData null_node_data_;
 
       // begin specific data
     protected:
-      const RMF_internal::Data &get_frame_data(std::string category,
-                                 int frame) const {
+      const RMF_internal::Data &get_frame_data(Category cat,
+                                               int frame) const {
+        std::string category= get_category_name(cat);
         std::map<std::string, std::vector<RMF_internal::Data > >::const_iterator
           it= all_.category.find(category);
         if (it==all_.category.end()) {
@@ -67,9 +68,9 @@ namespace RMF {
       }
 
       const RMF_internal::NodeData &get_node_frame_data(int node,
-                                    std::string category,
-                                    int frame) const {
-        const RMF_internal::Data &data= get_frame_data(category, frame);
+                                                        Category cat,
+                                                        int frame) const {
+        const RMF_internal::Data &data= get_frame_data(cat, frame);
         std::map<std::string, RMF_internal::NodeData>::const_iterator
           nit= data.nodes.find(get_node_string(node));
         if (nit == data.nodes.end()) {
@@ -91,8 +92,9 @@ namespace RMF {
         return all_.frames[i];
       }
 
-      RMF_internal::Data &access_frame_data(std::string category,
-                              int frame) {
+      RMF_internal::Data &access_frame_data(Category cat,
+                                            int frame) {
+        std::string category= get_category_name(cat);
         dirty_=true;
         if (all_.category[category].size() <= (frame+1)) {
           all_.category[category].resize(frame+2);
@@ -103,53 +105,53 @@ namespace RMF {
 
 
       RMF_internal::NodeData &access_node_data(int node,
-                                 std::string category,
-                                 int frame) {
+                                               Category cat,
+                                               int frame) {
         dirty_=true;
-        RMF_internal::Data &data= access_frame_data(category, frame);
+        RMF_internal::Data &data= access_frame_data(cat, frame);
         return data.nodes[get_node_string(node)];
       }
 
 
-    void initialize_categories() {
-      for (std::map<std::string, std::vector<RMF_internal::Data > >::const_iterator
-             it= all_.category.begin(); it != all_.category.end(); ++it) {
-        get_category(it->first);
+      void initialize_categories() {
+        for (std::map<std::string, std::vector<RMF_internal::Data > >::const_iterator
+               it= all_.category.begin(); it != all_.category.end(); ++it) {
+          get_category(it->first);
+        }
       }
-    }
 
-    void initialize_node_keys() {
-      for (unsigned int i=0; i< all_.nodes.size(); ++i) {
-        add_node_key();
+      void initialize_node_keys() {
+        for (unsigned int i=0; i< all_.nodes.size(); ++i) {
+          add_node_key();
+        }
       }
-    }
     public:
 
-    void flush() {
-      if (!dirty_) return;
-      avro::DataFileWriter<RMF_internal::All>
-        rd(get_file_path().c_str(), get_all_schema());
-      rd.write(all_);
-      dirty_=false;
-    }
-    void reload() {
-      avro::DataFileReader<RMF_internal::All>
-        rd(get_file_path().c_str(), get_all_schema());
-      bool ok=rd.read(all_);
-      if (!ok) {
-        throw IOException("Can't read input file on reload");
+      void flush() {
+        if (!dirty_) return;
+        avro::DataFileWriter<RMF_internal::All>
+          rd(get_file_path().c_str(), get_all_schema());
+        rd.write(all_);
+        dirty_=false;
       }
+      void reload() {
+        avro::DataFileReader<RMF_internal::All>
+          rd(get_file_path().c_str(), get_all_schema());
+        bool ok=rd.read(all_);
+        if (!ok) {
+          throw IOException("Can't read input file on reload");
+        }
 
-      initialize_categories();
-      initialize_node_keys();
-      dirty_=false;
-    }
-    void set_current_frame(int frame){
-      SharedData::set_current_frame(frame);
-      if (all_.file.number_of_frames < frame+1) {
-        access_file().number_of_frames=frame+1;
+        initialize_categories();
+        initialize_node_keys();
+        dirty_=false;
       }
-    }
+      void set_current_frame(int frame){
+        SharedData::set_current_frame(frame);
+        if (all_.file.number_of_frames < frame+1) {
+          access_file().number_of_frames=frame+1;
+        }
+      }
 
       SingleAvroFile(std::string path): AvroKeysAndCategories(path){}
 
