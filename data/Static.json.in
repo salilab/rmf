@@ -1,0 +1,12 @@
+{
+    "type": "record",
+    "name": "StaticData",
+    "doc": "Store the static part of the data.",
+    "fields" : [
+        {
+            "type": "map",
+            "doc" : "categories by name",
+            "values" : @RMF_JSON_DATA@
+        }
+    ]
+}
