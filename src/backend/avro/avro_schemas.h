@@ -10,6 +10,7 @@
 
 #include <RMF/config.h>
 #include <avro/ValidSchema.hh>
+#include <backend/avro/AllJSON.h>
 
 namespace RMF {
   namespace internal {
@@ -18,6 +19,9 @@ namespace RMF {
     RMFEXPORT avro::ValidSchema get_Nodes_schema();
     RMFEXPORT avro::ValidSchema get_Frames_schema();
     RMFEXPORT avro::ValidSchema get_Data_schema();
+
+    RMFEXPORT void show(const RMF_internal::Data &data,
+                        std::ostream &out=std::cout);
   }
 }
 

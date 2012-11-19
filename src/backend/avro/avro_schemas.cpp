@@ -11,6 +11,8 @@
 #include <RMF/decorators.h>
 #include <avro/Compiler.hh>
 #include <stdexcept>
+#include <avro/Encoder.hh>
+#include <avro/Stream.hh>
 
 namespace RMF {
   namespace internal {
@@ -26,6 +28,16 @@ namespace RMF {
     RMF_SCHEMA(Frames);
     RMF_SCHEMA(Data);
 
+    void show(const RMF_internal::Data &data,
+              std::ostream &out) {
+      std::auto_ptr<avro::OutputStream> os
+        = avro::ostreamOutputStream(out);
+      avro::EncoderPtr encoder
+        = avro::jsonEncoder(RMF::internal::get_Data_schema());
+      encoder->init(*os);
+      avro::codec_traits<RMF_internal::Data>::encode(*encoder, data);
+      os->flush();
+    }
 
   } // namespace internal
 } /* namespace RMF */

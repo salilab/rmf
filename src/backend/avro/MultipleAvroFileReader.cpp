@@ -42,14 +42,15 @@ namespace RMF {
           }
           while (frame > categories_[i].data.frame) {
             if (!categories_[i].reader->read(categories_[i].data)) {
-              std::cout << "Out of data looking for " << frame << std::endl;
+              //std::cout << "Out of data looking for " << frame << std::endl;
               clear_data(categories_[i].data, frame);
               break;
             } else {
-              std::cout << "Read frame " << categories_[i].data.frame << std::endl;
+              //std::cout << "Read frame " << categories_[i].data.frame << std::endl;
+              //show(categories_[i].data, std::cout);
             }
             if (frame < categories_[i].data.frame) {
-              std::cout << "Missing frame looking for " << frame << std::endl;
+              //std::cout << "Missing frame looking for " << frame << std::endl;
               clear_data(categories_[i].data, frame);
               break;
             }
@@ -71,8 +72,6 @@ namespace RMF {
     std::vector<std::string> get_categories_from_disk(It a, It b) {
       std::vector<std::string> ret;
       for (; a != b; ++a) {
-        std::cout << "Inspecting " << a->path()
-                  << " with extension " << a->path().extension() << std::endl;
         if (a->path().extension()== ".frames" || a->path().extension()== ".static") {
           ret.push_back(a->path().stem().string());
         }
@@ -81,13 +80,13 @@ namespace RMF {
     }
     void MultipleAvroFileReader::initialize_categories() {
       std::string path=get_file_path();
-      std::cout << "Searching in " << path << std::endl;
+      //std::cout << "Searching in " << path << std::endl;
       std::vector<std::string> categories
         =get_categories_from_disk(boost::filesystem::directory_iterator(path),
                                   boost::filesystem::directory_iterator());
       categories_.clear();
       for (unsigned int i=0; i< categories.size(); ++i) {
-        std::cout << "initializing category " << categories[i] << std::endl;
+        //std::cout << "initializing category " << categories[i] << std::endl;
         Category cat=get_category(categories[i]);
         // not safe, need to handle reload separately
         add_category_data(cat);
@@ -122,9 +121,9 @@ namespace RMF {
       static_categories_.resize(cat.get_id()+1);
 
       std::string dynamic_path=get_category_dynamic_file_path(cat);
-      std::cout << "Checking dynamic path " << dynamic_path << std::endl;
+      //std::cout << "Checking dynamic path " << dynamic_path << std::endl;
       if (boost::filesystem::exists(dynamic_path)) {
-        std::cout << "Dynamic data found" << std::endl;
+        //std::cout << "Dynamic data found" << std::endl;
         categories_[cat.get_id()].reader
           .reset(new avro::DataFileReader<RMF_internal::Data>(dynamic_path.c_str(),
                                                               get_Data_schema()));
@@ -134,9 +133,9 @@ namespace RMF {
       }
 
       std::string static_path=get_category_static_file_path(cat);
-      std::cout << "Checking static path " << static_path << std::endl;
+      //std::cout << "Checking static path " << static_path << std::endl;
       if (boost::filesystem::exists(static_path)) {
-        std::cout << "Static data found" << std::endl;
+        //std::cout << "Static data found" << std::endl;
         avro::DataFileReader<RMF_internal::Data>
           reader(static_path.c_str(), get_Data_schema());
         reader.read(static_categories_[cat.get_id()]);

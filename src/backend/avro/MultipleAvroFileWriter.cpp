@@ -57,6 +57,7 @@ namespace RMF {
       avro::DataFileWriter<UCName>                                      \
         wr(get_##lcname##_file_path().c_str(), get_##UCName##_schema()); \
       wr.write(lcname##_);                                              \
+      wr.flush();                                                       \
     }
 
     void MultipleAvroFileWriter::commit() {
@@ -70,7 +71,11 @@ namespace RMF {
               .reset(new avro::DataFileWriter<RMF_internal::Data>(name.c_str(),
                                                                   get_Data_schema()));
           }
+          /*std::cout << "Writing data for " << get_category_name(Category(i))
+            << " at frame " << categories_[i].data.frame << std::endl;*/
+          //show(categories_[i].data);
           categories_[i].writer->write(categories_[i].data);
+          categories_[i].writer->flush();
         }
       }
       for (unsigned int i=0; i< static_categories_.size(); ++i) {
@@ -79,9 +84,11 @@ namespace RMF {
           avro::DataFileWriter<RMF_internal::Data> writer(name.c_str(),
                                                           get_Data_schema());
           writer.write(static_categories_[i]);
+          writer.flush();
         }
       }
       // must be last
+      //std::cout << "Committed num frames= " << file_.number_of_frames << std::endl;
       RMF_COMMIT(File, file);
     }
   } // namespace internal
