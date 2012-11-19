@@ -42,6 +42,7 @@ namespace RMF {
       boost::filesystem::remove_all(path);
       boost::filesystem::create_directory(path);
       file_.number_of_frames=0;
+      file_.version=1;
       file_dirty_=true;
       frames_dirty_=true;
       nodes_dirty_=true;

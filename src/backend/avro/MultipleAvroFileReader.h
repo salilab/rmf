@@ -44,7 +44,8 @@ namespace RMF {
             return null_static_data_;
           }
         } else {
-          if (categories_.size() > cat.get_id()) {
+          if (categories_.size() > cat.get_id()
+              && categories_[cat.get_id()].data.frame == frame ) {
             return categories_[cat.get_id()].data;
           } else {
             return null_data_;

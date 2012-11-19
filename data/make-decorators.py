@@ -475,7 +475,7 @@ class Decorator:
         ret.append(factstr%{"name":self.name,
                              "key_members": self._get_key_members(True),
                              "key_pass": self._get_key_pass(True),
-                             "create_check":"RMF_USAGE_CHECK(get_is(nh), \"Node is not\")",
+                             "create_check":"",
                              "CONST":"Const", "NOTCONST":"",
                             "construct": self._get_construct(True),
                             "initialize": self._get_initialize(True),

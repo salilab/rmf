@@ -25,6 +25,7 @@ namespace RMF {
 
     void MultipleAvroFileReader::set_current_frame(int frame) {
       if (frame != ALL_FRAMES) {
+        null_data_.frame=frame;
         for (unsigned int i=0; i< categories_.size(); ++i) {
           if (!categories_[i].reader) {
             clear_data(categories_[i].data, frame);

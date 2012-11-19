@@ -21,12 +21,19 @@ class GenericTest(unittest.TestCase):
             r.set_value(ik, 1)
             f.set_current_frame(1)
             r.set_value(ik, 2)
+            f.set_current_frame(2)
             f.set_current_frame(3)
             r.set_value(ik, 4)
+            del sc
+            del ik
             del r
             del f
+            print "reopening"
             f= RMF.open_rmf_file_read_only(path)
             r= f.get_root_node();
+            sc= f.get_category("sequence")
+            ik= f.get_int_key(sc, "ik0")
+            print "getting all"
             av= r.get_all_values(ik)
             self.assertEqual(av, [1,2,RMF.NullInt,4])
     def test_decorators(self):
@@ -37,26 +44,32 @@ class GenericTest(unittest.TestCase):
             r= f.get_root_node()
             fact= RMF.ScoreFactory(f)
             sn= r.add_child("feature", RMF.FEATURE)
-            for frame in [1,4,5]:
+            for frame in range(0,6):
                 f.set_current_frame(frame)
-                d= fact.get(sn)
-                d.set_score(frame)
+                if frame in [1,4,5]:
+                    d= fact.get(sn)
+                    d.set_score(frame)
             f.set_current_frame(RMF.ALL_FRAMES)
             del r
             del f
             del d
             del sn
+            print "reopening"
             f= RMF.open_rmf_file_read_only(path)
             r= f.get_root_node();
             fact= RMF.ScoreConstFactory(f)
             sn= r.get_children()[0]
+            print "get"
             all_d= fact.get(sn)
+            print "get all"
             all_values= all_d.get_all_scores()
             print all_values
             self.assertEqual(all_values[1], 1)
             self.assertEqual(all_values[4], 4)
             self.assertEqual(all_values[5], 5)
             f.set_current_frame(RMF.ALL_FRAMES)
+            print "checking is"
             self.assertEqual(fact.get_is(sn), False)
+            print "done"
 if __name__ == '__main__':
     unittest.main()
