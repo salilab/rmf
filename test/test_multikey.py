@@ -11,13 +11,14 @@ class GenericTest(unittest.TestCase):
     def _do_test(self, suffix):
         """Test creating a simple hierarchy file with multiple keys"""
         f= RMF.create_rmf_file(RMF._get_temporary_file_path("multikey."+suffix))
+        f.set_current_frame(0)
         r= f.get_root_node()
         print r.get_type()
         sc= f.get_category("multikey")
         ikfp= f.get_int_key(sc, "ik0")
         ik= f.get_int_key(sc, "ik0")
         on= r.add_child("oc", RMF.REPRESENTATION)
-        f.set_current_frame(10)
+        f.set_current_frame(1)
         r.set_value(ikfp, 1)
         on.set_value(ik, 10)
         print r.get_value(ikfp)

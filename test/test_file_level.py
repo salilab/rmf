@@ -23,7 +23,8 @@ class Tests(unittest.TestCase):
     def test_frames(self):
         """Test creating a simple hierarchy file with frames"""
         for suffix in RMF.suffixes:
-            f= RMF.create_rmf_file(RMF._get_temporary_file_path("test_file_frames."+suffix))
+            path=RMF._get_temporary_file_path("test_file_frames."+suffix)
+            f= RMF.create_rmf_file(path)
             r= f.get_root_node()
             print r.get_type()
             sc= f.get_category("sequence")
@@ -33,14 +34,27 @@ class Tests(unittest.TestCase):
             self.assertEqual(r.get_value(ik), 1, 0)
             f.set_current_frame(1)
             r.set_value(ik, 2)
+
+            del f
+            del sc
+            del ik
+            del r
+            f= RMF.open_rmf_file_read_only(path)
+            r= f.get_root_node()
+            sc= f.get_category("sequence")
+            ik= f.get_int_key(sc, "ik0")
+            f.set_current_frame(0)
+            self.assertEqual(r.get_value(ik), 1, 0)
+            f.set_current_frame(1)
             self.assertEqual(r.get_value(ik), 2)
             f.set_current_frame(0)
             self.assertEqual(r.get_value(ik), 1)
             self.assertEqual(f.get_number_of_frames(), 2)
     def test_perturbed_values(self):
-        """Test null values"""
+        """Test null values int"""
         for suffix in RMF.suffixes:
-            f= RMF.create_rmf_file(RMF._get_temporary_file_path("test_file."+suffix))
+            path=RMF._get_temporary_file_path("test_filei."+suffix)
+            f= RMF.create_rmf_file(path)
             r= f.get_root_node()
             print r.get_type()
             sc= f.get_category("sequence")
@@ -52,6 +66,13 @@ class Tests(unittest.TestCase):
             f.set_current_frame(1)
             ikna= r.get_value_always(ik)
             self.assertEqual(ikna, RMF.NullInt)
+    def test_perturbed_values(self):
+        """Test null values int"""
+        for suffix in RMF.suffixes:
+            path=RMF._get_temporary_file_path("test_filef."+suffix)
+            f= RMF.create_rmf_file(path)
+            r= f.get_root_node()
+            sc= f.get_category("sequence")
             fk= f.get_float_key(sc, "fk0")
             f.set_current_frame(0)
             r.set_value(fk, 1)
@@ -60,7 +81,5 @@ class Tests(unittest.TestCase):
             f.set_current_frame(1)
             fkna= r.get_value_always(fk)
             self.assertEqual(fkna, RMF.NullFloat)
-            RMF.show_hierarchy(r)
-            RMF.show_hierarchy_with_decorators(r)
 if __name__ == '__main__':
     unittest.main()

@@ -18,7 +18,9 @@ class GenericTest(unittest.TestCase):
             f.set_current_frame(i)
             of.set_current_frame(i)
             RMF.copy_frame(f, of)
+        print "deling"
         del of
+        print "reopening"
         of= RMF.open_rmf_file_read_only(onm)
         self.assert_(RMF.get_equal_structure(f, of, True))
         for i in range(-1, last_frame+1):
@@ -29,6 +31,7 @@ class GenericTest(unittest.TestCase):
     def test_perturbed(self):
         """Test copying an rmf file"""
         for suffix in RMF.suffixes:
+            print suffix
             self._copy_to(-1, suffix)
             self._copy_to(1, suffix)
 
