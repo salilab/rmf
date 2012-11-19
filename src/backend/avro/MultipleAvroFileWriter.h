@@ -107,7 +107,7 @@ namespace RMF {
 
       MultipleAvroFileWriter(std::string path,
                              bool create, bool read_only);
-      ~MultipleAvroFileWriter();
+      virtual ~MultipleAvroFileWriter();
 
       void set_current_frame(int frame);
 

@@ -117,8 +117,6 @@ namespace RMF {
     }
 
     void MultipleAvroFileReader::add_category_data(Category cat) {
-      RMF_INTERNAL_CHECK(cat.get_id()== categories_.size(),
-                         "Bad category added");
       categories_.resize(cat.get_id()+1);
       static_categories_.resize(cat.get_id()+1);
 
