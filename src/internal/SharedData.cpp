@@ -47,6 +47,8 @@ namespace RMF {
                                               path_(path){
     };
     SharedData::~SharedData() {
+      RMF_INTERNAL_CHECK(valid_== 11111,
+                         "Already destroyed");
       valid_=-66666;
       // check for an exception in the constructor
       if (reverse_cache.find(this) != reverse_cache.end()) {
@@ -114,6 +116,8 @@ namespace RMF {
           return cache.find(path)->second;
         }
         ret= new HDF5SharedData(path, create, false);
+        cache[path]=ret;
+        reverse_cache[ret]=path;
       } else if (boost::algorithm::ends_with(path, ".rmfa")) {
         ret= new SingleAvroShareData(path, create, false);
       } else if (create && boost::algorithm::ends_with(path, ".rmf2")) {
@@ -121,8 +125,6 @@ namespace RMF {
       } else {
         RMF_THROW("Don't know how to open file", IOException);
       }
-      cache[path]=ret;
-      reverse_cache[ret]=path;
       return ret;
     }
 
@@ -133,6 +135,8 @@ namespace RMF {
           return cache.find(path)->second;
         }
         ret= new HDF5SharedData(path, false, true);
+        cache[path]=ret;
+        reverse_cache[ret]=path;
       } else if (boost::algorithm::ends_with(path, ".rmfa")) {
         ret= new SingleAvroShareData(path, false, true);
       } else if (boost::algorithm::ends_with(path, ".rmf2")) {
@@ -140,8 +144,6 @@ namespace RMF {
       } else {
         RMF_THROW("Don't know how to open file", IOException);
       }
-      cache[path]=ret;
-      reverse_cache[ret]=path;
       return ret;
     }
 
