@@ -31,6 +31,9 @@ namespace RMF {
   inline uintptr_t get_uint(boost::shared_ptr<P> p) {
     return reinterpret_cast<uintptr_t>(p.get());
   }
+  inline uintptr_t get_uint(NodeID id) {
+    return id.get_index();
+  }
 
   namespace internal {
 
