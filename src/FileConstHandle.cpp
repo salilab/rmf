@@ -77,7 +77,8 @@ void FileConstHandle::validate(std::ostream &out=std::cerr) {
   for (unsigned int i=0; i< cs.size(); ++i) {
     validators.push_back(cs[i]->create(*this));
 }
-  for ( int frame=-1; frame < get_number_of_frames(); ++frame) {
+  for ( int frame=-1; frame < static_cast<int>(get_number_of_frames());
+        ++frame) {
     set_current_frame(frame);
     for (unsigned int i=0; i< cs.size(); ++i) {
       validators[i].write_errors(out);

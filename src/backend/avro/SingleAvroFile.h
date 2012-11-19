@@ -82,7 +82,7 @@ namespace RMF {
       }
 
       const RMF_internal::Frame& get_frame(int i) const {
-        if (i==-1 || i>= all_.frames.size()) {
+        if (i==-1 || i>= static_cast<int>(all_.frames.size())) {
           return null_frame_real_data_;
         }
         return all_.frames[i];
@@ -94,7 +94,7 @@ namespace RMF {
           return null_frame_real_data_;
         }
         dirty_=true;
-        if (all_.frames.size() <= i) {
+        if (static_cast<int>(all_.frames.size()) <= i) {
           all_.frames.resize(i+1);
         }
         return all_.frames[i];

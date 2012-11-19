@@ -38,7 +38,9 @@ namespace RMF {
               .reset( new avro::DataFileReader<RMF_internal::Data >(name.c_str(),
                                                                     get_Data_schema()));
             bool success=categories_[i].reader->read(categories_[i].data);
-            RMF_INTERNAL_CHECK(success, "No data found in file");
+            if (!success) {
+              RMF_THROW("Unable to read data from input", IOException);
+            }
           }
           while (frame > categories_[i].data.frame) {
             if (!categories_[i].reader->read(categories_[i].data)) {

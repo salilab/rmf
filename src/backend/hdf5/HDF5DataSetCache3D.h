@@ -45,11 +45,13 @@ namespace RMF {
           for (unsigned int i=0; i< extents_[0]; ++i) {
             for (unsigned int j=0; j< extents_[1]; ++j) {
               cache_[i][j]= all[i*extents_[1]+j];
+#ifndef RMF_NDEBUG
               typename TypeTraits::Type read= cache_[i][j],
                 fresh= ds_.get_value(HDF5DataSetIndexD<3>(i,j,
                                                           get_current_frame()));
               RMF_INTERNAL_CHECK(read==fresh,
                                  "Values don't match");
+#endif
             }
           }
         } else {

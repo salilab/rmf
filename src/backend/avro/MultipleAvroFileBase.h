@@ -59,7 +59,7 @@ namespace RMF {
       }
 
       const RMF_internal::Frame& get_frame(int i) const {
-        if (i==ALL_FRAMES || i>= frames_.size()) {
+        if (i==ALL_FRAMES || i>= static_cast<int>(frames_.size())) {
           return null_frame_data_;
         }
         return frames_[i];

@@ -268,7 +268,7 @@ namespace RMF {
       RMF_INTERNAL_CHECK(-1 != child_node,
                          "Bad child being added");
       int link= add_child(node, "link", LINK);
-      int link_category_index= get_category_index_create(link_category_);
+      get_category_index_create(link_category_);
       set_value(link, link_key_,
                 NodeID(child_node));
       RMF_INTERNAL_CHECK(get_linked(link)== child_node,
@@ -282,7 +282,7 @@ namespace RMF {
     }
 
     Ints HDF5SharedData::get_children(int node) const {
-      if (node < get_number_of_real_nodes()) {
+      if (node < static_cast<int>(get_number_of_real_nodes())) {
         int cur= get_first_child(node);
         Ints ret;
         while (!IndexTraits::get_is_null_value(cur)) {
@@ -403,13 +403,17 @@ namespace RMF {
     }
 
     void HDF5SharedData::set_frame_name(std::string str) {
-      if (frame_names_.get_size()[0] <= get_current_frame()) {
+      RMF_USAGE_CHECK(get_current_frame() != ALL_FRAMES,
+                      "Cannot set the name frame name for static data");
+      if (static_cast<int>(frame_names_.get_size()[0]) <= get_current_frame()) {
         frame_names_.set_size(HDF5DataSetIndexD<1>(get_current_frame()+1));
       }
       frame_names_.set_value(HDF5DataSetIndexD<1>(get_current_frame()), str);
     }
     std::string HDF5SharedData::get_frame_name() const {
-      if (frame_names_.get_size()[0] > get_current_frame()) {
+      RMF_USAGE_CHECK(get_current_frame() != ALL_FRAMES,
+                      "The static data frame does not have a name");
+      if (static_cast<int>(frame_names_.get_size()[0]) > get_current_frame()) {
         return frame_names_.get_value(HDF5DataSetIndexD<1>(get_current_frame()));
       } else {
         return std::string();

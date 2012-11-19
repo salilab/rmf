@@ -93,7 +93,7 @@ namespace RMF {
         RMF_USAGE_CHECK(i != ALL_FRAMES,
                         "You must be on a frame to change its data");
         frames_dirty_=true;
-        if (frames_.size() <= i+1) {
+        if (static_cast<int>(frames_.size()) <= i+1) {
           frames_.resize(i+1);
         }
         return frames_[i];
