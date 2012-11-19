@@ -16,21 +16,12 @@
 #include <RMF/decorators.h>
 
 namespace RMF {
-  unsigned int get_uint(NodeConstHandle nh);
-  unsigned int get_uint(NodeHandle nh);
-  // needed for the koenig lookup
-  unsigned int get_uint(NodeConstHandle nh){
-    return nh.get_id().get_index();
-  }
-  unsigned int get_uint(NodeHandle nh){
-    return nh.get_id().get_index();
-  }
   namespace {
     void copy_structure(NodeConstHandle in, NodeHandle out,
                         const internal::set<NodeConstHandle>* set){
       // we already saw this part of the dag
       if (in.get_has_association()) return;
-      in.set_association(out);
+      in.set_association(out.get_id());
       NodeConstHandles ch=in.get_children();
       for (unsigned int i=0; i< ch.size(); ++i) {
         if (set && set->find(ch[i]) == set->end()) continue;
@@ -41,7 +32,7 @@ namespace RMF {
     void link_structure(NodeConstHandle in, NodeHandle out){
       // to deal with aliases
       if (in.get_has_association()) return;
-      in.set_association(out);
+      in.set_association(out.get_id());
       NodeConstHandles ch=in.get_children();
       NodeHandles och=out.get_children();
       for (unsigned int i=0; i< ch.size(); ++i) {

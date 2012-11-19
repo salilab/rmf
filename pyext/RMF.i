@@ -332,4 +332,8 @@ def get_example_path(name):
    dir= os.path.split(sys.argv[0])[0]
    return os.path.join(dir, name)
 
+suffixes=["rmf", "rmf2", "rmfa"]
+
+read_write_suffixes=["rmf", "rmfa"]
+
 %}

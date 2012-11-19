@@ -6,7 +6,7 @@
 #include "common.h"
 
 std::string
-description("Slice an rmf file into one or more files based on frames");
+description("Grab frames from an rmf file");
 
 
 int main(int argc, char **argv) {

@@ -36,7 +36,7 @@
   /** This returns all the keys that are used in the current frame.
       Other frames may have different ones.*/                           \
   UCName##Key##s                                                        \
-  get_##lcname##_keys(Category category_id) const {                     \
+  get_##lcname##_keys(Category category_id) {                           \
     return get_keys<UCName##Traits>(category_id);                       \
   }
 
@@ -133,9 +133,9 @@ namespace RMF {
     /** Get a list of all keys of the given type,
      */
     template <class TypeT>
-      vector<Key<TypeT> > get_keys(Category category) const {
+      vector<Key<TypeT> > get_keys(Category category) {
       if (category==Category()) return vector<Key<TypeT> >();
-      return internal::ConstGenericSharedData<TypeT>
+      return internal::GenericSharedData<TypeT>
         ::get_keys(shared_.get(), category);
     }
     /** @} */
@@ -221,17 +221,18 @@ namespace RMF {
       return shared_->get_has_user_data(index);
     }
 
-    /** \name Descriptions
-        Each RMF structure has an associated description. This should
+    /** Each RMF structure has an associated description. This should
         consist of unstructured text describing the contents of the RMF
         data. Conventionally. this description can consist of multiple
         paragraphs, each separated by a newline character and should end
         in a newline.
-        @{
     */
     std::string get_description() const;
-    /** @} */
 
+    /** Each RMF structure has an associated field that the code that
+        produced the file can use to describe itself.
+    */
+    std::string get_producer() const;
 
     /** \name Key categories methods
         Methods for managing the key categories in this RMF.
