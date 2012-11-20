@@ -46,9 +46,6 @@ class Decorator {
   }
  public:
   typedef HandleType Node;
-  int get_frame() const {
-    return get_node().get_file().get_current_frame();
-  }
   Node get_node() const {
     return handle_;
   }

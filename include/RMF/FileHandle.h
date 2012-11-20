@@ -13,6 +13,8 @@
 #include "internal/SharedData.h"
 #include "Key.h"
 #include "FileConstHandle.h"
+#include "NodeHandle.h"
+#include "FrameHandle.h"
 
 
 namespace RMF {
@@ -40,14 +42,20 @@ namespace RMF {
     FileHandle(std::string name, bool create);
 #endif
 
-    /** Frames can have associated comments which can be used to label
-        particular frames of interest.*/
-    void set_frame_name(std::string comment);
-
     /** Return the root of the hierarchy stored in the file.
      */
     NodeHandle get_root_node() const {
       return NodeHandle(0, get_shared_data());
+    }
+
+    //! Return the root of the frame hierarchy
+    FrameHandle get_root_frame() const {
+      return FrameHandle(-1, get_shared_data());
+    }
+
+    FrameHandle get_current_frame() const {
+      return FrameHandle(get_shared_data()->get_current_frame(),
+                         get_shared_data());
     }
 
 #ifndef SWIG

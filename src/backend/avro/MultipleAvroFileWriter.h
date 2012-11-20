@@ -89,14 +89,12 @@ namespace RMF {
         file_dirty_=true;
         return file_;
       }
-      RMF_internal::Frame& access_frame(int i) {
-        RMF_USAGE_CHECK(i != ALL_FRAMES,
-                        "You must be on a frame to change its data");
+      RMF_internal::Node& access_frame(int i) {
         frames_dirty_=true;
-        if (static_cast<int>(frames_.size()) <= i+1) {
-          frames_.resize(i+1);
+        if (static_cast<int>(frames_.size()) <= i+2) {
+          frames_.resize(i+2);
         }
-        return frames_[i];
+        return frames_[i+1];
       }
       void commit();
     public:

@@ -76,7 +76,7 @@ namespace RMF {
       }
 
 
-      RMF_internal::Frame& access_frame(int i) {
+      RMF_internal::Node& access_frame(int i) {
         RMF_THROW("Can't modify read only file",
                   IOException);
       }

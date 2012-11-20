@@ -45,6 +45,9 @@ namespace RMF {
     virtual Ucname##Traits::Type get_value(unsigned int node,           \
                                            Key<Ucname##Traits> k)       \
       const=0;                                                          \
+    virtual Ucname##Traits::Type get_value_frame(unsigned int node,     \
+                                                 Key<Ucname##Traits> k) \
+      const=0;                                                          \
     virtual Ucname##Traits::Types                                       \
     get_values(unsigned int node,                                       \
                const vector<Key<Ucname##Traits> >& k) const {           \
@@ -72,6 +75,9 @@ namespace RMF {
     virtual void set_value(unsigned int node,                           \
                            Key<Ucname##Traits> k,                       \
                            Ucname##Traits::Type v) =0;                  \
+    virtual void set_value_frame(unsigned int node,                     \
+                                 Key<Ucname##Traits> k,                 \
+                                 Ucname##Traits::Type v) =0;            \
     virtual void set_values(unsigned int node,                          \
                             const vector<Key<Ucname##Traits> > &k,      \
                             const Ucname##Traits::Types v) {            \
@@ -198,6 +204,12 @@ namespace RMF {
       virtual int add_child(int node, std::string name, int t)=0;
       virtual void add_child(int node, int child_node)=0;
       virtual Ints get_children(int node) const=0;
+
+      virtual int add_child_frame(int node, std::string name, int t)=0;
+      virtual void add_child_frame(int node, int child_node)=0;
+      virtual Ints get_children_frame(int node) const=0;
+
+
       virtual void save_frames_hint(int i)=0;
 
       virtual Categories get_categories() const=0;
@@ -207,8 +219,7 @@ namespace RMF {
       virtual void set_description(std::string str)=0;
       virtual std::string get_producer() const=0;
       virtual void set_producer(std::string str)=0;
-      virtual void set_frame_name(std::string str)=0;
-      virtual std::string get_frame_name() const=0;
+      virtual std::string get_frame_name(int i) const=0;
       virtual bool get_supports_locking() const {return false;}
       virtual bool set_is_locked(bool) {return false;}
       virtual void reload()=0;

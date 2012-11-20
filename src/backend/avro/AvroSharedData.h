@@ -81,8 +81,7 @@ namespace RMF {
       void set_description(std::string str);
       std::string get_producer() const;
       void set_producer(std::string str);
-      void set_frame_name(std::string str);
-      std::string get_frame_name() const;
+      std::string get_frame_name(int i) const;
 
       void set_current_frame(int frame){
         P::set_current_frame(frame);
@@ -93,6 +92,10 @@ namespace RMF {
         RMF_INTERNAL_CHECK(P::get_current_frame()==frame,
                            "Didn't set frame");
       }
+
+      int add_child_frame(int node, std::string name, int t);
+      void add_child_frame(int node, int child_node);
+      Ints get_children_frame(int node) const;
     };
 
   } // namespace internal

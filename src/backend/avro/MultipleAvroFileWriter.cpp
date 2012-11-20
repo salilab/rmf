@@ -76,7 +76,7 @@ namespace RMF {
 #endif
     void MultipleAvroFileWriter::commit() {
       RMF_COMMIT(Nodes, nodes);
-      RMF_COMMIT(Frames, frames);
+      RMF_COMMIT(Nodes, frames);
       for (unsigned int i=0; i< categories_.size(); ++i) {
         if (categories_[i].dirty) {
           if (!categories_[i].writer) {
