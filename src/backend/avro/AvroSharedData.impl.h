@@ -30,6 +30,15 @@ namespace RMF {
     }
 
     template <class Base>
+    AvroSharedData<Base>::AvroSharedData(std::string &g, bool create,
+                                         bool read_only, bool use_buffer):
+      Base(g, create, read_only, use_buffer) {
+      if (create) {
+        add_child(-1, "root", ROOT);
+      }
+    }
+
+    template <class Base>
     std::string AvroSharedData<Base>::get_name(unsigned int node) const {
       return P::get_node(node).name;
     }

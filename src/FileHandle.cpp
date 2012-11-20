@@ -45,5 +45,9 @@ FileHandle open_rmf_file(std::string path) {
     return FileHandle(path, true);
   }
 
+ FileHandle create_rmf_buffer(std::string &buffer) {
+   return FileHandle(internal::create_shared_data_in_buffer(buffer, true));
+ }
+
 
 } /* namespace RMF */

@@ -22,6 +22,10 @@ namespace RMF {
       RMF_internal::All all_;
       bool dirty_;
 
+
+      std::string *buffer_;
+      bool write_to_buffer_;
+
       RMF_internal::Data null_frame_data_;
       RMF_internal::Data null_static_frame_data_;
 
@@ -114,6 +118,8 @@ namespace RMF {
 
       SingleAvroFile(std::string path,bool create,
                      bool read_only);
+      SingleAvroFile(std::string &buffer,bool create,
+                     bool read_only, bool);
       ~SingleAvroFile() { flush();}
 
     };

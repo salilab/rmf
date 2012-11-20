@@ -61,6 +61,10 @@ Floats get_values(const NodeConstHandles &nodes,
     return FileConstHandle(path);
   }
 
+  FileConstHandle open_rmf_buffer_read_only(const std::string &buffer) {
+    return FileConstHandle(internal::create_read_only_shared_data_from_buffer(buffer));
+  }
+
 bool FileConstHandle::get_supports_locking() const {
   return get_shared_data()->get_supports_locking();
 }

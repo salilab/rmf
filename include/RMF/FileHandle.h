@@ -32,11 +32,11 @@ namespace RMF {
   class RMFEXPORT FileHandle: public FileConstHandle {
     friend class NodeHandle;
     friend class internal::SharedData;
-    FileHandle(internal::SharedData *shared_);
   public:
     //! Empty file handle, no open file.
     FileHandle(){}
-#ifndef RMF_DOXYGEN
+#if !defined(RMF_DOXYGEN) && !defined(SWIG)
+    FileHandle(internal::SharedData *shared_);
     FileHandle(std::string name, bool create);
 #endif
 
@@ -103,6 +103,15 @@ namespace RMF {
    \exception RMF::IOException couldn't create file, or unsupported file format
    */
   RMFEXPORT FileHandle create_rmf_file(std::string path);
+
+#ifndef SWIG
+/**
+   Create an RMF in a buffer.
+
+   \param buffer The buffer to place the contents in.
+   */
+  RMFEXPORT FileHandle create_rmf_buffer(std::string &buffer);
+#endif
 
   /**
    Open an RMF from a file system path.

@@ -72,7 +72,6 @@ namespace RMF {
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
  protected:
     internal::SharedData* get_shared_data() const {return shared_.get();}
-    FileConstHandle(internal::SharedData *shared_);
 #endif
   public:
     RMF_COMPARISONS(FileConstHandle);
@@ -80,7 +79,8 @@ namespace RMF {
     RMF_SHOWABLE(FileConstHandle, get_name());
     //! Empty root handle, no open file.
     FileConstHandle(){}
-#ifndef RMF_DOXYGEN
+#if !defined(RMF_DOXYGEN) && !defined(SWIG)
+    FileConstHandle(internal::SharedData *shared_);
     FileConstHandle(std::string name);
 #endif
 
@@ -295,6 +295,16 @@ namespace RMF {
      \exception RMF::IOException couldn't open file, or unsupported file format
   */
   RMFEXPORT FileConstHandle open_rmf_file_read_only(std::string path);
+
+  /**
+     Open an RMF from a buffer in read-only mode.
+
+     \param buffer a buffer containing an RMF
+     \exception RMF::IOException couldn't parse the buffer,
+     or unsupported file format
+  */
+  RMFEXPORT FileConstHandle open_rmf_buffer_read_only(const std::string& buffer);
+
 
   /** \name Batch data access
       These methods provide batch access to attribute data to try

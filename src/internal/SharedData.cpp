@@ -147,5 +147,13 @@ namespace RMF {
       return ret;
     }
 
+    SharedData* create_shared_data_in_buffer(std::string& buffer, bool create) {
+      return new SingleAvroShareData(buffer, create, false, true);
+    }
+
+    SharedData* create_read_only_shared_data_from_buffer( std::string buffer) {
+      return new SingleAvroShareData(buffer, false, true, true);
+    }
+
   } // namespace internal
 } /* namespace RMF */

@@ -67,6 +67,8 @@ namespace RMF {
       RMF_FOREACH_TYPE(RMF_AVRO_SHARED_TYPE);
 
       AvroSharedData(std::string g, bool create, bool read_only);
+      AvroSharedData(std::string &buffer, bool create, bool read_only,
+                     bool use_buffer);
       virtual ~AvroSharedData(){}
       std::string get_name(unsigned int node) const;
       unsigned int get_type(unsigned int node) const;
