@@ -58,7 +58,7 @@ namespace RMF {
     }
     template <class Base>
     unsigned int AvroSharedData<Base>::get_number_of_frames() const {
-      return P::get_file().number_of_frames;
+      return P::get_frames().size()-1;
     }
     template <class Base>
     int AvroSharedData<Base>::add_child(int node, std::string name, int t){
@@ -95,6 +95,8 @@ namespace RMF {
       P::access_frame(index).name=name;
       P::access_frame(index).type= boost::lexical_cast<std::string>(FrameType(t));
       P::access_frame(node).children.push_back(index);
+      RMF_INTERNAL_CHECK(get_number_of_frames()==index+1,
+                         "No frame added");
       return index;
     }
     template <class Base>

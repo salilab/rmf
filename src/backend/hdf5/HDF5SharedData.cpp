@@ -374,7 +374,7 @@ namespace RMF {
       for (unsigned int i=0; i< cats.size(); ++i) {
         RMF_FOREACH_TYPE(RMF_SEARCH_KEYS);
       }
-      return ret;
+      return std::max<int>(frame_names_.get_size()[0], ret);
     }
 
 

@@ -854,7 +854,7 @@ namespace RMF {
        void set_current_frame(int frame);
 
        int add_child_frame(int node, std::string name, int t){
-         int index= get_number_of_frames();
+         int index= node+1;
          set_frame_name(index, name);
          return index;
        }

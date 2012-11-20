@@ -19,8 +19,13 @@ FrameHandle::FrameHandle(int frame, internal::SharedData *shared):
 }
 
 FrameHandle FrameHandle::add_child(std::string name, FrameType t) {
-  return FrameHandle(get_shared_data()->add_child_frame(get_frame_id(), name, t),
+  FrameHandle ret(get_shared_data()->add_child_frame(get_frame_id(), name, t),
                      get_shared_data());
+  ret.set_as_current_frame();
+  RMF_INTERNAL_CHECK(get_shared_data()->get_number_of_frames()
+                     == ret.get_id().get_index()+1,
+                     "Wrong number of frames");
+  return ret;
 }
 
 void FrameHandle::add_child(FrameConstHandle nh) {

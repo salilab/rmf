@@ -51,7 +51,8 @@ class RMFEXPORT FrameHandle: public FrameConstHandle {
 
  public:
   FrameHandle(){}
-  /** Create a new frame as a child of this one.
+  /** Create a new frame as a child of this one and make it
+      the current frame.
    */
   FrameHandle add_child(std::string name, FrameType t);
 

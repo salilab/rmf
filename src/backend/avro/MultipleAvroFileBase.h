@@ -65,6 +65,10 @@ namespace RMF {
         return frames_[i+1];
       }
 
+      const std::vector<RMF_internal::Node>& get_frames() const {
+        return frames_;
+      }
+
       const RMF_internal::Data& get_static_data(Category cat) const {
         return static_categories_[cat.get_id()];
       }

@@ -91,7 +91,9 @@ namespace RMF {
       }
       RMF_internal::Node& access_frame(int i) {
         frames_dirty_=true;
-        if (static_cast<int>(frames_.size()) <= i+2) {
+        if (static_cast<int>(frames_.size()) <= i+1) {
+          // we are adding a new frame, commit old data
+          commit();
           frames_.resize(i+2);
         }
         return frames_[i+1];

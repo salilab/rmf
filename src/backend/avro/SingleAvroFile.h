@@ -92,6 +92,10 @@ namespace RMF {
         return all_.frames[i+1];
       }
 
+      const std::vector< RMF_internal::Node>& get_frames() const {
+        return all_.frames;
+      }
+
       RMF_internal::Node& access_frame(int i) {
         dirty_=true;
         if (static_cast<int>(all_.frames.size()) <= i+1) {
