@@ -13,6 +13,7 @@
 #include <avro/Compiler.hh>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <cstdio>
 #include <stdexcept>
 
 namespace RMF {
@@ -50,14 +51,16 @@ namespace RMF {
     }
 
 #if BOOST_FILESYSTEM_VERSION==2
-// rename is broken
+// boost::rename is broken
 #define RMF_COMMIT(UCName, lcname)                                      \
     if (lcname##_dirty_) {                                              \
       std::string path=get_##lcname##_file_path().c_str();              \
+      std::string temppath=path+".new";                                 \
       avro::DataFileWriter<UCName>                                      \
-        wr(path.c_str(), get_##UCName##_schema());                      \
+        wr(temppath.c_str(), get_##UCName##_schema());                  \
       wr.write(lcname##_);                                              \
       wr.flush();                                                       \
+      std::rename(temppath.c_str(), path.c_str());                      \
     }
 #else
 #define RMF_COMMIT(UCName, lcname)                                      \
@@ -72,8 +75,6 @@ namespace RMF {
     }
 #endif
     void MultipleAvroFileWriter::commit() {
-      RMF_COMMIT(Nodes, nodes);
-      RMF_COMMIT(Nodes, frames);
       for (unsigned int i=0; i< categories_.size(); ++i) {
         if (categories_[i].dirty) {
           if (!categories_[i].writer) {
@@ -103,9 +104,9 @@ namespace RMF {
           static_categories_dirty_[i]=false;
         }
       }
-      // must be last
-      //std::cout << "Committed num frames= " << file_.number_of_frames << std::endl;
       RMF_COMMIT(File, file);
+      RMF_COMMIT(Nodes, nodes);
+      RMF_COMMIT(Nodes, frames);
     }
   } // namespace internal
 } /* namespace RMF */
