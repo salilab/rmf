@@ -12,7 +12,8 @@
 #include <RMF/config.h>
 #include "internal/SharedData.h"
 #include "Key.h"
-#include "NodeHandle.h"
+#include "NodeConstHandle.h"
+#include "FrameConstHandle.h"
 #include <boost/functional/hash.hpp>
 #include <boost/intrusive_ptr.hpp>
 
@@ -89,6 +90,18 @@ namespace RMF {
       return NodeConstHandle(0, shared_.get());
     }
 
+    //! Return the root of the hierarchy
+    FrameConstHandle get_root_frame() const {
+      return FrameConstHandle(-1, shared_.get());
+    }
+
+    //! Return the ith frame
+    FrameConstHandle get_frame(unsigned int i) const {
+      RMF_USAGE_CHECK(i < get_number_of_frames(),
+                      "Out of range frame");
+      return FrameConstHandle(i, shared_.get());
+    }
+
     std::string get_name() const {
       return shared_->get_file_name();
     }
@@ -147,12 +160,14 @@ namespace RMF {
 
         @{
     */
-    int get_current_frame() const {
-      return shared_->get_current_frame();
+    FrameConstHandle get_current_frame() const {
+      return FrameConstHandle(shared_->get_current_frame(), shared_.get());
     }
+#ifndef IMP_DOXYGEN
     void set_current_frame(int frame) {
       shared_->set_current_frame(frame);
     }
+#endif
     /* @} */
 
     /** Return the number of frames in the file. Currently, this is the number
@@ -161,10 +176,6 @@ namespace RMF {
     unsigned int get_number_of_frames() const {
       return shared_->get_number_of_frames();
     }
-    /** Frames can have associated comments which can be used to label
-        particular frames of interest. Returns an empty string if the
-        frame doesn't have a name.*/
-    std::string get_frame_name() const;
 
     /** \name Non-template versions for python
 
@@ -255,19 +266,6 @@ namespace RMF {
         should be safe to open the file in another process for reading.
      */
     void flush();
-
-    /** Some backends support locking to allow simulataneous reading from
-        and writing to the file from different processes.
-        @{
-    */
-    bool get_supports_locking() const;
-    /** Try to lock/unlock the file and return whether you have the lock.
-        That is if you try to lock the file and false is returned, you did
-        not succeed and should retry.
-
-        You probably should use FileLock instead of calling this directly. */
-    bool set_is_locked(bool tf);
-    /** @} */
 
     /** Run the various validators that attempt to check that the RMF file
         is correct. Print messages to the provided stream if errors are

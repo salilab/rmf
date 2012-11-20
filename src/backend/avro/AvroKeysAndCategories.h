@@ -37,6 +37,7 @@ namespace RMF {
       NameKeyMap name_key_map_;
 
       vector<std::string> node_keys_;
+      std::string frame_key_;
 
     public:
       std::string get_key_name(unsigned int id) const {
@@ -72,6 +73,7 @@ namespace RMF {
       }
 
       const std::string &get_node_string(int node) const {
+        if (node==-1) return frame_key_;
         return node_keys_[node];
       }
 

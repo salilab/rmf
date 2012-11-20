@@ -29,7 +29,7 @@ namespace RMF {
       RMF_internal::Data null_frame_data_;
       RMF_internal::Data null_static_frame_data_;
 
-      RMF_internal::Frame null_frame_real_data_;
+      RMF_internal::Node null_frame_real_data_;
 
       // begin specific data
     protected:
@@ -85,23 +85,25 @@ namespace RMF {
         return all_.file;
       }
 
-      const RMF_internal::Frame& get_frame(int i) const {
-        if (i==-1 || i>= static_cast<int>(all_.frames.size())) {
+      const RMF_internal::Node& get_frame(int i) const {
+        if ( i+1>= static_cast<int>(all_.frames.size())) {
           return null_frame_real_data_;
         }
-        return all_.frames[i];
+        return all_.frames[i+1];
       }
 
-      RMF_internal::Frame& access_frame(int i) {
-        if (i==-1) {
-          RMF_USAGE_CHECK(false, "Can't modify static frame data");
-          return null_frame_real_data_;
-        }
+      const std::vector< RMF_internal::Node>& get_frames() const {
+        return all_.frames;
+      }
+
+      RMF_internal::Node& access_frame(int i) {
         dirty_=true;
-        if (static_cast<int>(all_.frames.size()) <= i) {
-          all_.frames.resize(i+1);
+        if (static_cast<int>(all_.frames.size()) <= i+1) {
+          RMF_internal::Node def;
+          def.type= "frame";
+          all_.frames.resize(i+2, def);
         }
-        return all_.frames[i];
+        return all_.frames[i+1];
       }
 
       void initialize_categories();

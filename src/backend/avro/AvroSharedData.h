@@ -81,18 +81,19 @@ namespace RMF {
       void set_description(std::string str);
       std::string get_producer() const;
       void set_producer(std::string str);
-      void set_frame_name(std::string str);
-      std::string get_frame_name() const;
+      std::string get_frame_name(int i) const;
 
       void set_current_frame(int frame){
+        RMF_USAGE_CHECK(frame < static_cast<int>(get_number_of_frames()),
+                        "Setting to invalid frame");
         P::set_current_frame(frame);
-        // must be after so right number is written to disk
-        if (P::get_file().number_of_frames < frame+1) {
-          P::access_file().number_of_frames=frame+1;
-        }
         RMF_INTERNAL_CHECK(P::get_current_frame()==frame,
                            "Didn't set frame");
       }
+
+      int add_child_frame(int node, std::string name, int t);
+      void add_child_frame(int node, int child_node);
+      Ints get_children_frame(int node) const;
     };
 
   } // namespace internal

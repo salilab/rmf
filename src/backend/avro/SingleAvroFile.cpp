@@ -25,7 +25,6 @@ namespace RMF {
       } else {
         initialize_categories();
         initialize_node_keys();
-        access_file().number_of_frames=0;
       }
       null_static_frame_data_.frame=ALL_FRAMES;
     }
@@ -40,7 +39,6 @@ namespace RMF {
       } else {
         initialize_categories();
         initialize_node_keys();
-        access_file().number_of_frames=0;
       }
       null_static_frame_data_.frame=ALL_FRAMES;
 
@@ -70,6 +68,7 @@ namespace RMF {
         avro::DataFileWriter<RMF_internal::All>
           rd(get_file_path().c_str(), get_All_schema());
         rd.write(all_);
+        rd.flush();
       } else {
         buffer_->clear();
         std::ostringstream oss(std::ios_base::binary);

@@ -23,6 +23,7 @@
 #include "RMF/config.h"
 #include "RMF/constants.h"
 #include "RMF/NodeID.h"
+#include "RMF/FrameID.h"
 #include "RMF/types.h"
 #include "RMF/hdf5_handle.h"
 #include "RMF/HDF5Object.h"
@@ -40,6 +41,8 @@
 #include "RMF/Category.h"
 #include "RMF/NodeConstHandle.h"
 #include "RMF/NodeHandle.h"
+#include "RMF/FileConstHandle.h"
+#include "RMF/FileHandle.h"
 #include "RMF/FileConstHandle.h"
 #include "RMF/FileHandle.h"
 #include "RMF/names.h"
@@ -140,6 +143,7 @@ _types_list.append(#lcname)
 %enddef
 
 IMP_RMF_SWIG_VALUE(RMF, NodeID, NodeIDs);
+IMP_RMF_SWIG_VALUE(RMF, FrameID, FrameIDs);
 
 IMP_RMF_SWIG_NATIVE_VALUES_LIST(RMF, double, Floats, FloatsList);
 IMP_RMF_SWIG_NATIVE_VALUES_LIST(RMF, int, Ints, IntsList);
@@ -155,8 +159,10 @@ IMP_RMF_SWIG_NATIVE_VALUE(std::string);
 
 IMP_RMF_SWIG_GRAPH(RMF, NodeTree, NodeTree, RMF::NodeHandle);
 IMP_RMF_SWIG_VALUE(RMF, NodeConstHandle, NodeConstHandles);
+IMP_RMF_SWIG_VALUE(RMF, FrameConstHandle, FrameConstHandles);
 IMP_RMF_SWIG_VALUE(RMF, FileConstHandle, FileConstHandles);
 IMP_RMF_SWIG_VALUE(RMF, NodeHandle, NodeHandles);
+IMP_RMF_SWIG_VALUE(RMF, FrameHandle, FrameHandles);
 IMP_RMF_SWIG_VALUE(RMF, FileHandle, FileHandles);
 IMP_RMF_SWIG_VALUE(RMF, SetCurrentFrame, SetCurrentFrames);
 IMP_RMF_SWIG_VALUE(RMF, Category, Categories);
@@ -207,6 +213,7 @@ namespace RMF {
 
 %include "RMF/constants.h"
 %include "RMF/NodeID.h"
+%include "RMF/FrameID.h"
 %include "RMF/types.h"
 %include "RMF/hdf5_handle.h"
 %include "RMF/HDF5Object.h"
@@ -240,7 +247,9 @@ IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DEFINE_TYPE);
 %include "RMF/HDF5File.h"
 
 %include "RMF/NodeConstHandle.h"
+%include "RMF/FrameConstHandle.h"
 %include "RMF/NodeHandle.h"
+%include "RMF/FrameHandle.h"
 %include "RMF/FileConstHandle.h"
 %include "RMF/FileHandle.h"
 %include "RMF/Validator.h"
