@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF__INTERNAL_AVRO_KEYS_AND_CATEGORIES_H
-#define RMF__INTERNAL_AVRO_KEYS_AND_CATEGORIES_H
+#ifndef RMF_INTERNAL_AVRO_KEYS_AND_CATEGORIES_H
+#define RMF_INTERNAL_AVRO_KEYS_AND_CATEGORIES_H
 
 #include <RMF/config.h>
 #include <RMF/internal/SharedData.h>
@@ -126,4 +126,4 @@ namespace RMF {
   } // namespace internal
 } /* namespace RMF */
 
-#endif /* RMF__INTERNAL_AVRO_KEYS_AND_CATEGORIES_H */
+#endif /* RMF_INTERNAL_AVRO_KEYS_AND_CATEGORIES_H */

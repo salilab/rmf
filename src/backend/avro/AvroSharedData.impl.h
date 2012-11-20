@@ -99,4 +99,4 @@ namespace RMF {
 
   } // namespace internal
 } /* namespace RMF */
-#endif /* RMF__INTERNAL_AVRO_SHARED_DATA_IMPL_H */
+#endif /* RMF_INTERNAL_AVRO_SHARED_DATA_IMPL_H */

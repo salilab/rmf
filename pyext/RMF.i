@@ -178,6 +178,7 @@ IMP_RMF_SWIG_PAIR(RMF, NodeConstHandle, BondPair, BondPairs)
 IMP_RMF_SWIG_PAIR(RMF, Index, IndexRange, IndexRanges)
 IMP_RMF_SWIG_PAIR(RMF, Int, IntRange, IntRanges)
 
+
 IMP_RMF_SWIG_VALUE(RMF, ReferenceFrame, ReferenceFrames);
 
 
@@ -244,8 +245,16 @@ IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DEFINE_TYPE);
 %include "RMF/FileHandle.h"
 %include "RMF/Validator.h"
 %include "RMF/Decorator.h"
-%include "RMF/Factory.h"
+namespace RMF {
+  %template(_Decorator) Decorator<NodeHandle>;
+  %template(_ConstDecorator) Decorator<NodeConstHandle>;
+}
 
+%include "RMF/Factory.h"
+namespace RMF {
+  %template(_Factory) Factory<FileHandle>;
+  %template(_ConstFactory) Factory<FileConstHandle>;
+}
 
 
 IMP_RMF_DECORATOR(RMF, Particle);

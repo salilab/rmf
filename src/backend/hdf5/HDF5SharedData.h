@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF__INTERNAL_HDF_5SHARED_DATA_H
-#define RMF__INTERNAL_HDF_5SHARED_DATA_H
+#ifndef RMF_INTERNAL_HDF_5SHARED_DATA_H
+#define RMF_INTERNAL_HDF_5SHARED_DATA_H
 
 #include <RMF/config.h>
 #include <RMF/internal/SharedData.h>
@@ -849,4 +849,4 @@ namespace RMF {
 } /* namespace RMF */
 
 
-#endif /* RMF__INTERNAL_HDF_5SHARED_DATA_H */
+#endif /* RMF_INTERNAL_HDF_5SHARED_DATA_H */

@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF__INTERNAL_SINGLE_AVRO_FILE_WRITER_H
-#define RMF__INTERNAL_SINGLE_AVRO_FILE_WRITER_H
+#ifndef RMF_INTERNAL_SINGLE_AVRO_FILE_WRITER_H
+#define RMF_INTERNAL_SINGLE_AVRO_FILE_WRITER_H
 
 #include <RMF/config.h>
 #include <RMF/internal/SharedData.h>
@@ -117,4 +117,4 @@ namespace RMF {
 } /* namespace RMF */
 
 
-#endif /* RMF__INTERNAL_MULTIPLE_AVRO_FILE_WRITER_H */
+#endif /* RMF_INTERNAL_MULTIPLE_AVRO_FILE_WRITER_H */

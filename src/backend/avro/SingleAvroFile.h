@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF__INTERNAL_SINGLE_AVRO_FILE_H
-#define RMF__INTERNAL_SINGLE_AVRO_FILE_H
+#ifndef RMF_INTERNAL_SINGLE_AVRO_FILE_H
+#define RMF_INTERNAL_SINGLE_AVRO_FILE_H
 
 #include <RMF/config.h>
 #include <RMF/internal/SharedData.h>
@@ -124,4 +124,4 @@ namespace RMF {
 
 #include "AvroSharedData.impl.h"
 
-#endif /* RMF__INTERNAL_SINGLE_AVRO_FILE_H */
+#endif /* RMF_INTERNAL_SINGLE_AVRO_FILE_H */

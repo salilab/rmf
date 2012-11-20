@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF__INTERNAL_SINGLE_AVRO_FILE_BASE_H
-#define RMF__INTERNAL_SINGLE_AVRO_FILE_BASE_H
+#ifndef RMF_INTERNAL_SINGLE_AVRO_FILE_BASE_H
+#define RMF_INTERNAL_SINGLE_AVRO_FILE_BASE_H
 
 #include <RMF/config.h>
 #include "AvroKeysAndCategories.h"
@@ -94,4 +94,4 @@ namespace RMF {
   } // namespace internal
 } /* namespace RMF */
 
-#endif /* RMF__INTERNAL_MULTIPLE_AVRO_FILE_H */
+#endif /* RMF_INTERNAL_MULTIPLE_AVRO_FILE_H */

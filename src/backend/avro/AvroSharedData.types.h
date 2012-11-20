@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF__INTERNAL_AVRO_SHARED_DATA_TYPES_H
-#define RMF__INTERNAL_AVRO_SHARED_DATA_TYPES_H
+#ifndef RMF_INTERNAL_AVRO_SHARED_DATA_TYPES_H
+#define RMF_INTERNAL_AVRO_SHARED_DATA_TYPES_H
 
 #include <RMF/config.h>
 #include <RMF/constants.h>
@@ -175,4 +175,4 @@ namespace RMF {
   } // namespace internal
 } /* namespace RMF */
 
-#endif /* RMF__INTERNAL_AVRO_SHARED_DATA_TYPES_H */
+#endif /* RMF_INTERNAL_AVRO_SHARED_DATA_TYPES_H */

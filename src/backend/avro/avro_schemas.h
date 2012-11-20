@@ -26,4 +26,4 @@ namespace RMF {
 }
 
 
-#endif  /* RMF__INTERNAL_UTILITY_H */
+#endif  /* RMF_INTERNAL_UTILITY_H */

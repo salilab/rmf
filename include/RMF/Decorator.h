@@ -6,16 +6,17 @@
  *
  */
 
-#ifndef RMF__DECORATOR_H
-#define RMF__DECORATOR_H
+#ifndef RMF_DECORATOR_H
+#define RMF_DECORATOR_H
 
 #include <RMF/config.h>
+#include "infrastructure_macros.h"
 namespace RMF {
 
 /** Decorators in RMF provide high level routines to manipulate attributes
     of nodes in the hierarchy. They are created by an associated Factory.
  */
-template <class DecoratorType, class HandleType>
+template <class HandleType>
 class Decorator {
   HandleType handle_;
  protected:
@@ -52,10 +53,9 @@ class Decorator {
     return handle_;
   }
   RMF_SHOWABLE(Decorator,
-                   DecoratorType::get_decorator_type_name()
-                   << get_node().get_name());
+               get_node().get_name());
 };
 
 } /* namespace RMF */
 
-#endif /* RMF__DECORATOR_H */
+#endif /* RMF_DECORATOR_H */

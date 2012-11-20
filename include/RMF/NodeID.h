@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF__NODE_ID_H
-#define RMF__NODE_ID_H
+#ifndef RMF_NODE_ID_H
+#define RMF_NODE_ID_H
 
 #include <RMF/config.h>
 #include "infrastructure_macros.h"
@@ -47,4 +47,4 @@ typedef vector<NodeID> NodeIDs;
 
 } /* namespace RMF */
 
-#endif /* RMF__NODE_ID_H */
+#endif /* RMF_NODE_ID_H */
