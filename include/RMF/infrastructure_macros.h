@@ -574,7 +574,7 @@ operator<<(std::ostream &out, const Showable &t);
 
 #define RMF_TRAITS_ONE(UCName, UCNames, lcname, index, hdf5_disk,       \
                        hdf5_memory,                                     \
-                       hdf5_fill, null_value,                           \
+                       hdf5_fill, avro_value, null_value, null_test,    \
                        wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a,      \
                        multiple)                                        \
   struct UCName##Traits{                                                \
@@ -584,7 +584,7 @@ operator<<(std::ostream &out, const Showable &t);
   }
 
 #define RMF_TRAITS(UCName, UCNames, lcname, index, hdf5_disk, hdf5_memory, \
-                   hdf5_fill, avro_traits, null_value,                  \
+                   hdf5_fill, avro_traits, null_value, null_test,       \
                    wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a, batch)   \
   struct UCName##Traits{                                                \
     typedef UCName Type;                                                \
