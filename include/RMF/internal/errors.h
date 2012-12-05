@@ -11,6 +11,8 @@
 
 #include <RMF/config.h>
 #include "../infrastructure_macros.h"
+#include "../NodeID.h"
+#include "../FrameID.h"
 #include <boost/exception/all.hpp>
 #include <sstream>
 
@@ -19,6 +21,7 @@ namespace internal {
 
 struct FileTag {};
 struct NodeTag {};
+struct FrameTag {};
 struct KeyTag {};
 struct DecoratorTag {};
 struct MessageTag {};
@@ -28,11 +31,12 @@ struct SourceLineTag {};
 struct FunctionTag {};
 struct ExpressionTag {};
 struct CategoryTag {};
+struct OperationTag {};
 
 namespace ErrorInfo {
 typedef boost::error_info<MessageTag, std::string> Message;
 typedef boost::error_info<FileTag, std::string> File;
-typedef boost::error_info<NodeTag, std::string> Node;
+typedef boost::error_info<NodeTag, NodeID> Node;
 typedef boost::error_info<KeyTag, std::string> Key;
 typedef boost::error_info<DecoratorTag, std::string> Decorator;
 typedef boost::error_info<TypeTag, std::string> Type;
@@ -41,8 +45,8 @@ typedef boost::error_info<SourceLineTag, int> SourceLine;
 typedef boost::error_info<FunctionTag, std::string> Function;
 typedef boost::error_info<ExpressionTag, std::string> Expression;
 typedef boost::error_info<CategoryTag, std::string> Category;
-
-
+typedef boost::error_info<FrameTag, FrameID> Frame;
+typedef boost::error_info<OperationTag, std::string> Operation;
 }
 
 #ifdef __GNUC__

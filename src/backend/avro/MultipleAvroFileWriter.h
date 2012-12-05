@@ -102,7 +102,7 @@ namespace RMF {
     public:
       void flush() {}
       void reload() {
-        RMF_THROW("Can't reload writable file", UsageException);
+        RMF_THROW(Message("Can't reload writable file"), UsageException);
       }
 
       MultipleAvroFileWriter(std::string path,

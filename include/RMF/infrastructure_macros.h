@@ -12,7 +12,6 @@
 #include <sstream>
 #include <iostream>
 #include <string>
-#include "exceptions.h"
 
 #if RMF_USE_DEBUG_VECTOR
 #include <debug/vector>
@@ -155,70 +154,18 @@
 #define RMF_SHOWABLE(Name, streamed)
 #endif
 
-#define RMF_USAGE_CHECK(check, message)                                 \
-  do {                                                                  \
-    if (!(check)) {                                                     \
-      RMF_THROW(Message(message) << Type("Usage"),             \
-                RMF::UsageException);                                   \
-    }                                                                   \
-  } while (false)
-
-#define RMF_PATH_CHECK(path)                                   \
-  if (!boost::filesystem::exists(path)) {                               \
-    RMF_THROW(Message("File does not exist") << File(path) << Type("Usage"),     \
-                  IOException);                                         \
-  }
-
-#ifndef RMF_NDEBUG
-#define RMF_INTERNAL_CHECK(check, message)                          \
-  do {                                                                  \
-    if (!(check)) {                                                     \
-      RMF_THROW(Message(message) << Type("Internal")\
-        << SourceFile(__FILE__) << SourceLine(__LINE__) << Function(BOOST_CURRENT_FUNCTION),        \
-                    RMF::InternalException);                            \
-    }                                                                   \
-  } while (false)
-
-
-#define RMF_IF_CHECK                        \
-  if (true)
-
-#else // NDEBUG
-#define RMF_INTERNAL_CHECK(check, message)
-#define RMF_IF_CHECK
-
-#endif
-
-#define RMF_NOT_IMPLEMENTED                                 \
-  RMF_THROW(Message("Not implemented")   \
-             << Function(BOOST_CURRENT_FUNCTION)     \
-              <<SourceFile(__FILE__) << SourceLine(__LINE__)\
-              << Type("Internal"),                  \
-                RMF::InternalException)
 
 #define RMF_UNUSED(variable) if (0) std::cout << variable;
 
 #define RMF_NO_RETURN(type) return type()
 
 
-#define RMF_THROW(m,e)\
-{\
-  using RMF::internal::ErrorInfo;\
-    throw e << m;\
-  }
-
-#define RMF_RETHROW(m, e)\
-{\
-  using RMF::internal::ErrorInfo;\
-   e << m;\
-   throw;\
-  }
 
 /** Call a function and throw an RMF::IOException if the return values is bad */
 #define RMF_HDF5_CALL(v)                                                \
     if ((v)<0) {                                                        \
-      RMF_THROW(Message("HDF5 call failed") << Expression(#v),                    \
-                    RMF::IOException);                                  \
+      RMF_THROW(Message("HDF5 call failed") << Expression(#v),          \
+                RMF::IOException);                                      \
     }
 
 /** Create new HDF5 SharedData.handle.*/
@@ -558,8 +505,5 @@ operator<<(std::ostream &out, const Showable &t);
   };
 
 #endif
-
-
-#include "internal/errors.h"
 
 #endif  /* RMF_INFRASTRUCTURE_MACROS_H */

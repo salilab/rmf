@@ -60,24 +60,24 @@ namespace RMF {
 
       RMF_internal::Data &access_frame_data(Category cat,
                                             int frame) {
-        RMF_THROW("Can't modify read only file",
+        RMF_THROW(Message("Can't modify read only file"),
                   IOException);
       }
 
       RMF_internal::Node &access_node(unsigned int node) {
-        RMF_THROW("Can't modify read only file",
+        RMF_THROW(Message("Can't modify read only file"),
                   IOException);
       }
 
 
       RMF_internal::File &access_file() {
-        RMF_THROW("Can't modify read only file",
+        RMF_THROW(Message("Can't modify read only file"),
                   IOException);
       }
 
 
       RMF_internal::Node& access_frame(int i) {
-        RMF_THROW("Can't modify read only file",
+        RMF_THROW(Message("Can't modify read only file"),
                   IOException);
       }
 
