@@ -9,6 +9,76 @@
             "type": "int"
         },
         {
+            "name" : "index",
+            "type": {
+                "name" : "KeyIndex",
+                "type" : "record",
+                "doc": "Store an index from key names to location in stored vector.",
+            "fields" : [
+            {
+                "name": "int_index", "type":{
+                    "type": "map",
+                    "values": "int"
+                }
+            },
+            {
+                "name": "ints_index", "type":{
+                    "type": "map",
+                    "values": "int"
+                }
+            },
+            {
+                "name": "index_index", "type":{
+                    "type": "map",
+                    "values": "int"
+                }
+            },
+            {
+                "name": "indexes_index", "type":{
+                    "type": "map",
+                    "values": "int"
+                }
+            },
+            {
+                "name": "float_index", "type":{
+                    "type": "map",
+                    "values": "int"
+                }
+            },
+            {
+                "name": "floats_index", "type":{
+                    "type": "map",
+                    "values": "int"
+                }
+            },
+            {
+                "name": "node_id_index", "type":{
+                    "type": "map",
+                    "values": "int"
+                }
+            },
+            {
+                "name": "node_ids_index", "type":{
+                    "type": "map",
+                    "values": "int"
+                }
+            },
+            {
+                "name": "string_index", "type":{
+                    "type": "map",
+                    "values": "int"
+                }
+            },
+            {
+                "name": "strings_index", "type":{
+                    "type": "map",
+                    "values": "int"
+                }
+            }
+            ]
+        }
+        },
+        {
             "name": "nodes",
             "doc": "The actual data indexed by the node indexes",
             "type": {
@@ -21,14 +91,14 @@
                     "fields" : [
                         {
                             "name": "int_data", "type":{
-                                "type": "map",
-                                "values": "int"
+                                "type": "array",
+                                "items": "int"
                             }
                         },
                         {
                             "name": "ints_data", "type":{
-                                "type": "map",
-                                "values": {
+                                "type": "array",
+                                "items": {
                                     "type": "array",
                                     "items": "int"
                                 }
@@ -36,14 +106,14 @@
                         },
                         {
                             "name": "index_data", "type":{
-                                "type": "map",
-                                "values": "int"
+                                "type": "array",
+                                "items": "int"
                             }
                         },
                         {
                             "name": "indexes_data", "type":{
-                                "type": "map",
-                                "values": {
+                                "type": "array",
+                                "items": {
                                     "type": "array",
                                     "items": "int"
                                 }
@@ -51,14 +121,14 @@
                         },
                         {
                             "name": "float_data", "type":{
-                                "type": "map",
-                                "values": "double"
+                                "type": "array",
+                                "items": "double"
                             }
                         },
                         {
                             "name": "floats_data", "type":{
-                                "type": "map",
-                                "values": {
+                                "type": "array",
+                                "items": {
                                     "type": "array",
                                     "items": "double"
                                 }
@@ -66,14 +136,14 @@
                         },
                         {
                             "name": "node_id_data", "type":{
-                                "type": "map",
-                                "values": "int"
+                                "type": "array",
+                                "items": "int"
                             }
                         },
                         {
                             "name": "node_ids_data", "type":{
-                                "type": "map",
-                                "values": {
+                                "type": "array",
+                                "items": {
                                     "type": "array",
                                     "items": "int"
                                 }
@@ -81,14 +151,14 @@
                         },
                         {
                             "name": "string_data", "type":{
-                                "type": "map",
-                                "values": "string"
+                                "type": "array",
+                                "items": "string"
                             }
                         },
                         {
                             "name": "strings_data", "type":{
-                                "type": "map",
-                                "values": {
+                                "type": "array",
+                                "items": {
                                     "type": "array",
                                     "items": "string"
                                 }
