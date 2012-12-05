@@ -41,6 +41,9 @@ bool show_type(std::string node_name,
                                         data.index.lcname##_index)
 
 int main(int argc, char **argv) {
+  boost::shared_ptr<avro::Encoder> encoder= avro::jsonEncoder(RMF::internal::get_Data_schema());
+  std::auto_ptr<avro::OutputStream> stream=avro::ostreamOutputStream(std::cout);
+  encoder->init(*stream);
   try {
     RMF_ADD_INPUT_FILE("data");
     process_options(argc, argv);
@@ -55,12 +58,7 @@ int main(int argc, char **argv) {
       } catch (const std::exception &e) {
         break;
       }
-      std::cout << "frame: " << data.frame << std::endl;
-      for (std::map<std::string, RMF_internal::NodeData >::const_iterator it
-             = data.nodes.begin(); it != data.nodes.end(); ++it) {
-        bool shown=false;
-        RMF_FOREACH_TYPE(RMF_SHOW_TYPE);
-      }
+      avro::encode(*encoder, data);
     } while (true);
     return 0;
   } catch (const std::exception &e) {
