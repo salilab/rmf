@@ -400,11 +400,11 @@ operator<<(std::ostream &out, const Showable &t);
 
 #ifndef SWIG
 #define RMF_TRAITS_ONE(UCName, UCNames, lcname, index, hdf5_disk,       \
-                       hdf5_memory,hdf5_fill, null_value,               \
+                       hdf5_memory,hdf5_fill, avro_type, null_value,    \
                        wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a,      \
                        multiple)                                        \
   struct RMFEXPORT UCName##Traits:                                      \
-    public internal::BaseTraits<UCName, UCNames, index, multiple> {     \
+    public internal::BaseTraits<UCName, UCNames, avro_type, index, multiple> { \
     static hid_t get_hdf5_disk_type() {                                 \
       return hdf5_disk;                                                 \
     }                                                                   \
@@ -462,13 +462,15 @@ operator<<(std::ostream &out, const Showable &t);
 
 /** Declare a type traits*/
 #define RMF_TRAITS(UCName, UCNames, lcname, index, hdf5_disk, hdf5_memory, \
-                       hdf5_fill, null_value,                           \
+                   hdf5_fill, avro_type, null_value,                    \
                    wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a, batch)   \
   RMF_TRAITS_ONE(UCName, UCNames, lcname, index, hdf5_disk, hdf5_memory, \
-                     hdf5_fill, null_value,                             \
+                 hdf5_fill, avro_type, null_value,                      \
                  wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a, batch);    \
   struct UCNames##Traits:                                               \
-    public internal::BaseTraits<UCNames, vector<UCNames>, index+7, false> { \
+    public internal::BaseTraits<UCNames, vector<UCNames>,               \
+                                std::vector<avro_type>,                 \
+                                index+7, false> {                       \
     static hid_t get_hdf5_disk_type() {                                 \
       static RMF_HDF5_HANDLE(ints_type, H5Tvlen_create                  \
                              (UCName##Traits::get_hdf5_disk_type()),    \
@@ -540,9 +542,9 @@ operator<<(std::ostream &out, const Showable &t);
 
 /** Declare a type traits*/
 #define RMF_SIMPLE_TRAITS(UCName, UCNames, lcname, index, hdf5_disk, \
-                              hdf5_memory, hdf5_fill, null_value)       \
+                          hdf5_memory, hdf5_fill, avro_type, null_value) \
   RMF_TRAITS(UCName, UCNames, lcname, index, hdf5_disk,             \
-             hdf5_memory, hdf5_fill, null_value,                        \
+             hdf5_memory, hdf5_fill, avro_type, null_value,             \
              RMF_HDF5_CALL(H5Dwrite(d,                                  \
                                     get_hdf5_memory_type(), is, s,      \
                                     H5P_DEFAULT, &v)),                  \
@@ -575,7 +577,7 @@ operator<<(std::ostream &out, const Showable &t);
   }
 
 #define RMF_TRAITS(UCName, UCNames, lcname, index, hdf5_disk, hdf5_memory, \
-                       hdf5_fill, null_value,                           \
+                   hdf5_fill, avro_traits, null_value,                  \
                    wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a, batch)   \
   struct UCName##Traits{                                                \
     typedef UCName Type;                                                \
@@ -588,7 +590,7 @@ operator<<(std::ostream &out, const Showable &t);
   };
 
 #define RMF_SIMPLE_TRAITS(UCName, UCNames, lcname, index, hdf5_disk, \
-                              hdf5_memory, hdf5_fill, null_value)       \
+                          hdf5_memory, hdf5_fill, avro_type, null_value) \
   struct UCName##Traits{                                                \
     typedef UCName Type;                                                \
     typedef UCNames Types;                                              \

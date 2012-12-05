@@ -16,17 +16,6 @@
 namespace RMF {
   namespace internal {
 
-    typedef int32_t AvroInt;
-    typedef double AvroFloat;
-    typedef std::string AvroString;
-    typedef int32_t AvroIndex;
-    typedef int32_t AvroNodeID;
-    typedef std::vector<std::string> AvroStrings;
-    typedef std::vector<int32_t> AvroInts;
-    typedef std::vector<double> AvroFloats;
-    typedef std::vector<int32_t> AvroIndexes;
-    typedef std::vector<int32_t> AvroNodeIDs;
-
     template <class Out, class In>
     void avro_assign(Out &out, In in) {
       out=in;
@@ -68,7 +57,7 @@ namespace RMF {
 #define RMF_AVRO_SHARED_TYPE(lcname, Ucname, PassValue, ReturnValue,    \
                                    PassValues, ReturnValues)            \
     private:                                                            \
-    typedef std::map<std::string, Avro##Ucname> Ucname##Data;           \
+    typedef std::map<std::string, Ucname##Traits::AvroType> Ucname##Data; \
     Ucname##Data empty_##lcname##_data_;                                \
     const Ucname##Data &                                                \
     get_frame_##lcname##_data(int node,                                 \
