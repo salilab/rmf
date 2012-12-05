@@ -62,40 +62,8 @@ namespace RMF {
     template <class Base>
     class AvroSharedData: public Base {
       typedef Base P;
-      RMF_internal::NodeData null_node_data_;
-      typedef std::map<std::string, int> KeyIndex;
-      RMF_internal::KeyIndex null_key_index_;
-      typedef typename std::pair<const RMF_internal::NodeData &,
-                                 const RMF_internal::KeyIndex &> NodeFrameDataConstPair;
 
-      typedef std::pair< RMF_internal::NodeData &,
-                         RMF_internal::KeyIndex &> NodeFrameDataPair;
-
-      NodeFrameDataConstPair
-      get_node_frame_data(int node,
-                          Category cat,
-                          int frame) const {
-        const RMF_internal::Data &data= P::get_frame_data(cat, frame);
-        RMF_INTERNAL_CHECK(data.frame==frame,
-                           "Bad frame returned");
-        std::map<std::string, RMF_internal::NodeData>::const_iterator
-          nit= data.nodes.find(P::get_node_string(node));
-        if (nit == data.nodes.end()) {
-          return NodeFrameDataConstPair(null_node_data_, null_key_index_);
-        } else {
-          return NodeFrameDataConstPair(nit->second, data.index);
-        }
-      }
-
-      NodeFrameDataPair access_node_frame_data(int node,
-                                                Category cat,
-                                                int frame) {
-        RMF_internal::Data &data= P::access_frame_data(cat, frame);
-        RMF_INTERNAL_CHECK(data.frame==frame,
-                           "Bad frame returned");
-        return NodeFrameDataPair(data.nodes[P::get_node_string(node)],
-                                 data.index);
-      }
+      typedef std::map<std::string, int32_t> KeyIndex;
 
       template <class TypeTraits>
       void extract_keys(Category cat,

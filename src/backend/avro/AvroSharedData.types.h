@@ -20,7 +20,7 @@ namespace RMF {
 #define RMF_AVRO_SHARED_TYPE(lcname, Ucname, PassValue, ReturnValue,    \
                                    PassValues, ReturnValues)            \
     private:                                                            \
-    typedef std::vector<Ucname##Traits::AvroType> Ucname##Data;                     \
+    typedef std::vector<Ucname##Traits::AvroType> Ucname##Data;         \
     Ucname##Data empty_##lcname##_data_;                                \
     typedef std::pair< const Ucname##Data &,                            \
                        const KeyIndex &> Ucname##DataIndexConstPair;    \
@@ -28,20 +28,26 @@ namespace RMF {
                        KeyIndex &> Ucname##DataIndexPair;               \
     const Ucname##DataIndexConstPair                                    \
     get_frame_type_data(Key<Ucname##Traits> ,int node,                  \
-                              Category category,                        \
-                              int frame) const {                        \
-      NodeFrameDataConstPair data= get_node_frame_data(node,            \
-                                                        category, frame); \
-      return Ucname##DataIndexConstPair(data.first.lcname##_data,       \
-                                        data.second.lcname##_index);    \
+                        Category category,                              \
+                        int frame) const {                              \
+      const RMF_internal::Data &data= P::get_frame_data(category, frame); \
+      typename std::map<std::string, Ucname##Data>::const_iterator      \
+        it = data.lcname##_data.nodes.find(P::get_node_string(node));   \
+      if (it ==  data.lcname##_data.nodes.end()) {                      \
+        return Ucname##DataIndexConstPair(empty_##lcname##_data_,       \
+                                          data.lcname##_data.index);    \
+      } else {                                                          \
+        return Ucname##DataIndexConstPair(it->second,                   \
+                                          data.lcname##_data.index);    \
+      }                                                                 \
     }                                                                   \
     Ucname##DataIndexPair                                               \
     access_frame_type_data(Key<Ucname##Traits> ,int node,               \
                                  Category category, int frame) {        \
-      NodeFrameDataPair data= access_node_frame_data(node,              \
-                                                     category, frame);  \
-      return Ucname##DataIndexPair(data.first.lcname##_data,            \
-                                   data.second.lcname##_index);         \
+      RMF_internal::Data &data= P::access_frame_data(category, frame);  \
+      std::string ns= P::get_node_string(node);                         \
+      return Ucname##DataIndexPair(data.lcname##_data.nodes[ns],        \
+                                   data.lcname##_data.index);           \
     }                                                                   \
     public:                                                             \
     Ucname##Traits::Type get_value(unsigned int node,                   \
@@ -88,10 +94,10 @@ namespace RMF {
                 << std::endl;                                           \
       const RMF_internal::Data &data= P::get_frame_data(cat,            \
                                                         P::get_current_frame()); \
-      extract_keys(cat, data.index.lcname##_index, ret);                \
+      extract_keys(cat, data.lcname##_data.index, ret);                 \
       const RMF_internal::Data &staticdata= P::get_frame_data(cat,      \
                                                            ALL_FRAMES); \
-    extract_keys(cat, data.index.lcname##_index, ret);                  \
+      extract_keys(cat, data.lcname##_data.index, ret);                 \
       return vector<Key<Ucname##Traits> >(ret.begin(), ret.end());      \
     }                                                                   \
     Key<Ucname##Traits>                                                 \
