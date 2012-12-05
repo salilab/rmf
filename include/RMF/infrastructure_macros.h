@@ -401,6 +401,7 @@ operator<<(std::ostream &out, const Showable &t);
 #ifndef SWIG
 #define RMF_TRAITS_ONE(UCName, UCNames, lcname, index, hdf5_disk,       \
                        hdf5_memory,hdf5_fill, avro_type, null_value,    \
+                       null_test,                                       \
                        wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a,      \
                        multiple)                                        \
   struct RMFEXPORT UCName##Traits:                                      \
@@ -454,18 +455,19 @@ operator<<(std::ostream &out, const Showable &t);
       static const UCName ret= null_value;                              \
       return ret;                                                       \
     }                                                                   \
-    static bool get_is_null_value(const UCName& i) {                    \
-      return i== get_null_value();                                      \
+    template <class V>                                                  \
+      static bool get_is_null_value(const V& i) {                       \
+      return null_test;                                                 \
     }                                                                   \
     static std::string get_name() {return #lcname;}                     \
   }
 
 /** Declare a type traits*/
 #define RMF_TRAITS(UCName, UCNames, lcname, index, hdf5_disk, hdf5_memory, \
-                   hdf5_fill, avro_type, null_value,                    \
+                   hdf5_fill, avro_type, null_value, null_test,         \
                    wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a, batch)   \
   RMF_TRAITS_ONE(UCName, UCNames, lcname, index, hdf5_disk, hdf5_memory, \
-                 hdf5_fill, avro_type, null_value,                      \
+                 hdf5_fill, avro_type, null_value, null_test,           \
                  wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a, batch);    \
   struct UCNames##Traits:                                               \
     public internal::BaseTraits<UCNames, vector<UCNames>,               \
@@ -536,15 +538,20 @@ operator<<(std::ostream &out, const Showable &t);
     static hid_t get_hdf5_fill_type() {                                 \
       return get_hdf5_memory_type();                                    \
     }                                                                   \
+    template <class O>                                                  \
+      static bool get_is_null_value(const O &o) {                       \
+      return o.empty();                                                 \
+    }                                                                   \
     static std::string get_name() {return UCName##Traits::get_name()+"s";} \
   };                                                                    \
 
 
 /** Declare a type traits*/
-#define RMF_SIMPLE_TRAITS(UCName, UCNames, lcname, index, hdf5_disk, \
+#define RMF_SIMPLE_TRAITS(UCName, UCNames, lcname, index, hdf5_disk,    \
                           hdf5_memory, hdf5_fill, avro_type, null_value) \
-  RMF_TRAITS(UCName, UCNames, lcname, index, hdf5_disk,             \
+  RMF_TRAITS(UCName, UCNames, lcname, index, hdf5_disk,                 \
              hdf5_memory, hdf5_fill, avro_type, null_value,             \
+             i==get_null_value(),                                       \
              RMF_HDF5_CALL(H5Dwrite(d,                                  \
                                     get_hdf5_memory_type(), is, s,      \
                                     H5P_DEFAULT, &v)),                  \

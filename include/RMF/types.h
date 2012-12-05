@@ -92,7 +92,7 @@ namespace RMF {
   RMF_TRAITS(String, Strings, string, 3, internal::get_string_type(),
              internal::get_string_type(), internal::get_string_type(),
              std::string,
-             String(),{
+             String(), i.empty(), {
                char *c;
                if (!v.empty()) {
                  c= const_cast<char*>(v.c_str());
@@ -134,6 +134,7 @@ namespace RMF {
   RMF_TRAITS(NodeID, NodeIDs, node_id, 4, IndexTraits::get_hdf5_disk_type(),
              IndexTraits::get_hdf5_memory_type(),
              IndexTraits::get_hdf5_fill_type(), int32_t, NodeID(),
+             NodeID(i)==NodeID(),
              IndexTraits::write_value_dataset(d, is, s, v.get_index())
              ,{
                int i= IndexTraits::read_value_dataset(d, is, sp);
@@ -168,6 +169,7 @@ namespace RMF {
 
   RMF_TRAITS_ONE(Char, Chars, char, 6, H5T_STD_I8LE,
                  H5T_NATIVE_CHAR,H5T_NATIVE_CHAR, char, '\0',
+                 i == '\0',
                  {
                    RMF_UNUSED(d); RMF_UNUSED(is); RMF_UNUSED(s);
                    RMF_UNUSED(v);
