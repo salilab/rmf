@@ -10,21 +10,19 @@
 #define RMF_EXCEPTIONS_H
 
 #include <RMF/config.h>
+#include <boost/exception/app.hpp>
 #include <string>
 #include <exception>
 
 namespace RMF {
 /** The base class for RMF exceptions. Use the what() method
     to get back a string describing the exception.*/
-class RMFEXPORT Exception: public virtual std::exception {
-  std::string message_, file_name_, operation_;
+class RMFEXPORT Exception: public virtual std::exception,
+                           public virtual boost::exception {
  public:
-  Exception(const char *msg): message_(msg) {
+  Exception() {
   }
-  void set_operation_name(const char *name) throw();
-  void set_file_name(const char *name) throw();
   const char *what() const throw();
-  virtual const char *get_type() const=0;
   virtual ~Exception() throw();
 };
 
@@ -34,20 +32,18 @@ class RMFEXPORT Exception: public virtual std::exception {
     when these are throw, the failed operation should have been cleanly
     aborted without changing the file.
 */
-class RMFEXPORT UsageException: public virtual Exception {
+class RMFEXPORT UsageException: public Exception {
  public:
-  UsageException(const char *msg);
-  const char *get_type() const;
+  UsageException();
   ~UsageException() throw();
 };
 
 
 /** IOExceptions are thrown when some operation on a disk file fails.
 */
-class RMFEXPORT IOException: public virtual Exception {
+class RMFEXPORT IOException: public Exception {
  public:
-  IOException(const char *msg);
-  const char *get_type() const;
+  IOException();
   ~IOException() throw();
 };
 
@@ -55,10 +51,9 @@ class RMFEXPORT IOException: public virtual Exception {
     internal invariant no longer holds. Since they represent bugs in the
     library, one can not necessarily recover when they occur..
 */
-class RMFEXPORT InternalException: public virtual Exception {
+class RMFEXPORT InternalException: public Exception {
  public:
-  InternalException(const char *msg);
-  const char *get_type() const;
+  InternalException();
   ~InternalException() throw();
 };
 

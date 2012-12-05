@@ -26,11 +26,19 @@
   UCName##Key                                                           \
   get_##lcname##_key(Category category_id,                              \
                      std::string nm) const {                            \
+    try {\
     return get_key<UCName##Traits>(category_id, nm);                    \
+    catch (Exception &e) {\
+      RMF_RETHROW(Key(nm) << Category(get_category_name(category_id)), e);\
+    }\
   }                                                                     \
   std::string get_name(UCName##Key k) const {                           \
+    try {\
     return shared_->get_name(k);                                        \
-  }                                                                     \
+    catch (Exception &e) {\
+      RMF_RETHROW(Category(get_category_name(get_category(k))), e);\
+    }\
+ }                                                                     \
   Category get_category(UCName##Key k) const {                          \
     return shared_->get_category(k);                                    \
   }                                                                     \
@@ -122,13 +130,14 @@ namespace RMF {
     template <class TypeT>
       Key<TypeT> get_key(Category category,
                          std::string name) const {
-      if (category == Category()) {
-        return Key<TypeT>();
-      } else {
+        try {
         return internal::GenericSharedData<TypeT>
           ::get_key(shared_.get(), category,
                     name);
-      }
+            } catch (Exception &e) {
+      RMF_RETHROW(Category(get_category_name(category))
+          << Key(name), e);
+    }
     }
     template <class TypeT>
       vector<Key<TypeT> > get_keys(Category category_id,
