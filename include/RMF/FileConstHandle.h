@@ -38,7 +38,7 @@
   std::string get_name(UCName##Key k) const {                           \
     try {                                                               \
       return shared_->get_name(k);                                      \
-    } RMF_FILE_CATCH();                                                 \
+    } RMF_FILE_CATCH( );                                                \
   }                                                                     \
   Category get_category(UCName##Key k) const {                          \
     return shared_->get_category(k);                                    \
@@ -191,7 +191,7 @@ namespace RMF {
     unsigned int get_number_of_frames() const {
       try {
         return shared_->get_number_of_frames();
-      } RMF_FILE_CATCH();
+      } RMF_FILE_CATCH( );
     }
 
     /** \name Non-template versions for python
