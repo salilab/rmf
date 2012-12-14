@@ -19,7 +19,7 @@
 
 #define RMF_FILE_CATCH(extra_info)                              \
   catch (Exception &e) {                                        \
-    RMF_RETHROW(File(get_name())                                \
+    RMF_RETHROW(File(get_path())                                \
                 << Frame(get_current_frame().get_id())          \
                 << Operation(BOOST_CURRENT_FUNCTION)            \
                 extra_info, e);                                 \
@@ -276,19 +276,14 @@ namespace RMF {
     Categories get_categories() const {
       try {
         return shared_->get_categories();
-      } RMF_FILE_CATCH();
+      } RMF_FILE_CATCH( );
     }
     std::string get_name(Category kc) const {
       try {
         return shared_->get_category_name(kc);
-      } RMF_FILE_CATCH();
+      } RMF_FILE_CATCH( );
     }
     /** @} */
-
-    /** Make sure all data gets written to disk. Once flush is called, it
-        should be safe to open the file in another process for reading.
-    */
-    void flush();
 
     /** Run the various validators that attempt to check that the RMF file
         is correct. Print messages to the provided stream if errors are
