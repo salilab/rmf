@@ -87,7 +87,7 @@ namespace {
                  unsigned int nframes) {
     boost::timer timer;
     {
-      RMF::FileHandle fh= RMF::create_rmf_file(path.native());
+      RMF::FileHandle fh= RMF::create_rmf_file(path.string());
       fill_file(fh);
       for (unsigned int i=0; i< nframes; ++i) {
         add_frame(fh);
