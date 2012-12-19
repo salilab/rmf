@@ -48,7 +48,6 @@ class RMFEXPORT UsageException: public Exception {
   ~UsageException() throw();
 };
 
-
 /** IOExceptions are thrown when some operation on a disk file fails.
 */
 class RMFEXPORT IOException: public Exception {
@@ -66,9 +65,6 @@ class RMFEXPORT InternalException: public Exception {
   InternalException();
   ~InternalException() throw();
 };
-
-/** This function simply throws an exception. It is here for testing.*/
-RMFEXPORT void test_throw_exception();
 
 }
 

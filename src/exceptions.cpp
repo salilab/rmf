@@ -90,8 +90,4 @@ InternalException::InternalException(): Exception(){}
 
 InternalException::~InternalException() throw() {}
 
-void test_throw_exception() {
-  RMF_THROW(Message("Test exception"), UsageException);
-}
-
 } /* namespace RMF */
