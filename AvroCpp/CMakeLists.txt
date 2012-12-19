@@ -139,7 +139,7 @@ enable_testing()
 
 macro (unittest name)
     add_executable (${name} test/${name}.cc)
-    target_link_libraries (${name} avrocpp ${Boost_LIBRARIES})
+    target_link_libraries (${name} avrocpp)
     add_test (NAME ${name} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${name})
 endmacro (unittest)
