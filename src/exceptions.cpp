@@ -15,6 +15,10 @@ namespace RMF {
 Exception::Exception() {
 }
 
+const char *Exception::what() const throw() {
+  return "RMF Exception";
+}
+
 Exception::~Exception() throw() {}
 std::string get_message(const Exception &e) {
   using namespace RMF::internal::ErrorInfo;
@@ -85,5 +89,9 @@ IOException::~IOException() throw() {}
 InternalException::InternalException(): Exception(){}
 
 InternalException::~InternalException() throw() {}
+
+void test_throw_exception() {
+  RMF_THROW(Message("Test exception"), UsageException);
+}
 
 } /* namespace RMF */

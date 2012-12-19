@@ -26,9 +26,7 @@ class RMFEXPORT Exception: public virtual std::exception,
                            public virtual boost::exception {
  public:
   Exception();
-  const char *what() const throw() {
-    return "RMF Exception";
-  }
+  const char *what() const throw() ;
    virtual ~Exception() throw();
 };
 
@@ -68,6 +66,9 @@ class RMFEXPORT InternalException: public Exception {
   InternalException();
   ~InternalException() throw();
 };
+
+/** This function simply throws an exception. It is here for testing.*/
+RMFEXPORT void test_throw_exception();
 
 }
 
