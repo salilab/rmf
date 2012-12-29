@@ -75,7 +75,7 @@ else()
 endif()
 
 
-ADD_SUBDIRECTORY(pyext)
+ADD_SUBDIRECTORY(swig)
 
 include(test/CMakeLists.txt)
 include(examples/CMakeLists.txt)
