@@ -4,7 +4,7 @@ project(RMF)
 # needs to be in main CMakeLists.txt
 ENABLE_TESTING()
 
-FIND_LIBRARY(avrocpp_LIBRARY NAME avrocpp)
+FIND_LIBRARY(avrocpp_LIBRARY NAMES avrocpp)
 FIND_PROGRAM(avrogencpp_PROGRAM NAME avrogencpp)
 #message(STATUS ${avrocpp_LIBRARY})
 
@@ -20,6 +20,14 @@ set(avrogen_PATH "avrogencpp")
 set(avrocpp_LIBRARY avrocpp)
 endif()
 
+FIND_LIBRARY(log4cxx_LIBRARY NAMES log4cxx)
+if (${log4cxx_LIBRARY} MATCHES "log4cxx_LIBRARY-NOTFOUND")
+set(RMF_USE_LOG4CXX, "0")
+message(STATUS "Logging disabled")
+else()
+message(STATUS "Logging enabled")
+set(RMF_USE_LOG4CXX, "1")
+endif()
 
 set(Boost_NO_BOOST_CMAKE ON)
 find_package(Boost COMPONENTS system filesystem thread program_options
