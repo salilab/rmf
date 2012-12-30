@@ -5,16 +5,19 @@ project(RMF)
 ENABLE_TESTING()
 
 FIND_LIBRARY(avrocpp_LIBRARY NAMES avrocpp)
-FIND_PROGRAM(avrogencpp_PROGRAM NAME avrogencpp)
-#message(STATUS ${avrocpp_LIBRARY})
+FIND_PROGRAM(avrogencpp_PROGRAM NAMES avrogencpp)
+message(STATUS ${avrocpp_LIBRARY})
+
+message(STATUS ${avrogencpp_PROGRAM})
+
 
 if (${avrocpp_LIBRARY} MATCHES "avrocpp_LIBRARY-NOTFOUND" OR ${avrogencpp_PROGRAM} MATCHES "avrogencpp_PROGRAM-NOTFOUND")
 message(STATUS "Building avro internally")
 ADD_SUBDIRECTORY(AvroCpp)
-set(avrocpp_INCLUDE "${CMAKE_SOURCE_DIR}/AvroCpp/")
-set(avrogen_PATH "${PROJECT_BINARY_DIR}/AvroCpp/avrogencpp")
+set(avrogencpp_PROGRAM "${PROJECT_BINARY_DIR}/AvroCpp/avrogencpp")
 set(avrogen_DEPENDENCY "${PROJECT_BINARY_DIR}/AvroCpp/avrogencpp")
 include_directories("${PROJECT_SOURCE_DIR}/AvroCpp")
+set(avrocpp_LIBRARY avrocpp)
 else()
 message(STATUS "Using external avro" ${avrogencpp_PROGRAM})
 endif()
