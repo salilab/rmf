@@ -14,10 +14,9 @@ ADD_SUBDIRECTORY(AvroCpp)
 set(avrocpp_INCLUDE "${CMAKE_SOURCE_DIR}/AvroCpp/")
 set(avrogen_PATH "${PROJECT_BINARY_DIR}/AvroCpp/avrogencpp")
 set(avrogen_DEPENDENCY "${PROJECT_BINARY_DIR}/AvroCpp/avrogencpp")
+include_directories("${PROJECT_SOURCE_DIR}/AvroCpp")
 else()
-message(STATUS "Using external avro")
-set(avrogen_PATH "avrogencpp")
-set(avrocpp_LIBRARY avrocpp)
+message(STATUS "Using external avro" ${avrogencpp_PROGRAM})
 endif()
 
 FIND_LIBRARY(log4cxx_LIBRARY NAMES log4cxx)
@@ -38,7 +37,7 @@ include(GNUInstallDirs)
 include(FindHDF5)
 find_package(HDF5 REQUIRED)
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${Boost_INCLUDE_DIR})
+include_directories(${Boost_INCLUDE_DIR})
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR})
@@ -56,14 +55,10 @@ configure_file (
   )
 
 include_directories("${PROJECT_BINARY_DIR}/include"
-                               "${PROJECT_BINARY_DIR}/src"
-                               "${PROJECT_SOURCE_DIR}/src"
-                                "${PROJECT_SOURCE_DIR}/include"
-                               ${HDF5_INCLUDE_DIRS}
-                               ${avrocpp_INCLUDE}
-                                ${Boost_INCLUDE_DIR})
+                               "${PROJECT_SOURCE_DIR}/include"
+                               ${HDF5_INCLUDE_DIRS})
 
-add_subdirectory(data)
+include(data/CMakeLists.txt)
 include(include/CMakeLists.txt)
 
 include(src/CMakeLists.txt)
