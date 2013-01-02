@@ -11,14 +11,14 @@ find_file(avrocpp_HEADER NAMES avro/avro_schemas.h)
 if (${avrocpp_LIBRARY} MATCHES "avrocpp_LIBRARY-NOTFOUND"
     OR ${avrogencpp_PROGRAM} MATCHES "avrogencpp_PROGRAM-NOTFOUND"
     OR ${avrocpp_HEADER} MATCHES "avrocpp_HEADER-NOTFOUND")
-  message(STATUS "Building avro internally")
+  message(STATUS "Using internal Avro")
   add_subdirectory(AvroCpp)
   set(avrogencpp_PROGRAM "${PROJECT_BINARY_DIR}/AvroCpp/avrogencpp")
   set(avrogen_DEPENDENCY "${PROJECT_BINARY_DIR}/AvroCpp/avrogencpp")
   include_directories("${PROJECT_SOURCE_DIR}/AvroCpp")
   set(avrocpp_LIBRARY avrocpp)
 else()
-  message(STATUS "Using external avro" ${avrogencpp_PROGRAM})
+  message(STATUS "Using external Avro at " ${avrocpp_HEADER})
 endif()
 
 find_library(log4cxx_LIBRARY NAMES log4cxx)
