@@ -26,7 +26,8 @@ else()
 endif()
 
 include(FindLog4CXX)
-if (${Log4CXX_LIBRARY} MATCHES "log4cxx_LIBRARY-NOTFOUND")
+
+if (${Log4CXX_LIBRARY} MATCHES "Log4CXX_LIBRARY-NOTFOUND")
   set(RMF_USE_LOG4CXX, "0")
   message(STATUS "Logging disabled")
 else()
