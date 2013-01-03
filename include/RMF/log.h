@@ -10,7 +10,7 @@
 #define RMF_LOG_H
 
 #include <RMF/config.h>
-
+#include <string>
 #if RMF_USE_LOG4CXX
 #  include <log4cxx/logger.h>
 #  include <log4cxx/ndc.h>

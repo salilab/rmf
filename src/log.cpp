@@ -54,9 +54,10 @@ void set_log_level(std::string str) {
     RMF_THROW(Message("Invalid log level"), UsageException);
   }
 }
+#else
+void set_log_level(std::string str) {
+}
 #endif
 
-void set_log_level() {
 
-}
 }
