@@ -13,25 +13,25 @@
 
 #if RMF_USE_LOG4CXX
 #  include <log4cxx/logger.h>
+#  include <log4cxx/ndc.h>
 #endif
 
 namespace RMF {
 
 #if RMF_USE_LOG4CXX
-inline log4cxx::LoggerPtr get_logger() {
-  static log4cxx::LoggerPtr ret = log4cxx::Logger::getLogger("RMF");
-  return ret;
-}
-inline log4cxx::LoggerPtr get_avro_logger() {
-  static log4cxx::LoggerPtr ret = log4cxx::Logger::getLogger("RMF.avro");
-  return ret;
-}
-inline log4cxx::LoggerPtr get_hdf5_logger() {
-  static log4cxx::LoggerPtr ret = log4cxx::Logger::getLogger("RMF.hdf5");
-  return ret;
-}
+RMFEXPORT log4cxx::LoggerPtr get_logger();
+RMFEXPORT log4cxx::LoggerPtr get_avro_logger();
+RMFEXPORT log4cxx::LoggerPtr get_hdf5_logger();
 #endif
 
+/** Set the log level from a string. Supported values are:
+    - Trace
+    - Info
+    - Warn
+    - Error
+    - Off
+*/
+RMFEXPORT void set_log_level(std::string level);
 
 } /* namespace RMF */
 
@@ -43,6 +43,7 @@ inline log4cxx::LoggerPtr get_hdf5_logger() {
 #  define RMF_WARN(log, expr) LOG4CXX_WARN(log, expr)
 #  define RMF_ERROR(log, expr) LOG4CXX_ERROR(log, expr)
 #  define RMF_FATAL(log, expr) LOG4CXX_FATAL(log, expr)
+#  define RMF_CONTEXT(expr) log4cxx::NDC _log_context(expr)
 
 #else
 #  define RMF_TRACE(log, expr)
@@ -51,6 +52,7 @@ inline log4cxx::LoggerPtr get_hdf5_logger() {
 #  define RMF_WARN(log, expr)
 #  define RMF_ERROR(log, expr)
 #  define RMF_FATAL(log, expr)
+#  define RMF_CONTEXT(expr)
 
 #endif
 

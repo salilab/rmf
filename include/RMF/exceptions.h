@@ -113,13 +113,14 @@ public:
 
 
 #ifndef RMF_NDEBUG
-#  define RMF_INTERNAL_CHECK(check, message)                                                                          \
-  do {                                                                                                                \
-    if (!(check)) {                                                                                                   \
-      RMF_THROW(Message(message) << Type("Internal")                                                                  \
-                                 << SourceFile(__FILE__) << SourceLine(__LINE__) << Function(BOOST_CURRENT_FUNCTION), \
-                RMF::InternalException);                                                                              \
-    }                                                                                                                 \
+#  define RMF_INTERNAL_CHECK(check, message)                            \
+  do {                                                                  \
+    if (!(check)) {                                                     \
+      RMF_THROW(Message(message) << Type("Internal")                    \
+                << SourceFile(__FILE__) << SourceLine(__LINE__)         \
+                << Function(BOOST_CURRENT_FUNCTION),                    \
+                RMF::InternalException);                                \
+    }                                                                   \
   } while (false)
 
 

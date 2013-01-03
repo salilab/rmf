@@ -19,6 +19,7 @@
 #include "../backend/avro/SingleAvroFile.h"
 #include "../backend/avro/MultipleAvroFileWriter.h"
 #include "../backend/avro/MultipleAvroFileReader.h"
+#include <RMF/log.h>
 
 namespace RMF {
 namespace internal {
@@ -46,6 +47,7 @@ CacheCheck checker;
 SharedData::SharedData(std::string path): valid_(11111),
                                           cur_frame_(ALL_FRAMES),
                                           path_(path) {
+  RMF_INFO(get_logger(), "Opening file " << path_);
 };
 SharedData::~SharedData() {
   RMF_INTERNAL_CHECK(valid_ == 11111,
@@ -57,6 +59,7 @@ SharedData::~SharedData() {
     cache.erase(name);
     reverse_cache.erase(this);
   }
+  RMF_INFO(get_logger(), "Closing file " << path_);
 }
 
 void SharedData::audit_key_name(std::string name) const {
@@ -163,10 +166,12 @@ SharedData* create_read_only_shared_data(std::string path) {
 }
 
 SharedData* create_shared_data_in_buffer(std::string& buffer, bool create) {
+  RMF_INFO(get_logger(), "Initializing RMF in buffer");
   return new SingleAvroShareData(buffer, create, false, true);
 }
 
 SharedData* create_read_only_shared_data_from_buffer( std::string buffer) {
+  RMF_INFO(get_logger(), "Initializing RMF from buffer");
   return new SingleAvroShareData(buffer, false, true, true);
 }
 

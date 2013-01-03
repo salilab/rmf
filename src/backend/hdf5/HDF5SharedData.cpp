@@ -10,6 +10,7 @@
 #include <RMF/NodeHandle.h>
 #include <RMF/Validator.h>
 #include <RMF/internal/set.h>
+#include <RMF/log.h>
 #include <algorithm>
 
 namespace RMF {
@@ -412,6 +413,7 @@ void HDF5SharedData::reload() {
 
 
 void HDF5SharedData::set_current_frame(int frame) {
+  RMF_TRACE(get_hdf5_logger(), "Loading frame " << frame);
   SharedData::set_current_frame(frame);
   if (frame >= 0) {
     RMF_FOREACH_TYPE(RMF_HDF5_SET_FRAME);

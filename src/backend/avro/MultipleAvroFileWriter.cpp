@@ -47,6 +47,7 @@ MultipleAvroFileWriter::~MultipleAvroFileWriter() {
   }
 
 void MultipleAvroFileWriter::commit() {
+  RMF_INFO(get_avro_logger(), "Writing frame " << get_current_frame());
   for (unsigned int i = 0; i < categories_.size(); ++i) {
     if (categories_[i].dirty) {
       if (!categories_[i].writer) {
@@ -60,8 +61,6 @@ void MultipleAvroFileWriter::commit() {
                     IOException);
         }
       }
-      /*std::cout << "Writing data for " << get_category_name(Category(i))
-         << " at frame " << categories_[i].data.frame << std::endl;*/
       //show(categories_[i].data);
       RMF_INTERNAL_CHECK(categories_[i].data.frame == get_frames().size() - 2,
                          "Trying to write category that is at wrong frame.");

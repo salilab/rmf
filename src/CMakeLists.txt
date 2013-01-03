@@ -18,6 +18,7 @@ target_link_libraries(RMF
   ${Boost_THREAD_LIBRARY}
   ${avrocpp_LIBRARY}
   ${HDF5_LIBRARIES}
+  ${log4cxx_LIBRARY}
   )
 
 INSTALL(TARGETS RMF DESTINATION ${CMAKE_INSTALL_LIBDIR})
