@@ -1,2 +1,68 @@
-file(GLOB avro_sources "${PROJECT_SOURCE_DIR}/src/backend/avro/*.cpp")
+# AllJSON.h
+
+file(READ "src/backend/avro/Nodes.json" RMF_JSON_NODES)
+file(READ "src/backend/avro/File.json" RMF_JSON_FILE)
+file(READ "src/backend/avro/Data.json" RMF_JSON_DATA)
+
+configure_file (
+  "${PROJECT_SOURCE_DIR}/src/backend/avro/All.json.in"
+  "${PROJECT_BINARY_DIR}/src/backend/avro/All.json"
+  )
+
+set(json_headers)
+add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/backend/avro/AllJSON.h"
+     COMMAND "mkdir" "-p" "${PROJECT_BINARY_DIR}/src/backend/avro"
+     COMMAND "${avrogencpp_PROGRAM}" "--input" "${PROJECT_BINARY_DIR}/src/backend/avro/All.json"
+     "--output" "${PROJECT_BINARY_DIR}/src/backend/avro/AllJSON.h" "--namespace" "RMF_internal"
+     DEPENDS "${PROJECT_BINARY_DIR}/src/backend/avro/All.json" ${avrogen_DEPENDENCY} COMMENT "Creating json header")
+
+add_custom_target("AllJSON.h" ALL DEPENDS "${PROJECT_BINARY_DIR}/src/backend/avro/All.json" )
+
+list(APPEND json_headers "${PROJECT_BINARY_DIR}/src/backend/avro/AllJSON.h")
+
+# Data includes
+add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/backend/avro/File.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/File.json.cpp"
+   COMMAND "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+              "${PROJECT_BINARY_DIR}/src/backend/avro/"
+              "${PROJECT_SOURCE_DIR}/src/backend/avro/File.json" "avro_backend"
+   DEPENDS "${PROJECT_SOURCE_DIR}/src/backend/avro/File.json" "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+   COMMENT "Data wrapper for File.json"  )
+
+add_custom_target("File.data" ALL DEPENDS "${PROJECT_BINARY_DIR}/src/backend/avro/File.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/File.json.cpp" "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"  )
+
+add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/backend/avro/Data.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/Data.json.cpp"
+   COMMAND "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+              "${PROJECT_BINARY_DIR}/src/backend/avro/"
+              "${PROJECT_SOURCE_DIR}/src/backend/avro/Data.json" "avro_backend"
+   DEPENDS "${PROJECT_SOURCE_DIR}/src/backend/avro/Data.json" "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+   COMMENT "Data wrapper for Data.json"  )
+
+add_custom_target("Data.data" ALL DEPENDS "${PROJECT_BINARY_DIR}/src/backend/avro/Data.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/Data.json.cpp" "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"  )
+
+add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/backend/avro/Nodes.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/Nodes.json.cpp"
+   COMMAND "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+              "${PROJECT_BINARY_DIR}/src/backend/avro/"
+              "${PROJECT_SOURCE_DIR}/src/backend/avro/Nodes.json" "avro_backend"
+   DEPENDS "${PROJECT_SOURCE_DIR}/src/backend/avro/Nodes.json" "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+   COMMENT "Nodes wrapper for Nodes.json"  )
+
+add_custom_target("Nodes.data" ALL DEPENDS "${PROJECT_BINARY_DIR}/src/backend/avro/Nodes.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/Nodes.json.cpp" "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"  )
+
+add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/backend/avro/All.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/All.json.cpp"
+   COMMAND "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+              "${PROJECT_BINARY_DIR}/src/backend/avro/"
+              "${PROJECT_BINARY_DIR}/src/backend/avro/All.json" "avro_backend"
+   DEPENDS "${PROJECT_BINARY_DIR}/src/backend/avro/All.json" "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+   COMMENT "All wrapper for All.json"  )
+
+add_custom_target("All.data" ALL DEPENDS "${PROJECT_BINARY_DIR}/src/backend/avro/All.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/All.json.cpp" "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"  )
+
+
+
+file(GLOB avro_sources "${PROJECT_SOURCE_DIR}/src/backend/avro/*.cpp" "${PROJECT_BINARY_DIR}/src/backend/avro/All.json.cpp"
+"${PROJECT_BINARY_DIR}/src/backend/avro/File.json.cpp"
+"${PROJECT_BINARY_DIR}/src/backend/avro/Nodes.json.cpp"
+"${PROJECT_BINARY_DIR}/src/backend/avro/Data.json.cpp")
 list(APPEND sources ${avro_sources})
+
+message(STATUS  ${avro_sources})

@@ -9,19 +9,21 @@
 #include "avro_schemas.h"
 #include <RMF/internal/paths.h>
 #include <RMF/decorators.h>
+#include <backend/avro/File.json.h>
+#include <backend/avro/All.json.h>
+#include <backend/avro/Data.json.h>
+#include <backend/avro/Nodes.json.h>
 #include <avro/Compiler.hh>
 #include <stdexcept>
 #include <avro/Encoder.hh>
 #include <avro/Stream.hh>
 
 namespace RMF {
-namespace internal {
-#define RMF_SCHEMA(name)                                                       \
-  avro::ValidSchema get_##name##_schema() {                                    \
-    std::string path = get_data_path(#name ".json");                           \
-    std::auto_ptr<avro::InputStream> is = avro::fileInputStream(path.c_str()); \
-    return avro::compileJsonSchemaFromStream(*is);                             \
-  }
+  namespace internal {
+#define RMF_SCHEMA(name)                                                \
+    ::avro::ValidSchema get_##name##_schema() {                         \
+      return ::avro::compileJsonSchemaFromString(RMF::avro_backend::name##_json.c_str()); \
+    }
 
 RMF_SCHEMA(All);
 RMF_SCHEMA(File);
@@ -30,12 +32,12 @@ RMF_SCHEMA(Data);
 
 void show(const RMF_internal::Data &data,
           std::ostream             &out) {
-  std::auto_ptr<avro::OutputStream> os
+  std::auto_ptr< ::avro::OutputStream> os
     = avro::ostreamOutputStream(out);
-  avro::EncoderPtr encoder
+  ::avro::EncoderPtr encoder
     = avro::jsonEncoder(RMF::internal::get_Data_schema());
   encoder->init(*os);
-  avro::codec_traits<RMF_internal::Data>::encode(*encoder, data);
+  ::avro::codec_traits<RMF_internal::Data>::encode(*encoder, data);
   os->flush();
 }
 

@@ -5,13 +5,8 @@ FILE(GLOB sources "${PROJECT_SOURCE_DIR}/src/*.cpp" "${PROJECT_SOURCE_DIR}/src/i
 
 include(src/backend/CMakeLists.txt)
 
-configure_file (
-  "${PROJECT_SOURCE_DIR}/src/internal/paths.cpp.in"
-  "${PROJECT_BINARY_DIR}/src/internal/paths.cpp"
-  )
 
 add_library(RMF SHARED ${sources}
-  "${PROJECT_BINARY_DIR}/src/internal/paths.cpp" ${json_headers}
   ${decorators})
 
 target_link_libraries(RMF
