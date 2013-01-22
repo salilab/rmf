@@ -29,11 +29,10 @@ SingleAvroFile::SingleAvroFile(std::string path, bool create,
   null_static_frame_data_.frame = ALL_FRAMES;
 }
 
-SingleAvroFile::SingleAvroFile(std::string &path, bool create,
-                               bool read_only,
-                               bool): AvroKeysAndCategories("buffer"),
-                                      buffer_(&path),
-                                      write_to_buffer_(true) {
+SingleAvroFile::SingleAvroFile(std::string &path, bool create):
+  AvroKeysAndCategories("buffer"),
+  buffer_(&path),
+  write_to_buffer_(true) {
   if (!create) {
     reload();
   } else {
@@ -41,11 +40,18 @@ SingleAvroFile::SingleAvroFile(std::string &path, bool create,
     initialize_node_keys();
   }
   null_static_frame_data_.frame = ALL_FRAMES;
+}
 
-  if (read_only) {
-    // so we don't write to it
-    buffer_ = NULL;
-  }
+
+SingleAvroFile::SingleAvroFile(const std::string &path):
+  AvroKeysAndCategories("buffer"),
+  buffer_(const_cast<std::string*>(&path)),
+  write_to_buffer_(true) {
+  reload();
+  null_static_frame_data_.frame = ALL_FRAMES;
+
+  // so we don't write to it
+  buffer_ = NULL;
 }
 
 void SingleAvroFile::initialize_categories() {

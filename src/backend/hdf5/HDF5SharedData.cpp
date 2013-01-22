@@ -158,10 +158,20 @@ HDF5SharedData::HDF5SharedData(std::string g, bool create, bool read_only):
   }
 }
 
+  extern internal::map<std::string, HDF5SharedData *> cache;
+  extern internal::map<HDF5SharedData*, std::string> reverse_cache;
+
+
 HDF5SharedData::~HDF5SharedData() {
   add_ref();
   close_things();
   release();
+  // check for an exception in the constructor
+  if (reverse_cache.find(this) != reverse_cache.end()) {
+    std::string name = reverse_cache.find(this)->second;
+    cache.erase(name);
+    reverse_cache.erase(this);
+  }
 }
 
 void HDF5SharedData::flush() {

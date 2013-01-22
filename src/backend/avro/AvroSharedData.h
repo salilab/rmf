@@ -169,8 +169,10 @@ public:
   RMF_FOREACH_TYPE(RMF_AVRO_SHARED_TYPE);
 
   AvroSharedData(std::string g, bool create, bool read_only);
-  AvroSharedData(std::string &buffer, bool create, bool read_only,
-                 bool use_buffer);
+  // buffer versions
+  AvroSharedData(std::string &buffer, bool create);
+  AvroSharedData(const std::string &buffer);
+
   virtual ~AvroSharedData() {
   }
   std::string get_name(unsigned int node) const;

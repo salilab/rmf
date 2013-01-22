@@ -120,8 +120,8 @@ public:
 
   SingleAvroFile(std::string path, bool create,
                  bool read_only);
-  SingleAvroFile(std::string &buffer, bool create,
-                 bool read_only, bool);
+  SingleAvroFile(std::string &buffer, bool create);
+  SingleAvroFile(const std::string &buffer);
   ~SingleAvroFile() {
     flush();
   }
