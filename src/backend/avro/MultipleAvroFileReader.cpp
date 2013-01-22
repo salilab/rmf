@@ -14,12 +14,12 @@
 #include <stdexcept>
 
 namespace RMF {
-namespace internal {
+namespace avro_backend {
 
 namespace {
-void clear_data(RMF_internal::Data &data,
+void clear_data(RMF_avro_backend::Data &data,
                 int                frame) {
-  data = RMF_internal::Data();
+  data = RMF_avro_backend::Data();
   data.frame = frame;
 }
 }
@@ -37,7 +37,7 @@ void MultipleAvroFileReader::set_current_frame(int frame) {
         std::string name = get_category_dynamic_file_path(Category(i));
         try {
           categories_[i].reader
-          .reset( new avro::DataFileReader<RMF_internal::Data >(name.c_str(),
+          .reset( new avro::DataFileReader<RMF_avro_backend::Data >(name.c_str(),
                                                                 get_Data_schema()));
         } catch (const std::exception &e) {
           RMF_THROW(Message(e.what()) << Component(name), IOException);
@@ -147,7 +147,7 @@ void MultipleAvroFileReader::add_category_data(Category cat) {
     //std::cout << "Dynamic data found" << std::endl;
     try {
       categories_[cat.get_id()].reader
-      .reset(new avro::DataFileReader<RMF_internal::Data>(dynamic_path.c_str(),
+      .reset(new avro::DataFileReader<RMF_avro_backend::Data>(dynamic_path.c_str(),
                                                           get_Data_schema()));
     } catch (const std::exception &e) {
       RMF_THROW(Message(e.what()) << Component(dynamic_path), IOException);
@@ -168,7 +168,7 @@ void MultipleAvroFileReader::add_category_data(Category cat) {
     //std::cout << "Static data found" << std::endl;
     bool success;
     try {
-      avro::DataFileReader<RMF_internal::Data> reader(static_path.c_str(),
+      avro::DataFileReader<RMF_avro_backend::Data> reader(static_path.c_str(),
                                                       get_Data_schema());
       success = reader.read(static_categories_[cat.get_id()]);
     } catch (const std::exception &e) {
@@ -183,5 +183,5 @@ void MultipleAvroFileReader::add_category_data(Category cat) {
   }
 }
 
-}   // namespace internal
+}   // namespace avro_backend
 } /* namespace RMF */

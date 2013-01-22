@@ -292,7 +292,7 @@ create_shared_data_in_buffer(std::string &buffer,
                              bool        create);
 
 RMFEXPORT SharedData*
-create_read_only_shared_data_from_buffer( std::string buffer);
+create_read_only_shared_data_from_buffer(const std::string& buffer);
 
 
 // needed for correctness imposed by clang as the functions must be visible

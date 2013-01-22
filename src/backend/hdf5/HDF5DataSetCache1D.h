@@ -16,7 +16,7 @@
 namespace RMF {
 
 
-namespace internal {
+namespace hdf5_backend {
 
 template <class TypeTraits>
 class HDF5DataSetCacheD<TypeTraits, 1>/*: public boost::noncopyable*/ {
@@ -118,7 +118,7 @@ public:
   }
 };
 
-}   // namespace internal
+}   // namespace hdf5_backend
 } /* namespace RMF */
 
 
