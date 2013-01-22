@@ -14,7 +14,7 @@
 #include <stdexcept>
 
 namespace RMF {
-namespace internal {
+namespace avro_backend {
 
 SingleAvroFile::SingleAvroFile(std::string path, bool create,
                                bool read_only): AvroKeysAndCategories(path),
@@ -49,7 +49,7 @@ SingleAvroFile::SingleAvroFile(std::string &path, bool create,
 }
 
 void SingleAvroFile::initialize_categories() {
-  for (std::map<std::string, std::vector<RMF_internal::Data > >::const_iterator
+  for (std::map<std::string, std::vector<RMF_avro_backend::Data > >::const_iterator
        it = all_.category.begin(); it != all_.category.end(); ++it) {
     get_category(it->first);
   }
@@ -85,7 +85,7 @@ void SingleAvroFile::reload() {
   if (!write_to_buffer_) {
     bool success;
     try {
-      avro::DataFileReader<RMF_internal::All>
+      avro::DataFileReader<RMF_avro_backend::All>
       rd(get_file_path().c_str(), get_All_schema());
       success = rd.read(all_);
     } catch (std::exception &e) {
@@ -107,5 +107,5 @@ void SingleAvroFile::reload() {
   dirty_ = false;
 }
 
-}   // namespace internal
+}   // namespace avro_backend
 } /* namespace RMF */

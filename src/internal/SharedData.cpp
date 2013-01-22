@@ -104,9 +104,9 @@ std::string SharedData::get_file_name() const {
 }
 
 
-typedef AvroSharedData<SingleAvroFile> SingleAvroShareData;
-typedef AvroSharedData<MultipleAvroFileWriter> AvroWriterShareData;
-typedef AvroSharedData<MultipleAvroFileReader> AvroReaderShareData;
+typedef avro_backend::AvroSharedData<avro_backend::SingleAvroFile> SingleAvroShareData;
+typedef avro_backend::AvroSharedData<avro_backend::MultipleAvroFileWriter> AvroWriterShareData;
+typedef avro_backend::AvroSharedData<avro_backend::MultipleAvroFileReader> AvroReaderShareData;
 
 // throws RMF::IOException if couldn't create file or unsupported file
 // format
@@ -117,7 +117,7 @@ SharedData* create_shared_data(std::string path, bool create) {
       if (cache.find(path) != cache.end()) {
         return cache.find(path)->second;
       }
-      ret = new HDF5SharedData(path, create, false);
+      ret = new hdf5_backend::HDF5SharedData(path, create, false);
       cache[path] = ret;
       reverse_cache[ret] = path;
     } else if (boost::algorithm::ends_with(path, ".rmfa")) {
@@ -146,7 +146,7 @@ SharedData* create_read_only_shared_data(std::string path) {
       if (cache.find(path) != cache.end()) {
         return cache.find(path)->second;
       }
-      ret = new HDF5SharedData(path, false, true);
+      ret = new hdf5_backend::HDF5SharedData(path, false, true);
       cache[path] = ret;
       reverse_cache[ret] = path;
     } else if (boost::algorithm::ends_with(path, ".rmfa")) {

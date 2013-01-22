@@ -13,7 +13,7 @@
 #include <algorithm>
 
 namespace RMF {
-namespace internal {
+namespace hdf5_backend {
 
 #define RMF_CLOSE(lcname, Ucname, PassValue, ReturnValue,     \
                   PassValues, ReturnValues)                   \
@@ -65,7 +65,7 @@ void HDF5SharedData::open_things(bool create, bool read_only) {
     std::string version;
     version = file_.get_attribute<CharTraits>("version");
     RMF_USAGE_CHECK(version == "rmf 1",
-                    get_error_message("Unsupported rmf version ",
+                    internal::get_error_message("Unsupported rmf version ",
                                       "string found: \"",
                                       version, "\" expected \"",
                                       "rmf 1", "\""));
@@ -177,7 +177,7 @@ void HDF5SharedData::flush() {
 
 void HDF5SharedData::check_node(unsigned int node) const {
   RMF_USAGE_CHECK(node_names_.get_size()[0] > node,
-                  get_error_message("Invalid node specified: ",
+                  internal::get_error_message("Invalid node specified: ",
                                     node));
 }
 
@@ -417,5 +417,5 @@ void HDF5SharedData::set_current_frame(int frame) {
     RMF_FOREACH_TYPE(RMF_HDF5_SET_FRAME);
   }
 }
-}   // namespace internal
+}   // namespace hdf5_backend
 } /* namespace RMF */

@@ -19,7 +19,7 @@
 #include <utility>
 
 namespace RMF {
-namespace internal {
+namespace avro_backend {
 
 template <class Out, class In>
 void avro_assign(Out &out, In in) {
@@ -68,7 +68,7 @@ class AvroSharedData: public Base {
   template <class TypeTraits>
   void extract_keys(Category              cat,
                     const KeyIndex        &index,
-                    set<Key<TypeTraits> > &ret ) {
+                    internal::set<Key<TypeTraits> > &ret ) {
     for (typename KeyIndex::const_iterator iti
            = index.begin(); iti != index.end(); ++iti) {
       std::cout << "found " << iti->first << std::endl;
@@ -200,7 +200,7 @@ public:
   Ints get_children_frame(int node) const;
 };
 
-}   // namespace internal
+}   // namespace avro_backend
 } /* namespace RMF */
 
 

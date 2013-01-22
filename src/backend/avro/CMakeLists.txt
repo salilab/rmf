@@ -13,7 +13,7 @@ set(json_headers)
 add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/backend/avro/AllJSON.h"
      COMMAND "mkdir" "-p" "${PROJECT_BINARY_DIR}/src/backend/avro"
      COMMAND "${avrogencpp_PROGRAM}" "--input" "${PROJECT_BINARY_DIR}/src/backend/avro/All.json"
-     "--output" "${PROJECT_BINARY_DIR}/src/backend/avro/AllJSON.h" "--namespace" "RMF_internal"
+     "--output" "${PROJECT_BINARY_DIR}/src/backend/avro/AllJSON.h" "--namespace" "RMF_avro_backend"
      DEPENDS "${PROJECT_BINARY_DIR}/src/backend/avro/All.json" ${avrogen_DEPENDENCY} COMMENT "Creating json header")
 
 add_custom_target("AllJSON.h" ALL DEPENDS "${PROJECT_BINARY_DIR}/src/backend/avro/All.json" )
@@ -63,6 +63,4 @@ file(GLOB avro_sources "${PROJECT_SOURCE_DIR}/src/backend/avro/*.cpp" "${PROJECT
 "${PROJECT_BINARY_DIR}/src/backend/avro/File.json.cpp"
 "${PROJECT_BINARY_DIR}/src/backend/avro/Nodes.json.cpp"
 "${PROJECT_BINARY_DIR}/src/backend/avro/Data.json.cpp")
-list(APPEND sources ${avro_sources})
-
-message(STATUS  ${avro_sources})
+list(APPEND sources ${avro_sources} "${PROJECT_BINARY_DIR}/src/backend/avro/AllJSON.h" )

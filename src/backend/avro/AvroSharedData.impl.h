@@ -18,7 +18,7 @@
 #include <algorithm>
 
 namespace RMF {
-namespace internal {
+namespace avro_backend {
 
 template <class Base>
 AvroSharedData<Base>::AvroSharedData(std::string g, bool create,
@@ -70,7 +70,7 @@ int AvroSharedData<Base>::add_child(int node, std::string name, int t) {
   add_child(node, index);
   P::add_node_key();
   RMF_INTERNAL_CHECK(get_type(index) == t,
-                     get_error_message("Types don't match for node ",
+                     internal::get_error_message("Types don't match for node ",
                                        name, ": ", NodeType(t), " (", t,
                                        ") vs ",
                                        NodeType(get_type(index)), " (",
@@ -88,7 +88,7 @@ Ints AvroSharedData<Base>::get_children(int node) const {
 }
 template <class Base>
 std::string AvroSharedData<Base>::get_frame_name(int i) const {
-  const RMF_internal::Node &frame = P::get_frame(i);
+  const RMF_avro_backend::Node &frame = P::get_frame(i);
   return frame.name;
 }
 template <class Base>
@@ -127,6 +127,6 @@ void AvroSharedData<Base>::set_producer(std::string str) {
   P::access_file().producer = str;
 }
 
-}   // namespace internal
+}   // namespace avro_backend
 } /* namespace RMF */
 #endif /* RMF_INTERNAL_AVRO_SHARED_DATA_IMPL_H */

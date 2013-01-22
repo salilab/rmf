@@ -19,10 +19,10 @@
 #include <avro/Stream.hh>
 
 namespace RMF {
-  namespace internal {
+  namespace avro_backend {
 #define RMF_SCHEMA(name)                                                \
     ::avro::ValidSchema get_##name##_schema() {                         \
-      return ::avro::compileJsonSchemaFromString(RMF::avro_backend::name##_json.c_str()); \
+      return ::avro::compileJsonSchemaFromString(name##_json.c_str()); \
     }
 
 RMF_SCHEMA(All);
@@ -30,16 +30,16 @@ RMF_SCHEMA(File);
 RMF_SCHEMA(Nodes);
 RMF_SCHEMA(Data);
 
-void show(const RMF_internal::Data &data,
+void show(const RMF_avro_backend::Data &data,
           std::ostream             &out) {
   std::auto_ptr< ::avro::OutputStream> os
     = avro::ostreamOutputStream(out);
   ::avro::EncoderPtr encoder
-    = avro::jsonEncoder(RMF::internal::get_Data_schema());
+      = avro::jsonEncoder(get_Data_schema());
   encoder->init(*os);
-  ::avro::codec_traits<RMF_internal::Data>::encode(*encoder, data);
+  ::avro::codec_traits<RMF_avro_backend::Data>::encode(*encoder, data);
   os->flush();
 }
 
-}   // namespace internal
+}   // namespace avro_backend
 } /* namespace RMF */
