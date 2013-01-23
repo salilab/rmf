@@ -11,6 +11,7 @@
 
 #include <RMF/config.h>
 #include "hdf5_handle.h"
+#include "hdf5_types.h"
 #include <RMF/infrastructure_macros.h>
 #include <hdf5.h>
 
