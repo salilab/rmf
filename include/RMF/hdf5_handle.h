@@ -2,7 +2,7 @@
  *  \file RMF/hdf5_handle.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2012 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
@@ -12,6 +12,7 @@
 #include <RMF/config.h>
 #include "NodeID.h"
 #include "infrastructure_macros.h"
+#include "exceptions.h"
 #include "internal/intrusive_ptr_object.h"
 #include <hdf5.h>
 #include <algorithm>

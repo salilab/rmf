@@ -2,7 +2,7 @@
  *  \file RMF/paths.cpp
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2012 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
@@ -16,7 +16,7 @@
 #include <stdexcept>
 
 namespace RMF {
-namespace internal {
+namespace avro_backend {
 
 std::string MultipleAvroFileBase::get_category_dynamic_file_path(Category cat) const {
   boost::filesystem::path base = get_file_path();
@@ -57,5 +57,5 @@ MultipleAvroFileBase::MultipleAvroFileBase(std::string path):
   null_frame_data_.type = "static";
 }
 
-}   // namespace internal
+}   // namespace avro_backend
 } /* namespace RMF */

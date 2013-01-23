@@ -2,7 +2,7 @@
  *  \file RMF/NodeConstHandle.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2012 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
@@ -17,13 +17,13 @@
 #include "constants.h"
 #include <boost/intrusive_ptr.hpp>
 
-#define RMF_NODE_CATCH(extra_info)                                \
-  catch (Exception &e) {                                          \
-    RMF_RETHROW(File(get_file().get_name())                       \
-                << Node(get_id())                                 \
-                << Frame(get_file().get_current_frame().get_id()) \
-                << Operation(BOOST_CURRENT_FUNCTION)              \
-                extra_info, e);                                   \
+#define RMF_NODE_CATCH(extra_info)                                      \
+  catch (Exception &e) {                                                \
+    RMF_RETHROW(File(get_file().get_name())                             \
+                << Node(get_id().get_index())                           \
+                << Frame(get_file().get_current_frame().get_id().get_index()) \
+                << Operation(BOOST_CURRENT_FUNCTION)                    \
+                extra_info, e);                                         \
   }
 
 #define RMF_NODE_CATCH_KEY(k, extra_info)                                     \

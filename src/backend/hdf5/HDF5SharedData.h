@@ -2,7 +2,7 @@
  *  \file RMF/internal/SharedData.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2012 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
@@ -31,7 +31,7 @@
 namespace RMF {
 
 
-namespace internal {
+namespace hdf5_backend {
 
 #define RMF_HDF5_SHARED_DATA_TYPE(lcname, Ucname, PassValue, ReturnValue,  \
                                   PassValues, ReturnValues)                \
@@ -99,7 +99,7 @@ namespace internal {
 
 
 
-class HDF5SharedData: public SharedData {
+class HDF5SharedData: public internal::SharedData {
   // indexed first by per frame, then by
   // TypeInfo::get_index() then by ID
   // then by key.get_index()
@@ -117,9 +117,9 @@ class HDF5SharedData: public SharedData {
     std::string name;
   };
 
-  typedef map<Category, CategoryData> CategoryDataMap;
+  typedef internal::map<Category, CategoryData> CategoryDataMap;
   CategoryDataMap category_data_map_;
-  typedef map<std::string, Category> NameCategoryMap;
+  typedef internal::map<std::string, Category> NameCategoryMap;
   NameCategoryMap name_category_map_;
 
   struct KeyData {
@@ -129,10 +129,10 @@ class HDF5SharedData: public SharedData {
     int type_index;
   };
 
-  typedef map<unsigned int, KeyData> KeyDataMap;
+  typedef internal::map<unsigned int, KeyData> KeyDataMap;
   KeyDataMap key_data_map_;
-  typedef  map<std::string, unsigned int> NameKeyInnerMap;
-  typedef map<Category, NameKeyInnerMap > NameKeyMap;
+  typedef internal::map<std::string, unsigned int> NameKeyInnerMap;
+  typedef internal::map<Category, NameKeyInnerMap > NameKeyMap;
   NameKeyMap name_key_map_;
 
 
@@ -262,7 +262,7 @@ public:
     }
   };
   mutable Ints max_cache_;
-  mutable set<std::string> known_data_sets_;
+  mutable internal::set<std::string> known_data_sets_;
   boost::array<KeyNameDataSetCache, 4> key_name_data_sets_;
   RMF_FOREACH_TYPE(RMF_HDF5_SHARED_DATA_TYPE);
 
@@ -666,7 +666,7 @@ public:
       for (unsigned int i = 0; i < sz; ++i) {
         index[0] = i;
         RMF_USAGE_CHECK(nameds.get_value(index) != name,
-                        get_error_message("Attribute name ", name,
+                        internal::get_error_message("Attribute name ", name,
                                           " already taken for that type."));
       }
     }
@@ -849,7 +849,7 @@ public:
 
 };
 
-}   // namespace internal
+}   // namespace hdf5_backend
 } /* namespace RMF */
 
 

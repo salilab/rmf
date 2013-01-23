@@ -2,7 +2,7 @@
  *  \file RMF/internal/SharedData.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2012 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
@@ -19,7 +19,7 @@
 #include <boost/shared_ptr.hpp>
 
 namespace RMF {
-namespace internal {
+namespace avro_backend {
 
 class MultipleAvroFileWriter: public MultipleAvroFileBase {
   bool file_dirty_;
@@ -28,17 +28,17 @@ class MultipleAvroFileWriter: public MultipleAvroFileBase {
   vector<bool> static_categories_dirty_;
 
   struct CategoryData {
-    boost::shared_ptr<avro::DataFileWriter<RMF_internal::Data > > writer;
-    RMF_internal::Data data;
+    boost::shared_ptr<avro::DataFileWriter<RMF_avro_backend::Data > > writer;
+    RMF_avro_backend::Data data;
     bool dirty;
   };
 
   vector<CategoryData> categories_;
 
-  RMF_internal::Data null_frame_data_;
-  RMF_internal::Data null_static_frame_data_;
+  RMF_avro_backend::Data null_frame_data_;
+  RMF_avro_backend::Data null_static_frame_data_;
 protected:
-  const RMF_internal::Data &get_frame_data(Category cat,
+  const RMF_avro_backend::Data &get_frame_data(Category cat,
                                            int      frame) const {
     if (frame == ALL_FRAMES) {
       if (static_categories_.size() > cat.get_id()) {
@@ -55,11 +55,11 @@ protected:
     }
   }
 
-  RMF_internal::Data &access_frame_data(Category cat,
+  RMF_avro_backend::Data &access_frame_data(Category cat,
                                         int      frame) {
     if (frame == ALL_FRAMES) {
       if (static_categories_.size() <= cat.get_id()) {
-        RMF_internal::Data data;
+        RMF_avro_backend::Data data;
         data.frame = ALL_FRAMES;
         static_categories_.resize(cat.get_id() + 1, data);
         static_categories_dirty_.resize(cat.get_id() + 1, false);
@@ -77,7 +77,7 @@ protected:
     }
   }
 
-  RMF_internal::Node &access_node(unsigned int node) {
+  RMF_avro_backend::Node &access_node(unsigned int node) {
     nodes_dirty_ = true;
     if (nodes_.size() <= node) {
       nodes_.resize(node + 1);
@@ -85,11 +85,11 @@ protected:
     return nodes_[node];
   }
 
-  RMF_internal::File &access_file() {
+  RMF_avro_backend::File &access_file() {
     file_dirty_ = true;
     return file_;
   }
-  RMF_internal::Node& access_frame(int i) {
+  RMF_avro_backend::Node& access_frame(int i) {
     frames_dirty_ = true;
     if (static_cast<int>(frames_.size()) <= i + 1) {
       // we are adding a new frame, commit old data
@@ -114,7 +114,7 @@ public:
 
 };
 
-}   // namespace internal
+}   // namespace avro_backend
 } /* namespace RMF */
 
 

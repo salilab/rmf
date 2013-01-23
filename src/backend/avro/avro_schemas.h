@@ -2,7 +2,7 @@
  *  \file compatibility/hash.h
  *  \brief Make sure that we avoid errors in specialization of boost hash
  *
- *  Copyright 2007-2012 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
 #ifndef RMF_INTERNAL_AVRO_SCHEMAS_H
@@ -21,13 +21,13 @@
 #include <RMF/log.h>
 
 namespace RMF {
-namespace internal {
+namespace avro_backend {
 RMFEXPORT avro::ValidSchema get_All_schema();
 RMFEXPORT avro::ValidSchema get_File_schema();
 RMFEXPORT avro::ValidSchema get_Nodes_schema();
 RMFEXPORT avro::ValidSchema get_Data_schema();
 
-void show(const RMF_internal::Data &data,
+void show(const RMF_avro_backend::Data &data,
           std::ostream             &out = std::cout);
 
 

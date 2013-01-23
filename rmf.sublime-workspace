@@ -11,6 +11,81 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "src/internal/SharedData.cpp",
+			"settings":
+			{
+				"buffer_size": 5473,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/exceptions.cpp",
+			"settings":
+			{
+				"buffer_size": 2831,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "include/RMF/exceptions.h",
+			"settings":
+			{
+				"buffer_size": 4993,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "AvroCpp/CMakeLists.txt",
+			"settings":
+			{
+				"buffer_size": 4939,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "AvroCpp/test/AvrogencppTests.cc",
+			"settings":
+			{
+				"buffer_size": 6491,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "",
+			"file": "pyext/CMakeLists.txt",
+			"file_size": -1,
+			"file_write_time": -1,
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "pyext/RMF.i",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "include/RMF/utility.h",
+			"settings":
+			{
+				"buffer_size": 2563,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/utility.cpp",
+			"settings":
+			{
+				"buffer_size": 9796,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "Packages/User/scons_all.sublime-build",
 	"command_palette":
@@ -40,6 +115,8 @@
 	},
 	"file_history":
 	[
+		"/Users/drussel/src/rmf/rmf/include/RMF/utility.h",
+		"/Users/drussel/src/rmf/rmf/src/hdf5_wrapper.cpp",
 		"/Users/drussel/src/imp/imp/modules/base/include/exception.h",
 		"/Users/drussel/src/imp/imp/modules/base/include/open_mp.h",
 		"/Users/drussel/src/imp/imp/modules/rmf/src/frames.cpp",
@@ -85,6 +162,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"test",
+			"*this",
+			"char",
 			"input_outpu",
 			"inputoutput",
 			"exception",
@@ -102,6 +182,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"e"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -112,8 +193,259 @@
 	"groups":
 	[
 		{
+			"selected": 5,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "src/internal/SharedData.cpp",
+					"settings":
+					{
+						"buffer_size": 5473,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1204.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/exceptions.cpp",
+					"settings":
+					{
+						"buffer_size": 2831,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 495.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "include/RMF/exceptions.h",
+					"settings":
+					{
+						"buffer_size": 4993,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 445.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "AvroCpp/CMakeLists.txt",
+					"settings":
+					{
+						"buffer_size": 4939,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4350,
+								4350
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1470.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "AvroCpp/test/AvrogencppTests.cc",
+					"settings":
+					{
+						"buffer_size": 6491,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "pyext/CMakeLists.txt",
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "pyext/RMF.i",
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "include/RMF/utility.h",
+					"settings":
+					{
+						"buffer_size": 2563,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 224.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "src/utility.cpp",
+					"settings":
+					{
+						"buffer_size": 9796,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3240.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -154,7 +486,7 @@
 	},
 	"replace":
 	{
-		"height": 0.0
+		"height": 64.0
 	},
 	"save_all_on_build": true,
 	"select_file":

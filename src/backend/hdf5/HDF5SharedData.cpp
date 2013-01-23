@@ -2,7 +2,7 @@
  *  \file RMF/Category.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2012 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
@@ -14,7 +14,7 @@
 #include <algorithm>
 
 namespace RMF {
-namespace internal {
+namespace hdf5_backend {
 
 #define RMF_CLOSE(lcname, Ucname, PassValue, ReturnValue,     \
                   PassValues, ReturnValues)                   \
@@ -66,7 +66,7 @@ void HDF5SharedData::open_things(bool create, bool read_only) {
     std::string version;
     version = file_.get_attribute<CharTraits>("version");
     RMF_USAGE_CHECK(version == "rmf 1",
-                    get_error_message("Unsupported rmf version ",
+                    internal::get_error_message("Unsupported rmf version ",
                                       "string found: \"",
                                       version, "\" expected \"",
                                       "rmf 1", "\""));
@@ -159,10 +159,20 @@ HDF5SharedData::HDF5SharedData(std::string g, bool create, bool read_only):
   }
 }
 
+  extern internal::map<std::string, HDF5SharedData *> cache;
+  extern internal::map<HDF5SharedData*, std::string> reverse_cache;
+
+
 HDF5SharedData::~HDF5SharedData() {
   add_ref();
   close_things();
   release();
+  // check for an exception in the constructor
+  if (reverse_cache.find(this) != reverse_cache.end()) {
+    std::string name = reverse_cache.find(this)->second;
+    cache.erase(name);
+    reverse_cache.erase(this);
+  }
 }
 
 void HDF5SharedData::flush() {
@@ -178,7 +188,7 @@ void HDF5SharedData::flush() {
 
 void HDF5SharedData::check_node(unsigned int node) const {
   RMF_USAGE_CHECK(node_names_.get_size()[0] > node,
-                  get_error_message("Invalid node specified: ",
+                  internal::get_error_message("Invalid node specified: ",
                                     node));
 }
 
@@ -419,5 +429,5 @@ void HDF5SharedData::set_current_frame(int frame) {
     RMF_FOREACH_TYPE(RMF_HDF5_SET_FRAME);
   }
 }
-}   // namespace internal
+}   // namespace hdf5_backend
 } /* namespace RMF */

@@ -2,7 +2,7 @@
  *  \file RMF/internal/SharedData.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2012 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
@@ -18,7 +18,7 @@
 #include <algorithm>
 
 namespace RMF {
-namespace internal {
+namespace avro_backend {
 
 template <class Base>
 AvroSharedData<Base>::AvroSharedData(std::string g, bool create,
@@ -35,9 +35,8 @@ AvroSharedData<Base>::AvroSharedData(std::string g, bool create,
 }
 
 template <class Base>
-AvroSharedData<Base>::AvroSharedData(std::string &g, bool create,
-                                     bool read_only, bool use_buffer):
-  Base(g, create, read_only, use_buffer) {
+AvroSharedData<Base>::AvroSharedData(std::string &g, bool create):
+  Base(g, create) {
   if (create) {
     P::access_node(0).name = "root";
     P::access_node(0).type = boost::lexical_cast<std::string>(ROOT);
@@ -46,6 +45,12 @@ AvroSharedData<Base>::AvroSharedData(std::string &g, bool create,
     P::access_frame(-1).type = boost::lexical_cast<std::string>(STATIC);
     P::access_file().version = 1;
   }
+}
+
+
+template <class Base>
+AvroSharedData<Base>::AvroSharedData(const std::string &g):
+  Base(g) {
 }
 
 template <class Base>
@@ -70,7 +75,7 @@ int AvroSharedData<Base>::add_child(int node, std::string name, int t) {
   add_child(node, index);
   P::add_node_key();
   RMF_INTERNAL_CHECK(get_type(index) == t,
-                     get_error_message("Types don't match for node ",
+                     internal::get_error_message("Types don't match for node ",
                                        name, ": ", NodeType(t), " (", t,
                                        ") vs ",
                                        NodeType(get_type(index)), " (",
@@ -88,7 +93,7 @@ Ints AvroSharedData<Base>::get_children(int node) const {
 }
 template <class Base>
 std::string AvroSharedData<Base>::get_frame_name(int i) const {
-  const RMF_internal::Node &frame = P::get_frame(i);
+  const RMF_avro_backend::Node &frame = P::get_frame(i);
   return frame.name;
 }
 template <class Base>
@@ -127,6 +132,6 @@ void AvroSharedData<Base>::set_producer(std::string str) {
   P::access_file().producer = str;
 }
 
-}   // namespace internal
+}   // namespace avro_backend
 } /* namespace RMF */
 #endif /* RMF_INTERNAL_AVRO_SHARED_DATA_IMPL_H */

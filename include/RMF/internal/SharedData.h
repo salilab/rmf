@@ -2,7 +2,7 @@
  *  \file RMF/internal/SharedData.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2012 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
@@ -292,7 +292,7 @@ create_shared_data_in_buffer(std::string &buffer,
                              bool        create);
 
 RMFEXPORT SharedData*
-create_read_only_shared_data_from_buffer( std::string buffer);
+create_read_only_shared_data_from_buffer(const std::string& buffer);
 
 
 // needed for correctness imposed by clang as the functions must be visible

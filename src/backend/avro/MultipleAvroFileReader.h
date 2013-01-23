@@ -2,7 +2,7 @@
  *  \file RMF/internal/SharedData.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2012 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
@@ -18,14 +18,14 @@
 #include <boost/shared_ptr.hpp>
 
 namespace RMF {
-namespace internal {
+namespace avro_backend {
 
 class MultipleAvroFileReader: public MultipleAvroFileBase {
   typedef MultipleAvroFileBase P;
   struct CategoryData {
-    boost::shared_ptr<avro::DataFileReader<RMF_internal::Data > > reader;
+    boost::shared_ptr<avro::DataFileReader<RMF_avro_backend::Data > > reader;
     // frame is always something valid
-    RMF_internal::Data data;
+    RMF_avro_backend::Data data;
   };
 
   vector<CategoryData> categories_;
@@ -35,7 +35,7 @@ class MultipleAvroFileReader: public MultipleAvroFileBase {
                            int      frame);
 
 protected:
-  const RMF_internal::Data &get_frame_data(Category cat,
+  const RMF_avro_backend::Data &get_frame_data(Category cat,
                                            int      frame) const {
     if (frame == ALL_FRAMES) {
       if (static_categories_.size() > cat.get_id()) {
@@ -58,25 +58,25 @@ protected:
     }
   }
 
-  RMF_internal::Data &access_frame_data(Category cat,
+  RMF_avro_backend::Data &access_frame_data(Category cat,
                                         int      frame) {
     RMF_THROW(Message("Can't modify read only file"),
               IOException);
   }
 
-  RMF_internal::Node &access_node(unsigned int node) {
+  RMF_avro_backend::Node &access_node(unsigned int node) {
     RMF_THROW(Message("Can't modify read only file"),
               IOException);
   }
 
 
-  RMF_internal::File &access_file() {
+  RMF_avro_backend::File &access_file() {
     RMF_THROW(Message("Can't modify read only file"),
               IOException);
   }
 
 
-  RMF_internal::Node& access_frame(int i) {
+  RMF_avro_backend::Node& access_frame(int i) {
     RMF_THROW(Message("Can't modify read only file"),
               IOException);
   }
@@ -94,7 +94,7 @@ public:
 
 };
 
-}   // namespace internal
+}   // namespace avro_backend
 } /* namespace RMF */
 
 

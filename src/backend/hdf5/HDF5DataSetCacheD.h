@@ -2,7 +2,7 @@
  *  \file RMF/internal/SharedData.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2012 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
@@ -15,13 +15,13 @@
 namespace RMF {
 
 
-namespace internal {
+namespace hdf5_backend {
 
 template <class Traits, unsigned int D>
 class HDF5DataSetCacheD {
 };
 
-}   // namespace internal
+}   // namespace hdf5_backend
 } /* namespace RMF */
 
 

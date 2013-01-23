@@ -2,7 +2,7 @@
  *  \file RMF/paths.cpp
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2012 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
@@ -13,7 +13,7 @@
 #include <stdexcept>
 
 namespace RMF {
-namespace internal {
+namespace avro_backend {
 
 void MultipleAvroFileWriter::set_current_frame(int frame) {
   if (frame == get_current_frame()) return;
@@ -54,7 +54,7 @@ void MultipleAvroFileWriter::commit() {
         std::string name = get_category_dynamic_file_path(Category(i));
         try {
           categories_[i].writer
-          .reset(new avro::DataFileWriter<RMF_internal::Data>(name.c_str(),
+          .reset(new avro::DataFileWriter<RMF_avro_backend::Data>(name.c_str(),
                                                               get_Data_schema()));
         } catch (const std::exception &e) {
           RMF_THROW(Message(e.what()) << Component(name),
@@ -67,7 +67,7 @@ void MultipleAvroFileWriter::commit() {
       categories_[i].writer->write(categories_[i].data);
       categories_[i].writer->flush();
     }
-    categories_[i].data = RMF_internal::Data();
+    categories_[i].data = RMF_avro_backend::Data();
     // go to the about to be added frame
     categories_[i].data.frame = get_frames().size() - 1;
   }
@@ -75,7 +75,7 @@ void MultipleAvroFileWriter::commit() {
     if (static_categories_dirty_[i]) {
       std::string name = get_category_static_file_path(Category(i));
       try {
-        avro::DataFileWriter<RMF_internal::Data> writer(name.c_str(),
+        avro::DataFileWriter<RMF_avro_backend::Data> writer(name.c_str(),
                                                         get_Data_schema());
         writer.write(static_categories_[i]);
         writer.flush();
@@ -92,5 +92,5 @@ void MultipleAvroFileWriter::commit() {
   RMF_COMMIT(Nodes, nodes);
   RMF_COMMIT(Nodes, frames);
 }
-}   // namespace internal
+}   // namespace avro_backend
 } /* namespace RMF */

@@ -2,7 +2,7 @@
  *  \file RMF/internal/SharedData.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2012 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
@@ -14,15 +14,14 @@
 #include <RMF/infrastructure_macros.h>
 #include <RMF/constants.h>
 #include <RMF/internal/map.h>
-#include <RMF/internal/set.h>
 #include "AvroSharedData.types.h"
 
 namespace RMF {
-namespace internal {
+namespace avro_backend {
 
-class AvroKeysAndCategories: public SharedData {
-  typedef map<Category, std::string> CategoryNameMap;
-  typedef map<std::string, Category> NameCategoryMap;
+  class AvroKeysAndCategories: public internal::SharedData {
+    typedef internal::map<Category, std::string> CategoryNameMap;
+    typedef internal::map<std::string, Category> NameCategoryMap;
   CategoryNameMap category_name_map_;
   NameCategoryMap name_category_map_;
   struct KeyData {
@@ -30,10 +29,10 @@ class AvroKeysAndCategories: public SharedData {
     Category category;
     int type_index;
   };
-  typedef map<unsigned int, KeyData> KeyDataMap;
+  typedef internal::map<unsigned int, KeyData> KeyDataMap;
   KeyDataMap key_data_map_;
-  typedef map<std::string, unsigned int> NameKeyInnerMap;
-  typedef map<Category, NameKeyInnerMap> NameKeyMap;
+  typedef internal::map<std::string, unsigned int> NameKeyInnerMap;
+  typedef internal::map<Category, NameKeyInnerMap> NameKeyMap;
   NameKeyMap name_key_map_;
 
   vector<std::string> node_keys_;
@@ -127,7 +126,7 @@ public:
 
 };
 
-}   // namespace internal
+}   // namespace avro_backend
 } /* namespace RMF */
 
 #endif /* RMF_INTERNAL_AVRO_KEYS_AND_CATEGORIES_H */

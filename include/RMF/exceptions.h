@@ -2,7 +2,7 @@
  *  \file RMF/exceptions.h
  *  \brief Various general useful macros for IMP.
  *
- *  Copyright 2007-2012 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
@@ -69,35 +69,35 @@ public:
 
 }
 
-#define RMF_THROW(m, e)                        \
-  {                                            \
-    using namespace RMF::internal::ErrorInfo;  \
-    using RMF::internal::ErrorInfo::Type;      \
-    using RMF::internal::ErrorInfo::Category;  \
-    using RMF::internal::ErrorInfo::Key;       \
-    using RMF::internal::ErrorInfo::Decorator; \
-    using boost::operator<<;                   \
-    throw e() << m;                            \
+#define RMF_THROW(m, e)                          \
+  {                                              \
+    using namespace ::RMF::internal::ErrorInfo;  \
+    using ::RMF::internal::ErrorInfo::Type;      \
+    using ::RMF::internal::ErrorInfo::Category;  \
+    using ::RMF::internal::ErrorInfo::Key;       \
+    using ::RMF::internal::ErrorInfo::Decorator; \
+    using boost::operator<<;                     \
+    throw e() << m;                              \
   }
 
-#define RMF_RETHROW(m, e)                      \
-  {                                            \
-    using namespace RMF::internal::ErrorInfo;  \
-    using RMF::internal::ErrorInfo::Type;      \
-    using RMF::internal::ErrorInfo::Category;  \
-    using RMF::internal::ErrorInfo::Key;       \
-    using RMF::internal::ErrorInfo::Decorator; \
-    using boost::operator<<;                   \
-    e << m;                                    \
-    throw;                                     \
+#define RMF_RETHROW(m, e)                        \
+  {                                              \
+    using namespace ::RMF::internal::ErrorInfo;  \
+    using ::RMF::internal::ErrorInfo::Type;      \
+    using ::RMF::internal::ErrorInfo::Category;  \
+    using ::RMF::internal::ErrorInfo::Key;       \
+    using ::RMF::internal::ErrorInfo::Decorator; \
+    using boost::operator<<;                     \
+    e << m;                                      \
+    throw;                                       \
   }
 
-#define RMF_USAGE_CHECK(check, message)            \
-  do {                                             \
-    if (!(check)) {                                \
-      RMF_THROW(Message(message) << Type("Usage"), \
-                RMF::UsageException);              \
-    }                                              \
+#define RMF_USAGE_CHECK(check, message)              \
+  do {                                               \
+    if (!(check)) {                                  \
+      RMF_THROW(Message(message) << Type("Usage"),   \
+                ::RMF::UsageException);              \
+    }                                                \
   } while (false)
 
 #define RMF_INDEX_CHECK(value, end) \
@@ -119,7 +119,7 @@ public:
       RMF_THROW(Message(message) << Type("Internal")                    \
                 << SourceFile(__FILE__) << SourceLine(__LINE__)         \
                 << Function(BOOST_CURRENT_FUNCTION),                    \
-                RMF::InternalException);                                \
+                ::RMF::InternalException);                              \
     }                                                                   \
   } while (false)
 
@@ -138,7 +138,7 @@ public:
             << Function(BOOST_CURRENT_FUNCTION)             \
             << SourceFile(__FILE__) << SourceLine(__LINE__) \
             << Type("NotImplemented"),                      \
-            RMF::InternalException)
+            ::RMF::InternalException)
 
 
 #endif  /* RMF_EXCEPTIONS_H */
