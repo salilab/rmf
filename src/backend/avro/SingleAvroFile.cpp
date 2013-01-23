@@ -23,8 +23,10 @@ SingleAvroFile::SingleAvroFile(std::string path, bool create,
   if (!create) {
     reload();
   } else {
+    initialize_frames();
     initialize_categories();
     initialize_node_keys();
+    all_.file.version=1;
   }
   null_static_frame_data_.frame = ALL_FRAMES;
 }
@@ -36,8 +38,10 @@ SingleAvroFile::SingleAvroFile(std::string &path, bool create):
   if (!create) {
     reload();
   } else {
+    initialize_frames();
     initialize_categories();
     initialize_node_keys();
+    all_.file.version=1;
   }
   null_static_frame_data_.frame = ALL_FRAMES;
 }
@@ -53,6 +57,12 @@ SingleAvroFile::SingleAvroFile(const std::string &path):
   // so we don't write to it
   buffer_ = NULL;
 }
+
+  void SingleAvroFile::initialize_frames() {
+    all_.frames.push_back(RMF_avro_backend::Node());
+    access_frame(ALL_FRAMES).name = "static";
+    access_frame(ALL_FRAMES).type = "static";
+  }
 
 void SingleAvroFile::initialize_categories() {
   for (std::map<std::string, std::vector<RMF_avro_backend::Data > >::const_iterator
@@ -112,6 +122,34 @@ void SingleAvroFile::reload() {
   initialize_node_keys();
   dirty_ = false;
 }
+
+
+int SingleAvroFile::add_child_frame(int node, std::string name, int t) {
+  unsigned int index = get_number_of_frames();
+  access_frame(index).name = name;
+  access_frame(index).type = boost::lexical_cast<std::string>(FrameType(t));
+  access_frame(node).children.push_back(index);
+  RMF_INTERNAL_CHECK(get_number_of_frames() == index + 1,
+                     "No frame added");
+  return index;
+}
+
+void SingleAvroFile::add_child_frame(int node, int child_node) {
+  access_frame(node).children.push_back(child_node);
+}
+
+Ints SingleAvroFile::get_children_frame(int node) const {
+  return Ints(get_frame(node).children.begin(),
+              get_frame(node).children.end());
+}
+
+  std::string SingleAvroFile::get_frame_name(int i) const {
+    return get_frame(i).name;
+  }
+  unsigned int SingleAvroFile::get_number_of_frames() const {
+    return get_frames().size() - 1;
+  }
+
 
 }   // namespace avro_backend
 } /* namespace RMF */

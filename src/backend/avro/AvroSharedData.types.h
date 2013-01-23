@@ -62,7 +62,7 @@ public:                                                                    \
   Ucname##Traits::Types get_all_values(unsigned int node,                  \
                                        Key<Ucname##Traits> k) {            \
     Ucname##Traits::Types ret;                                             \
-    for (unsigned int i = 0; i < get_number_of_frames(); ++i) {            \
+    for (unsigned int i = 0; i < P::get_number_of_frames(); ++i) {      \
       P::set_current_frame(i);                                             \
       ret.push_back(get_value(node, k));                                   \
     }                                                                      \

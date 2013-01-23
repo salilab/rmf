@@ -261,7 +261,7 @@ IMP_RMF_DECORATOR(RMF, Typed);
 %include "RMF/utility.h"
 %include "RMF/SetCurrentFrame.h"
 %include "RMF/CoordinateTransformer.h"
-
+%include "RMF/log.h"
 
 %pythoncode %{
 _tmpdir=None

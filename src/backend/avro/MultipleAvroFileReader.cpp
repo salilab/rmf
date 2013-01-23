@@ -141,7 +141,25 @@ void MultipleAvroFileReader::initialize_categories() {
 void MultipleAvroFileReader::reload() {
   RMF_RELOAD(File,  file);
   RMF_RELOAD(Nodes, nodes);
-  RMF_RELOAD(Nodes, frames);
+  if (file_.version  >= 2) {
+    // In old RMF we used a monolithic frame file that we won't bother parsing
+    try {
+      avro::DataFileReader<RMF_avro_backend::Frame> re(get_frames_file_path().c_str(),
+                                                       get_Frame_schema());
+      do {
+        RMF_avro_backend::Frame frame;
+        if (! re.read(frame)) break;
+        frames_[frame.index]=frame;
+        number_of_frames_= frame.index+1;
+        for (unsigned int i=0; i< frame.parents.size(); ++i) {
+          frame_children_[frame.parents[i]].push_back(frame.index);
+        }
+      } while (true);
+    } catch (const std::exception &e) {
+      RMF_THROW(Message(e.what())
+                << Component(get_frames_file_path()), IOException);
+    }
+  }
 
   initialize_categories();
   initialize_node_keys();
@@ -198,6 +216,35 @@ void MultipleAvroFileReader::add_category_data(Category cat) {
     static_categories_[cat.get_id()].frame = ALL_FRAMES;
   }
 }
+
+  int MultipleAvroFileReader::add_child_frame(int node, std::string name, int t) {
+    RMF_THROW(Message("Trying to modify read-only file"),
+              UsageException);
+  }
+  void MultipleAvroFileReader::add_child_frame(int node, int child_node) {
+    RMF_THROW(Message("Trying to modify read-only file"),
+              UsageException);
+  }
+  Ints MultipleAvroFileReader::get_children_frame(int node) const {
+    if (frame_children_.find(node) != frame_children_.end()) {
+      return frame_children_.find(node)->second;
+    } else return Ints();
+  }
+
+ std::string MultipleAvroFileReader::get_frame_name(int i) const {
+    if (i==ALL_FRAMES) {
+      return "static";
+    } else {
+      if (frames_.find(i) != frames_.end()) {
+        return frames_.find(i)->second.name;
+      } else {
+        return "";
+      }
+    }
+  }
+  unsigned int MultipleAvroFileReader::get_number_of_frames() const {
+    return number_of_frames_;
+  }
 
 }   // namespace avro_backend
 } /* namespace RMF */

@@ -105,7 +105,7 @@ protected:
     }
     return all_.frames[i + 1];
   }
-
+  void initialize_frames();
   void initialize_categories();
   void initialize_node_keys();
 public:
@@ -125,7 +125,11 @@ public:
   ~SingleAvroFile() {
     flush();
   }
-
+  int add_child_frame(int node, std::string name, int t);
+  void add_child_frame(int node, int child_node);
+  Ints get_children_frame(int node) const;
+  std::string get_frame_name(int i) const;
+  unsigned int get_number_of_frames() const;
 };
 
 }   // namespace avro_backend

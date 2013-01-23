@@ -13,6 +13,7 @@
 #include <backend/avro/All.json.h>
 #include <backend/avro/Data.json.h>
 #include <backend/avro/Nodes.json.h>
+#include <backend/avro/Frame.json.h>
 #include <avro/Compiler.hh>
 #include <stdexcept>
 #include <avro/Encoder.hh>
@@ -29,6 +30,7 @@ RMF_SCHEMA(All);
 RMF_SCHEMA(File);
 RMF_SCHEMA(Nodes);
 RMF_SCHEMA(Data);
+RMF_SCHEMA(Frame);
 
 void show(const RMF_avro_backend::Data &data,
           std::ostream             &out) {

@@ -13,6 +13,7 @@
 #include <avro/Compiler.hh>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <RMF/log.h>
 #include <stdexcept>
 
 namespace RMF {
@@ -56,6 +57,12 @@ MultipleAvroFileBase::MultipleAvroFileBase(std::string path):
   null_frame_data_.name = "static";
   null_frame_data_.type = "static";
 }
+
+void MultipleAvroFileBase::set_current_frame(int frame) {
+  null_data_.frame = frame;
+  AvroKeysAndCategories::set_current_frame(frame);
+}
+
 
 }   // namespace avro_backend
 } /* namespace RMF */

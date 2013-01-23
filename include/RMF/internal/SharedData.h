@@ -120,9 +120,7 @@ public:
   int get_current_frame() const {
     return cur_frame_;
   }
-  virtual void set_current_frame(int frame) {
-    cur_frame_ = frame;
-  }
+  virtual void set_current_frame(int frame);
 
   RMF_FOREACH_TYPE(RMF_SHARED_TYPE);
   void audit_key_name(std::string name) const;

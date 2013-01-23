@@ -10,6 +10,7 @@
 #include "HDF5SharedData.h"
 #include <boost/algorithm/string/predicate.hpp>
 #include <RMF/internal/map.h>
+#include <RMF/log.h>
 
 namespace RMF {
 namespace hdf5_backend {
@@ -41,6 +42,7 @@ namespace hdf5_backend {
     if (cache.find(path) != cache.end()) {
       return cache.find(path)->second;
     }
+    RMF_INFO(get_hdf5_logger(), "Using HDF5 backend");
     HDF5SharedData*ret= new HDF5SharedData(path, create, read_only);
     cache[path]=ret;
     reverse_cache[ret]=path;

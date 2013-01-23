@@ -11,14 +11,14 @@
 
 #include <RMF/config.h>
 #include <string>
-#if RMF_USE_LOG4CXX
+#if RMF_HAS_LOG4CXX
 #  include <log4cxx/logger.h>
 #  include <log4cxx/ndc.h>
 #endif
 
 namespace RMF {
 
-#if RMF_USE_LOG4CXX
+#if RMF_HAS_LOG4CXX
 RMFEXPORT log4cxx::LoggerPtr get_logger();
 RMFEXPORT log4cxx::LoggerPtr get_avro_logger();
 RMFEXPORT log4cxx::LoggerPtr get_hdf5_logger();
@@ -35,7 +35,7 @@ RMFEXPORT void set_log_level(std::string level);
 
 } /* namespace RMF */
 
-#if RMF_USE_LOG4CXX
+#if RMF_HAS_LOG4CXX
 
 #  define RMF_TRACE(log, expr) LOG4CXX_TRACE(log, expr)
 #  define RMF_DEBUG(log, expr) LOG4CXX_DEBUG(log, expr)

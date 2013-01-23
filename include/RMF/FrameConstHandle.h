@@ -122,7 +122,7 @@ public:
   FrameConstHandle(): frame_(-2) {
   }
 
-  //! Return the number of child frames
+  //! Return the name of the frame
   std::string get_name() const {
     return shared_->get_frame_name(frame_);
   }

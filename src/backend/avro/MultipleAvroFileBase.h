@@ -34,8 +34,6 @@ protected:
   File file_;
   typedef RMF::vector<RMF_avro_backend::Node> Nodes;
   Nodes nodes_;
-  typedef RMF::vector<RMF_avro_backend::Node > Frames;
-  Frames frames_;
   typedef vector<RMF_avro_backend::Data> StaticData;
   StaticData static_categories_;
 
@@ -58,17 +56,6 @@ protected:
     return file_;
   }
 
-  const RMF_avro_backend::Node& get_frame(int i) const {
-    if (i + 1 >= static_cast<int>(frames_.size())) {
-      return null_frame_data_;
-    }
-    return frames_[i + 1];
-  }
-
-  const std::vector<RMF_avro_backend::Node>& get_frames() const {
-    return frames_;
-  }
-
   const RMF_avro_backend::Data& get_static_data(Category cat) const {
     return static_categories_[cat.get_id()];
   }
@@ -87,10 +74,7 @@ protected:
   std::string get_static_file_path() const;
   std::string get_frames_file_path() const;
 
-  void set_current_frame(int frame) {
-    null_data_.frame = frame;
-    AvroKeysAndCategories::set_current_frame(frame);
-  }
+  void set_current_frame(int frame);
 
   MultipleAvroFileBase(std::string path);
 };

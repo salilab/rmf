@@ -12,6 +12,7 @@
 #include "MultipleAvroFileWriter.h"
 #include "MultipleAvroFileReader.h"
 #include <boost/algorithm/string/predicate.hpp>
+#include <RMF/log.h>
 
 
 namespace RMF {
@@ -26,14 +27,17 @@ namespace avro_backend {
                                       bool read_only) {
     if (boost::algorithm::ends_with(path, ".rmf2")) {
       if (create) {
+        RMF_INFO(get_avro_logger(), "Using RMF2 writer backend");
         return new AvroWriterShareData(path, create, read_only);
       } else if (read_only) {
+        RMF_INFO(get_avro_logger(), "Using RMF2 reader backend");
         return new AvroReaderShareData(path, create, read_only);
       } else {
         RMF_THROW(Message("rmf2 files can only be created for writing or opened read-only"),
                   IOException);
       }
     } else if (boost::algorithm::ends_with(path, ".rmfa")) {
+       RMF_INFO(get_avro_logger(), "Using RMFA backend");
       return new SingleAvroShareData(path, create, read_only);
     } else {
       return NULL;
@@ -41,10 +45,13 @@ namespace avro_backend {
 
   }
   internal::SharedData* create_shared_data_buffer(std::string &buffer,
-                                             bool create) {
+                                                  bool create) {
+    RMF_INFO(get_avro_logger(), (create?"Created rmf in buffer":
+                                 "Opened rmf from buffer"));
     return new SingleAvroShareData(buffer, create);
   }
   internal::SharedData* create_shared_data_buffer(const std::string &buffer) {
+    RMF_INFO(get_avro_logger(), "Opened rmf from buffer, read-only");
     return new SingleAvroShareData(buffer);
   }
 
