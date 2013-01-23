@@ -52,7 +52,7 @@ MultipleAvroFileWriter::~MultipleAvroFileWriter() {
   }
 
 void MultipleAvroFileWriter::commit() {
-  RMF_INFO(get_avro_logger(), "Writing frame " << frame_.index);
+  RMF_TRACE(get_avro_logger(), "Writing frame " << frame_.index);
   for (unsigned int i = 0; i < categories_.size(); ++i) {
     if (categories_[i].dirty) {
       if (!categories_[i].writer) {
@@ -107,7 +107,7 @@ void MultipleAvroFileWriter::commit() {
 
   int MultipleAvroFileWriter::add_child_frame(int node, std::string name, int t) {
     unsigned int index = get_number_of_frames();
-    RMF_INFO(get_avro_logger(), "Adding frame " << index << " under " << node);
+    RMF_TRACE(get_avro_logger(), "Adding frame " << index << " under " << node);
     set_current_frame(index);
     frame_.name=name;
     frame_.type=boost::lexical_cast<std::string>(FrameType(t));

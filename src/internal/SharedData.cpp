@@ -77,7 +77,7 @@ namespace RMF {
     }
 
     void SharedData::set_current_frame(int frame) {
-    RMF_INFO(get_logger(), "Setting current frame to " << frame);
+    RMF_TRACE(get_logger(), "Setting current frame to " << frame);
     cur_frame_ = frame;
   }
 
