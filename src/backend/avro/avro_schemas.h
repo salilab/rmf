@@ -25,6 +25,7 @@ RMFEXPORT avro::ValidSchema get_All_schema();
 RMFEXPORT avro::ValidSchema get_File_schema();
 RMFEXPORT avro::ValidSchema get_Nodes_schema();
 RMFEXPORT avro::ValidSchema get_Data_schema();
+RMFEXPORT avro::ValidSchema get_Frame_schema();
 
 void show(const RMF_avro_backend::Data &data,
           std::ostream             &out = std::cout);

@@ -182,24 +182,18 @@ public:
   Ints get_children(int node) const;
   void save_frames_hint(int) {
   }
-  unsigned int get_number_of_frames() const;
   std::string get_description() const;
   void set_description(std::string str);
   std::string get_producer() const;
   void set_producer(std::string str);
-  std::string get_frame_name(int i) const;
 
   void set_current_frame(int frame) {
-    RMF_USAGE_CHECK(frame < static_cast<int>(get_number_of_frames()),
+    RMF_USAGE_CHECK(frame < static_cast<int>(P::get_number_of_frames()),
                     "Setting to invalid frame");
     P::set_current_frame(frame);
     RMF_INTERNAL_CHECK(P::get_current_frame() == frame,
                        "Didn't set frame");
   }
-
-  int add_child_frame(int node, std::string name, int t);
-  void add_child_frame(int node, int child_node);
-  Ints get_children_frame(int node) const;
 };
 
 }   // namespace avro_backend

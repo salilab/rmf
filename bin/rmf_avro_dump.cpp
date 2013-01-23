@@ -8,6 +8,7 @@
 #include <avro/DataFile.hh>
 #include <backend/avro/avro_schemas.h>
 #include <backend/avro/AllJSON.h>
+#include <backend/avro/FrameJSON.h>
 
 std::string
   description("Dump the data from an avro archive with frame data");
@@ -99,6 +100,10 @@ int main(int argc, char **argv) {
   } else if (try_read<RMF_avro_backend::All>("all", input,
                                              RMF::avro_backend::get_All_schema(),
                                              count)) {
+    return 0;
+  } else if (try_read<RMF_avro_backend::Frame>("frame", input,
+                                               RMF::avro_backend::get_Frame_schema(),
+                                               count)) {
     return 0;
   }
   return 1;

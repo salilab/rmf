@@ -3,6 +3,7 @@
 file(READ "src/backend/avro/Nodes.json" RMF_JSON_NODES)
 file(READ "src/backend/avro/File.json" RMF_JSON_FILE)
 file(READ "src/backend/avro/Data.json" RMF_JSON_DATA)
+file(READ "src/backend/avro/Frame.json" RMF_JSON_FRAME)
 
 configure_file (
   "${PROJECT_SOURCE_DIR}/src/backend/avro/All.json.in"
@@ -10,6 +11,18 @@ configure_file (
   )
 
 set(json_headers)
+
+add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/backend/avro/FrameJSON.h"
+     COMMAND "mkdir" "-p" "${PROJECT_BINARY_DIR}/src/backend/avro"
+     COMMAND "${avrogencpp_PROGRAM}" "--input" "${PROJECT_SOURCE_DIR}/src/backend/avro/Frame.json"
+     "--output" "${PROJECT_BINARY_DIR}/src/backend/avro/FrameJSON.h" "--namespace" "RMF_avro_backend"
+     DEPENDS "${PROJECT_SOURCE_DIR}/src/backend/avro/Frame.json" ${avrogen_DEPENDENCY} COMMENT "Creating json header")
+
+add_custom_target("FrameJSON.h" ALL DEPENDS "${PROJECT_SOURCE_DIR}/src/backend/avro/Frame.json" )
+
+list(APPEND json_headers "${PROJECT_BINARY_DIR}/src/backend/avro/FrameJSON.h")
+
+
 add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/backend/avro/AllJSON.h"
      COMMAND "mkdir" "-p" "${PROJECT_BINARY_DIR}/src/backend/avro"
      COMMAND "${avrogencpp_PROGRAM}" "--input" "${PROJECT_BINARY_DIR}/src/backend/avro/All.json"
@@ -48,6 +61,16 @@ add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/backend/avro/Nodes.json.h" 
 
 add_custom_target("Nodes.data" ALL DEPENDS "${PROJECT_BINARY_DIR}/src/backend/avro/Nodes.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/Nodes.json.cpp" "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"  )
 
+add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/backend/avro/Frame.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/Frame.json.cpp"
+   COMMAND "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+              "${PROJECT_BINARY_DIR}/src/backend/avro/"
+              "${PROJECT_SOURCE_DIR}/src/backend/avro/Frame.json" "avro_backend"
+   DEPENDS "${PROJECT_SOURCE_DIR}/src/backend/avro/Frame.json" "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+   COMMENT "Frame wrapper for Frame.json"  )
+
+add_custom_target("Frame.data" ALL DEPENDS "${PROJECT_BINARY_DIR}/src/backend/avro/Frame.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/Frame.json.cpp" "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"  )
+
+
 add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/backend/avro/All.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/All.json.cpp"
    COMMAND "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
               "${PROJECT_BINARY_DIR}/src/backend/avro/"
@@ -61,6 +84,7 @@ add_custom_target("All.data" ALL DEPENDS "${PROJECT_BINARY_DIR}/src/backend/avro
 
 file(GLOB avro_sources "${PROJECT_SOURCE_DIR}/src/backend/avro/*.cpp" "${PROJECT_BINARY_DIR}/src/backend/avro/All.json.cpp"
 "${PROJECT_BINARY_DIR}/src/backend/avro/File.json.cpp"
+"${PROJECT_BINARY_DIR}/src/backend/avro/Frame.json.cpp"
 "${PROJECT_BINARY_DIR}/src/backend/avro/Nodes.json.cpp"
 "${PROJECT_BINARY_DIR}/src/backend/avro/Data.json.cpp")
-list(APPEND sources ${avro_sources} "${PROJECT_BINARY_DIR}/src/backend/avro/AllJSON.h" )
+list(APPEND sources ${avro_sources} ${json_headers} )

@@ -16,6 +16,7 @@
 #include <RMF/exceptions.h>
 #include <avro/DataFile.hh>
 #include <backend/avro/AllJSON.h>
+#include <backend/avro/FrameJSON.h>
 #include <boost/shared_ptr.hpp>
 
 namespace RMF {
@@ -37,6 +38,8 @@ class MultipleAvroFileWriter: public MultipleAvroFileBase {
 
   RMF_avro_backend::Data null_frame_data_;
   RMF_avro_backend::Data null_static_frame_data_;
+  boost::shared_ptr<avro::DataFileWriter<RMF_avro_backend::Frame> > frame_writer_;
+  RMF_avro_backend::Frame frame_;
 protected:
   const RMF_avro_backend::Data &get_frame_data(Category cat,
                                            int      frame) const {
@@ -88,16 +91,7 @@ protected:
   RMF_avro_backend::File &access_file() {
     file_dirty_ = true;
     return file_;
-  }
-  RMF_avro_backend::Node& access_frame(int i) {
-    frames_dirty_ = true;
-    if (static_cast<int>(frames_.size()) <= i + 1) {
-      // we are adding a new frame, commit old data
-      commit();
-      frames_.resize(i + 2);
-    }
-    return frames_[i + 1];
-  }
+ }
   void commit();
 public:
   void flush() {
@@ -112,6 +106,13 @@ public:
 
   void set_current_frame(int frame);
 
+
+  int add_child_frame(int node, std::string name, int t);
+  void add_child_frame(int node, int child_node);
+  Ints get_children_frame(int node) const ;
+
+  std::string get_frame_name(int i) const;
+  unsigned int get_number_of_frames() const;
 };
 
 }   // namespace avro_backend

@@ -34,8 +34,6 @@ protected:
   File file_;
   typedef RMF::vector<RMF_avro_backend::Node> Nodes;
   Nodes nodes_;
-  typedef RMF::vector<RMF_avro_backend::Node > Frames;
-  Frames frames_;
   typedef vector<RMF_avro_backend::Data> StaticData;
   StaticData static_categories_;
 
@@ -56,17 +54,6 @@ protected:
 
   const RMF_avro_backend::File &get_file() const {
     return file_;
-  }
-
-  const RMF_avro_backend::Node& get_frame(int i) const {
-    if (i + 1 >= static_cast<int>(frames_.size())) {
-      return null_frame_data_;
-    }
-    return frames_[i + 1];
-  }
-
-  const std::vector<RMF_avro_backend::Node>& get_frames() const {
-    return frames_;
   }
 
   const RMF_avro_backend::Data& get_static_data(Category cat) const {
