@@ -10,7 +10,6 @@
 #define RMF_HDF_5DATA_SET_ACCESS_PROPERTIES_D_H
 
 #include <RMF/config.h>
-#include "types.h"
 #include "HDF5DataSetIndexD.h"
 
 

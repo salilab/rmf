@@ -10,7 +10,7 @@
 #define RMF_FRAME_HANDLE_H
 
 #include <RMF/config.h>
-#include "HDF5Group.h"
+#include "HDF5/HDF5Group.h"
 #include "internal/SharedData.h"
 #include "types.h"
 #include "FrameID.h"

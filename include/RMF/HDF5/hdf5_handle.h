@@ -10,10 +10,9 @@
 #define RMF_HDF_5_HANDLE_H
 
 #include <RMF/config.h>
-#include "NodeID.h"
-#include "infrastructure_macros.h"
-#include "exceptions.h"
-#include "internal/intrusive_ptr_object.h"
+#include <RMF/infrastructure_macros.h>
+#include <RMF/exceptions.h>
+#include <RMF/internal/intrusive_ptr_object.h>
 #include <hdf5.h>
 #include <algorithm>
 #include <vector>

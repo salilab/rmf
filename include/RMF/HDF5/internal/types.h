@@ -10,7 +10,7 @@
 #define RMF_INTERNAL_TYPES_H
 
 #include <RMF/config.h>
-#include "../infrastructure_macros.h"
+#include <RMF/infrastructure_macros.h>
 #include <hdf5.h>
 
 

@@ -11,8 +11,8 @@
 
 #include <RMF/config.h>
 #include <RMF/internal/SharedData.h>
-#include <RMF/HDF5Group.h>
-#include <RMF/HDF5File.h>
+#include <RMF/HDF5/HDF5Group.h>
+#include <RMF/HDF5/HDF5File.h>
 #include <RMF/infrastructure_macros.h>
 #include <RMF/constants.h>
 #include <RMF/internal/map.h>

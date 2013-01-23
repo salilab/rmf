@@ -8,7 +8,7 @@
 #include <boost/program_options.hpp>
 #include <RMF/profile.h>
 #include <RMF/utility.h>
-#include <RMF/HDF5ConstFile.h>
+#include <RMF/HDF5/HDF5ConstFile.h>
 #include <RMF/log.h>
 
 extern std::string description;

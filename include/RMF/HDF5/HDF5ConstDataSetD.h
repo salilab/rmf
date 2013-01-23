@@ -15,7 +15,7 @@
 #include "HDF5Object.h"
 #include "HDF5DataSetIndexD.h"
 #include "HDF5DataSetCreationPropertiesD.h"
-#include "infrastructure_macros.h"
+#include <RMF/infrastructure_macros.h>
 #include <algorithm>
 #include <boost/shared_ptr.hpp>
 
@@ -266,7 +266,7 @@ public:
      \ingroup hdf5
      @{
  */
-RMF_FOREACH_TYPE(RMF_DECLARE_CONST_DATA_SET);
+RMF_FOREACH_HDF5_TYPE(RMF_DECLARE_CONST_DATA_SET);
 /** @} */
 #endif
 

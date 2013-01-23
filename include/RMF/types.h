@@ -11,11 +11,9 @@
 
 #include <RMF/config.h>
 #include "NodeID.h"
-#include "hdf5_handle.h"
 #include "infrastructure_macros.h"
 #include "internal/errors.h"
-#include "internal/types.h"
-#include "hdf5_types.h"
+#include <RMF/HDF5/hdf5_types.h>
 #include <algorithm>
 #include <stdint.h>
 #include <limits>

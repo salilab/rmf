@@ -12,7 +12,7 @@
 #include <RMF/config.h>
 #include "Category.h"
 #include "types.h"
-#include "HDF5DataSetD.h"
+#include "HDF5/HDF5DataSetD.h"
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
 namespace RMF {
 namespace internal {

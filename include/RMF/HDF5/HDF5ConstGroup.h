@@ -93,7 +93,7 @@ public:
       below.
       @{
    */
-  RMF_FOREACH_TYPE(RMF_HDF5_DATA_SET_CONST_METHODS);
+  RMF_FOREACH_HDF5_TYPE(RMF_HDF5_DATA_SET_CONST_METHODS);
   /** @} */
 
   unsigned int get_number_of_children() const;

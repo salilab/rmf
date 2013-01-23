@@ -10,9 +10,9 @@
 #define RMF_HDF_5OBJECT_H
 
 #include <RMF/config.h>
-#include "types.h"
+#include "hdf5_types.h"
 #include "hdf5_handle.h"
-#include "infrastructure_macros.h"
+#include <RMF/infrastructure_macros.h>
 #include <hdf5.h>
 #include <boost/intrusive_ptr.hpp>
 

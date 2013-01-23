@@ -120,7 +120,7 @@ public:
       below.
       @{
    */
-  RMF_FOREACH_TYPE(RMF_HDF5_DATA_SET_METHODS);
+  RMF_FOREACH_HDF5_TYPE(RMF_HDF5_DATA_SET_METHODS);
   /** @} */
 
   HDF5Group get_child_group(unsigned int i) const;

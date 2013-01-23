@@ -10,8 +10,7 @@
 #define RMF_HDF_5DATA_SET_INDEX_D_H
 
 #include <RMF/config.h>
-#include "types.h"
-#include "infrastructure_macros.h"
+#include <RMF/infrastructure_macros.h>
 #include <boost/functional/hash.hpp>
 #include <stdexcept>
 

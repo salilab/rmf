@@ -10,7 +10,7 @@
 #define RMF_INTERNAL_HDF5_DATA_SET_CACHE_2D_H
 
 #include <RMF/config.h>
-#include <RMF/HDF5DataSetD.h>
+#include <RMF/HDF5/HDF5DataSetD.h>
 #include "HDF5DataSetCacheD.h"
 #include <boost/multi_array.hpp>
 namespace RMF {

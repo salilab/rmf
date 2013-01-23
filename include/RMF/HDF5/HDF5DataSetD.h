@@ -14,7 +14,7 @@
 #include "HDF5Object.h"
 #include "HDF5MutableAttributes.h"
 #include "HDF5ConstDataSetD.h"
-#include "infrastructure_macros.h"
+#include <RMF/infrastructure_macros.h>
 #include <algorithm>
 
 namespace RMF {
@@ -162,7 +162,7 @@ public:
      \ingroup hdf5
      @{
  */
-RMF_FOREACH_TYPE(RMF_DECLARE_DATA_SET);
+RMF_FOREACH_HDF5_TYPE(RMF_DECLARE_DATA_SET);
 /** @} */
 #endif
 

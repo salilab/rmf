@@ -10,10 +10,9 @@
 #define RMF_HDF5_TYPES_H
 
 #include <RMF/config.h>
-#include "NodeID.h"
 #include "hdf5_handle.h"
-#include "infrastructure_macros.h"
-#include "internal/errors.h"
+#include <RMF/infrastructure_macros.h>
+#include <RMF/internal/errors.h>
 #include "internal/types.h"
 #include <hdf5.h>
 #include <algorithm>
@@ -46,8 +45,6 @@ typedef std::string String;
 typedef std::vector<String> Strings;
 /** The type used to store lists of strings values.*/
 typedef std::vector<Strings> StringsList;
-/** The type used to store lists of NodeID values.*/
-typedef std::vector<NodeIDs> NodeIDsList;
 /** The type used to store lists of lists of integers values.*/
 typedef std::vector<Ints> IntsList;
 /** The type used to store char values.*/
@@ -106,42 +103,6 @@ RMF_TRAITS(String, Strings, string, 3, internal::get_string_type(),
              RMF_UNUSED(a); RMF_UNUSED(sz);
              RMF_NOT_IMPLEMENTED;
            }, false);
-
-RMF_TRAITS(NodeID, NodeIDs, node_id, 4, IndexTraits::get_hdf5_disk_type(),
-           IndexTraits::get_hdf5_memory_type(),
-           IndexTraits::get_hdf5_fill_type(), int32_t, NodeID(),
-           NodeID(i) == NodeID(),
-           IndexTraits::write_value_dataset(d, is, s, v.get_index())
-           , {
-             int i = IndexTraits::read_value_dataset(d, is, sp);
-             if (i >= 0) ret = NodeID(i);
-           }
-           , {
-             Ints vi(v.size());
-             for (unsigned int i = 0; i < v.size(); ++i) {
-               vi[i] = v[i].get_index();
-             }
-             IntTraits::write_values_dataset(d, is, s, vi);
-           }
-           , {
-             Ints reti = IndexTraits::read_values_dataset(d, is, sp, sz);
-             for (unsigned int i = 0; i < ret.size(); ++i) {
-               ret[i] = NodeID(reti[i]);
-             }
-           }
-           , {
-             Ints is(v.size());
-             for (unsigned int i = 0; i < v.size(); ++i) {
-               is[i] = v[i].get_index();
-             }
-             IndexTraits::write_values_attribute(a, is);
-           }
-           , {
-             Ints is = IndexTraits::read_values_attribute(a, sz);
-             for (unsigned int i = 0; i < ret.size(); ++i) {
-               ret[i] = NodeID(is[i]);
-             }
-           }, true);
 
 RMF_TRAITS_ONE(Char, Chars, char, 6, H5T_STD_I8LE,
                H5T_NATIVE_CHAR, H5T_NATIVE_CHAR, char, '\0',

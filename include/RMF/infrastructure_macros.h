@@ -164,7 +164,7 @@
 /** Call a function and throw an RMF::IOException if the return values is bad */
 #define RMF_HDF5_CALL(v)                                     \
   if ((v) < 0) {                                             \
-    RMF_THROW(Message("HDF5 call failed") << Expression(#v), \
+    RMF_THROW(Message("HDF5/HDF5 call failed") << Expression(#v), \
               RMF::IOException);                             \
   }
 
@@ -219,6 +219,37 @@
             IndexesList);
 #else
 #  define RMF_FOREACH_TYPE(macroname) \
+  macroname(type, Type, Type, Types,  \
+            const Types &, Types);
+#endif
+
+#ifndef RMF_DOXYGEN
+/** Expand to applying the macro to each type supported by
+    the rmf library. The macro should take six argments
+    - the lower case name of the type
+    - the upper case name
+    - the C++ type for accepting the value
+    - the C++ type for returning the value
+    - the C++ type for accepting more than one value
+    - the C++ type for returning more than one value
+ */
+#  define RMF_FOREACH_HDF5_TYPE(macroname)                              \
+  RMF_FOREACH_SIMPLE_TYPE(macroname);                                              \
+  macroname(string,   String,  String,          String,                            \
+            const Strings &, Strings);                                             \
+  macroname(strings,  Strings, Strings,         Strings,                           \
+            const StringsList &, StringsList);                                     \
+  macroname(floats,   Floats,  const Floats &,  Floats,                            \
+            const FloatsList &,                                                    \
+            FloatsList);                                                           \
+  macroname(ints,     Ints,    const Ints &,    Ints,                              \
+            const IntsList &,                                                      \
+            IntsList);                                                             \
+  macroname(indexes,  Indexes, const Indexes &, Indexes,                           \
+            const IndexesList &,                                                   \
+            IndexesList);
+#else
+#  define RMF_FOREACH_HDF5_TYPE(macroname) \
   macroname(type, Type, Type, Types,  \
             const Types &, Types);
 #endif
