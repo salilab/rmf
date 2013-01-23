@@ -74,10 +74,7 @@ protected:
   std::string get_static_file_path() const;
   std::string get_frames_file_path() const;
 
-  void set_current_frame(int frame) {
-    null_data_.frame = frame;
-    AvroKeysAndCategories::set_current_frame(frame);
-  }
+  void set_current_frame(int frame);
 
   MultipleAvroFileBase(std::string path);
 };

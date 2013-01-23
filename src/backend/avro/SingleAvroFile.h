@@ -105,7 +105,7 @@ protected:
     }
     return all_.frames[i + 1];
   }
-
+  void initialize_frames();
   void initialize_categories();
   void initialize_node_keys();
 public:

@@ -10,6 +10,7 @@
 #include "MultipleAvroFileWriter.h"
 #include <RMF/internal/paths.h>
 #include <RMF/decorators.h>
+#include <RMF/log.h>
 #include <boost/lexical_cast.hpp>
 
 namespace RMF {
@@ -18,9 +19,10 @@ namespace avro_backend {
 void MultipleAvroFileWriter::set_current_frame(int frame) {
   if (frame == get_current_frame()) return;
   RMF_USAGE_CHECK(frame == ALL_FRAMES
-                  || frame == frame_.index,
+                  || frame == frame_.index+1,
                   "Bad frame set");
   MultipleAvroFileBase::set_current_frame(frame);
+  if (frame != ALL_FRAMES) commit();
 }
 
 MultipleAvroFileWriter::MultipleAvroFileWriter(std::string path,
@@ -50,7 +52,7 @@ MultipleAvroFileWriter::~MultipleAvroFileWriter() {
   }
 
 void MultipleAvroFileWriter::commit() {
-  RMF_INFO(get_avro_logger(), "Writing frame " << get_current_frame());
+  RMF_INFO(get_avro_logger(), "Writing frame " << frame_.index);
   for (unsigned int i = 0; i < categories_.size(); ++i) {
     if (categories_[i].dirty) {
       if (!categories_[i].writer) {
@@ -100,12 +102,12 @@ void MultipleAvroFileWriter::commit() {
     }
     frame_writer_->write(frame_);
     frames_dirty_=false;
-    frame_= RMF_avro_backend::Frame();
   }
 }
 
   int MultipleAvroFileWriter::add_child_frame(int node, std::string name, int t) {
     unsigned int index = get_number_of_frames();
+    RMF_INFO(get_avro_logger(), "Adding frame " << index << " under " << node);
     set_current_frame(index);
     frame_.name=name;
     frame_.type=boost::lexical_cast<std::string>(FrameType(t));

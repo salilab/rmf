@@ -7,7 +7,7 @@
  */
 #include <RMF/log.h>
 #include <RMF/exceptions.h>
-#if RMF_USE_LOG4CXX
+#if RMF_HAS_LOG4CXX
 #include <log4cxx/basicconfigurator.h>
 #include <log4cxx/consoleappender.h>
 #include <log4cxx/patternlayout.h>
@@ -16,7 +16,7 @@
 #endif
 
 namespace RMF {
-#if RMF_USE_LOG4CXX
+#if RMF_HAS_LOG4CXX
 namespace {
 struct Configurator {
   Configurator(log4cxx::ConsoleAppenderPtr ptr) {

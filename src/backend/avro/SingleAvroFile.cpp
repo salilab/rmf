@@ -23,6 +23,7 @@ SingleAvroFile::SingleAvroFile(std::string path, bool create,
   if (!create) {
     reload();
   } else {
+    initialize_frames();
     initialize_categories();
     initialize_node_keys();
     all_.file.version=1;
@@ -37,6 +38,7 @@ SingleAvroFile::SingleAvroFile(std::string &path, bool create):
   if (!create) {
     reload();
   } else {
+    initialize_frames();
     initialize_categories();
     initialize_node_keys();
     all_.file.version=1;
@@ -55,6 +57,12 @@ SingleAvroFile::SingleAvroFile(const std::string &path):
   // so we don't write to it
   buffer_ = NULL;
 }
+
+  void SingleAvroFile::initialize_frames() {
+    all_.frames.push_back(RMF_avro_backend::Node());
+    access_frame(ALL_FRAMES).name = "static";
+    access_frame(ALL_FRAMES).type = "static";
+  }
 
 void SingleAvroFile::initialize_categories() {
   for (std::map<std::string, std::vector<RMF_avro_backend::Data > >::const_iterator

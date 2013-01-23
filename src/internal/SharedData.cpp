@@ -23,7 +23,7 @@ namespace RMF {
     SharedData::SharedData(std::string path): valid_(11111),
                                               cur_frame_(ALL_FRAMES),
                                               path_(path) {
-  RMF_INFO(get_logger(), "Opening file " << path_);
+      RMF_INFO(get_logger(), "Opening file " << path_);
     };
     SharedData::~SharedData() {
       RMF_INTERNAL_CHECK(valid_ == 11111,
@@ -76,6 +76,10 @@ namespace RMF {
 #endif
     }
 
+    void SharedData::set_current_frame(int frame) {
+    RMF_INFO(get_logger(), "Setting current frame to " << frame);
+    cur_frame_ = frame;
+  }
 
 
     namespace {

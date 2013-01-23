@@ -186,14 +186,6 @@ public:
   void set_description(std::string str);
   std::string get_producer() const;
   void set_producer(std::string str);
-
-  void set_current_frame(int frame) {
-    RMF_USAGE_CHECK(frame < static_cast<int>(P::get_number_of_frames()),
-                    "Setting to invalid frame");
-    P::set_current_frame(frame);
-    RMF_INTERNAL_CHECK(P::get_current_frame() == frame,
-                       "Didn't set frame");
-  }
 };
 
 }   // namespace avro_backend
