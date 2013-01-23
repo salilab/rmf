@@ -14,6 +14,8 @@
 #include <vector>
 #include <iostream>
 
+RMF_VECTOR_DECL(NodeID);
+
 namespace RMF {
 
 /** Each node in the hierarchy (RMF::NodeHandle)
@@ -41,11 +43,6 @@ public:
   RMF_COMPARISONS(NodeID);
   RMF_HASHABLE(NodeID, return i_);
 };
-#ifndef RMF_DOXYGEN
-typedef vector<NodeID> NodeIDs;
-#endif
-
-
 
 } /* namespace RMF */
 

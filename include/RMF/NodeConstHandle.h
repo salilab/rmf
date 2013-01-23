@@ -56,13 +56,11 @@
       to the current frame, as opposed to static data.*/ \
   bool get_has_frame_value(UCName##Key k) const;
 
+RMF_VECTOR_DECL(NodeConstHandle);
+
 namespace RMF {
 
 class FileConstHandle;
-class NodeConstHandle;
-// for children
-typedef vector<NodeConstHandle> NodeConstHandles;
-
 //! The types of the nodes.
 enum NodeType {
   //! The root node

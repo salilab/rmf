@@ -12,6 +12,8 @@
 #include <RMF/FileHandle.h>
 #include <RMF/decorators.h>
 
+RMF_VECTOR_DEF(FrameConstHandle);
+
 namespace RMF {
 
 FrameConstHandle::FrameConstHandle(int frame, internal::SharedData *shared):

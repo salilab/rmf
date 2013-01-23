@@ -12,6 +12,8 @@
 #include <RMF/FileHandle.h>
 #include <RMF/decorators.h>
 
+RMF_VECTOR_DEF(NodeConstHandle);
+
 namespace RMF {
 
 NodeConstHandle::NodeConstHandle(int node, internal::SharedData *shared):

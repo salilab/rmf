@@ -36,11 +36,9 @@
                                   k, v);                    \
   }
 
-namespace RMF {
+RMF_VECTOR_DECL(NodeHandle);
 
-class NodeHandle;
-// for children
-typedef vector<NodeHandle> NodeHandles;
+namespace RMF {
 
 class FileHandle;
 

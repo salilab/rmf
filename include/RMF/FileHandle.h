@@ -16,6 +16,7 @@
 #include "NodeHandle.h"
 #include "FrameHandle.h"
 
+RMF_VECTOR_DECL(FileHandle);
 
 namespace RMF {
 class HDF5Group;
@@ -109,8 +110,6 @@ public:
    */
   void flush();
 };
-
-typedef vector<FileHandle> FileHandles;
 
 /**
    Create an RMF from a file system path.

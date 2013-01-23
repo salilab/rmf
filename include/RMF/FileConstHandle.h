@@ -51,6 +51,7 @@
   }
 
 
+RMF_VECTOR_DECL(FileConstHandle);
 
 namespace RMF {
 
@@ -303,8 +304,6 @@ public:
    */
   void reload();
 };
-
-typedef vector<FileConstHandle> FileConstHandles;
 
 
 /**

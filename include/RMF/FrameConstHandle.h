@@ -46,12 +46,12 @@
     if (k == UCName##Key()) return false;                             \
     return !UCName##Traits::get_is_null_value(get_value_always(k));   \
   }
+
+RMF_VECTOR_DECL(FrameConstHandle);
+
 namespace RMF {
 
 class FileConstHandle;
-class FrameConstHandle;
-// for children
-typedef vector<FrameConstHandle> FrameConstHandles;
 
 //! The types of the frames.
 enum FrameType {

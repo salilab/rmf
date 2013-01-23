@@ -27,11 +27,10 @@
     get_shared_data()->set_value_frame(get_frame_id(), \
                                        k, v);          \
   }
-namespace RMF {
 
-class FrameHandle;
-// for children
-typedef vector<FrameHandle> FrameHandles;
+RMF_VECTOR_DECL(FrameHandle);
+
+namespace RMF {
 
 class FileHandle;
 

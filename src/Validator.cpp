@@ -8,6 +8,7 @@
 
 #include <RMF/Validator.h>
 #include <algorithm>
+
 namespace RMF {
 
 Creators& get_validators() {
