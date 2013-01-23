@@ -15,6 +15,7 @@
 #include <boost/version.hpp>
 #include <backend/hdf5/create.h>
 #include <backend/avro/create.h>
+#include <RMF/log.h>
 
 namespace RMF {
   namespace internal {
@@ -22,12 +23,13 @@ namespace RMF {
     SharedData::SharedData(std::string path): valid_(11111),
                                               cur_frame_(ALL_FRAMES),
                                               path_(path) {
+  RMF_INFO(get_logger(), "Opening file " << path_);
     };
     SharedData::~SharedData() {
       RMF_INTERNAL_CHECK(valid_ == 11111,
                          "Already destroyed");
       valid_ = -66666;
-
+      RMF_INFO(get_logger(), "Closing file " << path_);
     }
 
     void SharedData::audit_key_name(std::string name) const {
