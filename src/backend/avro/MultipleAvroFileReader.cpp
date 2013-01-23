@@ -159,6 +159,8 @@ void MultipleAvroFileReader::reload() {
       RMF_THROW(Message(e.what())
                 << Component(get_frames_file_path()), IOException);
     }
+  } else {
+    RMF_WARN(get_avro_logger(), "Ignoring frames data in old rmf2 file.");
   }
 
   initialize_categories();
