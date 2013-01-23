@@ -348,11 +348,7 @@ using RMF::operator<<;
       static const UCName ret = null_value;                                    \
       return ret;                                                              \
     }                                                                          \
-    template <class V>                                                         \
-    static bool get_is_null_value(const V &i) {                                \
-      return null_test;                                                        \
-    }                                                                          \
-    static std::string get_name() {return #lcname; }                           \
+    static std::string get_name() {return #lcname; }                    \
   }
 
 /** Declare a type traits*/

@@ -39,9 +39,6 @@ struct BaseTraits {
   static const T& get_fill_value() {
     return get_null_value();
   }
-  static bool get_is_null_value(const T& f) {
-    return f == get_null_value();
-  }
   static const T& get_null_value() {
     static const T ret;
     return ret;
