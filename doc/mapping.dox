@@ -5,14 +5,16 @@ This page outlines how one would go about storing various types of data in RMF f
 For nodes types, the following node shapes are used
 \dot
  digraph key {
-   root [label="RMF::ROOT" shape=rectangle];
+   root [label="RMF::ROOT" shape=circle];
    rep [label="RMF::REPRESENTATION" shape=oval];
-   bond [label="RMF::BOND" shape=triangle];
-   bond [label="RMF::ORGANIZATIONAL" shape=polygon];
+   bond [label="RMF::BOND" shape=invhouse];
+   org [label="RMF::ORGANIZATIONAL" shape=folder];
    feat [label="RMF::FEATURE" shape=hexagon];
-   alias [label="RMF::ALIAS" shape=invhouse];
+   tree [label="elided subtree" shape=triangle];
     }
 \enddot
+And a dot means an RMF::ALIAS node. The key concept to keep in mind with RMF::ALIAS nodes is that, unlike everything else, they don't introduce a new entity, simply point to one that exists elsewhere.
+See RMF::ROOT, RMF::REPRESENTATION, RMF::BOND, RMF::ORGANIZATIONAL, RMF::FEATURE for more information.
 
 \section pdb PDB files
 
@@ -25,25 +27,25 @@ All bonds are stored as RMF::BOND nodes with two children for the endpoints of t
 
 \dot
  digraph pdb {
-      root [label="root" shape=rectangle];
-      chain [label="Chain A" shape=polygon];
-      r0 [label="Residue 0 (RMF::Residue)" shape=polygon];
-      r1 [label="Residue 1 (RMF::Residue)" shape=polygon];
-      br [label="bond" shape=triangle];
-      br0 [label="bonded" shape=invhouse];
-      br1 [label="bonded" shape=invhouse];
-      rdot [label="Residue ... (RMF::Residue)" shape=polygon];
+      root [label="root" shape=circle];
+      chain [label="Chain A" shape=folder];
+      r0 [label="Residue 0 (RMF::Residue)" shape=folder];
+      r1 [label="Residue 1 (RMF::Residue)" shape=folder];
+      br [label="bond" shape=invhouse];
+      br0 [label="bonded" shape=point];
+      br1 [label="bonded" shape=point];
+      rdot [label="Residue ... (RMF::Residue)" shape=folder];
       a0 [label="N (RMF::Atom, RMF::Particle)" shape=oval];
       a1 [label="CA (RMF::Atom, RMF::Particle)" shape=oval];
       a2 [label="C (RMF::Atom, RMF::Particle)" shape=oval];
       ap0 [label="N (RMF::Atom, RMF::Particle)" shape=oval];
       apdot [label="... (RMF::Atom, RMF::Particle)" shape=oval];
-      b0 [label="bond" shape=triangle];
-      b00 [label="bonded" shape=invhouse];
-      b01 [label="bonded" shape=invhouse];
-      b1 [label="bond" shape=triangle];
-      b10 [label="bonded" shape=invhouse];
-      b11 [label="bonded" shape=invhouse];
+      b0 [label="bond" shape=invhouse];
+      b00 [label="bonded" shape=point];
+      b01 [label="bonded" shape=point];
+      b1 [label="bond" shape=invhouse];
+      b10 [label="bonded" shape=point];
+      b11 [label="bonded" shape=point];
       root -> chain;
       chain->r0;
       chain->br;
@@ -53,7 +55,7 @@ All bonds are stored as RMF::BOND nodes with two children for the endpoints of t
       r0->a1;
       r0->a2;
       br->br0;
-      br0->a0
+      br0->a2
       br->br1;
       br1->ap0;
       r0->b0;
@@ -86,14 +88,16 @@ Multiple structures can be stored as separate frames.
 
 \dot
  digraph rigid {
-      root [label="root" shape=rectangle];
-      copy_0 [label="Copy 0 (RMF::ReferenceFrame)" shape=polygon];
-      copy_1 [label="Copy 1 (RMF::ReferenceFrame)" shape=polygon];
-      copy_2 [label="Copy 2 (RMF::ReferenceFrame)" shape=polygon];
+      root [label="root" shape=circle];
+      copy_0 [label="Copy 0 (RMF::ReferenceFrame)" shape=folder];
+      copy_1 [label="Copy 1 (RMF::ReferenceFrame)" shape=folder];
+      copy_2 [label="Copy 2 (RMF::ReferenceFrame)" shape=folder];
       pdb [label="External PDB (RMF::External)" shape=oval];
+      em [label="External MRC (RMF::External)" shape=oval];
       root -> copy_0;
       root -> copy_1;
       root -> copy_2;
+      root->em;
       copy_0 -> pdb;
       copy_1 -> pdb;
       copy_2 -> pdb;
@@ -106,19 +110,19 @@ If the file contains data that has multiple organization schemes, for example, g
 
 \dot
  digraph symmetry {
-      root [label="root" shape=rectangle];
-      unit_cell [label="structure" shape=polygon];
-      a [label="Protein A" shape=oval];
-      b [label="Protein B" shape=oval];
-      c [label="Protein C" shape=oval];
-      d [label="Protein D" shape=oval];
-      bt [label="By fold" shape=polygon];
-      bth [label="Beta barrel" shape=polygon];
-      btx [label="Alpha helical" shape=polygon];
-      bta [label="Protein A" shape=invhouse];
-      btb [label="Protein B" shape=invhouse];
-      btc [label="Protein C" shape=invhouse];
-      btd [label="Protein D" shape=invhouse];
+      root [label="root" shape=circle];
+      unit_cell [label="structure" shape=folder];
+      a [label="Protein A" shape=triangle];
+      b [label="Protein B" shape=triangle];
+      c [label="Protein C" shape=triangle];
+      d [label="Protein D" shape=triangle];
+      bt [label="By fold" shape=folder];
+      bth [label="Beta barrel" shape=folder];
+      btx [label="Alpha helical" shape=folder];
+      bta [label="Protein A" shape=point];
+      btb [label="Protein B" shape=point];
+      btc [label="Protein C" shape=point];
+      btd [label="Protein D" shape=point];
       root->unit_cell;
       unit_cell->a;
       unit_cell->b;
@@ -144,12 +148,12 @@ When there is symmetry, or other repeated unit, define the unit cell in one sub 
 
 \dot
  digraph symmetry {
-      root [label="root" shape=rectangle];
-      unit_cell [label="unit cell" shape=polygon];
-      structure [label="structural nodes" shape=oval];
-      copy_0 [label="Copy 0 (RMF::ReferenceFrame)" shape=polygon];
-      copy_1 [label="Copy 1 (RMF::ReferenceFrame)" shape=polygon];
-      copy_2 [label="Copy 2 (RMF::ReferenceFrame)" shape=polygon];
+      root [label="root" shape=circle];
+      unit_cell [label="unit cell" shape=folder];
+      structure [label="structural nodes" shape=triangle];
+      copy_0 [label="Copy 0 (RMF::ReferenceFrame)" shape=folder];
+      copy_1 [label="Copy 1 (RMF::ReferenceFrame)" shape=folder];
+      copy_2 [label="Copy 2 (RMF::ReferenceFrame)" shape=folder];
       root -> unit_cell;
       unit_cell -> structure
       root -> copy_0;
