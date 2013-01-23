@@ -31,6 +31,13 @@
 #define RMF_HAS_DEBUG_VECTOR @RMF_HAS_DEBUG_VECTOR@
 #define RMF_HAS_LOG4CXX @RMF_HAS_LOG4CXX@
 
+#define RMF_HAS_OVERRIDE @RMF_HAS_OVERRIDE@
+#if RMF_HAS_OVERRIDE
+#define RMF_OVERRIDE override
+#else
+#define RMF_OVERRIDE
+#endif
+
 #ifdef _MSC_VER
 #pragma warning(disable: 4003)
 #endif
