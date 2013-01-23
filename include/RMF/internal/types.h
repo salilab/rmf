@@ -15,6 +15,7 @@
 
 
 namespace RMF {
+namespace HDF5 {
 namespace internal {
 inline hid_t create_string_type() {
   hid_t tid1 = H5Tcopy (H5T_C_S1);
@@ -48,6 +49,7 @@ struct BaseTraits {
 };
 
 }   // namespace internal
+} /* namespace HDF5 */
 } /* namespace RMF */
 
 

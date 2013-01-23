@@ -24,9 +24,9 @@ FileConstHandle FrameConstHandle::get_file() const {
   return FileConstHandle(shared_.get());
 }
 
-vector<FrameConstHandle> FrameConstHandle::get_children() const {
+FrameConstHandles FrameConstHandle::get_children() const {
   Ints children = shared_->get_children_frame(frame_);
-  vector<FrameConstHandle> ret(children.size());
+  FrameConstHandles ret(children.size());
   for (unsigned int i = 0; i < ret.size(); ++i) {
     ret[i] = FrameConstHandle(children[i], shared_.get());
   }

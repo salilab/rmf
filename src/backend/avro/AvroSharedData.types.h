@@ -89,7 +89,7 @@ public:                                                                    \
                                                             data.get<1>(), \
                                                             k));           \
   }                                                                        \
-  vector<Key<Ucname##Traits> >                                             \
+  std::vector<Key<Ucname##Traits> >                                     \
   get_##lcname##_keys(Category cat) {                                      \
     internal::set<Key<Ucname##Traits> > ret;                            \
     std::cout << "Getting keys with frame " << P::get_current_frame()      \
@@ -101,7 +101,7 @@ public:                                                                    \
     const RMF_avro_backend::Data &staticdata = P::get_frame_data(cat,          \
                                                              ALL_FRAMES);  \
     extract_keys(cat, staticdata.lcname##_data.index, ret);                \
-    return vector<Key<Ucname##Traits> >(ret.begin(), ret.end());           \
+    return std::vector<Key<Ucname##Traits> >(ret.begin(), ret.end());   \
   }                                                                        \
   Key<Ucname##Traits>                                                      \
   get_##lcname##_key(Category category,                                    \

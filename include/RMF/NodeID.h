@@ -23,9 +23,6 @@ namespace RMF {
     that %RMF file. These are stored using NodeID classes.*/
 class NodeID {
   int i_;
-  friend class NodeHandle;
-  friend struct NodeIDTraits;
-  friend class FileHandle;
   int compare(const NodeID&o) const {
     if (i_ < o.i_) return -1;
     else if (i_ > o.i_) return 1;

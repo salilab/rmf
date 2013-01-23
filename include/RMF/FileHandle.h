@@ -19,7 +19,6 @@
 RMF_VECTOR_DECL(FileHandle);
 
 namespace RMF {
-class HDF5Group;
 
 //! A handle for an RMF file
 /** Use this handle to perform operations relevant to the

@@ -14,6 +14,8 @@
 
 
 namespace RMF {
+namespace HDF5 {
+
 /** Data sets can be compressed using one of several algorithms.
  */
 enum Compression {GZIP_COMPRESSION, SLIB_COMPRESSION, NO_COMPRESSION};
@@ -61,6 +63,7 @@ struct HDF5DataSetCreationPropertiesD:
   }
 };
 
+} /* namespace HDF5 */
 } /* namespace RMF */
 
 #endif /* RMF_HDF_5DATA_SET_CREATION_PROPERTIES_D_H */

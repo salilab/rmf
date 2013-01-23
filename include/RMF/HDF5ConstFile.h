@@ -13,6 +13,8 @@
 #include "HDF5ConstGroup.h"
 
 namespace RMF {
+namespace HDF5 {
+
 /** Store a handle to non-writeable HDF5 file. See
    \external{http://www.hdfgroup.org/HDF5/doc/UG/UG_frame08TheFile.html,
    the HDF5 manual} for more information.
@@ -39,9 +41,9 @@ public:
 RMFEXPORT HDF5ConstFile open_hdf5_file_read_only(std::string name);
 
 /** */
-typedef vector<HDF5Group> HDF5ConstGroups;
+typedef std::vector<HDF5Group> HDF5ConstGroups;
 /** */
-typedef vector<HDF5File> HDF5ConstFiles;
+typedef std::vector<HDF5File> HDF5ConstFiles;
 
 /** For debugging, one can get the number of open hdf5 handles for either
     one file, or the whole system.*/
@@ -52,6 +54,13 @@ RMFEXPORT int get_number_of_open_hdf5_handles(HDF5ConstFile f
 RMFEXPORT Strings get_open_hdf5_handle_names(HDF5ConstFile f
                                                = HDF5ConstFile());
 
+/** Turn on and off printing of hdf5 error messages. They can help in
+      diagnostics, but, for the moment, can only be output to standard
+      error and so are off by default.
+ */
+RMFEXPORT void set_show_hdf5_errors(bool tf) ;
+
+} /* namespace HDF5 */
 } /* namespace RMF */
 
 #endif /* RMF_HDF_5CONST_FILE_H */

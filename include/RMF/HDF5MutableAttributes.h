@@ -16,6 +16,7 @@
 #include <hdf5.h>
 
 namespace RMF {
+namespace HDF5 {
 /** Wrap an HDF5 Object. See
     \external{http://www.hdfobject.org/HDF5/doc/UG/UG_frame09Objects.html,
     the HDF5 manual} for more information.
@@ -109,6 +110,7 @@ public:
   /** @} */
 };
 
+} /* namespace HDF5 */
 } /* namespace RMF */
 
 #endif /* RMF_HDF_5MUTABLE_ATTRIBUTES_H */

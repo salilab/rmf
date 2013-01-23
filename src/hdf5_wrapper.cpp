@@ -13,8 +13,13 @@
 #include <boost/scoped_array.hpp>
 
 namespace RMF {
-namespace internal {
+namespace HDF5 {
+namespace {
 bool show_hdf5_errors = false;
+}
+
+void set_show_hdf5_errors(bool tf) {
+  show_hdf5_errors=tf;
 }
 
 HDF5Object::HDF5Object(HDF5SharedHandle *h): h_(h) {
@@ -51,7 +56,7 @@ HDF5ConstGroup::HDF5ConstGroup(HDF5ConstGroup parent, std::string name):
 
 HDF5Group HDF5Group::add_child_group(std::string name) {
   RMF_USAGE_CHECK(!H5Lexists(get_handle(), name.c_str(), H5P_DEFAULT),
-                  internal::get_error_message("Child named ",
+                  RMF::internal::get_error_message("Child named ",
                                               name, " already exists"));
   RMF_HDF5_HANDLE(, H5Gcreate2(get_handle(), name.c_str(),
                                H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT),
@@ -120,7 +125,7 @@ hid_t get_parameters() {
   return plist;
 }
 herr_t error_function(hid_t, void *) {
-  if (internal::show_hdf5_errors) {
+  if (show_hdf5_errors) {
     H5Eprint2(H5E_DEFAULT, stderr);
   }
   // eat hdf5 error as I check the error code explicitly
@@ -242,4 +247,5 @@ Strings get_open_hdf5_handle_names(HDF5ConstFile f) {
   }
   return ret;
 }
+} /* namespace HDF5 */
 } /* namespace RMF */

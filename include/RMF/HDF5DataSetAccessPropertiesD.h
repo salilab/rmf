@@ -15,6 +15,7 @@
 
 
 namespace RMF {
+namespace HDF5 {
 
 /** A class to manage properties controlling access to HDF5 data sets.*/
 template <class TypeTraits, unsigned int D>
@@ -44,7 +45,7 @@ public:
   }
 };
 
-
+} /* namespace HDF5 */
 } /* namespace RMF */
 
 #endif /* RMF_HDF_5DATA_SET_ACCESS_PROPERTIES_D_H */

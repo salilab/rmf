@@ -17,6 +17,7 @@
 #include <boost/intrusive_ptr.hpp>
 
 namespace RMF {
+namespace HDF5 {
 
 class HDF5File;
 
@@ -73,7 +74,7 @@ public:
 
 #ifndef RMF_DOXYGEN
 /** \ingroup hdf5 */
-typedef vector<HDF5Object> HDF5Objects;
+typedef std::vector<HDF5Object> HDF5Objects;
 #  ifndef SWIG
 // work around issues with the bool_type being outputable
 inline std::ostream &operator<<(std::ostream     & out,
@@ -83,7 +84,7 @@ inline std::ostream &operator<<(std::ostream     & out,
 }
 #  endif
 #endif
-
+} /* namespace HDF5 */
 } /* namespace RMF */
 
 #endif /* RMF_HDF_5OBJECT_H */

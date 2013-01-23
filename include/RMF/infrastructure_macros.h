@@ -232,16 +232,6 @@
   RMF::Registrar<Type> Type##Reg(#Type);
 
 namespace RMF {
-#if !defined(SWIG)
-#  if RMF_USE_DEBUG_VECTOR
-using  __gnu_debug::vector;
-#  else
-using std::vector;
-#  endif
-#else
-template <class T>
-class vector {};
-#endif
 
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
 struct Showable;
@@ -272,7 +262,7 @@ struct Showable {
   Showable( std::string t): t_(t) {
   }
   template <class T>
-  Showable( const vector<T> &t ) {
+  Showable( const std::vector<T> &t ) {
     std::ostringstream out;
     out << "[";
     for (unsigned int i = 0; i < t.size(); ++i) {
@@ -292,8 +282,14 @@ operator<<(std::ostream &out, const Showable &t) {
   return out;
 }
 
+
+namespace HDF5 {
+using RMF::Showable;
+using RMF::operator<<;
+}
 #endif
 }
+
 
 #ifndef SWIG
 #  define RMF_TRAITS_ONE(UCName, UCNames, lcname, index, hdf5_disk,            \
@@ -367,7 +363,7 @@ operator<<(std::ostream &out, const Showable &t) {
                  hdf5_fill, avro_type, null_value, null_test,                 \
                  wv_ds, rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a, batch);          \
   struct UCNames##Traits:                                                     \
-    public internal::BaseTraits<UCNames, vector<UCNames>,                     \
+      public internal::BaseTraits<UCNames, std::vector<UCNames>,        \
                                 std::vector<avro_type>,                       \
                                 index + 7, false> {                           \
     static hid_t get_hdf5_disk_type() {                                       \
@@ -409,26 +405,26 @@ operator<<(std::ostream &out, const Showable &t) {
     }                                                                         \
     static void write_values_dataset(hid_t d, hid_t is,                       \
                                      hid_t s,                                 \
-                                     const vector<UCNames>&v) {               \
+                                     const std::vector<UCNames>&v) {    \
       RMF_UNUSED(d); RMF_UNUSED(is); RMF_UNUSED(s);                           \
       RMF_UNUSED(v);                                                          \
       RMF_NOT_IMPLEMENTED;                                                    \
     };                                                                        \
-    static vector<UCNames> read_values_dataset(hid_t d, hid_t is,             \
+    static std::vector<UCNames> read_values_dataset(hid_t d, hid_t is,  \
                                                hid_t sp, unsigned int sz) {   \
       RMF_UNUSED(d);                                                          \
       RMF_UNUSED(is); RMF_UNUSED(sp); RMF_UNUSED(sz);                         \
       RMF_NOT_IMPLEMENTED;                                                    \
-      return vector<UCNames>();                                               \
+      return std::vector<UCNames>();                                    \
     }                                                                         \
-    static vector<UCNames> read_values_attribute(hid_t a,                     \
+    static std::vector<UCNames> read_values_attribute(hid_t a,          \
                                                  unsigned int size) {         \
       RMF_UNUSED(a);                                                          \
       RMF_UNUSED(size);                                                       \
       RMF_NOT_IMPLEMENTED;                                                    \
-      return vector<UCNames>();                                               \
+      return std::vector<UCNames>();                                    \
     }                                                                         \
-    static void write_values_attribute(hid_t a, const vector<UCNames> &v) {   \
+    static void write_values_attribute(hid_t a, const std::vector<UCNames> &v) { \
       RMF_UNUSED(a); RMF_UNUSED(v);                                           \
       RMF_NOT_IMPLEMENTED;                                                    \
     }                                                                         \

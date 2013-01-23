@@ -16,6 +16,7 @@
 #include <hdf5.h>
 
 namespace RMF {
+namespace HDF5 {
 
 /** Wrap an gettings the attributes from an HDF5 Object. Each data set or
     group can have associated data. These data should be relativel small
@@ -83,6 +84,7 @@ public:
   /** @} */
 };
 
+} /* namespace HDF5 */
 } /* namespace RMF */
 
 #endif /* RMF_HDF_5CONST_ATTRIBUTES_H */

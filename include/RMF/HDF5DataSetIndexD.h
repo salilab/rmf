@@ -11,11 +11,12 @@
 
 #include <RMF/config.h>
 #include "types.h"
+#include "infrastructure_macros.h"
 #include <boost/functional/hash.hpp>
 #include <stdexcept>
 
 namespace RMF {
-
+namespace HDF5 {
 /** Store an index into a data set. Typedefs are provides
     for 1,2 and 3 dimension indexes, name like
     HDF5DataSetIndex2D.
@@ -105,13 +106,14 @@ public:
 
 #ifndef RMF_DOXYGEN
 typedef HDF5DataSetIndexD<1> HDF5DataSetIndex1D;
-typedef vector<HDF5DataSetIndex1D> HDF5DataSetIndex1Ds;
+typedef std::vector<HDF5DataSetIndex1D> HDF5DataSetIndex1Ds;
 typedef HDF5DataSetIndexD<2> HDF5DataSetIndex2D;
-typedef vector<HDF5DataSetIndex2D> HDF5DataSetIndex2Ds;
+typedef std::vector<HDF5DataSetIndex2D> HDF5DataSetIndex2Ds;
 typedef HDF5DataSetIndexD<3> HDF5DataSetIndex3D;
-typedef vector<HDF5DataSetIndex3D> HDF5DataSetIndex3Ds;
+typedef std::vector<HDF5DataSetIndex3D> HDF5DataSetIndex3Ds;
 #endif
 
+} /* namespace HDF5 */
 } /* namespace RMF */
 
 #endif /* RMF_HDF_5DATA_SET_INDEX_D_H */

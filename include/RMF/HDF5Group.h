@@ -15,10 +15,11 @@
 
 
 namespace RMF {
+namespace HDF5 {
 
 typedef HDF5MutableAttributes<HDF5ConstGroup> HDF5GroupAttributes;
 #ifndef RMF_DOXYGEN
-typedef vector<HDF5GroupAttributes> HDF5GroupAttributesList;
+typedef std::vector<HDF5GroupAttributes> HDF5GroupAttributesList;
 #endif
 
 
@@ -125,6 +126,7 @@ public:
   HDF5Group get_child_group(unsigned int i) const;
 };
 
+} /* namespace HDF5 */
 } /* namespace RMF */
 
 #endif /* RMF_HDF_5GROUP_H */

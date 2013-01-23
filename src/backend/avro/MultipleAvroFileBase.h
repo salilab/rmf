@@ -32,9 +32,9 @@ class MultipleAvroFileBase: public AvroKeysAndCategories {
 protected:
   typedef RMF_avro_backend::File File;
   File file_;
-  typedef RMF::vector<RMF_avro_backend::Node> Nodes;
+  typedef std::vector<RMF_avro_backend::Node> Nodes;
   Nodes nodes_;
-  typedef vector<RMF_avro_backend::Data> StaticData;
+  typedef std::vector<RMF_avro_backend::Data> StaticData;
   StaticData static_categories_;
 
   RMF_avro_backend::Node null_frame_data_;
@@ -48,7 +48,7 @@ protected:
     return nodes_[node];
   }
 
-  const RMF::vector<RMF_avro_backend::Node> &get_nodes_data() const {
+  const std::vector<RMF_avro_backend::Node> &get_nodes_data() const {
     return nodes_;
   }
 

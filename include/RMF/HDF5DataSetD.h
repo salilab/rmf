@@ -10,7 +10,7 @@
 #define RMF_HDF_5DATA_SET_D_H
 
 #include <RMF/config.h>
-#include "types.h"
+#include "hdf5_types.h"
 #include "HDF5Object.h"
 #include "HDF5MutableAttributes.h"
 #include "HDF5ConstDataSetD.h"
@@ -18,6 +18,7 @@
 #include <algorithm>
 
 namespace RMF {
+namespace HDF5 {
 
 /** Wrap an HDF5 data set. Typedefs and python types are provided for
     data sets in 1,2, and 3 dimensions with all the
@@ -105,7 +106,7 @@ public:
         last[i] += size[i] - 1;
       }
       RMF_USAGE_CHECK(total == value.size(),
-                      internal::get_error_message("Block has size ",
+                      RMF::internal::get_error_message("Block has size ",
                                                   total, " but found ",
                                                   value.size(),
                                                   " values"));
@@ -138,22 +139,22 @@ public:
 #  define RMF_DECLARE_DATA_SET(lcname, Ucname, PassValue, ReturnValue, \
                                PassValues, ReturnValues)               \
   typedef HDF5DataSetD<Ucname##Traits, 1> HDF5##Ucname##DataSet1D;     \
-  typedef vector<HDF5##Ucname##DataSet1D> HDF5##Ucname##DataSet1Ds;    \
+  typedef std::vector<HDF5##Ucname##DataSet1D> HDF5##Ucname##DataSet1Ds;    \
   typedef HDF5DataSetD<Ucname##Traits, 2> HDF5##Ucname##DataSet2D;     \
-  typedef vector<HDF5##Ucname##DataSet2D> HDF5##Ucname##DataSet2Ds;    \
+  typedef std::vector<HDF5##Ucname##DataSet2D> HDF5##Ucname##DataSet2Ds;    \
   typedef HDF5DataSetD<Ucname##Traits, 3> HDF5##Ucname##DataSet3D;     \
-  typedef vector<HDF5##Ucname##DataSet3D> HDF5##Ucname##DataSet3Ds;    \
+  typedef std::vector<HDF5##Ucname##DataSet3D> HDF5##Ucname##DataSet3Ds;    \
   typedef HDF5MutableAttributes<HDF5##Ucname##ConstDataSet1D>          \
     HDF5##Ucname##DataSet1DAttributes;                                 \
   typedef HDF5MutableAttributes<HDF5##Ucname##ConstDataSet2D>          \
     HDF5##Ucname##DataSet2DAttributes;                                 \
   typedef HDF5MutableAttributes<HDF5##Ucname##ConstDataSet3D>          \
     HDF5##Ucname##DataSet3DAttributes;                                 \
-  typedef vector<HDF5##Ucname##DataSet1DAttributes>                    \
+  typedef std::vector<HDF5##Ucname##DataSet1DAttributes>                    \
     HDF5##Ucname##DataSet1DAttributesList;                             \
-  typedef vector<HDF5##Ucname##DataSet2DAttributes>                    \
+  typedef std::vector<HDF5##Ucname##DataSet2DAttributes>                    \
     HDF5##Ucname##DataSet2DAttributesList;                             \
-  typedef vector<HDF5##Ucname##DataSet3DAttributes>                    \
+  typedef std::vector<HDF5##Ucname##DataSet3DAttributes>                    \
     HDF5##Ucname##DataSet3DAttributesList
 
 
@@ -164,6 +165,8 @@ public:
 RMF_FOREACH_TYPE(RMF_DECLARE_DATA_SET);
 /** @} */
 #endif
+
+} /* namespace HDF5 */
 } /* namespace RMF */
 
 #endif /* RMF_HDF_5DATA_SET_D_H */

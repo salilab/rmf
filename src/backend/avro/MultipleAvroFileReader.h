@@ -29,7 +29,7 @@ class MultipleAvroFileReader: public MultipleAvroFileBase {
     RMF_avro_backend::Data data;
   };
 
-  vector<CategoryData> categories_;
+  std::vector<CategoryData> categories_;
 
   void add_category_data(Category cat);
   void load_category_frame(Category cat,

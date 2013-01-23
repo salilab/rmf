@@ -27,7 +27,6 @@ namespace avro_backend {
   struct KeyData {
     std::string name;
     Category category;
-    int type_index;
   };
   typedef internal::map<unsigned int, KeyData> KeyDataMap;
   KeyDataMap key_data_map_;
@@ -35,7 +34,7 @@ namespace avro_backend {
   typedef internal::map<Category, NameKeyInnerMap> NameKeyMap;
   NameKeyMap name_key_map_;
 
-  vector<std::string> node_keys_;
+  std::vector<std::string> node_keys_;
   std::string frame_key_;
 
 public:
@@ -57,7 +56,6 @@ public:
       unsigned int id = key_data_map_.size();
       key_data_map_[id].name = name;
       key_data_map_[id].category = category;
-      key_data_map_[id].type_index = TypeTraits::get_index();
       name_key_map_[category][name] = id;
       RMF_INTERNAL_CHECK(get_key_helper<TypeTraits>(category,
                                                     name)
