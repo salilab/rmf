@@ -18,6 +18,7 @@
 #include <boost/filesystem/operations.hpp>
 #include <cstdio>
 #include <RMF/exceptions.h>
+#include <RMF/log.h>
 
 namespace RMF {
 namespace avro_backend {
@@ -39,7 +40,9 @@ void show(const RMF_avro_backend::Data &data,
     RMF_THROW(Message("Could not rename") << Component(new), \
               IOException);                                  \
   }                                                          \
-
+  RMF_TRACE(get_avro_logger(), "Renamed " << old             \
+                                                << " to "    \
+               << new)
 #else
 
 #  define RMF_RENAME(old, new)                               \
@@ -48,7 +51,10 @@ void show(const RMF_avro_backend::Data &data,
   } catch (const std::exception &e) {                        \
     RMF_THROW(Message("Could not rename") << Component(new), \
               IOException);                                  \
-  }
+  }                                                          \
+  RMF_TRACE(get_avro_logger(), "Renamed " << old             \
+               << " to "                                     \
+               << new)
 
 #endif
 
@@ -59,6 +65,7 @@ void show(const RMF_avro_backend::Data &data,
 template <class Data>
 void write(const Data &data, avro::ValidSchema schema, std::string path) {
   std::string temppath = path + ".new";
+  RMF_TRACE(get_avro_logger(), "Writing file " << temppath);
   try {
     avro::DataFileWriter<Data> wr(temppath.c_str(), schema);
     wr.write(data);
