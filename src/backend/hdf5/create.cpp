@@ -42,7 +42,7 @@ namespace hdf5_backend {
     if (cache.find(path) != cache.end()) {
       return cache.find(path)->second;
     }
-    RMF_INFO(get_hdf5_logger(), "Using HDF5 backend");
+    RMF_INFO(get_logger(), "Using HDF5 hdf5_backend");
     HDF5SharedData*ret= new HDF5SharedData(path, create, read_only);
     cache[path]=ret;
     reverse_cache[ret]=path;

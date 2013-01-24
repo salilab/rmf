@@ -21,44 +21,6 @@
 namespace RMF {
 namespace avro_backend {
 
-template <class Out, class In>
-void avro_assign(Out &out, In in) {
-  out = in;
-}
-
-inline void avro_assign(NodeID &out, int32_t in) {
-  out = NodeID(in);
-}
-inline void avro_assign(int32_t &out, NodeID in) {
-  out = in.get_index();
-}
-
-#if RMF_USE_DEBUG_VECTOR
-template <class Out, class In>
-void avro_assign(std::vector<Out> &out, vector<In> in) {
-  out.resize(in.size());
-  for (unsigned int i = 0; i < in.size(); ++i) {
-      avro_assign(out[i], in[i]);
-  }
-}
-template <class Out, class In>
-void avro_assign(vector<Out> &out, std::vector<In> in) {
-  out.resize(in.size());
-  for (unsigned int i = 0; i < in.size(); ++i) {
-      avro_assign(out[i], in[i]);
-  }
-}
-#else
-template <class Out, class In>
-void avro_assign(std::vector<Out> &out, const std::vector<In>& in) {
-  out.resize(in.size());
-  for (unsigned int i = 0; i < in.size(); ++i) {
-      avro_assign(out[i], in[i]);
-  }
-}
-#endif
-
-
 template <class Base>
 class AvroSharedData: public Base {
   typedef Base P;
@@ -89,8 +51,8 @@ class AvroSharedData: public Base {
         || it->second >= static_cast<int>(data.size())) {
       return TypeTraits::get_null_value();
     } else {
-      typename TypeTraits::Type ret;
-      avro_assign(ret, data[it->second]);
+      typename TypeTraits::Type ret
+          = get_as<typename TypeTraits::Type>(data[it->second]);
       return ret;
     }
   }
@@ -112,11 +74,11 @@ class AvroSharedData: public Base {
       index_value = it->second;
     }
     if (static_cast<int>(data.size()) <= index_value) {
-      typename TypeTraits::AvroType null;
-      avro_assign(null,              TypeTraits::get_null_value());
+      typename TypeTraits::AvroType null
+          = get_as<typename TypeTraits::AvroType>(TypeTraits::get_null_value());
       data.resize(index_value + 1, null);
     }
-      avro_assign(data[index_value], val);
+    data[index_value]= get_as<typename TypeTraits::AvroType>(val);
   }
   template <class TypeTraits>
   typename TypeTraits::Type get_value_impl( int             frame,

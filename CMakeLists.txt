@@ -50,6 +50,7 @@ include(FindHDF5)
 find_package(HDF5 REQUIRED)
 
 include(TestForOverride)
+include(TestForExtern)
 
 include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})

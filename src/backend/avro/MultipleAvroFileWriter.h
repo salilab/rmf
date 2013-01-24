@@ -26,7 +26,7 @@ class MultipleAvroFileWriter: public MultipleAvroFileBase {
   bool file_dirty_;
   bool nodes_dirty_;
   bool frames_dirty_;
-  vector<bool> static_categories_dirty_;
+  std::vector<bool> static_categories_dirty_;
 
   struct CategoryData {
     boost::shared_ptr<avro::DataFileWriter<RMF_avro_backend::Data > > writer;
@@ -34,7 +34,7 @@ class MultipleAvroFileWriter: public MultipleAvroFileBase {
     bool dirty;
   };
 
-  vector<CategoryData> categories_;
+  std::vector<CategoryData> categories_;
 
   RMF_avro_backend::Data null_frame_data_;
   RMF_avro_backend::Data null_static_frame_data_;

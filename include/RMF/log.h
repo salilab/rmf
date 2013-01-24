@@ -20,8 +20,10 @@ namespace RMF {
 
 #if RMF_HAS_LOG4CXX
 RMFEXPORT log4cxx::LoggerPtr get_logger();
+#ifndef IMP_DOXYGEN
 RMFEXPORT log4cxx::LoggerPtr get_avro_logger();
 RMFEXPORT log4cxx::LoggerPtr get_hdf5_logger();
+#endif
 #endif
 
 /** Set the log level from a string. Supported values are:
