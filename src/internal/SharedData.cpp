@@ -9,7 +9,7 @@
 #include <RMF/internal/SharedData.h>
 #include <RMF/NodeHandle.h>
 #include <RMF/internal/set.h>
-#include <RMF/HDF5/HDF5File.h>
+#include <RMF/HDF5/File.h>
 #include <boost/filesystem/path.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/version.hpp>

@@ -1,5 +1,5 @@
 /**
- *  \file RMF/HDF5DataSetAccessPropertiesD.h
+ *  \file RMF/DataSetAccessPropertiesD.h
  *  \brief Handle read/write of Model data from/to files.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
@@ -10,7 +10,7 @@
 #define RMF_HDF_5DATA_SET_ACCESS_PROPERTIES_D_H
 
 #include <RMF/config.h>
-#include "HDF5DataSetIndexD.h"
+#include "DataSetIndexD.h"
 
 
 namespace RMF {
@@ -18,11 +18,11 @@ namespace HDF5 {
 
 /** A class to manage properties controlling access to HDF5 data sets.*/
 template <class TypeTraits, unsigned int D>
-class HDF5DataSetAccessPropertiesD {
-  boost::intrusive_ptr<HDF5SharedHandle> h_;
+class DataSetAccessPropertiesD {
+  boost::intrusive_ptr<SharedHandle> h_;
 protected:
-  HDF5DataSetAccessPropertiesD(hid_t type):
-    h_(new HDF5SharedHandle(H5Pcreate(type), &H5Pclose,
+  DataSetAccessPropertiesD(hid_t type):
+    h_(new SharedHandle(H5Pcreate(type), &H5Pclose,
                             "Properties")) {
   }
 public:
@@ -38,8 +38,8 @@ public:
     RMF_HDF5_CALL(H5Pset_chunk_cache(get_handle(), entries,
                                      size_bytes, policy));
   }
-  HDF5DataSetAccessPropertiesD():
-    h_(new HDF5SharedHandle(H5Pcreate(H5P_DATASET_ACCESS), &H5Pclose,
+  DataSetAccessPropertiesD():
+    h_(new SharedHandle(H5Pcreate(H5P_DATASET_ACCESS), &H5Pclose,
                             "Properties")) {
   }
 };

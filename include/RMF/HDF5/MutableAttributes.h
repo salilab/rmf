@@ -1,5 +1,5 @@
 /**
- *  \file RMF/HDF5MutableAttributes.h
+ *  \file RMF/MutableAttributes.h
  *  \brief Handle read/write of Model data from/to files.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
@@ -10,8 +10,8 @@
 #define RMF_HDF_5MUTABLE_ATTRIBUTES_H
 
 #include <RMF/config.h>
-#include "hdf5_handle.h"
-#include <RMF/infrastructure_macros.h>
+#include "handle.h"
+#include "infrastructure_macros.h"
 #include <hdf5.h>
 
 namespace RMF {
@@ -21,28 +21,28 @@ namespace HDF5 {
     the HDF5 manual} for more information.
  */
 template <class Base>
-class HDF5MutableAttributes: public Base {
+class MutableAttributes: public Base {
   typedef Base P;
 #ifndef SWIG
 protected:
-  HDF5MutableAttributes() {
+  MutableAttributes() {
   }
   template <class A>
-  HDF5MutableAttributes(const A &h): Base(h) {
+  MutableAttributes(const A &h): Base(h) {
   }
   template <class A, class B>
-  HDF5MutableAttributes(const A &h, const B &i): Base(h, i) {
+  MutableAttributes(const A &h, const B &i): Base(h, i) {
   }
   template <class A, class B, class C>
-  HDF5MutableAttributes(const A &h, const B &i, const C &j): Base(h, i, j) {
+  MutableAttributes(const A &h, const B &i, const C &j): Base(h, i, j) {
   }
   template <class A, class B, class C, class D>
-  HDF5MutableAttributes(const A &h, const B &i, const C &j,
+  MutableAttributes(const A &h, const B &i, const C &j,
                         const D &k): Base(h, i, j, k) {
   }
 #else
 private:
-  HDF5MutableAttributes();
+  MutableAttributes();
 #endif
 public:
 

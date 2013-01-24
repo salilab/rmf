@@ -1,5 +1,5 @@
 /**
- *  \file RMF/HDF5DataSetCreationPropertiesD.h
+ *  \file RMF/DataSetCreationPropertiesD.h
  *  \brief Handle read/write of Model data from/to files.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
@@ -10,7 +10,7 @@
 #define RMF_HDF_5DATA_SET_CREATION_PROPERTIES_D_H
 
 #include <RMF/config.h>
-#include "HDF5DataSetAccessPropertiesD.h"
+#include "DataSetAccessPropertiesD.h"
 
 
 namespace RMF {
@@ -22,9 +22,9 @@ enum Compression {GZIP_COMPRESSION, SLIB_COMPRESSION, NO_COMPRESSION};
 
 /** Define properties for creating an HDF5 data set.*/
 template <class TypeTraits, unsigned int D>
-struct HDF5DataSetCreationPropertiesD:
-  HDF5DataSetAccessPropertiesD<TypeTraits, D> {
-  using HDF5DataSetAccessPropertiesD<TypeTraits, D>::get_handle;
+struct DataSetCreationPropertiesD:
+  DataSetAccessPropertiesD<TypeTraits, D> {
+  using DataSetAccessPropertiesD<TypeTraits, D>::get_handle;
   void set_compression(Compression comp) {
     if (comp == GZIP_COMPRESSION) {
       RMF_HDF5_CALL(H5Pset_deflate(get_handle(), 9));
@@ -36,15 +36,15 @@ struct HDF5DataSetCreationPropertiesD:
   /** See
      \external{http://www.hdfgroup.org/HDF5/doc/RM/RM_H5P.html#Property-SetChunk, H5Pset_chunk}
    */
-  void set_chunk_size(HDF5DataSetIndexD<D> chunk_size) {
+  void set_chunk_size(DataSetIndexD<D> chunk_size) {
     hsize_t cdims[D];
     for (unsigned int i = 0; i < D; ++i) {
       cdims[i] = chunk_size[i];
     }
       RMF_HDF5_CALL(H5Pset_chunk(get_handle(), D, cdims));
   }
-  HDF5DataSetCreationPropertiesD():
-    HDF5DataSetAccessPropertiesD<TypeTraits, D>(H5P_DATASET_CREATE) {
+  DataSetCreationPropertiesD():
+    DataSetAccessPropertiesD<TypeTraits, D>(H5P_DATASET_CREATE) {
     hsize_t cdims[D];
     cdims[0] = 512;
     if (D > 2) {

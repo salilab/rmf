@@ -8,7 +8,7 @@
 #include <boost/program_options.hpp>
 #include <RMF/profile.h>
 #include <RMF/utility.h>
-#include <RMF/HDF5/HDF5ConstFile.h>
+#include <RMF/HDF5/ConstFile.h>
 #include <RMF/log.h>
 
 extern std::string description;
@@ -58,7 +58,7 @@ boost::program_options::variables_map process_options(int argc, char *argv[]) {
     verbose = true;
   }
   if (variables_map.count("hdf5-errors")) {
-    RMF::HDF5::set_show_hdf5_errors(true);
+    RMF::HDF5::set_show_errors(true);
   }
   if (variables_map.count("profile")) {
     RMF::set_is_profiling(true);

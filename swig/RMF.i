@@ -224,4 +224,7 @@ suffixes=["rmf", "rmf2", "rmfa"]
 
 read_write_suffixes=["rmf", "rmfa"]
 
+import RMF_HDF5
+HDF5=RMF_HDF5
+
 %}

@@ -1,5 +1,5 @@
 /**
- *  \file RMF/HDF5ConstDataSetD.h
+ *  \file RMF/ConstDataSetD.h
  *  \brief Handle read/write of Model data from/to files.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
@@ -10,21 +10,21 @@
 #define RMF_HDF_5CONST_DATA_SET_D_H
 
 #include <RMF/config.h>
-#include "hdf5_types.h"
-#include "HDF5ConstAttributes.h"
-#include "HDF5Object.h"
-#include "HDF5DataSetIndexD.h"
-#include "HDF5DataSetCreationPropertiesD.h"
-#include <RMF/infrastructure_macros.h>
+#include "types.h"
+#include "ConstAttributes.h"
+#include "Object.h"
+#include "DataSetIndexD.h"
+#include "DataSetCreationPropertiesD.h"
+#include "infrastructure_macros.h"
 #include <algorithm>
 #include <boost/shared_ptr.hpp>
 
 namespace RMF {
 namespace HDF5 {
-class HDF5Group;
-typedef HDF5ConstAttributes<HDF5Object> HDF5ConstDataSetAttributes;
+class Group;
+typedef ConstAttributes<Object> ConstDataSetAttributes;
 #ifndef RMF_DOXYGEN
-typedef std::vector<HDF5ConstDataSetAttributes> HDF5ConstDataSetAttributesList;
+typedef std::vector<ConstDataSetAttributes> ConstDataSetAttributesList;
 #endif
 
 
@@ -37,18 +37,18 @@ typedef std::vector<HDF5ConstDataSetAttributes> HDF5ConstDataSetAttributesList;
    the HDF5 manual} for more information.
  */
 template <class TypeTraits, unsigned int D>
-class HDF5ConstDataSetD: public HDF5ConstDataSetAttributes {
-  typedef HDF5ConstDataSetAttributes P;
+class ConstDataSetD: public ConstDataSetAttributes {
+  typedef ConstDataSetAttributes P;
   struct Data {
-    HDF5Handle ids_;
-    HDF5Handle rds_;
-    HDF5Handle sel_;
+    Handle ids_;
+    Handle rds_;
+    Handle sel_;
     hsize_t ones_[D];
-    HDF5DataSetIndexD<D> size_;
+    DataSetIndexD<D> size_;
   };
 
   boost::shared_ptr<Data> data_;
-  int compare(const HDF5ConstDataSetD<TypeTraits, D> &o) const {
+  int compare(const ConstDataSetD<TypeTraits, D> &o) const {
     // not great, but...
     if (data_ && !o.data_) return -1;
     else if (o.data_ && !data_) return 1;
@@ -58,7 +58,7 @@ class HDF5ConstDataSetD: public HDF5ConstDataSetAttributes {
     else return 0;
   }
 
-  bool get_is_null_value(const HDF5DataSetIndexD<D> &ijk) const {
+  bool get_is_null_value(const DataSetIndexD<D> &ijk) const {
     return TypeTraits::get_is_null_value(get_value(ijk));
   }
   void initialize() {
@@ -66,15 +66,15 @@ class HDF5ConstDataSetD: public HDF5ConstDataSetAttributes {
     data_->ids_.open(H5Screate_simple(1, &one, NULL), &H5Sclose);
     std::fill(data_->ones_, data_->ones_ + D, 1);
     //pos_.reset(new hsize_t[dim_]);
-    //sel_= new HDF5SharedHandle(H5Dget_space(h_->get_hid()), &H5Sclose);
+    //sel_= new SharedHandle(H5Dget_space(h_->get_hid()), &H5Sclose);
     initialize_handles();
   }
-  friend class HDF5ConstGroup;
+  friend class ConstGroup;
 protected:
-  typedef HDF5DataSetCreationPropertiesD<TypeTraits, D> CreationProperties;
-  typedef HDF5DataSetAccessPropertiesD<TypeTraits, D> AccessProperties;
+  typedef DataSetCreationPropertiesD<TypeTraits, D> CreationProperties;
+  typedef DataSetAccessPropertiesD<TypeTraits, D> AccessProperties;
 
-  HDF5ConstDataSetD(HDF5SharedHandle* parent, std::string name,
+  ConstDataSetD(SharedHandle* parent, std::string name,
                     CreationProperties props):
     data_(new Data()) {
     //std::cout << "Creating data set " << name << std::endl;
@@ -87,7 +87,7 @@ protected:
     std::fill(maxs, maxs + D, H5S_UNLIMITED);
     RMF_HDF5_HANDLE(ds, H5Screate_simple(D, dims, maxs), &H5Sclose);
     //std::cout << "creating..." << name << std::endl;
-    P::open(new HDF5SharedHandle(H5Dcreate2(parent->get_hid(),
+    P::open(new SharedHandle(H5Dcreate2(parent->get_hid(),
                                             name.c_str(),
                                             TypeTraits::get_hdf5_disk_type(),
                                             ds, H5P_DEFAULT,
@@ -96,7 +96,7 @@ protected:
     initialize();
     //std::cout << "done..." << std::endl;
   }
-  HDF5ConstDataSetD(HDF5SharedHandle* parent,
+  ConstDataSetD(SharedHandle* parent,
                     std::string name, AccessProperties props):
     data_(new Data()) {
     RMF_USAGE_CHECK(H5Lexists(parent->get_hid(),
@@ -104,11 +104,11 @@ protected:
                     RMF::internal::get_error_message("Data set ",
                                                 name,
                                                 " does not exist"));
-    P::open(new HDF5SharedHandle(H5Dopen2(parent->get_hid(),
+    P::open(new SharedHandle(H5Dopen2(parent->get_hid(),
                                           name.c_str(), props.get_handle()),
                                  &H5Dclose, name));
     //RMF_HDF5_HANDLE(s, H5Dget_space(h_->get_hid()), H5Sclose);
-    RMF_HDF5_HANDLE(sel, H5Dget_space(HDF5Object::get_handle()), &H5Sclose);
+    RMF_HDF5_HANDLE(sel, H5Dget_space(Object::get_handle()), &H5Sclose);
     RMF_USAGE_CHECK(H5Sget_simple_extent_ndims(sel) == D,
                     RMF::internal::get_error_message(
                       "Dimensions don't match. Got ",
@@ -119,17 +119,17 @@ protected:
   hsize_t* get_ones() const {
     return data_->ones_;
   }
-  const HDF5Handle& get_row_data_space() const {
+  const Handle& get_row_data_space() const {
     return data_->rds_;
   }
-  const HDF5Handle& get_data_space() const {
+  const Handle& get_data_space() const {
     return data_->sel_;
   }
-  const HDF5Handle& get_input_data_space() const {
+  const Handle& get_input_data_space() const {
     return data_->ids_;
   }
-  void check_index(const HDF5DataSetIndexD<D> &ijk) const {
-    HDF5DataSetIndexD<D> sz = get_size();
+  void check_index(const DataSetIndexD<D> &ijk) const {
+    DataSetIndexD<D> sz = get_size();
     for (unsigned int i = 0; i < D; ++i) {
       RMF_USAGE_CHECK(ijk[i] < sz[i],
                       RMF::internal::get_error_message("Index is out of range: "
@@ -137,7 +137,7 @@ protected:
     }
   }
   void initialize_handles() {
-    data_->sel_.open(H5Dget_space(HDF5Object::get_handle()), &H5Sclose);
+    data_->sel_.open(H5Dget_space(Object::get_handle()), &H5Sclose);
     // must be second
     hsize_t ret[D];
     std::fill(ret, ret + D, -1);
@@ -160,16 +160,16 @@ protected:
   }
 public:
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
-  HDF5ConstDataSetD(hid_t file, std::string name): data_(new Data()) {
+  ConstDataSetD(hid_t file, std::string name): data_(new Data()) {
     RMF_USAGE_CHECK(H5Lexists(file,
                               name.c_str(), H5P_DEFAULT),
                     RMF::internal::get_error_message("Data set ", name,
                                                 " does not exist"));
-    P::open(new HDF5SharedHandle(H5Dopen2(file,
+    P::open(new SharedHandle(H5Dopen2(file,
                                           name.c_str(), H5P_DEFAULT),
                                  &H5Dclose, name));
     //RMF_HDF5_HANDLE(s, H5Dget_space(h_->get_hid()), H5Sclose);
-    RMF_HDF5_HANDLE(sel, H5Dget_space(HDF5Object::get_handle()), &H5Sclose);
+    RMF_HDF5_HANDLE(sel, H5Dget_space(Object::get_handle()), &H5Sclose);
     RMF_USAGE_CHECK(H5Sget_simple_extent_ndims(sel) == D,
                     RMF::internal::get_error_message("Dimensions don't match. Got ",
                                                 H5Sget_simple_extent_ndims(sel),
@@ -177,14 +177,14 @@ public:
     initialize();
   }
 #endif
-  typedef HDF5DataSetIndexD<D> Index;
-  HDF5ConstDataSetD() {
+  typedef DataSetIndexD<D> Index;
+  ConstDataSetD() {
   }
-  HDF5DataSetIndexD<D> get_size() const {
+  DataSetIndexD<D> get_size() const {
     //RMF_HDF5_HANDLE(s, H5Dget_space(h_->get_hid()), H5Sclose);
     return data_->size_;
   }
-  typename TypeTraits::Type get_value(const HDF5DataSetIndexD<D> &ijk) const {
+  typename TypeTraits::Type get_value(const DataSetIndexD<D> &ijk) const {
     RMF_IF_CHECK {
       check_index(ijk);
     }
@@ -193,16 +193,16 @@ public:
                                       H5S_SELECT_SET, ijk.get(),
                                       data_->ones_, data_->ones_,
                                       NULL));
-    return TypeTraits::read_value_dataset(HDF5Object::get_handle(),
+    return TypeTraits::read_value_dataset(Object::get_handle(),
                                           data_->ids_.get_hid(),
                                           get_data_space());
   }
-  RMF_SHOWABLE(HDF5ConstDataSetD, "HDF5ConstDataSet"
+  RMF_SHOWABLE(ConstDataSetD, "ConstDataSet"
                << D << "D " << P::get_name());
 #ifndef SWIG
-  typedef HDF5DataSetIndexD<D - 1> RowIndex;
+  typedef DataSetIndexD<D - 1> RowIndex;
   typename TypeTraits::Types get_row( const RowIndex ijkr) const {
-    HDF5DataSetIndexD<D> ijk;
+    DataSetIndexD<D> ijk;
     std::copy(ijkr.begin(), ijkr.end(), ijk.begin());
     ijk[D - 1] = 0;
     RMF_IF_CHECK {
@@ -215,7 +215,7 @@ public:
                                       H5S_SELECT_SET, ijk.get(),
                                       data_->ones_, &size[0],
                                       NULL));
-    return TypeTraits::read_values_dataset(HDF5Object::get_handle(),
+    return TypeTraits::read_values_dataset(Object::get_handle(),
                                            get_row_data_space().get_hid(),
                                            get_data_space(),
                                            size[D - 1]);
@@ -239,7 +239,7 @@ public:
     RMF_HDF5_HANDLE(input, H5Screate_simple(1, &total,
                                             NULL), &H5Sclose);
     typename TypeTraits::Types ret
-      = TypeTraits::read_values_dataset(HDF5Object::get_handle(),
+      = TypeTraits::read_values_dataset(Object::get_handle(),
                                         input,
                                         get_data_space(),
                                         total);
@@ -247,7 +247,7 @@ public:
                        "Size mismatch");
     return ret;
   }
-  RMF_COMPARISONS(HDF5ConstDataSetD);
+  RMF_COMPARISONS(ConstDataSetD);
 };
 
 
@@ -255,12 +255,12 @@ public:
 #ifndef RMF_DOXYGEN
 #  define RMF_DECLARE_CONST_DATA_SET(lcname, Ucname, PassValue, ReturnValue,  \
                                      PassValues, ReturnValues)                \
-  typedef HDF5ConstDataSetD<Ucname##Traits, 1> HDF5##Ucname##ConstDataSet1D;  \
-  typedef std::vector<HDF5##Ucname##ConstDataSet1D> HDF5##Ucname##ConstDataSet1Ds; \
-  typedef HDF5ConstDataSetD<Ucname##Traits, 2> HDF5##Ucname##ConstDataSet2D;  \
-  typedef std::vector<HDF5##Ucname##ConstDataSet2D> HDF5##Ucname##ConstDataSet2Ds; \
-  typedef HDF5ConstDataSetD<Ucname##Traits, 3> HDF5##Ucname##ConstDataSet3D;  \
-  typedef std::vector<HDF5##Ucname##ConstDataSet3D> HDF5##Ucname##ConstDataSet3Ds
+  typedef ConstDataSetD<Ucname##Traits, 1> Ucname##ConstDataSet1D;  \
+  typedef std::vector<Ucname##ConstDataSet1D> Ucname##ConstDataSet1Ds; \
+  typedef ConstDataSetD<Ucname##Traits, 2> Ucname##ConstDataSet2D;  \
+  typedef std::vector<Ucname##ConstDataSet2D> Ucname##ConstDataSet2Ds; \
+  typedef ConstDataSetD<Ucname##Traits, 3> Ucname##ConstDataSet3D;  \
+  typedef std::vector<Ucname##ConstDataSet3D> Ucname##ConstDataSet3Ds
 
 /** \name Basic data set types
      \ingroup hdf5

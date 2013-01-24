@@ -13,7 +13,7 @@
 #include "NodeID.h"
 #include "infrastructure_macros.h"
 #include "internal/errors.h"
-#include <RMF/HDF5/hdf5_types.h>
+#include <RMF/HDF5/types.h>
 #include <algorithm>
 #include <stdint.h>
 #include <limits>
