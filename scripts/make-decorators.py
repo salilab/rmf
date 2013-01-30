@@ -285,9 +285,11 @@ class Attributes:
             "name":self.nice_name,
             "len":len(self.attribute_names),
             "key":self.nice_name+"_"})
-            ret.append("""void set_%(name)s(const %(ptype)s &v) {
+            ret.append("""/** %(doc)s */
+    void set_%(name)s(const %(ptype)s &v) {
            P::set_values(%(key)s, v);
-        }"""%{"type":self.type,
+        }"""%{"doc": self.doc,
+              "type":self.type,
               "ptype":self.ptype,
               "name":self.nice_name,
               "len":len(self.attribute_names),
