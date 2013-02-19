@@ -17,13 +17,6 @@ namespace internal {
 extern std::string rmf_data_path;
 extern std::string rmf_example_path;
 }
-namespace {
-std::string get_concatenated_path(std::string part0,
-                                  std::string part1) {
-  return part0 + "/" + part1;
-}
-
-}
 
 std::string get_as_node_name(std::string in) {
   boost::erase_all(in, "\"");
