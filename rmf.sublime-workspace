@@ -12,10 +12,50 @@
 	"buffers":
 	[
 		{
-			"file": "src/backend/avro/avro_schemas.h",
+			"file": "src/backend/hdf5/HDF5SharedData.h",
 			"settings":
 			{
-				"buffer_size": 2717,
+				"buffer_size": 32963,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/backend/avro/MultipleAvroFileReader.h",
+			"settings":
+			{
+				"buffer_size": 3012,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/backend/avro/MultipleAvroFileReader.cpp",
+			"settings":
+			{
+				"buffer_size": 9541,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/backend/avro/Data.json",
+			"settings":
+			{
+				"buffer_size": 10653,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "scripts/make-all-header.py",
+			"settings":
+			{
+				"buffer_size": 256,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "include/RMF/HDF5/handle.h",
+			"settings":
+			{
+				"buffer_size": 2498,
 				"line_ending": "Unix"
 			}
 		}
@@ -48,6 +88,10 @@
 	},
 	"file_history":
 	[
+		"/Users/drussel/src/rmf/rmf/include/RMF/internal/compiler_warnings.h",
+		"/Users/drussel/src/rmf/rmf/include/RMF/internal/compiler_macros.h",
+		"/Users/drussel/src/rmf/rmf/src/backend/avro/avro_schemas.h",
+		"/Users/drussel/src/rmf/rmf/include/RMF/internal/SharedData.h",
 		"/Users/drussel/src/rmf/rmf/src/utility.cpp",
 		"/Users/drussel/src/rmf/rmf/include/RMF/utility.h",
 		"/Users/drussel/src/rmf/rmf/pyext/RMF.i",
@@ -103,6 +147,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"IMP",
+			"get_all_values_impl",
+			"get_all_values_helper",
 			"test",
 			"*this",
 			"char",
@@ -123,6 +170,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"RMF",
 			"e"
 		],
 		"reverse": false,
@@ -134,23 +182,23 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "src/backend/avro/avro_schemas.h",
+					"file": "src/backend/hdf5/HDF5SharedData.h",
 					"settings":
 					{
-						"buffer_size": 2717,
+						"buffer_size": 32963,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								838,
-								838
+								11343,
+								11387
 							]
 						],
 						"settings":
@@ -160,7 +208,145 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 120.0,
+						"translation.y": 3411.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/backend/avro/MultipleAvroFileReader.h",
+					"settings":
+					{
+						"buffer_size": 3012,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3012,
+								3012
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/backend/avro/MultipleAvroFileReader.cpp",
+					"settings":
+					{
+						"buffer_size": 9541,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1919,
+								1919
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 322.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/backend/avro/Data.json",
+					"settings":
+					{
+						"buffer_size": 10653,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1596,
+								1596
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 52.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "scripts/make-all-header.py",
+					"settings":
+					{
+						"buffer_size": 256,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								147,
+								147
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "include/RMF/HDF5/handle.h",
+					"settings":
+					{
+						"buffer_size": 2498,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								363,
+								363
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
