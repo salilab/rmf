@@ -12,6 +12,7 @@
 #include <RMF/internal/paths.h>
 #include <RMF/decorators.h>
 #include <avro/Compiler.hh>
+#include <boost/scoped_ptr.hpp>
 #include <stdexcept>
 
 namespace RMF {

@@ -36,7 +36,8 @@ RMF_SCHEMA(Frame);
 
 void show(const RMF_avro_backend::Data &data,
           std::ostream             &out) {
-  boost::scoped_ptr< ::avro::OutputStream> os(avro::ostreamOutputStream(out));
+  boost::scoped_ptr< ::avro::OutputStream>
+    os(avro::ostreamOutputStream(out).release());
   ::avro::EncoderPtr encoder
       = avro::jsonEncoder(get_Data_schema());
   encoder->init(*os);
