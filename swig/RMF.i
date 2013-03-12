@@ -6,7 +6,7 @@
 %{
 #include <RMF/compiler_macros.h>
 
-RMF_GCC_PUSH_POP(diagnostic push)
+RMF_PUSH_WARNINGS
 RMF_GCC_PRAGMA(diagnostic ignored "-Wunused-but-set-variable")
 RMF_GCC_PRAGMA(diagnostic ignored "-Wunused-value")
 RMF_GCC_PRAGMA(diagnostic ignored "-Wmissing-declarations")
@@ -235,5 +235,5 @@ HDF5=RMF_HDF5
 %}
 
 %{
-RMF_GCC_PUSH_POP(diagnostic pop)
+RMF_POP_WARNINGS
 %}

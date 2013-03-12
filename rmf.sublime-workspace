@@ -11,6 +11,14 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "/Users/drussel/src/dotfiles/Library/Application Support/Sublime Text 2/Packages/Rails/form_for-submit.sublime-snippet",
+			"settings":
+			{
+				"buffer_size": 311,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "Packages/User/scons_all.sublime-build",
 	"command_palette":
@@ -40,6 +48,10 @@
 	},
 	"file_history":
 	[
+		"/Users/drussel/src/rmf/rmf/doc/mapping.dox",
+		"/Users/drussel/src/rmf/rmf/scripts/make-decorators.py",
+		"/Users/drussel/src/rmf/rmf/src/backend/avro/MultipleAvroFileBase.cpp",
+		"/Users/drussel/src/rmf/rmf/swig/CMakeLists.txt",
 		"/Users/drussel/src/rmf/rmf/include/RMF/Category.h",
 		"/Users/drussel/src/rmf/rmf/include/RMF/constants.h",
 		"/Users/drussel/src/rmf/rmf/include/RMF/CoordinateTransformer.h",
@@ -102,7 +114,6 @@
 		"/Users/drussel/src/rmf/rmf/src/backend/avro/MultipleAvroFileReader.h",
 		"/Users/drussel/src/rmf/rmf/src/backend/avro/MultipleAvroFileReader.cpp",
 		"/Users/drussel/src/rmf/rmf/src/backend/avro/MultipleAvroFileBase.h",
-		"/Users/drussel/src/rmf/rmf/src/backend/avro/MultipleAvroFileBase.cpp",
 		"/Users/drussel/src/rmf/rmf/src/backend/avro/create.h",
 		"/Users/drussel/src/rmf/rmf/src/backend/avro/create.cpp",
 		"/Users/drussel/src/rmf/rmf/src/backend/avro/AvroSharedData.types.h",
@@ -111,7 +122,6 @@
 		"/Users/drussel/src/rmf/rmf/src/backend/avro/AvroKeysAndCategories.h",
 		"/Users/drussel/src/rmf/rmf/src/backend/avro/avro_schemas.h",
 		"/Users/drussel/src/rmf/rmf/src/backend/avro/avro_schemas.cpp",
-		"/Users/drussel/src/rmf/rmf/scripts/make-decorators.py",
 		"/Users/drussel/src/rmf/rmf/config.h.in",
 		"/Users/drussel/src/rmf/rmf/bin/rmf_transform.cpp",
 		"/Users/drussel/src/rmf/rmf/src/backend/avro/Data.json",
@@ -207,8 +217,35 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "/Users/drussel/src/dotfiles/Library/Application Support/Sublime Text 2/Packages/Rails/form_for-submit.sublime-snippet",
+					"settings":
+					{
+						"buffer_size": 311,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								311,
+								311
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],

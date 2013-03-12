@@ -16,7 +16,7 @@
 
 #include <vector>
 
-RMF_COMPILER_ENABLE_WARNINGS
+RMF_ENABLE_WARNINGS
 
 #ifdef NDEBUG
 #  define RMF_NDEBUG
@@ -269,6 +269,6 @@ operator<<(std::ostream &out, const Showable &t) {
 #endif
 }
 
-RMF_COMPILER_DISABLE_WARNINGS
+RMF_DISABLE_WARNINGS
 
 #endif  /* RMF_INFRASTRUCTURE_MACROS_H */

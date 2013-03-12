@@ -22,7 +22,7 @@
 #include <vector>
 #include <stdexcept>
 
-RMF_COMPILER_ENABLE_WARNINGS
+RMF_ENABLE_WARNINGS
 
 #ifndef SWIG
 template <bool REFED>
@@ -425,6 +425,6 @@ struct Convert<int> {
 
 #endif
 
-RMF_COMPILER_DISABLE_WARNINGS
+RMF_DISABLE_WARNINGS
 
 #endif  /* RMF_INTERNAL_SWIG_HELPERS_H */
