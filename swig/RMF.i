@@ -18,9 +18,7 @@ RMF_CLANG_PRAGMA(diagnostic ignored "-Wunused-function")
    longer than the 255 character name length for MSVC. This shouldn't affect
    the code, but does result in a lot of warning output, so disable this warning
    for clarity. */
-#ifdef _MSC_VER
-#pragma warning( disable: 4503 )
-#endif
+RMF_VC_PRAGMA( warning( disable: 4503 ) )
 
 #include <boost/version.hpp>
 #include <boost/exception/exception.hpp>
