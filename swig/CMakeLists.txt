@@ -1,10 +1,18 @@
 FIND_PACKAGE(SWIG REQUIRED)
 INCLUDE(${SWIG_USE_FILE})
 
-# We only work with Python 2 for now (not Python 3)
-SET(Python_ADDITIONAL_VERSIONS 2.7 2.6 2.5 2.4)
+if(NOT DEFINED PYTHON_INCLUDE_DIR)
+execute_process(COMMAND python -c "import sys; print '%d.%d' % sys.version_info[:2]"
+                WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+                OUTPUT_VARIABLE python_version
+                OUTPUT_STRIP_TRAILING_WHITESPACE)
+message(STATUS "Python version is " ${python_version})
+
+SET(Python_ADDITIONAL_VERSIONS ${python_version})
 FIND_PACKAGE(PythonLibs)
-INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
+endif()
+
+INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_DIRS})
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/swig)
 
