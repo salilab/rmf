@@ -209,7 +209,7 @@ struct ConvertSequenceHelper {
     if (!in || !PySequence_Check(in)) {
       return false;
     }
-    for (unsigned int i = 0; i < PySequence_Length(in); ++i) {
+    for ( int i = 0; i < PySequence_Length(in); ++i) {
       PyReceivePointer o(PySequence_GetItem(in, i));
       if(!ConvertVT::get_is_cpp_object(o, st)) {
         return false;
@@ -222,9 +222,9 @@ struct ConvertSequenceHelper {
     if (!in || !PySequence_Check(in)) {
       PyErr_SetString(PyExc_ValueError, "Expected a sequence");
     }
-    unsigned int l = PySequence_Size(in);
+    int l = PySequence_Size(in);
     RMF_INTERNAL_CHECK(in->ob_refcnt > 0, "Freed sequence object found");
-    for (unsigned int i = 0; i < l; ++i) {
+    for ( int i = 0; i < l; ++i) {
       PyReceivePointer o(PySequence_GetItem(in, i));
       typename ValueOrObject<V>::store_type vs
         = ConvertVT::get_cpp_object(o, st);
