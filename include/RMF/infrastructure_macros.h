@@ -117,28 +117,6 @@ RMF_ENABLE_WARNINGS
 /** @} */
 
 
-#ifdef RMF_DOXYGEN
-//! Define a graph object in \imp
-/** The docs for the graph should appear before the macro
-    invocation.
- */
-#  define RMF_GRAPH(Name, type, VertexName, EdgeName)  \
-  /** See \ref graphs "Graphs" for more information.*/ \
-  typedef boost::graph Name
-
-#elif defined(SWIG)
-#  define RMF_GRAPH(Name, type, VertexName, EdgeName)  class Name
-#else
-#  define RMF_GRAPH(Name, type, VertexName, EdgeName)                 \
-  typedef boost::adjacency_list<boost::vecS, boost::vecS,             \
-                                boost::type##S,                       \
-                                boost::property<boost::vertex_name_t, \
-                                                VertexName>,          \
-                                boost::property<boost::edge_name_t,   \
-                                                EdgeName> > Name
-#endif
-
-
 #ifndef SWIG
 #  define RMF_SHOWABLE(Name, streamed)  \
   operator Showable() const {           \
