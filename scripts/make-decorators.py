@@ -529,9 +529,9 @@ class Decorator:
     typedef std::vector<%(name)s%(CONST)sFactory>
             %(name)s%(CONST)sFactories;
 """
-        typecheck = """RMF_USAGE_CHECK(%s, std::string("Bad node type. Got ")
+        typecheck = """RMF_USAGE_CHECK(%s, std::string("Bad node type. Got \\\"")
                                       + boost::lexical_cast<std::string>(nh.get_type())
-                                      + " in decorator type  %s");""" % (self._get_type_check(), self.name)
+                                      + "\\\" in decorator type  %s");""" % (self._get_type_check(), self.name)
         ret.append(factstr%{"name":self.name,
                              "key_members": self._get_key_members(False),
                              "key_pass": self._get_key_pass(False),
