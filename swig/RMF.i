@@ -197,7 +197,7 @@ IMP_RMF_DECORATOR(RMF, Typed);
 
 %include "RMF/physics_decorators.h"
 %include "RMF/sequence_decorators.h"
-%include "RMF/geometry_decorators.h"
+%include "RMF/shape_decorators.h"
 %include "RMF/external_decorators.h"
 %include "RMF/feature_decorators.h"
 %include "RMF/alias_decorators.h"

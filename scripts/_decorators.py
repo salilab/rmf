@@ -371,53 +371,43 @@ class PluralAttributes(Attributes):
             "key":self.nice_name+"_"})
         return ret
 
-class DecoratorCategory:
-    def __init__(self, category,
-                 attributes, internal_attributes=[]):
-        self.category=category
-        self.attributes=attributes
-        self.internal_attributes=internal_attributes
-
 class Decorator:
-    def __init__(self, allowed_types, name, description,
-                 decorator_categories,
+    def __init__(self, allowed_types, category, name, description,
+                 attributes, internal_attributes=[],
                  init_function=[],
                  check_function=[]):
         self.name=name
+        self.category=category
         self.allowed_types= allowed_types
         self.description=description
         self.init_function=init_function
-        self.categories= decorator_categories
+        self.attributes= attributes
+        self.internal_attributes = internal_attributes
         self.check_function= check_function
     def _get_key_members(self, const):
         ret=[]
-        for cd in self.categories:
-            for a in cd.attributes+cd.internal_attributes:
-                ret.extend(a.get_key_members(const))
+        for a in self.attributes+self.internal_attributes:
+          ret.extend(a.get_key_members(const))
         return "\n".join(ret)
     def _get_methods(self, const):
         ret=[]
-        for cd in self.categories:
-            for a in cd.attributes:
-                ret.extend(a.get_methods(const))
+        for a in self.attributes:
+          ret.extend(a.get_methods(const))
         return "\n".join(ret)
     def _get_key_arguments(self, const):
         ret=[]
-        for cd in self.categories:
-            for a in cd.attributes+cd.internal_attributes:
-                ret.extend(a.get_key_arguments(const))
+        for a in self.attributes+self.internal_attributes:
+          ret.extend(a.get_key_arguments(const))
         return ",\n".join(ret)
     def _get_key_pass(self, const):
         ret=[]
-        for cd in self.categories:
-            for a in cd.attributes+cd.internal_attributes:
-                ret.extend(a.get_key_pass(const))
+        for a in self.attributes+self.internal_attributes:
+          ret.extend(a.get_key_pass(const))
         return ",\n".join(ret)
     def _get_key_saves(self, const):
         ret=[]
-        for cd in self.categories:
-            for a in cd.attributes+cd.internal_attributes:
-                ret.extend(a.get_key_saves(const))
+        for a in self.attributes+self.internal_attributes:
+          ret.extend(a.get_key_saves(const))
         return ",\n".join(["P(nh)"]+ret)
     def _get_type_check(self):
         cret=[]
@@ -427,32 +417,23 @@ class Decorator:
 
     def _get_checks(self, const):
         ret=[self._get_type_check()]
-        for cd in self.categories:
-            for a in cd.attributes+cd.internal_attributes:
-                ret.extend(a.get_check(const))
+        for a in self.attributes+self.internal_attributes:
+          ret.extend(a.get_check(const))
         ret.extend(self.check_function)
         return "\n    && ".join(ret)
     def _get_construct(self, const):
         ret=[]
-        for cd in self.categories:
-            # make handle missing later
-            lhs="{\n  Category cat="
-            if const:
-                rhs="fh.get_category(\""\
-                    +cd.category+"\");"
-            else:
-                rhs="fh.get_category(\""+cd.category+"\");"
-            ret.append(lhs+rhs)
-            ret.append("RMF_UNUSED(cat);")
-            for a in cd.attributes+cd.internal_attributes:
-                ret.extend(a.get_construct(const))
-            ret.append("}")
+        # make handle missing later
+        ret.append("Category cat = fh.get_category(\""\
+                     +self.category+"\");")
+        ret.append("RMF_UNUSED(cat);")
+        for a in self.attributes+self.internal_attributes:
+          ret.extend(a.get_construct(const))
         return "\n".join(ret)
     def _get_initialize(self, const):
         ret=[]
-        for cd in self.categories:
-            for a in cd.attributes+cd.internal_attributes:
-                ret.extend(a.get_initialize(const))
+        for a in self.attributes+self.internal_attributes:
+          ret.extend(a.get_initialize(const))
         if ret==[]:
             return "P()"
         else:
