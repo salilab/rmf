@@ -195,7 +195,13 @@ IMP_RMF_DECORATOR(RMF, Copy);
 IMP_RMF_DECORATOR(RMF, Diffuser);
 IMP_RMF_DECORATOR(RMF, Typed);
 
-%include "RMF/decorators.h"
+%include "RMF/physics_decorators.h"
+%include "RMF/sequence_decorators.h"
+%include "RMF/geometry_decorators.h"
+%include "RMF/external_decorators.h"
+%include "RMF/feature_decorators.h"
+%include "RMF/alias_decorators.h"
+%include "RMF/publication_decorators.h"
 %include "RMF/decorator_utility.h"
 %include "RMF/utility.h"
 %include "RMF/SetCurrentFrame.h"
