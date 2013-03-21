@@ -2,7 +2,7 @@ FIND_PACKAGE(SWIG REQUIRED)
 INCLUDE(${SWIG_USE_FILE})
 
 if(NOT DEFINED PYTHON_INCLUDE_DIRS)
-execute_process(COMMAND python -c "import sys; print '%d.%d' % sys.version_info[:2]"
+execute_process(COMMAND python -c "import sys; print '%d.%d.%d' % sys.version_info[:3]"
                 WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
                 OUTPUT_VARIABLE python_full_version
                 OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -10,7 +10,7 @@ string(REGEX REPLACE "^([0-9]+\\.[0-9]+).*" "\\1" python_version
        ${python_full_version})
 message(STATUS "Python version is " ${python_version})
 
-FIND_PACKAGE(PythonLibs ${python_full_version} REQUIRED)
+FIND_PACKAGE(PythonLibs ${python_full_version} EXACT REQUIRED)
 endif()
 
 message(STATUS ${PYTHON_INCLUDE_DIRS})
