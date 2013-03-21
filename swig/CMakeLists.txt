@@ -10,7 +10,7 @@ string(REGEX REPLACE "^([0-9]+\\.[0-9]+).*" "\\1" python_version
        ${python_full_version})
 message(STATUS "Python version is " ${python_version})
 
-FIND_PACKAGE(PythonLibs ${python_full_version} EXACT REQUIRED)
+FIND_PACKAGE(PythonLibs ${python_full_version} REQUIRED)
 endif()
 
 message(STATUS ${PYTHON_INCLUDE_DIRS})
