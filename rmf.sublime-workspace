@@ -12,10 +12,13 @@
 	"buffers":
 	[
 		{
+			"contents": "",
 			"file": "/Users/drussel/src/dotfiles/Library/Application Support/Sublime Text 2/Packages/Rails/form_for-submit.sublime-snippet",
+			"file_size": -1,
+			"file_write_time": -1,
 			"settings":
 			{
-				"buffer_size": 311,
+				"buffer_size": 0,
 				"line_ending": "Unix"
 			}
 		}
@@ -225,15 +228,15 @@
 					"file": "/Users/drussel/src/dotfiles/Library/Application Support/Sublime Text 2/Packages/Rails/form_for-submit.sublime-snippet",
 					"settings":
 					{
-						"buffer_size": 311,
+						"buffer_size": 0,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								311,
-								311
+								0,
+								0
 							]
 						],
 						"settings":
