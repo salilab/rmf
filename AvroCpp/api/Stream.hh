@@ -31,6 +31,7 @@
 namespace avro {
 
 using boost::uint8_t;
+using boost::uint64_t;
 
 /**
  * A no-copy input stream.
