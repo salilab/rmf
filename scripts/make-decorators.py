@@ -77,14 +77,14 @@ diffuser= Decorator(["REPRESENTATION"], "physics",
 force = Decorator(["REPRESENTATION"], "physics",
                         "Force", "Forces acting on particles in kCal/mol/A.",
                         [Attributes("Float", "Floats",
-                                   "forces", ["force cartesian x",
+                                   "force", ["force cartesian x",
                                               "force cartesian y",
                                               "force cartesian z"], "The force.")])
 
 torque = Decorator(["REPRESENTATION"], "physics",
                   "Torque", "Torque acting on particles in kCal/mol/radian.",
                         [Attributes("Float", "Floats",
-                                    "forces", ["torque cartesian x",
+                                    "torque", ["torque cartesian x",
                                                "torque cartesian y",
                                                "torque cartesian z"], "The torque.")])
 
