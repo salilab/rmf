@@ -262,6 +262,7 @@ public:
             top = stKey;
         } else if (top == stMapN) {
             out_.write(',');
+            out_.write('\n');
             top = stKey;
         } else if (top == stKey) {
             top = stMapN;
@@ -304,11 +305,13 @@ public:
         stateStack.push(top);
         top = stMap0;
         out_.write('{');
+        out_.write('\n');
     }
 
     void objectEnd() {
         top = stateStack.top();
         stateStack.pop();
+        out_.write('\n');
         out_.write('}');
         sep2();
     }
