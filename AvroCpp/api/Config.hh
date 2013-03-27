@@ -37,6 +37,11 @@
 #define AVRO_DECL
 #endif
 
+#if !defined(INT32_MIN) && defined(_MSC_VER)
+#define INT32_MIN _I32_MIN
+#define INT32_MAX _I32_MAX
+#endif
+
 #include <boost/cstdint.hpp>
 
 namespace avro {
