@@ -37,5 +37,15 @@
 #define AVRO_DECL
 #endif
 
-#endif
+#include <boost/cstdint.hpp>
 
+namespace avro {
+using boost::int64_t;
+using boost::uint64_t;
+using boost::int32_t;
+using boost::uint32_t;
+using boost::int8_t;
+using boost::uint8_t;
+}
+
+#endif

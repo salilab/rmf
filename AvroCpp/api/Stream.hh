@@ -21,7 +21,6 @@
 
 #include <memory>
 #include <string.h>
-#include <boost/cstdint.hpp>
 
 #include "boost/utility.hpp"
 
@@ -29,9 +28,6 @@
 #include "Exception.hh"
 
 namespace avro {
-
-using boost::uint8_t;
-using boost::uint64_t;
 
 /**
  * A no-copy input stream.
