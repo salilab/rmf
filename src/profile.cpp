@@ -1,31 +1,34 @@
 /** \file utility.cpp Benchmarking utilties
  *
- * Copyright 2007-2012 IMP Inventors. All rights reserved.
+ * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
+
 #include <RMF/profile.h>
-#if defined(IMP_BENCHMARK_USE_GPERFTOOLS)
-#include <gperftools/profiler.h>
-#elif defined(IMP_BENCHMARK_USE_GOOGLEPERFTOOLS)
-#include <google/profiler.h>
+#if defined(RMF_BENCHMARK_USE_GPERFTOOLS)
+#  include <gperftools/profiler.h>
+#elif defined(RMF_BENCHMARK_USE_GOOGLEPERFTOOLS)
+#  include <google/profiler.h>
 #endif
 
 #include <boost/format.hpp>
 #include <RMF/infrastructure_macros.h>
 #include <sstream>
 
+RMF_ENABLE_WARNINGS
+
 namespace RMF {
 namespace {
-std::string profname="RMF.%1%.prof";
-int last_prof=-1;
+std::string profname = "RMF.%1%.prof";
+int last_prof = -1;
 }
 
 void set_profile_name(std::string name) {
-  profname=name;
-  last_prof=-1;
+  profname = name;
+  last_prof = -1;
 }
 
-#if defined(IMP_BENCHMARK_USE_GPERFTOOLS)\
-  || defined(IMP_BENCHMARK_USE_GOOGLEPERFTOOLS)
+#if defined(RMF_BENCHMARK_USE_GPERFTOOLS) \
+  || defined(RMF_BENCHMARK_USE_GOOGLEPERFTOOLS)
 void set_is_profiling(bool tf) {
   if (tf) {
     ++last_prof;
@@ -34,14 +37,14 @@ void set_is_profiling(bool tf) {
       std::ostringstream oss;
       try {
         oss << boost::format(profname)
-            % last_prof;
-        name=oss.str();
+          % last_prof;
+        name = oss.str();
       } catch(...) {
-      RMF_THROW("Invalid format specified in profile name, should be %1%",
-                    UsageException);
+        RMF_THROW("Invalid format specified in profile name, should be %1%",
+                  UsageException);
       }
     } else {
-      name=profname;
+      name = profname;
     }
     ProfilerStart(name.c_str());
   } else {
@@ -57,3 +60,5 @@ void set_is_profiling(bool tf) {
 #endif
 
 }
+
+RMF_DISABLE_WARNINGS

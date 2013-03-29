@@ -2,68 +2,108 @@
  *  \file RMF/Category.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2012 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
 #include <RMF/exceptions.h>
+#include <RMF/internal/errors.h>
 #include <sstream>
 #include <algorithm>
 
+RMF_ENABLE_WARNINGS
+
 namespace RMF {
-Exception::~Exception() throw() {}
+Exception::Exception() {
+}
+
 const char *Exception::what() const throw() {
-  static const int buf_size=10000;
-  static char buffer[buf_size]={};
   try {
-    using std::operator<<;
+    if (message_.empty()) {
+      message_ = get_message(*this);
+    }
+  } catch (...) {}
+  return message_.c_str();
+}
+
+Exception::~Exception() throw() {
+}
+std::string get_message(const Exception &e) {
+  using namespace RMF::internal::ErrorInfo;
+  try {
     std::ostringstream oss;
-    oss << "A " << get_type() << " error occurred: ";
-    oss << '"' << message_ << '"';
-    if (!operation_.empty()) {
-      oss << " on " << operation_;
+    const std::string *type = boost::get_error_info<Type>(e);
+    if (type) {
+      oss << *type << "Error:";
     }
-    if (!file_name_.empty()) {
-      oss << ". File is \"" << file_name_ << "\"";
+    const std::string *expression = boost::get_error_info<Expression>(e);
+    if (expression) {
+      oss << " " << *expression;
     }
-    std::string str= oss.str();
-    std::copy(str.begin(),
-              str.begin()+std::min<int>(oss.str().size()+1, buf_size),
-              buffer);
+    const std::string *message = boost::get_error_info<Message>(e);
+    if (message) {
+      oss << " \"" << *message << "\"";
+    }
+    const std::string *operation = boost::get_error_info<Operation>(e);
+    if (operation) {
+      oss << " while " << *operation;
+    }
+    const std::string *component = boost::get_error_info<Component>(e);
+    if (component) {
+      oss << " component \"" << *component << "\"";;
+    }
+    const std::string *file = boost::get_error_info<File>(e);
+    if (file) {
+      oss << " in file \"" << *file << "\"";;
+    }
+    const int *frame = boost::get_error_info<Frame>(e);
+    if (frame) {
+      oss << " at frame " << *frame;
+    }
+    const int *node = boost::get_error_info<Node>(e);
+    if (node) {
+      oss << " at node " << *node;
+    }
+    const std::string *key = boost::get_error_info<Key>(e);
+    if (key) {
+      oss << " processing key \"" << *key << "\"";;
+    }
+    const std::string *category = boost::get_error_info<Category>(e);
+    if (category) {
+      oss << " processing category \"" << *category << "\"";;
+    }
+    const std::string *decorator = boost::get_error_info<Decorator>(e);
+    if (decorator) {
+      oss << " processing decorator of type " << *decorator;
+    }
+    const std::string *source = boost::get_error_info<SourceFile>(e);
+    if (source) {
+      oss << " at " << *source << ":" << *boost::get_error_info<SourceLine>(e);
+    }
+    const std::string *function = boost::get_error_info<Function>(e);
+    if (function) {
+      oss << " in " << *function;
+    }
+    return oss.str();
   } catch (...) {
+    return "Error formatting message.";
   }
-  return buffer;
+}
+UsageException::UsageException(): Exception() {
+}
+UsageException::~UsageException() throw() {
 }
 
-  void Exception::set_operation_name(const char *name) throw() {
-    try {
-      operation_=name;
-    } catch (...){}
-  }
-  void Exception::set_file_name(const char *name) throw() {
-    try {
-      file_name_=name;
-    } catch (...){}
-  }
-UsageException::UsageException(const char *msg): Exception(msg){}
-UsageException::~UsageException() throw() {}
-const char *UsageException::get_type() const {
-  static const char *name="usage";
-  return name;
+IOException::IOException(): Exception() {
+}
+IOException::~IOException() throw() {
+}
+InternalException::InternalException(): Exception() {
 }
 
-IOException::IOException(const char *msg): Exception(msg){}
-IOException::~IOException() throw() {}
-const char *IOException::get_type() const {
-  static const char *name="IO";
-  return name;
-}
-InternalException::InternalException(const char *msg): Exception(msg){}
-
-InternalException::~InternalException() throw() {}
-const char *InternalException::get_type() const {
-  static const char *name="Internal";
-  return name;
+InternalException::~InternalException() throw() {
 }
 
 } /* namespace RMF */
+
+RMF_DISABLE_WARNINGS

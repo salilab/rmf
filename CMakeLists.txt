@@ -2,34 +2,75 @@ cmake_minimum_required(VERSION 2.8)
 project(RMF)
 
 # needs to be in main CMakeLists.txt
-ENABLE_TESTING()
+enable_testing()
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
+
+set(RMF_INCLUDE_PATH "" CACHE INTERNAL "" FORCE)
+include(FindAvroCPP)
+
+if ((${AvroCPP_LIBRARY} MATCHES "AvroCPP_LIBRARY-NOTFOUND")
+    OR (${avrogencpp_PROGRAM} MATCHES "avrogencpp_PROGRAM-NOTFOUND"))
+  if ((NOT ${AvroCPP_LIBRARY} MATCHES "AvroCPP_LIBRARY-NOTFOUND")
+    OR (NOT ${avrogencpp_PROGRAM} MATCHES "avrogencpp_PROGRAM-NOTFOUND"))
+    message(SEND_ERROR "A partial avro install exists on the system, this is a bad thing: "
+     ${AvroCPP_LIBRARY} " " ${avrogencpp_PROGRAM} " " ${AvroCPP_HEADER})
+  endif()
+  message(STATUS "Using internal Avro")
+  add_subdirectory(AvroCpp)
+  set(avrogencpp_PROGRAM "${PROJECT_BINARY_DIR}/AvroCpp/avrogencpp")
+  set(avrogen_DEPENDENCY "${PROJECT_BINARY_DIR}/AvroCpp/avrogencpp")
+  include_directories("${PROJECT_SOURCE_DIR}/AvroCpp")
+  set(AvroCPP_LIBRARY avrocpp)
+  set(RMF_AVRO "internal" CACHE INTERNAL "" FORCE)
+else()
+  message(STATUS "Using external Avro at " ${AvroCPP_LIBRARY})
+  include_directories(${AvroCPP_INCLUDE_DIR})
+  link_directories(${AvroCPP_LIBRARY_DIR})
+  set(RMF_AVRO "external" CACHE INTERNAL "" FORCE)
+endif()
+
+if(POLICY CMP0017)
+cmake_policy(SET CMP0017 NEW)
+endif(POLICY CMP0017)
+
+include(FindLog4CXX)
+
+if (${Log4CXX_LIBRARY} MATCHES "Log4CXX_LIBRARY-NOTFOUND")
+  set(RMF_HAS_LOG4CXX "0" CACHE BOOL "Whether to use Log4CXX")
+  message(STATUS "Logging disabled")
+  set(Log4CXX_LIBRARY "")
+else()
+  message(STATUS "Logging enabled")
+  set(RMF_HAS_LOG4CXX "1" CACHE BOOL "Whether to use Log4CXX")
+  include_directories(${Log4CXX_INCLUDE_DIR})
+  link_directories(${Log4CXX_LIBRARY_DIR})
+endif()
+
+set(Boost_NO_BOOST_CMAKE ON)
 find_package(Boost COMPONENTS system filesystem thread program_options
-REQUIRED)
+  REQUIRED)
 
 include(GNUInstallDirs)
 
 include(FindHDF5)
 find_package(HDF5 REQUIRED)
 
-include(FindProtobuf)
-find_package(Protobuf)
-include_directories(${PROTOBUF_INCLUDE_DIR})
-#lib_directories(${PROTOBUF_LIB_DIR})
+include_directories(${HDF5_INCLUDE_DIRS})
+set(RMF_INCLUDE_PATH ${RMF_INCLUDE_PATH} ${HDF5_INCLUDE_DIRS}
+    CACHE INTERNAL "" FORCE)
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
+include(TestForExtern)
+
+include_directories(${Boost_INCLUDE_DIR})
+link_directories(${Boost_LIBRARY_DIRS})
 
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR})
 
-set (RMF_VERSION_MAJOR 0)
-set (RMF_VERSION_MINOR 9)
+set (RMF_VERSION_MAJOR 1)
+set (RMF_VERSION_MINOR 0)
 
-if (PROTOBUF_FOUND)
-  set(PROTOBUF_FOUND_INT 1)
-  PROTOBUF_GENERATE_CPP(protobuf_source protobuf_header "data/RMF.proto")
-else(PROTOBUF_FOUND)
-  set(PROTOBUF_FOUND_INT 0)
-endif(PROTOBUF_FOUND)
+set(RMF_HAS_DEBUG_VECTOR 0 CACHE BOOL "Whether to use a bounds checked vector")
 
 # configure a header file to pass some of the CMake settings
 # to the source code
@@ -38,36 +79,35 @@ configure_file (
   "${PROJECT_BINARY_DIR}/include/RMF/config.h"
   )
 
-
-FILE(GLOB SOURCES "src/*.cpp" "src/internal/*.cpp")
-FILE(GLOB HEADERS "include/RMF/*.h" "include/internal/RMF/*.h")
-
 include_directories("${PROJECT_BINARY_DIR}/include"
-"${PROJECT_SOURCE_DIR}/include" ${HDF5_INCLUDE_DIRS} "${PROJECT_BINARY_DIR}")
+  "${PROJECT_SOURCE_DIR}/include")
 
-add_library(RMF SHARED ${SOURCES} ${protobuf_source}
-${protobuf_header} ${HEADERS})
+include(data/CMakeLists.txt)
+include(include/CMakeLists.txt)
 
-target_link_libraries(RMF
-    ${Boost_FILESYSTEM_LIBRARY}
-    ${Boost_SYSTEM_LIBRARY}
-    ${Boost_THREAD_LIBRARY}
-    ${PROTOBUF_LIBRARY}
-    ${HDF5_LIBRARIES}
-)
+include(src/CMakeLists.txt)
+add_subdirectory(bin)
+# swig support is a little broken
 
 if (DEFINED CMAKE_INSTALL_PYTHONDIR)
-  message(STATUS "CMAKE_INSTALL_PYTHONDIR defined as ${CMAKE_INSTALL_PYTHONDIR}")
+  #message(STATUS "CMAKE_INSTALL_PYTHONDIR defined as ${CMAKE_INSTALL_PYTHONDIR}")
 else()
   set(CMAKE_INSTALL_PYTHONDIR "${CMAKE_INSTALL_LIBDIR}/python/site_packages")
 endif()
 
-ADD_SUBDIRECTORY(bin)
-ADD_SUBDIRECTORY(pyext)
-ADD_SUBDIRECTORY(test)
-ADD_SUBDIRECTORY(benchmark)
-ADD_SUBDIRECTORY(doc)
+if (DEFINED CMAKE_INSTALL_SWIGDIR)
+  #message(STATUS "CMAKE_INSTALL_SWIGDIR defined as ${CMAKE_INSTALL_SWIGDIR}")
+else()
+  set(CMAKE_INSTALL_SWIGDIR "${CMAKE_INSTALL_PREFIX}/share/RMF/swig")
+endif()
 
-INSTALL(TARGETS RMF DESTINATION ${CMAKE_INSTALL_LIBDIR})
-INSTALL(DIRECTORY ${PROJECT_SOURCE_DIR}/include/RMF  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-INSTALL(DIRECTORY ${PROJECT_BINARY_DIR}/include/RMF  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+add_subdirectory(swig)
+
+include(test/CMakeLists.txt)
+include(examples/CMakeLists.txt)
+include(benchmark/CMakeLists.txt)
+include(doc/CMakeLists.txt)
+
+add_custom_target(RMF_all DEPENDS RMF_benchmarks RMF_bins RMF_wrapper RMF_tests)
+add_custom_target(RMF_build DEPENDS RMF_bins RMF_wrapper)

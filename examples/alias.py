@@ -1,8 +1,10 @@
+## \example alias.py
+## Show using aliases to provide two different organization schemes
+## for manipulating a hierarchy.
 import RMF
-import IMP.base
 
 # find the name for a temporary file to use to for writing the hdf5 file
-tfn=IMP.base.create_temporary_file_name("aliases", ".rmf")
+tfn=RMF._get_temporary_file_path("aliases.rmf")
 print "File is", tfn
 
 # open the temporary file, clearing any existing contents
@@ -44,9 +46,10 @@ redh= crh.add_child("red", RMF.REPRESENTATION)
 greenh= crh.add_child("green", RMF.REPRESENTATION)
 blueh= crh.add_child("blue", RMF.REPRESENTATION)
 
+af= RMF.AliasFactory(fh)
 for r in red:
-    RMF.add_child_alias(redh, r)
+    RMF.add_child_alias(af, redh,  r)
 for g in green:
-    RMF.add_child_alias(greenh, g)
+    RMF.add_child_alias(af, greenh, g)
 for b in blue:
-    RMF.add_child_alias(blueh, b)
+    RMF.add_child_alias(af, blueh, b)

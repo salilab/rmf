@@ -2,114 +2,104 @@
  *  \file RMF/NodeConstHandle.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2012 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
-#ifndef IMPLIBRMF_NODE_CONST_HANDLE_H
-#define IMPLIBRMF_NODE_CONST_HANDLE_H
+#ifndef RMF_NODE_CONST_HANDLE_H
+#define RMF_NODE_CONST_HANDLE_H
 
 #include <RMF/config.h>
-#include "HDF5Group.h"
 #include "internal/SharedData.h"
 #include "types.h"
 #include "NodeID.h"
 #include "constants.h"
 #include <boost/intrusive_ptr.hpp>
 
+RMF_ENABLE_WARNINGS
 
+#define RMF_NODE_CATCH(extra_info)                                      \
+  catch (Exception &e) {                                                \
+    RMF_RETHROW(File(get_file().get_name())                             \
+                << Node(get_id().get_index())                           \
+                << Frame(get_file().get_current_frame().get_id().get_index()) \
+                << Operation(BOOST_CURRENT_FUNCTION)                    \
+                extra_info, e);                                         \
+  }
 
-#define IMP_HDF5_NODE_CONST_KEY_TYPE_METHODS(lcname, UCName, PassValue, \
-                                             ReturnValue,               \
-                                             PassValues, ReturnValues)  \
+#define RMF_NODE_CATCH_KEY(k, extra_info)                                     \
+  RMF_NODE_CATCH(<< Key(get_file().get_name(k))                               \
+                 << Category(get_file().get_name(get_file().get_category(k))) \
+                 extra_info)
+
+#define RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DECL(lcname, UCName, PassValue, \
+                                                  ReturnValue,               \
+                                                  PassValues, ReturnValues)  \
   /** \brief get the value of the attribute k from this node
       The node must have the attribute and if it is a per-frame
       attribute, and frame is not specified then frame 0 is
       used.
-  */                                                                    \
-ReturnValue get_value(UCName##Key k,                                    \
-                      int frame=ALL_FRAMES) const {                     \
-  RMF_USAGE_CHECK(frame >=0 || !k.get_is_per_frame(),               \
-                      "No frame specified for per-frame data.");        \
-  RMF_USAGE_CHECK(get_has_value(k, frame),                          \
-                      internal::get_error_message("Node ", get_name(),  \
-                                     " does not have a value for key ", \
-                                                  shared_->get_name(k), \
-                                                  " on frame ",         \
-                                                  frame));              \
-  return get_value_always(k, frame);                                    \
-}                                                                       \
-/** \brief  Return the value of the attribute for every frame in the file.
-    The null value is returned for frames that don't have the value.
-*/                                                                      \
-ReturnValues get_all_values(UCName##Key k) const {                      \
-  return shared_->get_all_values(node_, k);                             \
-}                                                                       \
-/** Return the attribute value or TypeTraits::get_null_value() if the
-    node does not have the attribute. In python the method a value equal to
-    eg RMF.NullFloat if the attribute is not there.*/                   \
-ReturnValue get_value_always(UCName##Key k,                             \
-                             unsigned int frame=0) const {              \
-  if (k== UCName##Key()) return UCName##Traits::get_null_value();       \
-  return shared_->get_value(node_, k, frame);                           \
-}                                                                       \
-/** If the default key is passed, false is returned.*/                  \
-bool get_has_value(UCName##Key k, unsigned int frame=0) const {         \
-  if (k== UCName##Key()) return false;                                  \
-  return !UCName##Traits::get_is_null_value(get_value_always(k,         \
-                                                             frame));   \
-}                                                                       \
-ReturnValues get_values_always(const UCName##Key##s& k,                 \
-                               unsigned int frame=0) const {            \
-  if (k.empty()) return ReturnValues();                                 \
-  return shared_->get_values(node_, k, frame);                          \
-}                                                                       \
-ReturnValues get_values(const UCName##Key##s& k,                        \
-                        int frame=ALL_FRAMES) const {                   \
-  RMF_USAGE_CHECK(frame >=0 || !k[0].get_is_per_frame(),            \
-                      "No frame specified for per-frame data.");        \
-  RMF_USAGE_CHECK(get_has_value(k[0], frame),                       \
-                      internal::get_error_message("Node ", get_name(),  \
-                                     " does not have a value for key ", \
-                                                  shared_->get_name(k[0]), \
-                                                  " on frame ",         \
-                                                  frame));              \
-  return get_values_always(k, frame);                                   \
-}                                                                       \
+   */                                         \
+  ReturnValue get_value(UCName##Key k) const; \
+  /** \brief  Return the value of the attribute for every frame in the file.
+      The null value is returned for frames that don't have the value.
+   */                                               \
+  ReturnValues get_all_values(UCName##Key k) const; \
+  /** Return the attribute value or TypeTraits::get_null_value() if the
+      node does not have the attribute. In python the method a value equal to
+      eg RMF.NullFloat if the attribute is not there.*/           \
+  ReturnValue get_value_always(UCName##Key k) const;              \
+  /** If the default key is passed, false is returned.*/          \
+  bool get_has_value(UCName##Key k) const;                        \
+  ReturnValues get_values_always(const UCName##Key##s & k) const; \
+  ReturnValues get_values(const UCName##Key##s & k) const;        \
+  /** Return true if the node has data for that key that is specific
+      to the current frame, as opposed to static data.*/ \
+  bool get_has_frame_value(UCName##Key k) const;
 
+RMF_VECTOR_DECL(NodeConstHandle);
 
 namespace RMF {
 
 class FileConstHandle;
-class NodeConstHandle;
-// for children
-typedef vector<NodeConstHandle> NodeConstHandles;
-
 //! The types of the nodes.
 enum NodeType {
-#if !defined(IMP_DOXYGEN) && !defined(SWIG)
-ROOT,
+  //! The root node
+  ROOT,
+  //! Represent part of a molecule
+  REPRESENTATION,
+  //! Store a geometric object
+  GEOMETRY,
+  //! Store information about some feature of the system
+  /** For example, the particles involved in scoring
+      functions and their score can be encoded as feature
+      nodes.
+   */
+  FEATURE,
+  /** Store a reference to another node. This node should
+      be an alias decorator node and have no other data,
+      at least for now. Aliases should be thought of as simply referencing
+      existing objects in the scene, not creating new objects.
+   */
+  ALIAS,
+  //! Arbitrary data that is not standardized
+  /** Programs can use these keys to store any extra data
+      they want to put into the file.
+   */
+  CUSTOM,
+  //! A link between two atoms
+  /** These are mostly for display purposes eg to show a wireframe
+      view of the molecule. */
+  BOND,
+  //! A node that is purely there for organizational purposes
+  /** This includes nodes that are just RMF::ReferenceFrame nodes.
+   */
+  ORGANIZATIONAL,
+#ifndef RMF_DOXYGEN
+  //! An internal link to another node
+  LINK
 #endif
-//! Represent part of a molecule
-REPRESENTATION,
-//! Store a geometric object
-GEOMETRY,
-//! Store information about some feature of the system
-/** For example, the particles involved in scoring
-    functions and their score can be encoded as feature
-    nodes.
-*/
-FEATURE,
-/** Store a reference to another node. This node should
-    be an alias decorator node and have no other data,
-    at least for now.
-*/
-ALIAS,
-//! Arbitrary data that is not standardized
-/** Programs can use these keys to store any extra data
-    they want to put into the file.
-*/
-CUSTOM};
+};
 
 /** Return a string version of the type name.*/
 RMFEXPORT
@@ -117,12 +107,11 @@ std::string get_type_name(NodeType t);
 
 
 
-#if !defined(IMP_DOXYGEN) && !defined(SWIG)
-inline std::ostream &operator<<(std::ostream &out,
-                                NodeType t) {
-  using std::operator<<;
-  return out << get_type_name(t);
-}
+#if !defined(RMF_DOXYGEN) && !defined(SWIG)
+RMFEXPORT std::ostream &operator<<(std::ostream &out,
+                                   NodeType     t);
+RMFEXPORT std::istream &operator>>(std::istream &in,
+                                   NodeType     &t);
 #endif
 
 
@@ -137,7 +126,7 @@ class RootConstHandle;
     not have that attribute.
 
     See the NodeHandle for modifying the contents.
-*/
+ */
 class RMFEXPORT NodeConstHandle {
   int node_;
   friend class FileHandle;
@@ -149,24 +138,29 @@ class RMFEXPORT NodeConstHandle {
     else if (shared_.get() > o.shared_.get()) return 1;
     else return 0;
   }
-#if !defined(SWIG) && !defined(IMP_DOXYGEN)
+#if !defined(SWIG) && !defined(RMF_DOXYGEN)
 protected:
-  int get_node_id() const {return node_;}
-  internal::SharedData* get_shared_data() const {return shared_.get();}
- public:
+  internal::SharedData* get_shared_data() const {
+    return shared_.get();
+  }
+public:
+  int get_node_id() const {
+    return node_;
+  }
   NodeConstHandle(int node, internal::SharedData *shared);
 #endif
 
- public:
+public:
   RMF_COMPARISONS(NodeConstHandle);
   RMF_HASHABLE(NodeConstHandle, return node_);
-  NodeConstHandle():node_(-1){}
+  NodeConstHandle(): node_(-1) {
+  }
 
   //! Return the number of child nodes
   std::string get_name() const {
     return shared_->get_name(node_);
   }
-  NodeConstHandles  get_children() const;
+  NodeConstHandles get_children() const;
 
 #ifndef SWIG
   /** Each node can be associated at runtime with an
@@ -183,13 +177,13 @@ protected:
       Either the association must not have been set before
       or overwrite must be true. If overwrite is true,
       the type must be the same as the old type.
-  */
+   */
   template <class T>
-  void set_association(const T& v, bool overwrite=false) {
+  void set_association(const T& v, bool overwrite = false) {
     shared_->set_association(node_, v, overwrite);
   }
 #else
-  void set_association(void* v, bool overwrite=false);
+  void set_association(void* v, bool overwrite = false);
 #endif
   //! Return the associated pointer for this node
   /** An exception will be thrown if it doesn't have one.*/
@@ -204,7 +198,7 @@ protected:
 
   //! get the type of this node
   NodeType get_type() const {
-    return NodeType(shared_->get_type(1, node_));
+    return NodeType(shared_->get_type(node_));
   }
   //! get a unique id for this node
   NodeID get_id() const {
@@ -216,11 +210,11 @@ protected:
       Type is one of the \ref rmf_types "standard types".
 
       @{
-  */
-  RMF_FOREACH_TYPE(IMP_HDF5_NODE_CONST_KEY_TYPE_METHODS);
+   */
+  RMF_FOREACH_TYPE(RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DECL);
   /** @} */
-  RMF_SHOWABLE(NodeHandle,
-                   get_name() << "(" << get_type() << ", " << node_ << ")");
+  RMF_SHOWABLE(NodeConstHandle,
+               get_name() << "(" << get_type() << ", " << node_ << ")");
 
   FileConstHandle get_file() const;
 };
@@ -228,30 +222,25 @@ protected:
 /** Print out the hierarchy as an ascii tree.
  */
 RMFEXPORT void show_hierarchy(NodeConstHandle root,
-                              std::ostream &out= std::cout);
+                              std::ostream    &out = std::cout);
 
 /** Print out the hierarchy as an ascii tree along with values
     as described by the frame parameters. If end_frame is -1,
     the only one frame is shown.
  */
 RMFEXPORT void show_hierarchy_with_values(NodeConstHandle root,
-                                          unsigned int begin_frame,
-                                          int end_frame=-1, int step=-1,
-                                          std::ostream &out= std::cout);
+                                          std::ostream    &out = std::cout);
 
 /** Print out the hierarchy as an ascii tree marking what decorators
     apply where.
  */
 RMFEXPORT void show_hierarchy_with_decorators(NodeConstHandle root,
-                                              bool verbose=false,
-                                              unsigned int frame=0,
-                                              std::ostream &out= std::cout);
+                                              bool            verbose = false,
+                                              std::ostream    &out = std::cout);
 
-
-/** Aliases are nodes that refer to other nodes. Resolving them can
-      result in a graph that is no longer a tree or even a DAG.*/
-RMFEXPORT NodeConstHandles get_children_resolving_aliases(NodeConstHandle nh);
 
 } /* namespace RMF */
 
-#endif /* IMPLIBRMF_NODE_CONST_HANDLE_H */
+RMF_DISABLE_WARNINGS
+
+#endif /* RMF_NODE_CONST_HANDLE_H */

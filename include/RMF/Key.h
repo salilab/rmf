@@ -2,90 +2,69 @@
  *  \file RMF/Key.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2012 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
-#ifndef IMPLIBRMF_KEY_H
-#define IMPLIBRMF_KEY_H
+#ifndef RMF_KEY_H
+#define RMF_KEY_H
 
 #include <RMF/config.h>
 #include "Category.h"
 #include "types.h"
-#include "HDF5DataSetD.h"
-#if !defined(SWIG) && !defined(IMP_DOXYGEN)
+
+RMF_ENABLE_WARNINGS
+
+#if !defined(SWIG) && !defined(RMF_DOXYGEN)
 namespace RMF {
-  namespace internal {
-    class SharedData;
-    class HDF5SharedData;
-  } // namespace internal
+namespace internal {
+class SharedData;
+class HDF5SharedData;
+}   // namespace internal
 } // namespace RMF
 #endif
 
 namespace RMF {
 
 /** A key referencing a particular piece of data. They are
- comparable, hashable and printable, but otherwise opaque.*/
-  template <class TypeTraitsT, int Arity>
+   comparable, hashable and printable, but otherwise opaque.*/
+template <class TypeTraitsT>
 class Key {
   friend class FileConstHandle;
   friend class NodeConstHandle;
   friend class NodeHandle;
   friend class internal::SharedData;
-    friend class internal::HDF5SharedData;
+  friend class internal::HDF5SharedData;
   int i_;
-  CategoryD<Arity> ci_;
-  bool pf_;
   int compare(const Key &o) const {
     if (i_ < o.i_) return -1;
     else if (i_ > o.i_) return 1;
-    else if (ci_ < o.ci_) return -1;
-    else if (ci_ > o.ci_) return 1;
-    else if (pf_ == o.pf_) return 0;
-    else if (!pf_) return 1;
-    else return -1;
+    else return 0;
   }
 public:
-#if !defined(IMP_DOXYGEN) && !defined(SWIG)
-  Key(CategoryD<Arity> category_id,
-      int i, bool pf): i_(i), ci_(category_id),
-                       pf_(pf) {}
-  bool get_is_per_frame() const {
-    return pf_;
+#if !defined(RMF_DOXYGEN) && !defined(SWIG)
+  Key(int i): i_(i) {
+    RMF_USAGE_CHECK(i >= 0, "Initialzing with invalid index");
   }
-  CategoryD<Arity> get_category() const {
-    return ci_;
-  }
-  int get_index() const {
+  int get_id() const {
     return i_;
   }
-    int get_arity() const {
-      return Arity;
-    }
 #endif
   typedef TypeTraitsT TypeTraits;
-  Key(): i_(-1), ci_(), pf_(false) {}
-    RMF_SHOWABLE(Key, "(Category index: " << ci_
-                     << " per frame: " << (pf_?'T':'F')
-                     << " index: " << i_ << ")");
+  Key(): i_(-1) {
+  }
+  RMF_SHOWABLE(Key, "(id: " << i_ << ")");
   RMF_COMPARISONS(Key);
-  RMF_HASHABLE(Key, return i_*ci_.get_index());
+  RMF_HASHABLE(Key, return i_);
 };
 
 
-#ifndef IMP_DOXYGEN
+} /* namespace RMF */
 
-#define RMF_DECLARE_KEY(lcname, Ucname, PassValue, ReturnValue,     \
-                            PassValues, ReturnValues)                   \
-  typedef Key<Ucname##Traits, 1> Ucname##Key;                           \
-  typedef vector<Ucname##Key> Ucname##Keys;                        \
-  typedef Key<Ucname##Traits, 2> Pair##Ucname##Key;                     \
-  typedef vector<Pair##Ucname##Key> Pair##Ucname##Keys;            \
-  typedef Key<Ucname##Traits, 3> Triplet##Ucname##Key;                  \
-  typedef vector<Triplet##Ucname##Key> Triplet##Ucname##Keys;      \
-  typedef Key<Ucname##Traits, 4> Quad##Ucname##Key;                     \
-  typedef vector<Quad##Ucname##Key> Quad##Ucname##Keys
 
+#  define RMF_DECLARE_KEY(lcname, Ucname, PassValue, ReturnValue, \
+                          PassValues, ReturnValues)               \
+  RMF_TEMPLATE_DECL(Key, Ucname##Traits, Ucname##Key)
 
 
 /** \name Key types
@@ -101,11 +80,11 @@ public:
     data set
     - IntsKey: store a list of arbitrary integers
     @{
-*/
+ */
 RMF_FOREACH_TYPE(RMF_DECLARE_KEY);
 /** @} */
-#endif
 
-} /* namespace RMF */
+RMF_DISABLE_WARNINGS
 
-#endif /* IMPLIBRMF_KEY_H */
+
+#endif /* RMF_KEY_H */
