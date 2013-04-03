@@ -18,6 +18,38 @@
 				"buffer_size": 11609,
 				"line_ending": "Unix"
 			}
+		},
+		{
+			"file": "CMakeLists.txt",
+			"settings":
+			{
+				"buffer_size": 2453,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/backend/avro/avro_schemas.h",
+			"settings":
+			{
+				"buffer_size": 3725,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/CMakeLists.txt",
+			"settings":
+			{
+				"buffer_size": 477,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "test/CMakeLists.txt",
+			"settings":
+			{
+				"buffer_size": 1101,
+				"line_ending": "Unix"
+			}
 		}
 	],
 	"build_system": "Packages/User/scons_all.sublime-build",
@@ -48,6 +80,8 @@
 	},
 	"file_history":
 	[
+		"/Users/drussel/src/rmf/rmf/src/backend/avro/CMakeLists.txt",
+		"/Users/drussel/src/rmf/rmf/AvroCpp/CMakeLists.txt",
 		"/Users/drussel/src/rmf/rmf/include/RMF/internal/hash.h",
 		"/Users/drussel/src/rmf/rmf/scripts/make-decorators.py",
 		"/Users/drussel/src/rmf/rmf/swig/RMF_HDF5.i",
@@ -142,7 +176,6 @@
 		"/Users/drussel/src/rmf/rmf/include/RMF/utility.h",
 		"/Users/drussel/src/rmf/rmf/pyext/RMF.i",
 		"/Users/drussel/src/rmf/rmf/AvroCpp/test/AvrogencppTests.cc",
-		"/Users/drussel/src/rmf/rmf/AvroCpp/CMakeLists.txt",
 		"/Users/drussel/src/rmf/rmf/include/RMF/exceptions.h",
 		"/Users/drussel/src/rmf/rmf/pyext/CMakeLists.txt",
 		"/Users/drussel/src/imp/imp/modules/base/include/exception.h",
@@ -190,6 +223,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"_s",
 			"Python",
 			"FileBufferCopyIn",
 			"IMP",
@@ -227,6 +261,7 @@
 	"groups":
 	[
 		{
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -252,7 +287,117 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 7219.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "CMakeLists.txt",
+					"settings":
+					{
+						"buffer_size": 2453,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								787,
+								787
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/User/CMake Listfile.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 467.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/backend/avro/avro_schemas.h",
+					"settings":
+					{
+						"buffer_size": 3725,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 65.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/CMakeLists.txt",
+					"settings":
+					{
+						"buffer_size": 477,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								294,
+								321
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/User/CMake Listfile.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "test/CMakeLists.txt",
+					"settings":
+					{
+						"buffer_size": 1101,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								390,
+								390
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/User/CMake Listfile.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
