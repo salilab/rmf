@@ -12,13 +12,10 @@
 	"buffers":
 	[
 		{
-			"contents": "",
-			"file": "/Users/drussel/src/dotfiles/Library/Application Support/Sublime Text 2/Packages/Rails/form_for-submit.sublime-snippet",
-			"file_size": -1,
-			"file_write_time": -1,
+			"file": "scripts/make-decorators.py",
 			"settings":
 			{
-				"buffer_size": 0,
+				"buffer_size": 11609,
 				"line_ending": "Unix"
 			}
 		}
@@ -51,16 +48,24 @@
 	},
 	"file_history":
 	[
-		"/Users/drussel/src/rmf/rmf/doc/mapping.dox",
+		"/Users/drussel/src/rmf/rmf/include/RMF/internal/hash.h",
 		"/Users/drussel/src/rmf/rmf/scripts/make-decorators.py",
-		"/Users/drussel/src/rmf/rmf/src/backend/avro/MultipleAvroFileBase.cpp",
+		"/Users/drussel/src/rmf/rmf/swig/RMF_HDF5.i",
+		"/Users/drussel/src/rmf/rmf/bin/rmf_pdb.cpp",
+		"/Users/drussel/src/rmf/rmf/include/RMF/compiler_macros.h",
+		"/Users/drussel/src/rmf/rmf/include/RMF/internal/swig_helpers.h",
+		"/Users/drussel/src/rmf/rmf/swig/RMF.i",
+		"/Users/drussel/src/rmf/rmf/bin/rmf_slice.cpp",
 		"/Users/drussel/src/rmf/rmf/swig/CMakeLists.txt",
+		"/Users/drussel/src/dotfiles/Library/Application Support/Sublime Text 2/Packages/Rails/form_for-submit.sublime-snippet",
+		"/Users/drussel/src/rmf/rmf/include/RMF/infrastructure_macros.h",
+		"/Users/drussel/src/rmf/rmf/AvroCpp/impl/FileStream.cc",
+		"/Users/drussel/src/rmf/rmf/doc/mapping.dox",
+		"/Users/drussel/src/rmf/rmf/src/backend/avro/MultipleAvroFileBase.cpp",
 		"/Users/drussel/src/rmf/rmf/include/RMF/Category.h",
 		"/Users/drussel/src/rmf/rmf/include/RMF/constants.h",
 		"/Users/drussel/src/rmf/rmf/include/RMF/CoordinateTransformer.h",
 		"/Users/drussel/src/rmf/rmf/include/RMF/decorator_utility.h",
-		"/Users/drussel/src/rmf/rmf/swig/RMF.i",
-		"/Users/drussel/src/rmf/rmf/swig/RMF_HDF5.i",
 		"/Users/drussel/src/rmf/rmf/bin/rmf_interpolate.cpp",
 		"/Users/drussel/src/rmf/rmf/include/RMF/Decorator.h",
 		"/Users/drussel/src/rmf/rmf/include/RMF/HDF5/types.h",
@@ -185,6 +190,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Python",
+			"FileBufferCopyIn",
 			"IMP",
 			"get_all_values_impl",
 			"get_all_values_helper",
@@ -220,15 +227,14 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/Users/drussel/src/dotfiles/Library/Application Support/Sublime Text 2/Packages/Rails/form_for-submit.sublime-snippet",
+					"file": "scripts/make-decorators.py",
 					"settings":
 					{
-						"buffer_size": 0,
+						"buffer_size": 11609,
 						"regions":
 						{
 						},
@@ -241,10 +247,12 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/XML/XML.tmLanguage"
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 7219.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
