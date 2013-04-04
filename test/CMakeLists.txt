@@ -1,5 +1,6 @@
 
-file(GLOB python_tests "test/test_*.py")
+include("${PROJECT_SOURCE_DIR}/test/PyTests.cmake")
+include("${PROJECT_SOURCE_DIR}/test/CppTests.cmake")
 
 foreach (test ${python_tests})
    GET_FILENAME_COMPONENT(name ${test} NAME_WE)
@@ -10,8 +11,6 @@ foreach (test ${python_tests})
   set_tests_properties("RMF.${name}" PROPERTIES TIMEOUT 2)
   #add_dependencies(${name} RMFPython)
 endforeach()
-
-file(GLOB cpp_tests "test/test_*.cpp")
 
 foreach (test ${cpp_tests})
    GET_FILENAME_COMPONENT(name ${test} NAME_WE)
