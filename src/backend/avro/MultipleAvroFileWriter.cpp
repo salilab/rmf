@@ -7,11 +7,13 @@
  */
 
 #include "avro_schemas.h"
+#include "avro_schema_io.h"
 #include "MultipleAvroFileWriter.h"
 #include <RMF/internal/paths.h>
 #include <RMF/decorators.h>
 #include <RMF/log.h>
 #include <boost/lexical_cast.hpp>
+#include <boost/filesystem.hpp>
 
 RMF_ENABLE_WARNINGS
 

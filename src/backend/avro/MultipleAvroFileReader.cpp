@@ -7,6 +7,7 @@
  */
 
 #include "avro_schemas.h"
+#include <RMF/log.h>
 #include "MultipleAvroFileReader.h"
 #include <boost/version.hpp>
 #include <boost/filesystem/path.hpp>

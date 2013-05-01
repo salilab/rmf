@@ -7,6 +7,8 @@
  */
 
 #include "avro_schemas.h"
+#include "avro_schema_io.h"
+#include "AllJSON.h"
 #include "SingleAvroFile.h"
 #include <RMF/internal/paths.h>
 #include <RMF/decorators.h>

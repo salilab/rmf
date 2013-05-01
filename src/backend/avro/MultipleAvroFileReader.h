@@ -14,8 +14,8 @@
 #include <RMF/infrastructure_macros.h>
 #include "MultipleAvroFileBase.h"
 #include <backend/avro/AvroCpp/api/DataFile.hh>
-#include <backend/avro/AllJSON.h>
-#include <backend/avro/FrameJSON.h>
+#include "AllJSON.h"
+#include "FrameJSON.h"
 #include <boost/shared_ptr.hpp>
 
 RMF_ENABLE_WARNINGS
