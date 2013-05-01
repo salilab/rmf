@@ -23,7 +23,6 @@
 #include "Schema.hh"
 #include "Node.hh"
 
-using std::string;
 using std::make_pair;
 using boost::format;
 using boost::shared_ptr;
@@ -33,7 +32,7 @@ namespace rmf_avro {
 
 typedef std::map<Name, NodePtr> SymbolMap;
 
-static bool validate(const NodePtr &node, SymbolMap &symbolMap) 
+static bool validate(const NodePtr &node, SymbolMap &symbolMap)
 {
     if (! node->isValid()) {
         throw Exception(format("Schema is invalid, due to bad node of type %1%")
@@ -77,7 +76,7 @@ static bool validate(const NodePtr &node, SymbolMap &symbolMap)
             // map (which could potentially create circular shared pointer
             // links that could not be easily freed), replace this node with a
             // symbolic link to the original one.
-            
+
             node->setLeafToSymbolic(i, symbolMap.find(leaf->name())->second);
         }
     }
@@ -101,7 +100,7 @@ ValidSchema::ValidSchema(const Schema &schema) : root_(schema.root())
     validate(root_);
 }
 
-ValidSchema::ValidSchema() : root_(NullSchema().root()) 
+ValidSchema::ValidSchema() : root_(NullSchema().root())
 {
     validate(root_);
 }
@@ -113,18 +112,17 @@ ValidSchema::setSchema(const Schema &schema)
     validate(root_);
 }
 
-void 
+void
 ValidSchema::toJson(std::ostream &os) const
-{ 
+{
     root_->printJson(os, 0);
     os << '\n';
 }
 
-void 
+void
 ValidSchema::toFlatList(std::ostream &os) const
-{ 
+{
     root_->printBasicInfo(os);
 }
 
 } // namespace rmf_avro
-
