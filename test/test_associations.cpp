@@ -12,12 +12,9 @@ namespace {
 struct MyInt {
   int i;
 };
-int get_uint(MyInt i) {
-  return i.i;
-}
+int get_uint(MyInt i) { return i.i; }
 
-void test(const char *fname)
-{
+void test(const char* fname) {
   RMF::FileHandle fh = RMF::create_rmf_file(fname);
   RMF::NodeHandle c0 = fh.get_root_node().add_child("c0", RMF::GEOMETRY);
   RMF::NodeHandle c1 = fh.get_root_node().add_child("c1", RMF::GEOMETRY);
@@ -36,7 +33,6 @@ void test(const char *fname)
   assert(b1 == c1);
   assert(c0.get_association<int*>() == &a0);
 
-
   RMF::NodeHandle c2 = fh.get_root_node().add_child("c2", RMF::GEOMETRY);
   boost::shared_ptr<int> si(new int(3));
   c2.set_association(si);
@@ -45,24 +41,24 @@ void test(const char *fname)
   boost::shared_ptr<int> sib = c2.get_association<boost::shared_ptr<int> >();
   assert(sib == si);
 
-
   RMF::NodeHandle c3 = fh.get_root_node().add_child("c3", RMF::GEOMETRY);
-  MyInt sint = {6};
+  MyInt sint = { 6 };
   c3.set_association(sint);
   RMF::NodeHandle c3b = fh.get_node_from_association(sint);
   assert(c3 == c3b);
-  MyInt sintb = c3.get_association<MyInt >();
+  MyInt sintb = c3.get_association<MyInt>();
   assert(sintb.i == sint.i);
 }
 }
 
-int main(int, char *[]) {
+int main(int, char * []) {
   try {
     // don't have tmp file support at this point
     const char fname[] = "/tmp/assoc.rmf";
     test(fname);
     remove(fname);
-  } catch (const std::exception &e) {
+  }
+  catch (const std::exception & e) {
     std::cerr << "Terminated with error: " << e.what() << std::endl;
     return 1;
   }

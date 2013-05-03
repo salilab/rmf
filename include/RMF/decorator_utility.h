@@ -12,14 +12,13 @@
 #include <RMF/config.h>
 #include "NodeConstHandle.h"
 #include <RMF/decorators.h>
-RMF_ENABLE_WARNINGS
-namespace RMF {
+RMF_ENABLE_WARNINGS namespace RMF {
 
-/** Return a list of Particle NodeHandles that forms a slice through the
-    tree and whose radii are as close as possible to the passed resolution.
- */
-RMFEXPORT NodeConstHandles get_particles_by_resolution(NodeConstHandle h,
-                                                       double          resolution);
+  /** Return a list of Particle NodeHandles that forms a slice through the
+      tree and whose radii are as close as possible to the passed resolution.
+   */
+  RMFEXPORT NodeConstHandles get_particles_by_resolution(NodeConstHandle h,
+                                                         double resolution);
 
 } /* namespace RMF */
 

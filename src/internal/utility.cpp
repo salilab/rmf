@@ -10,20 +10,17 @@
 #include <RMF/decorators.h>
 #include <stdexcept>
 
-RMF_ENABLE_WARNINGS
+RMF_ENABLE_WARNINGS namespace RMF {
+  namespace internal {
 
-namespace RMF {
-namespace internal {
-
-NodeHandle add_child_alias( AliasFactory    af,
-                            NodeHandle      parent,
-                            NodeConstHandle child) {
-  NodeHandle nh = parent.add_child(child.get_name() + " alias",
-                                   ALIAS);
-  af.get(nh).set_aliased(child);
-  return nh;
-}
-}   // namespace internal
-} /* namespace RMF */
+  NodeHandle add_child_alias(AliasFactory af,
+                             NodeHandle parent,
+                             NodeConstHandle child) {
+    NodeHandle nh = parent.add_child(child.get_name() + " alias", ALIAS);
+    af.get(nh).set_aliased(child);
+    return nh;
+  }
+  }  // namespace internal
+}    /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

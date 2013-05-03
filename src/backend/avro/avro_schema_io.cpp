@@ -20,23 +20,19 @@
 #include <backend/avro/AvroCpp/api/Stream.hh>
 #include <boost/scoped_ptr.hpp>
 
-RMF_ENABLE_WARNINGS
-
-namespace RMF {
+RMF_ENABLE_WARNINGS namespace RMF {
   namespace avro_backend {
 
-void show(const RMF_avro_backend::Data &data,
-          std::ostream             &out) {
-  boost::scoped_ptr< ::rmf_avro::OutputStream>
-    os(rmf_avro::ostreamOutputStream(out).release());
-  ::rmf_avro::EncoderPtr encoder
-      = rmf_avro::jsonEncoder(get_Data_schema());
-  encoder->init(*os);
-  ::rmf_avro::codec_traits<RMF_avro_backend::Data>::encode(*encoder, data);
-  os->flush();
-}
+  void show(const RMF_avro_backend::Data& data, std::ostream& out) {
+    boost::scoped_ptr< ::rmf_avro::OutputStream> os(
+        rmf_avro::ostreamOutputStream(out).release());
+    ::rmf_avro::EncoderPtr encoder = rmf_avro::jsonEncoder(get_Data_schema());
+    encoder->init(*os);
+    ::rmf_avro::codec_traits<RMF_avro_backend::Data>::encode(*encoder, data);
+    os->flush();
+  }
 
-}   // namespace avro_backend
-} /* namespace RMF */
+  }  // namespace avro_backend
+}    /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

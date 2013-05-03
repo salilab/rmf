@@ -12,30 +12,27 @@
 #include <RMF/FileHandle.h>
 #include <RMF/decorators.h>
 
-RMF_ENABLE_WARNINGS
-
-RMF_VECTOR_DEF(FrameHandle);
+RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(FrameHandle);
 
 namespace RMF {
 
-FrameHandle::FrameHandle(int frame, internal::SharedData *shared):
-  FrameConstHandle(frame, shared) {
-}
+FrameHandle::FrameHandle(int frame, internal::SharedData* shared)
+    : FrameConstHandle(frame, shared) {}
 
 FrameHandle FrameHandle::add_child(std::string name, FrameType t) {
   FrameHandle ret(get_shared_data()->add_child_frame(get_frame_id(), name, t),
                   get_shared_data());
   ret.set_as_current_frame();
-  RMF_INTERNAL_CHECK(get_shared_data()->get_number_of_frames()
-                     == static_cast<unsigned int>(ret.get_id().get_index() + 1),
-                     "Wrong number of frames");
+  RMF_INTERNAL_CHECK(
+      get_shared_data()->get_number_of_frames() ==
+          static_cast<unsigned int>(ret.get_id().get_index() + 1),
+      "Wrong number of frames");
   return ret;
 }
 
 void FrameHandle::add_child(FrameConstHandle nh) {
   get_shared_data()->add_child_frame(get_frame_id(), nh.get_frame_id());
 }
-
 
 FileHandle FrameHandle::get_file() const {
   return FileHandle(get_shared_data());

@@ -6,12 +6,9 @@
 #include <RMF/utility.h>
 #include "common.h"
 
-namespace {
-std::string
-  description("Grab frames from an rmf file");
-}
+namespace { std::string description("Grab frames from an rmf file"); }
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
   try {
     RMF_ADD_INPUT_FILE("rmf");
     RMF_ADD_OUTPUT_FILE("rmf");
@@ -25,17 +22,21 @@ int main(int argc, char **argv) {
     orh.set_current_frame(RMF::ALL_FRAMES);
     RMF::copy_frame(rh, orh);
     std::cout << "Copying frames";
-    for (unsigned int input_frame = start_frame; input_frame < rh.get_number_of_frames();
+    for (unsigned int input_frame = start_frame;
+         input_frame < rh.get_number_of_frames();
          input_frame += step_frame) {
       rh.set_current_frame(input_frame);
       orh.get_current_frame().add_child(rh.get_current_frame().get_name(),
-                                        rh.get_current_frame().get_type()).set_as_current_frame();
+                                        rh.get_current_frame().get_type())
+          .set_as_current_frame();
       RMF::copy_frame(rh, orh);
-      if (orh.get_number_of_frames() % 10 == 0) std::cout << "." << std::flush;
+      if (orh.get_number_of_frames() % 10 == 0)
+        std::cout << "." << std::flush;
     }
     std::cout << std::endl;
     return 0;
-  } catch (const std::exception &e) {
+  }
+  catch (const std::exception & e) {
     std::cerr << "Error: " << e.what() << std::endl;
     return 1;
   }

@@ -15,22 +15,20 @@
 #include <backend/avro/Frame.json.h>
 #include <backend/avro/AvroCpp/api/Compiler.hh>
 
-RMF_ENABLE_WARNINGS
-
-namespace RMF {
+RMF_ENABLE_WARNINGS namespace RMF {
   namespace avro_backend {
-#define RMF_SCHEMA(name)                                                \
-    ::rmf_avro::ValidSchema get_##name##_schema() {                     \
-      return ::rmf_avro::compileJsonSchemaFromString(name##_json.c_str()); \
-    }
+#define RMF_SCHEMA(name)                                                 \
+  ::rmf_avro::ValidSchema get_##name##_schema() {                        \
+    return ::rmf_avro::compileJsonSchemaFromString(name##_json.c_str()); \
+  }
 
-RMF_SCHEMA(All);
-RMF_SCHEMA(File);
-RMF_SCHEMA(Nodes);
-RMF_SCHEMA(Data);
-RMF_SCHEMA(Frame);
+  RMF_SCHEMA(All);
+  RMF_SCHEMA(File);
+  RMF_SCHEMA(Nodes);
+  RMF_SCHEMA(Data);
+  RMF_SCHEMA(Frame);
 
-}   // namespace avro_backend
-} /* namespace RMF */
+  }  // namespace avro_backend
+}    /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

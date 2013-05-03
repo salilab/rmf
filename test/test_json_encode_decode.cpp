@@ -6,36 +6,36 @@
 #include <sstream>
 
 namespace {
-  const char * schema = "{\"type\" : \"array\", \"items\" : \"double\"}";
-  ::rmf_avro::ValidSchema get_valid_schema() {
-    return ::rmf_avro::compileJsonSchemaFromString(schema);
-  }
-  std::string encode(std::vector<double> data) {
-    boost::shared_ptr<rmf_avro::Encoder> encoder
-      = rmf_avro::jsonEncoder(get_valid_schema());
-    std::ostringstream oss;
-    std::auto_ptr<rmf_avro::OutputStream> stream
-      = rmf_avro::ostreamOutputStream(oss);
-    encoder->init(*stream);
-    rmf_avro::encode(*encoder, data);
-    encoder->flush();
-    stream->flush();
-    return oss.str();
-  }
-  std::vector<double> decode(std::string buffer) {
-    boost::shared_ptr<rmf_avro::Decoder> decoder
-      = rmf_avro::jsonDecoder(get_valid_schema());
-    std::istringstream iss(buffer);
-    std::auto_ptr<rmf_avro::InputStream> stream
-      = rmf_avro::istreamInputStream(iss);
-    decoder->init(*stream);
-    std::vector<double> data;
-    rmf_avro::decode(*decoder, data);
-    return data;
-  }
+const char* schema = "{\"type\" : \"array\", \"items\" : \"double\"}";
+::rmf_avro::ValidSchema get_valid_schema() {
+  return ::rmf_avro::compileJsonSchemaFromString(schema);
+}
+std::string encode(std::vector<double> data) {
+  boost::shared_ptr<rmf_avro::Encoder> encoder =
+      rmf_avro::jsonEncoder(get_valid_schema());
+  std::ostringstream oss;
+  std::auto_ptr<rmf_avro::OutputStream> stream =
+      rmf_avro::ostreamOutputStream(oss);
+  encoder->init(*stream);
+  rmf_avro::encode(*encoder, data);
+  encoder->flush();
+  stream->flush();
+  return oss.str();
+}
+std::vector<double> decode(std::string buffer) {
+  boost::shared_ptr<rmf_avro::Decoder> decoder =
+      rmf_avro::jsonDecoder(get_valid_schema());
+  std::istringstream iss(buffer);
+  std::auto_ptr<rmf_avro::InputStream> stream =
+      rmf_avro::istreamInputStream(iss);
+  decoder->init(*stream);
+  std::vector<double> data;
+  rmf_avro::decode(*decoder, data);
+  return data;
+}
 }
 
-int main(int, char*[]) {
+int main(int, char * []) {
   {
     std::vector<double> v;
     v.push_back(1.5);

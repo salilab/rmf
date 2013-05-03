@@ -18,45 +18,44 @@
 
 RMF_ENABLE_WARNINGS
 
-#define RMF_NODE_CATCH(extra_info)                                      \
-  catch (Exception &e) {                                                \
-    RMF_RETHROW(File(get_file().get_name())                             \
-                << Node(get_id().get_index())                           \
-                << Frame(get_file().get_current_frame().get_id().get_index()) \
-                << Operation(BOOST_CURRENT_FUNCTION)                    \
-                extra_info, e);                                         \
+#define RMF_NODE_CATCH(extra_info)                                        \
+  catch (Exception & e) {                                                 \
+    RMF_RETHROW(                                                          \
+        File(get_file().get_name())                                       \
+            << Node(get_id().get_index())                                 \
+            << Frame(get_file().get_current_frame().get_id().get_index()) \
+            << Operation(BOOST_CURRENT_FUNCTION) extra_info,              \
+        e);                                                               \
   }
 
-#define RMF_NODE_CATCH_KEY(k, extra_info)                                     \
-  RMF_NODE_CATCH(<< Key(get_file().get_name(k))                               \
-                 << Category(get_file().get_name(get_file().get_category(k))) \
-                 extra_info)
+#define RMF_NODE_CATCH_KEY(k, extra_info)                                      \
+  RMF_NODE_CATCH( << Key(get_file().get_name(k))                               \
+                  << Category(get_file().get_name(get_file().get_category(k))) \
+                  extra_info)
 
-#define RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DECL(lcname, UCName, PassValue, \
-                                                  ReturnValue,               \
-                                                  PassValues, ReturnValues)  \
-  /** \brief get the value of the attribute k from this node
-      The node must have the attribute and if it is a per-frame
-      attribute, and frame is not specified then frame 0 is
-      used.
-   */                                         \
-  ReturnValue get_value(UCName##Key k) const; \
-  /** \brief  Return the value of the attribute for every frame in the file.
-      The null value is returned for frames that don't have the value.
-   */                                               \
-  ReturnValues get_all_values(UCName##Key k) const; \
-  /** Return the attribute value or TypeTraits::get_null_value() if the
-      node does not have the attribute. In python the method a value equal to
-      eg RMF.NullFloat if the attribute is not there.*/           \
-  ReturnValue get_value_always(UCName##Key k) const;              \
-  /** If the default key is passed, false is returned.*/          \
-  bool get_has_value(UCName##Key k) const;                        \
-  ReturnValues get_values_always(const UCName##Key##s & k) const; \
-  ReturnValues get_values(const UCName##Key##s & k) const;        \
-  /** Return true if the node has data for that key that is specific
-      to the current frame, as opposed to static data.*/ \
+#define RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DECL(                            \
+    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues)         \
+  /** \brief get the value of the attribute k from this node                  \
+      The node must have the attribute and if it is a per-frame               \
+      attribute, and frame is not specified then frame 0 is                   \
+      used.                                                                   \
+   */                                                                      \
+  ReturnValue get_value(UCName##Key k) const;                                 \
+  /** \brief  Return the value of the attribute for every frame in the file.  \
+      The null value is returned for frames that don't have the value.        \
+   */                                                                      \
+  ReturnValues get_all_values(UCName##Key k) const;                           \
+  /** Return the attribute value or TypeTraits::get_null_value() if the       \
+      node does not have the attribute. In python the method a value equal to \
+      eg RMF.NullFloat if the attribute is not there.*/                       \
+  ReturnValue get_value_always(UCName##Key k) const;                          \
+  /** If the default key is passed, false is returned.*/                      \
+  bool get_has_value(UCName##Key k) const;                                    \
+  ReturnValues get_values_always(const UCName##Key##s & k) const;             \
+  ReturnValues get_values(const UCName##Key##s & k) const;                    \
+  /** Return true if the node has data for that key that is specific          \
+      to the current frame, as opposed to static data.*/                      \
   bool get_has_frame_value(UCName##Key k) const;
-
 RMF_VECTOR_DECL(NodeConstHandle);
 
 namespace RMF {
@@ -102,18 +101,12 @@ enum NodeType {
 };
 
 /** Return a string version of the type name.*/
-RMFEXPORT
-std::string get_type_name(NodeType t);
-
-
+RMFEXPORT std::string get_type_name(NodeType t);
 
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
-RMFEXPORT std::ostream &operator<<(std::ostream &out,
-                                   NodeType     t);
-RMFEXPORT std::istream &operator>>(std::istream &in,
-                                   NodeType     &t);
+RMFEXPORT std::ostream& operator<<(std::ostream& out, NodeType t);
+RMFEXPORT std::istream& operator>>(std::istream& in, NodeType& t);
 #endif
-
 
 class RootConstHandle;
 
@@ -131,35 +124,34 @@ class RMFEXPORT NodeConstHandle {
   int node_;
   friend class FileHandle;
   boost::intrusive_ptr<internal::SharedData> shared_;
-  int compare(const NodeConstHandle &o) const {
-    if (node_ < o.node_) return -1;
-    else if (node_ > o.node_) return 1;
-    else if (shared_.get() < o.shared_.get()) return -1;
-    else if (shared_.get() > o.shared_.get()) return 1;
-    else return 0;
+  int compare(const NodeConstHandle& o) const {
+    if (node_ < o.node_)
+      return -1;
+    else if (node_ > o.node_)
+      return 1;
+    else if (shared_.get() < o.shared_.get())
+      return -1;
+    else if (shared_.get() > o.shared_.get())
+      return 1;
+    else
+      return 0;
   }
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
-protected:
-  internal::SharedData* get_shared_data() const {
-    return shared_.get();
-  }
-public:
-  int get_node_id() const {
-    return node_;
-  }
-  NodeConstHandle(int node, internal::SharedData *shared);
+ protected:
+  internal::SharedData* get_shared_data() const { return shared_.get(); }
+
+ public:
+  int get_node_id() const { return node_; }
+  NodeConstHandle(int node, internal::SharedData* shared);
 #endif
 
-public:
+ public:
   RMF_COMPARISONS(NodeConstHandle);
   RMF_HASHABLE(NodeConstHandle, return node_);
-  NodeConstHandle(): node_(-1) {
-  }
+  NodeConstHandle() : node_(-1) {}
 
   //! Return the number of child nodes
-  std::string get_name() const {
-    return shared_->get_name(node_);
-  }
+  std::string get_name() const { return shared_->get_name(node_); }
   NodeConstHandles get_children() const;
 
 #ifndef SWIG
@@ -178,8 +170,7 @@ public:
       or overwrite must be true. If overwrite is true,
       the type must be the same as the old type.
    */
-  template <class T>
-  void set_association(const T& v, bool overwrite = false) {
+  template <class T> void set_association(const T& v, bool overwrite = false) {
     shared_->set_association(node_, v, overwrite);
   }
 #else
@@ -187,8 +178,7 @@ public:
 #endif
   //! Return the associated pointer for this node
   /** An exception will be thrown if it doesn't have one.*/
-  template <class T>
-  T get_association() const {
+  template <class T> T get_association() const {
     return boost::any_cast<T>(shared_->get_association(node_));
   }
 
@@ -197,13 +187,9 @@ public:
   }
 
   //! get the type of this node
-  NodeType get_type() const {
-    return NodeType(shared_->get_type(node_));
-  }
+  NodeType get_type() const { return NodeType(shared_->get_type(node_)); }
   //! get a unique id for this node
-  NodeID get_id() const {
-    return NodeID(node_);
-  }
+  NodeID get_id() const { return NodeID(node_); }
 
   /** \name Functions to access attributes
 
@@ -222,22 +208,21 @@ public:
 /** Print out the hierarchy as an ascii tree.
  */
 RMFEXPORT void show_hierarchy(NodeConstHandle root,
-                              std::ostream    &out = std::cout);
+                              std::ostream& out = std::cout);
 
 /** Print out the hierarchy as an ascii tree along with values
     as described by the frame parameters. If end_frame is -1,
     the only one frame is shown.
  */
 RMFEXPORT void show_hierarchy_with_values(NodeConstHandle root,
-                                          std::ostream    &out = std::cout);
+                                          std::ostream& out = std::cout);
 
 /** Print out the hierarchy as an ascii tree marking what decorators
     apply where.
  */
 RMFEXPORT void show_hierarchy_with_decorators(NodeConstHandle root,
-                                              bool            verbose = false,
-                                              std::ostream    &out = std::cout);
-
+                                              bool verbose = false,
+                                              std::ostream& out = std::cout);
 
 } /* namespace RMF */
 

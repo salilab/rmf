@@ -11,32 +11,27 @@
 #include <boost/filesystem/operations.hpp>
 #include <stdexcept>
 
-RMF_ENABLE_WARNINGS
-
-namespace RMF {
+RMF_ENABLE_WARNINGS namespace RMF {
   namespace internal {
-    std::string get_relative_path(std::string /*base*/,
-                                  std::string file) {
-      // assume it already is
-      return file;
-    }
-    std::string get_absolute_path(std::string base,
-                                  std::string file) {
+  std::string get_relative_path(std::string /*base*/, std::string file) {
+    // assume it already is
+    return file;
+  }
+  std::string get_absolute_path(std::string base, std::string file) {
 
 #if BOOST_VERSION >= 104800
-      boost::filesystem::path parent
-        = boost::filesystem::path(base).parent_path();
-      return boost::filesystem::canonical(boost::filesystem::path(parent)
-                                          /boost::filesystem::path(file))
-        .string();
+    boost::filesystem::path parent =
+        boost::filesystem::path(base).parent_path();
+    return boost::filesystem::canonical(boost::filesystem::path(parent) /
+                                        boost::filesystem::path(file)).string();
 #else
-      boost::filesystem::path parent
-        = boost::filesystem::path(base).parent_path();
-      return (boost::filesystem::path(parent)/boost::filesystem::path(file))
+    boost::filesystem::path parent =
+        boost::filesystem::path(base).parent_path();
+    return (boost::filesystem::path(parent) / boost::filesystem::path(file))
         .string();
 #endif
-    }
-  } // namespace internal
-} /* namespace RMF */
+  }
+  }  // namespace internal
+}    /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

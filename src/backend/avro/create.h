@@ -11,20 +11,18 @@
 #include <RMF/config.h>
 #include <string>
 
-RMF_ENABLE_WARNINGS
-
-namespace RMF {
-  namespace internal {
-    class SharedData;
-  }
-namespace avro_backend {
-  RMFEXPORT internal::SharedData* create_shared_data(std::string path, bool create,
-                                                bool read_only);
-  RMFEXPORT internal::SharedData* create_shared_data_buffer(std::string &buffer,
-                                                       bool create);
-  RMFEXPORT internal::SharedData* create_shared_data_buffer(const std::string &buffer);
-}   // namespace avro_backend
-} /* namespace RMF */
+RMF_ENABLE_WARNINGS namespace RMF {
+  namespace internal { class SharedData; }
+  namespace avro_backend {
+  RMFEXPORT internal::SharedData* create_shared_data(std::string path,
+                                                     bool create,
+                                                     bool read_only);
+  RMFEXPORT internal::SharedData* create_shared_data_buffer(std::string& buffer,
+                                                            bool create);
+  RMFEXPORT internal::SharedData* create_shared_data_buffer(
+      const std::string& buffer);
+  }  // namespace avro_backend
+}    /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

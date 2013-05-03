@@ -17,24 +17,21 @@
 
 RMF_ENABLE_WARNINGS
 
-#define RMF_HDF5_NODE_KEY_TYPE_METHODS(lcname, UCName, PassValue, ReturnValue, \
-                                       PassValues, ReturnValues)               \
-  /** \brief  set the value of the attribute k for this node
-      If it is a per-frame attribute, frame must be specified.
-   */                                           \
-  void set_value(UCName##Key k, PassValue v) {  \
-    get_shared_data()->set_value(get_node_id(), \
-                                 k, v);         \
-  }                                             \
-  /** \brief  set the values of the attributes k for this node
-      These keys must have been produced by the add_keys method.
-      If it is a per-frame attribute, frame must be specified.
-   */                                                       \
-  void set_values(const UCName##Key##s & k, PassValues v) { \
-    get_shared_data()->set_values(get_node_id(),            \
-                                  k, v);                    \
+#define RMF_HDF5_NODE_KEY_TYPE_METHODS(                               \
+    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues) \
+  /** \brief  set the value of the attribute k for this node          \
+      If it is a per-frame attribute, frame must be specified.        \
+   */                                                              \
+  void set_value(UCName##Key k, PassValue v) {                        \
+    get_shared_data()->set_value(get_node_id(), k, v);                \
+  }                                                                   \
+  /** \brief  set the values of the attributes k for this node        \
+      These keys must have been produced by the add_keys method.      \
+      If it is a per-frame attribute, frame must be specified.        \
+   */                                                              \
+  void set_values(const UCName##Key##s & k, PassValues v) {           \
+    get_shared_data()->set_values(get_node_id(), k, v);               \
   }
-
 RMF_VECTOR_DECL(NodeHandle);
 
 namespace RMF {
@@ -48,16 +45,15 @@ class FileHandle;
     Make sure to check out the base class for the const
     methods.
  */
-class RMFEXPORT NodeHandle: public NodeConstHandle {
+class RMFEXPORT NodeHandle : public NodeConstHandle {
   friend class FileHandle;
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
-public:
-  NodeHandle(int node, internal::SharedData *shared);
+ public:
+  NodeHandle(int node, internal::SharedData* shared);
 #endif
 
-public:
-  NodeHandle() {
-  }
+ public:
+  NodeHandle() {}
   /** Create a new node as a child of this one.
    */
   NodeHandle add_child(std::string name, NodeType t);

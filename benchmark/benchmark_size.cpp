@@ -15,7 +15,8 @@ unsigned int get_size(boost::filesystem::path path) {
   if (boost::filesystem::is_directory(path)) {
     unsigned int ret = 0;
     for (boost::filesystem::directory_iterator it(path);
-         it != boost::filesystem::directory_iterator(); it++) {
+         it != boost::filesystem::directory_iterator();
+         it++) {
       ret += get_size(*it);
     }
     return ret;
@@ -34,7 +35,6 @@ void fill_atoms(RMF::FileHandle fh, RMF::NodeHandle nh) {
     a.set_element(14);
   }
 }
-
 
 void fill_residues(RMF::FileHandle fh, RMF::NodeHandle nh) {
   RMF::ResidueFactory rf(fh);
@@ -62,8 +62,7 @@ void fill_file(RMF::FileHandle fh) {
   fill_chains(fh, nh);
 }
 
-void add_coordinates(RMF::NodeHandle      nh,
-                     RMF::ParticleFactory pf) {
+void add_coordinates(RMF::NodeHandle nh, RMF::ParticleFactory pf) {
   RMF::NodeHandles nhs = nh.get_children();
   if (nhs.size() > 0) {
     for (unsigned int i = 0; i < nhs.size(); ++i) {
@@ -82,10 +81,11 @@ void add_coordinates(RMF::NodeHandle      nh,
 void add_frame(RMF::FileHandle fh) {
   RMF::FrameHandle fr = fh.get_current_frame().add_child("frame", RMF::FRAME);
   RMF::ParticleFactory pf(fh);
-      add_coordinates(fh.get_root_node(), pf);
+  add_coordinates(fh.get_root_node(), pf);
 }
 
-void benchmark(std::string type, boost::filesystem::path path,
+void benchmark(std::string type,
+               boost::filesystem::path path,
                unsigned int nframes) {
   boost::timer timer;
   {
@@ -101,27 +101,27 @@ void benchmark(std::string type, boost::filesystem::path path,
 
 }
 
-
-int main(int, char **) {
-  std::string suffixes[] = {"rmf", "rmf2", "rmfa"};
+int main(int, char**) {
+  std::string suffixes[] = { "rmf", "rmf2", "rmfa" };
   try {
 #if BOOST_VERSION > 104400
-    boost::filesystem::path temp
-      = boost::filesystem::unique_path(boost::filesystem::temp_directory_path()
-                                       / "%%%%-%%%%-%%%%-%%%%");
+    boost::filesystem::path temp = boost::filesystem::unique_path(
+        boost::filesystem::temp_directory_path() / "%%%%-%%%%-%%%%-%%%%");
     boost::filesystem::create_directory(temp);
 #else
     boost::filesystem::path temp(".");
 #endif
     std::cout << "File are in " << temp << std::endl;
     for (unsigned int i = 0; i < 3; ++i) {
-      boost::filesystem::path path1 = temp / (std::string("file.1.") + suffixes[i]);
-      benchmark(suffixes[i], path1,     1);
-      boost::filesystem::path path100
-        = temp / (std::string("file.100.") + suffixes[i]);
+      boost::filesystem::path path1 =
+          temp / (std::string("file.1.") + suffixes[i]);
+      benchmark(suffixes[i], path1, 1);
+      boost::filesystem::path path100 =
+          temp / (std::string("file.100.") + suffixes[i]);
       benchmark(suffixes[i], path100, 100);
     }
-  } catch (const std::exception &e) {
+  }
+  catch (const std::exception & e) {
     std::cerr << "Exception thrown: " << e.what() << std::endl;
   }
   return 0;

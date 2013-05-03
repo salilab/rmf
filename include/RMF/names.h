@@ -14,14 +14,12 @@
 #include "Key.h"
 #include <sstream>
 
-RMF_ENABLE_WARNINGS
-namespace RMF {
+RMF_ENABLE_WARNINGS namespace RMF {
 
-/** Node names have to obey certain rules, such as no quotes
-    in the name. This returns a string that has been modified to
-    obey the rules.*/
-RMFEXPORT std::string get_as_node_name(std::string input);
-
+  /** Node names have to obey certain rules, such as no quotes
+      in the name. This returns a string that has been modified to
+      obey the rules.*/
+  RMFEXPORT std::string get_as_node_name(std::string input);
 
 } /* namespace RMF */
 

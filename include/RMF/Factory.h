@@ -12,36 +12,32 @@
 #include <RMF/config.h>
 #include "infrastructure_macros.h"
 
-RMF_ENABLE_WARNINGS
+RMF_ENABLE_WARNINGS namespace RMF {
 
-namespace RMF {
-
-/** Factories in RMF allow one to create Decorator objects as well
-    as check whether a given node has the values needed for a particular
-    decorator type in a given frame.
- */
-template <class HandleType>
-class Factory {
-protected:
-  Factory() {
-  }
-public:
-#ifdef RMF_DOXYGEN
-  /** \name Methods
-      Each factory will have the following methods, where Decorator is
-      the name of the decorator type being produced.
-      @{
+  /** Factories in RMF allow one to create Decorator objects as well
+      as check whether a given node has the values needed for a particular
+      decorator type in a given frame.
    */
-  //! Return if the node has the needed attributes for the Decorator
-  bool get_is(NodeConstHandle nh) const;
-  //! Return the decorator
-  Decorator get(NodeConstHandle nh) const;
-  /** @} */
+  template <class HandleType> class Factory {
+   protected:
+    Factory() {}
+
+   public:
+#ifdef RMF_DOXYGEN
+    /** \name Methods
+        Each factory will have the following methods, where Decorator is
+        the name of the decorator type being produced.
+        @{
+     */
+    //! Return if the node has the needed attributes for the Decorator
+    bool get_is(NodeConstHandle nh) const;
+    //! Return the decorator
+    Decorator get(NodeConstHandle nh) const;
+/** @} */
 #endif
 
-  RMF_SHOWABLE(Factory,
-               "Factory");
-};
+    RMF_SHOWABLE(Factory, "Factory");
+  };
 
 } /* namespace RMF */
 

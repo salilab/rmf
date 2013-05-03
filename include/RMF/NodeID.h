@@ -14,32 +14,30 @@
 #include <vector>
 #include <iostream>
 
-RMF_ENABLE_WARNINGS
+RMF_ENABLE_WARNINGS namespace RMF {
 
-namespace RMF {
+  /** Each node in the hierarchy (RMF::NodeHandle)
+      associated data has an associated identifier that is unique with
+      that %RMF file. These are stored using NodeID classes.*/
+  class NodeID {
+    int i_;
+    int compare(const NodeID& o) const {
+      if (i_ < o.i_)
+        return -1;
+      else if (i_ > o.i_)
+        return 1;
+      else
+        return 0;
+    }
 
-/** Each node in the hierarchy (RMF::NodeHandle)
-    associated data has an associated identifier that is unique with
-    that %RMF file. These are stored using NodeID classes.*/
-class NodeID {
-  int i_;
-  int compare(const NodeID&o) const {
-    if (i_ < o.i_) return -1;
-    else if (i_ > o.i_) return 1;
-    else return 0;
-  }
-public:
-  explicit NodeID(unsigned int i): i_(i) {
-  }
-  NodeID(): i_(-1) {
-  }
-  int get_index() const {
-    return i_;
-  }
-  RMF_SHOWABLE(NodeID, i_);
-  RMF_COMPARISONS(NodeID);
-  RMF_HASHABLE(NodeID, return i_);
-};
+   public:
+    explicit NodeID(unsigned int i) : i_(i) {}
+    NodeID() : i_(-1) {}
+    int get_index() const { return i_; }
+    RMF_SHOWABLE(NodeID, i_);
+    RMF_COMPARISONS(NodeID);
+    RMF_HASHABLE(NodeID, return i_);
+  };
 
   /** Lists of NodeIDs */
   typedef std::vector<NodeID> NodeIDs;
