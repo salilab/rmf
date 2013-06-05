@@ -85,6 +85,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
                                                  bool create,
                                                  bool read_only)
       : MultipleAvroFileBase(path) {
+    RMF_UNUSED(create);
+    RMF_UNUSED(read_only);
     RMF_INTERNAL_CHECK(!create, "Can't create a file for reading");
     RMF_INTERNAL_CHECK(read_only,
                        "RMF2 files open for reading must be read-only");
