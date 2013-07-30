@@ -6,10 +6,10 @@ def replace(msg, to_replace, const):
     for k in to_replace:
       msg = msg.replace(k[0], k[1])
     if const:
-      msg = msg.replace("NOTCONST", "")
+      msg = msg.replace("NONCONST", "")
       msg = msg.replace("CONST", "Const")
     else:
-      msg = msg.replace("NOTCONST", "Const")
+      msg = msg.replace("NONCONST", "Const")
       msg = msg.replace("CONST", "")
     return msg
 
@@ -243,7 +243,7 @@ class Attributes(Base):
 decorator = """
   /** DESCRIPTION
 
-       See also NAMENOTCONST and NAMECONSTFactory.
+       See also NAMENONCONST and NAMECONSTFactory.
     */
   class NAMECONST: public Decorator<NodeCONSTHandle> {
     friend class NAMECONSTFactory;
