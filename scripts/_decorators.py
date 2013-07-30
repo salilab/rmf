@@ -2,380 +2,306 @@
 
 import os.path
 
-def get_string(type, name, const):
-    return """fh.get_key<%(type)sTraits>(cat,
-        \"%(name)s\")"""%{ "name":name,
-                               "type": type}
+def replace(msg, to_replace, const):
+    for k in to_replace:
+      msg = msg.replace(k[0], k[1])
+    if const:
+      msg = msg.replace("NOTCONST", "")
+      msg = msg.replace("CONST", "Const")
+    else:
+      msg = msg.replace("NOTCONST", "Const")
+      msg = msg.replace("CONST", "")
+    return msg
 
-def gets_string(type, name, const):
-    return """fh.get_keys<%(type)sTraits>(cat,
-        %(name)s)"""%{ "name":name,
-                      "type": type}
-class Children:
-    def __init__(self, nice_name, doc):
-        self.nice_name=nice_name
-        self.doc=doc
-    def get_key_members(self, const):
-        if (const):
-            return ["AliasConstFactory "+self.nice_name+"_;"]
-        else:
-            return ["AliasFactory "+self.nice_name+"_;"]
-    def get_methods(self, const):
-        ret=[]
-        if const:
-            nht="NodeConstHandle"
-        else:
-            nht="NodeHandle"
-        ret.append("/** "+self.doc+" */")
-        ret.append(nht+"s get_"+self.nice_name+"() const {")
-        ret.append("  try{")
-        ret.append("  "+nht+"s typed=get_node().get_children();")
-        ret.append("  "+nht+"s ret;")
-        ret.append("  for (unsigned int i=0; i< typed.size(); ++i) {")
-        ret.append("     if ("+self.nice_name+"_.get_is(typed[i])) {")
-        ret.append("        ret.push_back("+self.nice_name+"_.get(typed[i]).get_aliased());")
-        ret.append("     }");
-        ret.append("  }");
-        ret.append("  return ret;")
-        ret.append("  } RMF_DECORATOR_CATCH( );")
-        ret.append("}")
-        if not const:
-            ret.append("/** "+self.doc+" */")
-            ret.append("void set_"+self.nice_name+"(NodeConstHandles v) {")
-            ret.append("  try{")
-            ret.append("   for (unsigned int i=0; i< v.size(); ++i) {")
-            ret.append("       internal::add_child_alias("+self.nice_name+"_, get_node(), v[i]);")
-            ret.append("   }")
-            ret.append("  } RMF_DECORATOR_CATCH( );")
-            ret.append("}")
-            ret.append("/** "+self.doc+" */")
-            ret.append("void set_"+self.nice_name+"(NodeHandles v) {")
-            ret.append("  try{")
-            ret.append("   for (unsigned int i=0; i< v.size(); ++i) {")
-            ret.append("       internal::add_child_alias("+self.nice_name+"_, get_node(), v[i]);")
-            ret.append("   }")
-            ret.append("  } RMF_DECORATOR_CATCH( );")
-            ret.append("}")
-        return ret
-    def get_key_arguments(self, const):
-        if (const):
-            return ["AliasConstFactory "+self.nice_name+""]
-        else:
-            return ["AliasFactory "+self.nice_name+""]
-    def get_key_pass(self, const):
-        return [self.nice_name+"_"]
-    def get_key_saves(self, const):
-        return [self.nice_name+"_("+self.nice_name+")"]
-    def get_initialize(self, const):
-        if (const):
-            return [self.nice_name+"_(fh)"]
-        else:
-            return [self.nice_name+"_(fh)"]
-    def get_construct(self, const):
-        return []
-    def get_check(self, const):
-        return []
+class Base:
+  def __init__(self, name, data_type, return_type, doc):
+    self.names = [("NAME", name.replace(" ", "_")),
+                  ("DOC", doc),
+                  ("DATA", data_type)]
+    if return_type.endswith("s"):
+      self.names.append(("TYPES", return_type + "List"))
+    elif return_type.endswith("x"):
+      self.names.append(("TYPES", return_type + "es"))
+    else:
+      self.names.append(("TYPES", return_type + "s"))
+    self.names.append(("TYPE", return_type))
+    self.get_methods = ""
+    self.set_methods = ""
+    self.helpers = ""
+    self.check = ""
+  def get_data_members(self, const):
+    return replace("DATA NAME_;", self.names, const)
+  def get_get_set_methods(self, const):
+    ret = replace(self.get_methods, self.names, const)
+    if not const:
+      ret += replace(self.set_methods, self.names, const)
+    return ret
+  def get_helpers(self, const):
+    return replace(self.helpers, self.names, const)
+  def get_data_arguments(self, const):
+    return replace("DATA NAME", self.names, const)
+  def get_data_pass(self, const):
+    return replace("NAME_", self.names, const)
+  def get_data_saves(self, const):
+    return replace("NAME_(NAME)", self.names, const)
+  def get_data_initialize(self, const):
+    return replace("NAME_(" + self.data_initialize + ")", self.names, const)
+  def get_check(self, const):
+    return replace(self.check, self.names, const)
 
+class Children(Base):
+  def __init__(self, name, doc):
+    Base.__init__(self, name,"AliasCONSTFactory", "NodeCONSTHandles", doc)
+    self.names
+    self.get_methods = """  /** DOC */
+  TYPE get_NAME() const {
+    try {
+       NodeCONSTHandles typed = get_node().get_children();
+       TYPE ret;
+       for (unsigned int i = 0; i < typed.size(); ++i) {
+         if (NAME_.get_is(typed[i])) {
+           ret.push_back(NAME_.get(typed[i]).get_aliased());
+         }
+       }
+       return ret;
+    } RMF_DECORATOR_CATCH( );
+  }
+"""
+    self.set_methods = """  /** DOC */
+  void set_NAME(const NodeConstHandles &v) {
+    try {
+       for (unsigned int i = 0; i < v.size(); ++i) {
+         internal::add_child_alias(NAME_, get_node(), v[i]);
+       }
+    } RMF_DECORATOR_CATCH( );
+  }
+  void set_NAME(const NodeHandles &v) {
+    try {
+       for (unsigned int i = 0; i < v.size(); ++i) {
+         internal::add_child_alias(NAME_, get_node(), v[i]);
+       }
+    } RMF_DECORATOR_CATCH( );
+  }
+"""
+    self.data_initialize = "fh"
 
-class Attribute:
-    def __init__(self, tt, nice_name, attribute_name, doc):
-        self.type=tt
-        if tt.endswith("s"):
-            self.plural_type=tt+"List"
-        elif tt.endswith("x"):
-            self.plural_type=tt+"es"
-        else:
-            self.plural_type=tt+"s"
-        self.nice_name=nice_name
-        self.attribute_name=attribute_name
-        self.doc=doc
-    def get_key_members(self, const):
-        return [self.type+"Key "+self.nice_name+"_;"]
-    def get_methods(self, const):
-        ret=[]
-        ret.append("/** "+self.doc+" */")
-        ret.extend([self.type+" get_"+self.nice_name+"() const {",
-                    "  try{",
-                    "  return P::get_value("+self.nice_name+"_);",
-                    "  } RMF_DECORATOR_CATCH( );",
-                   "}"])
-        ret.append("/** "+self.doc+" */")
-        ret.extend([self.plural_type+" get_all_"+self.nice_name+"s() const {",
-                    "  try {",
-                    "  return P::get_all_values("+self.nice_name+"_);",
-                    "  } RMF_DECORATOR_CATCH( );",
-                   "}"])
-        if not const:
-            ret.append("/** "+self.doc+" */")
-            ret.extend(["void set_"+self.nice_name+"("+self.type+" v) {",
-                        "  try {",
-                        "  P::set_value("+self.nice_name+"_,",
-                        "            v);",
-                        "  } RMF_DECORATOR_CATCH( );",
-                        "}"])
-        return ret
-    def get_key_arguments(self, const):
-        return [self.type+"Key "+self.nice_name]
-    def get_key_pass(self, const):
-        return [self.nice_name+"_"]
-    def get_key_saves(self, const):
-        return [self.nice_name+"_("+self.nice_name+")"]
-    def get_construct(self, const):
-        return [self.nice_name+"_="+get_string(self.type, self.attribute_name, const)+";"]
-    def get_initialize(self, const):
-        return []
-    def get_check(self, const):
-        return ["""nh.get_has_value(%(nn)s_)"""%{"nn":self.nice_name}]
+class Attribute(Base):
+  def __init__(self, name, attribute_type, doc):
+    Base.__init__(self, name, attribute_type + "Key", attribute_type, doc)
+    self.get_methods = """  /** DOC */
+  TYPE get_NAME() const {
+    try {
+      return P::get_value(NAME_);
+    } RMF_DECORATOR_CATCH( );
+  }
+  /** DOC */
+  TYPES get_all_NAMEs() const {
+    try {
+      return P::get_all_values(NAME_);
+    } RMF_DECORATOR_CATCH( );
+  }
+"""
+    self.set_methods = """  /** DOC */
+  void set_NAME(TYPE v) {
+    try {
+      P::set_value(NAME_, v);
+    } RMF_DECORATOR_CATCH( );
+  }
 
+"""
+    self.check = "nh.get_has_value(NAME_)"
+    self.data_initialize = "fh.get_key<TYPETraits>(cat_, \"%s\")" % name
 
 class NodeAttribute(Attribute):
-    def __init__(self, *args):
-        Attribute.__init__(self, *args)
-    def get_methods(self, const):
-        ret=[]
-        if const:
-            nht= "NodeConstHandle"
-        else:
-            nht= "NodeHandle"
-        ret.append("/** "+self.doc+" */")
-        ret.extend([nht+" get_"+self.nice_name+"() const {",
-                    "  try {",
-                    "  NodeID id;",
-                    "   id= get_node().get_value("+self.nice_name+"_);",
-                    "  return get_node().get_file().get_node_from_id(id);",
-                    "  } RMF_DECORATOR_CATCH( );",
-                    "}"])
-        if not const:
-            ret.append("/** "+self.doc+" */")
-            ret.extend(["void set_"+self.nice_name+"(NodeConstHandle v) {",
-                        "  try {",
-                        "    get_node().set_value("+self.nice_name+"_, v.get_id());",
-                        "  } RMF_DECORATOR_CATCH( );",
-                        "}"])
-        return ret
+  def __init__(self, name, doc):
+    Attribute.__init__(self, name, "NodeID", doc)
+    self.get_methods = """  /** DOC */
+  NodeCONSTHandle get_NAME() const {
+    try {
+      NodeID id = get_node().get_value(NAME_);
+      return get_node().get_file().get_node_from_id(id);
+    } RMF_DECORATOR_CATCH( );
+  }
+"""
+    self.set_methods = """  /** DOC */
+  void set_NAME(NodeConstHandle v) {
+    try {
+      get_node().set_value(NAME_, v.get_id());
+    } RMF_DECORATOR_CATCH( );
+  }
+"""
 
 class PathAttribute(Attribute):
-    def __init__(self, *args):
-        Attribute.__init__(self, *args)
-    def get_methods(self, const):
-        ret=[]
-        ret.append("/** "+self.doc+" */")
-        ret.extend(["String get_"+self.nice_name+"() const {",
-                    " try {",
-                    " String relpath;"
-                    "   relpath= get_node().get_value("+self.nice_name+"_);",
-                    "  String filepath=get_node().get_file().get_path();",
-                    "  return internal::get_absolute_path(filepath, relpath);",
-                    "  } RMF_DECORATOR_CATCH( );",
-                    "}"])
-        if not const:
-            ret.append("/** "+self.doc+" */")
-            ret.extend(["void set_"+self.nice_name+"(String path) {",
-                        " try {",
-                        "  String filename= get_node().get_file().get_path();",
-                        "  String relpath= internal::get_relative_path(filename, path);",
-                        "    return get_node().set_value("+self.nice_name+"_, relpath);",
-                        "  } RMF_DECORATOR_CATCH( );",
-                        "}"])
-        return ret
+  def __init__(self, name, doc):
+    Attribute.__init__(self, name, "String", doc)
+    self.get_methods = """  /** DOC */
+  String get_NAME() const {
+    try {
+      String relpath = get_node().get_value(NAME_);
+      String filename = get_node().get_file().get_path();
+      return internal::get_absolute_path(filename, relpath);
+    } RMF_DECORATOR_CATCH( );
+  }
+"""
+    self.set_methods = """ /** DOC */
+  void set_NAME(String path) {
+   try {
+     String filename = get_node().get_file().get_path();
+     String relpath = internal::get_relative_path(filename, path);
+     get_node().set_value(NAME_, relpath);
+   } RMF_DECORATOR_CATCH( );
+  }
+"""
 
-class SingletonRangeAttribute:
-    def __init__(self, type, nice_name, attribute_name_begin, attribute_name_end, doc):
-        self.type=type
-        self.doc=doc
-        self.nice_name=nice_name
-        self.attribute_name_begin=attribute_name_begin
-        self.attribute_name_end=attribute_name_end
-    def get_key_members(self, const):
-        return ["boost::array<"+self.type+"Key,2> "+self.nice_name+"_;"]
-    def get_methods(self, const):
-        ret=[]
-        ret.append("/** "+self.doc+" */")
-        ret.extend([self.type+" get_"+self.nice_name+"() const {",
-                    "  try {",
-                    "  return get_node().get_value("+self.nice_name+"_[0]);",
-                    "  } RMF_DECORATOR_CATCH( );",
-                    "}"])
-        if not const:
-            ret.append("/** "+self.doc+" */")
-            ret.extend(["void set_"+self.nice_name+"("+self.type+" v) {",
-                        "  try {",
-                        "   get_node().set_value("+self.nice_name+"_[0], v);",
-                        "   get_node().set_value("+self.nice_name+"_[1], v);",
-                        "  } RMF_DECORATOR_CATCH( );",
-                "}"])
-        return ret
-    def get_key_arguments(self, const):
-        return ["boost::array<"+self.type+"Key, 2> "+self.nice_name]
-    def get_key_pass(self, const):
-        return [self.nice_name+"_"]
-    def get_key_saves(self, const):
-        return [self.nice_name+"_("+self.nice_name+")"]
-    def get_initialize(self, const):
-        return []
-    def get_construct(self, const):
-        return [self.nice_name+"_[0]="+get_string(self.type, self.attribute_name_begin, const)+\
-            ";\n"+self.nice_name+"_[1]="+get_string(self.type, self.attribute_name_end, const)+";"]
-    def get_check(self, const):
-        return ["nh.get_has_value("+self.nice_name+"_[0])"+\
-            "\n  && nh.get_has_value("+self.nice_name+"_[1])"+\
-            "\n  && nh.get_value("+self.nice_name+"_[0])"\
-            "\n   ==nh.get_value("+self.nice_name+"_[1])"]
+class AttributePair(Base):
+  def __init__(self, name, data_type, return_type, begin, end, doc):
+    Base.__init__(self, name, "boost::array<%sKey, 2>" % data_type, return_type, doc)
+    self.helpers = """  DATA get_NAME_keys(FileCONSTHandle fh) {
+     DATA ret;
+     ret[0] = fh.get_key<%sTraits>(cat_, "%s");
+     ret[1] = fh.get_key<%sTraits>(cat_, "%s");
+     return ret;
+    }
+""" % (data_type, begin, data_type, end)
+    self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1])"
+    self.data_initialize = "get_NAME_keys(fh)"
 
 
-class RangeAttribute:
-    def __init__(self, type, nice_name, attribute_name_begin,
-                 attribute_name_end, doc):
-        self.type=type
-        self.doc=doc
-        self.nice_name=nice_name
-        self.attribute_name_begin=attribute_name_begin
-        self.attribute_name_end=attribute_name_end
-    def get_key_members(self, const):
-        return ["boost::array<"+self.type+"Key,2> "+self.nice_name+"_;"]
-    def get_methods(self, const):
-        ret=[]
-        ret.append("/** "+self.doc+" */")
-        ret.extend([self.type+"Range get_"+self.nice_name+"() const {",
-                    "  try {",
-                    "  return std::make_pair(get_node().get_value("+self.nice_name+"_[0]),",
-                    "                        get_node().get_value("+self.nice_name+"_[1]));",
-                    "  } RMF_DECORATOR_CATCH( );",
-            "}"])
-        if not const:
-            ret.append("/** "+self.doc+" */")
-            ret.extend(["void set_"+self.nice_name+"("+self.type+" v0, "+self.type+" v1) {",
-                        " try {",
-                        "   get_node().set_value("+self.nice_name+"_[0], v0);",
-                        "   get_node().set_value("+self.nice_name+"_[1], v1);",
-                        "  } RMF_DECORATOR_CATCH( );",
-                "}"])
+class SingletonRangeAttribute(AttributePair):
+  def __init__(self, name, data_type, begin, end, doc):
+    AttributePair.__init__(self, name, data_type, data_type, begin, end, doc)
+    self.get_methods = """  /** DOC */
+  TYPE get_NAME() const {
+    try {
+      return get_node().get_value(NAME_[0]);
+    } RMF_DECORATOR_CATCH( );
+  }
+"""
+    self.set_methods = """ /** DOC */
+  void set_NAME(TYPE v) {
+    try {
+      get_node().set_value(NAME_[0], v);
+      get_node().set_value(NAME_[1], v);
+    } RMF_DECORATOR_CATCH( );
+  }
+"""
+    self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1]) && nh.get_value(NAME_[0]) == nh.get_value(NAME_[1])"
 
-        return ret
-    def get_key_arguments(self, const):
-        return ["boost::array<"+self.type+"Key, 2> "+self.nice_name]
-    def get_key_pass(self, const):
-        return [self.nice_name+"_"]
-    def get_key_saves(self, const):
-        return [self.nice_name+"_("+self.nice_name+")"]
-    def get_initialize(self, const):
-        return []
-    def get_construct(self, const):
-        return [self.nice_name+"_[0]="+get_string(self.type, self.attribute_name_begin, const)+\
-            ";\n"+self.nice_name+"_[1]="+get_string(self.type, self.attribute_name_end, const)+";"]
-    def get_check(self, const):
-        return ["nh.get_has_value("+self.nice_name+"_[0])"+\
-            "\n  && nh.get_has_value("+self.nice_name+"_[1])"+\
-            "\n  && nh.get_value("+self.nice_name+"_[0])"\
-            "\n   <nh.get_value("+self.nice_name+"_[1])"]
-class Attributes:
-    def __init__(self, type, ptype, nice_name, attribute_names, doc):
-        self.type=type
-        self.doc=doc
-        self.nice_name=nice_name
-        self.ptype=ptype
-        self.attribute_names=attribute_names
-    def get_key_members(self, const):
-        return [self.type+"Keys "+self.nice_name+"_;"]
-    def get_methods(self, const):
-        ret=[]
-        if not const:
-            ret.append("/** "+self.doc+" */")
-            ret.append("""%(ptype)s get_%(name)s() const {
-             return P::get_values(%(key)s);
-           }"""%{"type":self.type,
-            "ptype":self.ptype,
-            "name":self.nice_name,
-            "len":len(self.attribute_names),
-            "key":self.nice_name+"_"})
-            ret.append("""/** %(doc)s */
-    void set_%(name)s(const %(ptype)s &v) {
-           P::set_values(%(key)s, v);
-        }"""%{"doc": self.doc,
-              "type":self.type,
-              "ptype":self.ptype,
-              "name":self.nice_name,
-              "len":len(self.attribute_names),
-              "key":self.nice_name+"_"})
-        else:
-            ret.append("/** "+self.doc+" */")
-            ret.append("""%(ptype)s get_%(name)s() const {
-             return P::get_values(%(key)s);
-           }"""%{"type":self.type,
-            "ptype":self.ptype,
-            "name":self.nice_name,
-            "len":len(self.attribute_names),
-            "key":self.nice_name+"_"})
-        return ret
-    def get_key_arguments(self, const):
-        return [self.type+"Keys "+self.nice_name]
-    def get_key_pass(self, const):
-        return [self.nice_name+"_"]
-    def get_key_saves(self, const):
-        return [self.nice_name+"_("+self.nice_name+")"]
-    def get_initialize(self, const):
-        return []
-    def get_construct(self, const):
-        ret=[]
-        ret.append("""        Strings  %(name)s_names;"""%{"name":self.nice_name})
-        for nin in self.attribute_names:
-            ret.append("""        %(name)s_names.push_back("%(thisname)s");"""%{"name":self.nice_name,
-                                                                                "thisname":nin})
-        ret.append("""      %(name)s_=%(get)s;"""%{"name":self.nice_name,
-                                                   "get":gets_string(self.type,
-                                                                     "%(name)s_names"%{"name":self.nice_name},
-                                                                     const)})
-        return ret
-    def get_check(self, const):
-        return ["""nh.get_has_value(%(nn)s_[0])"""%{"nn":self.nice_name}]
+class RangeAttribute(AttributePair):
+  def __init__(self, name, data_type, begin, end, doc):
+    AttributePair.__init__(self, name, data_type, data_type + "Range", begin, end, doc)
+    self.get_methods = """  /** DOC */
+  TYPE get_NAME() const {
+    try {
+      return std::make_pair(get_node().get_value(NAME_[0]), get_node().get_value(NAME_[1]));
+    } RMF_DECORATOR_CATCH( );
+  }
+"""
+    self.set_methods = """ /** DOC */
+  void set_NAME(TYPE v) {
+    try {
+      get_node().set_value(NAME_[0], v.first);
+      get_node().set_value(NAME_[1], v.second);
+    } RMF_DECORATOR_CATCH( );
+  }
+"""
+    self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1]) && nh.get_value(NAME_[0]) < nh.get_value(NAME_[1])"
 
-# currently writing multiple plural attributes is not supported
-class PluralAttributes(Attributes):
-    def get_methods(self, const):
-        ret=[]
-        if not const:
-            ret.append("/** "+self.doc+" */")
-            ret.append("""%(ptype)s get_%(name)s() const {
-         %(ptype)s ret(%(len)s);
-           for (unsigned int i=0; i< %(len)s; ++i) {
-            ret[i]=get_node().get_value(%(key)s[i]);
-           }
-         return ret;
-      }"""%{"type":self.type,
-            "ptype":self.ptype,
-            "name":self.nice_name,
-            "len":len(self.attribute_names),
-            "key":self.nice_name+"_"})
-            ret.append("/** "+self.doc+" */")
-            ret.append("""void set_%(name)s(const %(ptype)s &v) {
-             for (unsigned int i=0; i< %(len)s; ++i) {
-                get_node().set_value(%(key)s[i], v[i]);
-             }
-        }"""%{"type":self.type,
-              "ptype":self.ptype,
-              "name":self.nice_name,
-              "len":len(self.attribute_names),
-              "key":self.nice_name+"_"})
-        else:
-            ret.append("/** "+self.doc+" */")
-            ret.append("""%(ptype)s get_%(name)s() const {
-         %(ptype)s ret(%(len)s);
-           for (unsigned int i=0; i< %(len)s; ++i) {
-            ret[i]=get_node().get_value(%(key)s[i]);
-           }
-         return ret;
-      }"""%{"type":self.type,
-            "ptype":self.ptype,
-            "name":self.nice_name,
-            "len":len(self.attribute_names),
-            "key":self.nice_name+"_"})
-        return ret
+class Attributes(Base):
+  def __init__(self, name, attribute_type, keys, doc):
+    Base.__init__(self, name, attribute_type+"Keys", attribute_type, doc)
+    self.helpers = """
+  DATA get_NAME_keys(FileCONSTHandle fh) {
+    DATA ret;
+    %s;
+    return ret;
+  }
+  bool get_has_NAME_attributes(NodeConstHandle nh) const {
+    for (unsigned int i = 0; i< NAME_.size(); ++i) {
+      if (!nh.get_has_value(NAME_[i])) return false;
+    }
+    return true;
+  }
+""" % ";".join("ret.push_back(fh.get_key<TYPETraits>(cat_, \"%s\"));" % x for x in keys)
+    self.data_initialize = "get_NAME_keys(fh)"
+    self.get_methods = """  /** DOC */
+  TYPES get_NAME() const {
+    try {
+      return P::get_values(NAME_);
+    } RMF_DECORATOR_CATCH( );
+  }
+"""
+    self.set_methods = """  /** DOC */
+  void set_NAME(TYPES v) {
+    try {
+      P::set_values(NAME_, v);
+    } RMF_DECORATOR_CATCH( );
+  }
+"""
+    self.check = " && ".join(["nh.get_has_value(NAME_[%d])" % i for i in range(len(keys))])
+
+decorator = """
+  /** DESCRIPTION
+
+       See also NAMENOTCONST and NAMECONSTFactory.
+    */
+  class NAMECONST: public Decorator<NodeCONSTHandle> {
+    friend class NAMECONSTFactory;
+    std::string get_name() const {return \"NAME\";}
+  private:
+    typedef Decorator<NodeCONSTHandle> P;
+DATA_MEMBERS
+    NAMECONST(NodeCONSTHandle nh,
+              DATA_ARGUMENTS):
+       DATA_SAVES {
+    }
+  public:
+METHODS
+    static std::string get_decorator_type_name() {
+         return "NAMECONST";
+    }
+  };
+
+    typedef std::vector<NAMECONST> NAMECONSTs;
+"""
+
+
+factory = """
+  /** Create decorators of type NAME.
+
+       See also NAMECONST and NAMENONCONSTFactory.
+    */
+  class NAMECONSTFactory: public Factory<FileCONSTHandle> {
+    typedef Factory<FileCONSTHandle> P;
+    Category cat_;
+DATA_MEMBERS
+HELPERS
+  public:
+    NAMECONSTFactory(FileCONSTHandle fh):
+    P(),
+    cat_(fh.get_category("CATEGORY")),
+    DATA_INITIALIZE {
+    }
+    /** Get a NAMECONST for nh.*/
+    NAMECONST get(NodeCONSTHandle nh) const {
+      CREATE_CHECKS
+      return NAMECONST(nh, DATA_PASS);
+    }
+    /** Check whether nh has all the attributes required to be a
+        NAMECONST.*/
+    bool get_is(NodeCONSTHandle nh) const {
+      return CHECKS;
+    }
+  };
+
+  typedef std::vector<NAMECONSTFactory> NAMECONSTFactories;
+"""
 
 class Decorator:
     def __init__(self, allowed_types, category, name, description,
                  attributes, internal_attributes=[],
-                 init_function=[],
-                 check_function=[]):
+                 init_function="",
+                 check_function=""):
         self.name=name
         self.category=category
         self.allowed_types= allowed_types
@@ -384,30 +310,35 @@ class Decorator:
         self.attributes= attributes
         self.internal_attributes = internal_attributes
         self.check_function= check_function
-    def _get_key_members(self, const):
+    def _get_data_members(self, const):
         ret=[]
         for a in self.attributes+self.internal_attributes:
-          ret.extend(a.get_key_members(const))
+          ret.append(a.get_data_members(const))
         return "\n".join(ret)
     def _get_methods(self, const):
         ret=[]
         for a in self.attributes:
-          ret.extend(a.get_methods(const))
+          ret.append(a.get_get_set_methods(const))
         return "\n".join(ret)
-    def _get_key_arguments(self, const):
+    def _get_helpers(self, const):
+        ret=[]
+        for a in self.attributes:
+          ret.append(a.get_helpers(const))
+        return "\n".join(ret)
+    def _get_data_arguments(self, const):
         ret=[]
         for a in self.attributes+self.internal_attributes:
-          ret.extend(a.get_key_arguments(const))
+          ret.append(a.get_data_arguments(const))
         return ",\n".join(ret)
-    def _get_key_pass(self, const):
+    def _get_data_pass(self, const):
         ret=[]
         for a in self.attributes+self.internal_attributes:
-          ret.extend(a.get_key_pass(const))
+          ret.append(a.get_data_pass(const))
         return ",\n".join(ret)
-    def _get_key_saves(self, const):
+    def _get_data_saves(self, const):
         ret=[]
         for a in self.attributes+self.internal_attributes:
-          ret.extend(a.get_key_saves(const))
+          ret.append(a.get_data_saves(const))
         return ",\n".join(["P(nh)"]+ret)
     def _get_type_check(self):
         cret=[]
@@ -418,9 +349,9 @@ class Decorator:
     def _get_checks(self, const):
         ret=[self._get_type_check()]
         for a in self.attributes+self.internal_attributes:
-          ret.extend(a.get_check(const))
-        ret.extend(self.check_function)
-        return "\n    && ".join(ret)
+          ret.append(a.get_check(const))
+        ret.append(self.check_function)
+        return "\n    && ".join(x for x in ret if x != "")
     def _get_construct(self, const):
         ret=[]
         # make handle missing later
@@ -428,111 +359,37 @@ class Decorator:
                      +self.category+"\");")
         ret.append("RMF_UNUSED(cat);")
         for a in self.attributes+self.internal_attributes:
-          ret.extend(a.get_construct(const))
+          ret.append(a.get_construct(const))
         return "\n".join(ret)
-    def _get_initialize(self, const):
+    def _get_data_initialize(self, const):
         ret=[]
         for a in self.attributes+self.internal_attributes:
-          ret.extend(a.get_initialize(const))
-        if ret==[]:
-            return "P()"
-        else:
-            return ", ".join(["P()"]+ret)
-    def get(self):
-        ret=[]
-        classstr="""/** %(description)s
+          ret.append(a.get_data_initialize(const))
+        return ", ".join(ret)
 
-       See also %(name)s%(NOTCONST)s and %(name)s%(CONST)sFactory.
-     */
-    class %(name)s%(CONST)s:
-        public Decorator<Node%(CONST)sHandle> {
-    friend class %(name)s%(CONST)sFactory;
-    std::string get_name() const {return \"%(name)s\";}
-    private:
-    typedef Decorator<Node%(CONST)sHandle> P;
-    %(key_members)s
-    %(name)s%(CONST)s(Node%(CONST)sHandle nh,
-                  %(key_arguments)s):
-       %(key_saves)s {
-    %(init)s;
-    }
-    public:
-    %(methods)s
-    static std::string get_decorator_type_name() {
-         return "%(name)s%(CONST)s";
-    }
-    };
-
-    typedef std::vector<%(name)s%(CONST)s>
-            %(name)s%(CONST)ss;
-"""
-        ret.append(classstr%{"description":self.description,
-                             "name":self.name,
-                             "key_members": self._get_key_members(True),
-                             "methods": self._get_methods(True),
-                             "key_arguments": self._get_key_arguments(True),
-                             "key_saves": self._get_key_saves(True),
-                             "CONST":"Const", "NOTCONST":"",
-                             "init":""})
-        ret.append(classstr%{"description":self.description,
-                             "name":self.name,
-                             "key_members": self._get_key_members(False),
-                             "methods": self._get_methods(False),
-                             "key_arguments": self._get_key_arguments(False),
-                             "key_saves": self._get_key_saves(False),
-                             "CONST":"", "NOTCONST":"Const",
-                             "init":"\n".join(self.init_function)})
-
-        factstr="""/** Create decorators of type %(name)s.
-
-       See also %(name)s%(CONST)s and %(name)s%(NOTCONST)sFactory.
-    */
-    class %(name)s%(CONST)sFactory:
-       public Factory<File%(CONST)sHandle>
-                 {
-    private:
-    typedef Factory<File%(CONST)sHandle> P;
-    %(key_members)s
-    public:
-    %(name)s%(CONST)sFactory(File%(CONST)sHandle fh):
-      %(initialize)s{
-    %(construct)s;
-    }
-    /** Get a %(name)s%(CONST)s for nh.*/
-    %(name)s%(CONST)s get(Node%(CONST)sHandle nh) const {
-      %(create_check)s;
-      return %(name)s%(CONST)s(nh, %(key_pass)s);
-    }
-    /** Check whether nh has all the attributes required to be a
-        %(name)s%(CONST)s.*/
-    bool get_is(Node%(CONST)sHandle nh) const {
-      return %(checks)s;
-    }
-    };
-
-    typedef std::vector<%(name)s%(CONST)sFactory>
-            %(name)s%(CONST)sFactories;
-"""
-        typecheck = """RMF_USAGE_CHECK(%s, std::string("Bad node type. Got \\\"")
+    def _get_list(self, const):
+      ret = [("HELPERS", self._get_helpers(const)),
+             ("DATA_MEMBERS", self._get_data_members(const)),
+             ("METHODS", self._get_methods(const)),
+             ("DATA_ARGUMENTS", self._get_data_arguments(const)),
+             ("DATA_SAVES", self._get_data_saves(const)),
+             ("DATA_PASS", self._get_data_pass(const)),
+             ("DATA_INITIALIZE", self._get_data_initialize(const)),
+             ("CREATE_CHECKS", """RMF_USAGE_CHECK(%s, std::string("Bad node type. Got \\\"")
                                       + boost::lexical_cast<std::string>(nh.get_type())
-                                      + "\\\" in decorator type  %s");""" % (self._get_type_check(), self.name)
-        ret.append(factstr%{"name":self.name,
-                             "key_members": self._get_key_members(False),
-                             "key_pass": self._get_key_pass(False),
-                             "CONST":"", "NOTCONST":"Const",
-                            "create_check":typecheck,
-                            "construct": self._get_construct(False),
-                            "initialize": self._get_initialize(False),
-                            "checks":self._get_checks(False)});
-        ret.append(factstr%{"name":self.name,
-                             "key_members": self._get_key_members(True),
-                             "key_pass": self._get_key_pass(True),
-                             "create_check":typecheck,
-                             "CONST":"Const", "NOTCONST":"",
-                            "construct": self._get_construct(True),
-                            "initialize": self._get_initialize(True),
-                            "checks":self._get_checks(True)});
-        return "\n".join(ret)
+                                      + "\\\" in decorator type  %s");""" % (self._get_type_check(), self.name)),
+             ("CHECKS", self._get_checks(const))]
+      return ret
+    def get(self):
+      ret = ""
+      common = [("DESCRIPTION", self.description),
+                ("NAME", self.name),
+                ("CATEGORY", self.category)]
+      ret += replace(decorator, common + self._get_list(True), True)
+      ret += replace(decorator, common + self._get_list(False), False)
+      ret += replace(factory, common + self._get_list(True), True)
+      ret += replace(factory, common + self._get_list(False), False)
+      return ret
 
 
 def make_header(name, infos, deps):
