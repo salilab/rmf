@@ -11,7 +11,8 @@ except:
 coordinates = Attributes("coordinates", "Float", ["cartesian x",
                                                   "cartesian y",
                                                   "cartesian z"],
-                         "The coordinates in angstroms.")
+                         "The coordinates in angstroms.",
+                         bulk = True)
 orientation = Attributes("orientation", "Float", ["orientation r",
                                                   "orientation i",
                                                   "orientation j",
@@ -94,15 +95,15 @@ colored= Decorator(["REPRESENTATION", "ORGANIZATIONAL", "ALIAS", "FEATURE", "GEO
                                                       "rgb color green",
                                                       "rgb color blue"],
                                "The RGB color. Each component has a value in [0...1].")])
-geometry_coordinates = Attributes("coordinates", "Floats", ["cartesian x",
-                                                          "cartesian y",
-                                                          "cartesian z"],
+geometry_coordinates = Attributes("coordinates", "Floats", ["cartesian xs",
+                                                          "cartesian ys",
+                                                          "cartesian zs"],
                                    "Coordinates of the center in angstroms.")
 geometry_index = Attribute("type", "Index", "The type of the geometric object.")
 
 ball= Decorator(["GEOMETRY"], "shape",
                 "Ball", "A geometric ball.",
-                [geometry_coordinates, radius],
+                [coordinates, radius],
                 internal_attributes=[geometry_index],
                 init_function = "nh.set_value(type_, 0);",
                 check_function = "nh.get_value(type_) == 0")
@@ -143,7 +144,7 @@ residue= Decorator(["REPRESENTATION"], "sequence",
                    "Residue", "Information regarding a residue.",
                    [SingletonRangeAttribute("index", "Int", "first residue index", "last residue index",
                                             "The index of the residue."),
-                    Attribute("residue type", "String", "The three letter name for the residue.")])
+                    Attribute("residue type", "String", "The three letter name for the residue.", function_name = "type")])
 
 chain= Decorator(["REPRESENTATION"], "sequence",
                  "Chain", "Information regarding a chain.",

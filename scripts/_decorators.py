@@ -27,6 +27,8 @@ class Base:
     self.names.append(("TYPE", return_type))
     self.get_methods = ""
     self.set_methods = ""
+    self.bulk_get_methods = ""
+    self.bulk_set_methods = ""
     self.helpers = ""
     self.check = ""
   def get_data_members(self, const):
@@ -35,6 +37,11 @@ class Base:
     ret = replace(self.get_methods, self.names, const)
     if not const:
       ret += replace(self.set_methods, self.names, const)
+    return ret
+  def get_bulk_methods(self, const):
+    ret = replace(self.bulk_get_methods, self.names, const)
+    if not const:
+      ret += replace(self.bulk_set_methods, self.names, const)
     return ret
   def get_helpers(self, const):
     return replace(self.helpers, self.names, const)
@@ -86,29 +93,31 @@ class Children(Base):
     self.data_initialize = "fh"
 
 class Attribute(Base):
-  def __init__(self, name, attribute_type, doc):
+  def __init__(self, name, attribute_type, doc, function_name = None):
+    if not function_name:
+      function_name = name.replace(" ", "_")
     Base.__init__(self, name, attribute_type + "Key", attribute_type, doc)
     self.get_methods = """  /** DOC */
-  TYPE get_NAME() const {
+  TYPE get_%s() const {
     try {
       return P::get_value(NAME_);
     } RMF_DECORATOR_CATCH( );
   }
   /** DOC */
-  TYPES get_all_NAMEs() const {
+  TYPES get_all_%ss() const {
     try {
       return P::get_all_values(NAME_);
     } RMF_DECORATOR_CATCH( );
   }
-"""
+""" % (function_name, function_name)
     self.set_methods = """  /** DOC */
-  void set_NAME(TYPE v) {
+  void set_%s(TYPE v) {
     try {
       P::set_value(NAME_, v);
     } RMF_DECORATOR_CATCH( );
   }
 
-"""
+""" % function_name
     self.check = "nh.get_has_value(NAME_)"
     self.data_initialize = "fh.get_key<TYPETraits>(cat_, \"%s\")" % name
 
@@ -208,7 +217,7 @@ class RangeAttribute(AttributePair):
     self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1]) && nh.get_value(NAME_[0]) < nh.get_value(NAME_[1])"
 
 class Attributes(Base):
-  def __init__(self, name, attribute_type, keys, doc):
+  def __init__(self, name, attribute_type, keys, doc, bulk = False):
     Base.__init__(self, name, attribute_type+"Keys", attribute_type, doc)
     self.helpers = """
   DATA get_NAME_keys(FileCONSTHandle fh) {
@@ -239,7 +248,24 @@ class Attributes(Base):
   }
 """
     self.check = " && ".join(["nh.get_has_value(NAME_[%d])" % i for i in range(len(keys))])
-
+    if bulk :
+      self.bulk_get_methods = """
+  /** Get values from a list of NodeIDs all at the same time. This method
+      is a bit experimental and may change.
+    */
+  TYPESList get_NAME(FileConstHandle fh,
+                       const NodeIDs &node_ids) const {
+      TYPESList ret(node_ids.size());
+      for (unsigned int i = 0; i< node_ids.size(); ++i) {
+        NodeConstHandle nh = fh.get_node_from_id(node_ids[i]);
+        ret[i].resize(NAME_.size());
+        for (unsigned int j = 0; j < NAME_.size(); ++j) {
+          ret[i][j] = nh.get_value(NAME_[j]);
+        }
+      }
+      return ret;
+  }
+"""
 decorator = """
   /** DESCRIPTION
 
@@ -292,6 +318,7 @@ HELPERS
     bool get_is(NodeCONSTHandle nh) const {
       return CHECKS;
     }
+    BULK_METHODS
   };
 
   typedef std::vector<NAMECONSTFactory> NAMECONSTFactories;
@@ -319,6 +346,11 @@ class Decorator:
         ret=[]
         for a in self.attributes:
           ret.append(a.get_get_set_methods(const))
+        return "\n".join(ret)
+    def _get_bulk_methods(self, const):
+        ret=[]
+        for a in self.attributes:
+          ret.append(a.get_bulk_methods(const))
         return "\n".join(ret)
     def _get_helpers(self, const):
         ret=[]
@@ -370,6 +402,7 @@ class Decorator:
     def _get_list(self, const):
       ret = [("HELPERS", self._get_helpers(const)),
              ("DATA_MEMBERS", self._get_data_members(const)),
+             ("BULK_METHODS", self._get_bulk_methods(const)),
              ("METHODS", self._get_methods(const)),
              ("DATA_ARGUMENTS", self._get_data_arguments(const)),
              ("DATA_SAVES", self._get_data_saves(const)),
