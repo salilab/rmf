@@ -54,7 +54,7 @@ chain= rmf.get_root_node().add_child("chain", RMF.REPRESENTATION)
 chain_factory.get(chain).set_chain_id(0)
 domain= chain.add_child("n-terminus", RMF.REPRESENTATION)
 dd= domain_factory.get(domain)
-dd.set_indexes(0,2)
+dd.set_indexes((0,2))
 
 atoms=[]
 res_data=[( "MET", 0 , [ ("N", 7 , 14.00 , 1.85 ,
