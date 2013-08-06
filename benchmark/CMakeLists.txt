@@ -6,7 +6,9 @@ foreach (cpp ${BIN_SOURCES})
    message(STATUS ${name})
    add_executable("RMF.${name}" ${cpp})
    target_link_libraries("RMF.${name}" RMF ${Boost_PROGRAM_OPTIONS_LIBRARY} )
+   set_target_properties(RMF.${name} PROPERTIES
+                         OUTPUT_NAME ${name})
+   set_property(TARGET "RMF.${name}" PROPERTY FOLDER "RMF")
+
    set(executables ${executables} "RMF.${name}")
 endforeach()
-
-add_custom_target("RMF_benchmarks" ALL DEPENDS ${executables})

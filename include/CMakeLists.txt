@@ -12,8 +12,9 @@ add_custom_command(OUTPUT ${decorators}
   DEPENDS "${PROJECT_SOURCE_DIR}/scripts/make-decorators.py"
   WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
   COMMENT "Making decorator headers")
-add_custom_target(decorators ALL DEPENDS "${PROJECT_BINARY_DIR}/include/RMF/physics_decorators.h"
+add_custom_target(RMF.decorators ALL DEPENDS "${PROJECT_BINARY_DIR}/include/RMF/physics_decorators.h"
   "${PROJECT_SOURCE_DIR}/scripts/make-decorators.py")
+set_property(TARGET "RMF.decorators" PROPERTY FOLDER "RMF")
 
 #set(all_h "${PROJECT_BINARY_DIR}/include/RMF.h")
 #add_custom_command(OUTPUT "${all_h}"
