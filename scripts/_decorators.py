@@ -407,11 +407,21 @@ class Decorator:
              ("DATA_ARGUMENTS", self._get_data_arguments(const)),
              ("DATA_SAVES", self._get_data_saves(const)),
              ("DATA_PASS", self._get_data_pass(const)),
-             ("DATA_INITIALIZE", self._get_data_initialize(const)),
-             ("CREATE_CHECKS", """RMF_USAGE_CHECK(%s, std::string("Bad node type. Got \\\"")
+             ("DATA_INITIALIZE", self._get_data_initialize(const))]
+      if const:
+             ret.append(("CREATE_CHECKS", """RMF_USAGE_CHECK(%s, std::string("Bad node type. Got \\\"")
                                       + boost::lexical_cast<std::string>(nh.get_type())
-                                      + "\\\" in decorator type  %s");""" % (self._get_type_check(), self.name)),
-             ("CHECKS", self._get_checks(const))]
+                                      + "\\\" in decorator type  %s");""" % (self._get_type_check(),
+                                      self.name)))
+      else:
+          ret.append(("CREATE_CHECKS", """RMF_USAGE_CHECK(%s, std::string("Bad node type. Got \\\"")
+                                      + boost::lexical_cast<std::string>(nh.get_type())
+                                      + "\\\" in decorator type  %s");
+                                      %s
+                                      """ % (self._get_type_check(), self.name,
+                                             self.init_function)))
+
+      ret.append(("CHECKS", self._get_checks(const)))
       return ret
     def get(self):
       ret = ""
