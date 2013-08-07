@@ -6,12 +6,13 @@ include("${PROJECT_SOURCE_DIR}/src/internal/Files.cmake")
 
 include(src/backend/CMakeLists.txt)
 
-include(plugins/vmd/CMakeLists.txt)
-
-add_library(RMF SHARED ${sources}
+add_library(RMF-lib SHARED ${sources}
   ${decorators})
+set_target_properties("RMF-lib" PROPERTIES OUTPUT_NAME "RMF")
+set_property(TARGET "RMF-lib" PROPERTY FOLDER "RMF")
 
-target_link_libraries(RMF
+
+target_link_libraries(RMF-lib
   ${Boost_FILESYSTEM_LIBRARY}
   ${Boost_SYSTEM_LIBRARY}
   ${Boost_THREAD_LIBRARY}
@@ -19,4 +20,4 @@ target_link_libraries(RMF
   ${Log4CXX_LIBRARY}
   )
 
-INSTALL(TARGETS RMF DESTINATION ${CMAKE_INSTALL_LIBDIR})
+INSTALL(TARGETS RMF-lib DESTINATION ${CMAKE_INSTALL_LIBDIR})

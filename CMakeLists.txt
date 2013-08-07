@@ -63,6 +63,9 @@ include(include/CMakeLists.txt)
 
 include(src/CMakeLists.txt)
 add_subdirectory(bin)
+
+include(plugins/vmd/CMakeLists.txt)
+
 # swig support is a little broken
 
 if (DEFINED CMAKE_INSTALL_PYTHONDIR)
@@ -85,6 +88,6 @@ include(examples/CMakeLists.txt)
 include(benchmark/CMakeLists.txt)
 include(doc/CMakeLists.txt)
 
-add_custom_target(RMF.all DEPENDS ${RMF_BINS} ${RMF_SWIG} ${RMF_TESTS})
-set_property(TARGET "RMF.all" PROPERTY FOLDER "RMF")
+add_custom_target(RMF DEPENDS ${RMF_BINS} ${RMF_SWIG} ${RMF_TESTS} ${RMF_VMD})
+set_property(TARGET "RMF" PROPERTY FOLDER "RMF")
 

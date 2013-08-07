@@ -46,9 +46,9 @@ endif(APPLE)
 # later compatible versions of Python), except on Windows where all DLL
 # symbols must be defined
 IF(WIN32)
-  SWIG_LINK_LIBRARIES(RMF ${PYTHON_LIBRARIES} RMF)
+  SWIG_LINK_LIBRARIES(RMF ${PYTHON_LIBRARIES} RMF-lib)
 ELSE(WIN32)
-  SWIG_LINK_LIBRARIES(RMF RMF)
+  SWIG_LINK_LIBRARIES(RMF RMF-lib)
 ENDIF(WIN32)
 
 INSTALL(TARGETS ${SWIG_MODULE_RMF_REAL_NAME} DESTINATION ${CMAKE_INSTALL_PYTHONDIR})
@@ -71,9 +71,9 @@ endif(APPLE)
 # later compatible versions of Python), except on Windows where all DLL
 # symbols must be defined
 IF(WIN32)
-  SWIG_LINK_LIBRARIES(RMF_HDF5 ${PYTHON_LIBRARIES} RMF)
+  SWIG_LINK_LIBRARIES(RMF_HDF5 ${PYTHON_LIBRARIES} RMF-lib)
 ELSE(WIN32)
-  SWIG_LINK_LIBRARIES(RMF_HDF5 RMF)
+  SWIG_LINK_LIBRARIES(RMF_HDF5 RMF-lib)
 ENDIF(WIN32)
 # Apple linkers complain by default if there are undefined symbols
 IF(APPLE)
