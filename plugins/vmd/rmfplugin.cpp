@@ -4,6 +4,7 @@
 #include <RMF/physics_decorators.h>
 #include <RMF/sequence_decorators.h>
 #include <RMF/shape_decorators.h>
+#include <RMF/log.h>
 #include <boost/scoped_array.hpp>
 #include <boost/foreach.hpp>
 
@@ -33,10 +34,7 @@ namespace {
                   int *from, int *to);
   public:
     Data(std::string name);
-    void fill_structure(molfile_atom_t *atoms) {
-      get_structure(file_.get_root_node(), atoms,
-                    ' ', -1, "NONE");
-    }
+    void read_structure(molfile_atom_t *atoms);
     void read_next_frame(molfile_timestep_t *frame);
     void read_graphics(int *nelem, const molfile_graphics_t **gdata);
     void read_bonds(int *nbonds, int **fromptr, int **toptr,
@@ -53,6 +51,8 @@ namespace {
     pf_(file_), bf_(file_), sf_(file_), cf_(file_), bdf_(file_) {
     get_structure(file_.get_root_node(), NULL,
                   ' ', -1, std::string());
+    RMF_TRACE(RMF::get_logger(),
+              "Found " << atoms_.size() << " atoms.");
   }
 
   //
@@ -90,6 +90,13 @@ namespace {
       ++ret;
     }
     return ret;
+  }
+
+  void Data::read_structure(molfile_atom_t *atoms) {
+    int found = get_structure(file_.get_root_node(),
+                              atoms, ' ', -1, "NONE");
+    RMF_TRACE(RMF::get_logger(),
+              "Found " << found << " atoms when reading structure.");
   }
 
   void Data::read_next_frame(molfile_timestep_t *frame) {
@@ -205,18 +212,21 @@ namespace {
     Data *data = reinterpret_cast<Data*>(mydata);
     delete data;
   }
+
   void *open_rmf_read(const char *filename, const char *,
                       int *natoms) {
     Data *data = new Data(filename);
     *natoms = data->get_number_of_atoms();
     return data;
   }
+
   int read_rmf_structure(void *mydata, int *optflags,
                          molfile_atom_t *atoms) {
     Data *data = reinterpret_cast<Data*>(mydata);
     *optflags = MOLFILE_RADIUS | MOLFILE_MASS;
     // copy from atoms
-    data->fill_structure(atoms);
+    data->read_structure(atoms);
+
     return VMDPLUGIN_SUCCESS;
   }
 
