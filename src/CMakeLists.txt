@@ -6,6 +6,8 @@ include("${PROJECT_SOURCE_DIR}/src/internal/Files.cmake")
 
 include(src/backend/CMakeLists.txt)
 
+include(plugins/vmd/CMakeLists.txt)
+
 add_library(RMF SHARED ${sources}
   ${decorators})
 
