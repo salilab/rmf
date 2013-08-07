@@ -69,6 +69,11 @@ struct Double {
     Double(double r) : re(r) { }
 };
 
+struct PaddedRecord {
+    int32_t index;
+    std::vector<uint8_t> padding;
+};
+
 namespace rmf_avro {
 
 template <typename T> struct codec_traits<Complex<T> > {
@@ -76,12 +81,25 @@ template <typename T> struct codec_traits<Complex<T> > {
         rmf_avro::encode(e, c.re);
         rmf_avro::encode(e, c.im);
     }
-    
+
     static void decode(Decoder& d, Complex<T>& c) {
         rmf_avro::decode(d, c.re);
         rmf_avro::decode(d, c.im);
     }
 };
+
+template<> struct codec_traits<PaddedRecord> {
+    static void encode(Encoder& e, const PaddedRecord& v) {
+        avro::encode(e, v.index);
+        avro::encode(e, v.padding);
+    }
+
+    static void decode(Decoder& d, PaddedRecord& v) {
+        avro::decode(d, v.index);
+        avro::decode(d, v.padding);
+    }
+};
+
 
 template <> struct codec_traits<Integer> {
     static void decode(Decoder& d, Integer& c) {
@@ -123,6 +141,12 @@ static const char dblsch[] = "{\"type\": \"record\","
     "\"name\":\"ComplexDouble\", \"fields\": ["
         "{\"name\":\"re\", \"type\":\"double\"}"
     "]}";
+static const char prsch[] = "{ \"type\" : \"record\","
+    "\"name\" : \"PaddedRecord\", \"fields\" : ["
+    "{ \"type\" : \"int\", \"name\" : \"index\" },"
+    "{ \"type\" : \"bytes\", \"name\" : \"padding\" }"
+    "]}";
+
 
 
 string toString(const ValidSchema& s)
@@ -147,7 +171,7 @@ public:
     void testCleanup() {
         BOOST_CHECK(boost::filesystem::remove(filename));
     }
-    
+
     void testWrite() {
         rmf_avro::DataFileWriter<ComplexInteger> df(filename, writerSchema, 100);
         int64_t re = 3;
@@ -343,6 +367,94 @@ public:
         }
         BOOST_CHECK_EQUAL(i, count);
     }
+
+    /**
+     * Test various seek operations.
+     */
+    void testSeeks() {
+      const size_t padding_size=10000;
+      const size_t number_of_objects=1000;
+      // first create a large file
+      ValidSchema dschema= avro::compileJsonSchemaFromString(prsch);
+      {
+        auto_ptr<avro::DataFileWriter<PaddedRecord> >
+          writer(new avro::DataFileWriter<PaddedRecord>(filename, dschema));
+
+        for (size_t i=0; i< number_of_objects; ++i) {
+          PaddedRecord d;
+          d.index=i;
+          d.padding.resize(padding_size);
+          for (size_t j=0; j < padding_size; ++j) {
+            // make sure all bytes appear
+            d.padding[j] = j%256;
+          }
+          writer->write(d);
+        }
+      }
+
+      // check seeking to the start and end
+      {
+        auto_ptr<avro::DataFileReader<PaddedRecord> >
+          reader(new avro::DataFileReader<PaddedRecord>(filename));
+        BOOST_REQUIRE_NE(reader->sizeBytes(), -1);
+        // test that seek to the start gets the first element
+        reader->seekBlockBytes(reader->blockOffsetBytes());
+        PaddedRecord d;
+        BOOST_REQUIRE(reader->read(d));
+        BOOST_CHECK_EQUAL(d.index, 0);
+
+        reader->seekBlockBytes(reader->sizeBytes());
+        BOOST_CHECK(!reader->read(d));
+      }
+
+      // check that all members are found
+      std::set<size_t> block_offsets;
+      {
+        std::vector<int> dividers;
+        {
+          auto_ptr<avro::DataFileReader<PaddedRecord> >
+            reader(new avro::DataFileReader<PaddedRecord>(filename));
+          int size = reader->sizeBytes();
+          dividers.push_back(reader->blockOffsetBytes());
+          int chunk_size = (size-dividers[0])/20;
+          BOOST_REQUIRE_GT(chunk_size, 0);
+          for (int i=1; i< 20; ++i) {
+            dividers.push_back(chunk_size *i+ dividers[0]);
+          }
+          BOOST_REQUIRE_GT(size, dividers.back());
+          dividers.push_back(size);
+        }
+        std::vector<int> found;
+        for (size_t i=1; i< dividers.size(); ++i) {
+          auto_ptr<avro::DataFileReader<PaddedRecord> >
+            reader(new avro::DataFileReader<PaddedRecord>(filename));
+          reader->seekBlockBytes(dividers[i-1]);
+          block_offsets.insert(reader->blockOffsetBytes());
+          BOOST_REQUIRE_GE(reader->blockOffsetBytes(), dividers[i-1]);
+          do {
+            PaddedRecord d;
+            if (!reader->read(d)) break;
+            if (reader->blockOffsetBytes() > dividers[i]) break;
+            found.push_back(d.index);
+          } while (true);
+        }
+        BOOST_CHECK_EQUAL(found.size(), 1000);
+        for (unsigned int i=0; i< found.size(); ++i) {
+          BOOST_CHECK_EQUAL(found[i], i);
+        }
+      }
+
+      // check that all the block offsets are stable
+      {
+        for (std::set<size_t>::const_iterator it= block_offsets.begin();
+             it != block_offsets.end(); ++it) {
+          auto_ptr<avro::DataFileReader<PaddedRecord> >
+            reader(new avro::DataFileReader<PaddedRecord>(filename));
+          reader->seekBlockBytes(*it);
+          BOOST_CHECK_EQUAL(reader->blockOffsetBytes(), *it);
+        }
+      }
+    }
 };
 
 void addReaderTests(test_suite* ts, const shared_ptr<DataFileTest>& t)
@@ -357,7 +469,7 @@ void addReaderTests(test_suite* ts, const shared_ptr<DataFileTest>& t)
 }
 
 test_suite*
-init_unit_test_suite( int argc, char* argv[] ) 
+init_unit_test_suite( int argc, char* argv[] )
 {
     test_suite* ts= BOOST_TEST_SUITE("DataFile tests");
     shared_ptr<DataFileTest> t1(new DataFileTest("test1.df", sch, isch));
@@ -379,6 +491,9 @@ init_unit_test_suite( int argc, char* argv[] )
     shared_ptr<DataFileTest> t4(new DataFileTest("test4.df", dsch, dblsch));
     ts->add(BOOST_CLASS_TEST_CASE(&DataFileTest::testTruncate, t4));
     ts->add(BOOST_CLASS_TEST_CASE(&DataFileTest::testCleanup, t4));
+
+    shared_ptr<DataFileTest> t5(new DataFileTest("test5.df", dsch, dblsch));
+    ts->add(BOOST_CLASS_TEST_CASE(&DataFileTest::testSeeks, t5));
 
     return ts;
 }

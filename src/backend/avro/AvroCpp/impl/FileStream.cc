@@ -43,7 +43,7 @@ struct BufferCopyIn {
     virtual ~BufferCopyIn() { }
     virtual void seek(size_t len) = 0;
     virtual bool read(uint8_t* b, size_t toRead, size_t& actual) = 0;
-
+    virtual int64_t size() const =0;
 };
 
 struct FileBufferCopyIn : public BufferCopyIn {
@@ -73,6 +73,15 @@ struct FileBufferCopyIn : public BufferCopyIn {
         }
         actual = static_cast<size_t>(dw);
         return actual != 0;
+    }
+
+    int64_t size() const {
+      LPDWORD hodwsz;
+      DWORD sz= GetFileSize(h_, &hodwsz);
+      if (hodwsz != sz) {
+        throw Exception("I don't know what the 'high-order doubleword of the file size' means");
+      }
+      return hodwsz;
     }
 #else
     const int fd_;
@@ -105,8 +114,15 @@ struct FileBufferCopyIn : public BufferCopyIn {
         }
         return false;
     }
+
+    int64_t size() const {
+      size_t cur = ::lseek(fd_, 0, SEEK_CUR);
+      size_t size= ::lseek(fd_, 0, SEEK_END); // seek to end of file
+      ::lseek(fd_, cur, SEEK_SET);
+      return size;
+    }
 #endif
-  
+
 };
 
 struct IStreamBufferCopyIn : public BufferCopyIn {
@@ -128,6 +144,10 @@ struct IStreamBufferCopyIn : public BufferCopyIn {
         }
         actual = static_cast<size_t>(is_.gcount());
         return (! is_.eof() || actual != 0);
+    }
+
+    int64_t size() const {
+      return -1;
     }
 
 };
@@ -187,6 +207,14 @@ class BufferCopyInInputStream : public InputStream {
         return false;
     }
 
+    int64_t remainingBytes() const {
+      int64_t size = in_->size();
+      if (size==-1) {
+        return -1;
+      } else {
+        return in_->size() - byteCount_;
+      }
+    }
 
 public:
     BufferCopyInInputStream(auto_ptr<BufferCopyIn>& in, size_t bufferSize) :
@@ -255,7 +283,7 @@ struct FileBufferCopyOut : public BufferCopyOut {
         }
     }
 #endif
-  
+
 };
 
 struct OStreamBufferCopyOut : public BufferCopyOut {

@@ -151,7 +151,8 @@ void DataFileWriterBase::setMetadata(const string& key, const string& value)
 
 DataFileReaderBase::DataFileReaderBase(const char* filename) :
     filename_(filename), stream_(fileInputStream(filename)),
-    decoder_(binaryDecoder()), objectCount_(0), eof_(false)
+    decoder_(binaryDecoder()), objectCount_(0), eof_(false),
+    blockOffset_(0)
 {
     readHeader();
 }
@@ -193,10 +194,9 @@ std::ostream& operator << (std::ostream& os, const DataFileSync& s)
     return os;
 }
 
-
 bool DataFileReaderBase::hasMore()
 {
-     if (eof_) {
+    if (eof_) {
         return false;
     } else if (objectCount_ != 0) {
         return true;
@@ -206,6 +206,9 @@ bool DataFileReaderBase::hasMore()
     drain(*dataStream_);
     DataFileSync s;
     decoder_->init(*stream_);
+
+    blockOffset_ = stream_->byteCount();
+
     rmf_avro::decode(*decoder_, s);
     if (s != sync_) {
         throw Exception("Sync mismatch");
@@ -246,6 +249,10 @@ class BoundedInputStream : public InputStream {
         return in_.byteCount();
     }
 
+    int64_t remainingBytes() const {
+      return limit_ - in_.byteCount();
+    }
+
 public:
     BoundedInputStream(InputStream& in, size_t limit) :
         in_(in), limit_(limit) { }
@@ -274,8 +281,122 @@ bool DataFileReaderBase::readDataBlock()
     auto_ptr<InputStream> st = boundedInputStream(*stream_, static_cast<size_t>(byteCount));
     dataDecoder_->init(*st);
     dataStream_ = st;
+
     return true;
 }
+
+int64_t DataFileReaderBase::sizeBytes() const {
+  int64_t rem= stream_->remainingBytes();
+  if (rem == -1) return -1;
+  else {
+    // force decoder to empty its buffer
+    decoder_->init(*stream_);
+    return rem + stream_->byteCount();
+  }
+}
+
+namespace {
+  bool sync_match(const uint8_t *begin, const uint8_t *end,
+                  const DataFileSync &b, int sync_skip) {
+      for (const uint8_t *c = begin; c < begin + 16 - sync_skip; ++c) {
+        if (c == end) return true;
+        if (*c != b[c - begin + sync_skip]) {
+          return false;
+        }
+      }
+      return true;
+  }
+}
+
+void DataFileReaderBase::seekBlockBytes(int64_t offset) {
+  // force decoder to dump its buffers
+  decoder_->init(*stream_);
+
+  if (offset == blockOffset_) {
+    return;
+
+  } else if (offset >= stream_->byteCount()) {
+    dataDecoder_->init(*dataStream_);
+    drain(*dataStream_);
+
+    stream_->skip(offset - stream_->byteCount());
+    objectCount_ = 0;
+
+    // if we have leftover data from a previous iteration
+    boost::array<uint8_t, 16> old_data;
+    const uint8_t *p = 0;
+    size_t n = 0;
+
+    size_t offset = stream_->byteCount();
+
+    while (true) {
+      if (n == 0) {
+        if (! stream_->next(&p, &n)) {
+          blockOffset_= offset;
+          eof_ = true;
+          return;
+        }
+      }
+
+      const uint8_t *pos= std::find(p, p + n, sync_[0]);
+
+      if (pos == p + n) {
+        // clear out all data
+        offset += n;
+        p = 0;
+        n = 0;
+        continue;
+      }
+      // advance
+      int64_t delta= pos - p;
+      offset += delta;
+      n -= delta;
+      p += delta;
+
+      // the first already matches
+      if (!sync_match(p + 1, p + n, sync_, 1)) {
+        ++offset;
+        --n;
+        ++p;
+        continue;
+      }
+      if (n >= 16) {
+        // we found it
+        stream_->backup(n - 16);
+        blockOffset_= offset;
+        readDataBlock();
+        break;
+      }
+
+      // below is not tested
+      std::copy(p, p + n, old_data.begin());
+
+      const uint8_t *next_p = 0;
+      size_t next_n = 0;
+      if (! stream_->next(&next_p, &next_n)) {
+        blockOffset_= offset + 16; // safetly off the end
+        eof_ = true;
+        return;
+      }
+
+      if (!sync_match(next_p, next_p + next_n, sync_, n)) {
+        stream_->backup(next_n);
+        ++offset;
+        --n;
+        ++p;
+        continue;
+      }
+
+      stream_->backup(next_n-16+n);
+      blockOffset_= offset;
+      readDataBlock();
+      break;
+    }
+  } else {
+    throw Exception("Cannot seek backwards in streams. This might be made to work in some cases.");
+  }
+}
+
 
 void DataFileReaderBase::close()
 {
@@ -321,6 +442,10 @@ void DataFileReaderBase::readHeader()
     if (it != metadata_.end() && toString(it->second) != AVRO_NULL_CODEC) {
         throw Exception("Unknown codec in data file: " + toString(it->second));
     }
+
+    // force the decoder to empty its buffer
+    decoder_->init(*stream_);
+    blockOffset_ = stream_->byteCount();
 
     rmf_avro::decode(*decoder_, sync_);
 }

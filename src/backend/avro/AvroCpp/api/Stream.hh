@@ -72,6 +72,14 @@ public:
      * to be used unless, retutned back using backup.
      */
     virtual size_t byteCount() const = 0;
+
+     /**
+     * Returns the number of bytes that can still be read from the
+     * stream or -1 if that is not available. All the bytes made available
+     * through next are considered to be used unless, retutned back using backup.
+     */
+    virtual int64_t remainingBytes() const = 0;
+
 };
 
 /**
