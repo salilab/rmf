@@ -24,8 +24,10 @@ namespace {
 
     boost::scoped_array<molfile_graphics_t> graphics_;
     boost::scoped_array<int> bonds_to_, bonds_from_;
+    boost::scoped_array<char> bond_type_;
+    char *bt_char_;
+    bool done_;
 
-    // find nodes to push to vmd
     int get_structure(RMF::NodeConstHandle cur, molfile_atom_t *atoms,
                       char chain, int resid, std::string resname);
     int get_graphics(RMF::NodeConstHandle cur, molfile_graphics_t *graphics);
@@ -35,11 +37,12 @@ namespace {
   public:
     Data(std::string name);
     void read_structure(molfile_atom_t *atoms);
-    void read_next_frame(molfile_timestep_t *frame);
+    bool read_next_frame(molfile_timestep_t *frame);
     void read_graphics(int *nelem, const molfile_graphics_t **gdata);
     void read_bonds(int *nbonds, int **fromptr, int **toptr,
                     float **bondorderptr,  int **bondtype,
                     int *nbondtypes, char ***bondtypename);
+    void read_timestep_data(molfile_timestep_metadata_t *data);
     unsigned int get_number_of_atoms() const {
       return atoms_.size();
     }
@@ -48,16 +51,17 @@ namespace {
   Data::Data(std::string name):
     file_(RMF::open_rmf_file_read_only(name)),
     af_(file_), rf_(file_), chf_(file_),
-    pf_(file_), bf_(file_), sf_(file_), cf_(file_), bdf_(file_) {
+    pf_(file_), bf_(file_), sf_(file_), cf_(file_), bdf_(file_),
+    done_(false) {
+    file_.set_current_frame(0);
     get_structure(file_.get_root_node(), NULL,
                   ' ', -1, std::string());
-    RMF_TRACE(RMF::get_logger(),
-              "Found " << atoms_.size() << " atoms.");
   }
 
   //
   int Data::get_structure(RMF::NodeConstHandle cur, molfile_atom_t *atoms,
                           char chain, int resid, std::string resname) {
+    if (cur.get_type() == RMF::ALIAS) return 0;
     if (chf_.get_is(cur)) {
       chain = chf_.get(cur).get_chain_id();
     }
@@ -72,21 +76,26 @@ namespace {
       ret += count;
       if (atoms) atoms += count;
     }
+
     if (ret == 0 && pf_.get_is(cur)) {
-      std::string nm = cur.get_name();
-      std::copy(nm.begin(), nm.end(), atoms->name);
-      std::string at;
-      if (af_.get_is(cur)) {
-        at = cur.get_name();
+      if (atoms) {
+        std::string nm = cur.get_name();
+        std::string at;
+        if (af_.get_is(cur)) {
+          at = cur.get_name();
+        }
+        std::copy(nm.begin(), nm.end(), atoms->name);
+        std::copy(at.begin(), at.end(), atoms->type);
+        std::copy(resname.begin(), resname.end(), atoms->resname);
+        atoms->resid = resid;
+        atoms->chain[0] = chain;
+        atoms->chain[1] = '\0';
+        atoms->segid[0] = '\0';
+        atoms->mass = pf_.get(cur).get_mass();
+        atoms->radius = pf_.get(cur).get_radius();
+      } else {
+        atoms_.push_back(cur);
       }
-      std::copy(at.begin(), at.end(), atoms->type);
-      std::copy(resname.begin(), resname.end(), atoms->resname);
-      atoms->resid = resid;
-      atoms->chain[0] = chain;
-      atoms->chain[1] = '\0';
-      atoms->segid[0] = '\0';
-      atoms->mass = pf_.get(cur).get_mass();
-      atoms->radius = pf_.get(cur).get_radius();
       ++ret;
     }
     return ret;
@@ -95,21 +104,26 @@ namespace {
   void Data::read_structure(molfile_atom_t *atoms) {
     int found = get_structure(file_.get_root_node(),
                               atoms, ' ', -1, "NONE");
-    RMF_TRACE(RMF::get_logger(),
-              "Found " << found << " atoms when reading structure.");
+    std::cout << "found " << found << " structural particles" << std::endl;
   }
 
-  void Data::read_next_frame(molfile_timestep_t *frame) {
-    RMF::FrameConstHandle curf = file_.get_current_frame();
-    RMF::FrameConstHandle nextf = file_.get_frame(curf.get_id().get_index() + 1);
-    nextf.set_as_current_frame();
+  bool Data::read_next_frame(molfile_timestep_t *frame) {
+    if (done_) return false;
     frame->physical_time = 0;
     for (unsigned int i = 0; i < atoms_.size(); ++i) {
       RMF::Floats coords = pf_.get(atoms_[i]).get_coordinates();
       std::copy(coords.begin(), coords.end(), frame->coords);
       frame->coords += 3;
     }
-  }
+    RMF::FrameConstHandle curf = file_.get_current_frame();
+    unsigned int next = curf.get_id().get_index() + 1;
+    if (next == file_.get_number_of_frames()) {
+      done_ = true;
+    } else {
+      file_.set_current_frame(curf.get_id().get_index() + 1);
+    }
+    return true;
+ }
 
   void Data::read_graphics(int *nelem, const molfile_graphics_t **gdata) {
     *nelem = get_graphics(file_.get_root_node(), NULL);
@@ -132,8 +146,12 @@ namespace {
     *toptr = bonds_to_.get();
     *bondorderptr = NULL;
     *bondtype = NULL;
-    *nbondtypes = 0;
-    *bondtypename = NULL;
+    *nbondtypes = 1;
+    bond_type_.reset(new char[2]);
+    bond_type_[0] = 'B';
+    bond_type_[1] = '\0';
+    bt_char_ = bond_type_.get();
+    *bondtypename = &bt_char_;
     get_bonds(file_.get_root_node(), index, *fromptr, *toptr);
   }
 
@@ -182,15 +200,15 @@ namespace {
   }
   int Data::get_bonds(RMF::NodeConstHandle cur,
                       const std::map<RMF::NodeConstHandle, int> &index,
-                      int *from, int *to) {
-    int ret;
+                     int *from, int *to) {
+    int ret = 0;
     if (bdf_.get_is(cur)) {
       RMF::NodeConstHandles bonded = bdf_.get(cur).get_bonded();
       if (bonded.size() == 2 && index.find(bonded[0]) != index.end()
           && index.find(bonded[1]) != index.end()) {
         if (from) {
-          *from = index.find(bonded[0])->second;
-          *to = index.find(bonded[1])->second;
+          *from = index.find(bonded[0])->second + 1;
+          *to = index.find(bonded[1])->second + 1;
           ++from;
           ++to;
         }
@@ -207,6 +225,12 @@ namespace {
     }
     return ret;
   }
+  void Data::read_timestep_data(molfile_timestep_metadata_t *data) {
+    data->count = file_.get_number_of_frames();
+    if (data->count == 0) data->count = 1;
+    data->avg_bytes_per_timestep = sizeof(double)*3*atoms_.size();
+    data->has_velocities = 0;
+  }
 
   void close_rmf_read(void *mydata) {
     Data *data = reinterpret_cast<Data*>(mydata);
@@ -217,11 +241,17 @@ namespace {
                       int *natoms) {
     Data *data = new Data(filename);
     *natoms = data->get_number_of_atoms();
+    if (*natoms == 0) {
+      *natoms = MOLFILE_NUMATOMS_NONE;
+    }
+    std::cout << "open_rmf_read " << filename
+              << ": " << *natoms << std::endl;
     return data;
   }
 
   int read_rmf_structure(void *mydata, int *optflags,
                          molfile_atom_t *atoms) {
+    std::cout << "read structure" << std::endl;
     Data *data = reinterpret_cast<Data*>(mydata);
     *optflags = MOLFILE_RADIUS | MOLFILE_MASS;
     // copy from atoms
@@ -230,11 +260,14 @@ namespace {
     return VMDPLUGIN_SUCCESS;
   }
 
-  int read_rmf_timestep(void *mydata, int natoms, molfile_timestep_t *frame,
-                        molfile_qm_metadata_t *, molfile_qm_timestep_t *) {
+  int read_rmf_timestep(void *mydata, int /*natoms*/, molfile_timestep_t *frame) {
+    std::cout << "read timestep" << std::endl;
     Data *data = reinterpret_cast<Data*>(mydata);
-    data->read_next_frame(frame);
-    return VMDPLUGIN_SUCCESS;
+    if (data->read_next_frame(frame)) {
+      return VMDPLUGIN_SUCCESS;
+    } else {
+      return MOLFILE_EOF;
+    }
   }
 
   int read_rmf_bonds(void *mydata, int *nbonds, int **fromptr, int **toptr,
@@ -248,18 +281,27 @@ namespace {
   }
   int read_rmf_graphics (void *mydata, int *nelem,
                          const molfile_graphics_t **gdata) {
+    std::cout << "read graphics" << std::endl;
     Data *data = reinterpret_cast<Data*>(mydata);
     data->read_graphics(nelem, gdata);
+    return VMDPLUGIN_SUCCESS;
+  }
+  int read_rmf_timestep_metadata(void *mydata,
+                                 molfile_timestep_metadata_t *tdata) {
+    std::cout << "read metdata" << std::endl;
+    Data *data = reinterpret_cast<Data*>(mydata);
+    data->read_timestep_data(tdata);
     return VMDPLUGIN_SUCCESS;
   }
 }
 
 VMDPLUGIN_API int VMDPLUGIN_init () {
+  std::cout << "Init" << std::endl;
   memset(&plugin, 0, sizeof(molfile_plugin_t));
   plugin.abiversion = vmdplugin_ABIVERSION;
   plugin.type = MOLFILE_PLUGIN_TYPE;
   plugin.name = "rmf";
-  plugin.prettyname = "RMF";
+  plugin.prettyname = "Rich Molecular Format";
   plugin.author = "Daniel Russel";
   plugin.majorv = 0;
   plugin.minorv = 9;
@@ -269,9 +311,12 @@ VMDPLUGIN_API int VMDPLUGIN_init () {
   plugin.read_bonds = read_rmf_bonds;
   plugin.read_rawgraphics = read_rmf_graphics;
   plugin.close_file_read = close_rmf_read;
+  plugin.read_timestep_metadata = read_rmf_timestep_metadata;
+  plugin.read_next_timestep = read_rmf_timestep;
   return VMDPLUGIN_SUCCESS;
 }
 VMDPLUGIN_API int VMDPLUGIN_register (void *v, vmdplugin_register_cb cb) {
+  std::cout << "Register" << std::endl;
   plugin.filename_extension = "rmf";
   (*cb)(v, (vmdplugin_t *)&plugin);
   plugin.filename_extension = "rmf2";
@@ -281,5 +326,6 @@ VMDPLUGIN_API int VMDPLUGIN_register (void *v, vmdplugin_register_cb cb) {
   return 0;
 }
 VMDPLUGIN_API int VMDPLUGIN_fini () {
+  std::cout << "Fini" << std::endl;
   return VMDPLUGIN_SUCCESS;
 }
