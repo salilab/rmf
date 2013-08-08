@@ -11,14 +11,13 @@
 
 #include <RMF/config.h>
 #include <boost/exception/exception.hpp>
-#include "internal/errors.h"
 #include <string>
 #include <exception>
 
 RMF_ENABLE_WARNINGS namespace RMF {
   /** The base class for RMF exceptions. Use the what() method
       to get back a string describing the exception.
-  
+
       Use get_message() to get a nice message describing the
       exception.
    */
@@ -133,5 +132,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
             ::RMF::InternalException)
 
 RMF_DISABLE_WARNINGS
+
+#include "internal/errors.h"
 
 #endif /* RMF_EXCEPTIONS_H */

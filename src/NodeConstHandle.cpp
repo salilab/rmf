@@ -16,16 +16,33 @@ RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(NodeConstHandle);
 
 namespace RMF {
 
-NodeConstHandle::NodeConstHandle(int node, internal::SharedData* shared)
+NodeConstHandle::NodeConstHandle(NodeID node, internal::SharedData* shared)
     : node_(node), shared_(shared) {}
 
 FileConstHandle NodeConstHandle::get_file() const {
   return FileConstHandle(shared_.get());
 }
 
+  std::string NodeConstHandle::get_file_name() const {
+    return get_file().get_name();
+  }
+  FrameID NodeConstHandle::get_current_frame_id() const {
+    return get_file().get_current_frame().get_frame_id();
+  }
+
+#define RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DEF(                      \
+                                                 lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues) \
+  std::string NodeConstHandle::get_category_name(UCName##Key k) const { \
+    return get_file().get_name(get_file().get_category(k));             \
+  }                                                                     \
+  std::string NodeConstHandle::get_name(UCName##Key k) const {return get_file().get_name(k);};
+
+ RMF_FOREACH_TYPE(RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DEF);
+
+
 std::vector<NodeConstHandle> NodeConstHandle::get_children() const {
   try {
-    Ints children = shared_->get_children(node_);
+    NodeIDs children = shared_->get_children(node_);
     std::vector<NodeConstHandle> ret(children.size());
     for (unsigned int i = 0; i < ret.size(); ++i) {
       ret[i] = NodeConstHandle(children[i], shared_.get());
@@ -34,63 +51,6 @@ std::vector<NodeConstHandle> NodeConstHandle::get_children() const {
   }
   RMF_NODE_CATCH();
 }
-
-#define RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DEF(                            \
-    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues)        \
-  ReturnValue NodeConstHandle::get_value(UCName##Key k) const {              \
-    try {                                                                    \
-      RMF_USAGE_CHECK(                                                       \
-          get_has_value(k),                                                  \
-          internal::get_error_message("Node ",                               \
-                                      get_name(),                            \
-                                      " does not have a value for key ",     \
-                                      shared_->get_name(k)));                \
-      return get_value_always(k);                                            \
-    }                                                                        \
-    RMF_NODE_CATCH_KEY(k, );                                                 \
-  }                                                                          \
-  ReturnValues NodeConstHandle::get_all_values(UCName##Key k) const {        \
-    try {                                                                    \
-      return shared_->get_all_values(node_, k);                              \
-    }                                                                        \
-    RMF_NODE_CATCH_KEY(k, );                                                 \
-  }                                                                          \
-  ReturnValue NodeConstHandle::get_value_always(UCName##Key k) const {       \
-    try {                                                                    \
-      return shared_->get_value(node_, k);                                   \
-    }                                                                        \
-    RMF_NODE_CATCH_KEY(k, );                                                 \
-  }                                                                          \
-  bool NodeConstHandle::get_has_value(UCName##Key k) const {                 \
-    return !UCName##Traits::get_is_null_value(get_value_always(k));          \
-  }                                                                          \
-  ReturnValues NodeConstHandle::get_values_always(const UCName##Key##s &     \
-                                                  k) const {                 \
-    try {                                                                    \
-      return shared_->get_values(node_, k);                                  \
-    }                                                                        \
-    RMF_NODE_CATCH();                                                        \
-  }                                                                          \
-  ReturnValues NodeConstHandle::get_values(const UCName##Key##s & k) const { \
-    try {                                                                    \
-      RMF_USAGE_CHECK(                                                       \
-          get_has_value(k[0]),                                               \
-          internal::get_error_message("Node ",                               \
-                                      get_name(),                            \
-                                      " does not have a value for key ",     \
-                                      shared_->get_name(k[0])));             \
-      return get_values_always(k);                                           \
-    }                                                                        \
-    RMF_NODE_CATCH();                                                        \
-  }                                                                          \
-  bool NodeConstHandle::get_has_frame_value(UCName##Key k) const {           \
-    try {                                                                    \
-      return shared_->get_has_frame_value(node_, k);                         \
-    }                                                                        \
-    RMF_NODE_CATCH();                                                        \
-  }
-
-RMF_FOREACH_TYPE(RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DEF);
 
 std::string get_type_name(NodeType t) {
   switch (t) {

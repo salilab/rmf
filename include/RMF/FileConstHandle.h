@@ -22,7 +22,7 @@ RMF_ENABLE_WARNINGS
 #define RMF_FILE_CATCH(extra_info)                                          \
   catch (Exception & e) {                                                   \
     RMF_RETHROW(                                                            \
-        File(get_path()) << Frame(get_current_frame().get_id().get_index()) \
+        File(get_path()) << Frame(get_current_frame().get_id()) \
                          << Operation(BOOST_CURRENT_FUNCTION) extra_info,   \
         e);                                                                 \
   }
@@ -91,19 +91,19 @@ class RMFEXPORT FileConstHandle {
 
   //! Return the root of the hierarchy
   NodeConstHandle get_root_node() const {
-    return NodeConstHandle(0, shared_.get());
+    return NodeConstHandle(NodeID(0), shared_.get());
   }
 
   //! Return the root of the hierarchy
   FrameConstHandle get_root_frame() const {
-    return FrameConstHandle(-1, shared_.get());
+    return FrameConstHandle(FrameID(-1), shared_.get());
   }
 
   //! Return the ith frame
-  FrameConstHandle get_frame(unsigned int i) const {
+  FrameConstHandle get_frame(FrameID i) const {
     try {
-      RMF_INDEX_CHECK(i, get_number_of_frames());
-      return FrameConstHandle(i, shared_.get());
+      RMF_INDEX_CHECK(i.get_index(), get_number_of_frames());
+      return FrameConstHandle(FrameID(i), shared_.get());
     }
     RMF_FILE_CATCH( << Frame(i));
   }
@@ -169,7 +169,7 @@ class RMFEXPORT FileConstHandle {
     return FrameConstHandle(shared_->get_current_frame(), shared_.get());
   }
 #ifndef IMP_DOXYGEN
-  void set_current_frame(int frame) {
+  void set_current_frame(FrameID frame) {
     try {
       shared_->set_current_frame(frame);
     }
@@ -222,7 +222,7 @@ class RMFEXPORT FileConstHandle {
 #else
   NodeConstHandle get_node_from_association(void* v) const;
 #endif
-  NodeConstHandle get_node_from_id(NodeID id) const;
+  NodeConstHandle get_node(NodeID id) const;
 
   /** Along with the associations for nodes, arbitrary data can
       be associated with the file in memory to aid in processing.

@@ -14,6 +14,7 @@
 #include <RMF/decorators.h>
 #include <backend/avro/AvroCpp/api/Compiler.hh>
 #include <boost/scoped_ptr.hpp>
+#include <boost/lexical_cast.hpp>
 #include <stdexcept>
 
 RMF_ENABLE_WARNINGS namespace RMF {
@@ -35,7 +36,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       initialize_node_keys();
       all_.file.version = 1;
     }
-    null_static_frame_data_.frame = ALL_FRAMES;
+    null_static_frame_data_.frame = -1;
   }
 
   SingleAvroFile::SingleAvroFile(std::string& path, bool create)
@@ -52,7 +53,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       initialize_node_keys();
       all_.file.version = 1;
     }
-    null_static_frame_data_.frame = ALL_FRAMES;
+    null_static_frame_data_.frame = -1;
   }
 
   SingleAvroFile::SingleAvroFile(const std::string& path)
@@ -62,7 +63,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
         buffer_(const_cast<std::string*>(&path)),
         write_to_buffer_(true) {
     reload();
-    null_static_frame_data_.frame = ALL_FRAMES;
+    null_static_frame_data_.frame = -1;
 
     // so we don't write to it
     buffer_ = NULL;
@@ -160,26 +161,30 @@ RMF_ENABLE_WARNINGS namespace RMF {
     dirty_ = false;
   }
 
-  int SingleAvroFile::add_child_frame(int node, std::string name, int t) {
-    unsigned int index = get_number_of_frames();
+  FrameID SingleAvroFile::add_child(FrameID node, std::string name, FrameType t) {
+    FrameID index = FrameID(get_number_of_frames());
     access_frame(index).name = name;
-    access_frame(index).type = boost::lexical_cast<std::string>(FrameType(t));
-    access_frame(node).children.push_back(index);
-    RMF_INTERNAL_CHECK(get_number_of_frames() == index + 1, "No frame added");
+    access_frame(index).type = boost::lexical_cast<std::string>(t);
+    access_frame(node).children.push_back(index.get_index());
+    RMF_INTERNAL_CHECK(get_number_of_frames() == index.get_index() + 1,
+                       "No frame added");
     return index;
   }
 
-  void SingleAvroFile::add_child_frame(int node, int child_node) {
-    access_frame(node).children.push_back(child_node);
+  void SingleAvroFile::add_child(FrameID node, FrameID child_node) {
+    access_frame(node).children.push_back(child_node.get_index());
   }
 
-  Ints SingleAvroFile::get_children_frame(int node) const {
-    return Ints(get_frame(node).children.begin(),
+  FrameIDs SingleAvroFile::get_children(FrameID node) const {
+    return FrameIDs(get_frame(node).children.begin(),
                 get_frame(node).children.end());
   }
 
-  std::string SingleAvroFile::get_frame_name(int i) const {
+  std::string SingleAvroFile::get_name(FrameID i) const {
     return get_frame(i).name;
+  }
+  FrameType SingleAvroFile::get_type(FrameID i) const {
+    return boost::lexical_cast<FrameType>(get_frame(i).type);
   }
   unsigned int SingleAvroFile::get_number_of_frames() const {
     return get_frames().size() - 1;

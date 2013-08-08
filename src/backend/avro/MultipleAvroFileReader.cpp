@@ -12,31 +12,32 @@
 #include <boost/version.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <boost/lexical_cast.hpp>
 #include <stdexcept>
 
 RMF_ENABLE_WARNINGS namespace RMF {
   namespace avro_backend {
 
   namespace {
-  void clear_data(RMF_avro_backend::Data& data, int frame) {
+  void clear_data(RMF_avro_backend::Data& data, FrameID frame) {
     data = RMF_avro_backend::Data();
-    data.frame = frame;
+    data.frame = frame.get_index();
   }
   }
 
-  void MultipleAvroFileReader::set_current_frame(int frame) {
+  void MultipleAvroFileReader::set_current_frame(FrameID frame) {
     if (frame != ALL_FRAMES) {
       RMF_TRACE(get_avro_logger(), "Loading frame " << frame);
     } else {
       RMF_TRACE(get_avro_logger(), "Loading static data");
     }
     if (frame != ALL_FRAMES) {
-      null_data_.frame = frame;
+      null_data_.frame = frame.get_index();
       for (unsigned int i = 0; i < categories_.size(); ++i) {
         if (!categories_[i].reader) {
           clear_data(categories_[i].data, frame);
         }
-        if (frame < categories_[i].data.frame) {
+        if (frame.get_index() < categories_[i].data.frame) {
           RMF_INTERNAL_CHECK(categories_[i].reader, "No old reader found");
           std::string name = get_category_dynamic_file_path(Category(i));
           try {
@@ -56,7 +57,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
             RMF_THROW(Message("Unable to read data from input"), IOException);
           }
         }
-        while (frame > categories_[i].data.frame) {
+        while (frame.get_index() > categories_[i].data.frame) {
           if (!categories_[i].reader->read(categories_[i].data)) {
             //std::cout << "Out of data looking for " << frame << std::endl;
             RMF_TRACE(
@@ -68,7 +69,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
             RMF_TRACE(get_avro_logger(),
                       "Loaded category " << get_category_name(Category(i)));
           }
-          if (frame < categories_[i].data.frame) {
+          if (frame.get_index() < categories_[i].data.frame) {
             RMF_TRACE(get_avro_logger(),
                       "Missing frame for category "
                           << get_category_name(Category(i)));
@@ -172,7 +173,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     initialize_categories();
     initialize_node_keys();
     // dance to read the correct data in
-    int current = get_current_frame();
+    FrameID current = get_current_frame();
     set_current_frame(ALL_FRAMES);
     set_current_frame(current);
   }
@@ -227,34 +228,46 @@ RMF_ENABLE_WARNINGS namespace RMF {
             IOException);
       }
     } else {
-      static_categories_[cat.get_id()].frame = ALL_FRAMES;
+      static_categories_[cat.get_id()].frame = -1;
     }
   }
 
-  int MultipleAvroFileReader::add_child_frame(int /*node*/,
+  FrameID MultipleAvroFileReader::add_child(FrameID /*node*/,
                                               std::string /*name*/,
-                                              int /*t*/) {
+                                              FrameType /*t*/) {
     RMF_THROW(Message("Trying to modify read-only file"), UsageException);
   }
-  void MultipleAvroFileReader::add_child_frame(int /*node*/,
-                                               int /*child_node*/) {
+  void MultipleAvroFileReader::add_child(FrameID /*node*/,
+                                               FrameID /*child_node*/) {
     RMF_THROW(Message("Trying to modify read-only file"), UsageException);
   }
-  Ints MultipleAvroFileReader::get_children_frame(int node) const {
-    if (frame_children_.find(node) != frame_children_.end()) {
-      return frame_children_.find(node)->second;
+  FrameIDs MultipleAvroFileReader::get_children(FrameID node) const {
+    if (frame_children_.find(node.get_index()) != frame_children_.end()) {
+      return FrameIDs(frame_children_.find(node.get_index())->second.begin(),
+                      frame_children_.find(node.get_index())->second.end());
     } else
-      return Ints();
+      return FrameIDs();
   }
 
-  std::string MultipleAvroFileReader::get_frame_name(int i) const {
+  std::string MultipleAvroFileReader::get_name(FrameID i) const {
     if (i == ALL_FRAMES) {
       return "static";
     } else {
-      if (frames_.find(i) != frames_.end()) {
-        return frames_.find(i)->second.name;
+      if (frames_.find(i.get_index()) != frames_.end()) {
+        return frames_.find(i.get_index())->second.name;
       } else {
         return "";
+      }
+    }
+  }
+  FrameType MultipleAvroFileReader::get_type(FrameID i) const {
+    if (i == ALL_FRAMES) {
+      return STATIC;
+    } else {
+      if (frames_.find(i.get_index()) != frames_.end()) {
+        return boost::lexical_cast<FrameType>(frames_.find(i.get_index())->second.type);
+      } else {
+        return FRAME;
       }
     }
   }

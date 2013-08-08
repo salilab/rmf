@@ -54,14 +54,18 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
   MultipleAvroFileBase::MultipleAvroFileBase(std::string path)
       : AvroKeysAndCategories(path) {
-    null_static_data_.frame = ALL_FRAMES;
+    null_static_data_.frame = -1;
     null_data_.frame = 0;
     null_frame_data_.name = "static";
     null_frame_data_.type = "static";
   }
 
-  void MultipleAvroFileBase::set_current_frame(int frame) {
-    null_data_.frame = frame;
+  void MultipleAvroFileBase::set_current_frame(FrameID frame) {
+    if (frame == ALL_FRAMES) {
+      null_data_.frame = -1;
+    } else {
+      null_data_.frame = frame.get_index();
+    }
     AvroKeysAndCategories::set_current_frame(frame);
   }
 

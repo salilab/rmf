@@ -159,7 +159,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     return OutType(in);
   }
   /** NodeIDs require translation.*/
-  template <class Out> Out get_as(NodeID ni) { return Out(ni.get_index()); }
+  template <class Out> Out get_as(NodeID ni) {
+    if (ni == NodeID()) return Out(-1);
+    else return Out(ni.get_index());
+  }
   /** Get one type as another, handling vectors or scalars.*/
   template <class OutType, class InType>
   OutType get_as(const std::vector<InType> in) {

@@ -65,7 +65,7 @@ namespace {
     af_(file_), rf_(file_), chf_(file_),
     pf_(file_), rff_(file_), bf_(file_), sf_(file_), cf_(file_), bdf_(file_),
     done_(false) {
-    file_.set_current_frame(0);
+    file_.set_current_frame(RMF::FrameID(0));
     bodies_.push_back(Body());
     std::pair<int,int> na = get_structure(file_.get_root_node(), NULL, 0,
                                ' ', -1, std::string());
@@ -180,7 +180,7 @@ namespace {
     if (next == file_.get_number_of_frames()) {
       done_ = true;
     } else {
-      file_.set_current_frame(curf.get_id().get_index() + 1);
+      file_.set_current_frame(RMF::FrameID(curf.get_id().get_index() + 1));
   }
     return true;
  }

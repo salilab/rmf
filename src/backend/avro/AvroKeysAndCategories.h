@@ -66,10 +66,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
       }
     }
 
-    const std::string& get_node_string(int node) const {
-      if (node == -1)
+    const std::string& get_node_string(NodeID node) const {
+      if (node == NodeID())
         return frame_key_;
-      return node_keys_[node];
+      return node_keys_[node.get_index()];
     }
 
     template <class TypeTraits>

@@ -102,9 +102,9 @@ int main(int argc, char** argv) {
     RMF::BallFactory bf(rh);
     RMF::CylinderFactory cf(rh);
     RMF::SegmentFactory sf(rh);
-    for (int i = RMF::ALL_FRAMES; i < num_frames; ++i) {
+    for (int i = RMF::ALL_FRAMES.get_index(); i < num_frames; ++i) {
       RMF_INFO(RMF::get_logger(), "Processing frame " << i);
-      rh.set_current_frame(i);
+      rh.set_current_frame(RMF::FrameID(i));
       transform(
           rh.get_root_node(), ipf, rpf, rff, bf, cf, sf, scale, translation);
     }

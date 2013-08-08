@@ -13,7 +13,10 @@
 #include <boost/exception/all.hpp>
 #include <sstream>
 
-RMF_ENABLE_WARNINGS namespace RMF {
+RMF_ENABLE_WARNINGS
+namespace RMF {
+  class NodeID;
+  class FrameID;
   namespace internal {
 
   struct FileTag {
@@ -48,7 +51,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   namespace ErrorInfo {
   typedef boost::error_info<MessageTag, std::string> Message;
   typedef boost::error_info<FileTag, std::string> File;
-  typedef boost::error_info<NodeTag, int> Node;
+  typedef boost::error_info<NodeTag, NodeID> Node;
   typedef boost::error_info<KeyTag, std::string> Key;
   typedef boost::error_info<DecoratorTag, std::string> Decorator;
   typedef boost::error_info<TypeTag, std::string> Type;
@@ -57,7 +60,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   typedef boost::error_info<FunctionTag, std::string> Function;
   typedef boost::error_info<ExpressionTag, std::string> Expression;
   typedef boost::error_info<CategoryTag, std::string> Category;
-  typedef boost::error_info<FrameTag, int> Frame;
+  typedef boost::error_info<FrameTag, FrameID> Frame;
   typedef boost::error_info<OperationTag, std::string> Operation;
   typedef boost::error_info<ComponentTag, std::string> Component;
   }

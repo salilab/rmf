@@ -141,9 +141,9 @@ IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DECLARE_TYPE);
   %}
 }
 
-%include "RMF/constants.h"
 %include "RMF/NodeID.h"
 %include "RMF/FrameID.h"
+%include "RMF/constants.h"
 %include "RMF/types.h"
 
 %include "RMF/Key.h"
@@ -153,7 +153,7 @@ IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DEFINE_TYPE);
 %include "RMF/Category.h"
 
 %include "RMF/names.h"
-
+%include "RMF/enums.h"
 %include "RMF/NodeConstHandle.h"
 %include "RMF/FrameConstHandle.h"
 %include "RMF/NodeHandle.h"

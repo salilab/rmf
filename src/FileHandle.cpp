@@ -21,8 +21,8 @@ FileHandle::FileHandle(internal::SharedData* shared)
 FileHandle::FileHandle(std::string name, bool create)
     : FileConstHandle(internal::create_shared_data(name, create)) {}
 
-NodeHandle FileHandle::get_node_from_id(NodeID id) const {
-  return NodeHandle(id.get_index(), get_shared_data());
+NodeHandle FileHandle::get_node(NodeID id) const {
+  return NodeHandle(id, get_shared_data());
 }
 
 void FileHandle::flush() {

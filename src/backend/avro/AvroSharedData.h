@@ -77,8 +77,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
       data[index_value] = get_as<typename TypeTraits::AvroType>(val);
     }
     template <class TypeTraits>
-    typename TypeTraits::Type get_value_impl(int frame,
-                                             int node,
+    typename TypeTraits::Type get_value_impl(FrameID frame,
+                                             NodeID node,
                                              Key<TypeTraits> k) const {
       typedef std::vector<typename TypeTraits::AvroType> Data;
       typedef boost::tuple<const Data&, const KeyIndex&> Pair;
@@ -88,19 +88,12 @@ RMF_ENABLE_WARNINGS namespace RMF {
         Pair data = get_frame_type_data(k, node, cat, frame);
         typename TypeTraits::Type ret =
             get_one_value(data.template get<0>(), data.template get<1>(), k);
-        if (!TypeTraits::get_is_null_value(ret) ||
-            P::get_current_frame() == ALL_FRAMES) {
           return ret;
-        }
-      }
-      {
-        Pair data = get_frame_type_data(k, node, cat, ALL_FRAMES);
-        return get_one_value(data.template get<0>(), data.template get<1>(), k);
       }
     }
     template <class TypeTraits>
-    void set_value_impl(int frame,
-                        int node,
+    void set_value_impl(FrameID frame,
+                        NodeID node,
                         Key<TypeTraits> k,
                         typename TypeTraits::Type v) {
       typedef std::vector<typename TypeTraits::AvroType> Data;
@@ -121,11 +114,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
     AvroSharedData(const std::string& buffer);
 
     virtual ~AvroSharedData() {}
-    std::string get_name(unsigned int node) const;
-    unsigned int get_type(unsigned int node) const;
-    int add_child(int node, std::string name, int t);
-    void add_child(int node, int child_node);
-    Ints get_children(int node) const;
+    std::string get_name(NodeID node) const RMF_OVERRIDE;
+    NodeType get_type(NodeID node) const RMF_OVERRIDE;
+    NodeID add_child(NodeID node, std::string name, NodeType t) RMF_OVERRIDE;
+    void add_child(NodeID node, NodeID child_node) RMF_OVERRIDE;
+    NodeIDs get_children(NodeID node) const RMF_OVERRIDE;
     void save_frames_hint(int) {}
     std::string get_description() const;
     void set_description(std::string str);

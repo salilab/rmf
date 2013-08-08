@@ -24,8 +24,8 @@ FileConstHandle::FileConstHandle(internal::SharedData* shared)
 FileConstHandle::FileConstHandle(std::string name)
     : shared_(internal::create_read_only_shared_data(name)) {}
 
-NodeConstHandle FileConstHandle::get_node_from_id(NodeID id) const {
-  return NodeConstHandle(id.get_index(), shared_.get());
+NodeConstHandle FileConstHandle::get_node(NodeID id) const {
+  return NodeConstHandle(id, shared_.get());
 }
 
 std::string FileConstHandle::get_description() const {
@@ -72,7 +72,7 @@ void FileConstHandle::validate(std::ostream& out = std::cerr) {
     }
     for (int frame = -1; frame < static_cast<int>(get_number_of_frames());
          ++frame) {
-      set_current_frame(frame);
+      set_current_frame(FrameID(frame));
       for (unsigned int i = 0; i < cs.size(); ++i) {
         validators[i].write_errors(out);
       }

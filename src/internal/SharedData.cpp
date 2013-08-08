@@ -77,7 +77,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
 #endif
   }
 
-  void SharedData::set_current_frame(int frame) {
+  void SharedData::set_current_frame(FrameID frame) {
     RMF_TRACE(get_logger(), "Setting current frame to " << frame);
     cur_frame_ = frame;
   }

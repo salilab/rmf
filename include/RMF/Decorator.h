@@ -23,24 +23,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
    protected:
     Decorator(HandleType handle) : handle_(handle) {}
     ;
-    template <class Keys>
-    typename Keys::value_type::TypeTraits::Types get_values(
-        const Keys& keys) const {
-      return get_node().get_values(keys);
-    }
     //TypeTraits::Values
     template <class KeyT>
     typename KeyT::TypeTraits::Type get_value(const KeyT& key) const {
       return get_node().get_value(key);
-    }
-    //TypeTraits::Values
-    template <class KeyT>
-    typename KeyT::TypeTraits::Types get_all_values(const KeyT& key) const {
-      return get_node().get_all_values(key);
-    }
-    template <class Keys, class Values>
-    void set_values(Keys& keys, const Values& v) {
-      get_node().set_values(keys, v);
     }
     template <class Key, class Value> void set_value(Key& key, const Value& v) {
       get_node().set_value(key, v);

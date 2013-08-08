@@ -45,7 +45,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
    protected:
     const RMF_avro_backend::Data& get_frame_data(Category cat,
-                                                 int frame) const {
+                                                 FrameID frame) const {
       if (frame == ALL_FRAMES) {
         if (static_categories_.size() > cat.get_id()) {
           return static_categories_[cat.get_id()];
@@ -61,11 +61,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
       }
     }
 
-    RMF_avro_backend::Data& access_frame_data(Category cat, int frame) {
+    RMF_avro_backend::Data& access_frame_data(Category cat, FrameID frame) {
       if (frame == ALL_FRAMES) {
         if (static_categories_.size() <= cat.get_id()) {
           RMF_avro_backend::Data data;
-          data.frame = ALL_FRAMES;
+          data.frame = -1;
           static_categories_.resize(cat.get_id() + 1, data);
           static_categories_dirty_.resize(cat.get_id() + 1, false);
         }
@@ -75,19 +75,19 @@ RMF_ENABLE_WARNINGS namespace RMF {
         while (categories_.size() <= cat.get_id()) {
           categories_.push_back(CategoryData());
           categories_.back().dirty = false;
-          categories_.back().data.frame = frame;
+          categories_.back().data.frame = frame.get_index();
         }
         categories_[cat.get_id()].dirty = true;
         return categories_[cat.get_id()].data;
       }
     }
 
-    RMF_avro_backend::Node& access_node(unsigned int node) {
+    RMF_avro_backend::Node& access_node(NodeID node) {
       nodes_dirty_ = true;
-      if (nodes_.size() <= node) {
-        nodes_.resize(node + 1);
+      if (nodes_.size() <= node.get_index()) {
+        nodes_.resize(node.get_index() + 1);
       }
-      return nodes_[node];
+      return nodes_[node.get_index()];
     }
 
     RMF_avro_backend::File& access_file() {
@@ -105,14 +105,15 @@ RMF_ENABLE_WARNINGS namespace RMF {
     MultipleAvroFileWriter(std::string path, bool create, bool read_only);
     virtual ~MultipleAvroFileWriter();
 
-    void set_current_frame(int frame);
+    void set_current_frame(FrameID frame) RMF_OVERRIDE;
 
-    int add_child_frame(int node, std::string name, int t);
-    void add_child_frame(int node, int child_node);
-    Ints get_children_frame(int node) const;
+    FrameID add_child(FrameID node, std::string name, FrameType t) RMF_OVERRIDE;
+    void add_child(FrameID node, FrameID child_node) RMF_OVERRIDE;
+    FrameIDs get_children(FrameID node) const RMF_OVERRIDE;
 
-    std::string get_frame_name(int i) const;
-    unsigned int get_number_of_frames() const;
+    std::string get_name(FrameID i) const RMF_OVERRIDE;
+    FrameType get_type(FrameID i) const RMF_OVERRIDE;
+    unsigned int get_number_of_frames() const RMF_OVERRIDE;
   };
 
   }  // namespace avro_backend

@@ -45,17 +45,20 @@ class RMFEXPORT FileHandle : public FileConstHandle {
 
   /** Return the root of the hierarchy stored in the file.
    */
-  NodeHandle get_root_node() const { return NodeHandle(0, get_shared_data()); }
+  NodeHandle get_root_node() const {
+    return NodeHandle(NodeID(0),
+                      get_shared_data());
+  }
 
   //! Return the root of the frame hierarchy
   FrameHandle get_root_frame() const {
-    return FrameHandle(-1, get_shared_data());
+    return FrameHandle(FrameID(-1), get_shared_data());
   }
 
   //! Return the ith frame
   FrameHandle get_frame(unsigned int i) const {
     RMF_USAGE_CHECK(i < get_number_of_frames(), "Out of range frame");
-    return FrameHandle(i, get_shared_data());
+    return FrameHandle(FrameID(i), get_shared_data());
   }
 
   FrameHandle get_current_frame() const {
@@ -80,7 +83,7 @@ class RMFEXPORT FileHandle : public FileConstHandle {
 #endif
   /** Return a NodeHandle from a NodeID. The NodeID must refer
       to a valid NodeHandle.*/
-  NodeHandle get_node_from_id(NodeID id) const;
+  NodeHandle get_node(NodeID id) const;
   /** Suggest how many frames the file is likely to have. This can
       make writing more efficient as space will be preallocated.
    */

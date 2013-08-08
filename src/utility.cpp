@@ -123,8 +123,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
   void copy_values(FileConstHandle in, FileHandle out) {
     // do something less dumb pater
     for (unsigned int i = 0; i < in.get_number_of_frames(); ++i) {
-      in.set_current_frame(i);
-      out.set_current_frame(i);
+      in.set_current_frame(FrameID(i));
+      out.set_current_frame(FrameID(i));
       copy_frame(in, out);
     }
   }

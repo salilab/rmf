@@ -16,7 +16,7 @@ RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(FrameConstHandle);
 
 namespace RMF {
 
-FrameConstHandle::FrameConstHandle(int frame, internal::SharedData* shared)
+FrameConstHandle::FrameConstHandle(FrameID frame, internal::SharedData* shared)
     : frame_(frame), shared_(shared) {}
 
 FileConstHandle FrameConstHandle::get_file() const {
@@ -24,7 +24,7 @@ FileConstHandle FrameConstHandle::get_file() const {
 }
 
 FrameConstHandles FrameConstHandle::get_children() const {
-  Ints children = shared_->get_children_frame(frame_);
+  FrameIDs children = shared_->get_children(frame_);
   FrameConstHandles ret(children.size());
   for (unsigned int i = 0; i < ret.size(); ++i) {
     ret[i] = FrameConstHandle(children[i], shared_.get());

@@ -103,13 +103,7 @@ class Attribute(Base):
       return P::get_value(NAME_);
     } RMF_DECORATOR_CATCH( );
   }
-  /** DOC */
-  TYPES get_all_%ss() const {
-    try {
-      return P::get_all_values(NAME_);
-    } RMF_DECORATOR_CATCH( );
-  }
-""" % (function_name, function_name)
+""" % (function_name)
     self.set_methods = """  /** DOC */
   void set_%s(TYPE v) {
     try {
@@ -128,7 +122,7 @@ class NodeAttribute(Attribute):
   NodeCONSTHandle get_NAME() const {
     try {
       NodeID id = get_node().get_value(NAME_);
-      return get_node().get_file().get_node_from_id(id);
+      return get_node().get_file().get_node(id);
     } RMF_DECORATOR_CATCH( );
   }
 """
@@ -236,14 +230,20 @@ class Attributes(Base):
     self.get_methods = """  /** DOC */
   TYPES get_NAME() const {
     try {
-      return P::get_values(NAME_);
+      TYPES ret(NAME_.size());
+      for (unsigned int i = 0; i < NAME_.size(); ++i) {
+        ret[i] = P::get_value(NAME_[i]);
+      }
+      return ret;
     } RMF_DECORATOR_CATCH( );
   }
 """
     self.set_methods = """  /** DOC */
   void set_NAME(TYPES v) {
     try {
-      P::set_values(NAME_, v);
+      for (unsigned int i = 0; i< NAME_.size(); ++i) {
+         P::set_value(NAME_[i], v[i]);
+      }
     } RMF_DECORATOR_CATCH( );
   }
 """
@@ -257,7 +257,7 @@ class Attributes(Base):
                        const NodeIDs &node_ids) const {
       TYPESList ret(node_ids.size());
       for (unsigned int i = 0; i< node_ids.size(); ++i) {
-        NodeConstHandle nh = fh.get_node_from_id(node_ids[i]);
+        NodeConstHandle nh = fh.get_node(node_ids[i]);
         ret[i].resize(NAME_.size());
         for (unsigned int j = 0; j < NAME_.size(); ++j) {
           ret[i][j] = nh.get_value(NAME_[j]);

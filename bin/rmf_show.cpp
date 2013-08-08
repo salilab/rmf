@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
     if (!prod.empty()) {
       std::cout << prod << std::endl;
     }
-    rh.set_current_frame(frame);
+    rh.set_current_frame(RMF::FrameID(frame));
     if (vm.count("decorators")) {
       RMF::show_hierarchy_with_decorators(
           rh.get_root_node(), vm.count("verbose"), std::cout);

@@ -34,7 +34,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     // begin specific data
    protected:
     const RMF_avro_backend::Data& get_frame_data(Category cat,
-                                                 int frame) const {
+                                                 FrameID frame) const {
       std::string category = get_category_name(cat);
       std::map<std::string,
                std::vector<RMF_avro_backend::Data> >::const_iterator it =
@@ -42,39 +42,45 @@ RMF_ENABLE_WARNINGS namespace RMF {
       if (it == all_.category.end()) {
         return frame == ALL_FRAMES ? null_static_frame_data_ : null_frame_data_;
       }
-      if (it->second.size() <= static_cast<unsigned int>(frame + 1)) {
+      unsigned int index;
+      if (frame == ALL_FRAMES) index = 0;
+      else index = frame.get_index() + 1;
+      if (it->second.size() <= static_cast<unsigned int>(index)) {
         return frame == ALL_FRAMES ? null_static_frame_data_ : null_frame_data_;
       } else {
-        return it->second[frame + 1];
+        return it->second[index];
       }
     }
 
-    RMF_avro_backend::Data& access_frame_data(Category cat, int frame) {
+    RMF_avro_backend::Data& access_frame_data(Category cat, FrameID frame) {
       std::string category = get_category_name(cat);
       dirty_ = true;
+      unsigned int index;
+      if (frame == ALL_FRAMES) index = 0;
+      else index = frame.get_index() + 1;
       while (all_.category[category].size() <=
-             static_cast<unsigned int>(frame + 1)) {
+             static_cast<unsigned int>(index)) {
         int cur = all_.category[category].size() - 1;
         all_.category[category].push_back(RMF_avro_backend::Data());
         all_.category[category].back().frame = cur;
       }
-      return all_.category[category][frame + 1];
+      return all_.category[category][index];
     }
 
-    const RMF_avro_backend::Node& get_node(unsigned int node) const {
-      return all_.nodes[node];
+    const RMF_avro_backend::Node& get_node(NodeID node) const {
+      return all_.nodes[node.get_index()];
     }
 
     const std::vector<RMF_avro_backend::Node>& get_nodes_data() const {
       return all_.nodes;
     }
 
-    RMF_avro_backend::Node& access_node(unsigned int node) {
+    RMF_avro_backend::Node& access_node(NodeID node) {
       dirty_ = true;
-      if (all_.nodes.size() <= node) {
-        all_.nodes.resize(node + 1);
+      if (all_.nodes.size() <= node.get_index()) {
+        all_.nodes.resize(node.get_index() + 1);
       }
-      return all_.nodes[node];
+      return all_.nodes[node.get_index()];
     }
 
     const RMF_avro_backend::File& get_file() const { return all_.file; }
@@ -84,25 +90,31 @@ RMF_ENABLE_WARNINGS namespace RMF {
       return all_.file;
     }
 
-    const RMF_avro_backend::Node& get_frame(int i) const {
-      if (i + 1 >= static_cast<int>(all_.frames.size())) {
+    const RMF_avro_backend::Node& get_frame(FrameID i) const {
+      if (i.get_index() + 1 >= static_cast<int>(all_.frames.size())) {
         return null_frame_real_data_;
       }
-      return all_.frames[i + 1];
+      return all_.frames[i.get_index() + 1];
     }
 
     const std::vector<RMF_avro_backend::Node>& get_frames() const {
       return all_.frames;
     }
 
-    RMF_avro_backend::Node& access_frame(int i) {
+    RMF_avro_backend::Node& access_frame(FrameID i) {
       dirty_ = true;
-      if (static_cast<int>(all_.frames.size()) <= i + 1) {
+      unsigned int index;
+      if (i == ALL_FRAMES) {
+        index = 0;
+      } else {
+        index = i.get_index() +1;
+      }
+      if (static_cast<int>(all_.frames.size()) <= index) {
         RMF_avro_backend::Node def;
         def.type = "frame";
-        all_.frames.resize(i + 2, def);
+        all_.frames.resize(index + 1, def);
       }
-      return all_.frames[i + 1];
+      return all_.frames[index];
     }
     void initialize_frames();
     void initialize_categories();
@@ -113,22 +125,27 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
    public:
 
-    void set_current_frame(int frame) {
-      null_frame_data_.frame = frame;
+    void set_current_frame(FrameID frame) RMF_OVERRIDE {
+      if (frame == ALL_FRAMES) {
+        null_frame_data_.frame = -1;
+      } else {
+        null_frame_data_.frame = frame.get_index();
+      }
       AvroKeysAndCategories::set_current_frame(frame);
     }
 
-    void flush();
-    void reload();
+    void flush() RMF_OVERRIDE;
+    void reload() RMF_OVERRIDE;
 
     SingleAvroFile(std::string path, bool create, bool read_only);
     SingleAvroFile(std::string& buffer, bool create);
     SingleAvroFile(const std::string& buffer);
     ~SingleAvroFile() { flush(); }
-    int add_child_frame(int node, std::string name, int t);
-    void add_child_frame(int node, int child_node);
-    Ints get_children_frame(int node) const;
-    std::string get_frame_name(int i) const;
+    FrameID add_child(FrameID node, std::string name, FrameType t) RMF_OVERRIDE;
+    void add_child(FrameID node, FrameID child_node) RMF_OVERRIDE;
+    FrameIDs get_children(FrameID node) const RMF_OVERRIDE;
+    std::string get_name(FrameID i) const RMF_OVERRIDE;
+    FrameType get_type(FrameID i) const RMF_OVERRIDE;
     unsigned int get_number_of_frames() const;
   };
 

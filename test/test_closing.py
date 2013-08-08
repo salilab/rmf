@@ -45,7 +45,7 @@ class Tests(unittest.TestCase):
             print r.get_type()
             sc= f.get_category("sequence")
             ik= f.get_int_key(sc, "ik0")
-            f.set_current_frame(0)
+            f.set_current_frame(RMF.FrameID(0))
             self.assertEqual(r.get_value(ik), 1)
 
 

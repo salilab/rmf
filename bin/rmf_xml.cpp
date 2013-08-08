@@ -119,7 +119,7 @@ int main(int argc, char** argv) {
     *out << input << std::endl;
     *out << "</path>\n";
     std::set<RMF::NodeConstHandle> seen;
-    rh.set_current_frame(frame);
+    rh.set_current_frame(RMF::FrameID(frame));
     show_hierarchy(rh.get_root_node(), cs, seen, *out);
     *out << "</rmf>\n";
     return 0;

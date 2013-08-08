@@ -152,7 +152,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     if (create) {
       add_node("root", ROOT);
     } else {
-      RMF_USAGE_CHECK(get_name(0) == "root", "Root node is not so named");
+      RMF_USAGE_CHECK(get_name(NodeID(0)) == "root", "Root node is not so named");
     }
   }
 
@@ -173,96 +173,102 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
   }
 
-  void HDF5SharedData::check_node(unsigned int node) const {
+  void HDF5SharedData::check_node(NodeID node) const {
     RMF_USAGE_CHECK(
-        node_names_.get_size()[0] > node,
+                    node_names_.get_size()[0] > node.get_index(),
         internal::get_error_message("Invalid node specified: ", node));
   }
 
-  int HDF5SharedData::add_node(std::string name, unsigned int type) {
-    int ret;
+  NodeID HDF5SharedData::add_node(std::string name, NodeType type) {
+    NodeID ret;
     if (free_ids_.empty()) {
       HDF5::DataSetIndexD<1> nsz = node_names_.get_size();
-      ret = nsz[0];
+      ret = NodeID(nsz[0]);
       ++nsz[0];
       node_names_.set_size(nsz);
       HDF5::DataSetIndexD<2> dsz = node_data_[0].get_size();
-      dsz[0] = ret + 1;
+      dsz[0] = ret.get_index() + 1;
       dsz[1] = std::max<hsize_t>(3, dsz[1]);
       node_data_[0].set_size(dsz);
     } else {
-      ret = free_ids_.back();
+      ret = NodeID(free_ids_.back());
       free_ids_.pop_back();
     }
     audit_node_name(name);
-    node_names_.set_value(HDF5::DataSetIndexD<1>(ret), name);
-    node_data_[0].set_value(HDF5::DataSetIndexD<2>(ret, TYPE), type);
-    node_data_[0].set_value(HDF5::DataSetIndexD<2>(ret, CHILD),
+    node_names_.set_value(HDF5::DataSetIndexD<1>(ret.get_index()), name);
+    node_data_[0].set_value(HDF5::DataSetIndexD<2>(ret.get_index(), TYPE), type);
+    node_data_[0].set_value(HDF5::DataSetIndexD<2>(ret.get_index(), CHILD),
                             IndexTraits::get_null_value());
-    node_data_[0].set_value(HDF5::DataSetIndexD<2>(ret, SIBLING),
+    node_data_[0].set_value(HDF5::DataSetIndexD<2>(ret.get_index(), SIBLING),
                             IndexTraits::get_null_value());
     return ret;
   }
-  int HDF5SharedData::get_first_child(unsigned int node) const {
+  NodeID HDF5SharedData::get_first_child(NodeID node) const {
     check_node(node);
-    return node_data_[0].get_value(HDF5::DataSetIndexD<2>(node, CHILD));
+    return NodeID(node_data_[0].get_value(HDF5::DataSetIndexD<2>(node.get_index(), CHILD)));
   }
-  int HDF5SharedData::get_sibling(unsigned int node) const {
+  NodeID HDF5SharedData::get_sibling(NodeID node) const {
     check_node(node);
-    return node_data_[0].get_value(HDF5::DataSetIndexD<2>(node, SIBLING));
+    return NodeID(node_data_[0].get_value(HDF5::DataSetIndexD<2>(node.get_index(), SIBLING)));
   }
-  void HDF5SharedData::set_first_child(unsigned int node, int c) {
+  void HDF5SharedData::set_first_child(NodeID node, NodeID c) {
     check_node(node);
-    return node_data_[0].set_value(HDF5::DataSetIndexD<2>(node, CHILD), c);
+    return node_data_[0].set_value(HDF5::DataSetIndexD<2>(node.get_index(), CHILD), c.get_index());
   }
-  void HDF5SharedData::set_sibling(unsigned int node, int c) {
+  void HDF5SharedData::set_sibling(NodeID node, NodeID c) {
     check_node(node);
-    return node_data_[0].set_value(HDF5::DataSetIndexD<2>(node, SIBLING), c);
+    if (c == NodeID()) {
+      node_data_[0].set_value(HDF5::DataSetIndexD<2>(node.get_index(), SIBLING),
+                              -1);
+    } else {
+      node_data_[0].set_value(HDF5::DataSetIndexD<2>(node.get_index(), SIBLING),
+                              c.get_index());
+    }
   }
-  std::string HDF5SharedData::get_name(unsigned int node) const {
-    if (node < get_number_of_real_nodes()) {
+  std::string HDF5SharedData::get_name(NodeID node) const {
+    if (node.get_index() < get_number_of_real_nodes()) {
       check_node(node);
-      return node_names_.get_value(HDF5::DataSetIndexD<1>(node));
+      return node_names_.get_value(HDF5::DataSetIndexD<1>(node.get_index()));
     } else {
       return "bond";
     }
   }
-  unsigned int HDF5SharedData::get_type(unsigned int index) const {
-    if (index < get_number_of_real_nodes()) {
+  NodeType HDF5SharedData::get_type(NodeID index) const {
+    if (index.get_index() < get_number_of_real_nodes()) {
       check_node(index);
-      return node_data_[0].get_value(HDF5::DataSetIndexD<2>(index, TYPE));
+      return NodeType(node_data_[0].get_value(HDF5::DataSetIndexD<2>(index.get_index(), TYPE)));
     } else {
       return BOND;
     }
   }
 
-  int HDF5SharedData::add_child(int node, std::string name, int t) {
-    int old_child = get_first_child(node);
-    int nn = add_node(name, t);
+  NodeID HDF5SharedData::add_child(NodeID node, std::string name, NodeType t) {
+    NodeID old_child = get_first_child(node);
+    NodeID nn = add_node(name, t);
     set_first_child(node, nn);
     set_sibling(nn, old_child);
     return nn;
   }
 
-  void HDF5SharedData::add_child(int node, int child_node) {
-    RMF_INTERNAL_CHECK(-1 != child_node, "Bad child being added");
-    int link = add_child(node, "link", LINK);
+  void HDF5SharedData::add_child(NodeID node, NodeID child_node) {
+    RMF_INTERNAL_CHECK(NodeID() != child_node, "Bad child being added");
+    NodeID link = add_child(node, "link", LINK);
     get_category_index_create(link_category_);
-    set_value(link, link_key_, NodeID(child_node));
+    set_static_value(link, link_key_, child_node);
     RMF_INTERNAL_CHECK(get_linked(link) == child_node, "Return does not match");
   }
 
-  int HDF5SharedData::get_linked(int node) const {
-    int ret = get_value(node, link_key_).get_index();
-    RMF_INTERNAL_CHECK(ret >= 0, "Bad link value found");
+  NodeID HDF5SharedData::get_linked(NodeID node) const {
+    NodeID ret = get_static_value(node, link_key_);
+    RMF_INTERNAL_CHECK(ret != NodeID(), "Bad link value found");
     return ret;
   }
 
-  Ints HDF5SharedData::get_children(int node) const {
-    if (node < static_cast<int>(get_number_of_real_nodes())) {
-      int cur = get_first_child(node);
-      Ints ret;
-      while (!IndexTraits::get_is_null_value(cur)) {
+  NodeIDs HDF5SharedData::get_children(NodeID node) const {
+    if (node.get_index() < static_cast<int>(get_number_of_real_nodes())) {
+      NodeID cur = get_first_child(node);
+      NodeIDs ret;
+      while (!NodeIDTraits::get_is_null_value(cur)) {
         if (get_type(cur) != LINK) {
           ret.push_back(cur);
           cur = get_sibling(cur);
@@ -273,16 +279,16 @@ RMF_ENABLE_WARNINGS namespace RMF {
       }
       std::reverse(ret.begin(), ret.end());
 
-      if (node == 0) {
+      if (node == NodeID(0)) {
         for (unsigned int i = 0; i < get_number_of_sets(2); ++i) {
-          ret.push_back(get_number_of_real_nodes() + i);
+          ret.push_back(NodeID(get_number_of_real_nodes() + i));
         }
       }
       return ret;
     } else {
-      Ints ret(2);
-      ret[0] = get_set_member(2, node - get_number_of_real_nodes(), 0);
-      ret[1] = get_set_member(2, node - get_number_of_real_nodes(), 1);
+      NodeIDs ret(2);
+      ret[0] = get_set_member(2, node.get_index() - get_number_of_real_nodes(), 0);
+      ret[1] = get_set_member(2, node.get_index() - get_number_of_real_nodes(), 1);
       return ret;
     }
   }
@@ -296,11 +302,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
     return ct;
   }
-  unsigned int HDF5SharedData::get_set_member(int arity,
+  NodeID HDF5SharedData::get_set_member(int arity,
                                               unsigned int index,
                                               int member_index) const {
-    return node_data_[arity - 1]
-        .get_value(HDF5::DataSetIndexD<2>(index, member_index + 1));
+    return NodeID(node_data_[arity - 1]
+                  .get_value(HDF5::DataSetIndexD<2>(index, member_index + 1)));
   }
   unsigned int HDF5SharedData::add_category_impl(std::string name) {
     // fill in later
@@ -376,19 +382,19 @@ RMF_ENABLE_WARNINGS namespace RMF {
     get_group().set_char_attribute("producer", str);
   }
 
-  void HDF5SharedData::set_frame_name(int i, std::string str) {
+  void HDF5SharedData::set_name(FrameID i, std::string str) {
     RMF_USAGE_CHECK(i != ALL_FRAMES,
                     "Cannot set the name frame name for static data");
-    if (static_cast<int>(frame_names_.get_size()[0]) <= i) {
-      frame_names_.set_size(HDF5::DataSetIndexD<1>(i + 1));
+    if (static_cast<int>(frame_names_.get_size()[0]) <= i.get_index()) {
+      frame_names_.set_size(HDF5::DataSetIndexD<1>(i.get_index() + 1));
     }
-    frame_names_.set_value(HDF5::DataSetIndexD<1>(i), str);
+    frame_names_.set_value(HDF5::DataSetIndexD<1>(i.get_index()), str);
   }
-  std::string HDF5SharedData::get_frame_name(int i) const {
+  std::string HDF5SharedData::get_name(FrameID i) const {
     RMF_USAGE_CHECK(i != ALL_FRAMES,
                     "The static data frame does not have a name");
-    if (static_cast<int>(frame_names_.get_size()[0]) > i) {
-      return frame_names_.get_value(HDF5::DataSetIndexD<1>(i));
+    if (static_cast<int>(frame_names_.get_size()[0]) > i.get_index()) {
+      return frame_names_.get_value(HDF5::DataSetIndexD<1>(i.get_index()));
     } else {
       return std::string();
     }
@@ -403,10 +409,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     lcname, Ucname, PassValue, ReturnValue, PassValues, ReturnValues) \
   per_frame_##lcname##_data_sets_.set_current_frame(frame);
 
-  void HDF5SharedData::set_current_frame(int frame) {
+  void HDF5SharedData::set_current_frame(FrameID frame) {
     RMF_TRACE(get_logger(), "Loading frame " << frame);
     SharedData::set_current_frame(frame);
-    if (frame >= 0) {
+    if (frame != ALL_FRAMES) {
       RMF_FOREACH_TYPE(RMF_HDF5_SET_FRAME);
     }
   }

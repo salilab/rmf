@@ -16,7 +16,7 @@ RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(NodeHandle);
 
 namespace RMF {
 
-NodeHandle::NodeHandle(int node, internal::SharedData* shared)
+NodeHandle::NodeHandle(NodeID node, internal::SharedData* shared)
     : NodeConstHandle(node, shared) {}
 
 NodeHandle NodeHandle::add_child(std::string name, NodeType t) {
@@ -40,7 +40,7 @@ FileHandle NodeHandle::get_file() const {
 
 NodeHandles NodeHandle::get_children() const {
   try {
-    Ints children = get_shared_data()->get_children(get_node_id());
+    NodeIDs children = get_shared_data()->get_children(get_node_id());
     NodeHandles ret(children.size());
     for (unsigned int i = 0; i < ret.size(); ++i) {
       ret[i] = NodeHandle(children[i], get_shared_data());

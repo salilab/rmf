@@ -203,7 +203,7 @@ int main(int argc, char** argv) {
     for (unsigned int input_frame = start_frame, output_frame = 0;
          input_frame < rh.get_number_of_frames();
          input_frame += step_frame, ++output_frame) {
-      rh.set_current_frame(input_frame);
+      rh.set_current_frame(RMF::FrameID(input_frame));
       *out << (boost::format("MODEL%1$9d") % (output_frame + 1)) << std::endl;
       write_atoms(*out, 0, rn, af, cf, rf);
       *out << "ENDMDL" << output_frame + 1 << std::endl;

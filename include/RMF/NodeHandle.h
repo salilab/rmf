@@ -19,19 +19,18 @@ RMF_ENABLE_WARNINGS
 
 #define RMF_HDF5_NODE_KEY_TYPE_METHODS(                               \
     lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues) \
-  /** \brief  set the value of the attribute k for this node          \
-      If it is a per-frame attribute, frame must be specified.        \
-   */                                                              \
+  /** \brief  set the value of the attribute k for this node on the
+      current frame.
+  */                                                                  \
   void set_value(UCName##Key k, PassValue v) {                        \
-    get_shared_data()->set_value(get_node_id(), k, v);                \
-  }                                                                   \
-  /** \brief  set the values of the attributes k for this node        \
-      These keys must have been produced by the add_keys method.      \
-      If it is a per-frame attribute, frame must be specified.        \
-   */                                                              \
-  void set_values(const UCName##Key##s & k, PassValues v) {           \
-    get_shared_data()->set_values(get_node_id(), k, v);               \
+    if (get_shared_data()->get_current_frame() == ALL_FRAMES) {       \
+      get_shared_data()->set_static_value(get_node_id(), k, v);       \
+    } else {                                                          \
+      get_shared_data()->set_current_value(get_node_id(), k, v);      \
+    }                                                                 \
+    RMF_INTERNAL_CHECK(v == get_value(k), "Don't match");             \
   }
+
 RMF_VECTOR_DECL(NodeHandle);
 
 namespace RMF {
@@ -49,7 +48,7 @@ class RMFEXPORT NodeHandle : public NodeConstHandle {
   friend class FileHandle;
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
  public:
-  NodeHandle(int node, internal::SharedData* shared);
+  NodeHandle(NodeID node, internal::SharedData* shared);
 #endif
 
  public:

@@ -196,12 +196,12 @@ int main(int argc, char** argv) {
     RMF::copy_frame(irh0, orh);
     for (unsigned int j = 0; j < irh0.get_number_of_frames(); ++j) {
       std::cout << "Processing frame " << j << std::endl;
-      irh0.set_current_frame(j);
+      irh0.set_current_frame(RMF::FrameID(j));
       orh.get_current_frame().add_child(irh0.get_current_frame().get_name(),
                                         RMF::FRAME).set_as_current_frame();
       RMF::copy_frame(irh0, orh);
       if (j + 1 < irh0.get_number_of_frames()) {
-        irh1.set_current_frame(j + 1);
+        irh1.set_current_frame(RMF::FrameID(j + 1));
         interpolate_frames(num_frames, noise, angle_noise, irh0, irh1, orh);
       }
       if (max_frames > 0 &&

@@ -11,8 +11,7 @@
 
 #include <RMF/config.h>
 #include "infrastructure_macros.h"
-#include <vector>
-#include <iostream>
+#include "exceptions.h"
 
 RMF_ENABLE_WARNINGS namespace RMF {
 
@@ -33,7 +32,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
    public:
     explicit NodeID(unsigned int i) : i_(i) {}
     NodeID() : i_(-1) {}
-    int get_index() const { return i_; }
+    int get_index() const {
+      RMF_USAGE_CHECK(i_ >= 0,
+                      "get_index called on uninitialized FrameID");
+      return i_;
+    }
     RMF_SHOWABLE(NodeID, i_);
     RMF_COMPARISONS(NodeID);
     RMF_HASHABLE(NodeID, return i_);

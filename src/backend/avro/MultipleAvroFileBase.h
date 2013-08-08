@@ -18,18 +18,18 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
   /* Later have laze and non-lazy frame loading so we can skip check on most
      fetches.
-  
+
      split into two classes, one for creating and one for reading (with a common
      base)
-  
+
      push get_all into base classes, then we can specialize it for the reader
      and
      do everything nicely with changing on set_current_frame
-  
+
      merge all the static data (file, nodes, frames, base structure) into one
      record
      share that. Only have the dynamic stuff be different between backends
-  
+
      can build cache on node keys later.
    */
   class MultipleAvroFileBase : public AvroKeysAndCategories {
@@ -46,8 +46,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
     RMF_avro_backend::Data null_data_;
     RMF_avro_backend::Data null_static_data_;
 
-    const RMF_avro_backend::Node& get_node(unsigned int node) const {
-      return nodes_[node];
+    const RMF_avro_backend::Node& get_node(NodeID node) const {
+      return nodes_[node.get_index()];
     }
 
     const std::vector<RMF_avro_backend::Node>& get_nodes_data() const {
@@ -74,7 +74,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     std::string get_static_file_path() const;
     std::string get_frames_file_path() const;
 
-    void set_current_frame(int frame);
+    void set_current_frame(FrameID frame) RMF_OVERRIDE;
 
     MultipleAvroFileBase(std::string path);
   };

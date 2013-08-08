@@ -26,8 +26,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
                                        bool read_only)
       : Base(g, create, read_only) {
     if (create) {
-      P::access_node(0).name = "root";
-      P::access_node(0).type = boost::lexical_cast<std::string>(ROOT);
+      P::access_node(NodeID(0)).name = "root";
+      P::access_node(NodeID(0)).type = boost::lexical_cast<std::string>(ROOT);
       P::add_node_key();
     }
   }
@@ -36,8 +36,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
   AvroSharedData<Base>::AvroSharedData(std::string& g, bool create)
       : Base(g, create) {
     if (create) {
-      P::access_node(0).name = "root";
-      P::access_node(0).type = boost::lexical_cast<std::string>(ROOT);
+      P::access_node(NodeID(0)).name = "root";
+      P::access_node(NodeID(0)).type = boost::lexical_cast<std::string>(ROOT);
       P::add_node_key();
     }
   }
@@ -47,18 +47,18 @@ RMF_ENABLE_WARNINGS namespace RMF {
       : Base(g) {}
 
   template <class Base>
-  std::string AvroSharedData<Base>::get_name(unsigned int node) const {
+  std::string AvroSharedData<Base>::get_name(NodeID node) const {
     return P::get_node(node).name;
   }
   template <class Base>
-  unsigned int AvroSharedData<Base>::get_type(unsigned int node) const {
+  NodeType AvroSharedData<Base>::get_type(NodeID node) const {
     std::string string_type = P::get_node(node).type;
     unsigned int ret_type = boost::lexical_cast<NodeType>(string_type);
-    return ret_type;
+    return NodeType(ret_type);
   }
   template <class Base>
-  int AvroSharedData<Base>::add_child(int node, std::string name, int t) {
-    int index = P::get_nodes_data().size();
+  NodeID AvroSharedData<Base>::add_child(NodeID node, std::string name, NodeType t) {
+    NodeID index(P::get_nodes_data().size());
     P::access_node(index).name = name;
     P::access_node(index).type = boost::lexical_cast<std::string>(NodeType(t));
     add_child(node, index);
@@ -79,12 +79,12 @@ RMF_ENABLE_WARNINGS namespace RMF {
     return index;
   }
   template <class Base>
-  void AvroSharedData<Base>::add_child(int node, int child_node) {
-    P::access_node(node).children.push_back(child_node);
+  void AvroSharedData<Base>::add_child(NodeID node, NodeID child_node) {
+    P::access_node(node).children.push_back(child_node.get_index());
   }
   template <class Base>
-  Ints AvroSharedData<Base>::get_children(int node) const {
-    return Ints(P::get_node(node).children.begin(),
+  NodeIDs AvroSharedData<Base>::get_children(NodeID node) const {
+    return NodeIDs(P::get_node(node).children.begin(),
                 P::get_node(node).children.end());
   }
 

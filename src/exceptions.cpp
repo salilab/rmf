@@ -8,6 +8,8 @@
 
 #include <RMF/exceptions.h>
 #include <RMF/internal/errors.h>
+#include <RMF/FrameID.h>
+#include <RMF/NodeID.h>
 #include <sstream>
 #include <algorithm>
 
@@ -56,11 +58,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
         oss << " in file \"" << *file << "\"";
         ;
       }
-      const int* frame = boost::get_error_info<Frame>(e);
+      const FrameID* frame = boost::get_error_info<Frame>(e);
       if (frame) {
         oss << " at frame " << *frame;
       }
-      const int* node = boost::get_error_info<Node>(e);
+      const NodeID* node = boost::get_error_info<Node>(e);
       if (node) {
         oss << " at node " << *node;
       }

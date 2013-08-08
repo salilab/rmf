@@ -41,7 +41,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
    protected:
     const RMF_avro_backend::Data& get_frame_data(Category cat,
-                                                 int frame) const {
+                                                 FrameID frame) const {
       if (frame == ALL_FRAMES) {
         if (static_categories_.size() > cat.get_id()) {
           return static_categories_[cat.get_id()];
@@ -52,7 +52,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
         RMF_USAGE_CHECK(frame == get_current_frame(),
                         "Asking for a non-current frame");
         if (categories_.size() > cat.get_id() &&
-            categories_[cat.get_id()].data.frame == frame) {
+            categories_[cat.get_id()].data.frame == frame.get_index()) {
           return categories_[cat.get_id()].data;
         } else {
           /*std::cout << "No data for category "
@@ -63,11 +63,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
       }
     }
 
-    RMF_avro_backend::Data& access_frame_data(Category /*cat*/, int /*frame*/) {
+    RMF_avro_backend::Data& access_frame_data(Category /*cat*/, FrameID /*frame*/) {
       RMF_THROW(Message("Can't modify read only file"), IOException);
     }
 
-    RMF_avro_backend::Node& access_node(unsigned int /*node*/) {
+    RMF_avro_backend::Node& access_node(NodeID /*node*/) {
       RMF_THROW(Message("Can't modify read only file"), IOException);
     }
 
@@ -83,14 +83,15 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
     MultipleAvroFileReader(std::string path, bool create, bool read_only);
 
-    void set_current_frame(int frame);
+    void set_current_frame(FrameID frame) RMF_OVERRIDE;
 
-    int add_child_frame(int node, std::string name, int t);
-    void add_child_frame(int node, int child_node);
-    Ints get_children_frame(int node) const;
+    FrameID add_child(FrameID node, std::string name, FrameType t) RMF_OVERRIDE;
+    void add_child(FrameID node, FrameID child_node) RMF_OVERRIDE;
+    FrameIDs get_children(FrameID node) const RMF_OVERRIDE;
 
-    std::string get_frame_name(int i) const;
-    unsigned int get_number_of_frames() const;
+    std::string get_name(FrameID i) const RMF_OVERRIDE;
+    FrameType get_type(FrameID i) const RMF_OVERRIDE;
+    unsigned int get_number_of_frames() const RMF_OVERRIDE;
 
   };
 

@@ -13,6 +13,9 @@
 #include "../Key.h"
 #include "../types.h"
 #include "../names.h"
+#include "../enums.h"
+#include "../NodeID.h"
+#include "../FrameID.h"
 #include "../infrastructure_macros.h"
 #include "map.h"
 #include "set.h"
@@ -36,44 +39,20 @@ RMF_ENABLE_WARNINGS namespace RMF {
 #define RMF_SHARED_TYPE(                                                      \
     lcname, Ucname, PassValue, ReturnValue, PassValues, ReturnValues)         \
   /** Return a value or the null value.*/                                     \
-  virtual Ucname##Traits::Type get_value(unsigned int node,                   \
+  virtual Ucname##Traits::Type get_current_value(NodeID node,                   \
                                          Key<Ucname##Traits> k) const = 0;    \
-  virtual Ucname##Traits::Type get_value_frame(                               \
-      unsigned int node, Key<Ucname##Traits> k) const = 0;                    \
-  virtual Ucname##Traits::Types get_values(                                   \
-      unsigned int node, const std::vector<Key<Ucname##Traits> > & k) const { \
-    Ucname##Traits::Types ret(k.size());                                      \
-    for (unsigned int i = 0; i < k.size(); ++i) {                             \
-      ret[i] = get_value(node, k[i]);                                         \
-    }                                                                         \
-    return ret;                                                               \
-  }                                                                           \
-  virtual Ucname##Traits::Types get_all_values(unsigned int node,             \
-                                               Key<Ucname##Traits> k) const { \
-    SharedData* sd = const_cast<SharedData*>(this);                           \
-    unsigned int nf = get_number_of_frames();                                 \
-    int start_frame = get_current_frame();                                    \
-    Ucname##Traits::Types ret(nf);                                            \
-    for (unsigned int i = 0; i < nf; ++i) {                                   \
-      sd->set_current_frame(i);                                               \
-      ret[i] = get_value(node, k);                                            \
-    }                                                                         \
-    sd->set_current_frame(start_frame);                                       \
-    return ret;                                                               \
-  }                                                                           \
-  virtual bool get_has_frame_value(unsigned int node,                         \
-                                   Key<Ucname##Traits> k) const = 0;          \
-  virtual void set_value(                                                     \
-      unsigned int node, Key<Ucname##Traits> k, Ucname##Traits::Type v) = 0;  \
-  virtual void set_value_frame(                                               \
-      unsigned int node, Key<Ucname##Traits> k, Ucname##Traits::Type v) = 0;  \
-  virtual void set_values(unsigned int node,                                  \
-                          const std::vector<Key<Ucname##Traits> > & k,        \
-                          const Ucname##Traits::Types v) {                    \
-    for (unsigned int i = 0; i < k.size(); ++i) {                             \
-      set_value(node, k[i], v[i]);                                            \
-    }                                                                         \
-  }                                                                           \
+  /** Return a value or the null value.*/                                     \
+  virtual Ucname##Traits::Type get_static_value(NodeID node,                   \
+                                         Key<Ucname##Traits> k) const = 0;    \
+  virtual Ucname##Traits::Type get_current_frame_value( Key<Ucname##Traits> k) const = 0; \
+  virtual Ucname##Traits::Type get_static_frame_value( Key<Ucname##Traits> k) const = 0; \
+  virtual void set_current_value(                                                     \
+      NodeID node, Key<Ucname##Traits> k, Ucname##Traits::Type v) = 0;  \
+  virtual void set_static_value(                                                     \
+      NodeID node, Key<Ucname##Traits> k, Ucname##Traits::Type v) = 0;  \
+  /** for frames */                                                     \
+  virtual void set_current_frame_value( Key<Ucname##Traits> k, Ucname##Traits::Type v) = 0;  \
+  virtual void set_static_frame_value( Key<Ucname##Traits> k, Ucname##Traits::Type v) = 0;  \
   virtual std::vector<Key<Ucname##Traits> > get_##lcname##_keys(              \
       Category category) = 0;                                                 \
   virtual Category get_category(Key<Ucname##Traits> k) const = 0;             \
@@ -85,7 +64,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
      Base class for wrapping all the file handles, caches, etc. for
      open RMF file handles, and to manage the associations between
      external objects and nodes in the RMF hierarchy
-  
+
      Note this class serves as an internal interface to RMS file handling
      with an almost one-to-one mapping between most of its functions and
      exposed functions
@@ -93,10 +72,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
   class SharedData : public boost::intrusive_ptr_object {
     std::vector<boost::any> association_;
     std::vector<uintptr_t> back_association_value_;
-    map<uintptr_t, int> back_association_;
+    map<uintptr_t, NodeID> back_association_;
     map<int, boost::any> user_data_;
     int valid_;
-    int cur_frame_;
+    FrameID cur_frame_;
     std::string path_;
 
    protected:
@@ -104,8 +83,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
    public:
     std::string get_file_path() const { return path_; }
-    int get_current_frame() const { return cur_frame_; }
-    virtual void set_current_frame(int frame);
+    FrameID get_current_frame() const { return cur_frame_; }
+    virtual void set_current_frame(FrameID frame);
 
     RMF_FOREACH_TYPE(RMF_SHARED_TYPE);
     void audit_key_name(std::string name) const;
@@ -129,7 +108,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
       RMF_NO_RETURN(T);
     }
     template <class T>
-    void set_association(int id, const T& d, bool overwrite) {
+    void set_association(NodeID nid, const T& d, bool overwrite) {
+      int id = nid.get_index();
       if (association_.size() <= static_cast<unsigned int>(id)) {
         association_.resize(id + 1, boost::any());
         back_association_value_.resize(id + 1);
@@ -145,14 +125,15 @@ RMF_ENABLE_WARNINGS namespace RMF {
       association_[id] = boost::any(d);
       RMF_USAGE_CHECK(back_association_.find(v) == back_association_.end(),
                       "Collision on association keys.");
-      back_association_[v] = id;
+      back_association_[v] = nid;
     }
     template <class T> bool get_has_associated_node(const T& v) const {
       return back_association_.find(get_uint(v)) != back_association_.end();
     }
-    boost::any get_association(int id) const {
+    boost::any get_association(NodeID nid) const {
+      int id = nid.get_index();
       RMF_USAGE_CHECK(static_cast<unsigned int>(id) < association_.size(),
-                      std::string("Unassociated id ") + get_name(id));
+                      std::string("Unassociated id ") + get_name(nid));
       try {
         return association_[id];
       }
@@ -162,12 +143,13 @@ RMF_ENABLE_WARNINGS namespace RMF {
       }
       RMF_NO_RETURN(boost::any);
     }
-    bool get_has_association(int id) const {
+    bool get_has_association(NodeID nid) const {
+      int id = nid.get_index();
       if (id >= static_cast<int>(association_.size()))
         return false;
       return !association_[id].empty();
     }
-    template <class T> int get_associated_node(const T& d) const {
+    template <class T> NodeID get_associated_node(const T& d) const {
       return back_association_.find(get_uint(d))->second;
     }
     virtual void flush() = 0;
@@ -177,16 +159,16 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
     //SharedData(HDF5Group g, bool create);
     virtual ~SharedData();
-    virtual std::string get_name(unsigned int node) const = 0;
-    virtual unsigned int get_type(unsigned int node) const = 0;
+    virtual std::string get_name(NodeID node) const = 0;
+    virtual NodeType get_type(NodeID node) const = 0;
 
-    virtual int add_child(int node, std::string name, int t) = 0;
-    virtual void add_child(int node, int child_node) = 0;
-    virtual Ints get_children(int node) const = 0;
+    virtual NodeID add_child(NodeID node, std::string name, NodeType t) = 0;
+    virtual void add_child(NodeID node, NodeID child_node) = 0;
+    virtual NodeIDs get_children(NodeID node) const = 0;
 
-    virtual int add_child_frame(int node, std::string name, int t) = 0;
-    virtual void add_child_frame(int node, int child_node) = 0;
-    virtual Ints get_children_frame(int node) const = 0;
+    virtual FrameID add_child(FrameID node, std::string name, FrameType t) = 0;
+    virtual void add_child(FrameID node, FrameID child_node) = 0;
+    virtual FrameIDs get_children(FrameID node) const = 0;
 
     virtual void save_frames_hint(int i) = 0;
 
@@ -197,7 +179,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
     virtual void set_description(std::string str) = 0;
     virtual std::string get_producer() const = 0;
     virtual void set_producer(std::string str) = 0;
-    virtual std::string get_frame_name(int i) const = 0;
+    virtual std::string get_name(FrameID i) const = 0;
+    virtual FrameType get_type(FrameID i) const = 0;
     virtual bool get_supports_locking() const { return false; }
     virtual bool set_is_locked(bool) { return false; }
     virtual void reload() = 0;
@@ -233,7 +216,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
      Construct shared data for the RMF file in 'path', either creating or
      the file or opening an existing file according to the value of 'create'.
      Note on internal implementation - stores results in internal cache
-  
+
      @param path path to RMF file
      @param create whether to create the file or just open it
      @exception IOException if couldn't create file or unsupported file format
@@ -243,7 +226,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   /**
      Construct shared data for the RMF file in 'path' in read only mode
      Note on internal implementation - stores results in internal cache
-  
+
      @param path path to RMF file
      @param create whether to create the file or just open it
      @exception RMF::IOException if couldn't open file or unsupported file
