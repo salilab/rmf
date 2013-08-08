@@ -25,6 +25,7 @@ namespace {
     struct Body {
       std::vector<RMF::ReferenceFrameConst> frames;
       RMF::NodeConstHandles atoms;
+      RMF::NodeConstHandles balls;
     };
     std::vector<Body> bodies_;
     unsigned int num_atoms_;
@@ -115,6 +116,23 @@ namespace {
         bodies_[body].atoms.push_back(cur);
       }
       ++ret;
+    } else if (ret == 0 && bf_.get_is(cur)) {
+      if (atoms) {
+        std::string nm = cur.get_name();
+        std::copy(nm.begin(), nm.end(), atoms->name);
+        std::string ball("ball");
+        std::copy(ball.begin(), ball.end(), atoms->type);
+        std::copy(resname.begin(), resname.end(), atoms->resname);
+        atoms->resid = resid;
+        atoms->chain[0] = chain;
+        atoms->chain[1] = '\0';
+        atoms->segid[0] = '\0';
+        atoms->mass = 0;
+        atoms->radius = bf_.get(cur).get_radius();
+      } else {
+        bodies_[body].balls.push_back(cur);
+      }
+      ++ret;
     }
     return ret;
   }
@@ -135,7 +153,15 @@ namespace {
         tr = RMF::CoordinateTransformer(tr, bodies_[i].frames[j]);
       }
       for (unsigned int j = 0; j < bodies_[i].atoms.size(); ++j) {
-        RMF::Floats cc = pf_.get(bodies_[i].atoms[j]).get_coordinates();
+        RMF::Floats cc;
+        cc = pf_.get(bodies_[i].atoms[j]).get_coordinates();
+        cc = tr.get_global_coordinates(cc);
+        std::copy(cc.begin(), cc.end(), coords);
+        coords += 3;
+      }
+      for (unsigned int j = 0; j < bodies_[i].balls.size(); ++j) {
+        RMF::Floats cc;
+        cc = bf_.get(bodies_[i].atoms[j]).get_coordinates();
         cc = tr.get_global_coordinates(cc);
         std::copy(cc.begin(), cc.end(), coords);
         coords += 3;
@@ -195,17 +221,7 @@ namespace {
     if (graphics && rff_.get_is(cur)) {
       tr = RMF::CoordinateTransformer(tr, rff_.get(cur));
     }
-    if (bf_.get_is(cur)) {
-      if (graphics) {
-        graphics->type = MOLFILE_SPHERE;
-        graphics->size = bf_.get(cur).get_radius();
-        graphics->style = 0;
-        RMF::Floats coords = tr.get_global_coordinates(bf_.get(cur).get_coordinates());
-        std::copy(coords.begin(), coords.end(), graphics->data);
-        ++graphics;
-      }
-      ++ret;
-    } else if (sf_.get_is(cur)) {
+    if (sf_.get_is(cur)) {
       RMF::SegmentConst s = sf_.get(cur);
       RMF::FloatsList coords = s.get_coordinates();
       int type = MOLFILE_LINE;
