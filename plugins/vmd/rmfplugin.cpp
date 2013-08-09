@@ -37,7 +37,7 @@ namespace {
     bool done_;
 
     // find nodes to push to vmd
-    int get_structure(RMF::NodeConstHandle cur, molfile_atom_t *atoms,
+    std::pair<int,int> get_structure(RMF::NodeConstHandle cur, molfile_atom_t *atoms,
                       int body,
                       char chain, int resid, std::string resname);
     int get_graphics(RMF::NodeConstHandle cur,
@@ -67,15 +67,17 @@ namespace {
     done_(false) {
     file_.set_current_frame(0);
     bodies_.push_back(Body());
-    num_atoms_ = get_structure(file_.get_root_node(), NULL, 0,
+    std::pair<int,int> na = get_structure(file_.get_root_node(), NULL, 0,
                                ' ', -1, std::string());
+    num_atoms_ = na.first + na.second;
   }
 
   //
-  int Data::get_structure(RMF::NodeConstHandle cur, molfile_atom_t *atoms,
+  std::pair<int,int> Data::get_structure(RMF::NodeConstHandle cur, molfile_atom_t *atoms,
                           int body,
                           char chain, int resid, std::string resname) {
-    if (cur.get_type() == RMF::ALIAS) return 0;
+    std::pair<int,int> ret(0,0);
+    if (cur.get_type() == RMF::ALIAS) return ret;
     if (rff_.get_is(cur)) {
       bodies_.push_back(Body());
       bodies_.back().frames = bodies_[body].frames;
@@ -89,14 +91,18 @@ namespace {
       resid = rf_.get(cur).get_index();
       resname = rf_.get(cur).get_type();
     }
-    int ret = 0;
     BOOST_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
-      int count = get_structure(c, atoms, body, chain, resid, resname);
-      ret += count;
-      if (atoms) atoms += count;
+      std::pair<int,int> count
+       = get_structure(c, atoms, body, chain, resid, resname);
+      ret.first += count.first;
+      ret.second += count.second;
+      if (atoms) {
+        atoms += count.first;
+        atoms += count.second;
+      }
     }
 
-    if (ret == 0 && pf_.get_is(cur)) {
+    if (ret.first == 0 && pf_.get_is(cur)) {
       if (atoms) {
         std::string nm = cur.get_name();
         std::string at;
@@ -115,8 +121,9 @@ namespace {
       } else {
         bodies_[body].atoms.push_back(cur);
       }
-      ++ret;
-    } else if (ret == 0 && bf_.get_is(cur)) {
+      ++ret.first;
+    }
+    if (bf_.get_is(cur)) {
       if (atoms) {
         std::string nm = cur.get_name();
         std::copy(nm.begin(), nm.end(), atoms->name);
@@ -132,15 +139,16 @@ namespace {
       } else {
         bodies_[body].balls.push_back(cur);
       }
-      ++ret;
+      ++ret.second;
     }
     return ret;
   }
 
   void Data::read_structure(molfile_atom_t *atoms) {
-    int found = get_structure(file_.get_root_node(),
+    std::pair<int,int> found = get_structure(file_.get_root_node(),
                               atoms, 0, ' ', -1, "NONE");
-    std::cout << "found " << found << " structural particles" << std::endl;
+    std::cout << "found " << found.first + found.second
+     << " structural particles" << std::endl;
   }
 
   bool Data::read_next_frame(molfile_timestep_t *frame) {
