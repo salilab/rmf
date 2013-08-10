@@ -76,7 +76,7 @@ struct FileBufferCopyIn : public BufferCopyIn {
     }
 
     int64_t size() const {
-      LPDWORD hodwsz;
+      DWORD hodwsz;
       DWORD sz= GetFileSize(h_, &hodwsz);
       if (hodwsz != sz) {
         throw Exception("I don't know what the 'high-order doubleword of the file size' means");
