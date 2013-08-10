@@ -88,6 +88,5 @@ include(examples/CMakeLists.txt)
 include(benchmark/CMakeLists.txt)
 include(doc/CMakeLists.txt)
 
-add_custom_target(RMF DEPENDS ${RMF_BINS} ${RMF_SWIG} ${RMF_TESTS} ${RMF_VMD})
+add_custom_target(RMF DEPENDS ${RMF_BINS} ${RMF_SWIG} ${RMF_TESTS} ${RMF_VMD} RMF.decorators)
 set_property(TARGET "RMF" PROPERTY FOLDER "RMF")
-
