@@ -1,6 +1,6 @@
 
-include("${PROJECT_SOURCE_DIR}/test/PyTests.cmake")
-include("${PROJECT_SOURCE_DIR}/test/CppTests.cmake")
+file(GLOB python_tests "${PROJECT_SOURCE_DIR}/test/*.py")
+file(GLOB cpp_tests "${PROJECT_SOURCE_DIR}/test/*.cpp")
 
 foreach (test ${python_tests})
    GET_FILENAME_COMPONENT(name ${test} NAME_WE)
@@ -16,13 +16,15 @@ foreach (test ${cpp_tests})
    GET_FILENAME_COMPONENT(name ${test} NAME_WE)
    add_executable("RMF-${name}" ${test})
    target_link_libraries("RMF-${name}" RMF-lib)
-   set_target_properties("RMF-${name}" PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/test")
+   set_target_properties("RMF-${name}" PROPERTIES
+                          RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/test"
+                          OUTPUT_NAME ${name})
    set_property(TARGET "RMF-${name}" PROPERTY FOLDER "RMF")
    add_test("RMF-${name}"
-            "${CMAKE_BINARY_DIR}/test/RMF.${name}${CMAKE_EXECUTABLE_SUFFIX}")
+            "${CMAKE_BINARY_DIR}/test/${name}${CMAKE_EXECUTABLE_SUFFIX}")
    set_tests_properties("RMF-${name}" PROPERTIES LABELS "RMF;test")
    set_tests_properties("RMF-${name}" PROPERTIES TIMEOUT 4)
-   set(tests ${tests} "RMF-${name}")
+   list(APPEND tests "RMF-${name}")
 endforeach()
 
 set(RMF_TESTS ${tests} CACHE INTERNAL "" FORCE)
