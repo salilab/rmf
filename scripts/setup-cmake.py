@@ -81,13 +81,26 @@ def make_py_test_lists():
   tests.sort()
   _rewrite(os.path.join("test", "PyTests.cmake"), ["set(python_tests "] + ["${PROJECT_SOURCE_DIR}/%s"%x.replace("\\", "/") for x in tests] +[")"])
 
+def make_examples_lists():
+  tests = glob.glob(os.path.join("examples", "*.py"))
+  tests.sort()
+  _rewrite(os.path.join("examples", "Files.cmake"), ["set(python_examples "] + ["${PROJECT_SOURCE_DIR}/%s"%x.replace("\\", "/") for x in tests] +[")"])
+
 def make_cpp_test_lists():
   tests = glob.glob(os.path.join("test", "test_*.cpp"))
   tests.sort()
   _rewrite(os.path.join("test", "CppTests.cmake"), ["set(cpp_tests"] + ["${PROJECT_SOURCE_DIR}/%s"%x.replace("\\", "/") for x in tests] + [")"])
+
+def make_bins_lists():
+  tests = glob.glob(os.path.join("bin", "*.cpp"))
+  tests.sort()
+  _rewrite(os.path.join("bin", "CppFiles.cmake"), ["set(cpp_bins "] + ["${PROJECT_SOURCE_DIR}/%s"%x.replace("\\", "/") for x in tests] +[")"])
+
 
 make_all_rmf_header()
 make_all_hdf5_header()
 make_source_list()
 make_py_test_lists()
 make_cpp_test_lists()
+make_examples_lists()
+make_bins_lists()

@@ -1,9 +1,9 @@
 # AllJSON.h
 
-file(READ "src/backend/avro/Nodes.json" RMF_JSON_NODES)
-file(READ "src/backend/avro/File.json" RMF_JSON_FILE)
-file(READ "src/backend/avro/Data.json" RMF_JSON_DATA)
-file(READ "src/backend/avro/Frame.json" RMF_JSON_FRAME)
+file(READ "backend/avro/Nodes.json" RMF_JSON_NODES)
+file(READ "backend/avro/File.json" RMF_JSON_FILE)
+file(READ "backend/avro/Data.json" RMF_JSON_DATA)
+file(READ "backend/avro/Frame.json" RMF_JSON_FRAME)
 
 configure_file (
   "${PROJECT_SOURCE_DIR}/src/backend/avro/All.json.in"

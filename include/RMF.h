@@ -17,6 +17,7 @@
 #include <RMF/constants.h>
 #include <RMF/decorator_utility.h>
 #include <RMF/decorators.h>
+#include <RMF/enums.h>
 #include <RMF/exceptions.h>
 #include <RMF/infrastructure_macros.h>
 #include <RMF/log.h>

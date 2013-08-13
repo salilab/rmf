@@ -1,16 +1,16 @@
 include_directories("${PROJECT_BINARY_DIR}/src"
   "${PROJECT_SOURCE_DIR}/src")
 
-include("${PROJECT_SOURCE_DIR}/src/Files.cmake")
-include("${PROJECT_SOURCE_DIR}/src/internal/Files.cmake")
+include("Files.cmake")
+include("internal/Files.cmake")
 
-include(src/backend/CMakeLists.txt)
+include(backend/CMakeLists.txt)
 
 add_library(RMF-lib SHARED ${sources}
   ${decorators})
 set_target_properties("RMF-lib" PROPERTIES OUTPUT_NAME "RMF")
 set_property(TARGET "RMF-lib" PROPERTY FOLDER "RMF")
-
+set_property(TARGET "RMF-lib" PROPERTY COMPILE_DEFINITIONS RMF_EXPORT)
 
 target_link_libraries(RMF-lib
   ${Boost_FILESYSTEM_LIBRARY}

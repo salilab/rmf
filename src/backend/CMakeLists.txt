@@ -1,2 +1,2 @@
-include(src/backend/avro/CMakeLists.txt)
-include(src/backend/hdf5/CMakeLists.txt)
+include(backend/avro/CMakeLists.txt)
+include(backend/hdf5/CMakeLists.txt)

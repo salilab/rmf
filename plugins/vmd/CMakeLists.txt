@@ -11,7 +11,7 @@ set(RMF_VMD "" CACHE INTERNAL "" FORCE)
 else()
 include_directories(${VMDPLUGIN_INCLUDE_PATH})
 
-add_library(RMF-vmd MODULE "plugins/vmd/rmfplugin.cpp")
+add_library(RMF-vmd MODULE "rmfplugin.cpp")
 set_target_properties("RMF-vmd" PROPERTIES OUTPUT_NAME "rmfplugin")
 set_target_properties("RMF-vmd" PROPERTIES PREFIX "")
 set_target_properties("RMF-vmd" PROPERTIES SUFFIX ".so")

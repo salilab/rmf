@@ -1,6 +1,7 @@
+include(CppTests.cmake)
+include(PyTests.cmake)
 
-file(GLOB python_tests "${PROJECT_SOURCE_DIR}/test/*.py")
-file(GLOB cpp_tests "${PROJECT_SOURCE_DIR}/test/*.cpp")
+include_directories(${PROJECT_SOURCE_DIR}/src)
 
 foreach (test ${python_tests})
    GET_FILENAME_COMPONENT(name ${test} NAME_WE)

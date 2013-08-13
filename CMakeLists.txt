@@ -58,13 +58,13 @@ configure_file (
 include_directories("${PROJECT_BINARY_DIR}/include"
   "${PROJECT_SOURCE_DIR}/include")
 
-include(data/CMakeLists.txt)
-include(include/CMakeLists.txt)
+add_subdirectory(data)
+add_subdirectory(include)
 
-include(src/CMakeLists.txt)
+add_subdirectory(src)
 add_subdirectory(bin)
 
-include(plugins/vmd/CMakeLists.txt)
+add_subdirectory(plugins/vmd/)
 
 # swig support is a little broken
 
@@ -83,10 +83,10 @@ endif()
 
 add_subdirectory(swig)
 
-include(test/CMakeLists.txt)
-include(examples/CMakeLists.txt)
-include(benchmark/CMakeLists.txt)
-include(doc/CMakeLists.txt)
+add_subdirectory(test)
+add_subdirectory(examples)
+add_subdirectory(benchmark)
+add_subdirectory(doc)
 
 add_custom_target(RMF DEPENDS ${RMF_BINS} ${RMF_SWIG} ${RMF_TESTS} ${RMF_VMD} RMF.decorators)
 set_property(TARGET "RMF" PROPERTY FOLDER "RMF")

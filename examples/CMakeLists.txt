@@ -1,7 +1,7 @@
 
-file(GLOB python_tests "examples/*.py")
+include("Files.cmake")
 
-foreach (test ${python_tests})
+foreach (test ${python_examples})
    GET_FILENAME_COMPONENT(name ${test} NAME_WE)
   add_test("RMF.${name}" "python" ${test})
   set_tests_properties("RMF.${name}"

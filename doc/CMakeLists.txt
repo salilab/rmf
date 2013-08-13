@@ -1,5 +1,5 @@
 configure_file (
-  "doc/json.dox.in"
+  "json.dox.in"
   "${PROJECT_BINARY_DIR}/doc/json.dox"
   )
 

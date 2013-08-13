@@ -1,14 +1,15 @@
+include("CppFiles.cmake")
 
-FILE(GLOB BIN_SOURCES "*.cpp")
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/bin)
-foreach (cpp ${BIN_SOURCES})
-   GET_FILENAME_COMPONENT(name ${cpp} NAME_WE)
+include_directories(${PROJECT_SOURCE_DIR}/bin)
+include_directories(${PROJECT_SOURCE_DIR}/src)
+foreach (cpp ${cpp_bins})
+   get_filename_component(name ${cpp} NAME_WE)
    add_executable(RMF.${name} ${cpp})
    target_link_libraries(RMF.${name} RMF-lib ${Boost_LIBRARIES} )
    set_target_properties(RMF.${name} PROPERTIES
                          OUTPUT_NAME ${name})
    set_property(TARGET "RMF.${name}" PROPERTY FOLDER "RMF")
-   INSTALL(TARGETS RMF.${name} DESTINATION ${CMAKE_INSTALL_BINDIR})
+   install(TARGETS RMF.${name} DESTINATION ${CMAKE_INSTALL_BINDIR})
    set(bins ${bins} RMF.${name})
 endforeach()
 
