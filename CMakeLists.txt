@@ -88,5 +88,5 @@ add_subdirectory(examples)
 add_subdirectory(benchmark)
 add_subdirectory(doc)
 
-add_custom_target(RMF DEPENDS ${RMF_BINS} ${RMF_SWIG} ${RMF_TESTS} ${RMF_VMD} RMF.decorators)
+add_custom_target(RMF DEPENDS ${RMF_BINS} ${RMF_SWIG} ${RMF_TESTS} ${RMF_VMD} RMF-decorators)
 set_property(TARGET "RMF" PROPERTY FOLDER "RMF")

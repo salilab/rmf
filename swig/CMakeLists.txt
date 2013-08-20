@@ -32,7 +32,7 @@ FILE(GLOB SWIG_INCLUDES "${PROJECT_SOURCE_DIR}/swig/RMF.*.i")
 
 SET_SOURCE_FILES_PROPERTIES(RMF.i PROPERTIES CPLUSPLUS ON)
 SET(SWIG_MODULE_RMF_EXTRA_DEPS
-  ${rmf_headers}  ${headers} ${SWIG_INCLUDES}
+  ${rmf_headers}  ${headers} ${SWIG_INCLUDES} RMF-decorators
   )
 
 SWIG_ADD_MODULE(RMF python RMF.i)
@@ -40,7 +40,6 @@ set_property(TARGET "${SWIG_MODULE_RMF_REAL_NAME}" PROPERTY FOLDER "RMF")
 if(APPLE)
   set_target_properties("${SWIG_MODULE_RMF_REAL_NAME}" PROPERTIES LINK_FLAGS "-flat_namespace -undefined suppress")
 endif(APPLE)
-
 
 # Don't link in libpython (that prevents the extension from being used in
 # later compatible versions of Python), except on Windows where all DLL

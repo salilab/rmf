@@ -16,6 +16,7 @@ endforeach()
 foreach (test ${cpp_tests})
    GET_FILENAME_COMPONENT(name ${test} NAME_WE)
    add_executable("RMF-${name}" ${test})
+   add_dependencies("RMF-${name}" RMF-decorators)
    target_link_libraries("RMF-${name}" RMF-lib)
    set_target_properties("RMF-${name}" PROPERTIES
                           RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/test"
