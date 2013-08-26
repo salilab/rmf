@@ -68,7 +68,7 @@ RMF_ENABLE_WARNINGS
   // can be reference counted
   class intrusive_ptr_object {
    public:
-    intrusive_ptr_object() throw() : m_ref_count(0) {}
+    intrusive_ptr_object() RMF_NOEXCEPT : m_ref_count(0) {}
     ~intrusive_ptr_object();
 
     void add_ref() {
@@ -109,8 +109,8 @@ RMF_ENABLE_WARNINGS
      {
      (a)->add_ref();
      }
-  
-  
+
+
      template <class C>
      inline void intrusive_ptr_release(C *a,
      typename boost::enable_if<boost::is_base_of<intrusive_ptr_object,

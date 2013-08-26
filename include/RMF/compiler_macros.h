@@ -51,6 +51,17 @@
 #define RMF_FINAL
 #endif
 
+#if defined(__clang__) || defined(__GNUC__) && __cplusplus >= 201103L
+#define RMF_NOEXCEPT noexcept
+#define RMF_CXX11_DEFAULT_COPY_CONSTRUCTOR(Name) \
+  Name(const Name &) = default;                  \
+  Name& operator=(const Name &) = default
+#else
+// probably should be finer here
+#define RMF_NOEXCEPT throw()
+#define RMF_CXX11_DEFAULT_COPY_CONSTRUCTOR(Name)
+#endif
+
 #if defined(__clang__) || defined(__GNUC__)
 #define RMF_PRAGMA(x) _Pragma(RMF_STRINGIFY(x))
 #elif defined(_MSC_VER)

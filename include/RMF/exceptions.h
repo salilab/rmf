@@ -26,9 +26,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     mutable std::string message_;
 
    public:
+    RMF_CXX11_DEFAULT_COPY_CONSTRUCTOR(Exception);
     Exception();
-    const char* what() const throw();
-    virtual ~Exception() throw();
+    const char* what() const RMF_NOEXCEPT;
+    virtual ~Exception() RMF_NOEXCEPT;
   };
 
   /** Use this instead of the more standard what() to get the
@@ -43,16 +44,18 @@ RMF_ENABLE_WARNINGS namespace RMF {
    */
   class RMFEXPORT UsageException : public Exception {
    public:
+    RMF_CXX11_DEFAULT_COPY_CONSTRUCTOR(UsageException);
     UsageException();
-    ~UsageException() throw();
+    ~UsageException() RMF_NOEXCEPT;
   };
 
   /** IOExceptions are thrown when some operation on a disk file fails.
    */
   class RMFEXPORT IOException : public Exception {
    public:
+    RMF_CXX11_DEFAULT_COPY_CONSTRUCTOR(IOException);
     IOException();
-    ~IOException() throw();
+    ~IOException() RMF_NOEXCEPT;
   };
 
   /** Internal exceptions are thrown when the library discovers that some
@@ -61,8 +64,9 @@ RMF_ENABLE_WARNINGS namespace RMF {
    */
   class RMFEXPORT InternalException : public Exception {
    public:
+    RMF_CXX11_DEFAULT_COPY_CONSTRUCTOR(InternalException);
     InternalException();
-    ~InternalException() throw();
+    ~InternalException() RMF_NOEXCEPT;
   };
 
 }
