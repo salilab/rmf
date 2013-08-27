@@ -11,6 +11,7 @@
 
 #include <RMF/config.h>
 #include <boost/exception/exception.hpp>
+#include "compiler_macros.h"
 #include <string>
 #include <exception>
 
