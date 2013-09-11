@@ -4,6 +4,20 @@ project(RMF)
 # needs to be in main CMakeLists.txt
 enable_testing()
 
+message(STATUS "Running setup_cmake.py")
+execute_process(COMMAND python ${CMAKE_SOURCE_DIR}/scripts/setup-cmake.py
+                  RESULT_VARIABLE setup
+                  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+if(NOT ${setup} EQUAL 0)
+   message(FATAL_ERROR " Failed to setup cmake files")
+endif()
+
+  if(NOT "${output}" STREQUAL "")
+    message(STATUS ${output})
+  endif()
+
+
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 
 set(RMF_INCLUDE_PATH "" CACHE INTERNAL "" FORCE)

@@ -1,8 +1,8 @@
-include("CppFiles.cmake")
+include("Files.cmake")
 
 include_directories(${PROJECT_SOURCE_DIR}/bin)
 include_directories(${PROJECT_SOURCE_DIR}/src)
-foreach (cpp ${cpp_bins})
+foreach (cpp ${cppfiles})
    get_filename_component(name ${cpp} NAME_WE)
    add_executable(RMF-${name} ${cpp})
    add_dependencies(RMF-${name} RMF-decorators)

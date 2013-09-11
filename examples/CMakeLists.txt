@@ -1,7 +1,7 @@
 
 include("Files.cmake")
 
-foreach (test ${python_examples})
+foreach (test ${pyfiles})
    GET_FILENAME_COMPONENT(name ${test} NAME_WE)
   add_test("RMF.${name}" "python" ${test})
   set_tests_properties("RMF.${name}"

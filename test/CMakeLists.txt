@@ -1,9 +1,8 @@
-include(CppTests.cmake)
-include(PyTests.cmake)
+include(Files.cmake)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
-foreach (test ${python_tests})
+foreach (test ${pyfiles})
    GET_FILENAME_COMPONENT(name ${test} NAME_WE)
   add_test("RMF.${name}" "python" ${test})
   set_tests_properties("RMF.${name}"
@@ -13,7 +12,7 @@ foreach (test ${python_tests})
   #add_dependencies(${name} RMFPython)
 endforeach()
 
-foreach (test ${cpp_tests})
+foreach (test ${cppfiles})
    GET_FILENAME_COMPONENT(name ${test} NAME_WE)
    add_executable("RMF-${name}" ${test})
    add_dependencies("RMF-${name}" RMF-decorators)

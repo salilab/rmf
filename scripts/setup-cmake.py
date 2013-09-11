@@ -24,6 +24,14 @@ def _rewrite(filename, input, verbose=True):
     open(filename, "w").write(contents)
 
 
+def _get_files(ds, suffix):
+    patterns = [os.path.join(d, "*"+suffix) for d in ds]
+    files = []
+    for p in patterns:
+        files += [f[len(ds[0]) + 1:].replace("\\", "/") for f in glob.glob(p)]
+    files.sort()
+    return files
+
 def make_all_rmf_header():
   pat= os.path.join("include", "RMF", "*.h")
   allh= glob.glob(pat)
@@ -57,50 +65,19 @@ def make_all_hdf5_header():
     out.append("#include <RMF/HDF5/" + name + ">")
   _rewrite(os.path.join("include", "RMF", "HDF5.h"), out)
 
-def make_source_list():
-  all = []
-  for p in [os.path.join("src"),
-            os.path.join("src", "internal"),
-            os.path.join("src", "backend", "avro"),
-            os.path.join("src", "backend", "hdf5")]:
-    cur = glob.glob(os.path.join(p, "*.cpp"))
-    cur.sort()
-    # ick
-    #if p.endswith("avro"):
-    #  avros = glob.glob(os.path.join(p, "AvroCPP", "impl", "*.cc")) \
-#+ glob.glob(os.path.join(p, "AvroCPP", "impl", "*", "*.cc"))
-    #avros.sort()
-    #  avros = [x for x in avros if not x.endswith("avrogencpp.cc")]
-    #  cur.extend(avros)
-    sources = [x.replace("\\", "/") for x in cur]
-    _rewrite(os.path.join(p, "Files.cmake"),
-             ["set(sources ${sources}"] + ["${PROJECT_SOURCE_DIR}/%s"%x for x in cur] + [")"])
 
-def make_py_test_lists():
-  tests = glob.glob(os.path.join("test", "test_*.py"))
-  tests.sort()
-  _rewrite(os.path.join("test", "PyTests.cmake"), ["set(python_tests "] + ["${PROJECT_SOURCE_DIR}/%s"%x.replace("\\", "/") for x in tests] +[")"])
-
-def make_examples_lists():
-  tests = glob.glob(os.path.join("examples", "*.py"))
-  tests.sort()
-  _rewrite(os.path.join("examples", "Files.cmake"), ["set(python_examples "] + ["${PROJECT_SOURCE_DIR}/%s"%x.replace("\\", "/") for x in tests] +[")"])
-
-def make_cpp_test_lists():
-  tests = glob.glob(os.path.join("test", "test_*.cpp"))
-  tests.sort()
-  _rewrite(os.path.join("test", "CppTests.cmake"), ["set(cpp_tests"] + ["${PROJECT_SOURCE_DIR}/%s"%x.replace("\\", "/") for x in tests] + [")"])
-
-def make_bins_lists():
-  tests = glob.glob(os.path.join("bin", "*.cpp"))
-  tests.sort()
-  _rewrite(os.path.join("bin", "CppFiles.cmake"), ["set(cpp_bins "] + ["${PROJECT_SOURCE_DIR}/%s"%x.replace("\\", "/") for x in tests] +[")"])
-
+def make_files(d):
+    output = os.path.join(d[0], "Files.cmake")
+    cppfiles = _get_files(d, ".cpp")
+    pyfiles = _get_files(d, ".py")
+    _rewrite(output, ["set(pyfiles \"%s\")"%";".join(pyfiles),
+                      "set(cppfiles \"%s\")"%";".join(cppfiles)])
 
 make_all_rmf_header()
 make_all_hdf5_header()
-make_source_list()
-make_py_test_lists()
-make_cpp_test_lists()
-make_examples_lists()
-make_bins_lists()
+src = ["src",
+       os.path.join("src", "internal"),
+       os.path.join("src", "backend", "hdf5"),
+       os.path.join("src", "backend", "avro")]
+for d in [src, ["examples"], ["bin"], ["test"], ["benchmark"]]:
+    make_files(d)
