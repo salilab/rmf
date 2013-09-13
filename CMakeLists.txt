@@ -5,9 +5,9 @@ project(RMF)
 enable_testing()
 
 message(STATUS "Running setup_cmake.py")
-execute_process(COMMAND python ${CMAKE_SOURCE_DIR}/scripts/setup-cmake.py
+execute_process(COMMAND python ${PROJECT_SOURCE_DIR}/scripts/setup-cmake.py
                   RESULT_VARIABLE setup
-                  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+                  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 if(NOT ${setup} EQUAL 0)
    message(FATAL_ERROR " Failed to setup cmake files")
 endif()
