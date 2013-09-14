@@ -8,7 +8,9 @@ include(backend/CMakeLists.txt)
 add_library(RMF-lib SHARED ${cppfiles})
 add_definitions(-DRMF_EXPORTS)
 add_dependencies(RMF-lib RMF-decorators)
-set_target_properties("RMF-lib" PROPERTIES OUTPUT_NAME "RMF")
+set_target_properties("RMF-lib" PROPERTIES
+                      RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+                      OUTPUT_NAME "RMF")
 set_property(TARGET "RMF-lib" PROPERTY FOLDER "RMF")
 set_property(TARGET "RMF-lib" PROPERTY COMPILE_DEFINITIONS RMF_EXPORT)
 

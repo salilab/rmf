@@ -35,11 +35,13 @@ SET(SWIG_MODULE_RMF_EXTRA_DEPS
   ${rmf_headers}  ${headers} ${SWIG_INCLUDES} RMF-decorators
   )
 
+set(CMAKE_SWIG_OUTDIR ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" FORCE)
 SWIG_ADD_MODULE(RMF python RMF.i)
 set_property(TARGET "${SWIG_MODULE_RMF_REAL_NAME}" PROPERTY FOLDER "RMF")
 if(APPLE)
   set_target_properties("${SWIG_MODULE_RMF_REAL_NAME}" PROPERTIES LINK_FLAGS "-flat_namespace -undefined suppress")
 endif(APPLE)
+set_target_properties("${SWIG_MODULE_RMF_REAL_NAME}" PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 
 # Don't link in libpython (that prevents the extension from being used in
 # later compatible versions of Python), except on Windows where all DLL
@@ -59,11 +61,14 @@ SET(SWIG_MODULE_RMF_HDF5_EXTRA_DEPS
   ${headers}  ${hdf5_headers} ${SWIG_INCLUDES}
   )
 
+set(CMAKE_SWIG_OUTDIR ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" FORCE)
 SWIG_ADD_MODULE(RMF_HDF5 python RMF_HDF5.i)
 set_property(TARGET "${SWIG_MODULE_RMF_HDF5_REAL_NAME}" PROPERTY FOLDER "RMF")
 if(APPLE)
   set_target_properties("${SWIG_MODULE_RMF_HDF5_REAL_NAME}" PROPERTIES LINK_FLAGS "-flat_namespace -undefined suppress")
 endif(APPLE)
+set_target_properties("${SWIG_MODULE_RMF_HDF5_REAL_NAME}" PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+
 
 
 # Don't link in libpython (that prevents the extension from being used in

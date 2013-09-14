@@ -8,6 +8,7 @@ foreach (cpp ${cppfiles})
    add_dependencies(RMF-${name} RMF-decorators)
    target_link_libraries(RMF-${name} RMF-lib ${Boost_LIBRARIES} )
    set_target_properties(RMF-${name} PROPERTIES
+                         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
                          OUTPUT_NAME ${name})
    set_property(TARGET "RMF-${name}" PROPERTY FOLDER "RMF")
    install(TARGETS RMF-${name} DESTINATION ${CMAKE_INSTALL_BINDIR})
