@@ -109,7 +109,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       } else {
         index = i.get_index() +1;
       }
-      if (static_cast<int>(all_.frames.size()) <= index) {
+      if (all_.frames.size() <= index) {
         RMF_avro_backend::Node def;
         def.type = "frame";
         all_.frames.resize(index + 1, def);

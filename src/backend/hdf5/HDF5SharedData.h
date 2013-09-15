@@ -16,8 +16,8 @@
 #include <RMF/HDF5/File.h>
 #include <RMF/infrastructure_macros.h>
 #include <RMF/constants.h>
-#include <RMF/internal/map.h>
-#include <RMF/internal/set.h>
+#include <boost/unordered_map.hpp>
+#include <boost/unordered_set.hpp>
 
 #include "HDF5DataSetCacheD.h"
 #include "HDF5DataSetCache2D.h"
@@ -110,9 +110,9 @@ RMF_ENABLE_WARNINGS namespace RMF {
       std::string name;
     };
 
-    typedef internal::map<Category, CategoryData> CategoryDataMap;
+    typedef boost::unordered_map<Category, CategoryData> CategoryDataMap;
     CategoryDataMap category_data_map_;
-    typedef internal::map<std::string, Category> NameCategoryMap;
+    typedef boost::unordered_map<std::string, Category> NameCategoryMap;
     NameCategoryMap name_category_map_;
 
     struct KeyData {
@@ -122,10 +122,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
       int type_index;
     };
 
-    typedef internal::map<unsigned int, KeyData> KeyDataMap;
+    typedef boost::unordered_map<unsigned int, KeyData> KeyDataMap;
     KeyDataMap key_data_map_;
-    typedef internal::map<std::string, unsigned int> NameKeyInnerMap;
-    typedef internal::map<Category, NameKeyInnerMap> NameKeyMap;
+    typedef boost::unordered_map<std::string, unsigned int> NameKeyInnerMap;
+    typedef boost::unordered_map<Category, NameKeyInnerMap> NameKeyMap;
     NameKeyMap name_key_map_;
 
     Category link_category_;
@@ -249,7 +249,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       }
     };
     mutable Ints max_cache_;
-    mutable internal::set<std::string> known_data_sets_;
+    mutable boost::unordered_set<std::string> known_data_sets_;
     KeyNameDataSetCache key_name_data_sets_;
     RMF_FOREACH_TYPE(RMF_HDF5_SHARED_DATA_TYPE);
 
@@ -379,7 +379,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
         int index = get_index(1, category_index);
         HDF5::DataSetIndexD<2> nsz = node_data_[1 - 1].get_size();
         // deal with nodes added for sets
-        if (static_cast<unsigned int>(nsz[0]) <= node.get_index()) {
+        if (nsz[0] <= node.get_index()) {
           return TypeTraits::get_null_value();
         }
         if (nsz[1] <= static_cast<hsize_t>(index)) {
@@ -401,7 +401,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
           HDF5::DataSetIndexD<3> sz = ds.get_size();
           if (static_cast<hsize_t>(vi) >= sz[0] ||
               static_cast<hsize_t>(key_index) >= sz[1] ||
-              (frame.get_index() >= static_cast<unsigned int>(sz[2]))) {
+              (frame.get_index() >= sz[2])) {
             return TypeTraits::get_null_value();
           } else {
             return ds.get_value(HDF5::DataSetIndexD<3>(vi, key_index, frame.get_index()));
@@ -731,7 +731,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       unsigned int cindex;
       if (node == ALL_FRAMES) cindex = 0;
       else cindex = node.get_index() + 1;
-      if (cindex <= static_cast<int>(get_number_of_frames())) {
+      if (cindex <= get_number_of_frames()) {
           return FrameIDs(1, FrameID(cindex));
       } else {
         return FrameIDs();

@@ -86,7 +86,7 @@ namespace RMF {
   }                                                                     \
   virtual std::vector<Key<Ucname##Traits> > get_##lcname##_keys(Category cat)\
     RMF_OVERRIDE  {                                                     \
-    internal::set<Key<Ucname##Traits> > ret;                            \
+    boost::unordered_set<Key<Ucname##Traits> > ret;                     \
     const RMF_avro_backend::Data& data =                                \
       P::get_frame_data(cat, P::get_current_frame());                   \
     extract_keys(cat, data.lcname##_data.index, ret);                   \

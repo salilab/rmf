@@ -17,8 +17,8 @@
 #include "../NodeID.h"
 #include "../FrameID.h"
 #include "../infrastructure_macros.h"
-#include "map.h"
-#include "set.h"
+#include <boost/unordered_map.hpp>
+#include <boost/unordered_set.hpp>
 #include <boost/cstdint.hpp>
 #include <boost/any.hpp>
 #include <algorithm>
@@ -72,8 +72,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
   class SharedData : public boost::intrusive_ptr_object {
     std::vector<boost::any> association_;
     std::vector<uintptr_t> back_association_value_;
-    map<uintptr_t, NodeID> back_association_;
-    map<int, boost::any> user_data_;
+    boost::unordered_map<uintptr_t, NodeID> back_association_;
+    boost::unordered_map<int, boost::any> user_data_;
     int valid_;
     FrameID cur_frame_;
     std::string path_;

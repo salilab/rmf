@@ -13,8 +13,8 @@
 #include <RMF/internal/SharedData.h>
 #include <RMF/infrastructure_macros.h>
 #include <RMF/constants.h>
-#include <RMF/internal/map.h>
-#include <RMF/internal/set.h>
+#include <boost/unordered_map.hpp>
+#include <boost/unordered_set.hpp>
 #include "AvroSharedData.types.h"
 #include <utility>
 
@@ -29,7 +29,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     template <class TypeTraits>
     void extract_keys(Category cat,
                       const KeyIndex& index,
-                      internal::set<Key<TypeTraits> >& ret) {
+                      boost::unordered_set<Key<TypeTraits> >& ret) {
       for (typename KeyIndex::const_iterator iti = index.begin();
            iti != index.end();
            ++iti) {

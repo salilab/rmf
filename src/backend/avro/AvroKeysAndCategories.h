@@ -13,25 +13,25 @@
 #include <RMF/internal/SharedData.h>
 #include <RMF/infrastructure_macros.h>
 #include <RMF/constants.h>
-#include <RMF/internal/map.h>
+#include <boost/unordered_map.hpp>
 #include "AvroSharedData.types.h"
 
 RMF_ENABLE_WARNINGS namespace RMF {
   namespace avro_backend {
 
   class AvroKeysAndCategories : public internal::SharedData {
-    typedef internal::map<Category, std::string> CategoryNameMap;
-    typedef internal::map<std::string, Category> NameCategoryMap;
+    typedef boost::unordered_map<Category, std::string> CategoryNameMap;
+    typedef boost::unordered_map<std::string, Category> NameCategoryMap;
     CategoryNameMap category_name_map_;
     NameCategoryMap name_category_map_;
     struct KeyData {
       std::string name;
       Category category;
     };
-    typedef internal::map<unsigned int, KeyData> KeyDataMap;
+    typedef boost::unordered_map<unsigned int, KeyData> KeyDataMap;
     KeyDataMap key_data_map_;
-    typedef internal::map<std::string, unsigned int> NameKeyInnerMap;
-    typedef internal::map<Category, NameKeyInnerMap> NameKeyMap;
+    typedef boost::unordered_map<std::string, unsigned int> NameKeyInnerMap;
+    typedef boost::unordered_map<Category, NameKeyInnerMap> NameKeyMap;
     NameKeyMap name_key_map_;
 
     std::vector<std::string> node_keys_;

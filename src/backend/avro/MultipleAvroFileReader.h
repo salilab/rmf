@@ -35,8 +35,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
     void add_category_data(Category cat);
     void load_category_frame(Category cat, int frame);
 
-    internal::map<int, RMF_avro_backend::Frame> frames_;
-    internal::map<int, Ints> frame_children_;
+    boost::unordered_map<int, RMF_avro_backend::Frame> frames_;
+    boost::unordered_map<int, Ints> frame_children_;
     unsigned int number_of_frames_;
 
    protected:

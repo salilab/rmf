@@ -8,7 +8,7 @@
 
 #include <RMF/internal/SharedData.h>
 #include <RMF/NodeHandle.h>
-#include <RMF/internal/set.h>
+#include <boost/unordered_set.hpp>
 #include <RMF/HDF5/File.h>
 #include <boost/filesystem/path.hpp>
 #include <boost/scoped_ptr.hpp>

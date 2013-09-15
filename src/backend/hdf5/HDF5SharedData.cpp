@@ -9,7 +9,7 @@
 #include "HDF5SharedData.h"
 #include <RMF/NodeHandle.h>
 #include <RMF/Validator.h>
-#include <RMF/internal/set.h>
+#include <boost/unordered_set.hpp>
 #include <RMF/HDF5/Group.h>
 #include <RMF/log.h>
 #include <algorithm>

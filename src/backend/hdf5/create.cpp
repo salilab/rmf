@@ -9,7 +9,7 @@
 #include "create.h"
 #include "HDF5SharedData.h"
 #include <boost/algorithm/string/predicate.hpp>
-#include <RMF/internal/map.h>
+#include <boost/unordered_map.hpp>
 #include <RMF/log.h>
 
 RMF_ENABLE_WARNINGS namespace RMF {

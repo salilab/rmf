@@ -12,7 +12,7 @@
 #include "AvroSharedData.h"
 #include <RMF/NodeHandle.h>
 #include <RMF/Validator.h>
-#include <RMF/internal/set.h>
+#include <boost/unordered_set.hpp>
 #include <boost/lexical_cast.hpp>
 #include <backend/avro/AvroCpp/api/DataFile.hh>
 #include <algorithm>

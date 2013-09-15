@@ -11,7 +11,7 @@
 #include <RMF/NodeHandle.h>
 #include <RMF/FileConstHandle.h>
 #include <RMF/FileHandle.h>
-#include <RMF/internal/set.h>
+#include <boost/unordered_set.hpp>
 #include <RMF/internal/utility.h>
 #include <RMF/decorators.h>
 
@@ -19,7 +19,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   namespace {
   void copy_structure(NodeConstHandle in,
                       NodeHandle out,
-                      const internal::set<NodeConstHandle>* set) {
+                      const boost::unordered_set<NodeConstHandle>* set) {
     // we already saw this part of the dag
     if (in.get_has_association())
       return;
@@ -51,7 +51,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   void copy_structure(const NodeConstHandles & in, FileHandle out) {
     if (in.empty())
       return;
-    internal::set<NodeConstHandle> inputset(in.begin(), in.end());
+    boost::unordered_set<NodeConstHandle> inputset(in.begin(), in.end());
     copy_structure(
         in[0].get_file().get_root_node(), out.get_root_node(), &inputset);
   }
