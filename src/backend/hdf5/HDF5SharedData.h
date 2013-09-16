@@ -379,7 +379,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
         int index = get_index(1, category_index);
         HDF5::DataSetIndexD<2> nsz = node_data_[1 - 1].get_size();
         // deal with nodes added for sets
-        if (nsz[0] <= node.get_index()) {
+        if (nsz[0] <= static_cast<unsigned int>(node.get_index())) {
           return TypeTraits::get_null_value();
         }
         if (nsz[1] <= static_cast<hsize_t>(index)) {
@@ -401,7 +401,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
           HDF5::DataSetIndexD<3> sz = ds.get_size();
           if (static_cast<hsize_t>(vi) >= sz[0] ||
               static_cast<hsize_t>(key_index) >= sz[1] ||
-              (frame.get_index() >= sz[2])) {
+              (frame.get_index() >= static_cast<unsigned int>(sz[2]))) {
             return TypeTraits::get_null_value();
           } else {
             return ds.get_value(HDF5::DataSetIndexD<3>(vi, key_index, frame.get_index()));
@@ -455,7 +455,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       if (vi == -1) {
         unsigned int index = get_index(Arity, category_index);
         HDF5::DataSetIndexD<2> nsz = node_data_[Arity - 1].get_size();
-        RMF_USAGE_CHECK(static_cast<unsigned int>(nsz[0]) > node.get_index(),
+        RMF_USAGE_CHECK(nsz[0] > static_cast<unsigned int>(node.get_index()),
                         "Invalid node used");
         if (nsz[1] <= index) {
           HDF5::DataSetIndexD<2> newsz = nsz;
@@ -710,13 +710,13 @@ RMF_ENABLE_WARNINGS namespace RMF {
     std::string get_producer() const;
     void set_producer(std::string str);
 
-    std::string get_name(FrameID i) const RMF_OVERRIDE;
+    virtual std::string get_name(FrameID i) const RMF_OVERRIDE;
 
     bool get_supports_locking() const { return false; }
-    void reload() RMF_OVERRIDE;
+    virtual void reload() RMF_OVERRIDE;
     void set_current_frame(FrameID frame) RMF_OVERRIDE;
 
-    FrameID add_child(FrameID node, std::string name, FrameType /*t*/) RMF_OVERRIDE {
+    virtual FrameID add_child(FrameID node, std::string name, FrameType /*t*/) RMF_OVERRIDE {
       // frame types not supported in rmf files right now
       unsigned int cindex;
       if (node == ALL_FRAMES) cindex = 0;

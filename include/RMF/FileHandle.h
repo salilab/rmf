@@ -33,13 +33,13 @@ namespace RMF {
  */
 class RMFEXPORT FileHandle : public FileConstHandle {
   friend class NodeHandle;
-  friend class internal::SharedData;
+  friend class boost::shared_ptr<internal::SharedData>;
 
  public:
   //! Empty file handle, no open file.
   FileHandle() {}
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
-  FileHandle(internal::SharedData* shared_);
+  FileHandle(boost::shared_ptr<internal::SharedData> shared_);
   FileHandle(std::string name, bool create);
 #endif
 

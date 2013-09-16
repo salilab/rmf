@@ -54,7 +54,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   class RMFEXPORT File : public Group {
    public:
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
-    File(SharedHandle* h);
+    File(boost::shared_ptr<SharedHandle> h);
     // silliness to make RMF easier to implement
     bool get_is_writable() const {
       unsigned int intent;

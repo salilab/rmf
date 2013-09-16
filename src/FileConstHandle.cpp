@@ -16,7 +16,7 @@ RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(FileConstHandle);
 
 namespace RMF {
 
-FileConstHandle::FileConstHandle(internal::SharedData* shared)
+FileConstHandle::FileConstHandle(boost::shared_ptr<internal::SharedData> shared)
     : shared_(shared) {}
 
 // \exception RMF::IOException couldn't open file,
@@ -25,7 +25,7 @@ FileConstHandle::FileConstHandle(std::string name)
     : shared_(internal::create_read_only_shared_data(name)) {}
 
 NodeConstHandle FileConstHandle::get_node(NodeID id) const {
-  return NodeConstHandle(id, shared_.get());
+  return NodeConstHandle(id, shared_);
 }
 
 std::string FileConstHandle::get_description() const {

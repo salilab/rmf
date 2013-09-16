@@ -83,11 +83,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }
 
   namespace {
-  SharedData* create_shared_data_internal(std::string path,
+  boost::shared_ptr<SharedData> create_shared_data_internal(std::string path,
                                           bool create,
                                           bool read_only) {
     try {
-      SharedData* ret = NULL;
+      boost::shared_ptr<SharedData> ret;
       if ((ret = hdf5_backend::create_shared_data(path, create, read_only))) {
         return ret;
       } else if ((ret = avro_backend::create_shared_data(
@@ -105,17 +105,17 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
   // throws RMF::IOException if couldn't create file or unsupported file
   // format
-  SharedData* create_shared_data(std::string path, bool create) {
+    boost::shared_ptr<SharedData> create_shared_data(std::string path, bool create) {
     return create_shared_data_internal(path, create, false);
   }
 
-  SharedData* create_read_only_shared_data(std::string path) {
+  boost::shared_ptr<SharedData> create_read_only_shared_data(std::string path) {
     return create_shared_data_internal(path, false, true);
   }
 
-  SharedData* create_shared_data_in_buffer(std::string& buffer, bool create) {
+  boost::shared_ptr<SharedData> create_shared_data_in_buffer(std::string& buffer, bool create) {
     try {
-      SharedData* ret = NULL;
+      boost::shared_ptr<SharedData> ret;
       if ((ret = hdf5_backend::create_shared_data_buffer(buffer, create))) {
         return ret;
       } else if ((ret = avro_backend::create_shared_data_buffer(buffer,
@@ -130,10 +130,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
   }
 
-  SharedData* create_read_only_shared_data_from_buffer(
+  boost::shared_ptr<SharedData> create_read_only_shared_data_from_buffer(
       const std::string& buffer) {
     try {
-      SharedData* ret = NULL;
+      boost::shared_ptr<SharedData> ret;
       if ((ret = hdf5_backend::create_shared_data_buffer(buffer))) {
         return ret;
       } else if ((ret = avro_backend::create_shared_data_buffer(buffer))) {

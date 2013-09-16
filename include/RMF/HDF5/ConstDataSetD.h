@@ -18,6 +18,7 @@
 #include "DataSetCreationPropertiesD.h"
 #include "infrastructure_macros.h"
 #include <algorithm>
+#include <boost/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
 
 RMF_ENABLE_WARNINGS namespace RMF {
@@ -82,7 +83,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     typedef DataSetCreationPropertiesD<TypeTraits, D> CreationProperties;
     typedef DataSetAccessPropertiesD<TypeTraits, D> AccessProperties;
 
-    ConstDataSetD(SharedHandle* parent,
+    ConstDataSetD(boost::shared_ptr<SharedHandle> parent,
                   std::string name,
                   CreationProperties props)
         : data_(new Data()) {
@@ -95,7 +96,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       std::fill(maxs, maxs + D, H5S_UNLIMITED);
       RMF_HDF5_HANDLE(ds, H5Screate_simple(D, dims, maxs), &H5Sclose);
       //std::cout << "creating..." << name << std::endl;
-      P::open(new SharedHandle(H5Dcreate2(parent->get_hid(),
+      P::open(boost::make_shared<SharedHandle>(H5Dcreate2(parent->get_hid(),
                                           name.c_str(),
                                           TypeTraits::get_hdf5_disk_type(),
                                           ds,
@@ -107,14 +108,14 @@ RMF_ENABLE_WARNINGS namespace RMF {
       initialize();
       //std::cout << "done..." << std::endl;
     }
-    ConstDataSetD(SharedHandle* parent,
+    ConstDataSetD(boost::shared_ptr<SharedHandle> parent,
                   std::string name,
                   AccessProperties props)
         : data_(new Data()) {
       RMF_USAGE_CHECK(H5Lexists(parent->get_hid(), name.c_str(), H5P_DEFAULT),
                       RMF::internal::get_error_message(
                           "Data set ", name, " does not exist"));
-      P::open(new SharedHandle(
+      P::open(boost::make_shared<SharedHandle>(
           H5Dopen2(parent->get_hid(), name.c_str(), props.get_handle()),
           &H5Dclose,
           name));
@@ -166,7 +167,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       RMF_USAGE_CHECK(H5Lexists(file, name.c_str(), H5P_DEFAULT),
                       RMF::internal::get_error_message(
                           "Data set ", name, " does not exist"));
-      P::open(new SharedHandle(
+      P::open(boost::make_shared<SharedHandle>(
           H5Dopen2(file, name.c_str(), H5P_DEFAULT), &H5Dclose, name));
       //RMF_HDF5_HANDLE(s, H5Dget_space(h_->get_hid()), H5Sclose);
       RMF_HDF5_HANDLE(sel, H5Dget_space(Object::get_handle()), &H5Sclose);

@@ -114,7 +114,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     AvroSharedData(const std::string& buffer);
 
     virtual ~AvroSharedData() {}
-    std::string get_name(NodeID node) const RMF_OVERRIDE;
+    virtual std::string get_name(NodeID node) const RMF_OVERRIDE;
     NodeType get_type(NodeID node) const RMF_OVERRIDE;
     NodeID add_child(NodeID node, std::string name, NodeType t) RMF_OVERRIDE;
     void add_child(NodeID node, NodeID child_node) RMF_OVERRIDE;
@@ -124,6 +124,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     void set_description(std::string str);
     std::string get_producer() const;
     void set_producer(std::string str);
+    using Base::get_name;
+    using Base::get_type;
+    using Base::add_child;
+    using Base::get_children;
   };
 
   }  // namespace avro_backend

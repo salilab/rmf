@@ -47,7 +47,7 @@ class RMFEXPORT FrameHandle : public FrameConstHandle {
   friend class FileHandle;
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
  public:
-  FrameHandle(FrameID frame, internal::SharedData* shared);
+  FrameHandle(FrameID frame, boost::shared_ptr<internal::SharedData> shared);
 #endif
 
  public:

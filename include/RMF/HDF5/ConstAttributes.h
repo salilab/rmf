@@ -26,7 +26,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   template <class Base> class ConstAttributes : public Base {
 #ifndef SWIG
    protected:
-    ConstAttributes(SharedHandle* h) : Base(h) {}
+    ConstAttributes(boost::shared_ptr<SharedHandle> h) : Base(h) {}
     ConstAttributes() {}
 #else
    private:

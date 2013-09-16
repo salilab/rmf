@@ -15,7 +15,7 @@
 #include "NodeID.h"
 #include "enums.h"
 #include "constants.h"
-#include <boost/intrusive_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 
 RMF_ENABLE_WARNINGS
 
@@ -88,7 +88,7 @@ class RootConstHandle;
 class RMFEXPORT NodeConstHandle {
   NodeID node_;
   friend class FileHandle;
-  boost::intrusive_ptr<internal::SharedData> shared_;
+  boost::shared_ptr<internal::SharedData> shared_;
   int compare(const NodeConstHandle& o) const {
     if (node_ < o.node_)
       return -1;
@@ -132,11 +132,11 @@ class RMFEXPORT NodeConstHandle {
   FrameID get_current_frame_id() const;
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
  protected:
-  internal::SharedData* get_shared_data() const { return shared_.get(); }
+  boost::shared_ptr<internal::SharedData> get_shared_data() const { return shared_; }
 
  public:
   NodeID get_node_id() const { return node_; }
-  NodeConstHandle(NodeID node, internal::SharedData* shared);
+  NodeConstHandle(NodeID node, boost::shared_ptr<internal::SharedData> shared);
 #endif
 
  public:

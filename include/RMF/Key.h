@@ -32,7 +32,7 @@ template <class TypeTraitsT> class Key {
   friend class FileConstHandle;
   friend class NodeConstHandle;
   friend class NodeHandle;
-  friend class internal::SharedData;
+  friend class boost::shared_ptr<internal::SharedData>;
   friend class internal::HDF5SharedData;
   int i_;
   int compare(const Key& o) const {

@@ -13,7 +13,7 @@ RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(FileHandle);
 
 namespace RMF {
 
-FileHandle::FileHandle(internal::SharedData* shared)
+FileHandle::FileHandle(boost::shared_ptr<internal::SharedData> shared)
     : FileConstHandle(shared) {}
 
 // \exception RMF::IOException if couldn't create file,

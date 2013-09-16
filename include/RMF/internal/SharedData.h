@@ -69,7 +69,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
      with an almost one-to-one mapping between most of its functions and
      exposed functions
    */
-  class SharedData : public boost::intrusive_ptr_object {
+  class SharedData {
     std::vector<boost::any> association_;
     std::vector<uintptr_t> back_association_value_;
     boost::unordered_map<uintptr_t, NodeID> back_association_;
@@ -197,17 +197,18 @@ RMF_ENABLE_WARNINGS namespace RMF {
   public:                                                                  \
     typedef Key<Ucname##Traits> K;                                         \
     typedef std::vector<K> Ks;                                             \
-  };                                                                       \
-  template <> class GenericSharedData<Ucname##Traits> {                    \
-  public:                                                                  \
-    typedef Key<Ucname##Traits> K;                                         \
-    typedef std::vector<K> Ks;                                             \
-    static Ks get_keys(SharedData* p, Category category) {                 \
-      return p->get_##lcname##_keys(category);                             \
-    }                                                                      \
-    static K get_key(SharedData* p, Category category, std::string name) { \
-      return p->get_##lcname##_key(category, name);                        \
-    }                                                                      \
+  };                                                                    \
+  template <> class GenericSharedData<Ucname##Traits> {                 \
+  public:                                                               \
+  typedef Key<Ucname##Traits> K;                                        \
+  typedef std::vector<K> Ks;                                            \
+  static Ks get_keys(boost::shared_ptr<SharedData> p, Category category) { \
+    return p->get_##lcname##_keys(category);                            \
+    }                                                                   \
+  static K get_key(boost::shared_ptr<SharedData> p, Category category,  \
+                   std::string name) {                                  \
+    return p->get_##lcname##_key(category, name);                       \
+  }                                                                     \
   };
 
   RMF_FOREACH_TYPE(RMF_GENERIC_SHARED);
@@ -221,7 +222,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
      @param create whether to create the file or just open it
      @exception IOException if couldn't create file or unsupported file format
    */
-  RMFEXPORT SharedData* create_shared_data(std::string path, bool create);
+  RMFEXPORT boost::shared_ptr<SharedData>
+  create_shared_data(std::string path, bool create);
 
   /**
      Construct shared data for the RMF file in 'path' in read only mode
@@ -232,26 +234,16 @@ RMF_ENABLE_WARNINGS namespace RMF {
      @exception RMF::IOException if couldn't open file or unsupported file
                 format
    */
-  RMFEXPORT SharedData* create_read_only_shared_data(std::string path);
+    RMFEXPORT boost::shared_ptr<SharedData>
+    create_read_only_shared_data(std::string path);
 
-  RMFEXPORT SharedData* create_shared_data_in_buffer(std::string& buffer,
+  RMFEXPORT boost::shared_ptr<SharedData>
+  create_shared_data_in_buffer(std::string& buffer,
                                                      bool create);
 
-  RMFEXPORT SharedData* create_read_only_shared_data_from_buffer(
+  RMFEXPORT boost::shared_ptr<SharedData>
+  create_read_only_shared_data_from_buffer(
       const std::string& buffer);
-
-  // needed for correctness imposed by clang as the functions must be visible
-  // by ADL (or declared before the usage which is almost impossible to achieve
-  // as we can't control whether boost intrusive_ptr.hpp is included before
-  // us or not
-  inline void intrusive_ptr_add_ref(SharedData* a) { (a)->add_ref(); }
-
-  inline void intrusive_ptr_release(SharedData* a) {
-    bool del = (a)->release();
-    if (del) {
-      delete a;
-    }
-  }
 
   }  // namespace internal
 }    /* namespace RMF */

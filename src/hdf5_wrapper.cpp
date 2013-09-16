@@ -18,25 +18,25 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
   void set_show_errors(bool tf) { show_errors = tf; }
 
-  Object::Object(SharedHandle* h) : h_(h) {}
+  Object::Object(boost::shared_ptr<SharedHandle> h) : h_(h) {}
 
   File Object::get_file() const {
     RMF_HDF5_NEW_HANDLE(h, H5Iget_file_id(get_handle()), &H5Fclose);
-    return File(h.get());
+    return File(h);
   }
 
-  Group::Group(SharedHandle* h) : P(h) {}
+  Group::Group(boost::shared_ptr<SharedHandle> h) : P(h) {}
 
-  ConstGroup::ConstGroup(SharedHandle* h) : P(h) {}
+  ConstGroup::ConstGroup(boost::shared_ptr<SharedHandle> h) : P(h) {}
 
   Group::Group(Group parent, std::string name)
-      : P(new SharedHandle(
+      : P(boost::make_shared<SharedHandle>(
             H5Gopen2(parent.get_handle(), name.c_str(), H5P_DEFAULT),
             &H5Gclose,
             name)) {}
 
   ConstGroup::ConstGroup(ConstGroup parent, std::string name)
-      : P(new SharedHandle(
+    : P(boost::make_shared<SharedHandle>(
             H5Gopen2(parent.get_handle(), name.c_str(), H5P_DEFAULT),
             &H5Gclose,
             name)) {}
@@ -91,13 +91,13 @@ RMF_ENABLE_WARNINGS namespace RMF {
     return info.type == H5O_TYPE_GROUP;  //H5O_TYPE_DATASET
   }
   ConstGroup ConstGroup::get_child_group(unsigned int i) const {
-    return ConstGroup(new SharedHandle(
+    return ConstGroup(boost::make_shared<SharedHandle>(
         H5Gopen2(get_handle(), get_child_name(i).c_str(), H5P_DEFAULT),
         &H5Gclose,
         "open group"));
   }
   Group Group::get_child_group(unsigned int i) const {
-    return Group(new SharedHandle(
+    return Group(boost::make_shared<SharedHandle>(
         H5Gopen2(get_handle(), get_child_name(i).c_str(), H5P_DEFAULT),
         &H5Gclose,
         "open group"));
@@ -142,7 +142,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
         h,
         H5Fcreate(name.c_str(), H5F_ACC_TRUNC, H5P_DEFAULT, plist),
         &H5Fclose);
-    return File(h.get());
+    return File(h);
   }
 
   File open_file(std::string name) {
@@ -151,7 +151,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     RMF_HDF5_HANDLE(plist, get_parameters(), H5Pclose);
     RMF_HDF5_NEW_HANDLE(
         h, H5Fopen(name.c_str(), H5F_ACC_RDWR, plist), &H5Fclose);
-    return File(h.get());
+    return File(h);
   }
 
   ConstFile open_file_read_only(std::string name) {
@@ -160,7 +160,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     RMF_HDF5_HANDLE(plist, get_parameters(), H5Pclose);
     RMF_HDF5_NEW_HANDLE(
         h, H5Fopen(name.c_str(), H5F_ACC_RDONLY, plist), &H5Fclose);
-    return ConstFile(h.get());
+    return ConstFile(h);
   }
 
   File open_file_read_only_returning_nonconst(std::string name) {
@@ -169,11 +169,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
     RMF_HDF5_HANDLE(plist, get_parameters(), H5Pclose);
     RMF_HDF5_NEW_HANDLE(
         h, H5Fopen(name.c_str(), H5F_ACC_RDONLY, plist), &H5Fclose);
-    return File(h.get());
+    return File(h);
   }
 
-  File::File(SharedHandle* h) : Group(h) {}
-  ConstFile::ConstFile(SharedHandle* h) : ConstGroup(h) {}
+  File::File(boost::shared_ptr<SharedHandle> h) : Group(h) {}
+  ConstFile::ConstFile(boost::shared_ptr<SharedHandle> h) : ConstGroup(h) {}
   ConstFile::ConstFile(File h) : ConstGroup(h.get_shared_handle()) {}
 
   void File::flush() { RMF_HDF5_CALL(H5Fflush(get_handle(), H5F_SCOPE_LOCAL)); }

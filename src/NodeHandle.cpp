@@ -16,7 +16,7 @@ RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(NodeHandle);
 
 namespace RMF {
 
-NodeHandle::NodeHandle(NodeID node, internal::SharedData* shared)
+NodeHandle::NodeHandle(NodeID node, boost::shared_ptr<internal::SharedData> shared)
     : NodeConstHandle(node, shared) {}
 
 NodeHandle NodeHandle::add_child(std::string name, NodeType t) {

@@ -11,13 +11,14 @@
 
 #include <RMF/config.h>
 #include "DataSetIndexD.h"
+#include <boost/shared_ptr.hpp>
 
 RMF_ENABLE_WARNINGS namespace RMF {
   namespace HDF5 {
 
   /** A class to manage properties controlling access to HDF5 data sets.*/
   template <class TypeTraits, unsigned int D> class DataSetAccessPropertiesD {
-    boost::intrusive_ptr<SharedHandle> h_;
+    boost::shared_ptr<SharedHandle> h_;
 
    protected:
     DataSetAccessPropertiesD(hid_t type)

@@ -157,9 +157,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }
 
   HDF5SharedData::~HDF5SharedData() {
-    add_ref();
     close_things();
-    release();
   }
 
   void HDF5SharedData::flush() {
@@ -175,7 +173,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
   void HDF5SharedData::check_node(NodeID node) const {
     RMF_USAGE_CHECK(
-                    node_names_.get_size()[0] > node.get_index(),
+                    static_cast<unsigned int>(node_names_.get_size()[0])
+                    > node.get_index(),
         internal::get_error_message("Invalid node specified: ", node));
   }
 
@@ -226,7 +225,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
   }
   std::string HDF5SharedData::get_name(NodeID node) const {
-    if (node.get_index() < get_number_of_real_nodes()) {
+    if (static_cast<unsigned int>(node.get_index()) < get_number_of_real_nodes()) {
       check_node(node);
       return node_names_.get_value(HDF5::DataSetIndexD<1>(node.get_index()));
     } else {
@@ -234,7 +233,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
   }
   NodeType HDF5SharedData::get_type(NodeID index) const {
-    if (index.get_index() < get_number_of_real_nodes()) {
+    if (static_cast<unsigned int>(index.get_index()) < get_number_of_real_nodes()) {
       check_node(index);
       return NodeType(node_data_[0].get_value(HDF5::DataSetIndexD<2>(index.get_index(), TYPE)));
     } else {

@@ -12,7 +12,6 @@
 #include <RMF/config.h>
 #include "infrastructure_macros.h"
 #include <RMF/exceptions.h>
-#include <RMF/internal/intrusive_ptr_object.h>
 #include <H5Ipublic.h>
 #include <algorithm>
 #include <vector>
@@ -78,29 +77,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
   };
 
   //! Share an HDF5 handle
-  /** This should be used with a boost intrusive_ptr. It is not available
-      in python.
-   */
-  class RMFEXPORT SharedHandle : public Handle,
-                                 public boost::intrusive_ptr_object {
+  class RMFEXPORT SharedHandle : public Handle {
    public:
     SharedHandle(hid_t h, HDF5CloseFunction f, std::string operation)
         : Handle(h, f, operation) {}
   };
-
-#ifndef RMF_DOXYGEN
-  // needed for correctness imposed by clang as the functions must be visible
-  // by ADL
-  inline void intrusive_ptr_add_ref(SharedHandle* a) { (a)->add_ref(); }
-
-  inline void intrusive_ptr_release(SharedHandle* a) {
-    bool del = (a)->release();
-    if (del) {
-      delete a;
-    }
-  }
-
-#endif
 
 #endif  // SWIG
 

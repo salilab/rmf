@@ -36,7 +36,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
 #ifndef SWIG
    protected:
-    Group(SharedHandle* h);
+    Group(boost::shared_ptr<SharedHandle> h);
 #endif
    public:
     Group() {}

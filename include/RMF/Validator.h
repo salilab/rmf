@@ -11,7 +11,8 @@
 
 #include <RMF/config.h>
 #include "FileHandle.h"
-#include <boost/intrusive_ptr.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 
 RMF_ENABLE_WARNINGS namespace RMF {
   /** Validators check invariants of the RMF hierarchy. Use the
@@ -50,7 +51,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   };
 
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
-  struct Creator : public boost::intrusive_ptr_object {
+  struct Creator {
     std::string name_;
     Creator(std::string name) : name_(name) {}
     virtual Validator* create(FileConstHandle rh) = 0;
@@ -61,23 +62,12 @@ RMF_ENABLE_WARNINGS namespace RMF {
     Validator* create(FileConstHandle rh) { return new V(rh, name_); }
   };
 
-  // needed for correctness imposed by clang as the functions must be visible
-  // by ADL
-  inline void intrusive_ptr_add_ref(Creator * a) { (a)->add_ref(); }
-
-  inline void intrusive_ptr_release(Creator * a) {
-    bool del = (a)->release();
-    if (del) {
-      delete a;
-    }
-  }
-
-  typedef std::vector<boost::intrusive_ptr<Creator> > Creators;
+  typedef std::vector<boost::shared_ptr<Creator> > Creators;
   RMFEXPORT Creators& get_validators();
 
   template <class V> struct Registrar {
     Registrar(std::string name) {
-      get_validators().push_back(new CreatorImpl<V>(name));
+      get_validators().push_back(boost::make_shared<CreatorImpl<V> >(name));
     }
   };
 #endif

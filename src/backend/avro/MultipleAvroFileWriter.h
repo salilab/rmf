@@ -84,7 +84,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
     RMF_avro_backend::Node& access_node(NodeID node) {
       nodes_dirty_ = true;
-      if (nodes_.size() <= node.get_index()) {
+      if (nodes_.size() <= static_cast<unsigned int>(node.get_index())) {
         nodes_.resize(node.get_index() + 1);
       }
       return nodes_[node.get_index()];

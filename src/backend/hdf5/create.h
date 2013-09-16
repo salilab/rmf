@@ -9,17 +9,18 @@
 #ifndef RMF_HDF5_CREATE_H
 #define RMF_HDF5_CREATE_H
 #include <RMF/config.h>
+#include <boost/shared_ptr.hpp>
 #include <string>
 
 RMF_ENABLE_WARNINGS namespace RMF {
   namespace internal { class SharedData; }
   namespace hdf5_backend {
-  RMFEXPORT internal::SharedData* create_shared_data(std::string path,
+  RMFEXPORT boost::shared_ptr<internal::SharedData> create_shared_data(std::string path,
                                                      bool create,
                                                      bool read_only);
-  RMFEXPORT internal::SharedData* create_shared_data_buffer(std::string& buffer,
+  RMFEXPORT boost::shared_ptr<internal::SharedData> create_shared_data_buffer(std::string& buffer,
                                                             bool create);
-  RMFEXPORT internal::SharedData* create_shared_data_buffer(
+  RMFEXPORT boost::shared_ptr<internal::SharedData> create_shared_data_buffer(
       const std::string& buffer);
   }  // namespace avro_backend
 }    /* namespace RMF */

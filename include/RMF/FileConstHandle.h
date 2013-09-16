@@ -15,7 +15,7 @@
 #include "NodeConstHandle.h"
 #include "FrameConstHandle.h"
 #include <boost/functional/hash.hpp>
-#include <boost/intrusive_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 
 RMF_ENABLE_WARNINGS
 
@@ -64,8 +64,7 @@ class RMFEXPORT FileConstHandle {
                   std::vector<std::string>& paths,
                   std::string path) const;
   friend class NodeConstHandle;
-  friend class internal::SharedData;
-  boost::intrusive_ptr<internal::SharedData> shared_;
+  boost::shared_ptr<internal::SharedData> shared_;
   int compare(const FileConstHandle& o) const {
     if (get_name() < o.get_name())
       return -1;
@@ -76,7 +75,7 @@ class RMFEXPORT FileConstHandle {
   }
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
  protected:
-  internal::SharedData* get_shared_data() const { return shared_.get(); }
+  boost::shared_ptr<internal::SharedData> get_shared_data() const { return shared_; }
 #endif
  public:
   RMF_COMPARISONS(FileConstHandle);
@@ -85,25 +84,25 @@ class RMFEXPORT FileConstHandle {
   //! Empty root handle, no open file.
   FileConstHandle() {}
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
-  FileConstHandle(internal::SharedData* shared_);
+  FileConstHandle(boost::shared_ptr<internal::SharedData> shared);
   FileConstHandle(std::string name);
 #endif
 
   //! Return the root of the hierarchy
   NodeConstHandle get_root_node() const {
-    return NodeConstHandle(NodeID(0), shared_.get());
+    return NodeConstHandle(NodeID(0), shared_);
   }
 
   //! Return the root of the hierarchy
   FrameConstHandle get_root_frame() const {
-    return FrameConstHandle(FrameID(-1), shared_.get());
+    return FrameConstHandle(FrameID(-1), shared_);
   }
 
   //! Return the ith frame
   FrameConstHandle get_frame(FrameID i) const {
     try {
       RMF_INDEX_CHECK(i.get_index(), get_number_of_frames());
-      return FrameConstHandle(FrameID(i), shared_.get());
+      return FrameConstHandle(FrameID(i), shared_);
     }
     RMF_FILE_CATCH( << Frame(i));
   }
@@ -125,7 +124,7 @@ class RMFEXPORT FileConstHandle {
   Key<TypeT> get_key(Category category, std::string name) const {
     try {
       return internal::GenericSharedData<TypeT>::get_key(
-          shared_.get(), category, name);
+          shared_, category, name);
     }
     RMF_FILE_CATCH( << Category(get_name(category)) << Key(name));
   }
@@ -151,7 +150,7 @@ class RMFEXPORT FileConstHandle {
     try {
       if (category == Category())
         return std::vector<Key<TypeT> >();
-      return internal::GenericSharedData<TypeT>::get_keys(shared_.get(),
+      return internal::GenericSharedData<TypeT>::get_keys(shared_,
                                                           category);
     }
     RMF_FILE_CATCH( << Category(get_name(category)));
@@ -166,7 +165,7 @@ class RMFEXPORT FileConstHandle {
       @{
    */
   FrameConstHandle get_current_frame() const {
-    return FrameConstHandle(shared_->get_current_frame(), shared_.get());
+    return FrameConstHandle(shared_->get_current_frame(), shared_);
   }
 #ifndef IMP_DOXYGEN
   void set_current_frame(FrameID frame) {
@@ -216,7 +215,7 @@ class RMFEXPORT FileConstHandle {
     if (!shared_->get_has_associated_node(d)) {
       return NodeConstHandle();
     } else {
-      return NodeConstHandle(shared_->get_associated_node(d), shared_.get());
+      return NodeConstHandle(shared_->get_associated_node(d), shared_);
     }
   }
 #else

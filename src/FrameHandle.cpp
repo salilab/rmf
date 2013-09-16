@@ -16,7 +16,7 @@ RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(FrameHandle);
 
 namespace RMF {
 
-FrameHandle::FrameHandle(FrameID frame, internal::SharedData* shared)
+FrameHandle::FrameHandle(FrameID frame, boost::shared_ptr<internal::SharedData> shared)
     : FrameConstHandle(frame, shared) {}
 
 FrameHandle FrameHandle::add_child(std::string name, FrameType t) {

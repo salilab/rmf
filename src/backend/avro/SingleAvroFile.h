@@ -77,7 +77,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
     RMF_avro_backend::Node& access_node(NodeID node) {
       dirty_ = true;
-      if (all_.nodes.size() <= node.get_index()) {
+      if (all_.nodes.size() <= static_cast<unsigned int>(node.get_index())) {
         all_.nodes.resize(node.get_index() + 1);
       }
       return all_.nodes[node.get_index()];
@@ -144,7 +144,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     FrameID add_child(FrameID node, std::string name, FrameType t) RMF_OVERRIDE;
     void add_child(FrameID node, FrameID child_node) RMF_OVERRIDE;
     FrameIDs get_children(FrameID node) const RMF_OVERRIDE;
-    std::string get_name(FrameID i) const RMF_OVERRIDE;
+    virtual std::string get_name(FrameID i) const RMF_OVERRIDE;
     FrameType get_type(FrameID i) const RMF_OVERRIDE;
     unsigned int get_number_of_frames() const;
   };

@@ -25,7 +25,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   class RMFEXPORT ConstFile : public ConstGroup {
    public:
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
-    ConstFile(SharedHandle* h);
+    ConstFile(boost::shared_ptr<SharedHandle> h);
 #endif
     ConstFile(File f);
     ConstFile() {}

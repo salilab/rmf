@@ -14,7 +14,7 @@
 #include "handle.h"
 #include "infrastructure_macros.h"
 #include <hdf5.h>
-#include <boost/intrusive_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 
 RMF_ENABLE_WARNINGS namespace RMF {
   namespace HDF5 {
@@ -26,14 +26,14 @@ RMF_ENABLE_WARNINGS namespace RMF {
       the HDF5 manual} for more information.
    */
   class RMFEXPORT Object {
-    boost::intrusive_ptr<SharedHandle> h_;
+    boost::shared_ptr<SharedHandle> h_;
 #ifndef SWIG
    protected:
-    Object(SharedHandle* h);
+    Object(boost::shared_ptr<SharedHandle> h);
     // silliness
     friend class Group;
-    SharedHandle* get_shared_handle() const { return h_.get(); }
-    void open(SharedHandle* h) { h_ = h; }
+    boost::shared_ptr<SharedHandle> get_shared_handle() const { return h_; }
+    void open(boost::shared_ptr<SharedHandle> h) { h_ = h; }
     Object() {}
 #else
    private:

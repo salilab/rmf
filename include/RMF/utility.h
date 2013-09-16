@@ -10,7 +10,6 @@
 #define RMF_UTILITY_H
 
 #include <RMF/config.h>
-#include "internal/intrusive_ptr_object.h"
 #include "internal/errors.h"
 #include "NodeConstHandle.h"
 
@@ -23,7 +22,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   class NodeConstHandle;
 
   /** \name Copy functions
-  
+
       \note These functions make use of the association field.
       @{
    */

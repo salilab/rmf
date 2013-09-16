@@ -48,7 +48,7 @@ class RMFEXPORT NodeHandle : public NodeConstHandle {
   friend class FileHandle;
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
  public:
-  NodeHandle(NodeID node, internal::SharedData* shared);
+  NodeHandle(NodeID node, boost::shared_ptr<internal::SharedData> shared);
 #endif
 
  public:

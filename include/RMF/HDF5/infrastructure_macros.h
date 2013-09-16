@@ -33,8 +33,8 @@ using RMF::operator<< ;
 
 /** Create new HDF5 SharedData.handle.*/
 #define RMF_HDF5_NEW_HANDLE(name, cmd, cleanup)        \
-  boost::intrusive_ptr<RMF::HDF5::SharedHandle> name = \
-      new RMF::HDF5::SharedHandle(cmd, cleanup, #cmd)
+  boost::shared_ptr<RMF::HDF5::SharedHandle> name = \
+    boost::make_shared<RMF::HDF5::SharedHandle>(cmd, cleanup, #cmd)
 
 #define RMF_HDF5_HANDLE(name, cmd, cleanup) \
   RMF::HDF5::Handle name(cmd, cleanup, #cmd)

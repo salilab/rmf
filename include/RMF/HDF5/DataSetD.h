@@ -37,9 +37,9 @@ RMF_ENABLE_WARNINGS namespace RMF {
     typedef DataSetCreationPropertiesD<TypeTraits, D> CreationProperties;
     typedef DataSetAccessPropertiesD<TypeTraits, D> AccessProperties;
 
-    DataSetD(SharedHandle* parent, std::string name, CreationProperties props)
+    DataSetD(boost::shared_ptr<SharedHandle> parent, std::string name, CreationProperties props)
         : P(parent, name, props) {}
-    DataSetD(SharedHandle* parent, std::string name, AccessProperties props)
+    DataSetD(boost::shared_ptr<SharedHandle> parent, std::string name, AccessProperties props)
         : P(parent, name, props) {}
 
    public:

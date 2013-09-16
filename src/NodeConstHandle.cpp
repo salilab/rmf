@@ -16,11 +16,11 @@ RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(NodeConstHandle);
 
 namespace RMF {
 
-NodeConstHandle::NodeConstHandle(NodeID node, internal::SharedData* shared)
+NodeConstHandle::NodeConstHandle(NodeID node, boost::shared_ptr<internal::SharedData> shared)
     : node_(node), shared_(shared) {}
 
 FileConstHandle NodeConstHandle::get_file() const {
-  return FileConstHandle(shared_.get());
+  return FileConstHandle(shared_);
 }
 
   std::string NodeConstHandle::get_file_name() const {
@@ -45,7 +45,7 @@ std::vector<NodeConstHandle> NodeConstHandle::get_children() const {
     NodeIDs children = shared_->get_children(node_);
     std::vector<NodeConstHandle> ret(children.size());
     for (unsigned int i = 0; i < ret.size(); ++i) {
-      ret[i] = NodeConstHandle(children[i], shared_.get());
+      ret[i] = NodeConstHandle(children[i], shared_);
     }
     return ret;
   }
