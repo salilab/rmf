@@ -150,11 +150,15 @@ chain= Decorator(["REPRESENTATION"], "sequence",
                  "Chain", "Information regarding a chain.",
                  [Attribute("chain id", "Index", "The one letter id for the chain (A is 0 etc).")])
 
-fragment= Decorator(["REPRESENTATION"], "sequence",
-                    "Domain", "Information regarding a fragment of a molecule.",
+domain= Decorator(["REPRESENTATION"], "sequence",
+                    "Domain", "Information regarding a domain of a molecule.",
                    [RangeAttribute("indexes", "Int", "first residue index",
                                    "last residue index",
                                    "The range for the residues, specified as [first_index...last_index].")])
+
+fragment= Decorator(["REPRESENTATION"], "sequence",
+                    "Fragment", "Information regarding a fragment of a molecule.",
+                   [Attribute("indexes", "Indexes", "A list of indexes in the fragment")])
 
 copy= Decorator(["REPRESENTATION"], "sequence",
                 "Copy", "Information regarding a copy of a molecule.",
@@ -165,7 +169,7 @@ typed= Decorator(["REPRESENTATION"], "sequence",
                  "Typed", "A numeric tag for keeping track of types of molecules.",
                   [Attribute("type name", "String", "An arbitrary tag representing the type.")])
 
-make_header("sequence", [residue, chain, fragment, typed, copy], [])
+make_header("sequence", [residue, chain, fragment, domain, typed, copy], [])
 
 
 
