@@ -164,7 +164,6 @@
       RMF_CLANG_PRAGMA(diagnostic warning "-Wctor-dtor-privacy")               \
       RMF_CLANG_PRAGMA(diagnostic warning "-Wcustom-atomic-properties")        \
       RMF_CLANG_PRAGMA(diagnostic warning "-Wdeclaration-after-statement")     \
-      RMF_CLANG_PRAGMA(diagnostic warning "-Wdefault-arg-special-member")      \
       RMF_CLANG_PRAGMA(diagnostic warning "-Wdelegating-ctor-cycles")          \
       RMF_CLANG_PRAGMA(diagnostic warning "-Wdelete-non-virtual-dtor")         \
       RMF_CLANG_PRAGMA(diagnostic warning "-Wdeprecated-declarations")         \
