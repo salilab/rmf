@@ -121,28 +121,33 @@ RMF_ENABLE_WARNINGS
     - the C++ type for returning the value
     - the C++ type for accepting more than one value
     - the C++ type for returning more than one value
- */
-#define RMF_FOREACH_TYPE(macroname)                                          \
-  RMF_FOREACH_SIMPLE_TYPE(macroname);                                        \
-  macroname(string, String, String, String, const Strings&, Strings);        \
-  macroname(                                                                 \
-      strings, Strings, Strings, Strings, const StringsList&, StringsList);  \
-  macroname(node_id, NodeID, NodeID, NodeID, const NodeIDs&, NodeIDs);       \
-  macroname(node_ids,                                                        \
-            NodeIDs,                                                         \
-            const NodeIDs&,                                                  \
-            NodeIDs,                                                         \
-            const NodeIDsList&,                                              \
-            NodeIDsList);                                                    \
-  macroname(                                                                 \
-      floats, Floats, const Floats&, Floats, const FloatsList&, FloatsList); \
-  macroname(ints, Ints, const Ints&, Ints, const IntsList&, IntsList);       \
-  macroname(indexes,                                                         \
-            Indexes,                                                         \
-            const Indexes&,                                                  \
-            Indexes,                                                         \
-            const IndexesList&,                                              \
-            IndexesList);
+*/
+#define RMF_FOREACH_TYPE(macroname)                                     \
+  RMF_FOREACH_SIMPLE_TYPE(macroname);                                   \
+  macroname(string, String, RMF::String, RMF::String,                   \
+            const RMF::Strings&, RMF::Strings);                         \
+  macroname(                                                            \
+            strings, Strings, const RMF::Strings&,                      \
+            RMF::Strings, const RMF::StringsList&, RMF:::StringsList);  \
+  macroname(node_id, NodeID, RMF::NodeID, RMF::NodeID,                  \
+            const RMF::NodeIDs&, RMF::NodeIDs);                         \
+  macroname(node_ids,                                                   \
+            NodeIDs,                                                    \
+            const RMF::NodeIDs&,                                        \
+            RMF::NodeIDs,                                               \
+            const RMF::NodeIDsList&,                                    \
+            RMF::NodeIDsList);                                          \
+  macroname(                                                            \
+            floats, Floats, const RMF::Floats&, RMF::Floats,            \
+            const RMF::FloatsList&, RMF::FloatsList);                   \
+  macroname(ints, Ints, const RMF::Ints&, RMF::Ints,                    \
+            const RMF::IntsList&, RMF::IntsList);                       \
+  macroname(indexes,                                                    \
+            Indexes,                                                    \
+            const RMF::Indexes&,                                        \
+            RMF::Indexes,                                               \
+            const RMF::IndexesList&,                                    \
+            RMF::IndexesList);
 #else
 #define RMF_FOREACH_TYPE(macroname) \
   macroname(type, Type, Type, Types, const Types&, Types);
