@@ -6,4 +6,4 @@
  *
  */
 
-#include <RMF/NodeID.h>
+#include <RMF/ID.h>

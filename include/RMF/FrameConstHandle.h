@@ -12,7 +12,7 @@
 #include <RMF/config.h>
 #include "internal/SharedData.h"
 #include "types.h"
-#include "FrameID.h"
+#include "ID.h"
 #include "enums.h"
 #include "constants.h"
 #include <boost/shared_ptr.hpp>

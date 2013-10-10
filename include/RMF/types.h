@@ -10,7 +10,7 @@
 #define RMF_TYPES_H
 
 #include <RMF/config.h>
-#include "NodeID.h"
+#include "ID.h"
 #include "infrastructure_macros.h"
 #include "internal/errors.h"
 #include <RMF/HDF5/types.h>

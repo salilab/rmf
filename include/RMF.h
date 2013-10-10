@@ -6,11 +6,10 @@
 #include <RMF/FileHandle.h>
 #include <RMF/FrameConstHandle.h>
 #include <RMF/FrameHandle.h>
-#include <RMF/FrameID.h>
+#include <RMF/ID.h>
 #include <RMF/Key.h>
 #include <RMF/NodeConstHandle.h>
 #include <RMF/NodeHandle.h>
-#include <RMF/NodeID.h>
 #include <RMF/SetCurrentFrame.h>
 #include <RMF/Validator.h>
 #include <RMF/compiler_macros.h>

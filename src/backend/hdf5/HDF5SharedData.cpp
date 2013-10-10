@@ -17,8 +17,8 @@
 RMF_ENABLE_WARNINGS namespace RMF {
   namespace hdf5_backend {
 
-#define RMF_CLOSE(                                                    \
-    lcname, Ucname, PassValue, ReturnValue, PassValues, ReturnValues) \
+#define RMF_CLOSE(lcname, Ucname, PassValue, ReturnValue, PassValues, \
+                  ReturnValues)                                       \
   lcname##_data_sets_ = DataDataSetCache2D<Ucname##Traits>();         \
   per_frame_##lcname##_data_sets_ = DataDataSetCache3D<Ucname##Traits>()
 
@@ -46,15 +46,15 @@ RMF_ENABLE_WARNINGS namespace RMF {
       {
         HDF5::DataSetCreationPropertiesD<HDF5::StringTraits, 1> props;
         props.set_compression(HDF5::GZIP_COMPRESSION);
-        (file_.add_child_data_set<HDF5::StringTraits, 1>)(
-            get_node_name_data_set_name(), props);
+        (file_.add_child_data_set<HDF5::StringTraits,
+                                  1>)(get_node_name_data_set_name(), props);
       }
       {
         HDF5::DataSetCreationPropertiesD<HDF5::IndexTraits, 2> props;
         props.set_compression(HDF5::GZIP_COMPRESSION);
         props.set_chunk_size(RMF::HDF5::DataSetIndexD<2>(128, 4));
-        (file_.add_child_data_set<HDF5::IndexTraits, 2>)(
-            get_node_data_data_set_name(), props);
+        (file_.add_child_data_set<HDF5::IndexTraits,
+                                  2>)(get_node_data_data_set_name(), props);
       }
     } else {
       if (read_only) {
@@ -66,12 +66,9 @@ RMF_ENABLE_WARNINGS namespace RMF {
       std::string version;
       version = file_.get_attribute<HDF5::CharTraits>("version");
       RMF_USAGE_CHECK(version == "rmf 1",
-                      internal::get_error_message("Unsupported rmf version ",
-                                                  "string found: \"",
-                                                  version,
-                                                  "\" expected \"",
-                                                  "rmf 1",
-                                                  "\""));
+                      internal::get_error_message(
+                          "Unsupported rmf version ", "string found: \"",
+                          version, "\" expected \"", "rmf 1", "\""));
     }
     node_names_.set(file_, get_node_name_data_set_name());
     node_data_[0].set(file_, get_node_data_data_set_name());
@@ -82,36 +79,36 @@ RMF_ENABLE_WARNINGS namespace RMF {
     frame_names_.set(file_, frn);
   }
 
-#define RMF_LIST_KEYS(                                                  \
-    lcname, Ucname, PassValue, ReturnValue, PassValues, ReturnValues)   \
-  RMF_TRACE(get_logger(), "Checking for " << #lcname << " keys.");      \
-  for (int pf = 0; pf < 2; ++pf) {                                      \
-    bool per_frame = (pf == 1);                                         \
-    HDF5DataSetCacheD<StringTraits, 1>& nameds =                        \
-        get_key_list_data_set<Ucname##Traits>(cats[i], per_frame);      \
-    HDF5::DataSetIndexD<1> sz = nameds.get_size();                      \
-    for (unsigned int j = 0; j < sz[0]; ++j) {                          \
-      std::string name = nameds.get_value(HDF5::DataSetIndexD<1>(j));   \
-      int id;                                                           \
-      NameKeyInnerMap::iterator it = name_key_map_[cats[i]].find(name); \
-      if (it == name_key_map_[cats[i]].end()) {                         \
-        id = key_data_map_.size();                                      \
-        name_key_map_[cats[i]][name] = id;                              \
-        key_data_map_[id].name = name;                                  \
-        key_data_map_[id].type_index =                                  \
-            Ucname##Traits::HDF5Traits::get_index();                    \
-        key_data_map_[id].per_frame_index = -1;                         \
-        key_data_map_[id].static_index = -1;                            \
-        key_data_map_[id].category = cats[i];                           \
-      } else {                                                          \
-        id = it->second;                                                \
-      }                                                                 \
-      if (per_frame) {                                                  \
-        key_data_map_[id].per_frame_index = j;                          \
-      } else {                                                          \
-        key_data_map_[id].static_index = j;                             \
-      }                                                                 \
-    }                                                                   \
+#define RMF_LIST_KEYS(lcname, Ucname, PassValue, ReturnValue, PassValues, \
+                      ReturnValues)                                       \
+  RMF_TRACE(get_logger(), "Checking for " << #lcname << " keys.");        \
+  for (int pf = 0; pf < 2; ++pf) {                                        \
+    bool per_frame = (pf == 1);                                           \
+    HDF5DataSetCacheD<StringTraits, 1>& nameds =                          \
+        get_key_list_data_set<Ucname##Traits>(cats[i], per_frame);        \
+    HDF5::DataSetIndexD<1> sz = nameds.get_size();                        \
+    for (unsigned int j = 0; j < sz[0]; ++j) {                            \
+      std::string name = nameds.get_value(HDF5::DataSetIndexD<1>(j));     \
+      int id;                                                             \
+      NameKeyInnerMap::iterator it = name_key_map_[cats[i]].find(name);   \
+      if (it == name_key_map_[cats[i]].end()) {                           \
+        id = key_data_map_.size();                                        \
+        name_key_map_[cats[i]][name] = id;                                \
+        key_data_map_[id].name = name;                                    \
+        key_data_map_[id].type_index =                                    \
+            Ucname##Traits::HDF5Traits::get_index();                      \
+        key_data_map_[id].per_frame_index = -1;                           \
+        key_data_map_[id].static_index = -1;                              \
+        key_data_map_[id].category = cats[i];                             \
+      } else {                                                            \
+        id = it->second;                                                  \
+      }                                                                   \
+      if (per_frame) {                                                    \
+        key_data_map_[id].per_frame_index = j;                            \
+      } else {                                                            \
+        key_data_map_[id].static_index = j;                               \
+      }                                                                   \
+    }                                                                     \
   }
 
   void HDF5SharedData::initialize_keys(int) {
@@ -152,17 +149,16 @@ RMF_ENABLE_WARNINGS namespace RMF {
     if (create) {
       add_node("root", ROOT);
     } else {
-      RMF_USAGE_CHECK(get_name(NodeID(0)) == "root", "Root node is not so named");
+      RMF_USAGE_CHECK(get_name(NodeID(0)) == "root",
+                      "Root node is not so named");
     }
   }
 
-  HDF5SharedData::~HDF5SharedData() {
-    close_things();
-  }
+  HDF5SharedData::~HDF5SharedData() { close_things(); }
 
   void HDF5SharedData::flush() {
     RMF_HDF5_CALL(H5Fflush(file_.get_handle(), H5F_SCOPE_GLOBAL));
-    //SharedData::validate();
+    // SharedData::validate();
     node_names_.flush();
     frame_names_.flush();
     category_names_.flush();
@@ -173,8 +169,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
   void HDF5SharedData::check_node(NodeID node) const {
     RMF_USAGE_CHECK(
-                    static_cast<unsigned int>(node_names_.get_size()[0])
-                    > node.get_index(),
+        node_names_.get_size()[0] > node.get_index(),
         internal::get_error_message("Invalid node specified: ", node));
   }
 
@@ -195,7 +190,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
     audit_node_name(name);
     node_names_.set_value(HDF5::DataSetIndexD<1>(ret.get_index()), name);
-    node_data_[0].set_value(HDF5::DataSetIndexD<2>(ret.get_index(), TYPE), type);
+    node_data_[0]
+        .set_value(HDF5::DataSetIndexD<2>(ret.get_index(), TYPE), type);
     node_data_[0].set_value(HDF5::DataSetIndexD<2>(ret.get_index(), CHILD),
                             IndexTraits::get_null_value());
     node_data_[0].set_value(HDF5::DataSetIndexD<2>(ret.get_index(), SIBLING),
@@ -204,28 +200,32 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }
   NodeID HDF5SharedData::get_first_child(NodeID node) const {
     check_node(node);
-    return NodeID(node_data_[0].get_value(HDF5::DataSetIndexD<2>(node.get_index(), CHILD)));
+    return NodeID(node_data_[0].get_value(
+        HDF5::DataSetIndexD<2>(node.get_index(), CHILD)));
   }
   NodeID HDF5SharedData::get_sibling(NodeID node) const {
     check_node(node);
-    return NodeID(node_data_[0].get_value(HDF5::DataSetIndexD<2>(node.get_index(), SIBLING)));
+    return NodeID(node_data_[0].get_value(
+        HDF5::DataSetIndexD<2>(node.get_index(), SIBLING)));
   }
   void HDF5SharedData::set_first_child(NodeID node, NodeID c) {
     check_node(node);
-    return node_data_[0].set_value(HDF5::DataSetIndexD<2>(node.get_index(), CHILD), c.get_index());
+    return node_data_[0].set_value(
+        HDF5::DataSetIndexD<2>(node.get_index(), CHILD), c.get_index());
   }
   void HDF5SharedData::set_sibling(NodeID node, NodeID c) {
     check_node(node);
     if (c == NodeID()) {
-      node_data_[0].set_value(HDF5::DataSetIndexD<2>(node.get_index(), SIBLING),
-                              -1);
+      node_data_[0]
+          .set_value(HDF5::DataSetIndexD<2>(node.get_index(), SIBLING), -1);
     } else {
       node_data_[0].set_value(HDF5::DataSetIndexD<2>(node.get_index(), SIBLING),
                               c.get_index());
     }
   }
   std::string HDF5SharedData::get_name(NodeID node) const {
-    if (static_cast<unsigned int>(node.get_index()) < get_number_of_real_nodes()) {
+    if (static_cast<unsigned int>(node.get_index()) <
+        get_number_of_real_nodes()) {
       check_node(node);
       return node_names_.get_value(HDF5::DataSetIndexD<1>(node.get_index()));
     } else {
@@ -233,9 +233,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
   }
   NodeType HDF5SharedData::get_type(NodeID index) const {
-    if (static_cast<unsigned int>(index.get_index()) < get_number_of_real_nodes()) {
+    if (static_cast<unsigned int>(index.get_index()) <
+        get_number_of_real_nodes()) {
       check_node(index);
-      return NodeType(node_data_[0].get_value(HDF5::DataSetIndexD<2>(index.get_index(), TYPE)));
+      return NodeType(node_data_[0].get_value(
+          HDF5::DataSetIndexD<2>(index.get_index(), TYPE)));
     } else {
       return BOND;
     }
@@ -286,8 +288,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
       return ret;
     } else {
       NodeIDs ret(2);
-      ret[0] = get_set_member(2, node.get_index() - get_number_of_real_nodes(), 0);
-      ret[1] = get_set_member(2, node.get_index() - get_number_of_real_nodes(), 1);
+      ret[0] =
+          get_set_member(2, node.get_index() - get_number_of_real_nodes(), 0);
+      ret[1] =
+          get_set_member(2, node.get_index() - get_number_of_real_nodes(), 1);
       return ret;
     }
   }
@@ -301,11 +305,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
     return ct;
   }
-  NodeID HDF5SharedData::get_set_member(int arity,
-                                              unsigned int index,
-                                              int member_index) const {
-    return NodeID(node_data_[arity - 1]
-                  .get_value(HDF5::DataSetIndexD<2>(index, member_index + 1)));
+  NodeID HDF5SharedData::get_set_member(int arity, unsigned int index,
+                                        int member_index) const {
+    return NodeID(node_data_[arity - 1].get_value(
+        HDF5::DataSetIndexD<2>(index, member_index + 1)));
   }
   unsigned int HDF5SharedData::add_category_impl(std::string name) {
     // fill in later
@@ -318,8 +321,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   Categories HDF5SharedData::get_categories() const {
     Categories ret;
     for (CategoryDataMap::const_iterator it = category_data_map_.begin();
-         it != category_data_map_.end();
-         ++it) {
+         it != category_data_map_.end(); ++it) {
       ret.push_back(it->first);
     }
     return ret;
@@ -338,12 +340,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
   }
 
-#define RMF_SEARCH_KEYS(                                                       \
-    lcname, Ucname, PassValue, ReturnValue, PassValues, ReturnValues)          \
+#define RMF_SEARCH_KEYS(lcname, Ucname, PassValue, ReturnValue, PassValues,    \
+                        ReturnValues)                                          \
   {                                                                            \
     int category_index = get_category_index(cats[i]);                          \
-    if (category_index == -1)                                                  \
-      continue;                                                                \
+    if (category_index == -1) continue;                                        \
     ret = std::max<int>(ret,                                                   \
                         get_number_of_frames<Ucname##Traits>(category_index)); \
   }
@@ -404,8 +405,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
     open_things(false, read_only_);
   }
 
-#define RMF_HDF5_SET_FRAME(                                           \
-    lcname, Ucname, PassValue, ReturnValue, PassValues, ReturnValues) \
+#define RMF_HDF5_SET_FRAME(lcname, Ucname, PassValue, ReturnValue, PassValues, \
+                           ReturnValues)                                       \
   per_frame_##lcname##_data_sets_.set_current_frame(frame);
 
   void HDF5SharedData::set_current_frame(FrameID frame) {
@@ -416,6 +417,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
   }
   }  // namespace hdf5_backend
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

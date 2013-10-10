@@ -12,7 +12,7 @@
 #include <RMF/config.h>
 #include "internal/SharedData.h"
 #include "types.h"
-#include "FrameID.h"
+#include "ID.h"
 #include "FrameConstHandle.h"
 
 RMF_ENABLE_WARNINGS

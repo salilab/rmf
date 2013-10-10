@@ -6,7 +6,7 @@
  *
  */
 
-#include <RMF/FrameID.h>
+#include <RMF/ID.h>
 
 RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(FrameID);
 

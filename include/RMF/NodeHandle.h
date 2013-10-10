@@ -12,7 +12,7 @@
 #include <RMF/config.h>
 #include "internal/SharedData.h"
 #include "types.h"
-#include "NodeID.h"
+#include "ID.h"
 #include "NodeConstHandle.h"
 
 RMF_ENABLE_WARNINGS

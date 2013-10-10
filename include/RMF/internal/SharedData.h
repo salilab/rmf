@@ -14,8 +14,8 @@
 #include "../types.h"
 #include "../names.h"
 #include "../enums.h"
-#include "../NodeID.h"
-#include "../FrameID.h"
+#include "../ID.h"
+#include "../ID.h"
 #include "../infrastructure_macros.h"
 #include <boost/unordered_map.hpp>
 #include <boost/unordered_set.hpp>
