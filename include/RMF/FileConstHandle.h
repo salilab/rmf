@@ -13,18 +13,17 @@
 #include "internal/SharedData.h"
 #include "Key.h"
 #include "NodeConstHandle.h"
-#include "FrameConstHandle.h"
 #include <boost/functional/hash.hpp>
 #include <boost/shared_ptr.hpp>
 
 RMF_ENABLE_WARNINGS
 
-#define RMF_FILE_CATCH(extra_info)                                          \
-  catch (Exception & e) {                                                   \
-    RMF_RETHROW(                                                            \
-        File(get_path()) << Frame(get_current_frame().get_id()) \
-                         << Operation(BOOST_CURRENT_FUNCTION) extra_info,   \
-        e);                                                                 \
+#define RMF_FILE_CATCH(extra_info)                                        \
+  catch (Exception& e) {                                                  \
+    RMF_RETHROW(                                                          \
+        File(get_path()) << Frame(get_current_frame())                    \
+                         << Operation(BOOST_CURRENT_FUNCTION) extra_info, \
+        e);                                                               \
   }
 
 #define RMF_HDF5_ROOT_CONST_KEY_TYPE_METHODS(                                  \
@@ -93,20 +92,6 @@ class RMFEXPORT FileConstHandle {
     return NodeConstHandle(NodeID(0), shared_);
   }
 
-  //! Return the root of the hierarchy
-  FrameConstHandle get_root_frame() const {
-    return FrameConstHandle(FrameID(-1), shared_);
-  }
-
-  //! Return the ith frame
-  FrameConstHandle get_frame(FrameID i) const {
-    try {
-      RMF_INDEX_CHECK(i.get_index(), get_number_of_frames());
-      return FrameConstHandle(FrameID(i), shared_);
-    }
-    RMF_FILE_CATCH( << Frame(i));
-  }
-
   std::string get_name() const { return shared_->get_file_name(); }
 
   std::string get_path() const { return shared_->get_file_path(); }
@@ -164,17 +149,28 @@ class RMFEXPORT FileConstHandle {
 
       @{
    */
-  FrameConstHandle get_current_frame() const {
-    return FrameConstHandle(shared_->get_current_frame(), shared_);
+  FrameID get_current_frame() const {
+    return shared_->get_current_frame();
   }
-#ifndef IMP_DOXYGEN
+  FrameType get_current_frame_type() const {
+    return shared_->get_type(get_current_frame());
+  }
+  std::string get_current_frame_name() const {
+    return shared_->get_name(get_current_frame());
+  }
   void set_current_frame(FrameID frame) {
     try {
       shared_->set_current_frame(frame);
     }
     RMF_FILE_CATCH( << Frame(frame));
   }
-#endif
+  /** Add a frame and make it the current frame. It is a child of the
+      current frame. */
+  FrameID add_frame(std::string name, FrameType t) {
+    FrameID ret = shared_->add_child(get_current_frame(), name, t);
+    set_current_frame(ret);
+    return ret;
+  }
   /* @} */
 
   /** Return the number of frames in the file. Currently, this is the number

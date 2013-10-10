@@ -27,7 +27,7 @@ FileConstHandle NodeConstHandle::get_file() const {
     return get_file().get_name();
   }
   FrameID NodeConstHandle::get_current_frame_id() const {
-    return get_file().get_current_frame().get_frame_id();
+    return get_file().get_current_frame();
   }
 
 #define RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DEF(                      \

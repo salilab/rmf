@@ -16,7 +16,7 @@ class Tests(unittest.TestCase):
             print r.get_type()
             sc= f.get_category("sequence")
             ik= f.get_int_key(sc, "ik0")
-            f.get_root_frame().add_child("0", RMF.FRAME)
+            f.add_frame("0", RMF.FRAME)
             r.set_value(ik, 1)
             del r
             del f
@@ -35,7 +35,7 @@ class Tests(unittest.TestCase):
             print r.get_type()
             sc= f.get_category("sequence")
             ik= f.get_int_key(sc, "ik0")
-            f.get_root_frame().add_child("0", RMF.FRAME)
+            f.add_frame("0", RMF.FRAME)
             r.set_value(ik, 1)
             del f
             del r

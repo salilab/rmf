@@ -10,7 +10,7 @@ class GenericTest(unittest.TestCase):
         key = f.get_int_key(cat, "key")
         n = f.get_root_node().add_child("node", RMF.REPRESENTATION)
         n.set_value(key, 1)
-        f.get_current_frame().add_child("next", RMF.FRAME)
+        f.add_frame("next", RMF.FRAME)
         print dir(f)
         print f.get_keys(cat)
         for fr in f.get_frame_ids():

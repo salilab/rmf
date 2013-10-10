@@ -10,6 +10,9 @@
 #define RMF_ENUMS_H
 
 #include <RMF/config.h>
+#include <string>
+#include <iostream>
+
 RMF_ENABLE_WARNINGS
 
 namespace RMF {

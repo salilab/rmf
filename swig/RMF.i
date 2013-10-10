@@ -111,10 +111,8 @@ RMF_SWIG_NATIVE_VALUE(std::string);
 
 RMF_SWIG_GRAPH(RMF, NodeTree, NodeTree, RMF::NodeHandle);
 RMF_SWIG_VALUE(RMF, NodeConstHandle, NodeConstHandles);
-RMF_SWIG_VALUE(RMF, FrameConstHandle, FrameConstHandles);
 RMF_SWIG_VALUE(RMF, FileConstHandle, FileConstHandles);
 RMF_SWIG_VALUE(RMF, NodeHandle, NodeHandles);
-RMF_SWIG_VALUE(RMF, FrameHandle, FrameHandles);
 RMF_SWIG_VALUE(RMF, FileHandle, FileHandles);
 RMF_SWIG_VALUE(RMF, SetCurrentFrame, SetCurrentFrames);
 RMF_SWIG_VALUE(RMF, Category, Categories);
@@ -171,9 +169,7 @@ RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DEFINE_TYPE);
 %include "RMF/names.h"
 %include "RMF/enums.h"
 %include "RMF/NodeConstHandle.h"
-%include "RMF/FrameConstHandle.h"
 %include "RMF/NodeHandle.h"
-%include "RMF/FrameHandle.h"
 %include "RMF/FileConstHandle.h"
 %include "RMF/FileHandle.h"
 %include "RMF/Validator.h"

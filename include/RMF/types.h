@@ -129,8 +129,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
   struct NodeIDTraits {
     typedef NodeID Type;
     typedef NodeIDs Types;
-    static bool get_is_null_value(const Type& t) { return t == Type(); }
-    static NodeID get_null_value() { return NodeID(); }
+    static bool get_is_null_value(const Type& t) { return t == Type(-1); }
+    static NodeID get_null_value() { return NodeID(-1); }
 #ifndef SWIG
     struct HDF5Traits : public HDF5::IndexTraits {
       static int get_index() { return 4; }

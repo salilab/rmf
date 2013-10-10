@@ -14,14 +14,15 @@ class GenericTest(unittest.TestCase):
         f= RMF.open_rmf_file_read_only(nm)
         of= RMF.create_rmf_file(onm)
         RMF.copy_structure(f, of)
-        fr= of.get_root_frame()
-        for i in range(-1, last_frame+1):
+        f.set_current_frame(RMF.ALL_FRAMES)
+        of.set_current_frame(RMF.ALL_FRAMES)
+        RMF.copy_frame(f, of)
+        for i in range(0, last_frame+1):
             f.set_current_frame(RMF.FrameID(i))
-            print fr.get_id(), f.get_current_frame().get_id()
+            of.add_frame(f.get_current_frame_name(),
+                        f.get_current_frame_type())
             RMF.copy_frame(f, of)
-            fr= fr.add_child(str(i), RMF.FRAME)
         print "deling"
-        del fr
         del of
         print "reopening"
         of= RMF.open_rmf_file_read_only(onm)
@@ -35,6 +36,7 @@ class GenericTest(unittest.TestCase):
                 self.assert_(RMF.get_equal_frame(f, of, True))
     def test_perturbed(self):
         """Test copying an rmf file"""
+        RMF.HDF5.set_show_errors(True)
         for suffix in RMF.suffixes:
             print suffix
             self._copy_to(-1, suffix)

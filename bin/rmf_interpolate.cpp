@@ -136,8 +136,7 @@ void interpolate_frames(int num,
   boost::variate_generator<boost::mt19937&, boost::normal_distribution<> >
   angle_normal_random(rng, a_nd);
   for (int i = 0; i < num; ++i) {
-    output_file.get_current_frame().add_child("interpolated", RMF::FRAME)
-        .set_as_current_frame();
+    output_file.add_frame("interpolated", RMF::FRAME);
     double frac = static_cast<double>(i + 1) / static_cast<double>(num + 1);
     std::cout << "fraction is " << frac << " at "
               << output_file.get_current_frame() << " from "
@@ -197,8 +196,7 @@ int main(int argc, char** argv) {
     for (unsigned int j = 0; j < irh0.get_number_of_frames(); ++j) {
       std::cout << "Processing frame " << j << std::endl;
       irh0.set_current_frame(RMF::FrameID(j));
-      orh.get_current_frame().add_child(irh0.get_current_frame().get_name(),
-                                        RMF::FRAME).set_as_current_frame();
+      orh.add_frame(irh0.get_current_frame_name(), RMF::FRAME);
       RMF::copy_frame(irh0, orh);
       if (j + 1 < irh0.get_number_of_frames()) {
         irh1.set_current_frame(RMF::FrameID(j + 1));

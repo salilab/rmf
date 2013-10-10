@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
     RMF::FileConstHandle rh = RMF::open_rmf_file_read_only(input);
     for (unsigned int i = 0; i < rh.get_number_of_frames(); ++i) {
       rh.set_current_frame(RMF::FrameID(i));
-      std::string cmt = rh.get_current_frame().get_name();
+      std::string cmt = rh.get_current_frame_name();
       if (!cmt.empty()) {
         std::cout << i << ": " << cmt << std::endl;
       }

@@ -22,14 +22,14 @@ RMF_ENABLE_WARNINGS namespace RMF {
       between.
    */
   class RMFEXPORT SetCurrentFrame {
-    FrameConstHandle old_frame_;
+    FileConstHandle file_;
+    FrameID old_frame_;
 
    public:
     /** If current_frame is passed -2 (the default), the frame is not set
         on creation and only restored on destruction).
      */
-    SetCurrentFrame(FileConstHandle file, FrameID current_frame = FrameID());
-    SetCurrentFrame(FrameConstHandle frame);
+    SetCurrentFrame(FileConstHandle file, FrameID current_frame);
     ~SetCurrentFrame();
     RMF_SHOWABLE(SetCurrentFrame, "To: " << old_frame_);
   };

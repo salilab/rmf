@@ -11,16 +11,18 @@
 #include <cstdlib>
 #include <fstream>
 
-RMF_ENABLE_WARNINGS namespace RMF {
-  namespace internal {
-  extern std::string rmf_data_path;
-  extern std::string rmf_example_path;
-  }
+RMF_ENABLE_WARNINGS
 
-  std::string get_as_node_name(std::string in) {
-    boost::erase_all(in, "\"");
-    return in;
-  }
+namespace RMF {
+namespace internal {
+extern std::string rmf_data_path;
+extern std::string rmf_example_path;
+}
+
+std::string get_as_node_name(std::string in) {
+  boost::erase_all(in, "\"");
+  return in;
+}
 } /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

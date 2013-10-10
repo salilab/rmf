@@ -79,7 +79,7 @@ void add_coordinates(RMF::NodeHandle nh, RMF::ParticleFactory pf) {
 }
 
 void add_frame(RMF::FileHandle fh) {
-  RMF::FrameHandle fr = fh.get_current_frame().add_child("frame", RMF::FRAME);
+  fh.add_frame("frame", RMF::FRAME);
   RMF::ParticleFactory pf(fh);
   add_coordinates(fh.get_root_node(), pf);
 }

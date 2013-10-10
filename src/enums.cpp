@@ -6,36 +6,14 @@
  *
  */
 
-#include <RMF/FrameConstHandle.h>
-#include <boost/tuple/tuple.hpp>
-#include <RMF/Category.h>
-#include <RMF/FileHandle.h>
-#include <RMF/decorators.h>
+#include <RMF/enums.h>
+#include <boost/algorithm/string.hpp>
+#include <cstdlib>
+#include <fstream>
 
-RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(FrameConstHandle);
+RMF_ENABLE_WARNINGS
 
 namespace RMF {
-
-FrameConstHandle::FrameConstHandle(FrameID frame,
-                                   boost::shared_ptr<internal::SharedData> shared)
-    : frame_(frame), shared_(shared) {}
-
-FileConstHandle FrameConstHandle::get_file() const {
-  return FileConstHandle(shared_);
-}
-
-FrameConstHandles FrameConstHandle::get_children() const {
-  FrameIDs children = shared_->get_children(frame_);
-  FrameConstHandles ret(children.size());
-  for (unsigned int i = 0; i < ret.size(); ++i) {
-    ret[i] = FrameConstHandle(children[i], shared_);
-  }
-  return ret;
-}
-
-void FrameConstHandle::set_as_current_frame() {
-  get_file().set_current_frame(frame_);
-}
 
 std::string get_frame_type_name(FrameType t) {
   switch (t) {
@@ -70,6 +48,7 @@ std::istream& operator>>(std::istream& in, FrameType& t) {
   t = FRAME;
   return in;
 }
+
 } /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

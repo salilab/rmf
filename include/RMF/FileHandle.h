@@ -14,7 +14,6 @@
 #include "Key.h"
 #include "FileConstHandle.h"
 #include "NodeHandle.h"
-#include "FrameHandle.h"
 
 RMF_ENABLE_WARNINGS RMF_VECTOR_DECL(FileHandle);
 
@@ -48,22 +47,6 @@ class RMFEXPORT FileHandle : public FileConstHandle {
   NodeHandle get_root_node() const {
     return NodeHandle(NodeID(0),
                       get_shared_data());
-  }
-
-  //! Return the root of the frame hierarchy
-  FrameHandle get_root_frame() const {
-    return FrameHandle(FrameID(-1), get_shared_data());
-  }
-
-  //! Return the ith frame
-  FrameHandle get_frame(unsigned int i) const {
-    RMF_USAGE_CHECK(i < get_number_of_frames(), "Out of range frame");
-    return FrameHandle(FrameID(i), get_shared_data());
-  }
-
-  FrameHandle get_current_frame() const {
-    return FrameHandle(get_shared_data()->get_current_frame(),
-                       get_shared_data());
   }
 
 #ifndef SWIG
