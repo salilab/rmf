@@ -1,6 +1,6 @@
 
 %{
-#define IMP_RMF_SWIG_CPP_WARNING(string) IMP_WARN_PREPROCESS(string)
+#define RMF_SWIG_CPP_WARNING(string) WARN_PREPROCESS(string)
   %}
 
 /*%pythonprepend Namespace::Name::~Name %{
@@ -40,8 +40,8 @@
   $result = PyInt_FromLong(static_cast<long>($1));
 }
 
-/* Add additional IMP_CONTAINER methods for scripting languages */
-%define IMP_RMF_SWIG_CONTAINER(Namespace, ContainedNamespace, type, Ucname, lcname)
+/* Add additional CONTAINER methods for scripting languages */
+%define RMF_SWIG_CONTAINER(Namespace, ContainedNamespace, type, Ucname, lcname)
   %extend Namespace::type {
   ContainedNamespace::Ucname##s get_##lcname##s() const {
     ContainedNamespace::Ucname##s ret(self->lcname##s_begin(), self->lcname##s_end());
@@ -60,13 +60,13 @@
   BOOST_STATIC_ASSERT(Convert<IMP::internal::_TrivialDecorator>::converter ==3);
   %}*/
 
-%define IMP_RMF_DECORATOR(Namespace, Name)
-IMP_RMF_VALUE(Namespace, Name, Name##s);
-IMP_RMF_VALUE(Namespace, Name##Const, Name##Consts);
+%define RMF_DECORATOR(Namespace, Name)
+RMF_VALUE(Namespace, Name, Name##s);
+RMF_VALUE(Namespace, Name##Const, Name##Consts);
 %enddef
 
 
-%define IMP_RMF_SWIG_SHOWSTUFF(Name)
+%define RMF_SWIG_SHOWSTUFF(Name)
   std::string __str__() const {
   std::ostringstream out;
   out << *self;
@@ -79,16 +79,16 @@ IMP_RMF_VALUE(Namespace, Name##Const, Name##Consts);
   }
 %enddef
 
-%define IMP_RMF_SWIG_SHOWABLE(Namespace, Name)
+%define RMF_SWIG_SHOWABLE(Namespace, Name)
      %extend Namespace::Name {
-  IMP_RMF_SWIG_SHOWSTUFF(Name);
+  RMF_SWIG_SHOWSTUFF(Name);
  }
 %enddef
 
 
 
 
-%define IMP_RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Name, PluralName, CONSTREF)
+%define RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Name, PluralName, CONSTREF)
   %typemap(in) Namespace::PluralName CONSTREF {
   try {
     // hack to get around swig's value wrapper being randomly used
@@ -133,7 +133,7 @@ IMP_RMF_VALUE(Namespace, Name##Const, Name##Consts);
 
 
 
-%define IMP_RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Name, IntermediateName, PluralName, CONSTREF)
+%define RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Name, IntermediateName, PluralName, CONSTREF)
   %typemap(in) PluralName CONSTREF {
   try {
     // hack to get around swig's value wrapper being randomly used
@@ -182,7 +182,7 @@ IMP_RMF_VALUE(Namespace, Name##Const, Name##Consts);
 
 
 
-%define IMP_RMF_SWIG_VALUE_CHECKS(Namespace, Name, Type)
+%define RMF_SWIG_VALUE_CHECKS(Namespace, Name, Type)
 %typemap(in) Namespace::Name const& = Type const &;
 %typecheck(SWIG_TYPECHECK_POINTER) Namespace::Name const& = Type const &;
 %typemap(in) Namespace::Name & {
@@ -225,12 +225,12 @@ IMP_RMF_VALUE(Namespace, Name##Const, Name##Consts);
 
 
 
-%define IMP_RMF_SWIG_VALUE_TUPLE(Namespace, Name, PluralName)
-IMP_RMF_SWIG_VALUE_CHECKS(Namespace, Name, SWIGTYPE);
-IMP_RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(IMP::ParticleIndex, Namespace::Name, Namespace::PluralName, const&);
-IMP_RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(IMP::ParticleIndex, Namespace::Name, Namespace::PluralName,);
-IMP_RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, IMP::ParticleIndex, Name, const&);
-IMP_RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, IMP::ParticleIndex, Name,);
+%define RMF_SWIG_VALUE_TUPLE(Namespace, Name, PluralName)
+RMF_SWIG_VALUE_CHECKS(Namespace, Name, SWIGTYPE);
+RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(IMP::ParticleIndex, Namespace::Name, Namespace::PluralName, const&);
+RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(IMP::ParticleIndex, Namespace::Name, Namespace::PluralName,);
+RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, IMP::ParticleIndex, Name, const&);
+RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, IMP::ParticleIndex, Name,);
 %pythoncode %{
 PluralName=list
 _plural_types.append(#PluralName)
@@ -245,9 +245,9 @@ _value_types.append(#Name)
 
 
 
-%define IMP_RMF_SWIG_VALUE_IMPL(Namespace, Name, TemplateName, UniqueName, PluralName)
-IMP_RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Namespace::Name, PluralName, const&);
-IMP_RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Namespace::Name, PluralName,);
+%define RMF_SWIG_VALUE_IMPL(Namespace, Name, TemplateName, UniqueName, PluralName)
+RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Namespace::Name, PluralName, const&);
+RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Namespace::Name, PluralName,);
 
 %typemap(out) Namespace::Name const& {
   $result=SWIG_NewPointerObj(new Namespace::Name(*$1), $descriptor(Namespace::Name*), SWIG_POINTER_OWN | %newpointer_flags);
@@ -268,13 +268,13 @@ _value_types.append(#Name)
 %enddef
 
 
-%define IMP_RMF_SWIG_VALUE_INSTANCE(Namespace, Name, TemplateName, PluralName)
-IMP_RMF_SWIG_VALUE_CHECKS(Namespace, Name, SWIGTYPE);
-IMP_RMF_SWIG_VALUE_IMPL(Namespace, Name, TemplateName, PluralName, PluralName);
+%define RMF_SWIG_VALUE_INSTANCE(Namespace, Name, TemplateName, PluralName)
+RMF_SWIG_VALUE_CHECKS(Namespace, Name, SWIGTYPE);
+RMF_SWIG_VALUE_IMPL(Namespace, Name, TemplateName, PluralName, PluralName);
 %enddef
 
 
-%define IMP_RMF_SWIG_VALUE_BUILTIN(Namespace, Name, PluralName, Type)
+%define RMF_SWIG_VALUE_BUILTIN(Namespace, Name, PluralName, Type)
 %typemap(in) Namespace::Name const& = Type const &;
 %typecheck(SWIG_TYPECHECK_POINTER) Namespace::Name const& = Type const &;
 %typemap(in) Namespace::Name & {
@@ -300,28 +300,28 @@ IMP_RMF_SWIG_VALUE_IMPL(Namespace, Name, TemplateName, PluralName, PluralName);
 %typemap(directorout) Namespace::Name * {
   values_like_##Name##_must_be_returned_by_value_or_const_ref_not_pointer;
 }
-IMP_RMF_SWIG_VALUE_IMPL(Namespace, Name, TemplateName, PluralName, PluralName);
+RMF_SWIG_VALUE_IMPL(Namespace, Name, TemplateName, PluralName, PluralName);
 %enddef
 
-%define IMP_RMF_SWIG_VALUE(Namespace, Name, PluralName)
-IMP_RMF_SWIG_VALUE_INSTANCE(Namespace, Name, Name, PluralName)
-IMP_RMF_SWIG_SHOWABLE(Namespace, Name);
+%define RMF_SWIG_VALUE(Namespace, Name, PluralName)
+RMF_SWIG_VALUE_INSTANCE(Namespace, Name, Name, PluralName)
+RMF_SWIG_SHOWABLE(Namespace, Name);
 %enddef
 
  // a value that has implicit constructors
-%define IMP_RMF_SWIG_VALUE_IMPLICIT(Namespace, Name, PluralName)
-IMP_RMF_SWIG_VALUE_IMPL(Namespace, Name, Name, PluralName, PluralName);
-IMP_RMF_SWIG_SHOWABLE(Namespace, Name);
+%define RMF_SWIG_VALUE_IMPLICIT(Namespace, Name, PluralName)
+RMF_SWIG_VALUE_IMPL(Namespace, Name, Name, PluralName, PluralName);
+RMF_SWIG_SHOWABLE(Namespace, Name);
 %enddef
 
-%define IMP_RMF_SWIG_VALUE_TEMPLATE(Namespace, Name)
-IMP_RMF_SWIG_SHOWABLE(Namespace, Name);
+%define RMF_SWIG_VALUE_TEMPLATE(Namespace, Name)
+RMF_SWIG_SHOWABLE(Namespace, Name);
 %enddef
 
 
 
 
-%define IMP_RMF_SWIG_NATIVE_VALUE(Name)
+%define RMF_SWIG_NATIVE_VALUE(Name)
 
 %typemap(in) Name & {
   values_like_##Name##_must_be_passed_by_value_or_const_ref_not_non_const_ref;
@@ -405,7 +405,7 @@ IMP_RMF_SWIG_SHOWABLE(Namespace, Name);
 
 
 
-%define IMP_RMF_SWIG_RAII_INSTANCE(Namespace, Name, NiceName)
+%define RMF_SWIG_RAII_INSTANCE(Namespace, Name, NiceName)
   %typemap(in) Namespace::Name* {
   BOOST_STATIC_ASSERT($argnum==1); // RAII object Namespace::Name cannot be passed as an argument
 try {
@@ -429,40 +429,40 @@ try {
 %enddef
 
 
-%define IMP_RMF_SWIG_RAII(Namespace, Name)
-IMP_RMF_SWIG_RAII_INSTANCE(Namespace, Name, Name)
-IMP_RMF_SWIG_SHOWABLE(Namespace, Name);
+%define RMF_SWIG_RAII(Namespace, Name)
+RMF_SWIG_RAII_INSTANCE(Namespace, Name, Name)
+RMF_SWIG_SHOWABLE(Namespace, Name);
 %enddef
 
-%define IMP_RMF_SWIG_RAII_TEMPLATE(Namespace, Name)
-IMP_RMF_SWIG_SHOWABLE(Namespace, Name);
+%define RMF_SWIG_RAII_TEMPLATE(Namespace, Name)
+RMF_SWIG_SHOWABLE(Namespace, Name);
 %enddef
 
 
 
-%define IMP_RMF_SWIG_PAIR(Namespace, Name, PairName, PluralName)
-IMP_RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Namespace::Name, PairName, const&);
-IMP_RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Namespace::Name, PairName,);
-IMP_RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Namespace::Name, Namespace::PairName, Namespace::PluralName, const&);
-IMP_RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Namespace::Name, Namespace::PairName, Namespace::PluralName,);
+%define RMF_SWIG_PAIR(Namespace, Name, PairName, PluralName)
+RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Namespace::Name, PairName, const&);
+RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Namespace::Name, PairName,);
+RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Namespace::Name, Namespace::PairName, Namespace::PluralName, const&);
+RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Namespace::Name, Namespace::PairName, Namespace::PluralName,);
 %feature("valuewrapper") PluralName;
 %enddef
 
-%define IMP_RMF_SWIG_NATIVE_PAIR(Namespace, Name, PairName, PluralName)
-IMP_RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Name, PairName, const&);
-IMP_RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Name, PairName,);
-IMP_RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Name, Namespace::PairName, Namespace::PluralName, const&);
-IMP_RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Name, Namespace::PairName, Namespace::PluralName,);
+%define RMF_SWIG_NATIVE_PAIR(Namespace, Name, PairName, PluralName)
+RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Name, PairName, const&);
+RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Name, PairName,);
+RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Name, Namespace::PairName, Namespace::PluralName, const&);
+RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Name, Namespace::PairName, Namespace::PluralName,);
 %feature("valuewrapper") PluralName;
 %enddef
 
-%define IMP_RMF_SWIG_NATIVE_VALUES_LIST(Namespace, Name, PluralName, PluralListName)
-IMP_RMF_SWIG_VALUE_CHECKS(Namespace, PluralListName, SWIGTYPE);
-IMP_RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Name, Namespace::PluralName, Namespace::PluralListName, const&);
-IMP_RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Name, Namespace::PluralName, Namespace::PluralListName,);
+%define RMF_SWIG_NATIVE_VALUES_LIST(Namespace, Name, PluralName, PluralListName)
+RMF_SWIG_VALUE_CHECKS(Namespace, PluralListName, SWIGTYPE);
+RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Name, Namespace::PluralName, Namespace::PluralListName, const&);
+RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Name, Namespace::PluralName, Namespace::PluralListName,);
 %enddef
 
-%define IMP_RMF_SWIG_SEQUENCE_PAIR(Namespace, Name0, Name1, PairName)
+%define RMF_SWIG_SEQUENCE_PAIR(Namespace, Name0, Name1, PairName)
 %typemap(out) Namespace::PairName {
   PyObject *first=ConvertSequence<Namespace::PairName::first_type, Convert< Namespace::PairName::first_type::value_type> >::create_python_object(ValueOrObject<Namespace::PairName::first_type >::get($1.first), $descriptor(Name0), SWIG_POINTER_OWN);
   PyObject *second=ConvertSequence<Namespace::PairName::second_type, Convert< Namespace::PairName::second_type::value_type> >::create_python_object(ValueOrObject<Namespace::PairName::second_type >::get($1.second), $descriptor(Name1), SWIG_POINTER_OWN);

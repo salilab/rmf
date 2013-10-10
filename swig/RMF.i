@@ -61,7 +61,7 @@ def get_data_types():
 
 
 /* Apply the passed macro to each type used in RMF */
-%define IMP_RMF_SWIG_FOREACH_TYPE(macroname)
+%define RMF_SWIG_FOREACH_TYPE(macroname)
   macroname(int, Int, Ints, int);
   macroname(ints, Ints, IntsList, RMF::Ints);
   macroname(float, Float, Floats, double);
@@ -75,7 +75,7 @@ def get_data_types():
 %enddef
 
 /* Declare the needed things for each type */
-%define IMP_RMF_SWIG_DECLARE_TYPE(lcname, Ucname, Ucnames, Type)
+%define RMF_SWIG_DECLARE_TYPE(lcname, Ucname, Ucnames, Type)
 %inline %{
 namespace RMF {
  const Type Null##Ucname=Ucname##Traits::get_null_value();
@@ -85,53 +85,70 @@ namespace RMF {
 %rename(_##Ucname##Traits) Ucname##Traits;
 }
 
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF, Ucname##Key, Ucname##Key, Ucname##Keys);
+RMF_SWIG_VALUE_INSTANCE(RMF, Ucname##Key, Ucname##Key, Ucname##Keys);
 %pythoncode %{
 _types_list.append(#lcname)
 %}
 %enddef
 
-%define IMP_RMF_SWIG_DEFINE_TYPE(lcname, Ucname, Ucnames, Type)
+%define RMF_SWIG_DEFINE_TYPE(lcname, Ucname, Ucnames, Type)
 %template(Ucname##Key) RMF::Key<RMF::Ucname##Traits>;
 %enddef
 
-IMP_RMF_SWIG_VALUE(RMF, NodeID, NodeIDs);
-IMP_RMF_SWIG_VALUE(RMF, FrameID, FrameIDs);
-IMP_RMF_SWIG_NATIVE_VALUES_LIST(RMF, double, Floats, FloatsList);
-IMP_RMF_SWIG_NATIVE_VALUES_LIST(RMF, int, Ints, IntsList);
-IMP_RMF_SWIG_NATIVE_VALUES_LIST(RMF, std::string, Strings, StringsList);
-IMP_RMF_SWIG_VALUE_BUILTIN(RMF, Float, Floats, double);
-IMP_RMF_SWIG_VALUE_BUILTIN(RMF, Int, Ints, int);
-IMP_RMF_SWIG_VALUE_BUILTIN(RMF, String, Strings, std::string);
-IMP_RMF_SWIG_NATIVE_VALUE(float);
-IMP_RMF_SWIG_NATIVE_VALUE(double);
-IMP_RMF_SWIG_NATIVE_VALUE(int);
-IMP_RMF_SWIG_NATIVE_VALUE(std::string);
+RMF_SWIG_VALUE_INSTANCE(RMF, NodeID, ID<NodeTag>, NodeIDs);
+RMF_SWIG_VALUE_INSTANCE(RMF, FrameID, ID<FrameTag>, FrameIDs);
+RMF_SWIG_NATIVE_VALUES_LIST(RMF, double, Floats, FloatsList);
+RMF_SWIG_NATIVE_VALUES_LIST(RMF, int, Ints, IntsList);
+RMF_SWIG_NATIVE_VALUES_LIST(RMF, std::string, Strings, StringsList);
+RMF_SWIG_VALUE_BUILTIN(RMF, Float, Floats, double);
+RMF_SWIG_VALUE_BUILTIN(RMF, Int, Ints, int);
+RMF_SWIG_VALUE_BUILTIN(RMF, String, Strings, std::string);
+RMF_SWIG_NATIVE_VALUE(float);
+RMF_SWIG_NATIVE_VALUE(double);
+RMF_SWIG_NATIVE_VALUE(int);
+RMF_SWIG_NATIVE_VALUE(std::string);
 
 
-IMP_RMF_SWIG_GRAPH(RMF, NodeTree, NodeTree, RMF::NodeHandle);
-IMP_RMF_SWIG_VALUE(RMF, NodeConstHandle, NodeConstHandles);
-IMP_RMF_SWIG_VALUE(RMF, FrameConstHandle, FrameConstHandles);
-IMP_RMF_SWIG_VALUE(RMF, FileConstHandle, FileConstHandles);
-IMP_RMF_SWIG_VALUE(RMF, NodeHandle, NodeHandles);
-IMP_RMF_SWIG_VALUE(RMF, FrameHandle, FrameHandles);
-IMP_RMF_SWIG_VALUE(RMF, FileHandle, FileHandles);
-IMP_RMF_SWIG_VALUE(RMF, SetCurrentFrame, SetCurrentFrames);
-IMP_RMF_SWIG_VALUE(RMF, Category, Categories);
-IMP_RMF_SWIG_VALUE_TEMPLATE(RMF, Key);
-IMP_RMF_SWIG_PAIR(RMF, Index, IndexRange, IndexRanges)
-IMP_RMF_SWIG_PAIR(RMF, Int, IntRange, IntRanges)
+RMF_SWIG_GRAPH(RMF, NodeTree, NodeTree, RMF::NodeHandle);
+RMF_SWIG_VALUE(RMF, NodeConstHandle, NodeConstHandles);
+RMF_SWIG_VALUE(RMF, FrameConstHandle, FrameConstHandles);
+RMF_SWIG_VALUE(RMF, FileConstHandle, FileConstHandles);
+RMF_SWIG_VALUE(RMF, NodeHandle, NodeHandles);
+RMF_SWIG_VALUE(RMF, FrameHandle, FrameHandles);
+RMF_SWIG_VALUE(RMF, FileHandle, FileHandles);
+RMF_SWIG_VALUE(RMF, SetCurrentFrame, SetCurrentFrames);
+RMF_SWIG_VALUE(RMF, Category, Categories);
+RMF_SWIG_VALUE_TEMPLATE(RMF, Key);
+RMF_SWIG_VALUE_TEMPLATE(RMF, ID);
+RMF_SWIG_PAIR(RMF, Index, IndexRange, IndexRanges)
+RMF_SWIG_PAIR(RMF, Int, IntRange, IntRanges)
 
 
-IMP_RMF_SWIG_VALUE(RMF, ReferenceFrame, ReferenceFrames);
+RMF_SWIG_VALUE(RMF, ReferenceFrame, ReferenceFrames);
 
 
-IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DECLARE_TYPE);
+RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DECLARE_TYPE);
 
 %implicitconv;
 
+%include "RMF/ID.h"
+%template(FrameID) RMF::ID<RMF::FrameTag>;
+%template(NodeID) RMF::ID<RMF::NodeTag>;
+
 %extend RMF::FileConstHandle {
    %pythoncode %{
+    def get_frame_ids(self):
+        class MyRange:
+           def __init__(self, mx):
+               self.max = mx
+           def __getitem__(self, i):
+               if i > self.max:
+                    raise IndexError()
+               else:
+                    return FrameID(i)
+           def __len__(self):
+               return self.max + 1
+        return MyRange(self.get_number_of_frames())
     def get_keys(self, kc):
         ret=[]
         for t in _types_list:
@@ -139,15 +156,14 @@ IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DECLARE_TYPE);
            ret.extend(fn(kc))
         return ret
   %}
-}
+ }
 
-%include "RMF/NodeID.h"
-%include "RMF/FrameID.h"
+
 %include "RMF/constants.h"
 %include "RMF/types.h"
 
 %include "RMF/Key.h"
-IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DEFINE_TYPE);
+RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DEFINE_TYPE);
 
 
 %include "RMF/Category.h"
@@ -174,28 +190,28 @@ namespace RMF {
 }
 
 
-IMP_RMF_DECORATOR(RMF, Particle);
-IMP_RMF_DECORATOR(RMF, IntermediateParticle);
-IMP_RMF_DECORATOR(RMF, Colored);
-IMP_RMF_DECORATOR(RMF, External);
-IMP_RMF_DECORATOR(RMF, JournalArticle);
-IMP_RMF_DECORATOR(RMF, Ball);
-IMP_RMF_DECORATOR(RMF, Cylinder);
-IMP_RMF_DECORATOR(RMF, Segment);
-IMP_RMF_DECORATOR(RMF, Score);
-IMP_RMF_DECORATOR(RMF, RigidParticle);
-IMP_RMF_DECORATOR(RMF, ReferenceFrame);
-IMP_RMF_DECORATOR(RMF, Residue);
-IMP_RMF_DECORATOR(RMF, Atom);
-IMP_RMF_DECORATOR(RMF, Alias);
-IMP_RMF_DECORATOR(RMF, Bond);
-IMP_RMF_DECORATOR(RMF, Chain);
-IMP_RMF_DECORATOR(RMF, Domain);
-IMP_RMF_DECORATOR(RMF, Copy);
-IMP_RMF_DECORATOR(RMF, Diffuser);
-IMP_RMF_DECORATOR(RMF, Typed);
-IMP_RMF_DECORATOR(RMF, Force);
-IMP_RMF_DECORATOR(RMF, Torque);
+RMF_DECORATOR(RMF, Particle);
+RMF_DECORATOR(RMF, IntermediateParticle);
+RMF_DECORATOR(RMF, Colored);
+RMF_DECORATOR(RMF, External);
+RMF_DECORATOR(RMF, JournalArticle);
+RMF_DECORATOR(RMF, Ball);
+RMF_DECORATOR(RMF, Cylinder);
+RMF_DECORATOR(RMF, Segment);
+RMF_DECORATOR(RMF, Score);
+RMF_DECORATOR(RMF, RigidParticle);
+RMF_DECORATOR(RMF, ReferenceFrame);
+RMF_DECORATOR(RMF, Residue);
+RMF_DECORATOR(RMF, Atom);
+RMF_DECORATOR(RMF, Alias);
+RMF_DECORATOR(RMF, Bond);
+RMF_DECORATOR(RMF, Chain);
+RMF_DECORATOR(RMF, Domain);
+RMF_DECORATOR(RMF, Copy);
+RMF_DECORATOR(RMF, Diffuser);
+RMF_DECORATOR(RMF, Typed);
+RMF_DECORATOR(RMF, Force);
+RMF_DECORATOR(RMF, Torque);
 
 %include "RMF/physics_decorators.h"
 %include "RMF/sequence_decorators.h"
