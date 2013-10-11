@@ -101,7 +101,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     HDF5DataSetCacheD<StringTraits, 1> node_names_;
     HDF5DataSetCacheD<StringTraits, 1> frame_names_;
     HDF5DataSetCacheD<StringTraits, 1> category_names_;
-    boost::array<HDF5DataSetCacheD<IndexTraits, 2>, 4> node_data_;
+    HDF5DataSetCacheD<IndexTraits, 2> node_data_;
     Ints free_ids_;
     unsigned int frames_hint_;
 
@@ -133,7 +133,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
     // caches
     typedef std::vector<std::vector<int> > IndexCache;
-    mutable boost::array<IndexCache, 4> index_cache_;
+    mutable IndexCache index_cache_;
 
     /*                 HDF5DataSetCreationPropertiesD<TypeTraits, D> props;
               if (D==3) {
@@ -281,27 +281,22 @@ RMF_ENABLE_WARNINGS namespace RMF {
       FIRST_KEY = 3
     };
 
-    unsigned int get_index(int Arity, unsigned int category_index) const {
-      switch (Arity) {
-        case 1:
-          return category_index + FIRST_KEY;
-        default:
-          return 1 + Arity + category_index;
-      }
+    unsigned int get_index(unsigned int category_index) const {
+      return category_index + FIRST_KEY;
     }
     void check_node(NodeID node) const;
-    template <int Arity>
+
     unsigned int get_column_maximum(unsigned int category_index) const {
       if (max_cache_.size() > category_index &&
           max_cache_[category_index] > -2) {
         return max_cache_[category_index];
       }
-      HDF5::DataSetIndexD<2> sz = node_data_[Arity - 1].get_size();
+      HDF5::DataSetIndexD<2> sz = node_data_.get_size();
       int mx = -1;
-      int index = get_index(Arity, category_index);
+      int index = get_index(category_index);
       for (unsigned int i = 0; i < sz[0]; ++i) {
-        mx = std::max(mx, node_data_[Arity - 1]
-                              .get_value(HDF5::DataSetIndexD<2>(i, index)));
+        mx = std::max(mx,
+                      node_data_.get_value(HDF5::DataSetIndexD<2>(i, index)));
       }
       max_cache_.resize(
           std::max(max_cache_.size(), static_cast<size_t>(category_index + 1)),
@@ -363,10 +358,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
                                              unsigned int category_index,
                                              unsigned int key_index,
                                              FrameID frame) const {
-      int vi = get_index_from_cache<1>(node, category_index);
+      int vi = get_index_from_cache(node, category_index);
       if (IndexTraits::get_is_null_value(vi)) {
-        int index = get_index(1, category_index);
-        HDF5::DataSetIndexD<2> nsz = node_data_[1 - 1].get_size();
+        int index = get_index(category_index);
+        HDF5::DataSetIndexD<2> nsz = node_data_.get_size();
         // deal with nodes added for sets
         if (nsz[0] <= static_cast<unsigned int>(node.get_index())) {
           return TypeTraits::get_null_value();
@@ -374,13 +369,13 @@ RMF_ENABLE_WARNINGS namespace RMF {
         if (nsz[1] <= static_cast<hsize_t>(index)) {
           return TypeTraits::get_null_value();
         } else {
-          vi = node_data_[1 - 1]
-                   .get_value(HDF5::DataSetIndexD<2>(node.get_index(), index));
+          vi = node_data_.get_value(
+              HDF5::DataSetIndexD<2>(node.get_index(), index));
         }
         if (IndexTraits::get_is_null_value(vi)) {
           return TypeTraits::get_null_value();
         } else {
-          add_index_to_cache<1>(node, category_index, vi);
+          add_index_to_cache(node, category_index, vi);
         }
       }
       {
@@ -416,44 +411,36 @@ RMF_ENABLE_WARNINGS namespace RMF {
       HDF5::DataSetIndexD<3> sz = ds.get_size();
       return sz[2];
     }
-    template <int Arity>
     int get_index_from_cache(NodeID node, unsigned int category_index) const {
-      if (index_cache_[Arity - 1].size() <=
-          static_cast<unsigned int>(node.get_index()))
+      if (index_cache_.size() <= static_cast<unsigned int>(node.get_index()))
         return -1;
-      else if (index_cache_[Arity - 1][node.get_index()].size() <=
-               category_index) {
+      else if (index_cache_[node.get_index()].size() <= category_index) {
         return -1;
       }
-      return index_cache_[Arity - 1][node.get_index()][category_index];
+      return index_cache_[node.get_index()][category_index];
     }
-    template <int Arity>
     void add_index_to_cache(NodeID node, unsigned int category_index,
                             int index) const {
-      if (index_cache_[Arity - 1].size() <=
-          static_cast<unsigned int>(node.get_index())) {
-        index_cache_[Arity - 1]
-            .resize(node.get_index() + 1, std::vector<int>());
+      if (index_cache_.size() <= static_cast<unsigned int>(node.get_index())) {
+        index_cache_.resize(node.get_index() + 1, std::vector<int>());
       }
-      if (index_cache_[Arity - 1][node.get_index()].size() <= category_index) {
-        index_cache_[Arity - 1][node.get_index()]
-            .resize(category_index + 1, -1);
+      if (index_cache_[node.get_index()].size() <= category_index) {
+        index_cache_[node.get_index()].resize(category_index + 1, -1);
       }
-      index_cache_[Arity - 1][node.get_index()][category_index] = index;
+      index_cache_[node.get_index()][category_index] = index;
     }
 
-    template <int Arity>
     int get_index_set(NodeID node, unsigned int category_index) {
-      int vi = get_index_from_cache<Arity>(node, category_index);
+      int vi = get_index_from_cache(node, category_index);
       if (vi == -1) {
-        unsigned int index = get_index(Arity, category_index);
-        HDF5::DataSetIndexD<2> nsz = node_data_[Arity - 1].get_size();
+        unsigned int index = get_index(category_index);
+        HDF5::DataSetIndexD<2> nsz = node_data_.get_size();
         RMF_USAGE_CHECK(nsz[0] > static_cast<unsigned int>(node.get_index()),
                         "Invalid node used");
         if (nsz[1] <= index) {
           HDF5::DataSetIndexD<2> newsz = nsz;
           newsz[1] = index + 1;
-          node_data_[Arity - 1].set_size(newsz);
+          node_data_.set_size(newsz);
         }
         // now it is big enough
         // make sure the target table is there
@@ -461,15 +448,15 @@ RMF_ENABLE_WARNINGS namespace RMF {
            file_.add_data_set<TypeTraits>(nm, (per_frame?3:2));
            }*/
         // now we have the index and the data set is there
-        vi = node_data_[Arity - 1]
-                 .get_value(HDF5::DataSetIndexD<2>(node.get_index(), index));
+        vi = node_data_.get_value(
+            HDF5::DataSetIndexD<2>(node.get_index(), index));
         if (IndexTraits::get_is_null_value(vi)) {
-          vi = get_column_maximum<Arity>(category_index) + 1;
-          node_data_[Arity - 1]
-              .set_value(HDF5::DataSetIndexD<2>(node.get_index(), index), vi);
+          vi = get_column_maximum(category_index) + 1;
+          node_data_.set_value(HDF5::DataSetIndexD<2>(node.get_index(), index),
+                               vi);
           max_cache_[category_index] = vi;
         }
-        add_index_to_cache<Arity>(node, category_index, vi);
+        add_index_to_cache(node, category_index, vi);
       }
       return vi;
     }
@@ -518,7 +505,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
                         typename TypeTraits::Type v) {
       RMF_USAGE_CHECK(!TypeTraits::get_is_null_value(v),
                       "Cannot write sentry value to an RMF file.");
-      int vi = get_index_set<1>(node, category_index);
+      int vi = get_index_set(node, category_index);
       if (frame != ALL_FRAMES) {
         HDF5DataSetCacheD<TypeTraits, 3>& ds =
             get_per_frame_data_data_set<TypeTraits>(category_index, 1);
@@ -595,12 +582,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
     void open_things(bool create, bool read_only);
 
     unsigned int get_number_of_real_nodes() const {
-      return node_data_[0].get_size()[0];
+      return node_data_.get_size()[0];
     }
-
-    unsigned int get_number_of_sets(int arity) const;
-    NodeID get_set_member(int Arity, unsigned int index,
-                          int member_index) const;
     NodeID get_linked(NodeID node) const;
     unsigned int add_category_impl(std::string name);
     std::string get_category_name_impl(unsigned int category_index) const {
