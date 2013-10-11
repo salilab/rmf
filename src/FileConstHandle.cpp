@@ -89,7 +89,7 @@ std::string FileConstHandle::validate() {
 
 void FileConstHandle::reload() {
   try {
-    get_shared_data()->reload();
+    shared_->reload();
   }
   RMF_FILE_CATCH();
 }

@@ -86,9 +86,7 @@ class RootConstHandle;
     See the NodeHandle for modifying the contents.
  */
 class RMFEXPORT NodeConstHandle {
-  NodeID node_;
   friend class FileHandle;
-  boost::shared_ptr<internal::SharedData> shared_;
   int compare(const NodeConstHandle& o) const {
     if (node_ < o.node_)
       return -1;
@@ -128,12 +126,11 @@ class RMFEXPORT NodeConstHandle {
     RMF_NODE_CATCH_KEY(k, );
   }
  protected:
+  NodeID node_;
+  boost::shared_ptr<internal::SharedData> shared_;
   std::string get_file_name() const;
   FrameID get_current_frame_id() const;
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
- protected:
-  boost::shared_ptr<internal::SharedData> get_shared_data() const { return shared_; }
-
  public:
   NodeID get_node_id() const { return node_; }
   NodeConstHandle(NodeID node, boost::shared_ptr<internal::SharedData> shared);

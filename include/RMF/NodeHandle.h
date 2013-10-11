@@ -17,18 +17,18 @@
 
 RMF_ENABLE_WARNINGS
 
-#define RMF_HDF5_NODE_KEY_TYPE_METHODS(                               \
-    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues) \
-  /** \brief  set the value of the attribute k for this node on the
-      current frame.
-  */                                                                  \
-  void set_value(UCName##Key k, PassValue v) {                        \
-    if (get_shared_data()->get_current_frame() == ALL_FRAMES) {       \
-      get_shared_data()->set_static_value(get_node_id(), k, v);       \
-    } else {                                                          \
-      get_shared_data()->set_current_value(get_node_id(), k, v);      \
-    }                                                                 \
-    RMF_INTERNAL_CHECK(v == get_value(k), "Don't match");             \
+#define RMF_HDF5_NODE_KEY_TYPE_METHODS(lcname, UCName, PassValue, ReturnValue, \
+                                       PassValues, ReturnValues)               \
+  /** \brief  set the value of the attribute k for this node on the            \
+      current frame.                                                           \
+  */                                                                           \
+  void set_value(UCName##Key k, PassValue v) const {                           \
+    if (shared_->get_current_frame() == ALL_FRAMES) {                          \
+      shared_->set_static_value(node_, k, v);                                  \
+    } else {                                                                   \
+      shared_->set_current_value(node_, k, v);                                 \
+    }                                                                          \
+    RMF_INTERNAL_CHECK(v == get_value(k), "Don't match");                      \
   }
 
 RMF_VECTOR_DECL(NodeHandle);
@@ -55,10 +55,10 @@ class RMFEXPORT NodeHandle : public NodeConstHandle {
   NodeHandle() {}
   /** Create a new node as a child of this one.
    */
-  NodeHandle add_child(std::string name, NodeType t);
+  NodeHandle add_child(std::string name, NodeType t) const;
 
   /** Add an existing node as a child.*/
-  void add_child(NodeConstHandle nh);
+  void add_child(NodeConstHandle nh) const;
 
   NodeHandles get_children() const;
 

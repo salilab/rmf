@@ -147,6 +147,14 @@ RMF_ENABLE_WARNINGS namespace RMF {
     virtual std::string get_name(FrameID i) const RMF_OVERRIDE;
     FrameType get_type(FrameID i) const RMF_OVERRIDE;
     unsigned int get_number_of_frames() const;
+    virtual std::string get_file_type() const RMF_OVERRIDE {
+      if (text_) {
+        return "Single avro version 1 (text)";
+      } else {
+        return "Single avro version 1 (binary)";
+      }
+    }
+
   };
 
   }  // namespace avro_backend

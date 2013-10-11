@@ -702,6 +702,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     virtual void reload() RMF_OVERRIDE;
     void set_current_frame(FrameID frame) RMF_OVERRIDE;
 
+    virtual std::string get_file_type() const RMF_OVERRIDE {
+      return "HDF5 version 1";
+    }
+
     virtual FrameID add_child(FrameID node, std::string name,
                               FrameType /*t*/) RMF_OVERRIDE {
       // frame types not supported in rmf files right now

@@ -63,7 +63,6 @@ class RMFEXPORT FileConstHandle {
                   std::vector<std::string>& paths,
                   std::string path) const;
   friend class NodeConstHandle;
-  boost::shared_ptr<internal::SharedData> shared_;
   int compare(const FileConstHandle& o) const {
     if (get_name() < o.get_name())
       return -1;
@@ -72,10 +71,8 @@ class RMFEXPORT FileConstHandle {
     else
       return 0;
   }
-#if !defined(SWIG) && !defined(RMF_DOXYGEN)
  protected:
-  boost::shared_ptr<internal::SharedData> get_shared_data() const { return shared_; }
-#endif
+  boost::shared_ptr<internal::SharedData> shared_;
  public:
   RMF_COMPARISONS(FileConstHandle);
   RMF_HASHABLE(FileConstHandle, return boost::hash_value(get_name()););
@@ -182,6 +179,10 @@ class RMFEXPORT FileConstHandle {
     }
     RMF_FILE_CATCH();
   }
+
+  /** Return a string identifying the file type.
+  */
+  std::string get_file_type() const {return shared_->get_file_type();}
 
   /** \name Non-template versions for python
 

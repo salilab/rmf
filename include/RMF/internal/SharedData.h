@@ -183,6 +183,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     virtual FrameType get_type(FrameID i) const = 0;
     virtual bool get_supports_locking() const { return false; }
     virtual bool set_is_locked(bool) { return false; }
+    virtual std::string get_file_type() const = 0;
     virtual void reload() = 0;
   };
 

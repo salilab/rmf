@@ -46,7 +46,7 @@ class RMFEXPORT FileHandle : public FileConstHandle {
    */
   NodeHandle get_root_node() const {
     return NodeHandle(NodeID(0),
-                      get_shared_data());
+                      shared_);
   }
 
 #ifndef SWIG
@@ -54,11 +54,11 @@ class RMFEXPORT FileHandle : public FileConstHandle {
       of external data. Nodes can be extracted using these bits of data.
    */
   template <class T> NodeHandle get_node_from_association(const T& d) const {
-    if (!get_shared_data()->get_has_associated_node(d)) {
+    if (!shared_->get_has_associated_node(d)) {
       return NodeHandle();
     } else {
-      return NodeHandle(get_shared_data()->get_associated_node(d),
-                        get_shared_data());
+      return NodeHandle(shared_->get_associated_node(d),
+                        shared_);
     }
   }
 #else
@@ -70,8 +70,8 @@ class RMFEXPORT FileHandle : public FileConstHandle {
   /** Suggest how many frames the file is likely to have. This can
       make writing more efficient as space will be preallocated.
    */
-  void set_number_of_frames_hint(unsigned int i) {
-    get_shared_data()->save_frames_hint(i);
+  void set_number_of_frames_hint(unsigned int i) const {
+    shared_->save_frames_hint(i);
   }
   /** Each RMF structure has an associated description. This should
       consist of unstructured text describing the contents of the RMF
@@ -79,17 +79,17 @@ class RMFEXPORT FileHandle : public FileConstHandle {
       paragraphs, each separated by a newline character and should end
       in a newline.
    */
-  void set_description(std::string descr);
+  void set_description(std::string descr) const;
 
   /** Each RMF structure has an associated field that the code that
       produced the file can use to describe itself.
    */
-  void set_producer(std::string);
+  void set_producer(std::string) const;
 
   /** Make sure all data gets written to disk. Once flush is called, it
        should be safe to open the file in another process for reading.
    */
-  void flush();
+  void flush() const;
 };
 
 /**

@@ -22,26 +22,26 @@ FileHandle::FileHandle(std::string name, bool create)
     : FileConstHandle(internal::create_shared_data(name, create)) {}
 
 NodeHandle FileHandle::get_node(NodeID id) const {
-  return NodeHandle(id, get_shared_data());
+  return NodeHandle(id, shared_);
 }
 
-void FileHandle::flush() {
+void FileHandle::flush() const {
   try {
-    get_shared_data()->flush();
+    shared_->flush();
   }
   RMF_FILE_CATCH();
 }
 
-void FileHandle::set_description(std::string descr) {
+void FileHandle::set_description(std::string descr) const {
   try {
-    get_shared_data()->set_description(descr);
+    shared_->set_description(descr);
   }
   RMF_FILE_CATCH();
 }
 
-void FileHandle::set_producer(std::string descr) {
+void FileHandle::set_producer(std::string descr) const {
   try {
-    get_shared_data()->set_producer(descr);
+    shared_->set_producer(descr);
   }
   RMF_FILE_CATCH();
 }
