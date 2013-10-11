@@ -200,13 +200,22 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }
   NodeID HDF5SharedData::get_first_child(NodeID node) const {
     check_node(node);
-    return NodeID(node_data_[0].get_value(
-        HDF5::DataSetIndexD<2>(node.get_index(), CHILD)));
+    int child = node_data_[0]
+                    .get_value(HDF5::DataSetIndexD<2>(node.get_index(), CHILD));
+    if (child == -1)
+      return NodeID();
+    else
+      return NodeID(child);
   }
   NodeID HDF5SharedData::get_sibling(NodeID node) const {
     check_node(node);
-    return NodeID(node_data_[0].get_value(
-        HDF5::DataSetIndexD<2>(node.get_index(), SIBLING)));
+    int sib = node_data_[0]
+                  .get_value(HDF5::DataSetIndexD<2>(node.get_index(), SIBLING));
+    if (sib == -1) {
+      return NodeID();
+    } else {
+      return NodeID(sib);
+    }
   }
   void HDF5SharedData::set_first_child(NodeID node, NodeID c) {
     check_node(node);
@@ -266,7 +275,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }
 
   NodeIDs HDF5SharedData::get_children(NodeID node) const {
-    if (node.get_index() < static_cast<int>(get_number_of_real_nodes())) {
+    if (node.get_index() < get_number_of_real_nodes()) {
       NodeID cur = get_first_child(node);
       NodeIDs ret;
       while (!NodeIDTraits::get_is_null_value(cur)) {
@@ -385,7 +394,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   void HDF5SharedData::set_name(FrameID i, std::string str) {
     RMF_USAGE_CHECK(i != ALL_FRAMES,
                     "Cannot set the name frame name for static data");
-    if (static_cast<int>(frame_names_.get_size()[0]) <= i.get_index()) {
+    if (frame_names_.get_size()[0] <= i.get_index()) {
       frame_names_.set_size(HDF5::DataSetIndexD<1>(i.get_index() + 1));
     }
     frame_names_.set_value(HDF5::DataSetIndexD<1>(i.get_index()), str);
@@ -393,7 +402,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   std::string HDF5SharedData::get_name(FrameID i) const {
     RMF_USAGE_CHECK(i != ALL_FRAMES,
                     "The static data frame does not have a name");
-    if (static_cast<int>(frame_names_.get_size()[0]) > i.get_index()) {
+    if (frame_names_.get_size()[0] > i.get_index()) {
       return frame_names_.get_value(HDF5::DataSetIndexD<1>(i.get_index()));
     } else {
       return std::string();

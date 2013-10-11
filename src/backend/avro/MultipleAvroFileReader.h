@@ -52,7 +52,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
         RMF_USAGE_CHECK(frame == get_current_frame(),
                         "Asking for a non-current frame");
         if (categories_.size() > cat.get_id() &&
-            categories_[cat.get_id()].data.frame == frame.get_index()) {
+            static_cast<unsigned int>(categories_[cat.get_id()].data.frame) ==
+                frame.get_index()) {
           return categories_[cat.get_id()].data;
         } else {
           /*std::cout << "No data for category "

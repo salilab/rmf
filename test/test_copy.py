@@ -29,8 +29,10 @@ class GenericTest(unittest.TestCase):
         self.assert_(RMF.get_equal_structure(f, of, True))
         for i in range(-1, last_frame+1):
             print i
-            f.set_current_frame(RMF.FrameID(i))
-            of.set_current_frame(RMF.FrameID(i))
+            if i == -1: fid = RMF.ALL_FRAMES
+            else: fid = RMF.FrameID(i)
+            f.set_current_frame(fid)
+            of.set_current_frame(fid)
             if suffix != "rmft":
                 # going through a text format perturbs values
                 self.assert_(RMF.get_equal_frame(f, of, True))

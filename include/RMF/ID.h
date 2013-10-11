@@ -12,6 +12,7 @@
 #include <RMF/config.h>
 #include "infrastructure_macros.h"
 #include "exceptions.h"
+#include <limits>
 
 RMF_ENABLE_WARNINGS
 
@@ -36,10 +37,25 @@ class ID {
   }
 
  public:
-  explicit ID(int i) : i_(i) {}
-  ID() : i_(-2) {}
-  int get_index() const {
-    RMF_USAGE_CHECK(i_ != -2, "get_index called on uninitialized ID");
+#if !defined(RMF_DOXGYGEN) && !defined(SWIG)
+  class SpecialTag {};
+  ID(int i, SpecialTag) : i_(i) {}
+  int get_index_always() const {
+    RMF_USAGE_CHECK(i_ != std::numeric_limits<int>::min(),
+                    "get_index called on uninitialized ID");
+    return i_;
+  }
+#endif
+  explicit ID(unsigned int i) : i_(i) {
+    RMF_USAGE_CHECK(static_cast<int>(i_) >= 0,
+                    "Bad index passed on initialize");
+  }
+  ID() : i_(std::numeric_limits<int>::min()) {}
+  unsigned int get_index() const {
+    RMF_USAGE_CHECK(i_ != std::numeric_limits<int>::min(),
+                    "get_index called on uninitialized ID");
+    RMF_USAGE_CHECK(i_ >= 0,
+                    "get_index called on special ID.");
     return i_;
   }
   RMF_SHOWABLE(ID, i_);

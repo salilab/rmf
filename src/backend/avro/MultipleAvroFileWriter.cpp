@@ -21,12 +21,14 @@ RMF_ENABLE_WARNINGS namespace RMF {
   void MultipleAvroFileWriter::set_current_frame(FrameID frame) {
     if (frame == get_current_frame())
       return;
-    RMF_USAGE_CHECK(frame == ALL_FRAMES
-                    || frame.get_index() == frame_.index + 1
-                    || frame.get_index() == frame_.index,
-                    "Bad frame set. You probably didn't add a new frame.");
+    RMF_USAGE_CHECK(
+        frame == ALL_FRAMES ||
+            frame.get_index() == static_cast<unsigned int>(frame_.index + 1) ||
+        frame.get_index() == static_cast<unsigned int>(frame_.index),
+        "Bad frame set. You probably didn't add a new frame.");
     MultipleAvroFileBase::set_current_frame(frame);
-    if (frame != ALL_FRAMES && frame.get_index() != frame_.index) {
+    if (frame != ALL_FRAMES &&
+        frame.get_index() != static_cast<unsigned int>(frame_.index)) {
       commit();
     }
   }
@@ -145,7 +147,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     if (i == ALL_FRAMES) {
       return "static";
     } else {
-      RMF_USAGE_CHECK(i.get_index() == frame_.index,
+      RMF_USAGE_CHECK(i.get_index() == static_cast<unsigned int>(frame_.index),
                       "Can only query the name of the current frame with"
                       " writing RMF2 files.");
       return frame_.name;
@@ -155,7 +157,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       if (i == ALL_FRAMES) {
       return STATIC;
     } else {
-      RMF_USAGE_CHECK(i.get_index() == frame_.index,
+      RMF_USAGE_CHECK(i.get_index() == static_cast<unsigned int>(frame_.index),
                       "Can only query the name of the current frame with"
                       " writing RMF2 files.");
       return boost::lexical_cast<FrameType>(frame_.type);

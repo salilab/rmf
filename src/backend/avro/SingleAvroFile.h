@@ -91,7 +91,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
 
     const RMF_avro_backend::Node& get_frame(FrameID i) const {
-      if (i.get_index() + 1 >= static_cast<int>(all_.frames.size())) {
+      if (i.get_index() + 1 >= all_.frames.size()) {
         return null_frame_real_data_;
       }
       return all_.frames[i.get_index() + 1];

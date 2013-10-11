@@ -16,7 +16,7 @@ namespace RMF {
   /** A constant used to denote that the particular operation
       refers to all frames in the file.
   */
-  static const FrameID ALL_FRAMES = FrameID(-1);
+  static const FrameID ALL_FRAMES = FrameID(-1, FrameID::SpecialTag());
 }
 
 RMF_DISABLE_WARNINGS

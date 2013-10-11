@@ -129,8 +129,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
   struct NodeIDTraits {
     typedef NodeID Type;
     typedef NodeIDs Types;
-    static bool get_is_null_value(const Type& t) { return t == Type(-1); }
-    static NodeID get_null_value() { return NodeID(-1); }
+    static bool get_is_null_value(const Type& t) { return t == Type(); }
+    static NodeID get_null_value() { return NodeID(); }
 #ifndef SWIG
     struct HDF5Traits : public HDF5::IndexTraits {
       static int get_index() { return 4; }
@@ -155,17 +155,30 @@ RMF_ENABLE_WARNINGS namespace RMF {
   };
 
   /** Get one type as another, handling vectors or scalars.*/
-  template <class OutType, class InType> OutType get_as(InType in) {
+  template <class OutType, class InType>
+  inline OutType get_as(InType in) {
     return OutType(in);
   }
   /** NodeIDs require translation.*/
-  template <class Out> Out get_as(NodeID ni) {
-    if (ni == NodeID()) return Out(-1);
-    else return Out(ni.get_index());
+  template <class Out>
+  inline Out get_as(NodeID ni) {
+    if (ni == NodeID())
+      return Out(-1);
+    else
+      return Out(ni.get_index());
   }
+
+  template <>
+  inline NodeID get_as(int i) {
+    if (i == -1)
+      return NodeID();
+    else
+      return NodeID(i);
+  }
+
   /** Get one type as another, handling vectors or scalars.*/
   template <class OutType, class InType>
-  OutType get_as(const std::vector<InType> in) {
+  inline OutType get_as(const std::vector<InType> in) {
     OutType ret(in.size());
     for (unsigned int i = 0; i < ret.size(); ++i) {
       ret[i] = get_as<typename OutType::value_type>(in[i]);

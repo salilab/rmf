@@ -37,7 +37,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
         if (!categories_[i].reader) {
           clear_data(categories_[i].data, frame);
         }
-        if (frame.get_index() < categories_[i].data.frame) {
+        if (frame.get_index() <
+            static_cast<unsigned int>(categories_[i].data.frame)) {
           RMF_INTERNAL_CHECK(categories_[i].reader, "No old reader found");
           std::string name = get_category_dynamic_file_path(Category(i));
           try {
@@ -57,7 +58,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
             RMF_THROW(Message("Unable to read data from input"), IOException);
           }
         }
-        while (frame.get_index() > categories_[i].data.frame) {
+        while (frame.get_index() >
+               static_cast<unsigned int>(categories_[i].data.frame)) {
           if (!categories_[i].reader->read(categories_[i].data)) {
             //std::cout << "Out of data looking for " << frame << std::endl;
             RMF_TRACE(
@@ -69,7 +71,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
             RMF_TRACE(get_avro_logger(),
                       "Loaded category " << get_category_name(Category(i)));
           }
-          if (frame.get_index() < categories_[i].data.frame) {
+          if (frame.get_index() <
+              static_cast<unsigned int>(categories_[i].data.frame)) {
             RMF_TRACE(get_avro_logger(),
                       "Missing frame for category "
                           << get_category_name(Category(i)));

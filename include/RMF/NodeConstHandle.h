@@ -139,7 +139,7 @@ class RMFEXPORT NodeConstHandle {
  public:
   RMF_COMPARISONS(NodeConstHandle);
   RMF_HASHABLE(NodeConstHandle, return node_.get_index());
-  NodeConstHandle() : node_(-1) {}
+  NodeConstHandle() {}
 
   //! Return the number of child nodes
   std::string get_name() const { return shared_->get_name(node_); }
