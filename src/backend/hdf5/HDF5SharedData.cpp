@@ -229,8 +229,7 @@ void HDF5SharedData::set_sibling(NodeID node, NodeID c) {
   }
 }
 std::string HDF5SharedData::get_name(NodeID node) const {
-  if (static_cast<unsigned int>(node.get_index()) <
-      get_number_of_real_nodes()) {
+  if (static_cast<unsigned int>(node.get_index()) < get_number_of_nodes()) {
     check_node(node);
     return node_names_.get_value(HDF5::DataSetIndexD<1>(node.get_index()));
   } else {
@@ -238,8 +237,7 @@ std::string HDF5SharedData::get_name(NodeID node) const {
   }
 }
 NodeType HDF5SharedData::get_type(NodeID index) const {
-  if (static_cast<unsigned int>(index.get_index()) <
-      get_number_of_real_nodes()) {
+  if (static_cast<unsigned int>(index.get_index()) < get_number_of_nodes()) {
     check_node(index);
     return NodeType(
         node_data_.get_value(HDF5::DataSetIndexD<2>(index.get_index(), TYPE)));
