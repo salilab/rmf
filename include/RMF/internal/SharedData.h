@@ -26,38 +26,35 @@
 #include <boost/shared_ptr.hpp>
 
 RMF_ENABLE_WARNINGS namespace RMF {
-  template <class P> inline uintptr_t get_uint(const P * p) {
+  template <class P>
+  inline uintptr_t get_uint(const P * p) {
     return reinterpret_cast<uintptr_t>(p);
   }
-  template <class P> inline uintptr_t get_uint(boost::shared_ptr<P> p) {
+  template <class P>
+  inline uintptr_t get_uint(boost::shared_ptr<P> p) {
     return reinterpret_cast<uintptr_t>(p.get());
   }
   inline uintptr_t get_uint(NodeID id) { return id.get_index(); }
 
   namespace internal {
 
-#define RMF_SHARED_TYPE(                                                      \
-    lcname, Ucname, PassValue, ReturnValue, PassValues, ReturnValues)         \
-  /** Return a value or the null value.*/                                     \
-  virtual Ucname##Traits::Type get_current_value(NodeID node,                   \
-                                         Key<Ucname##Traits> k) const = 0;    \
-  /** Return a value or the null value.*/                                     \
-  virtual Ucname##Traits::Type get_static_value(NodeID node,                   \
-                                         Key<Ucname##Traits> k) const = 0;    \
-  virtual Ucname##Traits::Type get_current_frame_value( Key<Ucname##Traits> k) const = 0; \
-  virtual Ucname##Traits::Type get_static_frame_value( Key<Ucname##Traits> k) const = 0; \
-  virtual void set_current_value(                                                     \
-      NodeID node, Key<Ucname##Traits> k, Ucname##Traits::Type v) = 0;  \
-  virtual void set_static_value(                                                     \
-      NodeID node, Key<Ucname##Traits> k, Ucname##Traits::Type v) = 0;  \
-  /** for frames */                                                     \
-  virtual void set_current_frame_value( Key<Ucname##Traits> k, Ucname##Traits::Type v) = 0;  \
-  virtual void set_static_frame_value( Key<Ucname##Traits> k, Ucname##Traits::Type v) = 0;  \
-  virtual std::vector<Key<Ucname##Traits> > get_##lcname##_keys(              \
-      Category category) = 0;                                                 \
-  virtual Category get_category(Key<Ucname##Traits> k) const = 0;             \
-  virtual Key<Ucname##Traits> get_##lcname##_key(Category category,           \
-                                                 std::string name) = 0;       \
+#define RMF_SHARED_TYPE(lcname, Ucname, PassValue, ReturnValue, PassValues, \
+                        ReturnValues)                                       \
+  /** Return a value or the null value.*/                                   \
+  virtual Ucname##Traits::Type get_current_value(                           \
+      NodeID node, Key<Ucname##Traits> k) const = 0;                        \
+  /** Return a value or the null value.*/                                   \
+  virtual Ucname##Traits::Type get_static_value(                            \
+      NodeID node, Key<Ucname##Traits> k) const = 0;                        \
+  virtual void set_current_value(NodeID node, Key<Ucname##Traits> k,        \
+                                 Ucname##Traits::Type v) = 0;               \
+  virtual void set_static_value(NodeID node, Key<Ucname##Traits> k,         \
+                                Ucname##Traits::Type v) = 0;                \
+  virtual std::vector<Key<Ucname##Traits> > get_##lcname##_keys(            \
+      Category category) = 0;                                               \
+  virtual Category get_category(Key<Ucname##Traits> k) const = 0;           \
+  virtual Key<Ucname##Traits> get_##lcname##_key(Category category,         \
+                                                 std::string name) = 0;     \
   virtual std::string get_name(Key<Ucname##Traits> k) const = 0
 
   /**
@@ -89,13 +86,15 @@ RMF_ENABLE_WARNINGS namespace RMF {
     RMF_FOREACH_TYPE(RMF_SHARED_TYPE);
     void audit_key_name(std::string name) const;
     void audit_node_name(std::string name) const;
-    template <class T> void set_user_data(int i, const T& d) {
+    template <class T>
+    void set_user_data(int i, const T& d) {
       user_data_[i] = boost::any(d);
     }
     bool get_has_user_data(int i) const {
       return user_data_.find(i) != user_data_.end();
     }
-    template <class T> T get_user_data(int i) const {
+    template <class T>
+    T get_user_data(int i) const {
       RMF_USAGE_CHECK(user_data_.find(i) != user_data_.end(),
                       "No such data found");
       try {
@@ -127,7 +126,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
                       "Collision on association keys.");
       back_association_[v] = nid;
     }
-    template <class T> bool get_has_associated_node(const T& v) const {
+    template <class T>
+    bool get_has_associated_node(const T& v) const {
       return back_association_.find(get_uint(v)) != back_association_.end();
     }
     boost::any get_association(NodeID nid) const {
@@ -145,11 +145,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
     bool get_has_association(NodeID nid) const {
       int id = nid.get_index();
-      if (id >= static_cast<int>(association_.size()))
-        return false;
+      if (id >= static_cast<int>(association_.size())) return false;
       return !association_[id].empty();
     }
-    template <class T> NodeID get_associated_node(const T& d) const {
+    template <class T>
+    NodeID get_associated_node(const T& d) const {
       return back_association_.find(get_uint(d))->second;
     }
     virtual void flush() = 0;
@@ -157,7 +157,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
     virtual unsigned int get_number_of_frames() const = 0;
 
-    //SharedData(HDF5Group g, bool create);
+    // SharedData(HDF5Group g, bool create);
     virtual ~SharedData();
     virtual std::string get_name(NodeID node) const = 0;
     virtual NodeType get_type(NodeID node) const = 0;
@@ -187,29 +187,31 @@ RMF_ENABLE_WARNINGS namespace RMF {
     virtual void reload() = 0;
   };
 
-  template <class Traits> class GenericSharedData {
-  };
-  template <class Traits> class ConstGenericSharedData {
-  };
+  template <class Traits>
+  class GenericSharedData {};
+  template <class Traits>
+  class ConstGenericSharedData {};
 
-#define RMF_GENERIC_SHARED(                                                \
-    lcname, Ucname, PassValue, ReturnValue, PassValues, ReturnValues)      \
-  template <> class ConstGenericSharedData<Ucname##Traits> {               \
-  public:                                                                  \
-    typedef Key<Ucname##Traits> K;                                         \
-    typedef std::vector<K> Ks;                                             \
-  };                                                                    \
-  template <> class GenericSharedData<Ucname##Traits> {                 \
-  public:                                                               \
-  typedef Key<Ucname##Traits> K;                                        \
-  typedef std::vector<K> Ks;                                            \
-  static Ks get_keys(boost::shared_ptr<SharedData> p, Category category) { \
-    return p->get_##lcname##_keys(category);                            \
-    }                                                                   \
-  static K get_key(boost::shared_ptr<SharedData> p, Category category,  \
-                   std::string name) {                                  \
-    return p->get_##lcname##_key(category, name);                       \
-  }                                                                     \
+#define RMF_GENERIC_SHARED(lcname, Ucname, PassValue, ReturnValue, PassValues, \
+                           ReturnValues)                                       \
+  template <>                                                                  \
+  class ConstGenericSharedData<Ucname##Traits> {                               \
+   public:                                                                     \
+    typedef Key<Ucname##Traits> K;                                             \
+    typedef std::vector<K> Ks;                                                 \
+  };                                                                           \
+  template <>                                                                  \
+  class GenericSharedData<Ucname##Traits> {                                    \
+   public:                                                                     \
+    typedef Key<Ucname##Traits> K;                                             \
+    typedef std::vector<K> Ks;                                                 \
+    static Ks get_keys(boost::shared_ptr<SharedData> p, Category category) {   \
+      return p->get_##lcname##_keys(category);                                 \
+    }                                                                          \
+    static K get_key(boost::shared_ptr<SharedData> p, Category category,       \
+                     std::string name) {                                       \
+      return p->get_##lcname##_key(category, name);                            \
+    }                                                                          \
   };
 
   RMF_FOREACH_TYPE(RMF_GENERIC_SHARED);
@@ -223,8 +225,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
      @param create whether to create the file or just open it
      @exception IOException if couldn't create file or unsupported file format
    */
-  RMFEXPORT boost::shared_ptr<SharedData>
-  create_shared_data(std::string path, bool create);
+  RMFEXPORT boost::shared_ptr<SharedData> create_shared_data(std::string path,
+                                                             bool create);
 
   /**
      Construct shared data for the RMF file in 'path' in read only mode
@@ -235,19 +237,17 @@ RMF_ENABLE_WARNINGS namespace RMF {
      @exception RMF::IOException if couldn't open file or unsupported file
                 format
    */
-    RMFEXPORT boost::shared_ptr<SharedData>
-    create_read_only_shared_data(std::string path);
+  RMFEXPORT boost::shared_ptr<SharedData> create_read_only_shared_data(
+      std::string path);
+
+  RMFEXPORT boost::shared_ptr<SharedData> create_shared_data_in_buffer(
+      std::string& buffer, bool create);
 
   RMFEXPORT boost::shared_ptr<SharedData>
-  create_shared_data_in_buffer(std::string& buffer,
-                                                     bool create);
-
-  RMFEXPORT boost::shared_ptr<SharedData>
-  create_read_only_shared_data_from_buffer(
-      const std::string& buffer);
+      create_read_only_shared_data_from_buffer(const std::string& buffer);
 
   }  // namespace internal
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

@@ -48,48 +48,42 @@ RMF_ENABLE_WARNINGS namespace RMF {
         file_, kc, get_category_name_impl(kc), arity);                    \
   }
 
-#define RMF_HDF5_SHARED_TYPE(lcname, Ucname, PassValue, ReturnValue,          \
-                             PassValues, ReturnValues)                        \
-  Ucname##Traits::Type get_current_value(NodeID node,                         \
-                                         Key<Ucname##Traits> k) const {       \
-    return get_value_helper<Ucname##Traits>(get_current_frame(), node, k);    \
-  }                                                                           \
-  Ucname##Traits::Type get_static_value(NodeID node,                          \
-                                        Key<Ucname##Traits> k) const {        \
-    return get_value_helper<Ucname##Traits>(ALL_FRAMES, node, k);             \
-  }                                                                           \
-  Ucname##Traits::Type get_current_frame_value(Key<Ucname##Traits>) const {   \
-    return Ucname##Traits::get_null_value();                                  \
-  }                                                                           \
-  Ucname##Traits::Type get_static_frame_value(Key<Ucname##Traits>) const {    \
-    return Ucname##Traits::get_null_value();                                  \
-  }                                                                           \
-  void set_current_value(NodeID node, Key<Ucname##Traits> k,                  \
-                         Ucname##Traits::Type v) {                            \
-    return set_value_helper<Ucname##Traits>(get_current_frame(), node, k, v); \
-  }                                                                           \
-  void set_static_value(NodeID node, Key<Ucname##Traits> k,                   \
-                        Ucname##Traits::Type v) {                             \
-    return set_value_helper<Ucname##Traits>(ALL_FRAMES, node, k, v);          \
-  }                                                                           \
-  void set_current_frame_value(Key<Ucname##Traits>, Ucname##Traits::Type) {   \
-    RMF_THROW(Message("Not supported in this hdf5_backend"), IOException);    \
-  }                                                                           \
-  void set_static_frame_value(Key<Ucname##Traits>, Ucname##Traits::Type) {    \
-    RMF_THROW(Message("Not supported in this hdf5_backend"), IOException);    \
-  }                                                                           \
-  std::vector<Key<Ucname##Traits> > get_##lcname##_keys(Category category) {  \
-    return get_keys<Ucname##Traits>(category);                                \
-  }                                                                           \
-  Key<Ucname##Traits> get_##lcname##_key(Category category,                   \
-                                         std::string name) {                  \
-    return get_key<Ucname##Traits>(category, name);                           \
-  }                                                                           \
-  std::string get_name(Key<Ucname##Traits> k) const {                         \
-    return key_data_map_.find(k.get_id())->second.name;                       \
-  }                                                                           \
-  Category get_category(Key<Ucname##Traits> key) const {                      \
-    return key_data_map_.find(key.get_id())->second.category;                 \
+#define RMF_HDF5_SHARED_TYPE(lcname, Ucname, PassValue, ReturnValue,         \
+                             PassValues, ReturnValues)                       \
+  Ucname##Traits::Type get_current_value(NodeID node,                        \
+                                         Key<Ucname##Traits> k) const {      \
+    return get_value<Ucname##Traits>(get_current_frame(), node, k);          \
+  }                                                                          \
+  Ucname##Traits::Type get_static_value(NodeID node,                         \
+                                        Key<Ucname##Traits> k) const {       \
+    return get_value<Ucname##Traits>(ALL_FRAMES, node, k);                   \
+  }                                                                          \
+  Ucname##Traits::Type get_current_frame_value(Key<Ucname##Traits>) const {  \
+    return Ucname##Traits::get_null_value();                                 \
+  }                                                                          \
+  Ucname##Traits::Type get_static_frame_value(Key<Ucname##Traits>) const {   \
+    return Ucname##Traits::get_null_value();                                 \
+  }                                                                          \
+  void set_current_value(NodeID node, Key<Ucname##Traits> k,                 \
+                         Ucname##Traits::Type v) {                           \
+    return set_value<Ucname##Traits>(get_current_frame(), node, k, v);       \
+  }                                                                          \
+  void set_static_value(NodeID node, Key<Ucname##Traits> k,                  \
+                        Ucname##Traits::Type v) {                            \
+    return set_value<Ucname##Traits>(ALL_FRAMES, node, k, v);                \
+  }                                                                          \
+  std::vector<Key<Ucname##Traits> > get_##lcname##_keys(Category category) { \
+    return get_keys<Ucname##Traits>(category);                               \
+  }                                                                          \
+  Key<Ucname##Traits> get_##lcname##_key(Category category,                  \
+                                         std::string name) {                 \
+    return get_key<Ucname##Traits>(category, name);                          \
+  }                                                                          \
+  std::string get_name(Key<Ucname##Traits> k) const {                        \
+    return key_data_map_.find(k.get_id())->second.name;                      \
+  }                                                                          \
+  Category get_category(Key<Ucname##Traits> key) const {                     \
+    return key_data_map_.find(key.get_id())->second.category;                \
   }
 
   class HDF5SharedData : public internal::SharedData {
@@ -306,8 +300,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
 
     template <class TypeTraits>
-    typename TypeTraits::Type get_value_helper(FrameID frame, NodeID node,
-                                               Key<TypeTraits> k) const {
+    typename TypeTraits::Type get_value(FrameID frame, NodeID node,
+                                        Key<TypeTraits> k) const {
       int category_index = get_category_index(get_category(k));
       if (category_index == -1) {
         return TypeTraits::get_null_value();
@@ -322,8 +316,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
       }
     }
     template <class TypeTraits>
-    void set_value_helper(FrameID frame, NodeID node, Key<TypeTraits> k,
-                          typename TypeTraits::Type v) {
+    void set_value(FrameID frame, NodeID node, Key<TypeTraits> k,
+                   typename TypeTraits::Type v) {
       int category_index = get_category_index_create(get_category(k));
       int key_index = get_key_index_create(k, frame);
       set_value_impl<TypeTraits>(node, category_index, key_index, frame, v);
@@ -618,7 +612,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       return ret;
     }
 
-   template <class TypeTraits>
+    template <class TypeTraits>
     Key<TypeTraits> get_key(Category category, std::string name) {
       NameKeyInnerMap::iterator it = name_key_map_[category].find(name);
       if (it == name_key_map_[category].end()) {

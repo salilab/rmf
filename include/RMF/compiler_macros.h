@@ -31,7 +31,7 @@
 #endif
 
 #if RMF_COMPILER_HAS_OVERRIDE
-#define RMF_OVERRIDE
+#define RMF_OVERRIDE override
 #else
 #define RMF_OVERRIDE
 #endif
