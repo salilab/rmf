@@ -29,6 +29,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
   RMF_SCHEMA(Frame);
 
   }  // namespace avro_backend
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

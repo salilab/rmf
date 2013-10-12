@@ -25,7 +25,7 @@
 RMF_ENABLE_WARNINGS
 
 #ifndef SWIG
-    template <bool REFED>
+template <bool REFED>
 struct PyPointer : boost::noncopyable {
   PyObject* ptr_;
   PyPointer(PyObject* ptr) : ptr_(ptr) {
@@ -53,14 +53,13 @@ struct PyPointer : boost::noncopyable {
 typedef PyPointer<true> PyReceivePointer;
 typedef PyPointer<false> PyOwnerPointer;
 
-#define RMF_PYTHON_CALL(call)                                               \
-  {                                                                         \
-    int rc = call;                                                          \
-    if (rc != 0) {                                                          \
-      RMF_INTERNAL_CHECK(0,                                                 \
-                         RMF::internal::get_error_message(                  \
-                             "Python call failed: ", #call, " with ", rc)); \
-    }                                                                       \
+#define RMF_PYTHON_CALL(call)                                                  \
+  {                                                                            \
+    int rc = call;                                                             \
+    if (rc != 0) {                                                             \
+      RMF_INTERNAL_CHECK(0, RMF::internal::get_error_message(                  \
+                                "Python call failed: ", #call, " with ", rc)); \
+    }                                                                          \
   }
 
 using boost::enable_if;
@@ -69,30 +68,44 @@ using boost::mpl::not_;
 using boost::is_convertible;
 using boost::is_base_of;
 using boost::is_pointer;
-//using namespace boost;
-//using namespace boost::mpl;
+// using namespace boost;
+// using namespace boost::mpl;
 
-template <class V> void assign(V*& a, const V& b) { a = new V(b); }
-template <class V> void assign(V& a, const V& b) { a = b; }
-template <class V> void assign(SwigValueWrapper<V>& a, const V& b) { a = b; }
-template <class T> void delete_if_pointer(T& t) { t = T(); }
-template <class T> void delete_if_pointer(T*& t) {
+template <class V>
+void assign(V*& a, const V& b) {
+  a = new V(b);
+}
+template <class V>
+void assign(V& a, const V& b) {
+  a = b;
+}
+template <class V>
+void assign(SwigValueWrapper<V>& a, const V& b) {
+  a = b;
+}
+template <class T>
+void delete_if_pointer(T& t) {
+  t = T();
+}
+template <class T>
+void delete_if_pointer(T*& t) {
   if (t) {
     *t = T();
     delete t;
   }
 }
-template <class T> void delete_if_pointer(SwigValueWrapper<T>&) {}
+template <class T>
+void delete_if_pointer(SwigValueWrapper<T>&) {}
 
 /*
    Handle assignment into a container. Swig always provides the
    values by reference so we need to determine if the container wants
    them by value or reference and dereference if necessary.
  */
-template <class Container, class Value> struct Assign {
+template <class Container, class Value>
+struct Assign {
   static void assign(Container& c, unsigned int i, Value* v) { c[i] = *v; }
   static void assign(Container& c, unsigned int i, const Value& v) { c[i] = v; }
-
 };
 
 /*
@@ -101,14 +114,16 @@ template <class Container, class Value> struct Assign {
    pointer for objects, but just want the object type).
  */
 
-template <class T, class Enabled = void> struct ValueOrObject {
+template <class T, class Enabled = void>
+struct ValueOrObject {
   static const T& get(const T& t) { return t; }
   static const T& get(const T* t) { return *t; }
   typedef T type;
   typedef T store_type;
 };
 
-template <class T> struct ConvertAllBase {
+template <class T>
+struct ConvertAllBase {
   BOOST_STATIC_ASSERT(!is_pointer<T>::value);
   template <class SwigData>
   static bool get_is_cpp_object(PyObject* o, SwigData st) {
@@ -118,7 +133,8 @@ template <class T> struct ConvertAllBase {
   }
 };
 
-template <class T> struct ConvertValueBase : public ConvertAllBase<T> {
+template <class T>
+struct ConvertValueBase : public ConvertAllBase<T> {
   BOOST_STATIC_ASSERT(!is_pointer<T>::value);
   template <class SwigData>
   static const T& get_cpp_object(PyObject* o, SwigData st) {
@@ -162,7 +178,8 @@ struct Convert : public ConvertValueBase<T> {
    These all result in more than one layer of python objects being created
    instead of a single one as in the above cases.
  */
-template <class T, class VT, class ConvertVT> struct ConvertSequenceHelper {
+template <class T, class VT, class ConvertVT>
+struct ConvertSequenceHelper {
   typedef typename ValueOrObject<VT>::type V;
   BOOST_STATIC_ASSERT(!is_pointer<T>::value);
   template <class SwigData>
@@ -195,20 +212,18 @@ template <class T, class VT, class ConvertVT> struct ConvertSequenceHelper {
 };
 
 template <class T, class ConvertValue, class Enabled = void>
-struct ConvertSequence {
-
-};
+struct ConvertSequence {};
 
 template <class T, class ConvertT>
-struct ConvertSequence<T,
-                       ConvertT,
-                       typename enable_if<is_base_of<
-                           boost::array<typename T::value_type, T::static_size>,
-                           T> >::type> {
+struct ConvertSequence<
+    T, ConvertT,
+    typename enable_if<is_base_of<
+        boost::array<typename T::value_type, T::static_size>, T> >::type> {
   static const int converter = 5;
   typedef ConvertSequenceHelper<T, typename T::value_type, ConvertT> Helper;
   typedef typename ValueOrObject<typename T::value_type>::type VT;
-  template <class SwigData> static T get_cpp_object(PyObject* o, SwigData st) {
+  template <class SwigData>
+  static T get_cpp_object(PyObject* o, SwigData st) {
     if (!get_is_cpp_object(o, st)) {
       throw std::runtime_error("wrong type");
     }
@@ -261,8 +276,7 @@ struct ConvertSequence<std::pair<T, T>, ConvertT> {
       return PySequence_Size(in) == 2;
   }
   template <class SwigData>
-  static PyObject* create_python_object(const std::pair<T, T>& t,
-                                        SwigData st,
+  static PyObject* create_python_object(const std::pair<T, T>& t, SwigData st,
                                         int OWN) {
     PyReceivePointer ret(PyTuple_New(2));
     PyReceivePointer of(Convert<VT>::create_python_object(t.first, st, OWN));
@@ -273,10 +287,12 @@ struct ConvertSequence<std::pair<T, T>, ConvertT> {
   }
 };
 
-template <class T, class ConvertT> struct ConvertVectorBase {
+template <class T, class ConvertT>
+struct ConvertVectorBase {
   typedef ConvertSequenceHelper<T, typename T::value_type, ConvertT> Helper;
   typedef typename ValueOrObject<typename T::value_type>::type VT;
-  template <class SwigData> static T get_cpp_object(PyObject* o, SwigData st) {
+  template <class SwigData>
+  static T get_cpp_object(PyObject* o, SwigData st) {
     if (!get_is_cpp_object(o, st)) {
       throw std::runtime_error("wrong type");
     }
@@ -301,12 +317,13 @@ template <class T, class ConvertT> struct ConvertVectorBase {
 };
 
 template <class T, class ConvertT>
-struct ConvertSequence<std::vector<T>, ConvertT> :
-    public ConvertVectorBase<std::vector<T>, ConvertT> {
+struct ConvertSequence<std::vector<T>, ConvertT> : public ConvertVectorBase<
+    std::vector<T>, ConvertT> {
   static const int converter = 7;
 };
 
-template <> struct Convert<std::string> {
+template <>
+struct Convert<std::string> {
   static const int converter = 10;
   template <class SwigData>
   static std::string get_cpp_object(PyObject* o, SwigData) {
@@ -346,16 +363,20 @@ struct ConvertFloatBase {
   }
 };
 
-template <> struct Convert<float> : public ConvertFloatBase {
+template <>
+struct Convert<float> : public ConvertFloatBase {
   static const int converter = 11;
 };
-template <> struct Convert<double> : public ConvertFloatBase {
+template <>
+struct Convert<double> : public ConvertFloatBase {
   static const int converter = 12;
 };
 
-template <> struct Convert<int> {
+template <>
+struct Convert<int> {
   static const int converter = 13;
-  template <class SwigData> static int get_cpp_object(PyObject* o, SwigData) {
+  template <class SwigData>
+  static int get_cpp_object(PyObject* o, SwigData) {
     if (!PyInt_Check(o)) {
       throw std::runtime_error("wrong type");
     } else {

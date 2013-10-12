@@ -33,12 +33,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     void initialize(DS ds) {
       RMF_USAGE_CHECK(!dirty_, "Trying to set a set that is already set");
       ds_ = ds;
-      if (ds == DS())
-        return;
+      if (ds == DS()) return;
       extents_ = ds_.get_size();
       cache_.resize(boost::extents[extents_[0]][extents_[1]]);
-      if (get_current_frame() >= extents_[2])
-        return;
+      if (get_current_frame() >= extents_[2]) return;
       if (TypeTraits::HDF5Traits::BatchOperations) {
         HDF5::DataSetIndexD<3> lb(0, 0, get_current_frame());
         HDF5::DataSetIndexD<3> sz = extents_;
@@ -95,8 +93,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       extents_ = HDF5::DataSetIndexD<3>(0, 0, 0);
     }
     void flush() {
-      if (!dirty_)
-        return;
+      if (!dirty_) return;
       if (extents_ != ds_.get_size()) {
         ds_.set_size(extents_);
       }
@@ -109,8 +106,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
             data[i * extents_[1] + j] = cache_[i][j];
           }
         }
-        ds_.set_block(
-            lb, sz, get_as<typename TypeTraits::HDF5Traits::Types>(data));
+        ds_.set_block(lb, sz,
+                      get_as<typename TypeTraits::HDF5Traits::Types>(data));
       } else {
         for (unsigned int i = 0; i < get_size()[0]; ++i) {
           for (unsigned int j = 0; j < get_size()[1]; ++j) {
@@ -126,7 +123,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       RMF_INTERNAL_CHECK(!name_.empty(), "Name never set");
       if (ds_ == DS()) {
         HDF5::DataSetCreationPropertiesD<typename TypeTraits::HDF5Traits, 3>
-        props;
+            props;
         props.set_chunk_size(HDF5::DataSetIndexD<3>(256, 4, 1));
         props.set_compression(HDF5::GZIP_COMPRESSION);
         ds_ = parent_.add_child_data_set<typename TypeTraits::HDF5Traits, 3>(
@@ -169,7 +166,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   };
 
   }  // namespace hdf5_backend
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

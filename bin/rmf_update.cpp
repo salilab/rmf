@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
       std::cout << "Nothing to do" << std::endl;
     }
   }
-  catch (const std::exception & e) {
+  catch (const std::exception& e) {
     std::cerr << "Error: " << e.what() << std::endl;
   }
   return 0;

@@ -15,8 +15,7 @@ unsigned int get_size(boost::filesystem::path path) {
   if (boost::filesystem::is_directory(path)) {
     unsigned int ret = 0;
     for (boost::filesystem::directory_iterator it(path);
-         it != boost::filesystem::directory_iterator();
-         it++) {
+         it != boost::filesystem::directory_iterator(); it++) {
       ret += get_size(*it);
     }
     return ret;
@@ -84,8 +83,7 @@ void add_frame(RMF::FileHandle fh) {
   add_coordinates(fh.get_root_node(), pf);
 }
 
-void benchmark(std::string type,
-               boost::filesystem::path path,
+void benchmark(std::string type, boost::filesystem::path path,
                unsigned int nframes) {
   boost::timer timer;
   {
@@ -98,11 +96,10 @@ void benchmark(std::string type,
   std::cout << type << " with " << nframes << " frames is " << get_size(path)
             << " in " << timer.elapsed() << std::endl;
 }
-
 }
 
 int main(int, char**) {
-  std::string suffixes[] = { "rmf", "rmf2", "rmfa" };
+  std::string suffixes[] = {"rmf", "rmf2", "rmfa"};
   try {
 #if BOOST_VERSION > 104400
     boost::filesystem::path temp = boost::filesystem::unique_path(
@@ -121,7 +118,7 @@ int main(int, char**) {
       benchmark(suffixes[i], path100, 100);
     }
   }
-  catch (const std::exception & e) {
+  catch (const std::exception& e) {
     std::cerr << "Exception thrown: " << e.what() << std::endl;
   }
   return 0;

@@ -42,6 +42,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     Category get_category_impl(unsigned int id) const {
       return key_data_map_.find(id)->second.category;
     }
+
    public:
     template <class Traits>
     std::string get_name(Key<Traits> k) const {
@@ -72,8 +73,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
 
     const std::string& get_node_string(NodeID node) const {
-      if (node == NodeID())
-        return frame_key_;
+      if (node == NodeID()) return frame_key_;
       return node_keys_[node.get_index()];
     }
 
@@ -91,20 +91,21 @@ RMF_ENABLE_WARNINGS namespace RMF {
       node_keys_.push_back(oss.str());
     }
 
-    virtual std::string get_name(Category kc) const RMF_OVERRIDE {
+    RMF_BACKEND_VIRTUAL std::string get_name(Category kc) const
+        RMF_BACKEND_OVERRIDE {
       return category_name_map_.find(kc)->second;
     }
 
-    virtual Categories get_categories() const RMF_OVERRIDE {
+    RMF_BACKEND_VIRTUAL Categories get_categories() const RMF_BACKEND_OVERRIDE {
       Categories ret;
       for (CategoryNameMap::const_iterator it = category_name_map_.begin();
-           it != category_name_map_.end();
-           ++it) {
+           it != category_name_map_.end(); ++it) {
         ret.push_back(it->first);
       }
       return ret;
     }
-    virtual Category get_category(std::string name) RMF_OVERRIDE {
+    RMF_BACKEND_VIRTUAL Category
+    get_category(std::string name) RMF_BACKEND_OVERRIDE {
       NameCategoryMap::iterator it = name_category_map_.find(name);
       if (it == name_category_map_.end()) {
         unsigned int id = category_name_map_.size();
@@ -118,11 +119,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
 
     AvroKeysAndCategories(std::string path) : SharedData(path) {}
-
   };
 
   }  // namespace avro_backend
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

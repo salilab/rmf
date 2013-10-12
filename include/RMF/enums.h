@@ -55,7 +55,6 @@ enum NodeType {
 #endif
 };
 
-
 /** Return a string version of the type name.*/
 RMFEXPORT std::string get_type_name(NodeType t);
 
@@ -63,7 +62,6 @@ RMFEXPORT std::string get_type_name(NodeType t);
 RMFEXPORT std::ostream& operator<<(std::ostream& out, NodeType t);
 RMFEXPORT std::istream& operator>>(std::istream& in, NodeType& t);
 #endif
-
 
 //! The types of the frames.
 enum FrameType {
@@ -86,7 +84,6 @@ RMFEXPORT std::string get_frame_type_name(FrameType t);
 RMFEXPORT std::ostream& operator<<(std::ostream& out, FrameType t);
 RMFEXPORT std::istream& operator>>(std::istream& in, FrameType& t);
 #endif
-
 
 } /* namespace RMF */
 

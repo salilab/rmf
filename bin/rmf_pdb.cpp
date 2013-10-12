@@ -14,34 +14,26 @@
 #include <fstream>
 
 RMF_ENABLE_WARNINGS namespace {
-  std::string description = "Convert an rmf file into an pdb file suitable for "
-                            "opening in a pdb viewer.";
+  std::string description =
+      "Convert an rmf file into an pdb file suitable for "
+      "opening in a pdb viewer.";
 
   std::string element_names[] = {
-    "H", "HE", "LI", "BE", "B", "C", "N", "O", "F", "NE", "NA", "MG", "AL",
-    "SI", "P", "S", "CL", "AR", "K", "CA", "SC", "TI", "V", "CR", "MN", "FE",
-    "CO", "NI", "CU", "ZN", "GA", "GE", "AS", "SE", "BR", "KR", "RB", "SR", "Y",
-    "ZR", "NB", "MO", "TC", "RU", "RH", "PD", "AG", "CD", "IN", "SN", "SB",
-    "TE", "I", "XE", "CS", "BA", "LA", "CE", "PR", "ND", "PM", "SM", "EU", "GD",
-    "TB", "DY", "HO", "ER", "TM", "YB", "LU", "HF", "TA", "W", "RE", "OS", "IR",
-    "PT", "AU", "HG", "TL", "PB", "BI", "PO", "AT", "RN", "FR", "RA", "AC",
-    "TH", "PA", "U", "NP", "PU", "AM", "CM", "BK", "CF", "ES", "FM", "MD", "NO",
-    "LR", "Db", "JL", "RF",
-  };
+      "H",  "HE", "LI", "BE", "B",  "C",  "N",  "O",  "F",  "NE", "NA", "MG",
+      "AL", "SI", "P",  "S",  "CL", "AR", "K",  "CA", "SC", "TI", "V",  "CR",
+      "MN", "FE", "CO", "NI", "CU", "ZN", "GA", "GE", "AS", "SE", "BR", "KR",
+      "RB", "SR", "Y",  "ZR", "NB", "MO", "TC", "RU", "RH", "PD", "AG", "CD",
+      "IN", "SN", "SB", "TE", "I",  "XE", "CS", "BA", "LA", "CE", "PR", "ND",
+      "PM", "SM", "EU", "GD", "TB", "DY", "HO", "ER", "TM", "YB", "LU", "HF",
+      "TA", "W",  "RE", "OS", "IR", "PT", "AU", "HG", "TL", "PB", "BI", "PO",
+      "AT", "RN", "FR", "RA", "AC", "TH", "PA", "U",  "NP", "PU", "AM", "CM",
+      "BK", "CF", "ES", "FM", "MD", "NO", "LR", "Db", "JL", "RF", };
 
   // change atom type to string for Hao's hetatom code
-  std::string get_pdb_string(double x,
-                             double y,
-                             double z,
-                             int index,
-                             std::string atom_name,
-                             std::string rt,
-                             char chain,
-                             int res_index,
-                             char res_icode,
-                             double occupancy,
-                             double tempFactor,
-                             std::string element_name) {
+  std::string get_pdb_string(double x, double y, double z, int index,
+                             std::string atom_name, std::string rt, char chain,
+                             int res_index, char res_icode, double occupancy,
+                             double tempFactor, std::string element_name) {
     std::stringstream out;
 
     if (atom_name.find("HET:") == 0) {
@@ -49,7 +41,7 @@ RMF_ENABLE_WARNINGS namespace {
     } else {
       out << "ATOM  ";
     }
-    //7-11 : atom id
+    // 7-11 : atom id
     out.setf(std::ios::right, std::ios::adjustfield);
     out.width(5);
     out << index;
@@ -78,16 +70,16 @@ RMF_ENABLE_WARNINGS namespace {
     out << " ";
     // 18-20 : residue name
     out << std::right << std::setw(3) << rt.substr(0, 3);
-    //skip 21
+    // skip 21
     out.width(1);
     out << " ";
     // 22: chain identifier
     out << chain;
-    //23-26: residue number
+    // 23-26: residue number
     out.setf(std::ios::right, std::ios::adjustfield);
     out.width(4);
     out << res_index;
-    //27: residue insertion code
+    // 27: residue insertion code
     out.width(1);
     out << res_icode;
     out.setf(std::ios::fixed, std::ios::floatfield);
@@ -102,35 +94,31 @@ RMF_ENABLE_WARNINGS namespace {
     out.width(8);
     out.precision(3);
     out << z;
-    //55:60 occupancy
+    // 55:60 occupancy
     out.width(6);
     out.precision(2);
     out << occupancy;
-    //61-66: temp. factor
+    // 61-66: temp. factor
     out.width(6);
     out.precision(2);
     out << tempFactor;
     // 73 - 76  LString(4)      Segment identifier, left-justified.
     out.width(10);
-    out << "";  //TODO
-                // 77 - 78  LString(2)      Element symbol, right-justified.
+    out << "";  // TODO
+    // 77 - 78  LString(2)      Element symbol, right-justified.
     out.width(2);
     out.setf(std::ios::right, std::ios::adjustfield);
     out << element_name;
     //     79 - 80        LString(2)      Charge on the atom.
     out.width(2);
-    out << "" << std::endl;  //TODO
+    out << "" << std::endl;  // TODO
     return out.str();
   }
 
-  int write_atoms(std::ostream & out,
-                  int current_index,
-                  RMF::NodeConstHandle nh,
-                  RMF::AtomConstFactory af,
-                  RMF::ChainConstFactory cf,
-                  RMF::ResidueConstFactory rf,
-                  char chain = -1,
-                  int residue_index = -1,
+  int write_atoms(std::ostream & out, int current_index,
+                  RMF::NodeConstHandle nh, RMF::AtomConstFactory af,
+                  RMF::ChainConstFactory cf, RMF::ResidueConstFactory rf,
+                  char chain = -1, int residue_index = -1,
                   std::string residue_type = std::string()) {
     if (cf.get_is(nh)) {
       chain = cf.get(nh).get_chain_id();
@@ -146,31 +134,16 @@ RMF_ENABLE_WARNINGS namespace {
       int element = a.get_element();
       // not safe
       std::string element_name = element_names[element - 1];
-      std::string str = get_pdb_string(coords[0],
-                                       coords[1],
-                                       coords[2],
-                                       ++current_index,
-                                       nh.get_name(),
-                                       residue_type,
-                                       (chain == -1 ? ' ' : (chain + 'A')),
-                                       residue_index,
-                                       ' ',
-                                       1.0,
-                                       0.0,
-                                       element_name);
+      std::string str = get_pdb_string(
+          coords[0], coords[1], coords[2], ++current_index, nh.get_name(),
+          residue_type, (chain == -1 ? ' ' : (chain + 'A')), residue_index, ' ',
+          1.0, 0.0, element_name);
       out << str;
     }
     RMF::NodeConstHandles ch = nh.get_children();
     for (unsigned int i = 0; i < ch.size(); ++i) {
-      current_index = write_atoms(out,
-                                  current_index,
-                                  ch[i],
-                                  af,
-                                  cf,
-                                  rf,
-                                  chain,
-                                  residue_index,
-                                  residue_type);
+      current_index = write_atoms(out, current_index, ch[i], af, cf, rf, chain,
+                                  residue_index, residue_type);
     }
     return current_index;
   }
@@ -210,7 +183,7 @@ int main(int argc, char** argv) {
     }
     return 0;
   }
-  catch (const std::exception & e) {
+  catch (const std::exception& e) {
     std::cerr << "Error: " << e.what() << std::endl;
   }
 }

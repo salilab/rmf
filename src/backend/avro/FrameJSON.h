@@ -31,10 +31,10 @@ struct Frame {
   std::string type;
   std::vector<int32_t> parents;
 };
-
 }
 namespace rmf_avro {
-template <> struct codec_traits<RMF_avro_backend::Frame> {
+template <>
+struct codec_traits<RMF_avro_backend::Frame> {
   static void encode(Encoder& e, const RMF_avro_backend::Frame& v) {
     rmf_avro::encode(e, v.index);
     rmf_avro::encode(e, v.name);
@@ -48,6 +48,5 @@ template <> struct codec_traits<RMF_avro_backend::Frame> {
     rmf_avro::decode(d, v.parents);
   }
 };
-
 }
 #endif

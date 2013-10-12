@@ -42,8 +42,7 @@ std::string FileConstHandle::get_producer() const {
   RMF_FILE_CATCH();
 }
 
-Floats get_values(const NodeConstHandles& nodes,
-                  FloatKey k,
+Floats get_values(const NodeConstHandles& nodes, FloatKey k,
                   Float missing_value) {
   Floats ret(nodes.size(), missing_value);
   for (unsigned int i = 0; i < nodes.size(); ++i) {

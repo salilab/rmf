@@ -15,20 +15,17 @@ namespace {
 std::string description("Dump the data from an avro archive with frame data");
 
 template <class TypeTraits>
-bool show_type(std::string node_name,
-               bool shown,
+bool show_type(std::string node_name, bool shown,
                const std::vector<typename TypeTraits::AvroType>& data,
                const std::map<std::string, int>& index) {
-  if (data.empty())
-    return shown;
+  if (data.empty()) return shown;
   std::cout << "  node: " << node_name << std::endl;
   for (unsigned int i = 0; i < data.size(); ++i) {
 
     if (!TypeTraits::get_is_null_value(data[i])) {
       for (typename std::map<std::string, int>::const_iterator it =
                index.begin();
-           it != index.end();
-           ++it) {
+           it != index.end(); ++it) {
         if (it->second == i) {
           std::cout << "    " << it->first << ": " << RMF::Showable(data[i])
                     << std::endl;
@@ -39,9 +36,7 @@ bool show_type(std::string node_name,
   return true;
 }
 template <class Type>
-bool try_read(std::string type,
-              std::string input,
-              rmf_avro::ValidSchema schema,
+bool try_read(std::string type, std::string input, rmf_avro::ValidSchema schema,
               bool count) {
   std::cout << "Trying " << type << std::endl;
   boost::shared_ptr<rmf_avro::Encoder> encoder =
@@ -57,10 +52,9 @@ bool try_read(std::string type,
     do {
       try {
         // a bit silly
-        if (!reader.read(data))
-          break;
+        if (!reader.read(data)) break;
       }
-      catch (const std::exception & e) {
+      catch (const std::exception& e) {
         break;
       }
       ok = true;
@@ -74,7 +68,7 @@ bool try_read(std::string type,
     } while (true);
     return ok;
   }
-  catch (const std::exception & e) {
+  catch (const std::exception& e) {
     std::cerr << "Error: " << e.what() << std::endl;
     return false;
   }
@@ -82,9 +76,9 @@ bool try_read(std::string type,
 }
 }
 
-#define RMF_SHOW_TYPE(                                                \
-    lcname, Ucname, PassValue, ReturnValue, PassValues, ReturnValues) \
-  shown = show_type<RMF::Ucname##Traits>(                             \
+#define RMF_SHOW_TYPE(lcname, Ucname, PassValue, ReturnValue, PassValues, \
+                      ReturnValues)                                       \
+  shown = show_type<RMF::Ucname##Traits>(                                 \
       it->first, shown, it->second.lcname##_data, data.index.lcname##_index)
 
 int main(int argc, char** argv) {
@@ -105,9 +99,7 @@ int main(int argc, char** argv) {
                  "all", input, RMF::avro_backend::get_All_schema(), count)) {
     return 0;
   } else if (try_read<RMF_avro_backend::Frame>(
-                 "frame",
-                 input,
-                 RMF::avro_backend::get_Frame_schema(),
+                 "frame", input, RMF::avro_backend::get_Frame_schema(),
                  count)) {
     return 0;
   }

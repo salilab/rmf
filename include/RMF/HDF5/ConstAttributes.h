@@ -23,7 +23,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
       (a few k at most). See MutableAttributes for the methods to change
       the attribute data.
    */
-  template <class Base> class ConstAttributes : public Base {
+  template <class Base>
+  class ConstAttributes : public Base {
 #ifndef SWIG
    protected:
     ConstAttributes(boost::shared_ptr<SharedHandle> h) : Base(h) {}
@@ -43,10 +44,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
       if (!H5Aexists(Base::get_shared_handle()->get_hid(), name.c_str())) {
         return typename TypeTraits::Types();
       } else {
-        RMF_HDF5_HANDLE(a,
-                        H5Aopen(Base::get_shared_handle()->get_hid(),
-                                name.c_str(),
-                                H5P_DEFAULT),
+        RMF_HDF5_HANDLE(a, H5Aopen(Base::get_shared_handle()->get_hid(),
+                                   name.c_str(), H5P_DEFAULT),
                         &H5Aclose);
         RMF_HDF5_HANDLE(s, H5Aget_space(a), &H5Sclose);
         hsize_t dim, maxdim;
@@ -57,22 +56,23 @@ RMF_ENABLE_WARNINGS namespace RMF {
       }
     }
     /** @} */
-    template <class CT, class CF> CT copy_to(const CF& cf) const {
+    template <class CT, class CF>
+    CT copy_to(const CF& cf) const {
       return CT(cf.begin(), cf.end());
     }
     bool get_has_attribute(std::string nm) const {
-      return H5Aexists_by_name(
-                 Base::get_handle(), ".", nm.c_str(), H5P_DEFAULT) > 0;
+      return H5Aexists_by_name(Base::get_handle(), ".", nm.c_str(),
+                               H5P_DEFAULT) > 0;
     }
 /** \name Nontemplated attributes
     When using python, call the non-template versions of the
     attribute manipulation methods.
     @{
  */
-#define RMF_HDF5_CONST_ATTRIBUTE(                                     \
-    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues) \
-  ReturnValues get_##lcname##_attribute(std::string nm) const {       \
-    return get_attribute<UCName##Traits>(nm);                         \
+#define RMF_HDF5_CONST_ATTRIBUTE(lcname, UCName, PassValue, ReturnValue, \
+                                 PassValues, ReturnValues)               \
+  ReturnValues get_##lcname##_attribute(std::string nm) const {          \
+    return get_attribute<UCName##Traits>(nm);                            \
   }
 
     RMF_FOREACH_SIMPLE_TYPE(RMF_HDF5_CONST_ATTRIBUTE);
@@ -81,7 +81,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   };
 
   } /* namespace HDF5 */
-}   /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

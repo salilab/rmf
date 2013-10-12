@@ -21,8 +21,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   namespace avro_backend {
 
   template <class Base>
-  AvroSharedData<Base>::AvroSharedData(std::string g,
-                                       bool create,
+  AvroSharedData<Base>::AvroSharedData(std::string g, bool create,
                                        bool read_only)
       : Base(g, create, read_only) {
     if (create) {
@@ -57,7 +56,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
     return NodeType(ret_type);
   }
   template <class Base>
-  NodeID AvroSharedData<Base>::add_child(NodeID node, std::string name, NodeType t) {
+  NodeID AvroSharedData<Base>::add_child(NodeID node, std::string name,
+                                         NodeType t) {
     NodeID index(P::get_nodes_data().size());
     P::access_node(index).name = name;
     P::access_node(index).type = boost::lexical_cast<std::string>(NodeType(t));
@@ -65,17 +65,9 @@ RMF_ENABLE_WARNINGS namespace RMF {
     P::add_node_key();
     RMF_INTERNAL_CHECK(
         get_type(index) == static_cast<unsigned int>(t),
-        internal::get_error_message("Types don't match for node ",
-                                    name,
-                                    ": ",
-                                    NodeType(t),
-                                    " (",
-                                    t,
-                                    ") vs ",
-                                    NodeType(get_type(index)),
-                                    " (",
-                                    get_type(index),
-                                    ")"));
+        internal::get_error_message(
+            "Types don't match for node ", name, ": ", NodeType(t), " (", t,
+            ") vs ", NodeType(get_type(index)), " (", get_type(index), ")"));
     return index;
   }
   template <class Base>
@@ -85,7 +77,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   template <class Base>
   NodeIDs AvroSharedData<Base>::get_children(NodeID node) const {
     return NodeIDs(P::get_node(node).children.begin(),
-                P::get_node(node).children.end());
+                   P::get_node(node).children.end());
   }
 
   template <class Base>
@@ -96,7 +88,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
   void AvroSharedData<Base>::set_description(std::string str) {
     P::access_file().description = str;
   }
-  template <class Base> std::string AvroSharedData<Base>::get_producer() const {
+  template <class Base>
+  std::string AvroSharedData<Base>::get_producer() const {
     return P::get_file().producer;
   }
   template <class Base>
@@ -105,7 +98,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }
 
   }  // namespace avro_backend
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

@@ -26,8 +26,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
    public:
     /** Create one with the default reference frame, so the points aren't
         transformed at all.*/
-    CoordinateTransformer() {}
-    ;
+    CoordinateTransformer() {};
     /** Compose an outer CoordinateTransformer with the nested ReferenceFrame.*/
     CoordinateTransformer(CoordinateTransformer base, ReferenceFrameConst rb);
     RMF_SHOWABLE(CoordinateTransformer, transform_);

@@ -16,12 +16,12 @@ RMF_ENABLE_WARNINGS namespace RMF {
   class NodeConstHandle;
 
   namespace internal {
-  template <class VA, class VB> void copy_vector(const VA& va, VB& vb) {
+  template <class VA, class VB>
+  void copy_vector(const VA& va, VB& vb) {
     vb.insert(vb.end(), va.begin(), va.end());
   }
 
-  RMFEXPORT NodeHandle add_child_alias(AliasFactory af,
-                                       NodeHandle parent,
+  RMFEXPORT NodeHandle add_child_alias(AliasFactory af, NodeHandle parent,
                                        NodeConstHandle child);
   }
 }

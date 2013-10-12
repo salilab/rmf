@@ -39,7 +39,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   try {                                                             \
     boost::filesystem::rename(old, new);                            \
   }                                                                 \
-  catch (const std::exception & e) {                                \
+  catch (const std::exception& e) {                                 \
     RMF_THROW(Message(std::string("Could not rename: ") + e.what()) \
                   << Component(new),                                \
               IOException);                                         \
@@ -50,7 +50,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
   /** Write a schema to a file in a safe manner (with renaming
       after writing).
-  
+
       Should be in another header.*/
   template <class Data>
   void write(const Data& data, rmf_avro::ValidSchema schema, std::string path) {
@@ -62,7 +62,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
         wr.write(data);
         wr.flush();
       }
-      catch (std::exception & e) {
+      catch (std::exception& e) {
         RMF_THROW(Message(e.what()) << Component(temppath), IOException);
       }
     }
@@ -70,8 +70,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }
 
   template <class Data>
-  void write_text(const Data& data,
-                  rmf_avro::ValidSchema schema,
+  void write_text(const Data& data, rmf_avro::ValidSchema schema,
                   std::string path) {
     std::string temppath = path + ".new";
     {
@@ -85,7 +84,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
         encoder->flush();
         stream->flush();
       }
-      catch (std::exception & e) {
+      catch (std::exception& e) {
         RMF_THROW(Message(e.what()) << Component(temppath), IOException);
       }
     }

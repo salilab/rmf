@@ -38,8 +38,7 @@ FrameID NodeConstHandle::get_current_frame_id() const {
   }                                                                     \
   std::string NodeConstHandle::get_name(UCName##Key k) const {          \
     return get_file().get_name(k);                                      \
-  }                                                                     \
-
+  }
 
 RMF_FOREACH_TYPE(RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DEF);
 

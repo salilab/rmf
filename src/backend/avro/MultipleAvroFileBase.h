@@ -74,17 +74,17 @@ RMF_ENABLE_WARNINGS namespace RMF {
     std::string get_static_file_path() const;
     std::string get_frames_file_path() const;
 
-    virtual std::string get_file_type() const RMF_OVERRIDE {
+    RMF_BACKEND_VIRTUAL std::string get_file_type() const RMF_BACKEND_OVERRIDE {
       return "Multiple avro version 1";
     }
 
-    void set_current_frame(FrameID frame) RMF_OVERRIDE;
+    void set_current_frame(FrameID frame) RMF_BACKEND_OVERRIDE;
 
     MultipleAvroFileBase(std::string path);
   };
 
   }  // namespace avro_backend
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

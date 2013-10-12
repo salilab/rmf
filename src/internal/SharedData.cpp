@@ -58,12 +58,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     const char* cur = illegal;
     while (*cur != '\0') {
       if (name.find(*cur) != std::string::npos) {
-        RMF_THROW(Message(get_error_message("Node names names can't contain \"",
-                                            *cur,
-                                            "\", but \"",
-                                            name,
-                                            "\" does.")),
-                  UsageException);
+        RMF_THROW(
+            Message(get_error_message("Node names names can't contain \"", *cur,
+                                      "\", but \"", name, "\" does.")),
+            UsageException);
       }
       ++cur;
     }
@@ -84,20 +82,20 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
   namespace {
   boost::shared_ptr<SharedData> create_shared_data_internal(std::string path,
-                                          bool create,
-                                          bool read_only) {
+                                                            bool create,
+                                                            bool read_only) {
     try {
       boost::shared_ptr<SharedData> ret;
       if ((ret = hdf5_backend::create_shared_data(path, create, read_only))) {
         return ret;
-      } else if ((ret = avro_backend::create_shared_data(
-                     path, create, read_only))) {
+      } else if ((ret = avro_backend::create_shared_data(path, create,
+                                                         read_only))) {
         return ret;
       } else {
         RMF_THROW(Message("Don't know how to open file"), IOException);
       }
     }
-    catch (Exception & e) {
+    catch (Exception& e) {
       RMF_RETHROW(File(path), e);
     }
   }
@@ -105,7 +103,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
   // throws RMF::IOException if couldn't create file or unsupported file
   // format
-    boost::shared_ptr<SharedData> create_shared_data(std::string path, bool create) {
+  boost::shared_ptr<SharedData> create_shared_data(std::string path,
+                                                   bool create) {
     return create_shared_data_internal(path, create, false);
   }
 
@@ -113,7 +112,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
     return create_shared_data_internal(path, false, true);
   }
 
-  boost::shared_ptr<SharedData> create_shared_data_in_buffer(std::string& buffer, bool create) {
+  boost::shared_ptr<SharedData> create_shared_data_in_buffer(
+      std::string& buffer, bool create) {
     try {
       boost::shared_ptr<SharedData> ret;
       if ((ret = hdf5_backend::create_shared_data_buffer(buffer, create))) {
@@ -125,7 +125,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
         RMF_THROW(Message("Don't know how to open file"), IOException);
       }
     }
-    catch (Exception & e) {
+    catch (Exception& e) {
       RMF_RETHROW(File("buffer"), e);
     }
   }
@@ -142,12 +142,12 @@ RMF_ENABLE_WARNINGS namespace RMF {
         RMF_THROW(Message("Don't know how to open file"), IOException);
       }
     }
-    catch (Exception & e) {
+    catch (Exception& e) {
       RMF_RETHROW(File("buffer"), e);
     }
   }
 
   }  // namespace internal
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

@@ -16,7 +16,9 @@
 RMF_ENABLE_WARNINGS namespace RMF {
 
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
-  namespace internal { class SharedData; }
+  namespace internal {
+  class SharedData;
+  }
 #endif
 
   /** Data associated with nodes or sets of nodes is divided into

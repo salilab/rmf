@@ -20,8 +20,7 @@
 RMF_ENABLE_WARNINGS namespace RMF {
   namespace avro_backend {
 
-  SingleAvroFile::SingleAvroFile(std::string path,
-                                 bool create,
+  SingleAvroFile::SingleAvroFile(std::string path, bool create,
                                  bool /*read_only*/)
       : AvroKeysAndCategories(path),
         dirty_(false),
@@ -79,8 +78,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     for (std::map<std::string,
                   std::vector<RMF_avro_backend::Data> >::const_iterator it =
              all_.category.begin();
-         it != all_.category.end();
-         ++it) {
+         it != all_.category.end(); ++it) {
       get_category(it->first);
     }
   }
@@ -93,8 +91,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }
 
   void SingleAvroFile::flush() {
-    if (!dirty_)
-      return;
+    if (!dirty_) return;
     if (!write_to_buffer_) {
       if (!text_) {
         write(all_, get_All_schema(), get_file_path());
@@ -125,7 +122,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
             get_file_path().c_str(), get_All_schema());
         success = rd.read(all_);
       }
-      catch (std::exception & e) {
+      catch (std::exception& e) {
         RMF_THROW(Message(e.what()) << File(get_file_path()), IOException);
       }
       if (!success) {
@@ -142,7 +139,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
         rmf_avro::decode(*decoder, all_);
         success = true;
       }
-      catch (std::exception & e) {
+      catch (std::exception& e) {
         RMF_THROW(Message(e.what()) << File(get_file_path()), IOException);
       }
       if (!success) {
@@ -161,13 +158,14 @@ RMF_ENABLE_WARNINGS namespace RMF {
     dirty_ = false;
   }
 
-  FrameID SingleAvroFile::add_child(FrameID node, std::string name, FrameType t) {
+  FrameID SingleAvroFile::add_child(FrameID node, std::string name,
+                                    FrameType t) {
     FrameID index = FrameID(get_number_of_frames());
     access_frame(index).name = name;
     access_frame(index).type = boost::lexical_cast<std::string>(t);
     access_frame(node).children.push_back(index.get_index());
-    RMF_INTERNAL_CHECK(get_number_of_frames()
-                       == static_cast<unsigned int>(index.get_index()) + 1,
+    RMF_INTERNAL_CHECK(get_number_of_frames() ==
+                           static_cast<unsigned int>(index.get_index()) + 1,
                        "No frame added");
     return index;
   }
@@ -178,7 +176,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
   FrameIDs SingleAvroFile::get_children(FrameID node) const {
     return FrameIDs(get_frame(node).children.begin(),
-                get_frame(node).children.end());
+                    get_frame(node).children.end());
   }
 
   std::string SingleAvroFile::get_name(FrameID i) const {
@@ -192,6 +190,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }
 
   }  // namespace avro_backend
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

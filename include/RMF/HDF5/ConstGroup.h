@@ -41,8 +41,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     ConstGroup(boost::shared_ptr<SharedHandle> h);
 #endif
    public:
-    ConstGroup() {}
-    ;
+    ConstGroup() {};
     RMF_SHOWABLE(ConstGroup, "Group " << get_name());
 
     // create from an existing group
@@ -54,8 +53,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
     template <class TypeTraits, unsigned int D>
     ConstDataSetD<TypeTraits, D> get_child_data_set(
-        std::string name,
-        DataSetAccessPropertiesD<TypeTraits, D> props) const {
+        std::string name, DataSetAccessPropertiesD<TypeTraits, D> props) const {
       return ConstDataSetD<TypeTraits, D>(get_shared_handle(), name, props);
     }
 
@@ -71,14 +69,14 @@ RMF_ENABLE_WARNINGS namespace RMF {
     return get_child_data_set<UCName##Traits, D>(name);                  \
   }
 
-#define RMF_HDF5_DATA_SET_CONST_METHODS(                                    \
-    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues)       \
-  RMF_HDF5_DATA_SET_CONST_METHODS_D(                                        \
-      lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues, 1); \
-  RMF_HDF5_DATA_SET_CONST_METHODS_D(                                        \
-      lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues, 2); \
-  RMF_HDF5_DATA_SET_CONST_METHODS_D(                                        \
-      lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues, 3)
+#define RMF_HDF5_DATA_SET_CONST_METHODS(lcname, UCName, PassValue,             \
+                                        ReturnValue, PassValues, ReturnValues) \
+  RMF_HDF5_DATA_SET_CONST_METHODS_D(lcname, UCName, PassValue, ReturnValue,    \
+                                    PassValues, ReturnValues, 1);              \
+  RMF_HDF5_DATA_SET_CONST_METHODS_D(lcname, UCName, PassValue, ReturnValue,    \
+                                    PassValues, ReturnValues, 2);              \
+  RMF_HDF5_DATA_SET_CONST_METHODS_D(lcname, UCName, PassValue, ReturnValue,    \
+                                    PassValues, ReturnValues, 3)
 
     /** \name Untemplated methods
         When using Python, you must call the non-templated methods listed
@@ -97,7 +95,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   };
 
   } /* namespace HDF5 */
-}   /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

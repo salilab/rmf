@@ -249,6 +249,9 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }  // namespace internal
 } /* namespace RMF */
 
+#define RMF_BACKEND_VIRTUAL virtual
+#define RMF_BACKEND_OVERRIDE RMF_OVERRIDE
+
 RMF_DISABLE_WARNINGS
 
 #endif /* RMF_INTERNAL_SHARED_DATA_H */

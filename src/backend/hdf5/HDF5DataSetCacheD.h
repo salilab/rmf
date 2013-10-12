@@ -17,11 +17,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
   namespace hdf5_backend {
 
-  template <class Traits, unsigned int D> class HDF5DataSetCacheD {
-  };
+  template <class Traits, unsigned int D>
+  class HDF5DataSetCacheD {};
 
   }  // namespace hdf5_backend
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

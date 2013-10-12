@@ -42,7 +42,7 @@ void test(const char* fname) {
   assert(sib == si);
 
   RMF::NodeHandle c3 = fh.get_root_node().add_child("c3", RMF::GEOMETRY);
-  MyInt sint = { 6 };
+  MyInt sint = {6};
   c3.set_association(sint);
   RMF::NodeHandle c3b = fh.get_node_from_association(sint);
   assert(c3 == c3b);
@@ -58,7 +58,7 @@ int main(int, char * []) {
     test(fname);
     remove(fname);
   }
-  catch (const std::exception & e) {
+  catch (const std::exception& e) {
     std::cerr << "Terminated with error: " << e.what() << std::endl;
     return 1;
   }

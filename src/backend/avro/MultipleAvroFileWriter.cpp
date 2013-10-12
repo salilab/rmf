@@ -19,12 +19,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
   namespace avro_backend {
 
   void MultipleAvroFileWriter::set_current_frame(FrameID frame) {
-    if (frame == get_current_frame())
-      return;
+    if (frame == get_current_frame()) return;
     RMF_USAGE_CHECK(
         frame == ALL_FRAMES ||
             frame.get_index() == static_cast<unsigned int>(frame_.index + 1) ||
-        frame.get_index() == static_cast<unsigned int>(frame_.index),
+            frame.get_index() == static_cast<unsigned int>(frame_.index),
         "Bad frame set. You probably didn't add a new frame.");
     MultipleAvroFileBase::set_current_frame(frame);
     if (frame != ALL_FRAMES &&
@@ -33,8 +32,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
   }
 
-  MultipleAvroFileWriter::MultipleAvroFileWriter(std::string path,
-                                                 bool create,
+  MultipleAvroFileWriter::MultipleAvroFileWriter(std::string path, bool create,
                                                  bool read_only)
       : MultipleAvroFileBase(path) {
     RMF_INTERNAL_CHECK(create, "Can only create files");
@@ -64,15 +62,15 @@ RMF_ENABLE_WARNINGS namespace RMF {
         if (!categories_[i].writer) {
           std::string name = get_category_dynamic_file_path(Category(i));
           try {
-            categories_[i].writer
-                .reset(new rmf_avro::DataFileWriter<RMF_avro_backend::Data>(
+            categories_[i].writer.reset(
+                new rmf_avro::DataFileWriter<RMF_avro_backend::Data>(
                     name.c_str(), get_Data_schema()));
           }
-          catch (const std::exception & e) {
+          catch (const std::exception& e) {
             RMF_THROW(Message(e.what()) << Component(name), IOException);
           }
         }
-        //show(categories_[i].data);
+        // show(categories_[i].data);
         RMF_INTERNAL_CHECK(categories_[i].data.frame == frame_.index,
                            "Trying to write category that is at wrong frame.");
         categories_[i].writer->write(categories_[i].data);
@@ -91,12 +89,12 @@ RMF_ENABLE_WARNINGS namespace RMF {
           writer.write(static_categories_[i]);
           writer.flush();
         }
-        catch (const std::exception & e) {
+        catch (const std::exception& e) {
           RMF_THROW(Message(e.what()) << Component(name), IOException);
         }
-        //std::cout << "Writing data for " << get_category_name(Category(i)) <<
-        //std::endl;
-        //show(static_categories_[i]);
+        // std::cout << "Writing data for " << get_category_name(Category(i)) <<
+        // std::endl;
+        // show(static_categories_[i]);
         static_categories_dirty_[i] = false;
       }
     }
@@ -113,17 +111,18 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
   }
 
-  FrameID MultipleAvroFileWriter::add_child(FrameID node,
-                                        std::string name,
-                                        FrameType t) {
+  FrameID MultipleAvroFileWriter::add_child(FrameID node, std::string name,
+                                            FrameType t) {
     unsigned int index = get_number_of_frames();
     RMF_TRACE(get_avro_logger(), "Adding frame " << index << " under " << node);
     set_current_frame(FrameID(index));
     frame_.name = name;
     frame_.type = boost::lexical_cast<std::string>(FrameType(t));
     unsigned int findex;
-    if (node == ALL_FRAMES) findex = -1;
-    else findex = node.get_index();
+    if (node == ALL_FRAMES)
+      findex = -1;
+    else
+      findex = node.get_index();
     frame_.parents.push_back(findex);
     frames_dirty_ = true;
     frame_.index = index;
@@ -131,8 +130,9 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }
   void MultipleAvroFileWriter::add_child(FrameID node, FrameID child_node) {
     if (child_node != get_current_frame()) {
-      RMF_THROW(Message("RMF2 writer doesn't support adding other frames than "
-                        "the current as a child."),
+      RMF_THROW(Message(
+                    "RMF2 writer doesn't support adding other frames than "
+                    "the current as a child."),
                 UsageException);
     }
     frame_.parents.push_back(node.get_index());
@@ -153,8 +153,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
       return frame_.name;
     }
   }
-    FrameType MultipleAvroFileWriter::get_type(FrameID i) const {
-      if (i == ALL_FRAMES) {
+  FrameType MultipleAvroFileWriter::get_type(FrameID i) const {
+    if (i == ALL_FRAMES) {
       return STATIC;
     } else {
       RMF_USAGE_CHECK(i.get_index() == static_cast<unsigned int>(frame_.index),
@@ -168,6 +168,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }
 
   }  // namespace avro_backend
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

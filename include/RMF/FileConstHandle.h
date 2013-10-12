@@ -58,9 +58,7 @@ class NodeConstHandle;
     \see open_rmf_file_read_only
  */
 class RMFEXPORT FileConstHandle {
-  void gather_ids(NodeConstHandle n,
-                  Ints& ids,
-                  std::vector<std::string>& paths,
+  void gather_ids(NodeConstHandle n, Ints& ids, std::vector<std::string>& paths,
                   std::string path) const;
   friend class NodeConstHandle;
   int compare(const FileConstHandle& o) const {
@@ -71,8 +69,10 @@ class RMFEXPORT FileConstHandle {
     else
       return 0;
   }
+
  protected:
   boost::shared_ptr<internal::SharedData> shared_;
+
  public:
   RMF_COMPARISONS(FileConstHandle);
   RMF_HASHABLE(FileConstHandle, return boost::hash_value(get_name()););
@@ -105,10 +105,10 @@ class RMFEXPORT FileConstHandle {
   template <class TypeT>
   Key<TypeT> get_key(Category category, std::string name) const {
     try {
-      return internal::GenericSharedData<TypeT>::get_key(
-          shared_, category, name);
+      return internal::GenericSharedData<TypeT>::get_key(shared_, category,
+                                                         name);
     }
-    RMF_FILE_CATCH( << Category(get_name(category)) << Key(name));
+    RMF_FILE_CATCH(<< Category(get_name(category)) << Key(name));
   }
   template <class TypeT>
   std::vector<Key<TypeT> > get_keys(Category category_id,
@@ -124,18 +124,17 @@ class RMFEXPORT FileConstHandle {
       }
       return ret;
     }
-    RMF_FILE_CATCH( << Category(get_name(category_id)));
+    RMF_FILE_CATCH(<< Category(get_name(category_id)));
   }
   /** Get a list of all keys of the given type,
    */
-  template <class TypeT> std::vector<Key<TypeT> > get_keys(Category category) {
+  template <class TypeT>
+  std::vector<Key<TypeT> > get_keys(Category category) {
     try {
-      if (category == Category())
-        return std::vector<Key<TypeT> >();
-      return internal::GenericSharedData<TypeT>::get_keys(shared_,
-                                                          category);
+      if (category == Category()) return std::vector<Key<TypeT> >();
+      return internal::GenericSharedData<TypeT>::get_keys(shared_, category);
     }
-    RMF_FILE_CATCH( << Category(get_name(category)));
+    RMF_FILE_CATCH(<< Category(get_name(category)));
   }
   /** @} */
 
@@ -146,9 +145,7 @@ class RMFEXPORT FileConstHandle {
 
       @{
    */
-  FrameID get_current_frame() const {
-    return shared_->get_current_frame();
-  }
+  FrameID get_current_frame() const { return shared_->get_current_frame(); }
   FrameType get_current_frame_type() const {
     return shared_->get_type(get_current_frame());
   }
@@ -159,7 +156,7 @@ class RMFEXPORT FileConstHandle {
     try {
       shared_->set_current_frame(frame);
     }
-    RMF_FILE_CATCH( << Frame(frame));
+    RMF_FILE_CATCH(<< Frame(frame));
   }
   /** Add a frame and make it the current frame. It is a child of the
       current frame. */
@@ -182,7 +179,7 @@ class RMFEXPORT FileConstHandle {
 
   /** Return a string identifying the file type.
   */
-  std::string get_file_type() const {return shared_->get_file_type();}
+  std::string get_file_type() const { return shared_->get_file_type(); }
 
   /** \name Non-template versions for python
 
@@ -223,11 +220,13 @@ class RMFEXPORT FileConstHandle {
   /** Along with the associations for nodes, arbitrary data can
       be associated with the file in memory to aid in processing.
    */
-  template <class T> void add_associated_data(int index, const T& t) {
+  template <class T>
+  void add_associated_data(int index, const T& t) {
     shared_->set_user_data(index, t);
   }
   /** To get back the ith user data.*/
-  template <class T> T get_associated_data(int index) {
+  template <class T>
+  T get_associated_data(int index) {
     return shared_->get_user_data<T>(index);
   }
 
@@ -257,7 +256,7 @@ class RMFEXPORT FileConstHandle {
     try {
       return shared_->get_category(name);
     }
-    RMF_FILE_CATCH( << Category(name));
+    RMF_FILE_CATCH(<< Category(name));
   }
   /** This returns all the categories that are used in the current frame.
       Other frames may have different ones.*/
@@ -318,10 +317,9 @@ RMFEXPORT FileConstHandle open_rmf_buffer_read_only(const std::string& buffer);
     \note These methods are experimental and subject to change.
     @{
  */
-RMFEXPORT Floats get_values(const NodeConstHandles& nodes,
-                            FloatKey k,
-                            Float missing_value =
-                                std::numeric_limits<double>::max());
+RMFEXPORT Floats
+    get_values(const NodeConstHandles& nodes, FloatKey k,
+               Float missing_value = std::numeric_limits<double>::max());
 /** @} */
 
 } /* namespace RMF */

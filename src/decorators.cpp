@@ -10,6 +10,4 @@
 #include <cstdlib>
 #include <fstream>
 
-namespace RMF {
-
-} /* namespace RMF */
+namespace RMF {} /* namespace RMF */

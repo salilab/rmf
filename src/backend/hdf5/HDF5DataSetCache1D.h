@@ -70,8 +70,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       cache_.clear();
     }
     void flush() {
-      if (dirty_begin_ >= dirty_end_)
-        return;
+      if (dirty_begin_ >= dirty_end_) return;
       if (ds_.get_size()[0] != cache_.size()) {
         ds_.set_size(HDF5::DataSetIndexD<1>(cache_.size()));
       }
@@ -93,7 +92,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       RMF_INTERNAL_CHECK(!name_.empty(), "Name never set");
       if (ds_ == DS()) {
         HDF5::DataSetCreationPropertiesD<typename TypeTraits::HDF5Traits, 1>
-        props;
+            props;
         props.set_chunk_size(HDF5::DataSetIndexD<1>(256));
         props.set_compression(HDF5::GZIP_COMPRESSION);
         ds_ = parent_.add_child_data_set<typename TypeTraits::HDF5Traits, 1>(
@@ -102,7 +101,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
       dirty_begin_ = std::min<int>(dirty_begin_, cache_.size());
       dirty_end_ = ijk[0];
       cache_.resize(ijk[0], TypeTraits::get_null_value());
-
     }
     void set_value(const HDF5::DataSetIndexD<1>& ijk,
                    typename TypeTraits::Type value) {
@@ -121,7 +119,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   };
 
   }  // namespace hdf5_backend
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

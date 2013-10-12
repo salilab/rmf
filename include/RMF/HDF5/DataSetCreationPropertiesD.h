@@ -61,12 +61,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
                                       &TypeTraits::get_fill_value()));
       RMF_HDF5_CALL(H5Pset_fill_time(get_handle(), H5D_FILL_TIME_ALLOC));
       RMF_HDF5_CALL(H5Pset_alloc_time(get_handle(), H5D_ALLOC_TIME_INCR));
-
     }
   };
 
   } /* namespace HDF5 */
-}   /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

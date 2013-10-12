@@ -35,14 +35,10 @@ std::string description(
     "Transform an rmf file in place. IntermediateParticle, Ball, Cylinder, "
     "Segment, RigidParticle and ReferenceFrame nodes are handled.");
 
-void transform(RMF::NodeHandle nh,
-               RMF::IntermediateParticleFactory ipf,
-               RMF::RigidParticleFactory rpf,
-               RMF::ReferenceFrameFactory rff,
-               RMF::BallFactory bf,
-               RMF::CylinderFactory cf,
-               RMF::SegmentFactory sf,
-               double scale,
+void transform(RMF::NodeHandle nh, RMF::IntermediateParticleFactory ipf,
+               RMF::RigidParticleFactory rpf, RMF::ReferenceFrameFactory rff,
+               RMF::BallFactory bf, RMF::CylinderFactory cf,
+               RMF::SegmentFactory sf, double scale,
                const RMF::Floats& translation) {
   RMF_TRANSFORM(ipf, IntermediateParticle, coordinates)
   else RMF_TRANSFORM(rpf, RigidParticle, coordinates);
@@ -89,9 +85,9 @@ int main(int argc, char** argv) {
       translation = RMF::Floats(0, 3);
     }
     RMF_INFO(RMF::get_logger(), "Scaling model by " << scale);
-    RMF_INFO(RMF::get_logger(),
-             "Translating model by " << translation[0] << " " << translation[1]
-                                     << " " << translation[2]);
+    RMF_INFO(RMF::get_logger(), "Translating model by " << translation[0] << " "
+                                                        << translation[1] << " "
+                                                        << translation[2]);
 
     RMF::FileHandle rh = RMF::open_rmf_file(input);
     int num_frames = rh.get_number_of_frames();
@@ -105,12 +101,12 @@ int main(int argc, char** argv) {
     for (int i = RMF::ALL_FRAMES.get_index(); i < num_frames; ++i) {
       RMF_INFO(RMF::get_logger(), "Processing frame " << i);
       rh.set_current_frame(RMF::FrameID(i));
-      transform(
-          rh.get_root_node(), ipf, rpf, rff, bf, cf, sf, scale, translation);
+      transform(rh.get_root_node(), ipf, rpf, rff, bf, cf, sf, scale,
+                translation);
     }
     return 0;
   }
-  catch (const std::exception & e) {
+  catch (const std::exception& e) {
     std::cerr << "Error: " << e.what() << std::endl;
     print_help_and_exit(argv);
   }

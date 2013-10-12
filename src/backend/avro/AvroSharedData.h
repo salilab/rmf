@@ -142,12 +142,14 @@ class AvroSharedData : public Base {
   AvroSharedData(std::string& buffer, bool create);
   AvroSharedData(const std::string& buffer);
 
-  virtual ~AvroSharedData() {}
-  virtual std::string get_name(NodeID node) const RMF_OVERRIDE;
-  NodeType get_type(NodeID node) const RMF_OVERRIDE;
-  NodeID add_child(NodeID node, std::string name, NodeType t) RMF_OVERRIDE;
-  void add_child(NodeID node, NodeID child_node) RMF_OVERRIDE;
-  NodeIDs get_children(NodeID node) const RMF_OVERRIDE;
+  RMF_BACKEND_VIRTUAL ~AvroSharedData() {}
+  RMF_BACKEND_VIRTUAL std::string get_name(NodeID node) const
+      RMF_BACKEND_OVERRIDE;
+  NodeType get_type(NodeID node) const RMF_BACKEND_OVERRIDE;
+  NodeID add_child(NodeID node, std::string name,
+                   NodeType t) RMF_BACKEND_OVERRIDE;
+  void add_child(NodeID node, NodeID child_node) RMF_BACKEND_OVERRIDE;
+  NodeIDs get_children(NodeID node) const RMF_BACKEND_OVERRIDE;
   void save_frames_hint(int) {}
   std::string get_description() const;
   void set_description(std::string str);

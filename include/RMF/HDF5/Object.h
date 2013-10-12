@@ -57,7 +57,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
 
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
-    typedef void(Object::* bool_type)() const;
+    typedef void (Object::*bool_type)() const;
     void this_type_does_not_support_comparisons() const {}
     operator bool_type() const {
       return h_ ? &Object::this_type_does_not_support_comparisons : 0;
@@ -77,7 +77,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
 #endif
 #endif
   } /* namespace HDF5 */
-}   /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

@@ -52,12 +52,12 @@ RMF_ENABLE_WARNINGS namespace RMF {
   RMFEXPORT bool get_equal_structure(
       FileConstHandle input, FileConstHandle output, bool print_diff = false);
   /** Return true of the two have the same structure.*/
-  RMFEXPORT bool get_equal_frame(
-      FileConstHandle input, FileConstHandle out, bool print_diff = false);
+  RMFEXPORT bool get_equal_frame(FileConstHandle input, FileConstHandle out,
+                                 bool print_diff = false);
 
   /** Add the child node as an alias child of the parent. */
-  RMFEXPORT void add_child_alias(
-      AliasFactory af, NodeHandle parent, NodeConstHandle child);
+  RMFEXPORT void add_child_alias(AliasFactory af, NodeHandle parent,
+                                 NodeConstHandle child);
 
   /** This function simply throws an exception. It is here for testing.*/
   RMFEXPORT void test_throw_exception();

@@ -58,8 +58,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
     template <class TypeTraits, unsigned int D>
     DataSetD<TypeTraits, D> add_child_data_set(
-        std::string name,
-        DataSetCreationPropertiesD<TypeTraits, D> props) {
+        std::string name, DataSetCreationPropertiesD<TypeTraits, D> props) {
       return DataSetD<TypeTraits, D>(get_shared_handle(), name, props);
     }
     template <class TypeTraits, unsigned int D>
@@ -69,12 +68,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
     template <class TypeTraits, unsigned int D>
     DataSetD<TypeTraits, D> get_child_data_set(
-        std::string name,
-        DataSetAccessPropertiesD<TypeTraits, D> props) const {
+        std::string name, DataSetAccessPropertiesD<TypeTraits, D> props) const {
       return DataSetD<TypeTraits, D>(get_shared_handle(), name, props);
     }
-#define RMF_HDF5_DATA_SET_METHODS_D(                                           \
-    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues, D)       \
+#define RMF_HDF5_DATA_SET_METHODS_D(lcname, UCName, PassValue, ReturnValue,    \
+                                    PassValues, ReturnValues, D)               \
   DataSetD<UCName##Traits, D> get_child_##lcname##_data_set_##D##d(            \
       std::string name,                                                        \
       DataSetAccessPropertiesD<UCName##Traits, D> props) const {               \
@@ -95,14 +93,14 @@ RMF_ENABLE_WARNINGS namespace RMF {
     return add_child_data_set<UCName##Traits, D>(name, props);                 \
   }
 
-#define RMF_HDF5_DATA_SET_METHODS(                                          \
-    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues)       \
-  RMF_HDF5_DATA_SET_METHODS_D(                                              \
-      lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues, 1); \
-  RMF_HDF5_DATA_SET_METHODS_D(                                              \
-      lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues, 2); \
-  RMF_HDF5_DATA_SET_METHODS_D(                                              \
-      lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues, 3)
+#define RMF_HDF5_DATA_SET_METHODS(lcname, UCName, PassValue, ReturnValue, \
+                                  PassValues, ReturnValues)               \
+  RMF_HDF5_DATA_SET_METHODS_D(lcname, UCName, PassValue, ReturnValue,     \
+                              PassValues, ReturnValues, 1);               \
+  RMF_HDF5_DATA_SET_METHODS_D(lcname, UCName, PassValue, ReturnValue,     \
+                              PassValues, ReturnValues, 2);               \
+  RMF_HDF5_DATA_SET_METHODS_D(lcname, UCName, PassValue, ReturnValue,     \
+                              PassValues, ReturnValues, 3)
 
     /** \name Untemplated methods
         When using Python, you must call the non-templated methods listed
@@ -116,7 +114,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   };
 
   } /* namespace HDF5 */
-}   /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

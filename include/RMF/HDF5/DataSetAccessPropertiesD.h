@@ -17,7 +17,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
   namespace HDF5 {
 
   /** A class to manage properties controlling access to HDF5 data sets.*/
-  template <class TypeTraits, unsigned int D> class DataSetAccessPropertiesD {
+  template <class TypeTraits, unsigned int D>
+  class DataSetAccessPropertiesD {
     boost::shared_ptr<SharedHandle> h_;
 
    protected:
@@ -29,20 +30,18 @@ RMF_ENABLE_WARNINGS namespace RMF {
     /* Set the chunk cache to a certain size. See
        \external{http://www.hdfgroup.org/HDF5/doc/RM/RM_H5P.html#Property-SetChunkCache,H5Pset_chunk_cache}.
      */
-    void set_chunk_cache_size(unsigned int entries,
-                              unsigned int size_bytes,
+    void set_chunk_cache_size(unsigned int entries, unsigned int size_bytes,
                               double policy = .75) {
       RMF_HDF5_CALL(
           H5Pset_chunk_cache(get_handle(), entries, size_bytes, policy));
     }
     DataSetAccessPropertiesD()
-        : h_(new SharedHandle(H5Pcreate(H5P_DATASET_ACCESS),
-                              &H5Pclose,
+        : h_(new SharedHandle(H5Pcreate(H5P_DATASET_ACCESS), &H5Pclose,
                               "Properties")) {}
   };
 
   } /* namespace HDF5 */
-}   /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

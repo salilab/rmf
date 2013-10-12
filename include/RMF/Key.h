@@ -16,19 +16,20 @@
 RMF_ENABLE_WARNINGS
 
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
-    namespace RMF {
-  namespace internal {
-  class SharedData;
-  class HDF5SharedData;
-  }  // namespace internal
-}    // namespace RMF
+namespace RMF {
+namespace internal {
+class SharedData;
+class HDF5SharedData;
+}  // namespace internal
+}  // namespace RMF
 #endif
 
 namespace RMF {
 
 /** A key referencing a particular piece of data. They are
    comparable, hashable and printable, but otherwise opaque.*/
-template <class TypeTraitsT> class Key {
+template <class TypeTraitsT>
+class Key {
   friend class FileConstHandle;
   friend class NodeConstHandle;
   friend class NodeHandle;
@@ -60,8 +61,8 @@ template <class TypeTraitsT> class Key {
 
 } /* namespace RMF */
 
-#define RMF_DECLARE_KEY(                                              \
-    lcname, Ucname, PassValue, ReturnValue, PassValues, ReturnValues) \
+#define RMF_DECLARE_KEY(lcname, Ucname, PassValue, ReturnValue, PassValues, \
+                        ReturnValues)                                       \
   RMF_TEMPLATE_DECL(Key, Ucname##Traits, Ucname##Key)
 
 /** \name Key types

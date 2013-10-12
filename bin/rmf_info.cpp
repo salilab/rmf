@@ -9,14 +9,14 @@
 namespace {
 std::string description("Print out information about categories and keys.");
 
-template <class Traits> struct GetCount {
+template <class Traits>
+struct GetCount {
   static int get_count(RMF::FileConstHandle rh, RMF::Key<Traits> k) {
     return get_count(rh.get_root_node(), k);
   }
   static int get_count(RMF::NodeConstHandle rh, RMF::Key<Traits> k) {
     int cur = 0;
-    if (rh.get_has_value(k))
-      ++cur;
+    if (rh.get_has_value(k)) ++cur;
     RMF::NodeConstHandles nhs = rh.get_children();
     for (unsigned int i = 0; i < nhs.size(); ++i) {
       cur += get_count(nhs[i], k);
@@ -26,9 +26,7 @@ template <class Traits> struct GetCount {
 };
 
 template <class Traits>
-void show_key_info(RMF::FileConstHandle rh,
-                   RMF::Category cat,
-                   std::string name,
+void show_key_info(RMF::FileConstHandle rh, RMF::Category cat, std::string name,
                    std::ostream& out) {
   std::vector<RMF::Key<Traits> > keys = rh.get_keys<Traits>(cat);
   for (unsigned int i = 0; i < keys.size(); ++i) {
@@ -39,8 +37,8 @@ void show_key_info(RMF::FileConstHandle rh,
   }
 }
 
-#define RMF_SHOW_TYPE_DATA_INFO(                                      \
-    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues) \
+#define RMF_SHOW_TYPE_DATA_INFO(lcname, UCName, PassValue, ReturnValue, \
+                                PassValues, ReturnValues)               \
   show_key_info<RMF::UCName##Traits>(rh, categories[i], #lcname, out);
 
 int count(RMF::NodeConstHandle nh, std::set<RMF::NodeConstHandle>& seen) {
@@ -74,8 +72,8 @@ int frame = 0;
 
 int main(int argc, char** argv) {
   try {
-    options.add_options()(
-        "frame,f", boost::program_options::value<int>(&frame), "Frame to use");
+    options.add_options()("frame,f", boost::program_options::value<int>(&frame),
+                          "Frame to use");
     RMF_ADD_INPUT_FILE("rmf");
     process_options(argc, argv);
 
@@ -87,7 +85,7 @@ int main(int argc, char** argv) {
     show_info(rh, std::cout);
     return 0;
   }
-  catch (const std::exception & e) {
+  catch (const std::exception& e) {
     std::cerr << "Error: " << e.what() << std::endl;
   }
 }

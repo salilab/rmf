@@ -6,7 +6,9 @@
 #include <RMF/utility.h>
 #include "common.h"
 
-namespace { std::string description("Grab frames from an rmf file"); }
+namespace {
+std::string description("Grab frames from an rmf file");
+}
 
 int main(int argc, char** argv) {
   try {
@@ -23,19 +25,16 @@ int main(int argc, char** argv) {
     RMF::copy_frame(rh, orh);
     std::cout << "Copying frames";
     for (unsigned int input_frame = start_frame;
-         input_frame < rh.get_number_of_frames();
-         input_frame += step_frame) {
+         input_frame < rh.get_number_of_frames(); input_frame += step_frame) {
       rh.set_current_frame(RMF::FrameID(input_frame));
-      orh.add_frame(rh.get_current_frame_name(),
-                    rh.get_current_frame_type());
+      orh.add_frame(rh.get_current_frame_name(), rh.get_current_frame_type());
       RMF::copy_frame(rh, orh);
-      if (orh.get_number_of_frames() % 10 == 0)
-        std::cout << "." << std::flush;
+      if (orh.get_number_of_frames() % 10 == 0) std::cout << "." << std::flush;
     }
     std::cout << std::endl;
     return 0;
   }
-  catch (const std::exception & e) {
+  catch (const std::exception& e) {
     std::cerr << "Error: " << e.what() << std::endl;
     return 1;
   }

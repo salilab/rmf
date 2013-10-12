@@ -20,12 +20,15 @@ RMF_ENABLE_WARNINGS namespace RMF {
       \external{http://www.hdfobject.org/HDF5/doc/UG/UG_frame09Objects.html,
       the HDF5 manual} for more information.
    */
-  template <class Base> class MutableAttributes : public Base {
+  template <class Base>
+  class MutableAttributes : public Base {
     typedef Base P;
 #ifndef SWIG
    protected:
     MutableAttributes() {}
-    template <class A> MutableAttributes(const A& h) : Base(h) {}
+    template <class A>
+    MutableAttributes(const A& h)
+        : Base(h) {}
     template <class A, class B>
     MutableAttributes(const A& h, const B& i)
         : Base(h, i) {}
@@ -73,17 +76,13 @@ RMF_ENABLE_WARNINGS namespace RMF {
           hsize_t dim = std::max(value.size(), size_t(1));
           hsize_t max = H5S_UNLIMITED;
           RMF_HDF5_CALL(H5Sset_extent_simple(s, 1, &dim, &max));
-          RMF_HDF5_HANDLE(a,
-                          H5Acreate2(P::get_handle(),
-                                     name.c_str(),
-                                     TypeTraits::get_hdf5_disk_type(),
-                                     s,
-                                     H5P_DEFAULT,
-                                     H5P_DEFAULT),
+          RMF_HDF5_HANDLE(a, H5Acreate2(P::get_handle(), name.c_str(),
+                                        TypeTraits::get_hdf5_disk_type(), s,
+                                        H5P_DEFAULT, H5P_DEFAULT),
                           &H5Aclose);
         }
-        RMF_HDF5_HANDLE(
-            a, H5Aopen(P::get_handle(), name.c_str(), H5P_DEFAULT), &H5Aclose);
+        RMF_HDF5_HANDLE(a, H5Aopen(P::get_handle(), name.c_str(), H5P_DEFAULT),
+                        &H5Aclose);
         TypeTraits::write_values_attribute(a, value);
       }
     }
@@ -94,10 +93,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     attribute manipulation methods.
     @{
  */
-#define RMF_HDF5_ATTRIBUTE(                                           \
-    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues) \
-  void set_##lcname##_attribute(std::string nm, PassValues value) {   \
-    set_attribute<UCName##Traits>(nm, value);                         \
+#define RMF_HDF5_ATTRIBUTE(lcname, UCName, PassValue, ReturnValue, PassValues, \
+                           ReturnValues)                                       \
+  void set_##lcname##_attribute(std::string nm, PassValues value) {            \
+    set_attribute<UCName##Traits>(nm, value);                                  \
   }
 
     RMF_FOREACH_SIMPLE_TYPE(RMF_HDF5_ATTRIBUTE);
@@ -106,7 +105,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   };
 
   } /* namespace HDF5 */
-}   /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

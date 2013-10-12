@@ -62,7 +62,9 @@ RMF_ENABLE_WARNINGS namespace RMF {
     static bool get_is_null_value(const Type& t) {
       return t == get_null_value();
     }
-    static ReturnType get_null_value() { return std::numeric_limits<Type>::max(); }
+    static ReturnType get_null_value() {
+      return std::numeric_limits<Type>::max();
+    }
     typedef HDF5::IntTraits HDF5Traits;
     typedef boost::int32_t AvroType;
   };
@@ -86,7 +88,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     typedef const Type& ReturnType;
     typedef const Type& ArgumentType;
     static bool get_is_null_value(const Type& t) { return t.empty(); }
-    static ReturnType get_null_value() { static Type r; return r; }
+    static ReturnType get_null_value() {
+      static Type r;
+      return r;
+    }
     typedef HDF5::StringTraits HDF5Traits;
     typedef Type AvroType;
   };
@@ -106,7 +111,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     typedef const Type& ReturnType;
     typedef const Type& ArgumentType;
     static bool get_is_null_value(const Type& t) { return t.empty(); }
-    static ReturnType get_null_value() { static Type r; return r; }
+    static ReturnType get_null_value() {
+      static Type r;
+      return r;
+    }
     typedef HDF5::IntsTraits HDF5Traits;
     typedef std::vector<IntTraits::AvroType> AvroType;
   };
@@ -116,7 +124,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     typedef const Type& ReturnType;
     typedef const Type& ArgumentType;
     static bool get_is_null_value(const Type& t) { return t.empty(); }
-    static ReturnType get_null_value() { static Type r; return r; }
+    static ReturnType get_null_value() {
+      static Type r;
+      return r;
+    }
     typedef HDF5::FloatsTraits HDF5Traits;
     typedef Type AvroType;
   };
@@ -126,7 +137,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     typedef const Type& ReturnType;
     typedef const Type& ArgumentType;
     static bool get_is_null_value(const Type& t) { return t.empty(); }
-    static ReturnType get_null_value() { static Type r; return r; }
+    static ReturnType get_null_value() {
+      static Type r;
+      return r;
+    }
     typedef HDF5::StringsTraits HDF5Traits;
     typedef Type AvroType;
   };
@@ -137,7 +151,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     typedef const Type& ReturnType;
     typedef const Type& ArgumentType;
     static bool get_is_null_value(const Type& t) { return t.empty(); }
-    static ReturnType get_null_value() { static Type r; return r; }
+    static ReturnType get_null_value() {
+      static Type r;
+      return r;
+    }
     typedef HDF5::IndexesTraits HDF5Traits;
     typedef std::vector<IndexTraits::AvroType> AvroType;
   };
@@ -164,7 +181,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     typedef const Type& ReturnType;
     typedef const Type& ArgumentType;
     static bool get_is_null_value(const Type& t) { return t.empty(); }
-    static ReturnType get_null_value() { static Type r; return r; }
+    static ReturnType get_null_value() {
+      static Type r;
+      return r;
+    }
 #ifndef SWIG
     struct HDF5Traits : public HDF5::IndexesTraits {
       static int get_index() { return 5; }

@@ -42,7 +42,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
   }  // namespace internal
   }  /* namespace HDF5 */
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

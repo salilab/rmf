@@ -107,10 +107,10 @@ struct All {
   std::vector<Node> frames;
   std::map<std::string, std::vector<Data> > category;
 };
-
 }
 namespace rmf_avro {
-template <> struct codec_traits<RMF_avro_backend::File> {
+template <>
+struct codec_traits<RMF_avro_backend::File> {
   static void encode(Encoder& e, const RMF_avro_backend::File& v) {
     rmf_avro::encode(e, v.description);
     rmf_avro::encode(e, v.producer);
@@ -123,7 +123,8 @@ template <> struct codec_traits<RMF_avro_backend::File> {
   }
 };
 
-template <> struct codec_traits<RMF_avro_backend::Node> {
+template <>
+struct codec_traits<RMF_avro_backend::Node> {
   static void encode(Encoder& e, const RMF_avro_backend::Node& v) {
     rmf_avro::encode(e, v.name);
     rmf_avro::encode(e, v.type);
@@ -136,7 +137,8 @@ template <> struct codec_traits<RMF_avro_backend::Node> {
   }
 };
 
-template <> struct codec_traits<RMF_avro_backend::IntData> {
+template <>
+struct codec_traits<RMF_avro_backend::IntData> {
   static void encode(Encoder& e, const RMF_avro_backend::IntData& v) {
     rmf_avro::encode(e, v.index);
     rmf_avro::encode(e, v.nodes);
@@ -147,7 +149,8 @@ template <> struct codec_traits<RMF_avro_backend::IntData> {
   }
 };
 
-template <> struct codec_traits<RMF_avro_backend::FloatData> {
+template <>
+struct codec_traits<RMF_avro_backend::FloatData> {
   static void encode(Encoder& e, const RMF_avro_backend::FloatData& v) {
     rmf_avro::encode(e, v.index);
     rmf_avro::encode(e, v.nodes);
@@ -158,7 +161,8 @@ template <> struct codec_traits<RMF_avro_backend::FloatData> {
   }
 };
 
-template <> struct codec_traits<RMF_avro_backend::StringData> {
+template <>
+struct codec_traits<RMF_avro_backend::StringData> {
   static void encode(Encoder& e, const RMF_avro_backend::StringData& v) {
     rmf_avro::encode(e, v.index);
     rmf_avro::encode(e, v.nodes);
@@ -169,7 +173,8 @@ template <> struct codec_traits<RMF_avro_backend::StringData> {
   }
 };
 
-template <> struct codec_traits<RMF_avro_backend::IndexData> {
+template <>
+struct codec_traits<RMF_avro_backend::IndexData> {
   static void encode(Encoder& e, const RMF_avro_backend::IndexData& v) {
     rmf_avro::encode(e, v.index);
     rmf_avro::encode(e, v.nodes);
@@ -180,7 +185,8 @@ template <> struct codec_traits<RMF_avro_backend::IndexData> {
   }
 };
 
-template <> struct codec_traits<RMF_avro_backend::NodeIDData> {
+template <>
+struct codec_traits<RMF_avro_backend::NodeIDData> {
   static void encode(Encoder& e, const RMF_avro_backend::NodeIDData& v) {
     rmf_avro::encode(e, v.index);
     rmf_avro::encode(e, v.nodes);
@@ -191,7 +197,8 @@ template <> struct codec_traits<RMF_avro_backend::NodeIDData> {
   }
 };
 
-template <> struct codec_traits<RMF_avro_backend::IntsData> {
+template <>
+struct codec_traits<RMF_avro_backend::IntsData> {
   static void encode(Encoder& e, const RMF_avro_backend::IntsData& v) {
     rmf_avro::encode(e, v.index);
     rmf_avro::encode(e, v.nodes);
@@ -202,7 +209,8 @@ template <> struct codec_traits<RMF_avro_backend::IntsData> {
   }
 };
 
-template <> struct codec_traits<RMF_avro_backend::FloatsData> {
+template <>
+struct codec_traits<RMF_avro_backend::FloatsData> {
   static void encode(Encoder& e, const RMF_avro_backend::FloatsData& v) {
     rmf_avro::encode(e, v.index);
     rmf_avro::encode(e, v.nodes);
@@ -213,7 +221,8 @@ template <> struct codec_traits<RMF_avro_backend::FloatsData> {
   }
 };
 
-template <> struct codec_traits<RMF_avro_backend::StringsData> {
+template <>
+struct codec_traits<RMF_avro_backend::StringsData> {
   static void encode(Encoder& e, const RMF_avro_backend::StringsData& v) {
     rmf_avro::encode(e, v.index);
     rmf_avro::encode(e, v.nodes);
@@ -224,7 +233,8 @@ template <> struct codec_traits<RMF_avro_backend::StringsData> {
   }
 };
 
-template <> struct codec_traits<RMF_avro_backend::IndexesData> {
+template <>
+struct codec_traits<RMF_avro_backend::IndexesData> {
   static void encode(Encoder& e, const RMF_avro_backend::IndexesData& v) {
     rmf_avro::encode(e, v.index);
     rmf_avro::encode(e, v.nodes);
@@ -235,7 +245,8 @@ template <> struct codec_traits<RMF_avro_backend::IndexesData> {
   }
 };
 
-template <> struct codec_traits<RMF_avro_backend::NodeIDsData> {
+template <>
+struct codec_traits<RMF_avro_backend::NodeIDsData> {
   static void encode(Encoder& e, const RMF_avro_backend::NodeIDsData& v) {
     rmf_avro::encode(e, v.index);
     rmf_avro::encode(e, v.nodes);
@@ -246,7 +257,8 @@ template <> struct codec_traits<RMF_avro_backend::NodeIDsData> {
   }
 };
 
-template <> struct codec_traits<RMF_avro_backend::Data> {
+template <>
+struct codec_traits<RMF_avro_backend::Data> {
   static void encode(Encoder& e, const RMF_avro_backend::Data& v) {
     rmf_avro::encode(e, v.frame);
     rmf_avro::encode(e, v.int_data);
@@ -275,7 +287,8 @@ template <> struct codec_traits<RMF_avro_backend::Data> {
   }
 };
 
-template <> struct codec_traits<RMF_avro_backend::All> {
+template <>
+struct codec_traits<RMF_avro_backend::All> {
   static void encode(Encoder& e, const RMF_avro_backend::All& v) {
     rmf_avro::encode(e, v.file);
     rmf_avro::encode(e, v.nodes);
@@ -289,6 +302,5 @@ template <> struct codec_traits<RMF_avro_backend::All> {
     rmf_avro::decode(d, v.category);
   }
 };
-
 }
 #endif

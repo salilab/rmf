@@ -69,7 +69,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
     InternalException();
     ~InternalException() RMF_NOEXCEPT;
   };
-
 }
 
 #define RMF_THROW(m, e)                          \
@@ -79,7 +78,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     using ::RMF::internal::ErrorInfo::Category;  \
     using ::RMF::internal::ErrorInfo::Key;       \
     using ::RMF::internal::ErrorInfo::Decorator; \
-    using boost::operator<< ;                    \
+    using boost::operator<<;                     \
     throw e() << m;                              \
   }
 
@@ -90,7 +89,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     using ::RMF::internal::ErrorInfo::Category;  \
     using ::RMF::internal::ErrorInfo::Key;       \
     using ::RMF::internal::ErrorInfo::Decorator; \
-    using boost::operator<< ;                    \
+    using boost::operator<<;                     \
     e << m;                                      \
     throw;                                       \
   }
@@ -102,11 +101,12 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }                                                                      \
   } while (false)
 
-#define RMF_INDEX_CHECK(value, end)                                     \
-  RMF_USAGE_CHECK(static_cast<boost::int64_t>(value) >= 0,              \
-                  "Negative index passed");                             \
-  RMF_USAGE_CHECK(static_cast<unsigned int>(value) <                    \
-                  static_cast<unsigned int>(end), "Out of range index");
+#define RMF_INDEX_CHECK(value, end)                                      \
+  RMF_USAGE_CHECK(static_cast<boost::int64_t>(value) >= 0,               \
+                  "Negative index passed");                              \
+  RMF_USAGE_CHECK(                                                       \
+      static_cast<unsigned int>(value) < static_cast<unsigned int>(end), \
+      "Out of range index");
 
 #define RMF_PATH_CHECK(path)                                                 \
   if (!boost::filesystem::exists(path)) {                                    \
@@ -133,10 +133,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
 #endif
 
-#define RMF_NOT_IMPLEMENTED                                                 \
-  RMF_THROW(Message("Not implemented")                                      \
-                << Function(BOOST_CURRENT_FUNCTION) << SourceFile(__FILE__) \
-                << SourceLine(__LINE__) << Type("NotImplemented"),          \
+#define RMF_NOT_IMPLEMENTED                                                \
+  RMF_THROW(Message("Not implemented") << Function(BOOST_CURRENT_FUNCTION) \
+                                       << SourceFile(__FILE__)             \
+                                       << SourceLine(__LINE__)             \
+                                       << Type("NotImplemented"),          \
             ::RMF::InternalException)
 
 RMF_DISABLE_WARNINGS

@@ -10,8 +10,9 @@
 #include <fstream>
 
 namespace {
-std::string description = "Convert an rmf file into an xml file suitable for "
-                          "opening in a web browser.";
+std::string description =
+    "Convert an rmf file into an xml file suitable for "
+    "opening in a web browser.";
 
 std::string get_as_attribute_name(std::string name) {
   std::vector<char> data(name.begin(), name.end());
@@ -28,15 +29,13 @@ std::string get_as_attribute_name(std::string name) {
 }
 
 template <class TypeT, class Handle>
-bool show_type_data_xml(Handle nh,
-                        RMF::Category kc,
-                        bool opened,
+bool show_type_data_xml(Handle nh, RMF::Category kc, bool opened,
                         std::ostream& out) {
-  using RMF::operator<< ;
+  using RMF::operator<<;
   RMF::FileConstHandle rh = nh.get_file();
   std::vector<RMF::Key<TypeT> > keys = rh.get_keys<TypeT>(kc);
   for (unsigned int i = 0; i < keys.size(); ++i) {
-    //std::cout << "key " << rh.get_name(keys[i]) << std::endl;
+    // std::cout << "key " << rh.get_name(keys[i]) << std::endl;
     if (nh.get_has_value(keys[i])) {
       if (!opened) {
         out << "<" << nh.get_file().get_name(kc) << "\n";
@@ -48,8 +47,8 @@ bool show_type_data_xml(Handle nh,
   }
   return opened;
 }
-#define RMF_SHOW_TYPE_DATA_XML(                                       \
-    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues) \
+#define RMF_SHOW_TYPE_DATA_XML(lcname, UCName, PassValue, ReturnValue, \
+                               PassValues, ReturnValues)               \
   opened = show_type_data_xml<RMF::UCName##Traits>(nh, kc, opened, out);
 
 template <class Handle>
@@ -61,10 +60,8 @@ void show_data_xml(Handle nh, RMF::Category kc, std::ostream& out) {
   }
 }
 
-void show_hierarchy(RMF::NodeConstHandle nh,
-                    const RMF::Categories& cs,
-                    std::set<RMF::NodeConstHandle>& seen,
-                    std::ostream& out) {
+void show_hierarchy(RMF::NodeConstHandle nh, const RMF::Categories& cs,
+                    std::set<RMF::NodeConstHandle>& seen, std::ostream& out) {
   out << "<node name=\"" << nh.get_name() << "\" id=\"" << nh.get_id() << "\" "
       << "type=\"" << RMF::get_type_name(nh.get_type()) << "\">\n";
   if (seen.find(nh) == seen.end()) {
@@ -90,8 +87,7 @@ int main(int argc, char** argv) {
     RMF_ADD_INPUT_FILE("rmf");
     RMF_ADD_OUTPUT_FILE("xml");
     int frame = 0;
-    options.add_options()("frame,f",
-                          boost::program_options::value<int>(&frame),
+    options.add_options()("frame,f", boost::program_options::value<int>(&frame),
                           "Frame to use, if -1 just show static data");
 
     process_options(argc, argv);
@@ -124,7 +120,7 @@ int main(int argc, char** argv) {
     *out << "</rmf>\n";
     return 0;
   }
-  catch (const std::exception & e) {
+  catch (const std::exception& e) {
     std::cerr << "Error: " << e.what() << std::endl;
   }
 }

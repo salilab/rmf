@@ -44,21 +44,18 @@ class RMFEXPORT FileHandle : public FileConstHandle {
 
   /** Return the root of the hierarchy stored in the file.
    */
-  NodeHandle get_root_node() const {
-    return NodeHandle(NodeID(0),
-                      shared_);
-  }
+  NodeHandle get_root_node() const { return NodeHandle(NodeID(0), shared_); }
 
 #ifndef SWIG
   /** Each node in the hierarchy can be associated with some arbitrary bit
       of external data. Nodes can be extracted using these bits of data.
    */
-  template <class T> NodeHandle get_node_from_association(const T& d) const {
+  template <class T>
+  NodeHandle get_node_from_association(const T& d) const {
     if (!shared_->get_has_associated_node(d)) {
       return NodeHandle();
     } else {
-      return NodeHandle(shared_->get_associated_node(d),
-                        shared_);
+      return NodeHandle(shared_->get_associated_node(d), shared_);
     }
   }
 #else

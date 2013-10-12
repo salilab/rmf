@@ -29,7 +29,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
       return f.add_key<TypeT>(category_id, name, per_frame);
     }
   }
-
   }
 }
 

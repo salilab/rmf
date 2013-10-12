@@ -42,15 +42,14 @@ RMF_ENABLE_WARNINGS namespace RMF {
           RMF_INTERNAL_CHECK(categories_[i].reader, "No old reader found");
           std::string name = get_category_dynamic_file_path(Category(i));
           try {
-            RMF_TRACE(
-                get_avro_logger(),
-                "Opening category file for " << get_name(Category(i)));
+            RMF_TRACE(get_avro_logger(), "Opening category file for "
+                                             << get_name(Category(i)));
             categories_[i].reader.reset();
-            categories_[i].reader
-                .reset(new rmf_avro::DataFileReader<RMF_avro_backend::Data>(
+            categories_[i].reader.reset(
+                new rmf_avro::DataFileReader<RMF_avro_backend::Data>(
                     name.c_str(), get_Data_schema()));
           }
-          catch (const std::exception & e) {
+          catch (const std::exception& e) {
             RMF_THROW(Message(e.what()) << Component(name), IOException);
           }
           bool success = categories_[i].reader->read(categories_[i].data);
@@ -61,21 +60,19 @@ RMF_ENABLE_WARNINGS namespace RMF {
         while (frame.get_index() >
                static_cast<unsigned int>(categories_[i].data.frame)) {
           if (!categories_[i].reader->read(categories_[i].data)) {
-            //std::cout << "Out of data looking for " << frame << std::endl;
-            RMF_TRACE(
-                get_avro_logger(),
-                "Out of data for category " << get_name(Category(i)));
+            // std::cout << "Out of data looking for " << frame << std::endl;
+            RMF_TRACE(get_avro_logger(), "Out of data for category "
+                                             << get_name(Category(i)));
             clear_data(categories_[i].data, frame);
             break;
           } else {
-            RMF_TRACE(get_avro_logger(),
-                      "Loaded category " << get_name(Category(i)));
+            RMF_TRACE(get_avro_logger(), "Loaded category "
+                                             << get_name(Category(i)));
           }
           if (frame.get_index() <
               static_cast<unsigned int>(categories_[i].data.frame)) {
-            RMF_TRACE(get_avro_logger(),
-                      "Missing frame for category "
-                          << get_name(Category(i)));
+            RMF_TRACE(get_avro_logger(), "Missing frame for category "
+                                             << get_name(Category(i)));
             clear_data(categories_[i].data, frame);
             break;
           }
@@ -85,8 +82,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     MultipleAvroFileBase::set_current_frame(frame);
   }
 
-  MultipleAvroFileReader::MultipleAvroFileReader(std::string path,
-                                                 bool create,
+  MultipleAvroFileReader::MultipleAvroFileReader(std::string path, bool create,
                                                  bool read_only)
       : MultipleAvroFileBase(path) {
     RMF_UNUSED(create);
@@ -114,13 +110,13 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }
   void MultipleAvroFileReader::initialize_categories() {
     std::string path = get_file_path();
-    //std::cout << "Searching in " << path << std::endl;
+    // std::cout << "Searching in " << path << std::endl;
     std::vector<std::string> categories =
         get_categories_from_disk(boost::filesystem::directory_iterator(path),
                                  boost::filesystem::directory_iterator());
     categories_.clear();
     for (unsigned int i = 0; i < categories.size(); ++i) {
-      //std::cout << "initializing category " << categories[i] << std::endl;
+      // std::cout << "initializing category " << categories[i] << std::endl;
       Category cat = get_category(categories[i]);
       add_category_data(cat);
     }
@@ -135,7 +131,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
                                           get_##UCName##_schema());           \
       success = re.read(lcname##_);                                           \
     }                                                                         \
-    catch (const std::exception & e) {                                        \
+    catch (const std::exception& e) {                                         \
       RMF_THROW(Message(e.what()) << Component(get_##lcname##_file_path()),   \
                 IOException);                                                 \
     }                                                                         \
@@ -156,8 +152,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
             get_frames_file_path().c_str(), get_Frame_schema());
         do {
           RMF_avro_backend::Frame frame;
-          if (!re.read(frame))
-            break;
+          if (!re.read(frame)) break;
           frames_[frame.index] = frame;
           number_of_frames_ = frame.index + 1;
           for (unsigned int i = 0; i < frame.parents.size(); ++i) {
@@ -165,7 +160,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
           }
         } while (true);
       }
-      catch (const std::exception & e) {
+      catch (const std::exception& e) {
         RMF_THROW(Message(e.what()) << Component(get_frames_file_path()),
                   IOException);
       }
@@ -188,47 +183,47 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
 
     std::string dynamic_path = get_category_dynamic_file_path(cat);
-    //std::cout << "Checking dynamic path " << dynamic_path << std::endl;
+    // std::cout << "Checking dynamic path " << dynamic_path << std::endl;
     if (boost::filesystem::exists(dynamic_path)) {
-      //std::cout << "Dynamic data found" << std::endl;
+      // std::cout << "Dynamic data found" << std::endl;
       try {
         // make sure it is closed before reopening on windows
         categories_[cat.get_id()].reader.reset();
-        categories_[cat.get_id()].reader
-            .reset(new rmf_avro::DataFileReader<RMF_avro_backend::Data>(
-                dynamic_path.c_str(), get_Data_schema()));
+        categories_[cat.get_id()]
+            .reader.reset(new rmf_avro::DataFileReader<RMF_avro_backend::Data>(
+                 dynamic_path.c_str(), get_Data_schema()));
       }
-      catch (const std::exception & e) {
+      catch (const std::exception& e) {
         RMF_THROW(Message(e.what()) << Component(dynamic_path), IOException);
       }
-      bool success = categories_[cat.get_id()].reader
-          ->read(categories_[cat.get_id()].data);
+      bool success = categories_[cat.get_id()]
+                         .reader->read(categories_[cat.get_id()].data);
       if (!success) {
-        RMF_THROW(
-            Message("Error reading from data file") << Component(dynamic_path),
-            IOException);
+        RMF_THROW(Message("Error reading from data file")
+                      << Component(dynamic_path),
+                  IOException);
       }
     } else {
       categories_[cat.get_id()].data.frame = 0;
     }
 
     std::string static_path = get_category_static_file_path(cat);
-    //std::cout << "Checking static path " << static_path << std::endl;
+    // std::cout << "Checking static path " << static_path << std::endl;
     if (boost::filesystem::exists(static_path)) {
-      //std::cout << "Static data found" << std::endl;
+      // std::cout << "Static data found" << std::endl;
       bool success;
       try {
         rmf_avro::DataFileReader<RMF_avro_backend::Data> reader(
             static_path.c_str(), get_Data_schema());
         success = reader.read(static_categories_[cat.get_id()]);
       }
-      catch (const std::exception & e) {
+      catch (const std::exception& e) {
         RMF_THROW(Message(e.what()) << Component(static_path), IOException);
       }
       if (!success) {
-        RMF_THROW(
-            Message("Error reading from data file") << Component(static_path),
-            IOException);
+        RMF_THROW(Message("Error reading from data file")
+                      << Component(static_path),
+                  IOException);
       }
     } else {
       static_categories_[cat.get_id()].frame = -1;
@@ -236,12 +231,12 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }
 
   FrameID MultipleAvroFileReader::add_child(FrameID /*node*/,
-                                              std::string /*name*/,
-                                              FrameType /*t*/) {
+                                            std::string /*name*/,
+                                            FrameType /*t*/) {
     RMF_THROW(Message("Trying to modify read-only file"), UsageException);
   }
   void MultipleAvroFileReader::add_child(FrameID /*node*/,
-                                               FrameID /*child_node*/) {
+                                         FrameID /*child_node*/) {
     RMF_THROW(Message("Trying to modify read-only file"), UsageException);
   }
   FrameIDs MultipleAvroFileReader::get_children(FrameID node) const {
@@ -268,7 +263,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
       return STATIC;
     } else {
       if (frames_.find(i.get_index()) != frames_.end()) {
-        return boost::lexical_cast<FrameType>(frames_.find(i.get_index())->second.type);
+        return boost::lexical_cast<FrameType>(
+            frames_.find(i.get_index())->second.type);
       } else {
         return FRAME;
       }
@@ -279,6 +275,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }
 
   }  // namespace avro_backend
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

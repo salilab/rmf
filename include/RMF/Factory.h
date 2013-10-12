@@ -18,7 +18,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
       as check whether a given node has the values needed for a particular
       decorator type in a given frame.
    */
-  template <class HandleType> class Factory {
+  template <class HandleType>
+  class Factory {
    protected:
     Factory() {}
 

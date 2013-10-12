@@ -17,9 +17,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
   namespace {
   NodeConstHandles get_particles_by_resolution_internal(
-      const ParticleConstFactory& f,
-      NodeConstHandle h,
-      double resolution) {
+      const ParticleConstFactory& f, NodeConstHandle h, double resolution) {
     NodeConstHandles children = h.get_children();
     NodeConstHandles ret;
     for (unsigned int i = 0; i < children.size(); ++i) {

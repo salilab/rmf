@@ -13,17 +13,18 @@
 #include <string>
 
 RMF_ENABLE_WARNINGS namespace RMF {
-  namespace internal { class SharedData; }
+  namespace internal {
+  class SharedData;
+  }
   namespace hdf5_backend {
-  RMFEXPORT boost::shared_ptr<internal::SharedData> create_shared_data(std::string path,
-                                                     bool create,
-                                                     bool read_only);
-  RMFEXPORT boost::shared_ptr<internal::SharedData> create_shared_data_buffer(std::string& buffer,
-                                                            bool create);
+  RMFEXPORT boost::shared_ptr<internal::SharedData> create_shared_data(
+      std::string path, bool create, bool read_only);
+  RMFEXPORT boost::shared_ptr<internal::SharedData> create_shared_data_buffer(
+      std::string& buffer, bool create);
   RMFEXPORT boost::shared_ptr<internal::SharedData> create_shared_data_buffer(
       const std::string& buffer);
   }  // namespace avro_backend
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

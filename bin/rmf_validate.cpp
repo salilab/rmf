@@ -7,7 +7,9 @@
 #include "common.h"
 #include <sstream>
 
-namespace { std::string description = "Validate a saved RMF file."; }
+namespace {
+std::string description = "Validate a saved RMF file.";
+}
 
 int main(int argc, char** argv) {
   try {
@@ -17,7 +19,7 @@ int main(int argc, char** argv) {
     rh.validate(std::cerr);
     return 0;
   }
-  catch (const std::exception & e) {
+  catch (const std::exception& e) {
     std::cerr << "Error: " << e.what() << std::endl;
   }
 }

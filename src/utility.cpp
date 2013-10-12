@@ -17,25 +17,21 @@
 
 RMF_ENABLE_WARNINGS namespace RMF {
   namespace {
-  void copy_structure(NodeConstHandle in,
-                      NodeHandle out,
+  void copy_structure(NodeConstHandle in, NodeHandle out,
                       const boost::unordered_set<NodeConstHandle>* set) {
     // we already saw this part of the dag
-    if (in.get_has_association())
-      return;
+    if (in.get_has_association()) return;
     in.set_association(out.get_id());
     NodeConstHandles ch = in.get_children();
     for (unsigned int i = 0; i < ch.size(); ++i) {
-      if (set && set->find(ch[i]) == set->end())
-        continue;
+      if (set && set->find(ch[i]) == set->end()) continue;
       NodeHandle nn = out.add_child(ch[i].get_name(), ch[i].get_type());
       copy_structure(ch[i], nn, set);
     }
   }
   void link_structure(NodeConstHandle in, NodeHandle out) {
     // to deal with aliases
-    if (in.get_has_association())
-      return;
+    if (in.get_has_association()) return;
     in.set_association(out.get_id());
     NodeConstHandles ch = in.get_children();
     NodeHandles och = out.get_children();
@@ -49,31 +45,28 @@ RMF_ENABLE_WARNINGS namespace RMF {
     copy_structure(in.get_root_node(), out.get_root_node(), NULL);
   }
   void copy_structure(const NodeConstHandles & in, FileHandle out) {
-    if (in.empty())
-      return;
+    if (in.empty()) return;
     boost::unordered_set<NodeConstHandle> inputset(in.begin(), in.end());
-    copy_structure(
-        in[0].get_file().get_root_node(), out.get_root_node(), &inputset);
+    copy_structure(in[0].get_file().get_root_node(), out.get_root_node(),
+                   &inputset);
   }
 
   void link_structure(FileConstHandle in, FileHandle out) {
     link_structure(in.get_root_node(), out.get_root_node());
   }
   namespace {
-#define RMF_COPY_FRAME_1(                                             \
-    lcname, Ucname, PassValue, ReturnValue, PassValues, ReturnValues) \
+#define RMF_COPY_FRAME_1(lcname, Ucname, PassValue, ReturnValue, PassValues, \
+                         ReturnValues)                                       \
   copy_node_frame_type<Ucname##Traits>(in, out, incats, outcats)
-#define RMF_COPY_FRAME_D(                                             \
-    lcname, Ucname, PassValue, ReturnValue, PassValues, ReturnValues) \
+#define RMF_COPY_FRAME_D(lcname, Ucname, PassValue, ReturnValue, PassValues, \
+                         ReturnValues)                                       \
   copy_set_frame_type<Ucname##Traits>(in, out, incats, outcats)
 
   template <class TypeTraits>
-  void copy_node_frame_type_node(NodeConstHandle in,
-                                 NodeHandle out,
+  void copy_node_frame_type_node(NodeConstHandle in, NodeHandle out,
                                  const std::vector<Key<TypeTraits> >& inkeys,
                                  const std::vector<Key<TypeTraits> >& outkeys) {
-    if (!in.get_has_association())
-      return;
+    if (!in.get_has_association()) return;
     for (unsigned int i = 0; i < inkeys.size(); ++i) {
       if (in.get_has_frame_value(inkeys[i])) {
         out.set_value(outkeys[i], in.get_value(inkeys[i]));
@@ -87,10 +80,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }
 
   template <class TypeTraits>
-  void copy_node_frame_type(FileConstHandle in,
-                            FileHandle out,
-                            Categories incats,
-                            Categories outcats) {
+  void copy_node_frame_type(FileConstHandle in, FileHandle out,
+                            Categories incats, Categories outcats) {
     std::vector<Key<TypeTraits> > inkeys;
     std::vector<Key<TypeTraits> > outkeys;
     for (unsigned int i = 0; i < incats.size(); ++i) {
@@ -102,8 +93,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
             out.get_key<TypeTraits>(outcats[i], in.get_name(cinkeys[j])));
       }
     }
-    copy_node_frame_type_node(
-        in.get_root_node(), out.get_root_node(), inkeys, outkeys);
+    copy_node_frame_type_node(in.get_root_node(), out.get_root_node(), inkeys,
+                              outkeys);
   }
 
   void copy_node_frame(FileConstHandle in, FileHandle out) {
@@ -130,8 +121,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }
 
   namespace {
-  bool get_equal_node_structure(NodeConstHandle in,
-                                NodeConstHandle out,
+  bool get_equal_node_structure(NodeConstHandle in, NodeConstHandle out,
                                 bool print_diff) {
     bool ret = true;
     if (in.get_type() != out.get_type()) {
@@ -164,31 +154,32 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }
   }
 
-  bool get_equal_structure(
-      FileConstHandle in, FileConstHandle out, bool print_diff) {
+  bool get_equal_structure(FileConstHandle in, FileConstHandle out,
+                           bool print_diff) {
     bool ret = true;
-    ret = get_equal_node_structure(
-        in.get_root_node(), out.get_root_node(), print_diff) && ret;
+    ret = get_equal_node_structure(in.get_root_node(), out.get_root_node(),
+                                   print_diff) &&
+          ret;
     return ret;
   }
 
   namespace {
-#define RMF_EQUAL_FRAME_1(                                            \
-    lcname, Ucname, PassValue, ReturnValue, PassValues, ReturnValues) \
-  ret = get_equal_node_frame_type<Ucname##Traits>(                    \
-      in, out, incats, outcats, print_diff) && ret
-#define RMF_EQUAL_FRAME_D(                                            \
-    lcname, Ucname, PassValue, ReturnValue, PassValues, ReturnValues) \
-  ret = get_equal_set_frame_type<Ucname##Traits>(                     \
-      in, out, incats, outcats, print_diff) && ret
+#define RMF_EQUAL_FRAME_1(lcname, Ucname, PassValue, ReturnValue, PassValues, \
+                          ReturnValues)                                       \
+  ret = get_equal_node_frame_type<Ucname##Traits>(in, out, incats, outcats,   \
+                                                  print_diff) &&              \
+        ret
+#define RMF_EQUAL_FRAME_D(lcname, Ucname, PassValue, ReturnValue, PassValues, \
+                          ReturnValues)                                       \
+  ret = get_equal_set_frame_type<Ucname##Traits>(in, out, incats, outcats,    \
+                                                 print_diff) &&               \
+        ret
 
   template <class TypeTraits>
   bool get_equal_node_frame_type_node(
-      NodeConstHandle in,
-      NodeConstHandle out,
+      NodeConstHandle in, NodeConstHandle out,
       const std::vector<Key<TypeTraits> >& inkeys,
-      const std::vector<Key<TypeTraits> >& outkeys,
-      bool print_diff) {
+      const std::vector<Key<TypeTraits> >& outkeys, bool print_diff) {
     bool ret = true;
     for (unsigned int i = 0; i < inkeys.size(); ++i) {
       if (in.get_has_frame_value(inkeys[i]) !=
@@ -213,17 +204,16 @@ RMF_ENABLE_WARNINGS namespace RMF {
     NodeConstHandles inch = in.get_children();
     NodeConstHandles outch = out.get_children();
     for (unsigned int i = 0; i < inch.size(); ++i) {
-      ret = get_equal_node_frame_type_node(
-          inch[i], outch[i], inkeys, outkeys, print_diff) && ret;
+      ret = get_equal_node_frame_type_node(inch[i], outch[i], inkeys, outkeys,
+                                           print_diff) &&
+            ret;
     }
     return ret;
   }
 
   template <class TypeTraits>
-  bool get_equal_node_frame_type(FileConstHandle in,
-                                 FileConstHandle out,
-                                 Categories incats,
-                                 Categories outcats,
+  bool get_equal_node_frame_type(FileConstHandle in, FileConstHandle out,
+                                 Categories incats, Categories outcats,
                                  bool print_diff) {
     std::vector<Key<TypeTraits> > inkeys;
     std::vector<Key<TypeTraits> > outkeys;
@@ -240,8 +230,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
         in.get_root_node(), out.get_root_node(), inkeys, outkeys, print_diff);
   }
 
-  bool get_equal_node_frame(FileConstHandle in,
-                            FileConstHandle out,
+  bool get_equal_node_frame(FileConstHandle in, FileConstHandle out,
                             bool print_diff) {
     Categories incats = in.get_categories();
     Categories outcats;
@@ -252,18 +241,17 @@ RMF_ENABLE_WARNINGS namespace RMF {
     RMF_FOREACH_TYPE(RMF_EQUAL_FRAME_1);
     return ret;
   }
-
   }
 
-  bool get_equal_frame(
-      FileConstHandle in, FileConstHandle out, bool print_diff) {
+  bool get_equal_frame(FileConstHandle in, FileConstHandle out,
+                       bool print_diff) {
     bool ret = true;
     ret = get_equal_node_frame(in, out, print_diff) && ret;
     return ret;
   }
 
-  void add_child_alias(
-      AliasFactory af, NodeHandle parent, NodeConstHandle child) {
+  void add_child_alias(AliasFactory af, NodeHandle parent,
+                       NodeConstHandle child) {
     internal::add_child_alias(af, parent, child);
   }
 

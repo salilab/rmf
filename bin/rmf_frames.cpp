@@ -6,7 +6,9 @@
 #include <sstream>
 #include "common.h"
 
-namespace { std::string description("Print out information about frames"); }
+namespace {
+std::string description("Print out information about frames");
+}
 
 int main(int argc, char** argv) {
   try {
@@ -23,7 +25,7 @@ int main(int argc, char** argv) {
     }
     return 0;
   }
-  catch (const std::exception & e) {
+  catch (const std::exception& e) {
     std::cerr << "Error: " << e.what() << std::endl;
   }
 }

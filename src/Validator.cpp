@@ -67,9 +67,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     std::string catname_;
     std::string keynames_;
     TieChecker() {}
-    TieChecker(FileConstHandle rh,
-               Category c,
-               std::string name,
+    TieChecker(FileConstHandle rh, Category c, std::string name,
                Strings names) {
       if (c != Category()) {
         for (unsigned int i = 0; i < names.size(); ++i) {
@@ -111,8 +109,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
         coords_ = TieChecker(rh, c, "cartesian coordinates", xyz);
       }
     }
-    void write_errors_node(NodeConstHandle node,
-                           const NodeConstHandles&,
+    void write_errors_node(NodeConstHandle node, const NodeConstHandles&,
                            std::ostream& out) const {
       m_.write_errors(node, out);
       r_.write_errors(node, out);

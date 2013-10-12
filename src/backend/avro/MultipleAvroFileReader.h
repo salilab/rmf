@@ -25,7 +25,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     typedef MultipleAvroFileBase P;
     struct CategoryData {
       boost::shared_ptr<rmf_avro::DataFileReader<RMF_avro_backend::Data> >
-      reader;
+          reader;
       // frame is always something valid
       RMF_avro_backend::Data data;
     };
@@ -64,7 +64,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
       }
     }
 
-    RMF_avro_backend::Data& access_frame_data(Category /*cat*/, FrameID /*frame*/) {
+    RMF_avro_backend::Data& access_frame_data(Category /*cat*/,
+                                              FrameID /*frame*/) {
       RMF_THROW(Message("Can't modify read only file"), IOException);
     }
 
@@ -84,20 +85,20 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
     MultipleAvroFileReader(std::string path, bool create, bool read_only);
 
-    void set_current_frame(FrameID frame) RMF_OVERRIDE;
+    void set_current_frame(FrameID frame) RMF_BACKEND_OVERRIDE;
 
-    FrameID add_child(FrameID node, std::string name, FrameType t) RMF_OVERRIDE;
-    void add_child(FrameID node, FrameID child_node) RMF_OVERRIDE;
-    FrameIDs get_children(FrameID node) const RMF_OVERRIDE;
+    FrameID add_child(FrameID node, std::string name,
+                      FrameType t) RMF_BACKEND_OVERRIDE;
+    void add_child(FrameID node, FrameID child_node) RMF_BACKEND_OVERRIDE;
+    FrameIDs get_children(FrameID node) const RMF_BACKEND_OVERRIDE;
     using AvroKeysAndCategories::get_name;
-    std::string get_name(FrameID i) const RMF_OVERRIDE;
-    FrameType get_type(FrameID i) const RMF_OVERRIDE;
-    unsigned int get_number_of_frames() const RMF_OVERRIDE;
-
+    std::string get_name(FrameID i) const RMF_BACKEND_OVERRIDE;
+    FrameType get_type(FrameID i) const RMF_BACKEND_OVERRIDE;
+    unsigned int get_number_of_frames() const RMF_BACKEND_OVERRIDE;
   };
 
   }  // namespace avro_backend
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

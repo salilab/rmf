@@ -49,26 +49,19 @@ std::string description("Generate a new file that interpolates an old one.");
   }
 
 void interpolate_frame(
-    double frac,
-    boost::variate_generator<boost::mt19937&, boost::normal_distribution<> >&
-        noise,
+    double frac, boost::variate_generator<boost::mt19937&,
+                                          boost::normal_distribution<> >& noise,
     boost::variate_generator<boost::mt19937&, boost::normal_distribution<> >&
         angle_noise,
     RMF::IntermediateParticleConstFactory ipcf0,
     RMF::IntermediateParticleConstFactory ipcf1,
-    RMF::IntermediateParticleFactory ipf,
-    RMF::BallConstFactory bcf0,
-    RMF::BallConstFactory bcf1,
-    RMF::BallFactory bf,
+    RMF::IntermediateParticleFactory ipf, RMF::BallConstFactory bcf0,
+    RMF::BallConstFactory bcf1, RMF::BallFactory bf,
     RMF::ReferenceFrameConstFactory rfcf0,
-    RMF::ReferenceFrameConstFactory rfcf1,
-    RMF::ReferenceFrameFactory rff,
-    RMF::CylinderConstFactory ccf0,
-    RMF::CylinderConstFactory ccf1,
-    RMF::CylinderFactory cf,
-    RMF::NodeConstHandle input0,
-    RMF::NodeConstHandle input1,
-    RMF::NodeHandle output) {
+    RMF::ReferenceFrameConstFactory rfcf1, RMF::ReferenceFrameFactory rff,
+    RMF::CylinderConstFactory ccf0, RMF::CylinderConstFactory ccf1,
+    RMF::CylinderFactory cf, RMF::NodeConstHandle input0,
+    RMF::NodeConstHandle input1, RMF::NodeHandle output) {
   if (ipcf0.get_is(input0)) {
     RMF_INTERPOLATE(ip, coordinates, noise, false);
   }
@@ -86,30 +79,13 @@ void interpolate_frame(
   RMF::NodeConstHandles ic1 = input1.get_children();
   RMF::NodeHandles oc = output.get_children();
   for (unsigned int i = 0; i < ic0.size(); ++i) {
-    interpolate_frame(frac,
-                      noise,
-                      angle_noise,
-                      ipcf0,
-                      ipcf1,
-                      ipf,
-                      bcf0,
-                      bcf1,
-                      bf,
-                      rfcf0,
-                      rfcf1,
-                      rff,
-                      ccf0,
-                      ccf1,
-                      cf,
-                      ic0[i],
-                      ic1[i],
+    interpolate_frame(frac, noise, angle_noise, ipcf0, ipcf1, ipf, bcf0, bcf1,
+                      bf, rfcf0, rfcf1, rff, ccf0, ccf1, cf, ic0[i], ic1[i],
                       oc[i]);
   }
 }
 
-void interpolate_frames(int num,
-                        double noise,
-                        double angle_noise,
+void interpolate_frames(int num, double noise, double angle_noise,
                         RMF::FileConstHandle input_file0,
                         RMF::FileConstHandle input_file1,
                         RMF::FileHandle output_file) {
@@ -125,16 +101,16 @@ void interpolate_frames(int num,
   RMF::ReferenceFrameConstFactory rfcf0(input_file0);
   RMF::ReferenceFrameConstFactory rfcf1(input_file1);
   RMF::ReferenceFrameFactory rff(output_file);
-  //boost::random_device seed_gen;
+  // boost::random_device seed_gen;
   boost::mt19937 rng;
-  //rng.seed(seed_gen());
+  // rng.seed(seed_gen());
   rng.seed(static_cast<boost::uint64_t>(std::time(NULL)));
   boost::normal_distribution<> nd(0.0, noise);
   boost::variate_generator<boost::mt19937&, boost::normal_distribution<> >
-  normal_random(rng, nd);
+      normal_random(rng, nd);
   boost::normal_distribution<> a_nd(0.0, angle_noise);
   boost::variate_generator<boost::mt19937&, boost::normal_distribution<> >
-  angle_normal_random(rng, a_nd);
+      angle_normal_random(rng, a_nd);
   for (int i = 0; i < num; ++i) {
     output_file.add_frame("interpolated", RMF::FRAME);
     double frac = static_cast<double>(i + 1) / static_cast<double>(num + 1);
@@ -142,23 +118,9 @@ void interpolate_frames(int num,
               << output_file.get_current_frame() << " from "
               << input_file0.get_current_frame() << " and "
               << input_file1.get_current_frame() << std::endl;
-    interpolate_frame(frac,
-                      normal_random,
-                      angle_normal_random,
-                      ipcf0,
-                      ipcf1,
-                      ipf,
-                      bcf0,
-                      bcf1,
-                      bf,
-                      rfcf0,
-                      rfcf1,
-                      rff,
-                      ccf0,
-                      ccf1,
-                      cf,
-                      input_file0.get_root_node(),
-                      input_file1.get_root_node(),
+    interpolate_frame(frac, normal_random, angle_normal_random, ipcf0, ipcf1,
+                      ipf, bcf0, bcf1, bf, rfcf0, rfcf1, rff, ccf0, ccf1, cf,
+                      input_file0.get_root_node(), input_file1.get_root_node(),
                       output_file.get_root_node());
   }
 }
@@ -172,17 +134,13 @@ int main(int argc, char** argv) {
     double noise = 0, angle_noise = 0;
     int max_frames = -1;
     options.add_options()(
-        "number-interpolated",
-        boost::program_options::value<int>(&num_frames),
+        "number-interpolated", boost::program_options::value<int>(&num_frames),
         "How many frames to insert between each original frame")(
-        "coordinate_noise",
-        boost::program_options::value<double>(&noise),
+        "coordinate_noise", boost::program_options::value<double>(&noise),
         "How much (gaussian) noise to add to each generated coordinate.")(
-        "angular_noise",
-        boost::program_options::value<double>(&angle_noise),
+        "angular_noise", boost::program_options::value<double>(&angle_noise),
         "How much (gaussian) noise to add to each generated quaternion.")(
-        "frame_limit",
-        boost::program_options::value<int>(&max_frames),
+        "frame_limit", boost::program_options::value<int>(&max_frames),
         "Limits how many frames are output, for testing.");
     process_options(argc, argv);
     RMF::FileConstHandle irh0 = RMF::open_rmf_file_read_only(input);
@@ -209,7 +167,7 @@ int main(int argc, char** argv) {
     }
     return 0;
   }
-  catch (const std::exception & e) {
+  catch (const std::exception& e) {
     std::cerr << "Error: " << e.what() << std::endl;
   }
 }

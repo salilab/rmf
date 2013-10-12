@@ -57,7 +57,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
     virtual Validator* create(FileConstHandle rh) = 0;
     virtual ~Creator() {}
   };
-  template <class V> struct CreatorImpl : public Creator {
+  template <class V>
+  struct CreatorImpl : public Creator {
     CreatorImpl(std::string name) : Creator(name) {}
     Validator* create(FileConstHandle rh) { return new V(rh, name_); }
   };
@@ -65,7 +66,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
   typedef std::vector<boost::shared_ptr<Creator> > Creators;
   RMFEXPORT Creators& get_validators();
 
-  template <class V> struct Registrar {
+  template <class V>
+  struct Registrar {
     Registrar(std::string name) {
       get_validators().push_back(boost::make_shared<CreatorImpl<V> >(name));
     }

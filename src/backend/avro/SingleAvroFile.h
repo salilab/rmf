@@ -129,7 +129,7 @@ class SingleAvroFile : public AvroKeysAndCategories {
 
  public:
 
-  void set_current_frame(FrameID frame) RMF_OVERRIDE {
+  void set_current_frame(FrameID frame) RMF_BACKEND_OVERRIDE {
     if (frame == ALL_FRAMES) {
       null_frame_data_.frame = -1;
     } else {
@@ -138,21 +138,23 @@ class SingleAvroFile : public AvroKeysAndCategories {
     AvroKeysAndCategories::set_current_frame(frame);
   }
 
-  void flush() RMF_OVERRIDE;
-  void reload() RMF_OVERRIDE;
+  void flush() RMF_BACKEND_OVERRIDE;
+  void reload() RMF_BACKEND_OVERRIDE;
 
   SingleAvroFile(std::string path, bool create, bool read_only);
   SingleAvroFile(std::string& buffer, bool create);
   SingleAvroFile(const std::string& buffer);
   ~SingleAvroFile() { flush(); }
-  FrameID add_child(FrameID node, std::string name, FrameType t) RMF_OVERRIDE;
-  void add_child(FrameID node, FrameID child_node) RMF_OVERRIDE;
-  FrameIDs get_children(FrameID node) const RMF_OVERRIDE;
+  FrameID add_child(FrameID node, std::string name,
+                    FrameType t) RMF_BACKEND_OVERRIDE;
+  void add_child(FrameID node, FrameID child_node) RMF_BACKEND_OVERRIDE;
+  FrameIDs get_children(FrameID node) const RMF_BACKEND_OVERRIDE;
   using AvroKeysAndCategories::get_name;
-  virtual std::string get_name(FrameID i) const RMF_OVERRIDE;
-  FrameType get_type(FrameID i) const RMF_OVERRIDE;
+  RMF_BACKEND_VIRTUAL std::string get_name(FrameID i) const
+      RMF_BACKEND_OVERRIDE;
+  FrameType get_type(FrameID i) const RMF_BACKEND_OVERRIDE;
   unsigned int get_number_of_frames() const;
-  virtual std::string get_file_type() const RMF_OVERRIDE {
+  RMF_BACKEND_VIRTUAL std::string get_file_type() const RMF_BACKEND_OVERRIDE {
     if (text_) {
       return "Single avro version 1 (text)";
     } else {

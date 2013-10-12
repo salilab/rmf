@@ -14,7 +14,9 @@
 
 RMF_ENABLE_WARNINGS namespace RMF {
   namespace HDF5 {
-  namespace { bool show_errors = false; }
+  namespace {
+  bool show_errors = false;
+  }
 
   void set_show_errors(bool tf) { show_errors = tf; }
 
@@ -30,26 +32,22 @@ RMF_ENABLE_WARNINGS namespace RMF {
   ConstGroup::ConstGroup(boost::shared_ptr<SharedHandle> h) : P(h) {}
 
   Group::Group(Group parent, std::string name)
-      : P(boost::make_shared<SharedHandle>(
-            H5Gopen2(parent.get_handle(), name.c_str(), H5P_DEFAULT),
-            &H5Gclose,
-            name)) {}
+      : P(boost::make_shared<SharedHandle>(H5Gopen2(parent.get_handle(),
+                                                    name.c_str(), H5P_DEFAULT),
+                                           &H5Gclose, name)) {}
 
   ConstGroup::ConstGroup(ConstGroup parent, std::string name)
-    : P(boost::make_shared<SharedHandle>(
-            H5Gopen2(parent.get_handle(), name.c_str(), H5P_DEFAULT),
-            &H5Gclose,
-            name)) {}
+      : P(boost::make_shared<SharedHandle>(H5Gopen2(parent.get_handle(),
+                                                    name.c_str(), H5P_DEFAULT),
+                                           &H5Gclose, name)) {}
 
   Group Group::add_child_group(std::string name) {
     RMF_USAGE_CHECK(!H5Lexists(get_handle(), name.c_str(), H5P_DEFAULT),
-                    RMF::internal::get_error_message(
-                        "Child named ", name, " already exists"));
-    RMF_HDF5_HANDLE(
-        ,
-        H5Gcreate2(
-            get_handle(), name.c_str(), H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT),
-        &H5Gclose);
+                    RMF::internal::get_error_message("Child named ", name,
+                                                     " already exists"));
+    RMF_HDF5_HANDLE(, H5Gcreate2(get_handle(), name.c_str(), H5P_DEFAULT,
+                                 H5P_DEFAULT, H5P_DEFAULT),
+                    &H5Gclose);
     return Group(*this, name);
   }
 
@@ -59,23 +57,13 @@ RMF_ENABLE_WARNINGS namespace RMF {
     return n;
   }
   std::string ConstGroup::get_child_name(unsigned int i) const {
-    int sz = H5Lget_name_by_idx(get_handle(),
-                                ".",
-                                H5_INDEX_NAME,
-                                H5_ITER_NATIVE,
-                                (hsize_t) i,
-                                NULL,
-                                0,
-                                H5P_DEFAULT);
+    int sz =
+        H5Lget_name_by_idx(get_handle(), ".", H5_INDEX_NAME, H5_ITER_NATIVE,
+                           (hsize_t)i, NULL, 0, H5P_DEFAULT);
     boost::scoped_array<char> buf(new char[sz + 1]);
-    RMF_HDF5_CALL(H5Lget_name_by_idx(get_handle(),
-                                     ".",
-                                     H5_INDEX_NAME,
-                                     H5_ITER_NATIVE,
-                                     (hsize_t) i,
-                                     buf.get(),
-                                     sz + 1,
-                                     H5P_DEFAULT));
+    RMF_HDF5_CALL(H5Lget_name_by_idx(get_handle(), ".", H5_INDEX_NAME,
+                                     H5_ITER_NATIVE, (hsize_t)i, buf.get(),
+                                     sz + 1, H5P_DEFAULT));
     return std::string(buf.get());
   }
   bool ConstGroup::get_has_child(std::string name) const {
@@ -84,32 +72,28 @@ RMF_ENABLE_WARNINGS namespace RMF {
   bool ConstGroup::get_child_is_group(unsigned int i) const {
     H5O_info_t info;
     RMF_HDF5_HANDLE(
-        c,
-        H5Oopen(get_handle(), get_child_name(i).c_str(), H5P_DEFAULT),
+        c, H5Oopen(get_handle(), get_child_name(i).c_str(), H5P_DEFAULT),
         &H5Oclose);
     RMF_HDF5_CALL(H5Oget_info(c, &info));
-    return info.type == H5O_TYPE_GROUP;  //H5O_TYPE_DATASET
+    return info.type == H5O_TYPE_GROUP;  // H5O_TYPE_DATASET
   }
   ConstGroup ConstGroup::get_child_group(unsigned int i) const {
     return ConstGroup(boost::make_shared<SharedHandle>(
         H5Gopen2(get_handle(), get_child_name(i).c_str(), H5P_DEFAULT),
-        &H5Gclose,
-        "open group"));
+        &H5Gclose, "open group"));
   }
   Group Group::get_child_group(unsigned int i) const {
     return Group(boost::make_shared<SharedHandle>(
         H5Gopen2(get_handle(), get_child_name(i).c_str(), H5P_DEFAULT),
-        &H5Gclose,
-        "open group"));
+        &H5Gclose, "open group"));
   }
   bool ConstGroup::get_child_is_data_set(unsigned int i) const {
     H5O_info_t info;
     RMF_HDF5_HANDLE(
-        c,
-        H5Oopen(get_handle(), get_child_name(i).c_str(), H5P_DEFAULT),
+        c, H5Oopen(get_handle(), get_child_name(i).c_str(), H5P_DEFAULT),
         &H5Oclose);
     RMF_HDF5_CALL(H5Oget_info(c, &info));
-    return info.type == H5O_TYPE_DATASET;  //H5O_TYPE_DATASET
+    return info.type == H5O_TYPE_DATASET;  // H5O_TYPE_DATASET
   }
 
   namespace {
@@ -139,8 +123,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     RMF_HDF5_CALL(H5Eset_auto2(H5E_DEFAULT, &error_function, NULL));
     RMF_HDF5_HANDLE(plist, get_parameters(), H5Pclose);
     RMF_HDF5_NEW_HANDLE(
-        h,
-        H5Fcreate(name.c_str(), H5F_ACC_TRUNC, H5P_DEFAULT, plist),
+        h, H5Fcreate(name.c_str(), H5F_ACC_TRUNC, H5P_DEFAULT, plist),
         &H5Fclose);
     return File(h);
   }
@@ -149,8 +132,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
     RMF_HDF5_CALL(H5open());
     RMF_HDF5_CALL(H5Eset_auto2(H5E_DEFAULT, &error_function, NULL));
     RMF_HDF5_HANDLE(plist, get_parameters(), H5Pclose);
-    RMF_HDF5_NEW_HANDLE(
-        h, H5Fopen(name.c_str(), H5F_ACC_RDWR, plist), &H5Fclose);
+    RMF_HDF5_NEW_HANDLE(h, H5Fopen(name.c_str(), H5F_ACC_RDWR, plist),
+                        &H5Fclose);
     return File(h);
   }
 
@@ -158,8 +141,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
     RMF_HDF5_CALL(H5open());
     RMF_HDF5_CALL(H5Eset_auto2(H5E_DEFAULT, &error_function, NULL));
     RMF_HDF5_HANDLE(plist, get_parameters(), H5Pclose);
-    RMF_HDF5_NEW_HANDLE(
-        h, H5Fopen(name.c_str(), H5F_ACC_RDONLY, plist), &H5Fclose);
+    RMF_HDF5_NEW_HANDLE(h, H5Fopen(name.c_str(), H5F_ACC_RDONLY, plist),
+                        &H5Fclose);
     return ConstFile(h);
   }
 
@@ -167,8 +150,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
     RMF_HDF5_CALL(H5open());
     RMF_HDF5_CALL(H5Eset_auto2(H5E_DEFAULT, &error_function, NULL));
     RMF_HDF5_HANDLE(plist, get_parameters(), H5Pclose);
-    RMF_HDF5_NEW_HANDLE(
-        h, H5Fopen(name.c_str(), H5F_ACC_RDONLY, plist), &H5Fclose);
+    RMF_HDF5_NEW_HANDLE(h, H5Fopen(name.c_str(), H5F_ACC_RDONLY, plist),
+                        &H5Fclose);
     return File(h);
   }
 
@@ -235,6 +218,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
     return ret;
   }
   } /* namespace HDF5 */
-}   /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

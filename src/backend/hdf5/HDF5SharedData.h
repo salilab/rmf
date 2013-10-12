@@ -213,10 +213,9 @@ RMF_ENABLE_WARNINGS namespace RMF {
     template <class TypeTraits>
     HDF5DataSetCacheD<StringTraits, 1>& get_key_list_data_set(
         Category cat, bool per_frame) const {
-      return key_name_data_sets_.get(file_, cat, get_name(cat),
-                                     TypeTraits::HDF5Traits::get_index(),
-                                     TypeTraits::HDF5Traits::get_name(),
-                                     per_frame);
+      return key_name_data_sets_.get(
+          file_, cat, get_name(cat), TypeTraits::HDF5Traits::get_index(),
+          TypeTraits::HDF5Traits::get_name(), per_frame);
     }
 
     template <class TypeTraits>
@@ -650,9 +649,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
       return node_data_.get_size()[0];
     }
 
-    virtual Categories get_categories() const RMF_OVERRIDE;
-    virtual Category get_category(std::string name) RMF_OVERRIDE;
-    virtual std::string get_name(Category kc) const RMF_OVERRIDE {
+    RMF_BACKEND_VIRTUAL Categories get_categories() const RMF_BACKEND_OVERRIDE;
+    RMF_BACKEND_VIRTUAL Category
+        get_category(std::string name) RMF_BACKEND_OVERRIDE;
+    RMF_BACKEND_VIRTUAL std::string get_name(Category kc) const
+        RMF_BACKEND_OVERRIDE {
       return category_data_map_.find(kc)->second.name;
     }
 
@@ -662,18 +663,20 @@ RMF_ENABLE_WARNINGS namespace RMF {
     std::string get_producer() const;
     void set_producer(std::string str);
 
-    virtual std::string get_name(FrameID i) const RMF_OVERRIDE;
+    RMF_BACKEND_VIRTUAL std::string get_name(FrameID i) const
+        RMF_BACKEND_OVERRIDE;
 
     bool get_supports_locking() const { return false; }
-    virtual void reload() RMF_OVERRIDE;
-    void set_current_frame(FrameID frame) RMF_OVERRIDE;
+    RMF_BACKEND_VIRTUAL void reload() RMF_BACKEND_OVERRIDE;
+    void set_current_frame(FrameID frame) RMF_BACKEND_OVERRIDE;
 
-    virtual std::string get_file_type() const RMF_OVERRIDE {
+    RMF_BACKEND_VIRTUAL std::string get_file_type() const RMF_BACKEND_OVERRIDE {
       return "HDF5 version 1";
     }
 
-    virtual FrameID add_child(FrameID node, std::string name,
-                              FrameType /*t*/) RMF_OVERRIDE {
+    RMF_BACKEND_VIRTUAL FrameID
+    add_child(FrameID node, std::string name,
+              FrameType /*t*/) RMF_BACKEND_OVERRIDE {
       // frame types not supported in rmf files right now
       unsigned int cindex;
       if (node == ALL_FRAMES)
@@ -684,9 +687,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
       set_name(index, name);
       return index;
     }
-    void add_child(FrameID /*node*/, FrameID /*child_node*/) RMF_OVERRIDE {}
-    FrameType get_type(FrameID) const RMF_OVERRIDE { return FRAME; }
-    FrameIDs get_children(FrameID node) const RMF_OVERRIDE {
+    void add_child(FrameID /*node*/,
+                   FrameID /*child_node*/) RMF_BACKEND_OVERRIDE {}
+    FrameType get_type(FrameID) const RMF_BACKEND_OVERRIDE { return FRAME; }
+    FrameIDs get_children(FrameID node) const RMF_BACKEND_OVERRIDE {
       unsigned int cindex;
       if (node == ALL_FRAMES)
         cindex = 0;

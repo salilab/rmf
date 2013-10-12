@@ -44,6 +44,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
   }
 
   }  // namespace internal
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

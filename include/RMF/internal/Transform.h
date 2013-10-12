@@ -74,14 +74,12 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
     Floats get_translation() const { return Floats(trans_, trans_ + 3); }
     Floats get_rotation() const { return rot_.get_quaternion(); }
-    RMF_SHOWABLE(
-        Transform,
-        "Rotation: " << rot_
-                     << " and translation: " << Floats(trans_, trans_ + 3));
+    RMF_SHOWABLE(Transform, "Rotation: " << rot_ << " and translation: "
+                                         << Floats(trans_, trans_ + 3));
   };
 
   }  // namespace internal
-}    /* namespace RMF */
+} /* namespace RMF */
 RMF_DISABLE_WARNINGS
 
 #endif /* RMF_INTERNAL_TRANSFORM_H */

@@ -18,7 +18,8 @@
 RMF_ENABLE_WARNINGS namespace RMF {
 #if RMF_HAS_LOG4CXX
   namespace {
-  template <class T> void use(const T&) {}
+  template <class T>
+  void use(const T&) {}
   struct Configurator {
     Configurator(log4cxx::ConsoleAppenderPtr ptr) {
       log4cxx::BasicConfigurator::configure(ptr);
@@ -38,8 +39,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   void init_logger() {
     log4cxx::LoggerPtr rootLogger = log4cxx::Logger::getRootLogger();
     bool uninit = rootLogger->getAllAppenders().empty() ? true : false;
-    if (uninit)
-      do_init();
+    if (uninit) do_init();
   }
   }
   log4cxx::LoggerPtr get_logger() {
@@ -70,7 +70,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
 #else
   void set_log_level(std::string str) {}
 #endif
-
 }
 
 RMF_DISABLE_WARNINGS

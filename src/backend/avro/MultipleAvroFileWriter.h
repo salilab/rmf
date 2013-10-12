@@ -30,7 +30,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
     struct CategoryData {
       boost::shared_ptr<rmf_avro::DataFileWriter<RMF_avro_backend::Data> >
-      writer;
+          writer;
       RMF_avro_backend::Data data;
       bool dirty;
     };
@@ -40,7 +40,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     RMF_avro_backend::Data null_frame_data_;
     RMF_avro_backend::Data null_static_frame_data_;
     boost::shared_ptr<rmf_avro::DataFileWriter<RMF_avro_backend::Frame> >
-    frame_writer_;
+        frame_writer_;
     RMF_avro_backend::Frame frame_;
 
    protected:
@@ -103,21 +103,22 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
 
     MultipleAvroFileWriter(std::string path, bool create, bool read_only);
-    virtual ~MultipleAvroFileWriter();
+    RMF_BACKEND_VIRTUAL ~MultipleAvroFileWriter();
 
-    void set_current_frame(FrameID frame) RMF_OVERRIDE;
+    void set_current_frame(FrameID frame) RMF_BACKEND_OVERRIDE;
 
-    FrameID add_child(FrameID node, std::string name, FrameType t) RMF_OVERRIDE;
-    void add_child(FrameID node, FrameID child_node) RMF_OVERRIDE;
-    FrameIDs get_children(FrameID node) const RMF_OVERRIDE;
+    FrameID add_child(FrameID node, std::string name,
+                      FrameType t) RMF_BACKEND_OVERRIDE;
+    void add_child(FrameID node, FrameID child_node) RMF_BACKEND_OVERRIDE;
+    FrameIDs get_children(FrameID node) const RMF_BACKEND_OVERRIDE;
     using AvroKeysAndCategories::get_name;
-    std::string get_name(FrameID i) const RMF_OVERRIDE;
-    FrameType get_type(FrameID i) const RMF_OVERRIDE;
-    unsigned int get_number_of_frames() const RMF_OVERRIDE;
+    std::string get_name(FrameID i) const RMF_BACKEND_OVERRIDE;
+    FrameType get_type(FrameID i) const RMF_BACKEND_OVERRIDE;
+    unsigned int get_number_of_frames() const RMF_BACKEND_OVERRIDE;
   };
 
   }  // namespace avro_backend
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

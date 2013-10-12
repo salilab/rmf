@@ -54,8 +54,7 @@ class ID {
   unsigned int get_index() const {
     RMF_USAGE_CHECK(i_ != std::numeric_limits<int>::min(),
                     "get_index called on uninitialized ID");
-    RMF_USAGE_CHECK(i_ >= 0,
-                    "get_index called on special ID.");
+    RMF_USAGE_CHECK(i_ >= 0, "get_index called on special ID.");
     return i_;
   }
   RMF_SHOWABLE(ID, i_);

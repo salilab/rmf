@@ -40,46 +40,41 @@ RMF_ENABLE_WARNINGS namespace RMF {
   inline String get_set_data_data_set_name(int arity) {
     RMF_INTERNAL_CHECK(arity > 0, "Bad arity");
     std::ostringstream oss;
-    using std::operator<< ;
+    using std::operator<<;
     oss << "data_" << arity;
     return oss.str();
   }
   //! Get the name of the data set for storing category names
   inline String get_category_name_data_set_name() {
     std::ostringstream oss;
-    using std::operator<< ;
+    using std::operator<<;
     oss << "category_names_" << 1;
     return oss.str();
   }
   //! Get the name of the attribute which lists all the keys of the category
   inline String get_key_list_data_set_name(std::string category_name,
-                                           String type_name,
-                                           bool per_frame) {
+                                           String type_name, bool per_frame) {
     std::ostringstream oss;
-    using std::operator<< ;
+    using std::operator<<;
     oss << type_name << "_" << category_name << "_";
     oss << get_per_frame_name(per_frame) << "_list";
     return oss.str();
   }
   //! Get the name of the data set for storing a particular type of data
-  inline String get_data_data_set_name(std::string category_name,
-                                       int arity,
-                                       String type_name,
-                                       bool per_frame) {
+  inline String get_data_data_set_name(std::string category_name, int arity,
+                                       String type_name, bool per_frame) {
     RMF_INTERNAL_CHECK(arity > 0, "Bad arity");
     std::ostringstream oss;
-    using std::operator<< ;
+    using std::operator<<;
     oss << type_name << "_" << category_name << "_"
         << get_per_frame_name(per_frame);
-    if (arity > 1)
-      oss << "_" << arity;
+    if (arity > 1) oss << "_" << arity;
     oss << "_storage";
     return oss.str();
   }
   //! Get the name of the lock attribute
   inline std::string get_lock_attribute_name() { return std::string("lock"); }
   /** @} */
-
   }
 
 } /* namespace RMF */

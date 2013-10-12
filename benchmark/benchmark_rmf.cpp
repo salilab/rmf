@@ -7,7 +7,10 @@
 #include <sstream>
 
 namespace {
-template <class T> double count(T t) { return t; }
+template <class T>
+double count(T t) {
+  return t;
+}
 double count(std::string nm) { return nm.size(); }
 double count(RMF::NodeID nm) { return nm.get_index(); }
 
@@ -66,7 +69,7 @@ int main(int, char**) {
        << " (" << dist << ")"<< std::endl;*/
     std::cout << "rmf c++" << timer.elapsed() << " " << dist << std::endl;
   }
-  catch (const std::exception & e) {
+  catch (const std::exception& e) {
     std::cerr << "Exception thrown: " << e.what() << std::endl;
   }
   return 0;
