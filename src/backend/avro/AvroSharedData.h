@@ -117,9 +117,9 @@ class AvroSharedData : public Base {
   }
 
   template <class TypeTraits>
-  typename TypeTraits::Type get_current_value(NodeID node,
+  typename TypeTraits::Type get_loaded_value(NodeID node,
                                               Key<TypeTraits> k) const {
-    return get_value_impl(P::get_current_frame(), node, k);
+    return get_value_impl(P::get_loaded_frame(), node, k);
   }
   template <class TypeTraits>
   typename TypeTraits::Type get_static_value(NodeID node,
@@ -127,9 +127,9 @@ class AvroSharedData : public Base {
     return get_value_impl(ALL_FRAMES, node, k);
   }
   template <class TypeTraits>
-  void set_current_value(NodeID node, Key<TypeTraits> k,
+  void set_loaded_value(NodeID node, Key<TypeTraits> k,
                          typename TypeTraits::Type v) {
-    set_value_impl(P::get_current_frame(), node, k, v);
+    set_value_impl(P::get_loaded_frame(), node, k, v);
   }
   template <class TypeTraits>
   void set_static_value(NodeID node, Key<TypeTraits> k,

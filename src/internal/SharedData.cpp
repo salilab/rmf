@@ -21,10 +21,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
   namespace internal {
 
   SharedData::SharedData(std::string path)
-      : valid_(11111), cur_frame_(ALL_FRAMES), path_(path) {
+      : valid_(11111), loaded_frame_(0), cur_is_static_(true), path_(path) {
     RMF_INFO(get_logger(), "Opening file " << path_);
   }
-  ;
+
   SharedData::~SharedData() {
     RMF_INTERNAL_CHECK(valid_ == 11111, "Already destroyed");
     valid_ = -66666;
@@ -73,11 +73,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
 #else
     return boost::filesystem::path(path_).filename();
 #endif
-  }
-
-  void SharedData::set_current_frame(FrameID frame) {
-    RMF_TRACE(get_logger(), "Setting current frame to " << frame);
-    cur_frame_ = frame;
   }
 
   namespace {

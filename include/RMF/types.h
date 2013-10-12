@@ -85,7 +85,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   struct StringTraits {
     typedef String Type;
     typedef Strings Types;
-    typedef const Type& ReturnType;
+    typedef Type ReturnType;
     typedef const Type& ArgumentType;
     static bool get_is_null_value(const Type& t) { return t.empty(); }
     static ReturnType get_null_value() {
@@ -108,7 +108,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   struct IntsTraits {
     typedef Ints Type;
     typedef IntsList Types;
-    typedef const Type& ReturnType;
+    typedef Type ReturnType;
     typedef const Type& ArgumentType;
     static bool get_is_null_value(const Type& t) { return t.empty(); }
     static ReturnType get_null_value() {
@@ -121,7 +121,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   struct FloatsTraits {
     typedef Floats Type;
     typedef FloatsList Types;
-    typedef const Type& ReturnType;
+    typedef Type ReturnType;
     typedef const Type& ArgumentType;
     static bool get_is_null_value(const Type& t) { return t.empty(); }
     static ReturnType get_null_value() {
@@ -134,7 +134,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   struct StringsTraits {
     typedef Strings Type;
     typedef StringsList Types;
-    typedef const Type& ReturnType;
+    typedef Type ReturnType;
     typedef const Type& ArgumentType;
     static bool get_is_null_value(const Type& t) { return t.empty(); }
     static ReturnType get_null_value() {
@@ -148,10 +148,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
   struct IndexesTraits {
     typedef Indexes Type;
     typedef IndexesList Types;
-    typedef const Type& ReturnType;
+    typedef Type ReturnType;
     typedef const Type& ArgumentType;
     static bool get_is_null_value(const Type& t) { return t.empty(); }
-    static ReturnType get_null_value() {
+    static const Type& get_null_value() {
       static Type r;
       return r;
     }
@@ -178,7 +178,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   struct NodeIDsTraits {
     typedef NodeIDs Type;
     typedef NodeIDsList Types;
-    typedef const Type& ReturnType;
+    typedef Type ReturnType;
     typedef const Type& ArgumentType;
     static bool get_is_null_value(const Type& t) { return t.empty(); }
     static ReturnType get_null_value() {

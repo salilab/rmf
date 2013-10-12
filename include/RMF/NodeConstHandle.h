@@ -40,14 +40,12 @@ RMF_ENABLE_WARNINGS
       attribute, and frame is not specified then frame 0 is                   \
       used.                                                                   \
   */                                                                          \
-  ReturnValue get_value(UCName##Key k) const {                                \
-    return get_value_impl<UCName##Traits, ReturnValue>(k);                    \
-  }                                                                           \
+  ReturnValue get_value(UCName##Key k) const { return get_value_impl(k); }    \
   /** Return the attribute value or TypeTraits::get_null_value() if the       \
       node does not have the attribute. In python the method a value equal to \
       eg RMF.NullFloat if the attribute is not there.*/                       \
   ReturnValue get_value_always(UCName##Key k) const {                         \
-    return get_value_always_impl<UCName##Traits, ReturnValue>(k);             \
+    return get_value_impl(k);                                                 \
   }                                                                           \
   /** If the default key is passed, false is returned.*/                      \
   bool get_has_value(UCName##Key k) const {                                   \
@@ -56,12 +54,13 @@ RMF_ENABLE_WARNINGS
   /** Return true if the node has data for that key that is specific          \
       to the current frame, as opposed to static data.*/                      \
   bool get_has_frame_value(UCName##Key k) const {                             \
-    ReturnValue ret = shared_->get_current_value(node_, k);                   \
-    return !UCName##Traits::get_is_null_value(ret);                           \
+    return get_has_frame_value_impl(k);                                       \
   }                                                                           \
+                                                                              \
  protected:                                                                   \
   std::string get_category_name(UCName##Key k) const;                         \
   std::string get_name(UCName##Key k) const;                                  \
+                                                                              \
  public:
 
 RMF_VECTOR_DECL(NodeConstHandle);
@@ -96,33 +95,21 @@ class RMFEXPORT NodeConstHandle {
     else
       return 0;
   }
-  template <class Traits, class ReturnValue, class K>
-  ReturnValue get_value_always_impl(K k) const {
-    try {
-      if (shared_->get_current_frame() == ALL_FRAMES) {
-        return shared_->get_static_value(node_, k);
-      } else {
-        ReturnValue ret = shared_->get_current_value(node_, k);
-        if (!Traits::get_is_null_value(ret))
-          return ret;
-        else
-          return shared_->get_static_value(node_, k);
+
+  template <class Traits>
+  bool get_has_frame_value_impl(Key<Traits> k) const {
+    return !Traits::get_is_null_value(shared_->get_loaded_value(node_, k));
+  }
+
+  // hopefully get_value will be inlined...
+  template <class Traits>
+  typename Traits::ReturnType get_value_impl(Key<Traits> k) const {
+    if (!shared_->get_current_is_static()) {
+      if (!Traits::get_is_null_value(shared_->get_loaded_value(node_, k))) {
+        return shared_->get_loaded_value(node_, k);
       }
     }
-    RMF_NODE_CATCH();
-  }
-  template <class Traits, class ReturnValue, class K>
-  ReturnValue get_value_impl(K k) const {
-    try {
-      ReturnValue ret = get_value_always_impl<Traits, ReturnValue>(k);
-      RMF_USAGE_CHECK(
-          !Traits::get_is_null_value(ret),
-          internal::get_error_message("Node ", get_name(),
-                                      " does not have a value for key ",
-                                      shared_->get_name(k)));
-      return ret;
-    }
-    RMF_NODE_CATCH_KEY(k, );
+    return shared_->get_static_value(node_, k);
   }
 
  protected:

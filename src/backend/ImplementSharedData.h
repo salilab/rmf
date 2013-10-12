@@ -18,18 +18,18 @@ namespace backend {
 
 #define RMF_IMPLEMENT_SHARED_TYPE(lcname, Ucname, PassValue, ReturnValue, \
                                   PassValues, ReturnValues)               \
-  RMF_BACKEND_VIRTUAL Ucname##Traits::Type get_current_value(             \
+  RMF_BACKEND_VIRTUAL Ucname##Traits::ReturnType get_loaded_value(        \
       NodeID node, Key<Ucname##Traits> k) const RMF_BACKEND_OVERRIDE {    \
-    return Base::get_current_value(node, k);                              \
+    return Base::get_loaded_value(node, k);                               \
   }                                                                       \
-  RMF_BACKEND_VIRTUAL Ucname##Traits::Type get_static_value(              \
+  RMF_BACKEND_VIRTUAL Ucname##Traits::ReturnType get_static_value(        \
       NodeID node, Key<Ucname##Traits> k) const RMF_BACKEND_OVERRIDE {    \
     return Base::get_static_value(node, k);                               \
   }                                                                       \
-  RMF_BACKEND_VIRTUAL void set_current_value(                             \
+  RMF_BACKEND_VIRTUAL void set_loaded_value(                              \
       NodeID node, Key<Ucname##Traits> k,                                 \
       Ucname##Traits::Type v) RMF_BACKEND_OVERRIDE {                      \
-    return Base::set_current_value(node, k, v);                           \
+    return Base::set_loaded_value(node, k, v);                            \
   }                                                                       \
   RMF_BACKEND_VIRTUAL void set_static_value(                              \
       NodeID node, Key<Ucname##Traits> k,                                 \

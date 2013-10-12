@@ -14,7 +14,7 @@
 #include "../types.h"
 #include "../names.h"
 #include "../enums.h"
-#include "../ID.h"
+#include "../constants.h"
 #include "../ID.h"
 #include "../infrastructure_macros.h"
 #include <boost/unordered_map.hpp>
@@ -41,13 +41,13 @@ RMF_ENABLE_WARNINGS namespace RMF {
 #define RMF_SHARED_TYPE(lcname, Ucname, PassValue, ReturnValue, PassValues, \
                         ReturnValues)                                       \
   /** Return a value or the null value.*/                                   \
-  virtual Ucname##Traits::Type get_current_value(                           \
+  virtual Ucname##Traits::ReturnType get_loaded_value(                      \
       NodeID node, Key<Ucname##Traits> k) const = 0;                        \
   /** Return a value or the null value.*/                                   \
-  virtual Ucname##Traits::Type get_static_value(                            \
+  virtual Ucname##Traits::ReturnType get_static_value(                      \
       NodeID node, Key<Ucname##Traits> k) const = 0;                        \
-  virtual void set_current_value(NodeID node, Key<Ucname##Traits> k,        \
-                                 Ucname##Traits::Type v) = 0;               \
+  virtual void set_loaded_value(NodeID node, Key<Ucname##Traits> k,         \
+                                Ucname##Traits::Type v) = 0;                \
   virtual void set_static_value(NodeID node, Key<Ucname##Traits> k,         \
                                 Ucname##Traits::Type v) = 0;                \
   virtual std::vector<Key<Ucname##Traits> > get_keys(Category category,     \
@@ -72,16 +72,30 @@ RMF_ENABLE_WARNINGS namespace RMF {
     boost::unordered_map<uintptr_t, NodeID> back_association_;
     boost::unordered_map<int, boost::any> user_data_;
     int valid_;
-    FrameID cur_frame_;
+    FrameID loaded_frame_;
+    bool cur_is_static_;
     std::string path_;
 
    protected:
     SharedData(std::string path);
 
+    virtual void set_current_frame(FrameID) {};
+
    public:
     std::string get_file_path() const { return path_; }
-    FrameID get_current_frame() const { return cur_frame_; }
-    virtual void set_current_frame(FrameID frame);
+    FrameID get_loaded_frame() const { return loaded_frame_; }
+    bool get_current_is_static() const { return cur_is_static_; }
+    void set_loaded_frame(FrameID frame) {
+      loaded_frame_ = frame;
+      if (!get_current_is_static()) set_current_frame(loaded_frame_);
+    }
+    void set_current_is_static(bool tf) {
+      cur_is_static_ = tf;
+      set_current_frame(tf? RMF::ALL_FRAMES: loaded_frame_);
+    }
+    FrameID get_current_frame() const {
+      return get_current_is_static() ? RMF::ALL_FRAMES : loaded_frame_;
+    }
 
     RMF_FOREACH_TYPE(RMF_SHARED_TYPE);
     void audit_key_name(std::string name) const;
