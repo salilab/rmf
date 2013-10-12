@@ -9,7 +9,9 @@
 #include <RMF/FileHandle.h>
 #include <RMF/internal/SharedData.h>
 
-RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(FileHandle);
+RMF_ENABLE_WARNINGS
+
+RMF_VECTOR_DEF(FileHandle);
 
 namespace RMF {
 
@@ -44,6 +46,12 @@ void FileHandle::set_producer(std::string descr) const {
     shared_->set_producer(descr);
   }
   RMF_FILE_CATCH();
+}
+
+FrameID FileHandle::add_frame(std::string name, FrameType t) const {
+  FrameID ret = shared_->add_child(get_current_frame(), name, t);
+  set_current_frame(ret);
+  return ret;
 }
 
 FileHandle open_rmf_file(std::string path) { return FileHandle(path, false); }

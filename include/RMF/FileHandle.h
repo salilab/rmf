@@ -15,7 +15,9 @@
 #include "FileConstHandle.h"
 #include "NodeHandle.h"
 
-RMF_ENABLE_WARNINGS RMF_VECTOR_DECL(FileHandle);
+RMF_ENABLE_WARNINGS
+
+RMF_VECTOR_DECL(FileHandle);
 
 namespace RMF {
 
@@ -45,7 +47,9 @@ class RMFEXPORT FileHandle : public FileConstHandle {
   /** Return the root of the hierarchy stored in the file.
    */
   NodeHandle get_root_node() const { return NodeHandle(NodeID(0), shared_); }
-
+  /** Add a frame and make it the current frame. It is a child of the
+      current frame. */
+  FrameID add_frame(std::string name, FrameType t) const;
 #ifndef SWIG
   /** Each node in the hierarchy can be associated with some arbitrary bit
       of external data. Nodes can be extracted using these bits of data.
@@ -61,15 +65,12 @@ class RMFEXPORT FileHandle : public FileConstHandle {
 #else
   NodeHandle get_node_from_association(void* d) const;
 #endif
+  /* @} */
+
   /** Return a NodeHandle from a NodeID. The NodeID must refer
       to a valid NodeHandle.*/
   NodeHandle get_node(NodeID id) const;
-  /** Suggest how many frames the file is likely to have. This can
-      make writing more efficient as space will be preallocated.
-   */
-  void set_number_of_frames_hint(unsigned int i) const {
-    shared_->save_frames_hint(i);
-  }
+
   /** Each RMF structure has an associated description. This should
       consist of unstructured text describing the contents of the RMF
       data. Conventionally. this description can consist of multiple

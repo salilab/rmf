@@ -158,14 +158,6 @@ class RMFEXPORT FileConstHandle {
     }
     RMF_FILE_CATCH(<< Frame(frame));
   }
-  /** Add a frame and make it the current frame. It is a child of the
-      current frame. */
-  FrameID add_frame(std::string name, FrameType t) const {
-    FrameID ret = shared_->add_child(get_current_frame(), name, t);
-    set_current_frame(ret);
-    return ret;
-  }
-  /* @} */
 
   /** Return the number of frames in the file. Currently, this is the number
       of frames that the x-coordinate has, but it should be made more general.
