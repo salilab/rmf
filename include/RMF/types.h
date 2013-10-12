@@ -17,6 +17,8 @@
 #include <algorithm>
 #include <boost/cstdint.hpp>
 #include <limits>
+#include <cstdlib>
+#include <cmath>
 
 RMF_ENABLE_WARNINGS namespace RMF {
 
@@ -67,6 +69,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
     typedef HDF5::IntTraits HDF5Traits;
     typedef boost::int32_t AvroType;
+    static bool get_are_equal(ArgumentType a, ArgumentType b) { return a == b; }
   };
   struct FloatTraits {
     typedef Float Type;
@@ -81,6 +84,9 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
     typedef HDF5::FloatTraits HDF5Traits;
     typedef Type AvroType;
+    static bool get_are_equal(ArgumentType a, ArgumentType b) {
+      return std::abs(a - b) < .01 * std::abs(a + b) + .01;
+    }
   };
   struct StringTraits {
     typedef String Type;
@@ -94,6 +100,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
     typedef HDF5::StringTraits HDF5Traits;
     typedef Type AvroType;
+    static bool get_are_equal(ArgumentType a, ArgumentType b) { return a == b; }
   };
   struct IndexTraits {
     typedef Index Type;
@@ -104,6 +111,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     static ReturnType get_null_value() { return -1; }
     typedef HDF5::IndexTraits HDF5Traits;
     typedef boost::int32_t AvroType;
+    static bool get_are_equal(ArgumentType a, ArgumentType b) { return a == b; }
   };
   struct IntsTraits {
     typedef Ints Type;
@@ -117,6 +125,13 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
     typedef HDF5::IntsTraits HDF5Traits;
     typedef std::vector<IntTraits::AvroType> AvroType;
+    static bool get_are_equal(ArgumentType a, ArgumentType b) {
+      if (a.size() != b.size()) return false;
+      for (unsigned int i = 0; i< a.size(); ++i) {
+        if (!IntTraits::get_are_equal(a[i], b[i])) return false;
+      }
+      return true;
+    }
   };
   struct FloatsTraits {
     typedef Floats Type;
@@ -130,6 +145,13 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
     typedef HDF5::FloatsTraits HDF5Traits;
     typedef Type AvroType;
+    static bool get_are_equal(ArgumentType a, ArgumentType b) {
+      if (a.size() != b.size()) return false;
+      for (unsigned int i = 0; i< a.size(); ++i) {
+        if (!FloatTraits::get_are_equal(a[i], b[i])) return false;
+      }
+      return true;
+    }
   };
   struct StringsTraits {
     typedef Strings Type;
@@ -143,6 +165,13 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
     typedef HDF5::StringsTraits HDF5Traits;
     typedef Type AvroType;
+    static bool get_are_equal(ArgumentType a, ArgumentType b) {
+      if (a.size() != b.size()) return false;
+      for (unsigned int i = 0; i< a.size(); ++i) {
+        if (!StringTraits::get_are_equal(a[i], b[i])) return false;
+      }
+      return true;
+    }
   };
 
   struct IndexesTraits {
@@ -157,6 +186,13 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
     typedef HDF5::IndexesTraits HDF5Traits;
     typedef std::vector<IndexTraits::AvroType> AvroType;
+    static bool get_are_equal(ArgumentType a, ArgumentType b) {
+      if (a.size() != b.size()) return false;
+      for (unsigned int i = 0; i< a.size(); ++i) {
+        if (!IndexTraits::get_are_equal(a[i], b[i])) return false;
+      }
+      return true;
+    }
   };
 
   struct NodeIDTraits {
@@ -173,6 +209,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     };
 #endif
     typedef boost::int32_t AvroType;
+    static bool get_are_equal(ArgumentType a, ArgumentType b) { return a == b; }
   };
 
   struct NodeIDsTraits {
@@ -192,6 +229,13 @@ RMF_ENABLE_WARNINGS namespace RMF {
     };
 #endif
     typedef std::vector<IndexTraits::AvroType> AvroType;
+    static bool get_are_equal(ArgumentType a, ArgumentType b) {
+      if (a.size() != b.size()) return false;
+      for (unsigned int i = 0; i< a.size(); ++i) {
+        if (!NodeIDTraits::get_are_equal(a[i], b[i])) return false;
+      }
+      return true;
+    }
   };
 
   /** Get one type as another, handling vectors or scalars.*/

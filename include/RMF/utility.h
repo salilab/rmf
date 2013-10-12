@@ -29,31 +29,31 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
   /** Copy the hierarchy structure and set structure from one rmf
       file to another.*/
-  RMFEXPORT void copy_structure(FileConstHandle input, FileHandle output);
+  RMFEXPORT void clone_file_info(FileConstHandle input, FileHandle output);
 
-  /** Add the associations between the input and output needed to
-      use the other copy functions.*/
-  RMFEXPORT void link_structure(FileConstHandle input, FileHandle output);
 
-  /** Copy the hierarchy structure entailed by the set of nodes passed
-      for the input. They most form a coherent subhierarchy of their
-      input file (no nodes whose parents aren't included).*/
-  RMFEXPORT void copy_structure(const NodeConstHandles & input,
-                                FileHandle output);
+  /** Copy the hierarchy structure and set structure from one rmf
+      file to another.*/
+  RMFEXPORT void clone_hierarchy(FileConstHandle input, FileHandle output);
 
+
+  /** Copy the data of a single frame from between two files.*/
+  RMFEXPORT void clone_loaded_frame(FileConstHandle input, FileHandle output);
   /** Copy the data of a single frame from between two files. Parts missing
       in the output file will be skipped.*/
-  RMFEXPORT void copy_frame(FileConstHandle input, FileHandle output);
-  /** Copy all values of the given nodes to the output file.*/
-  RMFEXPORT void copy_values(FileConstHandle input, FileHandle output);
+  RMFEXPORT void clone_static_frame(FileConstHandle input, FileHandle output);
   /** @} */
 
   /** Return true of the two have the same structure.*/
   RMFEXPORT bool get_equal_structure(
       FileConstHandle input, FileConstHandle output, bool print_diff = false);
   /** Return true of the two have the same structure.*/
-  RMFEXPORT bool get_equal_frame(FileConstHandle input, FileConstHandle out,
-                                 bool print_diff = false);
+  RMFEXPORT bool get_equal_current_values(FileConstHandle input,
+                                          FileConstHandle out);
+
+  /** Return true of the two have the same structure.*/
+  RMFEXPORT bool get_equal_static_values(FileConstHandle input,
+                                         FileConstHandle out);
 
   /** Add the child node as an alias child of the parent. */
   RMFEXPORT void add_child_alias(AliasFactory af, NodeHandle parent,

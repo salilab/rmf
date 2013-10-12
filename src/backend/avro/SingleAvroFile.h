@@ -134,17 +134,14 @@ class SingleAvroFile : public AvroKeysAndCategories {
     return all_.nodes.size();
   }
 
-  void set_current_frame(FrameID frame) RMF_BACKEND_OVERRIDE {
-    if (frame == ALL_FRAMES) {
-      null_frame_data_.frame = -1;
-    } else {
-      null_frame_data_.frame = frame.get_index();
-    }
-    AvroKeysAndCategories::set_current_frame(frame);
+  RMF_BACKEND_VIRTUAL void set_loaded_frame(
+      FrameID frame) RMF_BACKEND_OVERRIDE {
+    null_frame_data_.frame = frame.get_index();
+    AvroKeysAndCategories::set_loaded_frame(frame);
   }
 
-  void flush() RMF_BACKEND_OVERRIDE;
-  void reload() RMF_BACKEND_OVERRIDE;
+  RMF_BACKEND_VIRTUAL void flush() RMF_BACKEND_OVERRIDE;
+  RMF_BACKEND_VIRTUAL void reload() RMF_BACKEND_OVERRIDE;
 
   SingleAvroFile(std::string path, bool create, bool read_only);
   SingleAvroFile(std::string& buffer, bool create);

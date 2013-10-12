@@ -666,7 +666,7 @@ class HDF5SharedData : public internal::SharedData {
 
   bool get_supports_locking() const { return false; }
   RMF_BACKEND_VIRTUAL void reload() RMF_BACKEND_OVERRIDE;
-  void set_current_frame(FrameID frame) RMF_BACKEND_OVERRIDE;
+  RMF_BACKEND_VIRTUAL void set_loaded_frame(FrameID frame) RMF_BACKEND_OVERRIDE;
 
   RMF_BACKEND_VIRTUAL std::string get_file_type() const RMF_BACKEND_OVERRIDE {
     return "HDF5 version 1";

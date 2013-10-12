@@ -146,18 +146,18 @@ int main(int argc, char** argv) {
     RMF::FileConstHandle irh0 = RMF::open_rmf_file_read_only(input);
     RMF::FileConstHandle irh1 = RMF::open_rmf_file_read_only(input);
     RMF::FileHandle orh = RMF::create_rmf_file(output);
-    RMF::copy_structure(irh0, orh);
-    int out_frame = 0;
-    irh0.set_current_frame(RMF::ALL_FRAMES);
-    orh.set_current_frame(RMF::ALL_FRAMES);
-    RMF::copy_frame(irh0, orh);
-    for (unsigned int j = 0; j < irh0.get_number_of_frames(); ++j) {
+    orh.set_producer("rmf_interpolate");
+    orh.set_description(std::string("Interpolation between frames of ") +
+                        input);
+    RMF::clone_hierarchy(irh0, orh);
+    RMF::clone_static_frame(irh0, orh);
+    for (unsigned int j = 0; j < irh0.get_number_of_frames() - 1; ++j) {
       std::cout << "Processing frame " << j << std::endl;
       irh0.set_current_frame(RMF::FrameID(j));
+      irh1.set_current_frame(RMF::FrameID(j+1));
       orh.add_frame(irh0.get_current_frame_name(), RMF::FRAME);
-      RMF::copy_frame(irh0, orh);
+      RMF::clone_loaded_frame(irh0, orh);
       if (j + 1 < irh0.get_number_of_frames()) {
-        irh1.set_current_frame(RMF::FrameID(j + 1));
         interpolate_frames(num_frames, noise, angle_noise, irh0, irh1, orh);
       }
       if (max_frames > 0 &&
@@ -165,6 +165,9 @@ int main(int argc, char** argv) {
         return 1;
       }
     }
+    irh0.set_current_frame(RMF::FrameID(irh0.get_number_of_frames() - 1));
+    RMF::clone_loaded_frame(irh0, orh);
+
     return 0;
   }
   catch (const std::exception& e) {

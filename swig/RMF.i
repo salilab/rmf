@@ -135,7 +135,7 @@ RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DECLARE_TYPE);
 
 %extend RMF::FileConstHandle {
    %pythoncode %{
-    def get_frame_ids(self):
+    def get_frames(self):
         class MyRange:
            def __init__(self, mx):
                self.max = mx
@@ -147,6 +147,18 @@ RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DECLARE_TYPE);
            def __len__(self):
                return self.max + 1
         return MyRange(self.get_number_of_frames())
+    def get_node_ids(self):
+        class MyRange:
+           def __init__(self, mx):
+               self.max = mx
+           def __getitem__(self, i):
+               if i > self.max:
+                    raise IndexError()
+               else:
+                    return NodeID(i)
+           def __len__(self):
+               return self.max + 1
+        return MyRange(self.get_number_of_nodes())
     def get_keys(self, kc):
         ret=[]
         for t in _types_list:

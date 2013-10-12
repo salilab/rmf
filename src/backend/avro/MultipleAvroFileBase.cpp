@@ -60,13 +60,9 @@ RMF_ENABLE_WARNINGS namespace RMF {
     null_frame_data_.type = "static";
   }
 
-  void MultipleAvroFileBase::set_current_frame(FrameID frame) {
-    if (frame == ALL_FRAMES) {
-      null_data_.frame = -1;
-    } else {
-      null_data_.frame = frame.get_index();
-    }
-    AvroKeysAndCategories::set_current_frame(frame);
+  void MultipleAvroFileBase::set_loaded_frame(FrameID frame) {
+    null_data_.frame = frame.get_index();
+    AvroKeysAndCategories::set_loaded_frame(frame);
   }
 
   }  // namespace avro_backend

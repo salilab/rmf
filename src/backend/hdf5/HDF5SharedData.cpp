@@ -384,12 +384,10 @@ void HDF5SharedData::reload() {
                            ReturnValues)                                       \
   per_frame_##lcname##_data_sets_.set_current_frame(frame);
 
-void HDF5SharedData::set_current_frame(FrameID frame) {
+void HDF5SharedData::set_loaded_frame(FrameID frame) {
   RMF_TRACE(get_logger(), "Loading frame " << frame);
-  SharedData::set_current_frame(frame);
-  if (frame != ALL_FRAMES) {
-    RMF_FOREACH_TYPE(RMF_HDF5_SET_FRAME);
-  }
+  SharedData::set_loaded_frame(frame);
+  RMF_FOREACH_TYPE(RMF_HDF5_SET_FRAME);
 }
 }  // namespace hdf5_backend
 } /* namespace RMF */

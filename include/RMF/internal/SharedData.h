@@ -22,6 +22,7 @@
 #include <boost/cstdint.hpp>
 #include <boost/any.hpp>
 #include <algorithm>
+#include <boost/range/irange.hpp>
 
 #include <boost/shared_ptr.hpp>
 
@@ -79,19 +80,15 @@ RMF_ENABLE_WARNINGS namespace RMF {
    protected:
     SharedData(std::string path);
 
-    virtual void set_current_frame(FrameID) {};
-
    public:
     std::string get_file_path() const { return path_; }
     FrameID get_loaded_frame() const { return loaded_frame_; }
     bool get_current_is_static() const { return cur_is_static_; }
-    void set_loaded_frame(FrameID frame) {
+    virtual void set_loaded_frame(FrameID frame) {
       loaded_frame_ = frame;
-      if (!get_current_is_static()) set_current_frame(loaded_frame_);
     }
     void set_current_is_static(bool tf) {
       cur_is_static_ = tf;
-      set_current_frame(tf? RMF::ALL_FRAMES: loaded_frame_);
     }
     FrameID get_current_frame() const {
       return get_current_is_static() ? RMF::ALL_FRAMES : loaded_frame_;
@@ -198,6 +195,15 @@ RMF_ENABLE_WARNINGS namespace RMF {
     virtual bool set_is_locked(bool) { return false; }
     virtual std::string get_file_type() const = 0;
     virtual void reload() = 0;
+    boost::iterator_range<boost::range_detail::integer_iterator<FrameID> >
+    get_frames() const {
+      return boost::irange(FrameID(0), FrameID(get_number_of_frames()));
+    }
+
+    boost::iterator_range<boost::range_detail::integer_iterator<NodeID> >
+    get_nodes() const {
+      return boost::irange(NodeID(0), NodeID(get_number_of_nodes()));
+    }
   };
 
   /**

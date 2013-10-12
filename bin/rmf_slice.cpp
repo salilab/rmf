@@ -5,6 +5,7 @@
 #include <RMF/FileHandle.h>
 #include <RMF/utility.h>
 #include "common.h"
+#include <boost/foreach.hpp>
 
 namespace {
 std::string description("Grab frames from an rmf file");
@@ -19,16 +20,17 @@ int main(int argc, char** argv) {
 
     RMF::FileConstHandle rh = RMF::open_rmf_file_read_only(input);
     RMF::FileHandle orh = RMF::create_rmf_file(output);
-    RMF::copy_structure(rh, orh);
-    rh.set_current_frame(RMF::ALL_FRAMES);
-    orh.set_current_frame(RMF::ALL_FRAMES);
-    RMF::copy_frame(rh, orh);
+    RMF::clone_file_info(rh, orh);
+    orh.set_producer("rmf_slice");
+    RMF::clone_hierarchy(rh, orh);
+    RMF::clone_static_frame(rh, orh);
     std::cout << "Copying frames";
-    for (unsigned int input_frame = start_frame;
-         input_frame < rh.get_number_of_frames(); input_frame += step_frame) {
-      rh.set_current_frame(RMF::FrameID(input_frame));
+    BOOST_FOREACH(RMF::FrameID f, rh.get_frames()) {
+      if (f.get_index() < start_frame) continue;
+      if ((f.get_index() - start_frame) % step_frame != 0) continue;
+      rh.set_current_frame(f);
       orh.add_frame(rh.get_current_frame_name(), rh.get_current_frame_type());
-      RMF::copy_frame(rh, orh);
+      RMF::clone_loaded_frame(rh, orh);
       if (orh.get_number_of_frames() % 10 == 0) std::cout << "." << std::flush;
     }
     std::cout << std::endl;

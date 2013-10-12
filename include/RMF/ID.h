@@ -60,6 +60,12 @@ class ID {
   RMF_SHOWABLE(ID, i_);
   RMF_COMPARISONS(ID);
   RMF_HASHABLE(ID, return i_);
+#if !defined(RMF_DOXYGEN) && !defined(SWIG)
+  ID operator++() {
+    ++i_;
+    return *this;
+  }
+#endif
 };
 
 typedef ID<NodeTag> NodeID;

@@ -18,16 +18,14 @@
 RMF_ENABLE_WARNINGS namespace RMF {
   namespace avro_backend {
 
-  void MultipleAvroFileWriter::set_current_frame(FrameID frame) {
-    if (frame == get_current_frame()) return;
+  void MultipleAvroFileWriter::set_loaded_frame(FrameID frame) {
+    if (frame == get_loaded_frame()) return;
     RMF_USAGE_CHECK(
-        frame == ALL_FRAMES ||
             frame.get_index() == static_cast<unsigned int>(frame_.index + 1) ||
             frame.get_index() == static_cast<unsigned int>(frame_.index),
         "Bad frame set. You probably didn't add a new frame.");
-    MultipleAvroFileBase::set_current_frame(frame);
-    if (frame != ALL_FRAMES &&
-        frame.get_index() != static_cast<unsigned int>(frame_.index)) {
+    MultipleAvroFileBase::set_loaded_frame(frame);
+    if (frame.get_index() != static_cast<unsigned int>(frame_.index)) {
       commit();
     }
   }
@@ -115,7 +113,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
                                             FrameType t) {
     unsigned int index = get_number_of_frames();
     RMF_TRACE(get_avro_logger(), "Adding frame " << index << " under " << node);
-    set_current_frame(FrameID(index));
+    set_loaded_frame(FrameID(index));
     frame_.name = name;
     frame_.type = boost::lexical_cast<std::string>(FrameType(t));
     unsigned int findex;

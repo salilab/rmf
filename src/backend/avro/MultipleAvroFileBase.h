@@ -80,7 +80,7 @@ class MultipleAvroFileBase : public AvroKeysAndCategories {
     return "Multiple avro version 1";
   }
 
-  void set_current_frame(FrameID frame) RMF_BACKEND_OVERRIDE;
+  void set_loaded_frame(FrameID frame) RMF_BACKEND_OVERRIDE;
 
   RMF_BACKEND_VIRTUAL unsigned int get_number_of_nodes() const
       RMF_BACKEND_OVERRIDE {

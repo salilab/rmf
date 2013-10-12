@@ -13,29 +13,27 @@ class GenericTest(unittest.TestCase):
         print nm, onm
         f= RMF.open_rmf_file_read_only(nm)
         of= RMF.create_rmf_file(onm)
-        RMF.copy_structure(f, of)
-        f.set_current_frame(RMF.ALL_FRAMES)
-        of.set_current_frame(RMF.ALL_FRAMES)
-        RMF.copy_frame(f, of)
-        for i in range(0, last_frame+1):
-            f.set_current_frame(RMF.FrameID(i))
-            of.add_frame(f.get_current_frame_name(),
-                        f.get_current_frame_type())
-            RMF.copy_frame(f, of)
+        RMF.clone_file_info(f, of)
+        RMF.clone_hierarchy(f, of)
+        RMF.clone_static_frame(f, of)
+        for fr in f.get_frames():
+            f.set_current_frame(fr)
+            nfid = of.add_frame(f.get_current_frame_name(), f.get_current_frame_type())
+            self.assertEqual(nfid, fr)
+            RMF.clone_loaded_frame(f, of)
         print "deling"
         del of
         print "reopening"
         of= RMF.open_rmf_file_read_only(onm)
-        self.assert_(RMF.get_equal_structure(f, of, True))
-        for i in range(-1, last_frame+1):
-            print i
-            if i == -1: fid = RMF.ALL_FRAMES
-            else: fid = RMF.FrameID(i)
+        self.assert_(RMF.get_equal_structure(f, of))
+        self.assert_(RMF.get_equal_static_values(f, of))
+        for i in range(0, last_frame+1):
+            fid = RMF.FrameID(i)
             f.set_current_frame(fid)
             of.set_current_frame(fid)
             if suffix != "rmft":
                 # going through a text format perturbs values
-                self.assert_(RMF.get_equal_frame(f, of, True))
+                self.assert_(RMF.get_equal_current_values(f, of))
     def test_perturbed(self):
         """Test copying an rmf file"""
         RMF.HDF5.set_show_errors(True)

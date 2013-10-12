@@ -51,6 +51,7 @@ RMF_VECTOR_DECL(FileConstHandle);
 namespace RMF {
 
 class NodeConstHandle;
+class FileHandle;
 
 //! A handle for a read-only RMF file
 /** Use this handle to perform operations relevant to the
@@ -61,7 +62,15 @@ class NodeConstHandle;
 class RMFEXPORT FileConstHandle {
   void gather_ids(NodeConstHandle n, Ints& ids, std::vector<std::string>& paths,
                   std::string path) const;
+#ifndef SWIG
   friend class NodeConstHandle;
+  friend void clone_file_info(FileConstHandle, FileHandle);
+  friend void clone_hierarchy(FileConstHandle, FileHandle);
+  friend void clone_static_frame(FileConstHandle, FileHandle);
+  friend void clone_loaded_frame(FileConstHandle, FileHandle);
+  friend bool get_equal_current_values(FileConstHandle, FileConstHandle);
+  friend bool get_equal_static_values(FileConstHandle, FileConstHandle);
+#endif
   int compare(const FileConstHandle& o) const {
     if (get_name() < o.get_name())
       return -1;
@@ -184,13 +193,13 @@ class RMFEXPORT FileConstHandle {
 
 #ifndef SWIG
   boost::iterator_range<boost::range_detail::integer_iterator<FrameID> >
-  get_frame_ids() const {
-    return boost::irange(FrameID(0), FrameID(get_number_of_frames() + 1));
+  get_frames() const {
+    return boost::irange(FrameID(0), FrameID(get_number_of_frames()));
   }
 
   boost::iterator_range<boost::range_detail::integer_iterator<NodeID> >
   get_node_ids() const {
-    return boost::irange(NodeID(0), NodeID(shared_->get_number_of_nodes() + 1));
+    return boost::irange(NodeID(0), NodeID(shared_->get_number_of_nodes()));
   }
 #endif
 
