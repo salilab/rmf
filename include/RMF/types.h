@@ -57,20 +57,24 @@ RMF_ENABLE_WARNINGS namespace RMF {
   struct IntTraits {
     typedef Int Type;
     typedef Ints Types;
+    typedef Type ReturnType;
+    typedef Type ArgumentType;
     static bool get_is_null_value(const Type& t) {
       return t == get_null_value();
     }
-    static Type get_null_value() { return std::numeric_limits<Type>::max(); }
+    static ReturnType get_null_value() { return std::numeric_limits<Type>::max(); }
     typedef HDF5::IntTraits HDF5Traits;
     typedef boost::int32_t AvroType;
   };
   struct FloatTraits {
     typedef Float Type;
     typedef Floats Types;
+    typedef Type ReturnType;
+    typedef Type ArgumentType;
     static bool get_is_null_value(const Type& t) {
       return t >= std::numeric_limits<Float>::max();
     }
-    static Type get_null_value() {
+    static ReturnType get_null_value() {
       return std::numeric_limits<Type>::infinity();
     }
     typedef HDF5::FloatTraits HDF5Traits;
@@ -79,40 +83,50 @@ RMF_ENABLE_WARNINGS namespace RMF {
   struct StringTraits {
     typedef String Type;
     typedef Strings Types;
+    typedef const Type& ReturnType;
+    typedef const Type& ArgumentType;
     static bool get_is_null_value(const Type& t) { return t.empty(); }
-    static Type get_null_value() { return Type(); }
+    static ReturnType get_null_value() { static Type r; return r; }
     typedef HDF5::StringTraits HDF5Traits;
     typedef Type AvroType;
   };
   struct IndexTraits {
     typedef Index Type;
     typedef Indexes Types;
+    typedef Type ReturnType;
+    typedef Type ArgumentType;
     static bool get_is_null_value(const Type& t) { return t == -1; }
-    static Type get_null_value() { return -1; }
+    static ReturnType get_null_value() { return -1; }
     typedef HDF5::IndexTraits HDF5Traits;
     typedef boost::int32_t AvroType;
   };
   struct IntsTraits {
     typedef Ints Type;
     typedef IntsList Types;
+    typedef const Type& ReturnType;
+    typedef const Type& ArgumentType;
     static bool get_is_null_value(const Type& t) { return t.empty(); }
-    static Type get_null_value() { return Type(); }
+    static ReturnType get_null_value() { static Type r; return r; }
     typedef HDF5::IntsTraits HDF5Traits;
     typedef std::vector<IntTraits::AvroType> AvroType;
   };
   struct FloatsTraits {
     typedef Floats Type;
     typedef FloatsList Types;
+    typedef const Type& ReturnType;
+    typedef const Type& ArgumentType;
     static bool get_is_null_value(const Type& t) { return t.empty(); }
-    static Type get_null_value() { return Type(); }
+    static ReturnType get_null_value() { static Type r; return r; }
     typedef HDF5::FloatsTraits HDF5Traits;
     typedef Type AvroType;
   };
   struct StringsTraits {
     typedef Strings Type;
     typedef StringsList Types;
+    typedef const Type& ReturnType;
+    typedef const Type& ArgumentType;
     static bool get_is_null_value(const Type& t) { return t.empty(); }
-    static Type get_null_value() { return Type(); }
+    static ReturnType get_null_value() { static Type r; return r; }
     typedef HDF5::StringsTraits HDF5Traits;
     typedef Type AvroType;
   };
@@ -120,8 +134,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
   struct IndexesTraits {
     typedef Indexes Type;
     typedef IndexesList Types;
+    typedef const Type& ReturnType;
+    typedef const Type& ArgumentType;
     static bool get_is_null_value(const Type& t) { return t.empty(); }
-    static Type get_null_value() { return Type(); }
+    static ReturnType get_null_value() { static Type r; return r; }
     typedef HDF5::IndexesTraits HDF5Traits;
     typedef std::vector<IndexTraits::AvroType> AvroType;
   };
@@ -129,8 +145,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
   struct NodeIDTraits {
     typedef NodeID Type;
     typedef NodeIDs Types;
+    typedef Type ReturnType;
+    typedef Type ArgumentType;
     static bool get_is_null_value(const Type& t) { return t == Type(); }
-    static NodeID get_null_value() { return NodeID(); }
+    static ReturnType get_null_value() { return NodeID(); }
 #ifndef SWIG
     struct HDF5Traits : public HDF5::IndexTraits {
       static int get_index() { return 4; }
@@ -143,8 +161,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
   struct NodeIDsTraits {
     typedef NodeIDs Type;
     typedef NodeIDsList Types;
+    typedef const Type& ReturnType;
+    typedef const Type& ArgumentType;
     static bool get_is_null_value(const Type& t) { return t.empty(); }
-    static NodeIDs get_null_value() { return NodeIDs(); }
+    static ReturnType get_null_value() { static Type r; return r; }
 #ifndef SWIG
     struct HDF5Traits : public HDF5::IndexesTraits {
       static int get_index() { return 5; }
