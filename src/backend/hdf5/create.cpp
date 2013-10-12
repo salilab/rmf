@@ -19,7 +19,7 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 namespace hdf5_backend {
 
-typedef internal::ImplementSharedData<HDF5SharedData> MySharedData;
+typedef backend::ImplementSharedData<HDF5SharedData> MySharedData;
 boost::shared_ptr<internal::SharedData> create_shared_data(std::string path,
                                                            bool create,
                                                            bool read_only) {

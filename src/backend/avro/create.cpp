@@ -11,18 +11,21 @@
 #include "SingleAvroFile.h"
 #include "MultipleAvroFileWriter.h"
 #include "MultipleAvroFileReader.h"
+#include "backend/ImplementSharedData.h"
 #include <boost/algorithm/string/predicate.hpp>
 #include <RMF/log.h>
 
-RMF_ENABLE_WARNINGS namespace RMF {
-  namespace avro_backend {
+RMF_ENABLE_WARNINGS
 
-  typedef avro_backend::AvroSharedData<avro_backend::SingleAvroFile>
-  SingleAvroShareData;
-  typedef avro_backend::AvroSharedData<avro_backend::MultipleAvroFileWriter>
-  AvroWriterShareData;
-  typedef avro_backend::AvroSharedData<avro_backend::MultipleAvroFileReader>
-  AvroReaderShareData;
+namespace RMF {
+namespace avro_backend {
+
+typedef backend::ImplementSharedData<avro_backend::AvroSharedData<
+    avro_backend::SingleAvroFile> > SingleAvroShareData;
+typedef backend::ImplementSharedData<avro_backend::AvroSharedData<
+    avro_backend::MultipleAvroFileWriter> > AvroWriterShareData;
+typedef backend::ImplementSharedData<avro_backend::AvroSharedData<
+    avro_backend::MultipleAvroFileReader> > AvroReaderShareData;
 
   boost::shared_ptr<internal::SharedData> create_shared_data(std::string path,
                                            bool create,

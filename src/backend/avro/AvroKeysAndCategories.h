@@ -36,18 +36,23 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
     std::vector<std::string> node_keys_;
     std::string frame_key_;
-
-   public:
     std::string get_key_name(unsigned int id) const {
       return key_data_map_.find(id)->second.name;
     }
-    Category get_category(unsigned int id) const {
+    Category get_category_impl(unsigned int id) const {
       return key_data_map_.find(id)->second.category;
     }
-    using SharedData::get_category;
-
+   public:
+    template <class Traits>
+    std::string get_name(Key<Traits> k) const {
+      return get_key_name(k.get_id());
+    }
+    template <class Traits>
+    Category get_category(Key<Traits> k) const {
+      return get_category_impl(k.get_id());
+    }
     template <class TypeTraits>
-    Key<TypeTraits> get_key_helper(Category category, std::string name) {
+    Key<TypeTraits> get_key(Category category, std::string name) {
       typename NameKeyInnerMap::const_iterator it =
           name_key_map_[category].find(name);
       if (it == name_key_map_[category].end()) {
@@ -56,7 +61,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
         key_data_map_[id].category = category;
         name_key_map_[category][name] = id;
         RMF_INTERNAL_CHECK(
-            get_key_helper<TypeTraits>(category, name) == Key<TypeTraits>(id),
+            get_key<TypeTraits>(category, name) == Key<TypeTraits>(id),
             "Keys don't match");
         return Key<TypeTraits>(id);
       } else {
@@ -86,11 +91,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
       node_keys_.push_back(oss.str());
     }
 
-    std::string get_name(Category kc) const {
+    virtual std::string get_name(Category kc) const RMF_OVERRIDE {
       return category_name_map_.find(kc)->second;
     }
 
-    Categories get_categories() const {
+    virtual Categories get_categories() const RMF_OVERRIDE {
       Categories ret;
       for (CategoryNameMap::const_iterator it = category_name_map_.begin();
            it != category_name_map_.end();
@@ -99,7 +104,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       }
       return ret;
     }
-    Category get_category(std::string name) {
+    virtual Category get_category(std::string name) RMF_OVERRIDE {
       NameCategoryMap::iterator it = name_category_map_.find(name);
       if (it == name_category_map_.end()) {
         unsigned int id = category_name_map_.size();

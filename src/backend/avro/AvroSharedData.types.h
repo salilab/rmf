@@ -46,44 +46,9 @@ namespace avro_backend {
     return Ucname##DataIndexPair(data.lcname##_data.nodes[ns],                 \
                                  data.lcname##_data.index);                    \
   }                                                                            \
-                                                                               \
- public:                                                                       \
-  virtual Ucname##Traits::Type get_current_value(                              \
-      NodeID node, Key<Ucname##Traits> k) const RMF_OVERRIDE {                 \
-    return get_value_impl(P::get_current_frame(), node, k);                    \
-  }                                                                            \
-  virtual Ucname##Traits::Type get_static_value(                               \
-      NodeID node, Key<Ucname##Traits> k) const RMF_OVERRIDE {                 \
-    return get_value_impl(ALL_FRAMES, node, k);                                \
-  }                                                                            \
-  virtual void set_current_value(NodeID node, Key<Ucname##Traits> k,           \
-                                 Ucname##Traits::Type v) RMF_OVERRIDE {        \
-    set_value_impl(P::get_current_frame(), node, k, v);                        \
-  }                                                                            \
-  virtual void set_static_value(NodeID node, Key<Ucname##Traits> k,            \
-                                Ucname##Traits::Type v) RMF_OVERRIDE {         \
-    set_value_impl(ALL_FRAMES, node, k, v);                                    \
-  }                                                                            \
-  virtual std::vector<Key<Ucname##Traits> > get_##lcname##_keys(               \
-      Category cat) RMF_OVERRIDE {                                             \
-    boost::unordered_set<Key<Ucname##Traits> > ret;                            \
-    const RMF_avro_backend::Data& data =                                       \
-        P::get_frame_data(cat, P::get_current_frame());                        \
-    extract_keys(cat, data.lcname##_data.index, ret);                          \
-    const RMF_avro_backend::Data& staticdata =                                 \
-        P::get_frame_data(cat, ALL_FRAMES);                                    \
-    extract_keys(cat, staticdata.lcname##_data.index, ret);                    \
-    return std::vector<Key<Ucname##Traits> >(ret.begin(), ret.end());          \
-  }                                                                            \
-  virtual Key<Ucname##Traits> get_##lcname##_key(                              \
-      Category category, std::string name) RMF_OVERRIDE {                      \
-    return P::template get_key_helper<Ucname##Traits>(category, name);         \
-  }                                                                            \
-  virtual std::string get_name(Key<Ucname##Traits> k) const RMF_OVERRIDE {     \
-    return P::get_key_name(k.get_id());                                        \
-  }                                                                            \
-  virtual Category get_category(Key<Ucname##Traits> k) const RMF_OVERRIDE {    \
-    return P::get_category(k.get_id());                                        \
+  const KeyIndex& get_key_index(const RMF_avro_backend::Data& data,            \
+                                Ucname##Traits) const {                        \
+    return data.lcname##_data.index;                                           \
   }
 
 }  // namespace avro_backend

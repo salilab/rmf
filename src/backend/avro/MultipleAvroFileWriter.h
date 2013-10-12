@@ -110,7 +110,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     FrameID add_child(FrameID node, std::string name, FrameType t) RMF_OVERRIDE;
     void add_child(FrameID node, FrameID child_node) RMF_OVERRIDE;
     FrameIDs get_children(FrameID node) const RMF_OVERRIDE;
-
+    using AvroKeysAndCategories::get_name;
     std::string get_name(FrameID i) const RMF_OVERRIDE;
     FrameType get_type(FrameID i) const RMF_OVERRIDE;
     unsigned int get_number_of_frames() const RMF_OVERRIDE;
