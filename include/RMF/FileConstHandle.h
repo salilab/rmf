@@ -269,7 +269,7 @@ class RMFEXPORT FileConstHandle {
   }
   std::string get_name(Category kc) const {
     try {
-      return shared_->get_category_name(kc);
+      return shared_->get_name(kc);
     }
     RMF_FILE_CATCH();
   }

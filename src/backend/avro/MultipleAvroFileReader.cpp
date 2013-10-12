@@ -44,7 +44,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
           try {
             RMF_TRACE(
                 get_avro_logger(),
-                "Opening category file for " << get_category_name(Category(i)));
+                "Opening category file for " << get_name(Category(i)));
             categories_[i].reader.reset();
             categories_[i].reader
                 .reset(new rmf_avro::DataFileReader<RMF_avro_backend::Data>(
@@ -64,18 +64,18 @@ RMF_ENABLE_WARNINGS namespace RMF {
             //std::cout << "Out of data looking for " << frame << std::endl;
             RMF_TRACE(
                 get_avro_logger(),
-                "Out of data for category " << get_category_name(Category(i)));
+                "Out of data for category " << get_name(Category(i)));
             clear_data(categories_[i].data, frame);
             break;
           } else {
             RMF_TRACE(get_avro_logger(),
-                      "Loaded category " << get_category_name(Category(i)));
+                      "Loaded category " << get_name(Category(i)));
           }
           if (frame.get_index() <
               static_cast<unsigned int>(categories_[i].data.frame)) {
             RMF_TRACE(get_avro_logger(),
                       "Missing frame for category "
-                          << get_category_name(Category(i)));
+                          << get_name(Category(i)));
             clear_data(categories_[i].data, frame);
             break;
           }

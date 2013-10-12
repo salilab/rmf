@@ -146,7 +146,7 @@ HDF5SharedData::HDF5SharedData(std::string g, bool create, bool read_only)
     : SharedData(g), frames_hint_(0), link_category_(-1) {
   open_things(create, read_only);
   link_category_ = get_category("link");
-  link_key_ = get_node_id_key(link_category_, "linked");
+  link_key_ = get_key<NodeIDTraits>(link_category_, "linked");
   if (create) {
     add_node("root", ROOT);
   } else {

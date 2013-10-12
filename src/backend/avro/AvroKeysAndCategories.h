@@ -86,7 +86,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       node_keys_.push_back(oss.str());
     }
 
-    std::string get_category_name(Category kc) const {
+    std::string get_name(Category kc) const {
       return category_name_map_.find(kc)->second;
     }
 
