@@ -13,77 +13,84 @@
 #include "AvroKeysAndCategories.h"
 #include <backend/avro/AllJSON.h>
 
-RMF_ENABLE_WARNINGS namespace RMF {
-  namespace avro_backend {
+RMF_ENABLE_WARNINGS
 
-  /* Later have laze and non-lazy frame loading so we can skip check on most
-     fetches.
+namespace RMF {
+namespace avro_backend {
 
-     split into two classes, one for creating and one for reading (with a common
-     base)
+/* Later have laze and non-lazy frame loading so we can skip check on most
+   fetches.
 
-     push get_all into base classes, then we can specialize it for the reader
-     and
-     do everything nicely with changing on set_current_frame
+   split into two classes, one for creating and one for reading (with a common
+   base)
 
-     merge all the static data (file, nodes, frames, base structure) into one
-     record
-     share that. Only have the dynamic stuff be different between backends
+   push get_all into base classes, then we can specialize it for the reader
+   and
+   do everything nicely with changing on set_current_frame
 
-     can build cache on node keys later.
-   */
-  class MultipleAvroFileBase : public AvroKeysAndCategories {
-   protected:
-    typedef RMF_avro_backend::File File;
-    File file_;
-    typedef std::vector<RMF_avro_backend::Node> Nodes;
-    Nodes nodes_;
-    typedef std::vector<RMF_avro_backend::Data> StaticData;
-    StaticData static_categories_;
+   merge all the static data (file, nodes, frames, base structure) into one
+   record
+   share that. Only have the dynamic stuff be different between backends
 
-    RMF_avro_backend::Node null_frame_data_;
+   can build cache on node keys later.
+ */
+class MultipleAvroFileBase : public AvroKeysAndCategories {
+ protected:
+  typedef RMF_avro_backend::File File;
+  File file_;
+  typedef std::vector<RMF_avro_backend::Node> Nodes;
+  Nodes nodes_;
+  typedef std::vector<RMF_avro_backend::Data> StaticData;
+  StaticData static_categories_;
 
-    RMF_avro_backend::Data null_data_;
-    RMF_avro_backend::Data null_static_data_;
+  RMF_avro_backend::Node null_frame_data_;
 
-    const RMF_avro_backend::Node& get_node(NodeID node) const {
-      return nodes_[node.get_index()];
+  RMF_avro_backend::Data null_data_;
+  RMF_avro_backend::Data null_static_data_;
+
+  const RMF_avro_backend::Node& get_node(NodeID node) const {
+    return nodes_[node.get_index()];
+  }
+
+  const std::vector<RMF_avro_backend::Node>& get_nodes_data() const {
+    return nodes_;
+  }
+
+  const RMF_avro_backend::File& get_file() const { return file_; }
+
+  const RMF_avro_backend::Data& get_static_data(Category cat) const {
+    return static_categories_[cat.get_id()];
+  }
+
+  void initialize_node_keys() {
+    clear_node_keys();
+    for (unsigned int i = 0; i < nodes_.size(); ++i) {
+      add_node_key();
     }
+  }
 
-    const std::vector<RMF_avro_backend::Node>& get_nodes_data() const {
-      return nodes_;
-    }
+  std::string get_category_dynamic_file_path(Category cat) const;
+  std::string get_category_static_file_path(Category cat) const;
+  std::string get_file_file_path() const;
+  std::string get_nodes_file_path() const;
+  std::string get_static_file_path() const;
+  std::string get_frames_file_path() const;
 
-    const RMF_avro_backend::File& get_file() const { return file_; }
+  RMF_BACKEND_VIRTUAL std::string get_file_type() const RMF_BACKEND_OVERRIDE {
+    return "Multiple avro version 1";
+  }
 
-    const RMF_avro_backend::Data& get_static_data(Category cat) const {
-      return static_categories_[cat.get_id()];
-    }
+  void set_current_frame(FrameID frame) RMF_BACKEND_OVERRIDE;
 
-    void initialize_node_keys() {
-      clear_node_keys();
-      for (unsigned int i = 0; i < nodes_.size(); ++i) {
-        add_node_key();
-      }
-    }
+  RMF_BACKEND_VIRTUAL unsigned int get_number_of_nodes() const
+      RMF_BACKEND_OVERRIDE {
+    return nodes_.size();
+  }
 
-    std::string get_category_dynamic_file_path(Category cat) const;
-    std::string get_category_static_file_path(Category cat) const;
-    std::string get_file_file_path() const;
-    std::string get_nodes_file_path() const;
-    std::string get_static_file_path() const;
-    std::string get_frames_file_path() const;
+  MultipleAvroFileBase(std::string path);
+};
 
-    RMF_BACKEND_VIRTUAL std::string get_file_type() const RMF_BACKEND_OVERRIDE {
-      return "Multiple avro version 1";
-    }
-
-    void set_current_frame(FrameID frame) RMF_BACKEND_OVERRIDE;
-
-    MultipleAvroFileBase(std::string path);
-  };
-
-  }  // namespace avro_backend
+}  // namespace avro_backend
 } /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

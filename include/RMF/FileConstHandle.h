@@ -15,6 +15,7 @@
 #include "NodeConstHandle.h"
 #include <boost/functional/hash.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/range/irange.hpp>
 
 RMF_ENABLE_WARNINGS
 
@@ -105,8 +106,7 @@ class RMFEXPORT FileConstHandle {
   template <class TypeT>
   Key<TypeT> get_key(Category category, std::string name) const {
     try {
-      return internal::GenericSharedData<TypeT>::get_key(shared_, category,
-                                                         name);
+      return shared_->get_key(category, name, TypeT());
     }
     RMF_FILE_CATCH(<< Category(get_name(category)) << Key(name));
   }
@@ -132,7 +132,7 @@ class RMFEXPORT FileConstHandle {
   std::vector<Key<TypeT> > get_keys(Category category) const {
     try {
       if (category == Category()) return std::vector<Key<TypeT> >();
-      return internal::GenericSharedData<TypeT>::get_keys(shared_, category);
+      return shared_->get_keys(category, TypeT());
     }
     RMF_FILE_CATCH(<< Category(get_name(category)));
   }
@@ -159,8 +159,7 @@ class RMFEXPORT FileConstHandle {
     RMF_FILE_CATCH(<< Frame(frame));
   }
 
-  /** Return the number of frames in the file. Currently, this is the number
-      of frames that the x-coordinate has, but it should be made more general.
+  /** Return the number of frames in the file.
    */
   unsigned int get_number_of_frames() const {
     try {
@@ -172,6 +171,18 @@ class RMFEXPORT FileConstHandle {
   /** Return a string identifying the file type.
   */
   std::string get_file_type() const { return shared_->get_file_type(); }
+
+#ifndef SWIG
+  boost::iterator_range<boost::range_detail::integer_iterator<FrameID> >
+  get_frame_ids() const {
+    return boost::irange(FrameID(0), FrameID(get_number_of_frames() + 1));
+  }
+
+  boost::iterator_range<boost::range_detail::integer_iterator<NodeID> >
+  get_node_ids() const {
+    return boost::irange(NodeID(0), NodeID(shared_->get_number_of_nodes() + 1));
+  }
+#endif
 
   /** \name Non-template versions for python
 

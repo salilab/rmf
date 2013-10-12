@@ -150,7 +150,6 @@ class AvroSharedData : public Base {
                    NodeType t) RMF_BACKEND_OVERRIDE;
   void add_child(NodeID node, NodeID child_node) RMF_BACKEND_OVERRIDE;
   NodeIDs get_children(NodeID node) const RMF_BACKEND_OVERRIDE;
-  void save_frames_hint(int) {}
   std::string get_description() const;
   void set_description(std::string str);
   std::string get_producer() const;

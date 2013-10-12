@@ -50,11 +50,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
                                  Ucname##Traits::Type v) = 0;               \
   virtual void set_static_value(NodeID node, Key<Ucname##Traits> k,         \
                                 Ucname##Traits::Type v) = 0;                \
-  virtual std::vector<Key<Ucname##Traits> > get_##lcname##_keys(            \
-      Category category) = 0;                                               \
+  virtual std::vector<Key<Ucname##Traits> > get_keys(Category category,     \
+                                                     Ucname##Traits) = 0;   \
   virtual Category get_category(Key<Ucname##Traits> k) const = 0;           \
-  virtual Key<Ucname##Traits> get_##lcname##_key(Category category,         \
-                                                 std::string name) = 0;     \
+  virtual Key<Ucname##Traits> get_key(Category category, std::string name,  \
+                                      Ucname##Traits) = 0;                  \
   virtual std::string get_name(Key<Ucname##Traits> k) const = 0
 
   /**
@@ -156,6 +156,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     std::string get_file_name() const;
 
     virtual unsigned int get_number_of_frames() const = 0;
+    virtual unsigned int get_number_of_nodes() const = 0;
 
     // SharedData(HDF5Group g, bool create);
     virtual ~SharedData();
@@ -169,8 +170,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
     virtual FrameID add_child(FrameID node, std::string name, FrameType t) = 0;
     virtual void add_child(FrameID node, FrameID child_node) = 0;
     virtual FrameIDs get_children(FrameID node) const = 0;
-
-    virtual void save_frames_hint(int i) = 0;
 
     virtual Categories get_categories() const = 0;
     virtual Category get_category(std::string name) = 0;
@@ -186,35 +185,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
     virtual std::string get_file_type() const = 0;
     virtual void reload() = 0;
   };
-
-  template <class Traits>
-  class GenericSharedData {};
-  template <class Traits>
-  class ConstGenericSharedData {};
-
-#define RMF_GENERIC_SHARED(lcname, Ucname, PassValue, ReturnValue, PassValues, \
-                           ReturnValues)                                       \
-  template <>                                                                  \
-  class ConstGenericSharedData<Ucname##Traits> {                               \
-   public:                                                                     \
-    typedef Key<Ucname##Traits> K;                                             \
-    typedef std::vector<K> Ks;                                                 \
-  };                                                                           \
-  template <>                                                                  \
-  class GenericSharedData<Ucname##Traits> {                                    \
-   public:                                                                     \
-    typedef Key<Ucname##Traits> K;                                             \
-    typedef std::vector<K> Ks;                                                 \
-    static Ks get_keys(boost::shared_ptr<SharedData> p, Category category) {   \
-      return p->get_##lcname##_keys(category);                                 \
-    }                                                                          \
-    static K get_key(boost::shared_ptr<SharedData> p, Category category,       \
-                     std::string name) {                                       \
-      return p->get_##lcname##_key(category, name);                            \
-    }                                                                          \
-  };
-
-  RMF_FOREACH_TYPE(RMF_GENERIC_SHARED);
 
   /**
      Construct shared data for the RMF file in 'path', either creating or

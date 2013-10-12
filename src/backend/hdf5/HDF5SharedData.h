@@ -643,9 +643,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     NodeID add_child(NodeID node, std::string name, NodeType t);
     void add_child(NodeID node, NodeID child_node);
     NodeIDs get_children(NodeID node) const;
-    void save_frames_hint(int i) { frames_hint_ = i; }
-    unsigned int get_number_of_frames() const;
-    unsigned int get_number_of_nodes() const {
+    RMF_BACKEND_VIRTUAL unsigned int get_number_of_frames() const
+        RMF_BACKEND_OVERRIDE;
+    RMF_BACKEND_VIRTUAL unsigned int get_number_of_nodes() const
+        RMF_BACKEND_OVERRIDE {
       return node_data_.get_size()[0];
     }
 

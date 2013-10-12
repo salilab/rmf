@@ -129,6 +129,11 @@ class SingleAvroFile : public AvroKeysAndCategories {
 
  public:
 
+  RMF_BACKEND_VIRTUAL unsigned int get_number_of_nodes() const
+      RMF_BACKEND_OVERRIDE {
+    return all_.nodes.size();
+  }
+
   void set_current_frame(FrameID frame) RMF_BACKEND_OVERRIDE {
     if (frame == ALL_FRAMES) {
       null_frame_data_.frame = -1;

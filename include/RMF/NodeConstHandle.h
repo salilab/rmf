@@ -162,11 +162,11 @@ class RMFEXPORT NodeConstHandle {
       the type must be the same as the old type.
    */
   template <class T>
-  void set_association(const T& v, bool overwrite = false) {
+  void set_association(const T& v, bool overwrite = false) const {
     shared_->set_association(node_, v, overwrite);
   }
 #else
-  void set_association(void* v, bool overwrite = false);
+  void set_association(void* v, bool overwrite = false) const;
 #endif
   //! Return the associated pointer for this node
   /** An exception will be thrown if it doesn't have one.*/
