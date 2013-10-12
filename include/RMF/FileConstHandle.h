@@ -129,7 +129,7 @@ class RMFEXPORT FileConstHandle {
   /** Get a list of all keys of the given type,
    */
   template <class TypeT>
-  std::vector<Key<TypeT> > get_keys(Category category) {
+  std::vector<Key<TypeT> > get_keys(Category category) const {
     try {
       if (category == Category()) return std::vector<Key<TypeT> >();
       return internal::GenericSharedData<TypeT>::get_keys(shared_, category);
@@ -152,7 +152,7 @@ class RMFEXPORT FileConstHandle {
   std::string get_current_frame_name() const {
     return shared_->get_name(get_current_frame());
   }
-  void set_current_frame(FrameID frame) {
+  void set_current_frame(FrameID frame) const {
     try {
       shared_->set_current_frame(frame);
     }
@@ -160,7 +160,7 @@ class RMFEXPORT FileConstHandle {
   }
   /** Add a frame and make it the current frame. It is a child of the
       current frame. */
-  FrameID add_frame(std::string name, FrameType t) {
+  FrameID add_frame(std::string name, FrameType t) const {
     FrameID ret = shared_->add_child(get_current_frame(), name, t);
     set_current_frame(ret);
     return ret;
