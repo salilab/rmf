@@ -147,10 +147,12 @@ class SingleAvroFile : public AvroKeysAndCategories {
   SingleAvroFile(std::string& buffer, bool create);
   SingleAvroFile(const std::string& buffer);
   ~SingleAvroFile() { flush(); }
-  FrameID add_child(FrameID node, std::string name,
-                    FrameType t) RMF_BACKEND_OVERRIDE;
-  void add_child(FrameID node, FrameID child_node) RMF_BACKEND_OVERRIDE;
-  FrameIDs get_children(FrameID node) const RMF_BACKEND_OVERRIDE;
+  RMF_BACKEND_VIRTUAL FrameID
+      add_frame(std::string name, FrameType t) RMF_BACKEND_OVERRIDE;
+  RMF_BACKEND_VIRTUAL void add_child_frame(
+      FrameID child_node) RMF_BACKEND_OVERRIDE;
+  RMF_BACKEND_VIRTUAL FrameIDs get_children(FrameID node) const
+      RMF_BACKEND_OVERRIDE;
   using AvroKeysAndCategories::get_name;
   RMF_BACKEND_VIRTUAL std::string get_name(FrameID i) const
       RMF_BACKEND_OVERRIDE;

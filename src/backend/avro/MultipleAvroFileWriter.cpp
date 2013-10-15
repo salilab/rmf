@@ -109,32 +109,24 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
   }
 
-  FrameID MultipleAvroFileWriter::add_child(FrameID node, std::string name,
-                                            FrameType t) {
+  FrameID MultipleAvroFileWriter::add_frame(std::string name, FrameType t) {
     unsigned int index = get_number_of_frames();
-    RMF_TRACE(get_avro_logger(), "Adding frame " << index << " under " << node);
+    RMF_TRACE(get_avro_logger(), "Adding frame " << index << " under "
+                                                 << get_loaded_frame());
     set_loaded_frame(FrameID(index));
     frame_.name = name;
     frame_.type = boost::lexical_cast<std::string>(FrameType(t));
-    unsigned int findex;
-    if (node == ALL_FRAMES)
-      findex = -1;
-    else
-      findex = node.get_index();
+    unsigned int findex = get_loaded_frame().get_index();
     frame_.parents.push_back(findex);
     frames_dirty_ = true;
     frame_.index = index;
     return FrameID(index);
   }
-  void MultipleAvroFileWriter::add_child(FrameID node, FrameID child_node) {
-    if (child_node != get_current_frame()) {
-      RMF_THROW(Message(
-                    "RMF2 writer doesn't support adding other frames than "
-                    "the current as a child."),
-                UsageException);
-    }
-    frame_.parents.push_back(node.get_index());
-    frames_dirty_ = true;
+  void MultipleAvroFileWriter::add_child_frame(FrameID) {
+    RMF_THROW(Message(
+                  "RMF2 writer doesn't support adding other frames than "
+                  "the current as a child."),
+              UsageException);
   }
   FrameIDs MultipleAvroFileWriter::get_children(FrameID /*node*/) const {
     RMF_THROW(Message("RMF2 writer doesn't support getting frame children."),

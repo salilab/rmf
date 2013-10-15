@@ -178,8 +178,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
     virtual void add_child(NodeID node, NodeID child_node) = 0;
     virtual NodeIDs get_children(NodeID node) const = 0;
 
-    virtual FrameID add_child(FrameID node, std::string name, FrameType t) = 0;
-    virtual void add_child(FrameID node, FrameID child_node) = 0;
+    virtual FrameID add_frame(std::string name, FrameType t) = 0;
+    virtual void add_child_frame(FrameID child_node) = 0;
     virtual FrameIDs get_children(FrameID node) const = 0;
 
     virtual Categories get_categories() const = 0;

@@ -8,6 +8,7 @@
 #include <RMF/Key.h>
 #include <RMF/NodeConstHandle.h>
 #include <RMF/NodeHandle.h>
+#include <RMF/Nullable.h>
 #include <RMF/SetCurrentFrame.h>
 #include <RMF/Validator.h>
 #include <RMF/compiler_macros.h>

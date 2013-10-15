@@ -49,7 +49,7 @@ void FileHandle::set_producer(std::string descr) const {
 }
 
 FrameID FileHandle::add_frame(std::string name, FrameType t) const {
-  FrameID ret = shared_->add_child(get_current_frame(), name, t);
+  FrameID ret = shared_->add_frame(name, t);
   set_current_frame(ret);
   return ret;
 }

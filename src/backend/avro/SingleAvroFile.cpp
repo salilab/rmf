@@ -158,20 +158,20 @@ RMF_ENABLE_WARNINGS namespace RMF {
     dirty_ = false;
   }
 
-  FrameID SingleAvroFile::add_child(FrameID node, std::string name,
+  FrameID SingleAvroFile::add_frame(std::string name,
                                     FrameType t) {
     FrameID index = FrameID(get_number_of_frames());
     access_frame(index).name = name;
     access_frame(index).type = boost::lexical_cast<std::string>(t);
-    access_frame(node).children.push_back(index.get_index());
+    access_frame(get_loaded_frame()).children.push_back(index.get_index());
     RMF_INTERNAL_CHECK(get_number_of_frames() ==
                            static_cast<unsigned int>(index.get_index()) + 1,
                        "No frame added");
     return index;
   }
 
-  void SingleAvroFile::add_child(FrameID node, FrameID child_node) {
-    access_frame(node).children.push_back(child_node.get_index());
+  void SingleAvroFile::add_child_frame(FrameID child_node) {
+    access_frame(get_loaded_frame()).children.push_back(child_node.get_index());
   }
 
   FrameIDs SingleAvroFile::get_children(FrameID node) const {

@@ -225,13 +225,11 @@ void MultipleAvroFileReader::add_category_data(Category cat) {
   }
 }
 
-FrameID MultipleAvroFileReader::add_child(FrameID /*node*/,
-                                          std::string /*name*/,
+FrameID MultipleAvroFileReader::add_frame(std::string /*name*/,
                                           FrameType /*t*/) {
   RMF_THROW(Message("Trying to modify read-only file"), UsageException);
 }
-void MultipleAvroFileReader::add_child(FrameID /*node*/,
-                                       FrameID /*child_node*/) {
+void MultipleAvroFileReader::add_child_frame(FrameID /*child_node*/) {
   RMF_THROW(Message("Trying to modify read-only file"), UsageException);
 }
 FrameIDs MultipleAvroFileReader::get_children(FrameID node) const {

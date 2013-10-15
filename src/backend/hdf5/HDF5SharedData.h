@@ -672,20 +672,15 @@ class HDF5SharedData : public internal::SharedData {
     return "HDF5 version 1";
   }
 
-  RMF_BACKEND_VIRTUAL FrameID add_child(FrameID node, std::string name,
+  RMF_BACKEND_VIRTUAL FrameID add_frame(std::string name,
                                         FrameType /*t*/) RMF_BACKEND_OVERRIDE {
     // frame types not supported in rmf files right now
-    unsigned int cindex;
-    if (node == ALL_FRAMES)
-      cindex = 0;
-    else
-      cindex = node.get_index() + 1;
+    unsigned int cindex = get_number_of_frames();
     FrameID index(cindex);
     set_name(index, name);
     return index;
   }
-  void add_child(FrameID /*node*/,
-                 FrameID /*child_node*/) RMF_BACKEND_OVERRIDE {}
+  void add_child_frame(FrameID /*child_node*/) RMF_BACKEND_OVERRIDE {}
   FrameType get_type(FrameID) const RMF_BACKEND_OVERRIDE { return FRAME; }
   FrameIDs get_children(FrameID node) const RMF_BACKEND_OVERRIDE {
     unsigned int cindex;
