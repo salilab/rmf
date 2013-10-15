@@ -6,7 +6,6 @@ import datetime
 
 # don't bother with command line arguments, to keep in simple
 file_name=IMP.benchmark.get_data_path("rnapii.rmf")
-frame=0
 verbose=True
 
 # show the data with the specified key category
@@ -16,9 +15,9 @@ def show_data_xml(nh, kc):
     keys= rh.get_keys(kc)
     count=0
     for k in keys:
-        if nh.get_has_value(k, frame):
+        v = nh.get_value(k)
+        if v is not None:
             count=count+1
-            nh.get_value(k, frame)
     return count
 def show_xml(nh, kcs):
     name=nh.get_name()

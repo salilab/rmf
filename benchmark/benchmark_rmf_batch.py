@@ -6,7 +6,6 @@ import datetime
 
 # don't bother with command line arguments, to keep in simple
 file_name=IMP.benchmark.get_data_path("rnapii.rmf")
-frame=0
 verbose=True
 
 # open the file, and don't clear the contents
@@ -33,8 +32,9 @@ IMP.benchmark.report("rmf access", "batch", elapsed.total_seconds(), len(all))
 start=datetime.datetime.now()
 all=[]
 for n in nhs:
-    if n.get_has_value(k, 0):
-        all.append(n.get_value(k, 0))
+    v = n.get_value(k)
+    if v is not None:
+        all.append(v)
 elapsed= datetime.datetime.now()-start
 
 IMP.benchmark.report("rmf acess", "loop", elapsed.total_seconds(), 0)
