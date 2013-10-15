@@ -22,21 +22,23 @@ namespace RMF {
   is the null value. These get converted to plain values or `None` in python.
   \note they should never be stored.
 */
-// swig needs help
 template <class Traits>
 class Nullable {
   typename Traits::ReturnType v_;
  public:
   Nullable(typename Traits::ReturnType v): v_(v) {}
 #ifndef SWIG
+  /** \pre !get_is_null() */
   operator const typename Traits::Type& () const {
     return get();
   }
+  /** \pre !get_is_null() */
   const typename Traits::Type& get() const {
     RMF_USAGE_CHECK(!get_is_null(), "Can't convert null value.");
     return v_;
   }
 #else
+  // otherwise SWIG gets confused by it being, eg, a pointer to an int
   typename Traits::Type get() const {
     RMF_USAGE_CHECK(!get_is_null(), "Can't convert null value.");
     return v_;
@@ -45,17 +47,6 @@ class Nullable {
 
   bool get_is_null() const { return Traits::get_is_null_value(v_); }
 
-#ifndef SWIG
-  // method for various actual types
-  unsigned int size() const {
-    RMF_USAGE_CHECK(!get_is_null(), "Can't convert null value.");
-    return v_.size();
-  }
-  unsigned int get_id() const {
-    RMF_USAGE_CHECK(!get_is_null(), "Can't convert null value.");
-    return v_.get_id();
-  }
-#endif
 };
 
 } /* namespace RMF */
