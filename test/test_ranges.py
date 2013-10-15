@@ -13,9 +13,9 @@ class GenericTest(unittest.TestCase):
         f.add_frame("next", RMF.FRAME)
         print dir(f)
         print f.get_keys(cat)
-        for fr in f.get_frame_ids():
+        for fr in f.get_frames():
             print fr
-        self.assertEqual(len(f.get_frame_ids()), 2)
+        self.assertEqual(len(f.get_frames()), 2)
 
 
 if __name__ == '__main__':

@@ -46,7 +46,7 @@ Floats get_values(const NodeConstHandles& nodes, FloatKey k,
                   Float missing_value) {
   Floats ret(nodes.size(), missing_value);
   for (unsigned int i = 0; i < nodes.size(); ++i) {
-    if (nodes[i].get_has_value(k)) {
+    if (!nodes[i].get_value(k).get_is_null()) {
       ret[i] = nodes[i].get_value(k);
     }
   }

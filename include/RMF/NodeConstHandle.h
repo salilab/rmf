@@ -15,6 +15,7 @@
 #include "ID.h"
 #include "enums.h"
 #include "constants.h"
+#include "Nullable.h"
 #include <boost/shared_ptr.hpp>
 
 RMF_ENABLE_WARNINGS
@@ -32,35 +33,29 @@ RMF_ENABLE_WARNINGS
   RMF_NODE_CATCH(<< Key(get_name(k))      \
                  << Category(get_category_name(k)) extra_info)
 
-#define RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DECL(                            \
-    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues)         \
- public:                                                                      \
-  /** \brief get the value of the attribute k from this node                  \
-      The node must have the attribute and if it is a per-frame               \
-      attribute, and frame is not specified then frame 0 is                   \
-      used.                                                                   \
-  */                                                                          \
-  ReturnValue get_value(UCName##Key k) const { return get_value_impl(k); }    \
-  /** Return the attribute value or TypeTraits::get_null_value() if the       \
-      node does not have the attribute. In python the method a value equal to \
-      eg RMF.NullFloat if the attribute is not there.*/                       \
-  ReturnValue get_value_always(UCName##Key k) const {                         \
-    return get_value_impl(k);                                                 \
-  }                                                                           \
-  /** If the default key is passed, false is returned.*/                      \
-  bool get_has_value(UCName##Key k) const {                                   \
-    return !UCName##Traits::get_is_null_value(get_value_always(k));           \
-  }                                                                           \
-  /** Return true if the node has data for that key that is specific          \
-      to the current frame, as opposed to static data.*/                      \
-  bool get_has_frame_value(UCName##Key k) const {                             \
-    return get_has_frame_value_impl(k);                                       \
-  }                                                                           \
-                                                                              \
- protected:                                                                   \
-  std::string get_category_name(UCName##Key k) const;                         \
-  std::string get_name(UCName##Key k) const;                                  \
-                                                                              \
+#define RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DECL(                         \
+    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues)      \
+ public:                                                                   \
+  /** \brief get the value of the attribute k from this node or null if it \
+   * doesn't have a value.                                                 \
+  */                                                                       \
+  Nullable<UCName##Traits> get_value(UCName##Key k) const {                \
+    return get_value_impl(k);                                              \
+  }                                                                        \
+  bool get_has_value(UCName##Key k) const {                                \
+    return !get_value(k).get_is_null();                                    \
+  }                                                                        \
+  Nullable<UCName##Traits> get_frame_value(UCName##Key k) const {          \
+    return shared_->get_loaded_value(node_, k);                            \
+  }                                                                        \
+  Nullable<UCName##Traits> get_static_value(UCName##Key k) const {         \
+    return shared_->get_static_value(node_, k);                            \
+  }                                                                        \
+                                                                           \
+ protected:                                                                \
+  std::string get_category_name(UCName##Key k) const;                      \
+  std::string get_name(UCName##Key k) const;                               \
+                                                                           \
  public:
 
 RMF_VECTOR_DECL(NodeConstHandle);
@@ -96,26 +91,22 @@ class RMFEXPORT NodeConstHandle {
       return 0;
   }
 
-  template <class Traits>
-  bool get_has_frame_value_impl(Key<Traits> k) const {
-    return !Traits::get_is_null_value(shared_->get_loaded_value(node_, k));
-  }
-
   // hopefully get_value will be inlined...
   template <class Traits>
-  typename Traits::ReturnType get_value_impl(Key<Traits> k) const {
+  Nullable<Traits> get_value_impl(Key<Traits> k) const {
     if (!shared_->get_current_is_static()) {
-      if (!Traits::get_is_null_value(shared_->get_loaded_value(node_, k))) {
-        return shared_->get_loaded_value(node_, k);
-      }
+      Nullable<Traits> ret = get_frame_value(k);
+      if (!ret.get_is_null()) return ret;
     }
-    return shared_->get_static_value(node_, k);
+    return get_static_value(k);
   }
 
  protected:
   NodeID node_;
   boost::shared_ptr<internal::SharedData> shared_;
+  // for error messages
   std::string get_file_name() const;
+  // for error messages
   FrameID get_current_frame_id() const;
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
  public:

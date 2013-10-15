@@ -51,7 +51,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       }
     }
     void write_errors(NodeConstHandle node, std::ostream& out) const {
-      if (node.get_has_frame_value(k_)) {
+      if (!node.get_frame_value(k_).get_is_null()) {
         double v = node.get_value(k_);
         if (v <= 0) {
           out << node.get_name() << ": Value " << keyname_ << " in category "

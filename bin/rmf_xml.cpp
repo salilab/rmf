@@ -42,7 +42,7 @@ bool show_type_data_xml(Handle nh, RMF::Category kc, bool opened,
         opened = true;
       }
       out << get_as_attribute_name(rh.get_name(keys[i])) << "=\"";
-      out << nh.get_value(keys[i]) << "\"\n";
+      out << RMF::Showable(nh.get_value(keys[i])) << "\"\n";
     }
   }
   return opened;

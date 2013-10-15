@@ -20,8 +20,9 @@ double show_type_data_xml(RMF::NodeConstHandle nh, RMF::Category kc) {
   RMF::FileConstHandle rh = nh.get_file();
   std::vector<RMF::Key<TypeT> > keys = rh.get_keys<TypeT>(kc);
   for (unsigned int i = 0; i < keys.size(); ++i) {
-    if (nh.get_has_value(keys[i])) {
-      ret += count(nh.get_value(keys[i]));
+    RMF::Nullable<TypeT> v = nh.get_value(keys[i]);
+    if (!v.get_is_null()) {
+      ret += count(v.get());
       ret += rh.get_name(keys[i]).size();
     }
   }

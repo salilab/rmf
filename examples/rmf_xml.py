@@ -22,13 +22,14 @@ def show_data_xml(nh, kc):
     keys= rh.get_keys(kc)
     opened=False
     for k in keys:
-        if nh.get_has_value(k):
+        v = nh.get_value(k)
+        if v is not None:
             if not opened:
                 print "<", rh.get_name(kc)
                 opened=True
             name=rh.get_name(k)
             name.replace(" ", "_")
-            print name,"=\""+str(nh.get_value(k))+"\""
+            print name,"=\""+str(v)+"\""
     if opened:
         print "/>"
 

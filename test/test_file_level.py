@@ -61,10 +61,10 @@ class Tests(unittest.TestCase):
             ik= f.get_int_key(sc, "ik0")
             f0= f.get_root_frame().add_child("0", RMF.FRAME)
             r.set_value(ik, 1)
-            ika= r.get_value_always(ik)
+            ika= r.get_value(ik)
             self.assertEqual(ika, 1)
             f1= f0.add_child("1", RMF.FRAME)
-            ikna= r.get_value_always(ik)
+            ikna= r.get_value(ik)
             self.assertEqual(ikna, RMF.NullInt)
     def test_perturbed_values(self):
         """Test null values int"""
@@ -76,10 +76,10 @@ class Tests(unittest.TestCase):
             fk= f.get_float_key(sc, "fk0")
             f0= f.add_frame("0", RMF.FRAME)
             r.set_value(fk, 1)
-            fka= r.get_value_always(fk)
+            fka= r.get_value(fk)
             self.assertEqual(fka, 1)
             f.add_frame("1", RMF.FRAME)
-            fkna= r.get_value_always(fk)
-            self.assertEqual(fkna, RMF.NullFloat)
+            fkna= r.get_value(fk)
+            self.assertEqual(fkna, None)
 if __name__ == '__main__':
     unittest.main()

@@ -76,11 +76,6 @@ def get_data_types():
 
 /* Declare the needed things for each type */
 %define RMF_SWIG_DECLARE_TYPE(lcname, Ucname, Ucnames, Type)
-%inline %{
-namespace RMF {
- const Type Null##Ucname=Ucname##Traits::get_null_value();
-}
-%}
 namespace RMF {
 %rename(_##Ucname##Traits) Ucname##Traits;
 }
@@ -94,6 +89,18 @@ _types_list.append(#lcname)
 %define RMF_SWIG_DEFINE_TYPE(lcname, Ucname, Ucnames, Type)
 %template(Ucname##Key) RMF::Key<RMF::Ucname##Traits>;
 %enddef
+
+%define RMF_SWIG_WRAP_NULLABLE(lcname, Ucname, Ucnames, Type)
+%template(_##Ucname##Nullable) RMF::Nullable<RMF::Ucname##Traits>;
+%enddef
+
+%feature("shadow") RMF::NodeConstHandle::get_value const %{
+    def get_value(self, *args):
+        v = $action(self, *args)
+        if v.get_is_null(): return None
+        else: return v.get()
+%}
+
 
 RMF_SWIG_VALUE_INSTANCE(RMF, NodeID, ID<NodeTag>, NodeIDs);
 RMF_SWIG_VALUE_INSTANCE(RMF, FrameID, ID<FrameTag>, FrameIDs);
@@ -169,12 +176,14 @@ RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DECLARE_TYPE);
  }
 
 
+
 %include "RMF/constants.h"
 %include "RMF/types.h"
 
+%include "RMF/Nullable.h"
 %include "RMF/Key.h"
 RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DEFINE_TYPE);
-
+RMF_SWIG_FOREACH_TYPE(RMF_SWIG_WRAP_NULLABLE);
 
 %include "RMF/Category.h"
 

@@ -153,6 +153,8 @@ RMF_ENABLE_WARNINGS
 #define RMF_VALIDATOR(Type) RMF::Registrar<Type> Type##Reg(#Type);
 namespace RMF {
 
+  template <class Tr> class Nullable;
+
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
 struct Showable;
 inline std::ostream& operator<<(std::ostream& out, const Showable& t);
@@ -178,7 +180,7 @@ struct Showable {
     oss << "(" << p.first << ", " << p.second << ")";
     t_ = oss.str();
   }
-  Showable(std::string t) : t_(t) {}
+  Showable(std::string t) : t_(std::string("\"") + t + "\"") {}
   template <class T>
   Showable(const std::vector<T>& t) {
     std::ostringstream out;
@@ -190,6 +192,13 @@ struct Showable {
       out << t[i];
     }
     out << "]";
+    t_ = out.str();
+  }
+  template <class Tr>
+  Showable(const Nullable<Tr>& t) {
+    std::ostringstream out;
+    if (t.get_is_null()) out << "<None>";
+    else out << t.get();
     t_ = out.str();
   }
 };
