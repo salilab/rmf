@@ -8,6 +8,7 @@
 
 #include <RMF/utility.h>
 #include "internal/clone_shared_data.h"
+#include "internal/shared_data_equality.h"
 #include <RMF/NodeConstHandle.h>
 #include <RMF/NodeHandle.h>
 #include <RMF/FileConstHandle.h>
