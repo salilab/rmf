@@ -240,27 +240,21 @@ FrameIDs MultipleAvroFileReader::get_children(FrameID node) const {
     return FrameIDs();
 }
 
-std::string MultipleAvroFileReader::get_name(FrameID i) const {
-  if (i == ALL_FRAMES) {
-    return "static";
+std::string MultipleAvroFileReader::get_loaded_frame_name() const {
+  FrameID i = get_loaded_frame();
+  if (frames_.find(i.get_index()) != frames_.end()) {
+    return frames_.find(i.get_index())->second.name;
   } else {
-    if (frames_.find(i.get_index()) != frames_.end()) {
-      return frames_.find(i.get_index())->second.name;
-    } else {
-      return "";
-    }
+    return "";
   }
 }
-FrameType MultipleAvroFileReader::get_type(FrameID i) const {
-  if (i == ALL_FRAMES) {
-    return STATIC;
+FrameType MultipleAvroFileReader::get_loaded_frame_type() const {
+  FrameID i = get_loaded_frame();
+  if (frames_.find(i.get_index()) != frames_.end()) {
+    return boost::lexical_cast<FrameType>(
+        frames_.find(i.get_index())->second.type);
   } else {
-    if (frames_.find(i.get_index()) != frames_.end()) {
-      return boost::lexical_cast<FrameType>(
-          frames_.find(i.get_index())->second.type);
-    } else {
-      return FRAME;
-    }
+    return FRAME;
   }
 }
 unsigned int MultipleAvroFileReader::get_number_of_frames() const {

@@ -133,25 +133,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
               UsageException);
   }
 
-  std::string MultipleAvroFileWriter::get_name(FrameID i) const {
-    if (i == ALL_FRAMES) {
-      return "static";
-    } else {
-      RMF_USAGE_CHECK(i.get_index() == static_cast<unsigned int>(frame_.index),
-                      "Can only query the name of the current frame with"
-                      " writing RMF2 files.");
-      return frame_.name;
-    }
+  std::string MultipleAvroFileWriter::get_loaded_frame_name() const {
+    return frame_.name;
   }
-  FrameType MultipleAvroFileWriter::get_type(FrameID i) const {
-    if (i == ALL_FRAMES) {
-      return STATIC;
-    } else {
-      RMF_USAGE_CHECK(i.get_index() == static_cast<unsigned int>(frame_.index),
-                      "Can only query the name of the current frame with"
-                      " writing RMF2 files.");
-      return boost::lexical_cast<FrameType>(frame_.type);
-    }
+  FrameType MultipleAvroFileWriter::get_loaded_frame_type() const {
+    return boost::lexical_cast<FrameType>(frame_.type);
   }
   unsigned int MultipleAvroFileWriter::get_number_of_frames() const {
     return frame_.index + 1;

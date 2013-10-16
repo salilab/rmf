@@ -179,11 +179,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
                     get_frame(node).children.end());
   }
 
-  std::string SingleAvroFile::get_name(FrameID i) const {
-    return get_frame(i).name;
+  std::string SingleAvroFile::get_loaded_frame_name() const {
+    return get_frame(get_loaded_frame()).name;
   }
-  FrameType SingleAvroFile::get_type(FrameID i) const {
-    return boost::lexical_cast<FrameType>(get_frame(i).type);
+  FrameType SingleAvroFile::get_loaded_frame_type() const {
+    return boost::lexical_cast<FrameType>(get_frame(get_loaded_frame()).type);
   }
   unsigned int SingleAvroFile::get_number_of_frames() const {
     return get_frames().size() - 1;

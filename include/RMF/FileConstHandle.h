@@ -161,10 +161,10 @@ class RMFEXPORT FileConstHandle {
       return shared_->get_loaded_frame();
   }
   FrameType get_current_frame_type() const {
-    return shared_->get_type(get_current_frame());
+    return shared_->get_loaded_frame_type();
   }
   std::string get_current_frame_name() const {
-    return shared_->get_name(get_current_frame());
+    return shared_->get_loaded_frame_name();
   }
   void set_current_frame(FrameID frame) const {
     try {

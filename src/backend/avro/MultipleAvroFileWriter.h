@@ -115,9 +115,9 @@ RMF_ENABLE_WARNINGS namespace RMF {
     RMF_BACKEND_VIRTUAL FrameIDs get_children(FrameID node) const
         RMF_BACKEND_OVERRIDE;
     using AvroKeysAndCategories::get_name;
-    std::string get_name(FrameID i) const RMF_BACKEND_OVERRIDE;
-    FrameType get_type(FrameID i) const RMF_BACKEND_OVERRIDE;
-    unsigned int get_number_of_frames() const RMF_BACKEND_OVERRIDE;
+    RMF_BACKEND_VIRTUAL std::string get_loaded_frame_name() const RMF_BACKEND_OVERRIDE;
+    RMF_BACKEND_VIRTUAL FrameType get_loaded_frame_type() const RMF_BACKEND_OVERRIDE;
+    RMF_BACKEND_VIRTUAL unsigned int get_number_of_frames() const RMF_BACKEND_OVERRIDE;
   };
 
   }  // namespace avro_backend

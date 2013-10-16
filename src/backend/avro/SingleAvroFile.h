@@ -154,9 +154,9 @@ class SingleAvroFile : public AvroKeysAndCategories {
   RMF_BACKEND_VIRTUAL FrameIDs get_children(FrameID node) const
       RMF_BACKEND_OVERRIDE;
   using AvroKeysAndCategories::get_name;
-  RMF_BACKEND_VIRTUAL std::string get_name(FrameID i) const
+  RMF_BACKEND_VIRTUAL std::string get_loaded_frame_name() const
       RMF_BACKEND_OVERRIDE;
-  FrameType get_type(FrameID i) const RMF_BACKEND_OVERRIDE;
+  FrameType get_loaded_frame_type() const RMF_BACKEND_OVERRIDE;
   unsigned int get_number_of_frames() const;
   RMF_BACKEND_VIRTUAL std::string get_file_type() const RMF_BACKEND_OVERRIDE {
     if (text_) {

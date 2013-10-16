@@ -661,7 +661,7 @@ class HDF5SharedData : public internal::SharedData {
   std::string get_producer() const;
   void set_producer(std::string str);
 
-  RMF_BACKEND_VIRTUAL std::string get_name(FrameID i) const
+  RMF_BACKEND_VIRTUAL std::string get_loaded_frame_name() const
       RMF_BACKEND_OVERRIDE;
 
   bool get_supports_locking() const { return false; }
@@ -681,7 +681,7 @@ class HDF5SharedData : public internal::SharedData {
     return index;
   }
   void add_child_frame(FrameID /*child_node*/) RMF_BACKEND_OVERRIDE {}
-  FrameType get_type(FrameID) const RMF_BACKEND_OVERRIDE { return FRAME; }
+  FrameType get_loaded_frame_type() const RMF_BACKEND_OVERRIDE { return FRAME; }
   FrameIDs get_children(FrameID node) const RMF_BACKEND_OVERRIDE {
     unsigned int cindex;
     if (node == ALL_FRAMES)

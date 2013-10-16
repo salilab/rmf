@@ -189,10 +189,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
     virtual void set_description(std::string str) = 0;
     virtual std::string get_producer() const = 0;
     virtual void set_producer(std::string str) = 0;
-    virtual std::string get_name(FrameID i) const = 0;
-    virtual FrameType get_type(FrameID i) const = 0;
-    virtual bool get_supports_locking() const { return false; }
-    virtual bool set_is_locked(bool) { return false; }
+    virtual std::string get_loaded_frame_name() const = 0;
+    virtual FrameType get_loaded_frame_type() const = 0;
     virtual std::string get_file_type() const = 0;
     virtual void reload() = 0;
     boost::iterator_range<boost::range_detail::integer_iterator<FrameID> >

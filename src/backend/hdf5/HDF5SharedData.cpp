@@ -365,9 +365,8 @@ void HDF5SharedData::set_name(FrameID i, std::string str) {
   }
   frame_names_.set_value(HDF5::DataSetIndexD<1>(i.get_index()), str);
 }
-std::string HDF5SharedData::get_name(FrameID i) const {
-  RMF_USAGE_CHECK(i != ALL_FRAMES,
-                  "The static data frame does not have a name");
+std::string HDF5SharedData::get_loaded_frame_name() const {
+  FrameID i = get_loaded_frame();
   if (frame_names_.get_size()[0] > i.get_index()) {
     return frame_names_.get_value(HDF5::DataSetIndexD<1>(i.get_index()));
   } else {
