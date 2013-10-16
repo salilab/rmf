@@ -14,7 +14,7 @@
 #include <RMF/Validator.h>
 #include <boost/unordered_set.hpp>
 #include <boost/lexical_cast.hpp>
-#include <backend/avro/AvroCpp/api/DataFile.hh>
+#include <backend/AvroCpp/api/DataFile.hh>
 #include <algorithm>
 
 RMF_ENABLE_WARNINGS namespace RMF {

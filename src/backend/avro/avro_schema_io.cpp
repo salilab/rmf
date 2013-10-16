@@ -14,10 +14,10 @@
 #include <backend/avro/Nodes.json.h>
 #include <backend/avro/Frame.json.h>
 #include "avro_schemas.h"
-#include <backend/avro/AvroCpp/api/Compiler.hh>
+#include <backend/AvroCpp/api/Compiler.hh>
 #include <stdexcept>
-#include <backend/avro/AvroCpp/api/Encoder.hh>
-#include <backend/avro/AvroCpp/api/Stream.hh>
+#include <backend/AvroCpp/api/Encoder.hh>
+#include <backend/AvroCpp/api/Stream.hh>
 #include <boost/scoped_ptr.hpp>
 
 RMF_ENABLE_WARNINGS namespace RMF {

@@ -9,7 +9,7 @@
 #define RMF_INTERNAL_AVRO_SCHEMAS_H
 
 #include <RMF/config.h>
-#include "backend/avro/AvroCpp/api/ValidSchema.hh"
+#include "backend/AvroCpp/api/ValidSchema.hh"
 
 RMF_ENABLE_WARNINGS namespace RMF {
   namespace avro_backend {

@@ -1,8 +1,8 @@
-#include <backend/avro/AvroCpp/api/Compiler.hh>
-#include <backend/avro/AvroCpp/api/Stream.hh>
-#include <backend/avro/AvroCpp/api/Encoder.hh>
-#include <backend/avro/AvroCpp/api/Decoder.hh>
-#include <backend/avro/AvroCpp/api/Specific.hh>
+#include <backend/AvroCpp/api/Compiler.hh>
+#include <backend/AvroCpp/api/Stream.hh>
+#include <backend/AvroCpp/api/Encoder.hh>
+#include <backend/AvroCpp/api/Decoder.hh>
+#include <backend/AvroCpp/api/Specific.hh>
 #include <sstream>
 
 namespace {

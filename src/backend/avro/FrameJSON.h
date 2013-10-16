@@ -20,9 +20,9 @@
 #define _USR_LOCAL_GOOGLE_HOME_DRUSSEL_SRC_IMP_DEBUG_SRC_DEPENDENCY_RMF_SRC_BACKEND_AVRO_FRAMEJSON_H_779595758__H_
 
 #include "boost/any.hpp"
-#include "AvroCpp/api/Specific.hh"
-#include "AvroCpp/api/Encoder.hh"
-#include "AvroCpp/api/Decoder.hh"
+#include "backend/AvroCpp/api/Specific.hh"
+#include "backend/AvroCpp/api/Encoder.hh"
+#include "backend/AvroCpp/api/Decoder.hh"
 
 namespace RMF_avro_backend {
 struct Frame {

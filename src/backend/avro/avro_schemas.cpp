@@ -13,7 +13,7 @@
 #include <backend/avro/Data.json.h>
 #include <backend/avro/Nodes.json.h>
 #include <backend/avro/Frame.json.h>
-#include <backend/avro/AvroCpp/api/Compiler.hh>
+#include <backend/AvroCpp/api/Compiler.hh>
 
 RMF_ENABLE_WARNINGS namespace RMF {
   namespace avro_backend {

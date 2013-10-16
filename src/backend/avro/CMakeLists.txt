@@ -69,14 +69,7 @@ set(datas "${PROJECT_BINARY_DIR}/src/backend/avro/All.json.h" "${PROJECT_BINARY_
     "${PROJECT_BINARY_DIR}/src/backend/avro/Data.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/Data.json.cpp"
     "${PROJECT_BINARY_DIR}/src/backend/avro/File.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/File.json.cpp" "${PROJECT_SOURCE_DIR}/scripts/make-embed.py")
 
-file(GLOB_RECURSE avrocpp_sources "${PROJECT_SOURCE_DIR}/src/backend/avro/AvroCpp/impl/*.cc")
-
-list(REMOVE_ITEM avrocpp_sources "${PROJECT_SOURCE_DIR}/src/backend/avro/AvroCpp/impl/avrogencpp.cc")
-
-add_definitions("-DAVRO_DYN_LINK" "-DAVRO_SOURCE")
-include_directories("${PROJECT_SOURCE_DIR}/src/backend/avro/AvroCpp/api")
-
-list(APPEND cppfiles ${avro_sources} ${avrocpp_sources}
+list(APPEND cppfiles ${avro_sources}
 "${PROJECT_BINARY_DIR}/src/backend/avro/All.json.cpp"
 "${PROJECT_BINARY_DIR}/src/backend/avro/File.json.cpp"
 "${PROJECT_BINARY_DIR}/src/backend/avro/Frame.json.cpp"

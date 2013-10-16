@@ -14,7 +14,7 @@
 #include <RMF/infrastructure_macros.h>
 #include "MultipleAvroFileBase.h"
 #include <RMF/exceptions.h>
-#include <backend/avro/AvroCpp/api/DataFile.hh>
+#include <backend/AvroCpp/api/DataFile.hh>
 #include <backend/avro/AllJSON.h>
 #include <backend/avro/FrameJSON.h>
 #include <boost/shared_ptr.hpp>

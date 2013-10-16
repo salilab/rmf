@@ -12,7 +12,7 @@
 #include "SingleAvroFile.h"
 #include <RMF/internal/paths.h>
 #include <RMF/decorators.h>
-#include <backend/avro/AvroCpp/api/Compiler.hh>
+#include <backend/AvroCpp/api/Compiler.hh>
 #include <boost/scoped_ptr.hpp>
 #include <boost/lexical_cast.hpp>
 #include <stdexcept>

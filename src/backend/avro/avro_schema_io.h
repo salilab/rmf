@@ -9,9 +9,9 @@
 #define RMF_INTERNAL_AVRO_SCHEMA_IO_H
 
 #include <RMF/config.h>
-#include "backend/avro/AvroCpp/api/ValidSchema.hh"
-#include "backend/avro/AvroCpp/api/DataFile.hh"
-#include "backend/avro/AvroCpp/api/Stream.hh"
+#include "backend/AvroCpp/api/ValidSchema.hh"
+#include "backend/AvroCpp/api/DataFile.hh"
+#include "backend/AvroCpp/api/Stream.hh"
 #include "AllJSON.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>

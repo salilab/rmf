@@ -5,8 +5,8 @@
 #include <RMF/FileHandle.h>
 #include <RMF/utility.h>
 #include "common.h"
-#include <backend/avro/AvroCpp/api/Compiler.hh>
-#include <backend/avro/AvroCpp/api/DataFile.hh>
+#include <backend/AvroCpp/api/Compiler.hh>
+#include <backend/AvroCpp/api/DataFile.hh>
 #include <backend/avro/avro_schemas.h>
 #include <backend/avro/AllJSON.h>
 #include <backend/avro/FrameJSON.h>
