@@ -14,3 +14,4 @@ examples/Files.cmake
 src/Files.cmake
 include/RMF.h
 include/RMF/HDF5.h
+test/Files.cmake
