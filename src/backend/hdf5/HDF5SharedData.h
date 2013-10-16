@@ -10,11 +10,15 @@
 #define RMF_INTERNAL_HDF_5SHARED_DATA_H
 
 #include <RMF/config.h>
-#include <RMF/internal/SharedData.h>
+#include "../BackwardsIOBase.h"
 #include <RMF/compiler_macros.h>
 #include <RMF/HDF5/Group.h>
 #include <RMF/HDF5/File.h>
 #include <RMF/infrastructure_macros.h>
+#include <RMF/Category.h>
+#include <RMF/ID.h>
+#include <RMF/Key.h>
+#include <RMF/enums.h>
 #include <RMF/constants.h>
 #include <boost/unordered_map.hpp>
 #include <boost/unordered_set.hpp>
@@ -50,7 +54,7 @@ namespace hdf5_backend {
         file_, kc, get_category_name_impl(kc), arity);                    \
   }
 
-class HDF5SharedData : public internal::SharedData {
+class HDF5SharedData : public backends::BackwardsIOBase {
   // indexed first by per frame, then by
   // TypeInfo::get_index() then by ID
   // then by key.get_index()
@@ -453,7 +457,6 @@ class HDF5SharedData : public internal::SharedData {
 
   template <class TypeTraits>
   unsigned int add_key_impl(Category cat, std::string name, bool per_frame) {
-    audit_key_name(name);
     // check that it is unique
     {
       HDF5DataSetCacheD<StringTraits, 1>& nameds =
@@ -556,7 +559,7 @@ class HDF5SharedData : public internal::SharedData {
 
   template <class TypeTraits>
   typename TypeTraits::Type get_loaded_value(NodeID node,
-                                              Key<TypeTraits> k) const {
+                                             Key<TypeTraits> k) const {
     return get_value(get_loaded_frame(), node, k);
   }
   template <class TypeTraits>
@@ -566,7 +569,7 @@ class HDF5SharedData : public internal::SharedData {
   }
   template <class TypeTraits>
   void set_loaded_value(NodeID node, Key<TypeTraits> k,
-                         typename TypeTraits::Type v) {
+                        typename TypeTraits::Type v) {
     set_value(get_loaded_frame(), node, k, v);
   }
   template <class TypeTraits>
@@ -576,7 +579,7 @@ class HDF5SharedData : public internal::SharedData {
   }
 
   template <class TypeTraits>
-  std::vector<Key<TypeTraits> > get_keys(Category cat) {
+  std::vector<Key<TypeTraits> > get_keys(Category cat, TypeTraits) {
     std::vector<Key<TypeTraits> > ret;
     typename NameKeyMap::const_iterator oit = name_key_map_.find(cat);
     if (oit == name_key_map_.end()) return ret;
@@ -591,7 +594,7 @@ class HDF5SharedData : public internal::SharedData {
   }
 
   template <class TypeTraits>
-  Key<TypeTraits> get_key(Category category, std::string name) {
+  Key<TypeTraits> get_key(Category category, std::string name, TypeTraits) {
     NameKeyInnerMap::iterator it = name_key_map_[category].find(name);
     if (it == name_key_map_[category].end()) {
       int id = key_data_map_.size();
@@ -672,8 +675,8 @@ class HDF5SharedData : public internal::SharedData {
     return "HDF5 version 1";
   }
 
-  RMF_BACKEND_VIRTUAL FrameID add_frame(std::string name,
-                                        FrameType /*t*/) RMF_BACKEND_OVERRIDE {
+  RMF_BACKEND_VIRTUAL FrameID
+  add_frame(std::string name, FrameType /*t*/) RMF_BACKEND_OVERRIDE {
     // frame types not supported in rmf files right now
     unsigned int cindex = get_number_of_frames();
     FrameID index(cindex);

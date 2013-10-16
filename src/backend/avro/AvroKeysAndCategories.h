@@ -10,7 +10,10 @@
 #define RMF_INTERNAL_AVRO_KEYS_AND_CATEGORIES_H
 
 #include <RMF/config.h>
-#include <RMF/internal/SharedData.h>
+#include <backend/BackwardsIOBase.h>
+#include <RMF/Category.h>
+#include <RMF/Key.h>
+#include <RMF/ID.h>
 #include <RMF/infrastructure_macros.h>
 #include <RMF/constants.h>
 #include <boost/unordered_map.hpp>
@@ -21,7 +24,7 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 namespace avro_backend {
 
-class AvroKeysAndCategories : public internal::SharedData {
+class AvroKeysAndCategories : public backends::BackwardsIOBase {
   typedef boost::unordered_map<Category, std::string> CategoryNameMap;
   typedef boost::unordered_map<std::string, Category> NameCategoryMap;
   CategoryNameMap category_name_map_;
@@ -55,7 +58,7 @@ class AvroKeysAndCategories : public internal::SharedData {
     return get_category_impl(k.get_id());
   }
   template <class TypeTraits>
-  Key<TypeTraits> get_key(Category category, std::string name) {
+  Key<TypeTraits> get_key(Category category, std::string name, TypeTraits) {
     typename NameKeyInnerMap::const_iterator it =
         name_key_map_[category].find(name);
     if (it == name_key_map_[category].end()) {
@@ -63,9 +66,9 @@ class AvroKeysAndCategories : public internal::SharedData {
       key_data_map_[id].name = name;
       key_data_map_[id].category = category;
       name_key_map_[category][name] = id;
-      RMF_INTERNAL_CHECK(
-          get_key<TypeTraits>(category, name) == Key<TypeTraits>(id),
-          "Keys don't match");
+      RMF_INTERNAL_CHECK(get_key<TypeTraits>(category, name, TypeTraits()) ==
+                             Key<TypeTraits>(id),
+                         "Keys don't match");
       return Key<TypeTraits>(id);
     } else {
       int id = it->second;
@@ -120,7 +123,7 @@ class AvroKeysAndCategories : public internal::SharedData {
     }
   }
 
-  AvroKeysAndCategories(std::string path) : SharedData(path) {}
+  AvroKeysAndCategories(std::string path) : backends::BackwardsIOBase(path) {}
 };
 
 }  // namespace avro_backend

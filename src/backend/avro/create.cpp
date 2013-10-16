@@ -6,62 +6,93 @@
  *
  */
 
-#include "create.h"
 #include "AvroSharedData.h"
 #include "SingleAvroFile.h"
 #include "MultipleAvroFileWriter.h"
 #include "MultipleAvroFileReader.h"
-#include "backend/ImplementSharedData.h"
-#include <boost/algorithm/string/predicate.hpp>
+#include "../IO.h"
+#include "../BackwardsIO.h"
+#include <boost/make_shared.hpp>
 #include <RMF/log.h>
 
 RMF_ENABLE_WARNINGS
 
 namespace RMF {
 namespace avro_backend {
+namespace {
 
-typedef backend::ImplementSharedData<avro_backend::AvroSharedData<
+typedef backends::BackwardsIO<avro_backend::AvroSharedData<
     avro_backend::SingleAvroFile> > SingleAvroShareData;
-typedef backend::ImplementSharedData<avro_backend::AvroSharedData<
+typedef backends::BackwardsIO<avro_backend::AvroSharedData<
     avro_backend::MultipleAvroFileWriter> > AvroWriterShareData;
-typedef backend::ImplementSharedData<avro_backend::AvroSharedData<
+typedef backends::BackwardsIO<avro_backend::AvroSharedData<
     avro_backend::MultipleAvroFileReader> > AvroReaderShareData;
 
-boost::shared_ptr<internal::SharedData> create_shared_data(std::string path,
-                                                           bool create,
-                                                           bool read_only) {
-  if (boost::algorithm::ends_with(path, ".rmf2")) {
-    if (create) {
-      RMF_INFO(get_avro_logger(), "Using RMF2 writer backend");
-      return boost::make_shared<AvroWriterShareData>(path, create, read_only);
-    } else if (read_only) {
-      RMF_INFO(get_avro_logger(), "Using RMF2 reader backend");
-      return boost::make_shared<AvroReaderShareData>(path, create, read_only);
-    } else {
-      RMF_THROW(Message(
-                    "rmf2 files can only be created for writing or "
-                    "opened read-only"),
-                IOException);
-    }
-  } else if (boost::algorithm::ends_with(path, ".rmft") ||
-             boost::algorithm::ends_with(path, ".rmfa")) {
-    RMF_INFO(get_avro_logger(), "Using RMFA/T backend");
-    return boost::make_shared<SingleAvroShareData>(path, create, read_only);
-  } else {
-    return boost::shared_ptr<SingleAvroShareData>();
-  }
-}
-boost::shared_ptr<internal::SharedData> create_shared_data_buffer() {
-  RMF_INFO(get_avro_logger(), "Created rmf in buffer");
-  return boost::make_shared<SingleAvroShareData>();
-}
-boost::shared_ptr<internal::SharedData> open_shared_data_buffer(
-    const std::vector<char>& buffer) {
-  RMF_INFO(get_avro_logger(), "Opened rmf from buffer, read-only");
-  return boost::make_shared<SingleAvroShareData>(buffer);
-}
 
+
+struct SingleTextAvroFactory : public RMF::backends::IOFactory {
+  virtual std::string get_file_extension() const RMF_OVERRIDE {
+    return ".rmft";
+  }
+  virtual boost::shared_ptr<RMF::backends::IO> read_file(
+      const std::string& name) const RMF_OVERRIDE {
+    return boost::make_shared<SingleAvroShareData>(name, false, true);
+  }
+  virtual boost::shared_ptr<RMF::backends::IO> write_file(
+      const std::string& name) const RMF_OVERRIDE {
+    return boost::make_shared<SingleAvroShareData>(name, false, false);
+  }
+  virtual boost::shared_ptr<RMF::backends::IO> create_file(
+      const std::string& name) const RMF_OVERRIDE {
+    return boost::make_shared<SingleAvroShareData>(name, true, false);
+  }
+  virtual ~SingleTextAvroFactory() {}
+};
+
+backends::IOFactoryRegistrar<SingleTextAvroFactory> registrart;
+
+
+
+class SingleAvroFactory : public SingleTextAvroFactory {
+  virtual std::string get_file_extension() const RMF_OVERRIDE {
+    return ".rmfa";
+  }
+  virtual boost::shared_ptr<RMF::backends::IO> create_buffer() const
+      RMF_OVERRIDE {
+    return boost::make_shared<SingleAvroShareData>();
+  }
+  virtual boost::shared_ptr<RMF::backends::IO> open_buffer(
+      const std::vector<char>& buffer) const RMF_OVERRIDE {
+    return boost::make_shared<SingleAvroShareData>(buffer);
+  }
+  virtual ~SingleAvroFactory() {}
+};
+
+backends::IOFactoryRegistrar<SingleAvroFactory> registrars;
+
+
+
+
+class MultipleAvroFactory : public RMF::backends::IOFactory {
+  virtual std::string get_file_extension() const RMF_OVERRIDE {
+    return ".rmf2";
+  }
+  virtual boost::shared_ptr<RMF::backends::IO> read_file(
+      const std::string& name) const RMF_OVERRIDE {
+    return boost::make_shared<AvroReaderShareData>(name, false, true);
+  }
+  virtual boost::shared_ptr<RMF::backends::IO> create_file(
+      const std::string& name) const RMF_OVERRIDE {
+    return boost::make_shared<AvroWriterShareData>(name, true, false);
+  }
+  virtual ~MultipleAvroFactory() {}
+};
+
+backends::IOFactoryRegistrar<MultipleAvroFactory> registrar2;
+
+
+}  // namespace
 }  // namespace avro_backend
-} /* namespace RMF */
+}  // namespace RMF
 
 RMF_DISABLE_WARNINGS

@@ -18,22 +18,6 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 namespace avro_backend {
 
-/* Later have laze and non-lazy frame loading so we can skip check on most
-   fetches.
-
-   split into two classes, one for creating and one for reading (with a common
-   base)
-
-   push get_all into base classes, then we can specialize it for the reader
-   and
-   do everything nicely with changing on set_current_frame
-
-   merge all the static data (file, nodes, frames, base structure) into one
-   record
-   share that. Only have the dynamic stuff be different between backends
-
-   can build cache on node keys later.
- */
 class MultipleAvroFileBase : public AvroKeysAndCategories {
  protected:
   typedef RMF_avro_backend::File File;
@@ -76,6 +60,7 @@ class MultipleAvroFileBase : public AvroKeysAndCategories {
   std::string get_static_file_path() const;
   std::string get_frames_file_path() const;
 
+public:
   RMF_BACKEND_VIRTUAL std::string get_file_type() const RMF_BACKEND_OVERRIDE {
     return "Multiple avro version 1";
   }

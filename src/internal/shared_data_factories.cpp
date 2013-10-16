@@ -1,71 +1,61 @@
+/**
+ *  \file RMF/Category.h
+ *  \brief Handle read/write of Model data from/to files.
+ *
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *
+ */
+
 #include <RMF/internal/shared_data_factories.h>
-#include <backend/hdf5/create.h>
-#include <backend/avro/create.h>
+#include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
+#include "backend/IO.h"
 
 RMF_ENABLE_WARNINGS
 
 namespace RMF {
-
 namespace internal {
 
-namespace {
-boost::shared_ptr<SharedData> create_shared_data_internal(std::string path,
-                                                          bool create,
-                                                          bool read_only) {
-  try {
-    boost::shared_ptr<SharedData> ret;
-    if ((ret = hdf5_backend::create_shared_data(path, create, read_only))) {
-      return ret;
-    } else if ((ret = avro_backend::create_shared_data(path, create,
-                                                       read_only))) {
-      return ret;
-    } else {
-      RMF_THROW(Message("Don't know how to open file"), IOException);
-    }
-  }
-  catch (Exception& e) {
-    RMF_RETHROW(File(path), e);
-  }
-}
-}
-
 boost::shared_ptr<SharedData> create_file(const std::string& name) {
-  return create_shared_data_internal(name, true, false);
-}
-
-boost::shared_ptr<SharedData> create_buffer() {  try {
-    boost::shared_ptr<SharedData> ret =
-        avro_backend::create_shared_data_buffer();
-    if (ret) {
-      return ret;
-    } else {
-      RMF_THROW(Message("Don't know how to open file"), IOException);
-    }
+  boost::shared_ptr<backends::IO> io = backends::create_file(name);
+  if (!io) {
+    RMF_THROW(Message("Can't create file") << File(name), IOException);
   }
-  catch (Exception& e) {
-    RMF_RETHROW(File("buffer"), e);
-  }
+  return boost::make_shared<SharedData>(io, name, true, true);
 }
-
+boost::shared_ptr<SharedData> create_buffer() {
+  boost::shared_ptr<backends::IO> io = backends::create_buffer();
+  if (!io) {
+    RMF_THROW(Message("Can't create buffer"), IOException);
+  }
+  return boost::make_shared<SharedData>(io, "buffer", true, true);
+}
 boost::shared_ptr<SharedData> read_file(const std::string& name) {
- return create_shared_data_internal(name, false, true);
+  boost::shared_ptr<backends::IO> io = backends::read_file(name);
+  if (!io) {
+    RMF_THROW(Message("Can't read file") << File(name), IOException);
+  }
+  boost::shared_ptr<SharedData> ret =
+      boost::make_shared<SharedData>(io, name, false, false);
+  return ret;
 }
 boost::shared_ptr<SharedData> open_buffer(const std::vector<char>& buffer) {
-  try {
-    boost::shared_ptr<SharedData> ret =
-        avro_backend::open_shared_data_buffer(buffer);
-    if (ret) {
-      return ret;
-    } else {
-      RMF_THROW(Message("Don't know how to open file"), IOException);
-    }
+  boost::shared_ptr<backends::IO> io = backends::open_buffer(buffer);
+  if (!io) {
+    RMF_THROW(Message("Can't create buffer"), IOException);
   }
-  catch (Exception& e) {
-    RMF_RETHROW(File("buffer"), e);
-  }
+  boost::shared_ptr<SharedData> ret =
+      boost::make_shared<SharedData>(io, "buffer", false, false);
+  return ret;
 }
 boost::shared_ptr<SharedData> write_file(const std::string& name) {
-  return create_shared_data_internal(name, false, false);
+  boost::shared_ptr<backends::IO> io = backends::write_file(name);
+  if (!io) {
+    RMF_THROW(Message("Can't write file") << File(name), IOException);
+  }
+  boost::shared_ptr<SharedData> ret =
+      boost::make_shared<SharedData>(io, name, true, false);
+  return ret;
 }
 
 }  // namespace internal

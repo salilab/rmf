@@ -100,7 +100,6 @@ void clone_static_values_category(SDA* sda, Category cata,
   clone_static_values_type<StringsTraits>(sda, cata, sdb, catb);
   clone_static_values_type<IndexesTraits>(sda, cata, sdb, catb);
   clone_static_values_type<NodeIDsTraits>(sda, cata, sdb, catb);
-  assert(get_equal_static_values_category(sda, cata, sdb, catb));
 }
 
 template <class SDA, class SDB>
@@ -151,7 +150,6 @@ void clone_loaded_values_category(SDA* sda, Category cata,
   clone_loaded_values_type<StringsTraits>(sda, cata, sdb, catb);
   clone_loaded_values_type<IndexesTraits>(sda, cata, sdb, catb);
   clone_loaded_values_type<NodeIDsTraits>(sda, cata, sdb, catb);
-  assert(get_equal_current_values_category(sda, cata, sdb, catb));
 }
 
 template <class SDA, class SDB>

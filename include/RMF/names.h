@@ -21,6 +21,9 @@ RMF_ENABLE_WARNINGS namespace RMF {
       obey the rules.*/
   RMFEXPORT std::string get_as_node_name(std::string input);
 
+  RMFEXPORT bool get_is_valid_key_name(std::string name);
+  RMFEXPORT bool get_is_valid_node_name(std::string name);
+
 } /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

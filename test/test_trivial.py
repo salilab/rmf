@@ -8,6 +8,7 @@ class GenericTest(unittest.TestCase):
     def test_aliases(self):
         """Test trivial usage"""
         for suffix in RMF.suffixes:
+            RMF.set_log_level("trace")
             path = RMF._get_temporary_file_path("trivial." + suffix)
             print path
             print "create"

@@ -143,10 +143,10 @@ void HDF5SharedData::initialize_categories() {
 }
 
 HDF5SharedData::HDF5SharedData(std::string g, bool create, bool read_only)
-    : SharedData(g), frames_hint_(0), link_category_(-1) {
+    : BackwardsIOBase(g), frames_hint_(0), link_category_(-1) {
   open_things(create, read_only);
   link_category_ = get_category("link");
-  link_key_ = get_key<NodeIDTraits>(link_category_, "linked");
+  link_key_ = get_key(link_category_, "linked", NodeIDTraits());
   if (create) {
     add_node("root", ROOT);
   } else {
@@ -186,7 +186,6 @@ NodeID HDF5SharedData::add_node(std::string name, NodeType type) {
     ret = NodeID(free_ids_.back());
     free_ids_.pop_back();
   }
-  audit_node_name(name);
   node_names_.set_value(HDF5::DataSetIndexD<1>(ret.get_index()), name);
   node_data_.set_value(HDF5::DataSetIndexD<2>(ret.get_index(), TYPE), type);
   node_data_.set_value(HDF5::DataSetIndexD<2>(ret.get_index(), CHILD),
@@ -385,7 +384,7 @@ void HDF5SharedData::reload() {
 
 void HDF5SharedData::set_loaded_frame(FrameID frame) {
   RMF_TRACE(get_logger(), "Loading frame " << frame);
-  SharedData::set_loaded_frame(frame);
+  BackwardsIOBase::set_loaded_frame(frame);
   RMF_FOREACH_TYPE(RMF_HDF5_SET_FRAME);
 }
 }  // namespace hdf5_backend

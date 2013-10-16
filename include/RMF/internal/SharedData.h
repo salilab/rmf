@@ -10,191 +10,110 @@
 #define RMF_INTERNAL_SHARED_DATA_H
 
 #include <RMF/config.h>
+#include "SharedDataUserData.h"
+#include "SharedDataPath.h"
+#include "SharedDataData.h"
+#include "SharedDataFile.h"
+#include "SharedDataCategory.h"
+#include "SharedDataKeys.h"
+#include "SharedDataHierarchy.h"
+#include "SharedDataLoadedFrame.h"
 #include "../Key.h"
 #include "../types.h"
 #include "../names.h"
 #include "../enums.h"
-#include "../constants.h"
 #include "../ID.h"
+#include "../constants.h"
 #include "../infrastructure_macros.h"
-#include <boost/unordered_map.hpp>
-#include <boost/unordered_set.hpp>
-#include <boost/cstdint.hpp>
-#include <boost/any.hpp>
-#include <algorithm>
 #include <boost/range/irange.hpp>
-
 #include <boost/shared_ptr.hpp>
 
-RMF_ENABLE_WARNINGS namespace RMF {
-  template <class P>
-  inline uintptr_t get_uint(const P * p) {
-    return reinterpret_cast<uintptr_t>(p);
-  }
-  template <class P>
-  inline uintptr_t get_uint(boost::shared_ptr<P> p) {
-    return reinterpret_cast<uintptr_t>(p.get());
-  }
-  inline uintptr_t get_uint(NodeID id) { return id.get_index(); }
+RMF_ENABLE_WARNINGS
 
-  namespace internal {
+namespace RMF {
 
-#define RMF_SHARED_TYPE(lcname, Ucname, PassValue, ReturnValue, PassValues, \
-                        ReturnValues)                                       \
-  /** Return a value or the null value.*/                                   \
-  virtual Ucname##Traits::ReturnType get_loaded_value(                      \
-      NodeID node, Key<Ucname##Traits> k) const = 0;                        \
-  /** Return a value or the null value.*/                                   \
-  virtual Ucname##Traits::ReturnType get_static_value(                      \
-      NodeID node, Key<Ucname##Traits> k) const = 0;                        \
-  virtual void set_loaded_value(NodeID node, Key<Ucname##Traits> k,         \
-                                Ucname##Traits::Type v) = 0;                \
-  virtual void set_static_value(NodeID node, Key<Ucname##Traits> k,         \
-                                Ucname##Traits::Type v) = 0;                \
-  virtual std::vector<Key<Ucname##Traits> > get_keys(Category category,     \
-                                                     Ucname##Traits) = 0;   \
-  virtual Category get_category(Key<Ucname##Traits> k) const = 0;           \
-  virtual Key<Ucname##Traits> get_key(Category category, std::string name,  \
-                                      Ucname##Traits) = 0;                  \
-  virtual std::string get_name(Key<Ucname##Traits> k) const = 0
+namespace backends {
+struct IO;
+}
 
-  /**
-     Base class for wrapping all the file handles, caches, etc. for
-     open RMF file handles, and to manage the associations between
-     external objects and nodes in the RMF hierarchy
+#define RMF_HOIST(lcname, UCName, PassValue, ReturnValue, PassValues, \
+                  ReturnValues)                                       \
+  using SharedDataData<UCName##Traits>::get_static_value;             \
+  using SharedDataData<UCName##Traits>::set_static_value;             \
+  using SharedDataData<UCName##Traits>::clear_static_values;          \
+  using SharedDataData<UCName##Traits>::get_loaded_value;             \
+  using SharedDataData<UCName##Traits>::set_loaded_value;             \
+  using SharedDataData<UCName##Traits>::clear_loaded_values;          \
+  using SharedDataKeys<UCName##Traits>::get_key;                      \
+  using SharedDataKeys<UCName##Traits>::get_name;                     \
+  using SharedDataKeys<UCName##Traits>::get_keys;                     \
+  using SharedDataKeys<UCName##Traits>::get_category;
 
-     Note this class serves as an internal interface to RMS file handling
-     with an almost one-to-one mapping between most of its functions and
-     exposed functions
-   */
-  class SharedData {
-    std::vector<boost::any> association_;
-    std::vector<uintptr_t> back_association_value_;
-    boost::unordered_map<uintptr_t, NodeID> back_association_;
-    boost::unordered_map<int, boost::any> user_data_;
-    int valid_;
-    FrameID loaded_frame_;
-    std::string path_;
+namespace internal {
 
-   protected:
-    SharedData(std::string path);
+class RMFEXPORT SharedData : public SharedDataUserData,
+                             public SharedDataPath,
+                             public SharedDataFile,
+                             public SharedDataHierarchy,
+                             public SharedDataCategory,
+                             public SharedDataLoadedFrame,
+                             public SharedDataKeys<IntTraits>,
+                             public SharedDataKeys<StringTraits>,
+                             public SharedDataKeys<FloatTraits>,
+                             public SharedDataKeys<IndexTraits>,
+                             public SharedDataKeys<NodeIDTraits>,
+                             public SharedDataKeys<IntsTraits>,
+                             public SharedDataKeys<StringsTraits>,
+                             public SharedDataKeys<FloatsTraits>,
+                             public SharedDataKeys<IndexesTraits>,
+                             public SharedDataKeys<NodeIDsTraits>,
+                             public SharedDataData<IntTraits>,
+                             public SharedDataData<StringTraits>,
+                             public SharedDataData<FloatTraits>,
+                             public SharedDataData<IndexTraits>,
+                             public SharedDataData<NodeIDTraits>,
+                             public SharedDataData<IntsTraits>,
+                             public SharedDataData<StringsTraits>,
+                             public SharedDataData<FloatsTraits>,
+                             public SharedDataData<IndexesTraits>,
+                             public SharedDataData<NodeIDsTraits> {
+  unsigned int number_of_frames_;
+  bool write_, created_;
+  boost::shared_ptr<backends::IO> io_;
 
-   public:
-    std::string get_file_path() const { return path_; }
-    FrameID get_loaded_frame() const { return loaded_frame_; }
-    virtual void set_loaded_frame(FrameID frame) {
-      loaded_frame_ = frame;
-    }
+  bool get_static_is_dirty() const;
+  void set_static_is_dirty(bool tf);
+  void clear_loaded_values();
+  void clear_static_values();
 
-    RMF_FOREACH_TYPE(RMF_SHARED_TYPE);
-    void audit_key_name(std::string name) const;
-    void audit_node_name(std::string name) const;
-    template <class T>
-    void set_user_data(int i, const T& d) {
-      user_data_[i] = boost::any(d);
-    }
-    bool get_has_user_data(int i) const {
-      return user_data_.find(i) != user_data_.end();
-    }
-    template <class T>
-    T get_user_data(int i) const {
-      RMF_USAGE_CHECK(user_data_.find(i) != user_data_.end(),
-                      "No such data found");
-      try {
-        return boost::any_cast<T>(user_data_.find(i)->second);
-      }
-      catch (boost::bad_any_cast) {
-        RMF_THROW(Message("Type mismatch when recovering user data"),
-                  UsageException);
-      }
-      RMF_NO_RETURN(T);
-    }
-    template <class T>
-    void set_association(NodeID nid, const T& d, bool overwrite) {
-      int id = nid.get_index();
-      if (association_.size() <= static_cast<unsigned int>(id)) {
-        association_.resize(id + 1, boost::any());
-        back_association_value_.resize(id + 1);
-      }
-      RMF_USAGE_CHECK(overwrite || association_[id].empty(),
-                      "Associations can only be set once");
-      if (overwrite && !association_[id].empty()) {
-        uintptr_t v = back_association_value_[id];
-        back_association_.erase(v);
-      }
-      uintptr_t v = get_uint(d);
-      back_association_value_[id] = v;
-      association_[id] = boost::any(d);
-      RMF_USAGE_CHECK(back_association_.find(v) == back_association_.end(),
-                      "Collision on association keys.");
-      back_association_[v] = nid;
-    }
-    template <class T>
-    bool get_has_associated_node(const T& v) const {
-      return back_association_.find(get_uint(v)) != back_association_.end();
-    }
-    boost::any get_association(NodeID nid) const {
-      int id = nid.get_index();
-      RMF_USAGE_CHECK(static_cast<unsigned int>(id) < association_.size(),
-                      std::string("Unassociated id ") + get_name(nid));
-      try {
-        return association_[id];
-      }
-      catch (boost::bad_any_cast) {
-        RMF_THROW(Message("Type mismatch when recovering node data"),
-                  UsageException);
-      }
-      RMF_NO_RETURN(boost::any);
-    }
-    bool get_has_association(NodeID nid) const {
-      int id = nid.get_index();
-      if (id >= static_cast<int>(association_.size())) return false;
-      return !association_[id].empty();
-    }
-    template <class T>
-    NodeID get_associated_node(const T& d) const {
-      return back_association_.find(get_uint(d))->second;
-    }
-    virtual void flush() = 0;
-    std::string get_file_name() const;
+  void save_static_frame();
+  void save_loaded_frame();
+  void load_static_frame();
+  void load_loaded_frame();
 
-    virtual unsigned int get_number_of_frames() const = 0;
-    virtual unsigned int get_number_of_nodes() const = 0;
+ public:
+  using SharedDataHierarchy::get_name;
+  using SharedDataCategory::get_name;
+  using SharedDataHierarchy::set_name;
+  using SharedDataHierarchy::set_type;
 
-    // SharedData(HDF5Group g, bool create);
-    virtual ~SharedData();
-    virtual std::string get_name(NodeID node) const = 0;
-    virtual NodeType get_type(NodeID node) const = 0;
+  RMF_FOREACH_TYPE(RMF_HOIST);
 
-    virtual NodeID add_child(NodeID node, std::string name, NodeType t) = 0;
-    virtual void add_child(NodeID node, NodeID child_node) = 0;
-    virtual NodeIDs get_children(NodeID node) const = 0;
+  SharedData(boost::shared_ptr<backends::IO> io, std::string name, bool write,
+             bool created);
+  Category get_category(std::string name);
+  void set_loaded_frame(FrameID frame);
+  FrameID add_frame(std::string name, FrameType type);
+  void flush();
+  void reload();
+  unsigned int get_number_of_frames() const { return number_of_frames_; }
+  void set_number_of_frames(unsigned int n) { number_of_frames_ = n; }
+  std::vector<char> get_buffer();
+  ~SharedData();
+};
 
-    virtual FrameID add_frame(std::string name, FrameType t) = 0;
-    virtual void add_child_frame(FrameID child_node) = 0;
-    virtual FrameIDs get_children(FrameID node) const = 0;
-
-    virtual Categories get_categories() const = 0;
-    virtual Category get_category(std::string name) = 0;
-    virtual std::string get_name(Category kc) const = 0;
-    virtual std::string get_description() const = 0;
-    virtual void set_description(std::string str) = 0;
-    virtual std::string get_producer() const = 0;
-    virtual void set_producer(std::string str) = 0;
-    virtual std::string get_loaded_frame_name() const = 0;
-    virtual FrameType get_loaded_frame_type() const = 0;
-    virtual std::string get_file_type() const = 0;
-    virtual std::vector<char> get_buffer() {
-      RMF_THROW(Message("Not support with this backend"), ::RMF::IOException);
-    }
-    virtual void reload() = 0;
-  };
-
-  }  // namespace internal
+}  // namespace internal
 } /* namespace RMF */
-
-#define RMF_BACKEND_VIRTUAL virtual
-#define RMF_BACKEND_OVERRIDE RMF_OVERRIDE
 
 RMF_DISABLE_WARNINGS
 

@@ -76,6 +76,7 @@ class Tests(unittest.TestCase):
     def test_perturbed_values(self):
         """Test null values int"""
         for suffix in RMF.suffixes:
+            RMF.set_log_level("trace")
             path = RMF._get_temporary_file_path("test_filef." + suffix)
             f = RMF.create_rmf_file(path)
             r = f.get_root_node()
@@ -106,4 +107,5 @@ class Tests(unittest.TestCase):
             f.set_current_frame(RMF.FrameID(0))
 
 if __name__ == '__main__':
+
     unittest.main()

@@ -83,6 +83,7 @@ make_all_rmf_header()
 make_all_hdf5_header()
 src = ["src",
        os.path.join("src", "internal"),
+       os.path.join("src", "backend"),
        os.path.join("src", "backend", "hdf5"),
        os.path.join("src", "backend", "avro")]
 for d in [src, ["examples"], ["bin"], ["test"], ["benchmark"]]:

@@ -13,6 +13,7 @@
 #include <RMF/internal/SharedData.h>
 #include <RMF/infrastructure_macros.h>
 #include <RMF/constants.h>
+#include <backend/BackwardsIOBase.h>
 #include <boost/unordered_map.hpp>
 #include <boost/unordered_set.hpp>
 #include "AvroSharedData.types.h"
@@ -34,7 +35,8 @@ class AvroSharedData : public Base {
                     boost::unordered_set<Key<TypeTraits> >& ret) {
     for (typename KeyIndex::const_iterator iti = index.begin();
          iti != index.end(); ++iti) {
-      ret.insert(P::template get_key<TypeTraits>(cat, iti->first));
+      ret.insert(
+          P::template get_key<TypeTraits>(cat, iti->first, TypeTraits()));
     }
   }
 
@@ -105,11 +107,13 @@ class AvroSharedData : public Base {
 
  public:
   template <class Traits>
-  std::vector<Key<Traits> > get_keys(Category cat) {
+  std::vector<Key<Traits> > get_keys(Category cat, Traits) {
     boost::unordered_set<Key<Traits> > ret;
-    const RMF_avro_backend::Data& data =
-        P::get_frame_data(cat, P::get_loaded_frame());
-    extract_keys(cat, get_key_index(data, Traits()), ret);
+    if (P::get_loaded_frame() != FrameID()) {
+      const RMF_avro_backend::Data& data =
+          P::get_frame_data(cat, P::get_loaded_frame());
+      extract_keys(cat, get_key_index(data, Traits()), ret);
+    }
     const RMF_avro_backend::Data& staticdata =
         P::get_frame_data(cat, ALL_FRAMES);
     extract_keys(cat, get_key_index(staticdata, Traits()), ret);
@@ -155,9 +159,6 @@ class AvroSharedData : public Base {
   std::string get_producer() const;
   void set_producer(std::string str);
   using Base::get_name;
-  using Base::get_type;
-  using Base::add_child;
-  using Base::get_children;
 };
 
 }  // namespace avro_backend

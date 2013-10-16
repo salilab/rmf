@@ -6,11 +6,9 @@
  *
  */
 
-#include "create.h"
 #include "HDF5SharedData.h"
-#include <boost/algorithm/string/predicate.hpp>
-#include <boost/unordered_map.hpp>
-#include <backend/ImplementSharedData.h>
+#include "../IO.h"
+#include "../BackwardsIO.h"
 #include <boost/make_shared.hpp>
 #include <RMF/log.h>
 
@@ -18,29 +16,30 @@ RMF_ENABLE_WARNINGS
 
 namespace RMF {
 namespace hdf5_backend {
+namespace {
 
-typedef backend::ImplementSharedData<HDF5SharedData> MySharedData;
-boost::shared_ptr<internal::SharedData> create_shared_data(std::string path,
-                                                           bool create,
-                                                           bool read_only) {
-  if (!boost::algorithm::ends_with(path, ".rmf")) {
-    return boost::shared_ptr<internal::SharedData>();
+typedef backends::BackwardsIO<HDF5SharedData> MIO;
+
+class HDF5Factory : public RMF::backends::IOFactory {
+  virtual std::string get_file_extension() const RMF_OVERRIDE { return ".rmf"; }
+  virtual boost::shared_ptr<RMF::backends::IO> read_file(
+      const std::string& name) const RMF_OVERRIDE {
+    return boost::make_shared<MIO>(name, false, true);
   }
-  RMF_INFO(get_logger(), "Using HDF5 hdf5_backend");
-  return boost::make_shared<MySharedData>(path, create, read_only);
-}
+  virtual boost::shared_ptr<RMF::backends::IO> write_file(
+      const std::string& name) const RMF_OVERRIDE {
+    return boost::make_shared<MIO>(name, false, false);
+  }
+  virtual boost::shared_ptr<RMF::backends::IO> create_file(
+      const std::string& name) const RMF_OVERRIDE {
+    return boost::make_shared<MIO>(name, true, false);
+  }
+  virtual ~HDF5Factory() {}
+};
 
-boost::shared_ptr<internal::SharedData> create_shared_data_buffer(
-    std::string& /*buffer*/, bool /*create*/) {
-  return boost::shared_ptr<internal::SharedData>();
-}
-
-boost::shared_ptr<internal::SharedData> create_shared_data_buffer(
-    const std::string& /*buffer*/) {
-  return boost::shared_ptr<internal::SharedData>();
-}
-
+backends::IOFactoryRegistrar<HDF5Factory> registrar;
+}  // namespace
 }  // namespace avro_backend
-} /* namespace RMF */
+}  // namespace RMF
 
 RMF_DISABLE_WARNINGS
