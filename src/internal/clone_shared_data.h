@@ -11,7 +11,9 @@
 
 #include <RMF/config.h>
 #include <RMF/log.h>
+#include <RMF/internal/shared_data_ranges.h>
 #include <boost/foreach.hpp>
+#include <boost/range/distance.hpp>
 #include <boost/unordered_set.hpp>
 
 RMF_ENABLE_WARNINGS
@@ -21,6 +23,10 @@ namespace internal {
 
 template <class SDA, class SDB>
 void clone_hierarchy(SDA* sda, SDB* sdb) {
+  RMF_INTERNAL_CHECK(boost::distance(get_nodes(sda)) >= 1,
+                     "No root node found.");
+  RMF_INTERNAL_CHECK(boost::distance(get_nodes(sdb)) >= 1,
+                     "No root node found.");
   boost::unordered_map<NodeID, NodeID> parents;
   BOOST_FOREACH(NodeID na, get_nodes(sda)) {
     NodeIDs children = sda->get_children(na);
@@ -76,7 +82,7 @@ void clone_static_data_type(SDA* sda, Category cata,
     get_key_map<Traits>(sda, cata, sdb, catb);
   if (keys.empty()) return;
   BOOST_FOREACH(NodeID n, get_nodes(sda)) {
-    RMF_INFO(get_logger(), "Cloning node " << n);
+    RMF_TRACE(get_logger(), "Cloning static node " << n);
     typedef std::pair<Key<Traits>, Key<Traits> > KP;
     BOOST_FOREACH(KP ks, keys) {
       typename Traits::ReturnType rt = sda->get_static_value(n, ks.first);
@@ -92,6 +98,10 @@ void clone_static_data_category(SDA* sda, Category cata,
                                 SDB* sdb, Category catb) {
   RMF_INTERNAL_CHECK(sda->get_number_of_nodes() == sdb->get_number_of_nodes(),
                      "Number of nodes don't match.");
+  RMF_INTERNAL_CHECK(boost::distance(get_nodes(sda)) >= 1,
+                     "No root node found.");
+  RMF_INTERNAL_CHECK(boost::distance(get_nodes(sdb)) >= 1,
+                     "No root node found.");
   clone_static_data_type<IntTraits>(sda, cata, sdb, catb);
   clone_static_data_type<FloatTraits>(sda, cata, sdb, catb);
   clone_static_data_type<StringTraits>(sda, cata, sdb, catb);
@@ -118,6 +128,7 @@ void clone_loaded_data_type(SDA* sda, Category cata,
   boost::unordered_map<Key<Traits>, Key<Traits> > keys =
     get_key_map<Traits>(sda, cata, sdb, catb);
   BOOST_FOREACH(NodeID n, get_nodes(sda)) {
+    RMF_INFO(get_logger(), "Cloning loaded node " << n);
     typedef std::pair<Key<Traits>, Key<Traits> > KP;
     BOOST_FOREACH(KP ks, keys) {
       typename Traits::ReturnType rt = sda->get_loaded_value(n, ks.first);
@@ -133,6 +144,10 @@ void clone_loaded_data_category(SDA* sda, Category cata,
                                 SDB* sdb, Category catb) {
   RMF_INTERNAL_CHECK(sda->get_number_of_nodes() == sdb->get_number_of_nodes(),
                      "Number of nodes don't match.");
+  RMF_INTERNAL_CHECK(boost::distance(get_nodes(sda)) >= 1,
+                     "No root node found.");
+  RMF_INTERNAL_CHECK(boost::distance(get_nodes(sdb)) >= 1,
+                     "No root node found.");
   clone_loaded_data_type<IntTraits>(sda, cata, sdb, catb);
   clone_loaded_data_type<FloatTraits>(sda, cata, sdb, catb);
   clone_loaded_data_type<StringTraits>(sda, cata, sdb, catb);
