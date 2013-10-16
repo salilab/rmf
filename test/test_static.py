@@ -1,6 +1,6 @@
 import RMF
 for suffix in RMF.suffixes:
-    path=RMF._get_temporary_file_path("alias."+suffix)
+    path = RMF._get_temporary_file_path("alias." + suffix)
     f = RMF.create_rmf_file(path)
     f0 = f.add_frame("frame", RMF.FRAME)
     cat = f.get_category("cat")

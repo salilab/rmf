@@ -2,7 +2,9 @@
 import unittest
 import RMF
 
+
 class GenericTest(unittest.TestCase):
+
     def test_open_2x(self):
         """Test frame comments"""
         f = RMF.create_rmf_file(RMF._get_temporary_file_path("frames.rmf"))

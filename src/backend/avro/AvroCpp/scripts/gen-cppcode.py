@@ -33,46 +33,53 @@ headers = '''
 
 done = False
 
-typeToC= { 'int' : 'int32_t', 'long' :'int64_t', 'float' : 'float', 'double' : 'double', 
-'boolean' : 'bool', 'null': 'avro::Null', 'string' : 'std::string', 'bytes' : 'std::vector<uint8_t>'} 
+typeToC = {
+    'int': 'int32_t', 'long': 'int64_t', 'float': 'float', 'double': 'double',
+    'boolean': 'bool', 'null': 'avro::Null', 'string': 'std::string', 'bytes': 'std::vector<uint8_t>'}
 
 structList = []
-structNames = {} 
+structNames = {}
 forwardDeclareList = []
 
-def addStruct(name, declaration) :
-    if not structNames.has_key(name) :
+
+def addStruct(name, declaration):
+    if not structNames.has_key(name):
         structNames[name] = True
         structList.append(declaration)
 
-def addForwardDeclare(declaration) :
+
+def addForwardDeclare(declaration):
     code = 'struct ' + declaration + ';'
     forwardDeclareList.append(code)
 
+
 def doPrimitive(type):
     return (typeToC[type], type)
+
 
 def doSymbolic(args):
     addForwardDeclare(args[1])
     return (args[1], args[1])
 
-def addLayout(name, type, var) :
+
+def addLayout(name, type, var):
     result = '        add(new $offsetType$(offset + offsetof($name$, $var$)));\n'
     result = result.replace('$name$', name)
-    if typeToC.has_key(type) : 
+    if typeToC.has_key(type):
         offsetType = 'avro::PrimitiveLayout'
-    else :
-        offsetType = type+ '_Layout'
+    else:
+        offsetType = type + '_Layout'
     result = result.replace('$offsetType$', offsetType)
     result = result.replace('$var$', var)
-    return result;
+    return result
 
-def addSimpleLayout(type) :
+
+def addSimpleLayout(type):
     result = '        add(new $offsetType$);\n'
-    if typeToC.has_key(type) : 
+    if typeToC.has_key(type):
         offsetType = 'avro::PrimitiveLayout'
-    else :
-        offsetType = type+ '_Layout'
+    else:
+        offsetType = type + '_Layout'
     return result.replace('$offsetType$', offsetType)
 
 recordfieldTemplate = '$type$ $name$\n'
@@ -105,10 +112,11 @@ $offsetlist$    }
 }; 
 '''
 
+
 def doRecord(args):
-    structDef = recordTemplate;
-    typename = args[1];
-    structDef = structDef.replace('$name$', typename);
+    structDef = recordTemplate
+    typename = args[1]
+    structDef = structDef.replace('$name$', typename)
     fields = ''
     serializefields = ''
     parsefields = ''
@@ -117,14 +125,14 @@ def doRecord(args):
     end = False
     while not end:
         line = getNextLine()
-        if line[0] == 'end': 
+        if line[0] == 'end':
             end = True
             initlist = initlist.rstrip(',\n')
         elif line[0] == 'name':
             fieldname = line[1]
             fieldline = getNextLine()
             fieldtypename, fieldtype = processType(fieldline)
-            fields += '    ' +  fieldtypename + ' ' + fieldname + ';\n'
+            fields += '    ' + fieldtypename + ' ' + fieldname + ';\n'
             serializefields += '    serialize(s, val.' + fieldname + ');\n'
             initlist += '        ' + fieldname + '(),\n'
             parsefields += '    parse(p, val.' + fieldname + ');\n'
@@ -135,7 +143,7 @@ def doRecord(args):
     structDef = structDef.replace('$parsefields$', parsefields)
     structDef = structDef.replace('$offsetlist$', offsetlist)
     addStruct(typename, structDef)
-    return (typename,typename)
+    return (typename, typename)
 
 uniontypestemplate = 'typedef $type$ Choice$N$Type'
 unionTemplate = '''struct $name$ {
@@ -222,8 +230,8 @@ switcher = '''\n          case $N$:
 def doUnion(args):
     structDef = unionTemplate
     uniontypes = ''
-    switchserialize= ''
-    switchparse= ''
+    switchserialize = ''
+    switchparse = ''
     typename = 'Union_of'
     setters = ''
     switches = ''
@@ -232,19 +240,21 @@ def doUnion(args):
     end = False
     while not end:
         line = getNextLine()
-        if line[0] == 'end': end = True
-        else :
+        if line[0] == 'end':
+            end = True
+        else:
             uniontype, name = processType(line)
             typename += '_' + name
-            uniontypes += '    ' + 'typedef ' + uniontype + ' T' + str(i) + ';\n'
+            uniontypes += '    ' + 'typedef ' + \
+                uniontype + ' T' + str(i) + ';\n'
             switch = unionser
             switch = switch.replace('$choice$', str(i))
             switch = switch.replace('$type$', uniontype)
-            switchserialize += switch 
+            switchserialize += switch
             switch = unionpar
             switch = switch.replace('$choice$', str(i))
             switch = switch.replace('$type$', uniontype)
-            switchparse += switch 
+            switchparse += switch
             setter = setfunc
             setter = setter.replace('$name$', name)
             setter = setter.replace('$type$', uniontype)
@@ -253,7 +263,7 @@ def doUnion(args):
             switch = switcher
             switches += switch.replace('$N$', str(i))
             offsetlist += addSimpleLayout(name)
-        i+= 1
+        i += 1
     structDef = structDef.replace('$name$', typename)
     structDef = structDef.replace('$typedeflist$', uniontypes)
     structDef = structDef.replace('$switchserialize$', switchserialize)
@@ -262,7 +272,7 @@ def doUnion(args):
     structDef = structDef.replace('$switch$', switches)
     structDef = structDef.replace('$offsetlist$', offsetlist)
     addStruct(typename, structDef)
-    return (typename,typename)
+    return (typename, typename)
 
 enumTemplate = '''struct $name$ {
 
@@ -297,27 +307,30 @@ class $name$_Layout : public avro::CompoundLayout {
 }; 
 '''
 
+
 def doEnum(args):
-    structDef = enumTemplate;
+    structDef = enumTemplate
     typename = args[1]
     structDef = structDef.replace('$name$', typename)
     end = False
-    symbols = '';
-    firstsymbol = '';
+    symbols = ''
+    firstsymbol = ''
     while not end:
         line = getNextLine()
-        if line[0] == 'end': end = True
+        if line[0] == 'end':
+            end = True
         elif line[0] == 'name':
-            if symbols== '' :
+            if symbols == '':
                 firstsymbol = line[1]
-            else :
+            else:
                 symbols += ', '
             symbols += line[1]
-        else: print "error"
-    structDef = structDef.replace('$enumsymbols$', symbols);
-    structDef = structDef.replace('$firstsymbol$', firstsymbol);
+        else:
+            print "error"
+    structDef = structDef.replace('$enumsymbols$', symbols)
+    structDef = structDef.replace('$firstsymbol$', firstsymbol)
     addStruct(typename, structDef)
-    return (typename,typename)
+    return (typename, typename)
 
 arrayTemplate = '''struct $name$ {
     typedef $valuetype$ ValueType;
@@ -383,6 +396,7 @@ $offsetlist$    }
 }; 
 '''
 
+
 def doArray(args):
     structDef = arrayTemplate
     line = getNextLine()
@@ -395,10 +409,11 @@ def doArray(args):
     structDef = structDef.replace('$offsetlist$', offsetlist)
 
     line = getNextLine()
-    if line[0] != 'end': print 'error'
+    if line[0] != 'end':
+        print 'error'
 
     addStruct(typename, structDef)
-    return (typename,typename)
+    return (typename, typename)
 
 mapTemplate = '''struct $name$ {
     typedef $valuetype$ ValueType;
@@ -469,11 +484,12 @@ $offsetlist$    }
 }; 
 '''
 
+
 def doMap(args):
     structDef = mapTemplate
-    line = getNextLine() # must be string
+    line = getNextLine()  # must be string
     line = getNextLine()
-    maptype, typename = processType(line);
+    maptype, typename = processType(line)
 
     offsetlist = addSimpleLayout(typename)
     typename = 'Map_of_' + typename
@@ -483,10 +499,11 @@ def doMap(args):
     structDef = structDef.replace('$offsetlist$', offsetlist)
 
     line = getNextLine()
-    if line[0] != 'end': print 'error'
+    if line[0] != 'end':
+        print 'error'
     addStruct(typename, structDef)
-    return (typename,typename)
-    
+    return (typename, typename)
+
 fixedTemplate = '''struct $name$ {
     enum {
         fixedSize = $N$
@@ -519,18 +536,20 @@ class $name$_Layout : public avro::CompoundLayout {
 }; 
 '''
 
+
 def doFixed(args):
     structDef = fixedTemplate
     typename = args[1]
     size = args[2]
 
     line = getNextLine()
-    if line[0] != 'end': print 'error'
+    if line[0] != 'end':
+        print 'error'
 
     structDef = structDef.replace('$name$', typename)
     structDef = structDef.replace('$N$', size)
     addStruct(typename, structDef)
-    return (typename,typename)
+    return (typename, typename)
 
 primitiveTemplate = '''struct $name$ {
     $type$ value;
@@ -556,51 +575,56 @@ class $name$_Layout : public avro::CompoundLayout {
 }; 
 '''
 
+
 def doPrimitiveStruct(type):
     structDef = primitiveTemplate
-    name =  type.capitalize()
-    structDef = structDef.replace('$name$', name);
-    structDef = structDef.replace('$type$', typeToC[type]);
+    name = type.capitalize()
+    structDef = structDef.replace('$name$', name)
+    structDef = structDef.replace('$type$', typeToC[type])
     addStruct(name, structDef)
 
-compoundBuilder= { 'record' : doRecord, 'union' : doUnion, 'enum' : doEnum, 
-'map' : doMap, 'array' : doArray, 'fixed' : doFixed, 'symbolic' : doSymbolic } 
+compoundBuilder = {'record': doRecord, 'union': doUnion, 'enum': doEnum,
+                   'map': doMap, 'array': doArray, 'fixed': doFixed, 'symbolic': doSymbolic}
 
-def processType(inputs) :
+
+def processType(inputs):
     type = inputs[0]
-    if typeToC.has_key(type) : 
+    if typeToC.has_key(type):
         result = doPrimitive(type)
-    else :
+    else:
         func = compoundBuilder[type]
         result = func(inputs)
     return result
 
-def generateCode() :
+
+def generateCode():
     inputs = getNextLine()
     type = inputs[0]
-    if typeToC.has_key(type) : 
+    if typeToC.has_key(type):
         doPrimitiveStruct(type)
-    else :
+    else:
         func = compoundBuilder[type]
         func(inputs)
+
 
 def getNextLine():
     try:
         line = raw_input()
     except:
-        line = '';
+        line = ''
         globals()["done"] = True
 
     if line == '':
         globals()["done"] = True
     return line.split(' ')
-    
+
+
 def writeHeader(filebase, namespace):
     headerstring = "%s_%s_hh__" % (namespace, filebase)
 
     print license
     print "#ifndef %s" % headerstring
-    print "#define %s" % headerstring 
+    print "#define %s" % headerstring
     print headers
     print "namespace %s {\n" % namespace
 
@@ -630,20 +654,22 @@ def usage():
 
 if __name__ == "__main__":
     from sys import argv
-    import getopt,sys
+    import getopt
+    import sys
 
     try:
-        opts, args = getopt.getopt(argv[1:], "hi:o:n:", ["help", "input=", "output=", "namespace="])
+        opts, args = getopt.getopt(
+            argv[1:], "hi:o:n:", ["help", "input=", "output=", "namespace="])
 
     except getopt.GetoptError, err:
-        print str(err) 
+        print str(err)
         usage()
         sys.exit(2)
 
     namespace = 'avrouser'
 
-    savein = sys.stdin              
-    saveout = sys.stdout              
+    savein = sys.stdin
+    saveout = sys.stdout
     inputFile = False
     outputFile = False
     outputFileBase = 'AvroGenerated'
@@ -655,7 +681,7 @@ if __name__ == "__main__":
                 sys.stdin = inputFile
             except:
                 print "Could not open file " + a
-                sys.exit() 
+                sys.exit()
         elif o in ("-o", "--output"):
             try:
                 outputFile = open(a, 'w')
@@ -682,4 +708,3 @@ if __name__ == "__main__":
         inputFile.close()
     if outputFile:
         outputFile.close()
-

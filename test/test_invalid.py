@@ -2,10 +2,12 @@
 import unittest
 import RMF
 
+
 class GenericTest(unittest.TestCase):
+
     def test_invalid(self):
         """Test that invalid float values work in rmft"""
-        name=RMF._get_temporary_file_path("test_data_types.rmft")
+        name = RMF._get_temporary_file_path("test_data_types.rmft")
         print "file is", name
         f = RMF.create_rmf_file(name)
         f.add_frame("root", RMF.FRAME)

@@ -1,6 +1,7 @@
-## \example bonds.py
-## Show how to extract bonds from a file.
+# \example bonds.py
+# Show how to extract bonds from a file.
 import RMF
+
 
 def print_bonds(node, bf):
     if (bf.get_is(node)):
