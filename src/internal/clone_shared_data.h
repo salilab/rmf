@@ -10,7 +10,7 @@
 #define RMF_INTERNAL_CLONE_SHARED_DATA_H
 
 #include <RMF/config.h>
-#include <RMF/internal/SharedData.h>
+#include <RMF/log.h>
 #include <boost/foreach.hpp>
 #include <boost/unordered_set.hpp>
 
@@ -18,12 +18,6 @@ RMF_ENABLE_WARNINGS
 
 namespace RMF {
 namespace internal {
-
-template <class SD>
-boost::iterator_range<boost::range_detail::integer_iterator<NodeID> > get_nodes(
-    SD* sd) {
-  return boost::irange(NodeID(0), NodeID(sd->get_number_of_nodes()));
-}
 
 template <class SDA, class SDB>
 void clone_hierarchy(SDA* sda, SDB* sdb) {
@@ -69,6 +63,8 @@ boost::unordered_map<Key<Traits>, Key<Traits> > get_key_map(
   std::vector<Key<Traits> > keysa = sda->get_keys(cata, Traits());
   BOOST_FOREACH(Key<Traits> keya, keysa) {
     ret[keya] = sdb->get_key(catb, sda->get_name(keya), Traits());
+    RMF_INFO(get_logger(), sda->get_name(keya) << " maps to "
+                                               << sdb->get_name(ret[keya]))
   }
   return ret;
 }
@@ -78,7 +74,9 @@ void clone_static_data_type(SDA* sda, Category cata,
                             SDB* sdb, Category catb) {
   boost::unordered_map<Key<Traits>, Key<Traits> > keys =
     get_key_map<Traits>(sda, cata, sdb, catb);
+  if (keys.empty()) return;
   BOOST_FOREACH(NodeID n, get_nodes(sda)) {
+    RMF_INFO(get_logger(), "Cloning node " << n);
     typedef std::pair<Key<Traits>, Key<Traits> > KP;
     BOOST_FOREACH(KP ks, keys) {
       typename Traits::ReturnType rt = sda->get_static_value(n, ks.first);

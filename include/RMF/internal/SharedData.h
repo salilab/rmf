@@ -185,15 +185,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
     virtual FrameType get_loaded_frame_type() const = 0;
     virtual std::string get_file_type() const = 0;
     virtual void reload() = 0;
-    boost::iterator_range<boost::range_detail::integer_iterator<FrameID> >
-    get_frames() const {
-      return boost::irange(FrameID(0), FrameID(get_number_of_frames()));
-    }
-
-    boost::iterator_range<boost::range_detail::integer_iterator<NodeID> >
-    get_nodes() const {
-      return boost::irange(NodeID(0), NodeID(get_number_of_nodes()));
-    }
   };
 
   /**

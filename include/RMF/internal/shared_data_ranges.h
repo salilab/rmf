@@ -1,0 +1,38 @@
+/**
+ *  \file RMF/internal/SharedData.h
+ *  \brief Handle read/write of Model data from/to files.
+ *
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *
+ */
+
+#ifndef RMF_INTERNAL_SHARED_DATA_RANGES_H
+#define RMF_INTERNAL_SHARED_DATA_RANGES_H
+
+#include <RMF/config.h>
+#include <boost/range/irange.hpp>
+#include "../ID.h"
+
+RMF_ENABLE_WARNINGS
+
+namespace RMF {
+namespace internal {
+
+template <class SD>
+boost::iterator_range<boost::range_detail::integer_iterator<NodeID> > get_nodes(
+    SD* sd) {
+  return boost::irange(NodeID(0), NodeID(sd->get_number_of_nodes()));
+}
+
+template <class SD>
+boost::iterator_range<boost::range_detail::integer_iterator<FrameID> >
+get_frames(SD* sd) {
+  return boost::irange(FrameID(0), FrameID(sd->get_number_of_frames()));
+}
+
+}  // namespace internal
+} /* namespace RMF */
+
+RMF_DISABLE_WARNINGS
+
+#endif /* RMF_INTERNAL_SHARED_DATA_RANGES_H */

@@ -11,11 +11,11 @@
 
 #include <RMF/config.h>
 #include "internal/SharedData.h"
+#include "internal/shared_data_ranges.h"
 #include "Key.h"
 #include "NodeConstHandle.h"
 #include <boost/functional/hash.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/range/irange.hpp>
 
 RMF_ENABLE_WARNINGS
 
@@ -187,12 +187,12 @@ class RMFEXPORT FileConstHandle {
 #ifndef SWIG
   boost::iterator_range<boost::range_detail::integer_iterator<FrameID> >
   get_frames() const {
-    return boost::irange(FrameID(0), FrameID(get_number_of_frames()));
+    return internal::get_frames(shared_.get());
   }
 
   boost::iterator_range<boost::range_detail::integer_iterator<NodeID> >
   get_node_ids() const {
-    return boost::irange(NodeID(0), NodeID(shared_->get_number_of_nodes()));
+    return internal::get_nodes(shared_.get());
   }
 #endif
 
