@@ -10,7 +10,7 @@
 #define RMF_INTERNAL_CLONE_SHARED_DATA_H
 
 #include <RMF/config.h>
-#include "SharedData.h"
+#include <RMF/internal/SharedData.h>
 #include <boost/foreach.hpp>
 #include <boost/unordered_set.hpp>
 
@@ -19,25 +19,33 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 namespace internal {
 
+template <class SD>
+boost::iterator_range<boost::range_detail::integer_iterator<NodeID> > get_nodes(
+    SD* sd) {
+  return boost::irange(NodeID(0), NodeID(sd->get_number_of_nodes()));
+}
+
 template <class SDA, class SDB>
-void clone_hierarchy(boost::shared_ptr<SDA> sda, boost::shared_ptr<SDB> sdb) {
+void clone_hierarchy(SDA* sda, SDB* sdb) {
   boost::unordered_map<NodeID, NodeID> parents;
-  BOOST_FOREACH(NodeID na, sda->get_nodes()) {
+  BOOST_FOREACH(NodeID na, get_nodes(sda)) {
     NodeIDs children = sda->get_children(na);
     BOOST_FOREACH(NodeID c, children) {
-      if (parents.find(c) == parents.end()) {
+      if (parents.find(c) == parents.end() &&
+          c.get_index() >= sdb->get_number_of_nodes()) {
         parents[c] = na;
       }
     }
   }
-  BOOST_FOREACH(NodeID na, sda->get_nodes()) {
+  if (parents.empty()) return;
+  BOOST_FOREACH(NodeID na, get_nodes(sda)) {
     if (parents.find(na) != parents.end()) {
       NodeID nid = sdb->add_child(parents.find(na)->second, sda->get_name(na),
                                   sda->get_type(na));
       RMF_INTERNAL_CHECK(nid == na, "Don't match");
     }
   }
-  BOOST_FOREACH(NodeID na, sda->get_nodes()) {
+  BOOST_FOREACH(NodeID na, get_nodes(sda)) {
     NodeIDs children = sda->get_children(na);
     BOOST_FOREACH(NodeID c, children) {
       if (parents.find(c) != parents.end() && parents.find(c)->second != na) {
@@ -48,14 +56,14 @@ void clone_hierarchy(boost::shared_ptr<SDA> sda, boost::shared_ptr<SDB> sdb) {
 }
 
 template <class SDA, class SDB>
-void clone_file(boost::shared_ptr<SDA> sda, boost::shared_ptr<SDB> sdb) {
+void clone_file(SDA* sda, SDB* sdb) {
   sdb->set_description(sda->get_description());
   sdb->set_producer(sda->get_producer());
 }
 
 template <class Traits, class SDA, class SDB>
 boost::unordered_map<Key<Traits>, Key<Traits> > get_key_map(
-    boost::shared_ptr<SDA> sda, Category cata, boost::shared_ptr<SDB> sdb,
+    SDA* sda, Category cata, SDB* sdb,
     Category catb) {
   boost::unordered_map<Key<Traits>, Key<Traits> > ret;
   std::vector<Key<Traits> > keysa = sda->get_keys(cata, Traits());
@@ -66,11 +74,11 @@ boost::unordered_map<Key<Traits>, Key<Traits> > get_key_map(
 }
 
 template <class Traits, class SDA, class SDB>
-void clone_static_data_type(boost::shared_ptr<SDA> sda, Category cata,
-                            boost::shared_ptr<SDB> sdb, Category catb) {
+void clone_static_data_type(SDA* sda, Category cata,
+                            SDB* sdb, Category catb) {
   boost::unordered_map<Key<Traits>, Key<Traits> > keys =
     get_key_map<Traits>(sda, cata, sdb, catb);
-  BOOST_FOREACH(NodeID n, sda->get_nodes()) {
+  BOOST_FOREACH(NodeID n, get_nodes(sda)) {
     typedef std::pair<Key<Traits>, Key<Traits> > KP;
     BOOST_FOREACH(KP ks, keys) {
       typename Traits::ReturnType rt = sda->get_static_value(n, ks.first);
@@ -82,8 +90,10 @@ void clone_static_data_type(boost::shared_ptr<SDA> sda, Category cata,
 }
 
 template <class SDA, class SDB>
-void clone_static_data_category(boost::shared_ptr<SDA> sda, Category cata,
-                                boost::shared_ptr<SDB> sdb, Category catb) {
+void clone_static_data_category(SDA* sda, Category cata,
+                                SDB* sdb, Category catb) {
+  RMF_INTERNAL_CHECK(sda->get_number_of_nodes() == sdb->get_number_of_nodes(),
+                     "Number of nodes don't match.");
   clone_static_data_type<IntTraits>(sda, cata, sdb, catb);
   clone_static_data_type<FloatTraits>(sda, cata, sdb, catb);
   clone_static_data_type<StringTraits>(sda, cata, sdb, catb);
@@ -97,7 +107,7 @@ void clone_static_data_category(boost::shared_ptr<SDA> sda, Category cata,
 }
 
 template <class SDA, class SDB>
-void clone_static_data(boost::shared_ptr<SDA> sda, boost::shared_ptr<SDB> sdb) {
+void clone_static_data(SDA* sda, SDB* sdb) {
   BOOST_FOREACH(Category cata, sda->get_categories()) {
     Category catb = sdb->get_category(sda->get_name(cata));
     clone_static_data_category(sda, cata, sdb, catb);
@@ -105,11 +115,11 @@ void clone_static_data(boost::shared_ptr<SDA> sda, boost::shared_ptr<SDB> sdb) {
 }
 
 template <class Traits, class SDA, class SDB>
-void clone_loaded_data_type(boost::shared_ptr<SDA> sda, Category cata,
-                            boost::shared_ptr<SDB> sdb, Category catb) {
+void clone_loaded_data_type(SDA* sda, Category cata,
+                            SDB* sdb, Category catb) {
   boost::unordered_map<Key<Traits>, Key<Traits> > keys =
     get_key_map<Traits>(sda, cata, sdb, catb);
-  BOOST_FOREACH(NodeID n, sda->get_nodes()) {
+  BOOST_FOREACH(NodeID n, get_nodes(sda)) {
     typedef std::pair<Key<Traits>, Key<Traits> > KP;
     BOOST_FOREACH(KP ks, keys) {
       typename Traits::ReturnType rt = sda->get_loaded_value(n, ks.first);
@@ -117,11 +127,14 @@ void clone_loaded_data_type(boost::shared_ptr<SDA> sda, Category cata,
         sdb->set_loaded_value(n, ks.second, rt);
       }
     }
-  }}
+  }
+}
 
 template <class SDA, class SDB>
-void clone_loaded_data_category(boost::shared_ptr<SDA> sda, Category cata,
-                                boost::shared_ptr<SDB> sdb, Category catb) {
+void clone_loaded_data_category(SDA* sda, Category cata,
+                                SDB* sdb, Category catb) {
+  RMF_INTERNAL_CHECK(sda->get_number_of_nodes() == sdb->get_number_of_nodes(),
+                     "Number of nodes don't match.");
   clone_loaded_data_type<IntTraits>(sda, cata, sdb, catb);
   clone_loaded_data_type<FloatTraits>(sda, cata, sdb, catb);
   clone_loaded_data_type<StringTraits>(sda, cata, sdb, catb);
@@ -135,7 +148,7 @@ void clone_loaded_data_category(boost::shared_ptr<SDA> sda, Category cata,
 }
 
 template <class SDA, class SDB>
-void clone_loaded_data(boost::shared_ptr<SDA> sda, boost::shared_ptr<SDB> sdb) {
+void clone_loaded_data(SDA* sda, SDB* sdb) {
   BOOST_FOREACH(Category cata, sda->get_categories()) {
     Category catb = sdb->get_category(sda->get_name(cata));
     clone_loaded_data_category(sda, cata, sdb, catb);
@@ -143,12 +156,12 @@ void clone_loaded_data(boost::shared_ptr<SDA> sda, boost::shared_ptr<SDB> sdb) {
 }
 
 template <class Traits, class SDA, class SDB>
-bool get_equal_current_values_type(boost::shared_ptr<SDA> sda, Category cata,
-                                   boost::shared_ptr<SDB> sdb, Category catb) {
+bool get_equal_current_values_type(SDA* sda, Category cata,
+                                   SDB* sdb, Category catb) {
   boost::unordered_map<Key<Traits>, Key<Traits> > keys =
       get_key_map<Traits>(sda, cata, sdb, catb);
   bool ret = true;
-  BOOST_FOREACH(NodeID n, sda->get_nodes()) {
+  BOOST_FOREACH(NodeID n, get_nodes(sda)) {
     typedef std::pair<Key<Traits>, Key<Traits> > KP;
     BOOST_FOREACH(KP ks, keys) {
       typename Traits::ReturnType rta = sda->get_loaded_value(n, ks.first);
@@ -173,8 +186,8 @@ bool get_equal_current_values_type(boost::shared_ptr<SDA> sda, Category cata,
 }
 
 template <class SDA, class SDB>
-bool get_equal_current_values_category(boost::shared_ptr<SDA> sda, Category cata,
-                                boost::shared_ptr<SDB> sdb, Category catb) {
+bool get_equal_current_values_category(SDA* sda, Category cata,
+                                SDB* sdb, Category catb) {
   bool ret = true;
   ret &= get_equal_current_values_type<IntTraits>(sda, cata, sdb, catb);
   ret &= get_equal_current_values_type<FloatTraits>(sda, cata, sdb, catb);
@@ -190,8 +203,8 @@ bool get_equal_current_values_category(boost::shared_ptr<SDA> sda, Category cata
 }
 
 template <class SDA, class SDB>
-bool get_equal_current_values(boost::shared_ptr<SDA> sda,
-                              boost::shared_ptr<SDB> sdb) {
+bool get_equal_current_values(SDA* sda,
+                              SDB* sdb) {
   BOOST_FOREACH(Category cata, sda->get_categories()) {
     Category catb = sdb->get_category(sda->get_name(cata));
     if (!get_equal_current_values_category(sda, cata, sdb, catb)) return false;
@@ -200,12 +213,12 @@ bool get_equal_current_values(boost::shared_ptr<SDA> sda,
 }
 
 template <class Traits, class SDA, class SDB>
-bool get_equal_static_values_type(boost::shared_ptr<SDA> sda, Category cata,
-                                  boost::shared_ptr<SDB> sdb, Category catb) {
+bool get_equal_static_values_type(SDA* sda, Category cata,
+                                  SDB* sdb, Category catb) {
   boost::unordered_map<Key<Traits>, Key<Traits> > keys =
       get_key_map<Traits>(sda, cata, sdb, catb);
   bool ret = true;
-  BOOST_FOREACH(NodeID n, sda->get_nodes()) {
+  BOOST_FOREACH(NodeID n, get_nodes(sda)) {
     typedef std::pair<Key<Traits>, Key<Traits> > KP;
     BOOST_FOREACH(KP ks, keys) {
       typename Traits::ReturnType rta = sda->get_static_value(n, ks.first);
@@ -230,8 +243,8 @@ bool get_equal_static_values_type(boost::shared_ptr<SDA> sda, Category cata,
 }
 
 template <class SDA, class SDB>
-bool get_equal_static_values_category(boost::shared_ptr<SDA> sda, Category cata,
-                                      boost::shared_ptr<SDB> sdb,
+bool get_equal_static_values_category(SDA* sda, Category cata,
+                                      SDB* sdb,
                                       Category catb) {
   bool ret = true;
   ret &= get_equal_static_values_type<IntTraits>(sda, cata, sdb, catb);
@@ -248,8 +261,8 @@ bool get_equal_static_values_category(boost::shared_ptr<SDA> sda, Category cata,
 }
 
 template <class SDA, class SDB>
-bool get_equal_static_values(boost::shared_ptr<SDA> sda,
-                             boost::shared_ptr<SDB> sdb) {
+bool get_equal_static_values(SDA* sda,
+                             SDB* sdb) {
   BOOST_FOREACH(Category cata, sda->get_categories()) {
     Category catb = sdb->get_category(sda->get_name(cata));
     if (!get_equal_static_values_category(sda, cata, sdb, catb)) return false;

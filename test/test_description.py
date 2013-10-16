@@ -12,6 +12,7 @@ class GenericTest(unittest.TestCase):
         """Test the description of an rmf file"""
         for suffix in RMF.suffixes:
             fn=RMF._get_temporary_file_path("test_file_perturbed."+suffix)
+            print fn
             f= RMF.create_rmf_file(fn)
             descr= "hi there\n"
             self.assertEqual(f.get_description(), "")

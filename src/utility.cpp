@@ -7,7 +7,7 @@
  */
 
 #include <RMF/utility.h>
-#include <RMF/internal/clone_shared_data.h>
+#include "internal/clone_shared_data.h"
 #include <RMF/NodeConstHandle.h>
 #include <RMF/NodeHandle.h>
 #include <RMF/FileConstHandle.h>
@@ -21,19 +21,19 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 
 void clone_file_info(FileConstHandle input, FileHandle output) {
-  internal::clone_file(input.shared_, output.shared_);
+  internal::clone_file(input.shared_.get(), output.shared_.get());
 }
 
 void clone_hierarchy(FileConstHandle input, FileHandle output) {
-  internal::clone_hierarchy(input.shared_, output.shared_);
+  internal::clone_hierarchy(input.shared_.get(), output.shared_.get());
 }
 
 void clone_loaded_frame(FileConstHandle input, FileHandle output) {
-  internal::clone_loaded_data(input.shared_, output.shared_);
+  internal::clone_loaded_data(input.shared_.get(), output.shared_.get());
 }
 
 void clone_static_frame(FileConstHandle input, FileHandle output) {
-  internal::clone_static_data(input.shared_, output.shared_);
+  internal::clone_static_data(input.shared_.get(), output.shared_.get());
 }
 
 namespace {
@@ -79,11 +79,11 @@ bool get_equal_structure(FileConstHandle in, FileConstHandle out,
 
 
 bool get_equal_current_values(FileConstHandle in, FileConstHandle out) {
-  return internal::get_equal_current_values(in.shared_, out.shared_);
+  return internal::get_equal_current_values(in.shared_.get(), out.shared_.get());
 }
 
 bool get_equal_static_values(FileConstHandle in, FileConstHandle out) {
-  return internal::get_equal_static_values(in.shared_, out.shared_);
+  return internal::get_equal_static_values(in.shared_.get(), out.shared_.get());
 }
 
 void add_child_alias(AliasFactory af, NodeHandle parent,
