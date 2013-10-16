@@ -3,11 +3,31 @@ include_directories("${PROJECT_BINARY_DIR}/src"
 
 include("Files.cmake")
 
-include(backend/CMakeLists.txt)
+file(GLOB_RECURSE avrocpp_sources "${PROJECT_SOURCE_DIR}/src/backend/AvroCpp/impl/*.cc")
 
-add_library(RMF-lib SHARED ${cppfiles})
+list(REMOVE_ITEM avrocpp_sources "${PROJECT_SOURCE_DIR}/src/backend/AvroCpp/impl/avrogencpp.cc")
+
+add_definitions("-DAVRO_DYN_LINK" "-DAVRO_SOURCE")
+include_directories("${PROJECT_SOURCE_DIR}/src/backend/AvroCpp/api")
+
+
+
+foreach (jf ${jsonfiles})
+set(jsonfiles_expanded ${jsonfiles_expanded} ${CMAKE_SOURCE_DIR}/src/${jf})
+endforeach()
+
+add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/generated/embed_json.h" "${PROJECT_BINARY_DIR}/src/generated/embed_json.cpp"
+   COMMAND python "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+              "${PROJECT_BINARY_DIR}/src/generated/" ${jsonfiles_expanded}
+   DEPENDS ${jsonfiles} "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+   COMMENT "Embedding json files" VERBATIM  )
+
+add_custom_target(RMF-embed DEPENDS "${PROJECT_BINARY_DIR}/src/generated/embed_json.cpp")
+
+
+add_library(RMF-lib SHARED ${cppfiles} ${avrocpp_sources} "${PROJECT_BINARY_DIR}/src/generated/embed_jsons.cpp")
 add_definitions(-DRMF_EXPORTS)
-add_dependencies(RMF-lib RMF-decorators)
+add_dependencies(RMF-lib RMF-decorators RMF-embed)
 set_target_properties("RMF-lib" PROPERTIES
                       RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
                       OUTPUT_NAME "RMF")

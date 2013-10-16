@@ -7,7 +7,7 @@
 #include "common.h"
 #include <backend/AvroCpp/api/Compiler.hh>
 #include <backend/AvroCpp/api/DataFile.hh>
-#include <backend/avro/avro_schemas.h>
+#include <generated/embed_jsons.h>
 #include <backend/avro/AllJSON.h>
 #include <backend/avro/FrameJSON.h>
 
@@ -39,8 +39,8 @@ template <class Type>
 bool try_read(std::string type, std::string input, rmf_avro::ValidSchema schema,
               bool count) {
   std::cout << "Trying " << type << std::endl;
-  boost::shared_ptr<rmf_avro::Encoder> encoder =
-      rmf_avro::jsonEncoder(RMF::avro_backend::get_Data_schema());
+  boost::shared_ptr<rmf_avro::Encoder> encoder = rmf_avro::jsonEncoder(
+      rmf_avro::compileJsonSchemaFromString(RMF::data_avro::data_json));
   std::auto_ptr<rmf_avro::OutputStream> stream =
       rmf_avro::ostreamOutputStream(std::cout);
   encoder->init(*stream);
@@ -87,19 +87,28 @@ int main(int argc, char** argv) {
   process_options(argc, argv);
   bool count = variables_map.count("count");
   if (try_read<RMF_avro_backend::Data>(
-          "data", input, RMF::avro_backend::get_Data_schema(), count)) {
+          "data", input,
+          rmf_avro::compileJsonSchemaFromString(RMF::data_avro::data_json),
+          count)) {
     return 0;
   } else if (try_read<RMF_avro_backend::File>(
-                 "file", input, RMF::avro_backend::get_File_schema(), count)) {
+                 "file", input, rmf_avro::compileJsonSchemaFromString(
+                                    RMF::data_avro::file_json),
+                 count)) {
     return 0;
   } else if (try_read<RMF_avro_backend::Node>(
-                 "node", input, RMF::avro_backend::get_Nodes_schema(), count)) {
+                 "node", input, rmf_avro::compileJsonSchemaFromString(
+                                    RMF::data_avro::nodes_json),
+                 count)) {
     return 0;
   } else if (try_read<RMF_avro_backend::All>(
-                 "all", input, RMF::avro_backend::get_All_schema(), count)) {
+                 "all", input, rmf_avro::compileJsonSchemaFromString(
+                                   RMF::data_avro::all_json),
+                 count)) {
     return 0;
   } else if (try_read<RMF_avro_backend::Frame>(
-                 "frame", input, RMF::avro_backend::get_Frame_schema(),
+                 "frame", input, rmf_avro::compileJsonSchemaFromString(
+                                     RMF::data_avro::frame_json),
                  count)) {
     return 0;
   }

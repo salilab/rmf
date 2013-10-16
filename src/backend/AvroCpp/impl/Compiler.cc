@@ -305,6 +305,12 @@ static ValidSchema compile(std::istream& is)
     return compileJsonSchemaFromStream(*in);
 }
 
+ValidSchema compileJsonSchemaFromString(const std::string& is)
+{
+  std::istringstream iss(is);
+  return  compile(iss);
+}
+
 void compileJsonSchema(std::istream &is, ValidSchema &schema)
 {
     if (!is.good()) {

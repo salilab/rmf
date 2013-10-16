@@ -3,43 +3,89 @@ import sys
 import os.path
 import os
 # first is directory, second data, third subnamespace
+print sys.argv
 output_directory = sys.argv[1]
-data_path = sys.argv[2]
-namespace = sys.argv[3]
+inputs = sys.argv[2:]
 
-data = open(data_path, "r").read()
-quoted_data = data.replace("\"", "\\\"").replace("\n", " ")
 
-file_name = os.path.split(data_path)[1]
-name = file_name.replace(".", "_")
+def rewrite(filename, contents):
+    try:
+        old = open(filename, "r").read()
+        if old == contents:
+            return
+    except:
+        pass
+        # print "Missing", filename
+    dirpath = os.path.split(filename)[0]
+    if dirpath != "":
+        mkdir(dirpath, False)
+    open(filename, "w").write(contents)
+
+
+def get_string_contents(path):
+    data = open(path, "r").read()
+    quoted_data = data.replace("\"", "\\\"").replace("\n", " ")
+    return quoted_data
+
+
+def get_function_name(path):
+    file_name = os.path.split(path)[1]
+    name = file_name.replace(".", "_").lower()
+    return name
+
+
+def get_namespace(path):
+    prefix = os.path.split(path)[0]
+    dirname = os.path.split(prefix)[1]
+    return "data_" + dirname
+
+
+def write_header(paths):
+    names = []
+    for p in paths:
+        names.append((get_namespace(p), get_function_name(p)))
+    decls = []
+    for n in names:
+        decls.extend(["namespace %s {" % n[0],
+                      "extern RMFEXPORT std::string %s;" % n[1],
+                      "}"])
+
+    header = """#ifndef RMF_EMBED_JSON_H
+#define RMF_EMBED_JSON_H
+#include <RMF/config.h>
+#include <string>
+namespace RMF {
+%s
+}
+#endif
+""" % "\n".join(decls)
+    outpath = os.path.join(output_directory, "embed_jsons.h")
+    rewrite(outpath, header)
+
+
+def write_cpp(paths):
+    names = []
+    for p in paths:
+        names.append((
+            get_namespace(p), get_function_name(p), get_string_contents(p)))
+    defs = []
+    for n in names:
+        defs.extend(["namespace %s {" % n[0],
+                     "std::string %s = \"%s\";" % (n[1], n[2]),
+                     "}"])
+    cpp = """#include "embed_jsons.h"
+namespace RMF {
+%s
+}
+""" % "\n".join(defs)
+    outpath = os.path.join(output_directory, "embed_jsons.cpp")
+    rewrite(outpath, cpp)
 
 try:
     os.makedirs(output_directory)
 except:
     pass
 
-header = """#ifndef RMF_%(NAME)s_H
-#define RMF_%(NAME)s_H
-#include <RMF/config.h>
-#include <string>
-namespace RMF {
-namespace %(namespace)s {
-extern RMFEXPORT std::string %(name)s;
-}
-}
-#endif
-""" % {"name": name, "NAME": name.upper(), "namespace": namespace}
-open(os.path.join(output_directory, file_name + ".h"), "w").write(header)
 
-header_path = output_directory[
-    output_directory.rfind("src") + 4:] + "/" + file_name + ".h"
-
-cpp = """#include <%(header_path)s>
-namespace RMF {
-namespace %(namespace)s {
-std::string %(name)s="%(data)s";
-}
-}
-""" % {"name": name, "NAME": name.upper(), "namespace": namespace,
-       "header_path": header_path, "data": quoted_data}
-open(os.path.join(output_directory, file_name + ".cpp"), "w").write(cpp)
+write_header(inputs)
+write_cpp(inputs)

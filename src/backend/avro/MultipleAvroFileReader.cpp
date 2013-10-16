@@ -6,9 +6,10 @@
  *
  */
 
-#include "avro_schemas.h"
-#include <RMF/log.h>
 #include "MultipleAvroFileReader.h"
+#include "generated/embed_jsons.h"
+#include "Compiler.hh"
+#include <RMF/log.h>
 #include <boost/version.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -44,7 +45,8 @@ void MultipleAvroFileReader::set_loaded_frame(FrameID frame) {
         categories_[i].reader.reset();
         categories_[i]
             .reader.reset(new rmf_avro::DataFileReader<RMF_avro_backend::Data>(
-                 name.c_str(), get_Data_schema()));
+                 name.c_str(), ::rmf_avro::compileJsonSchemaFromString(
+                                   data_avro::data_json)));
       }
       catch (const std::exception& e) {
         RMF_THROW(Message(e.what()) << Component(name), IOException);
@@ -118,24 +120,25 @@ void MultipleAvroFileReader::initialize_categories() {
   }
 }
 
-#define RMF_RELOAD(UCName, lcname)                                            \
-  {                                                                           \
-    bool success;                                                             \
-    try {                                                                     \
-      RMF_TRACE(get_avro_logger(), "Opening " #lcname " data");               \
-      rmf_avro::DataFileReader<UCName> re(get_##lcname##_file_path().c_str(), \
-                                          get_##UCName##_schema());           \
-      success = re.read(lcname##_);                                           \
-    }                                                                         \
-    catch (const std::exception& e) {                                         \
-      RMF_THROW(Message(e.what()) << Component(get_##lcname##_file_path()),   \
-                IOException);                                                 \
-    }                                                                         \
-    if (!success) {                                                           \
-      RMF_THROW(Message("Error parsing data")                                 \
-                    << Component(get_##lcname##_file_path()),                 \
-                IOException);                                                 \
-    }                                                                         \
+#define RMF_RELOAD(UCName, lcname)                                             \
+  {                                                                            \
+    bool success;                                                              \
+    try {                                                                      \
+      RMF_TRACE(get_avro_logger(), "Opening " #lcname " data");                \
+      rmf_avro::DataFileReader<UCName> re(                                     \
+          get_##lcname##_file_path().c_str(),                                  \
+          rmf_avro::compileJsonSchemaFromString(data_avro::lcname##_json)); \
+      success = re.read(lcname##_);                                            \
+    }                                                                          \
+    catch (const std::exception& e) {                                          \
+      RMF_THROW(Message(e.what()) << Component(get_##lcname##_file_path()),    \
+                IOException);                                                  \
+    }                                                                          \
+    if (!success) {                                                            \
+      RMF_THROW(Message("Error parsing data")                                  \
+                    << Component(get_##lcname##_file_path()),                  \
+                IOException);                                                  \
+    }                                                                          \
   }
 
 void MultipleAvroFileReader::reload() {
@@ -145,7 +148,8 @@ void MultipleAvroFileReader::reload() {
     // In old RMF we used a monolithic frame file that we won't bother parsing
     try {
       rmf_avro::DataFileReader<RMF_avro_backend::Frame> re(
-          get_frames_file_path().c_str(), get_Frame_schema());
+          get_frames_file_path().c_str(),
+          rmf_avro::compileJsonSchemaFromString(data_avro::frame_json));
       do {
         RMF_avro_backend::Frame frame;
         if (!re.read(frame)) break;
@@ -188,7 +192,8 @@ void MultipleAvroFileReader::add_category_data(Category cat) {
       categories_[cat.get_id()].reader.reset();
       categories_[cat.get_id()]
           .reader.reset(new rmf_avro::DataFileReader<RMF_avro_backend::Data>(
-               dynamic_path.c_str(), get_Data_schema()));
+               dynamic_path.c_str(),
+               rmf_avro::compileJsonSchemaFromString(data_avro::data_json)));
     }
     catch (const std::exception& e) {
       RMF_THROW(Message(e.what()) << Component(dynamic_path), IOException);
@@ -211,7 +216,8 @@ void MultipleAvroFileReader::add_category_data(Category cat) {
     bool success;
     try {
       rmf_avro::DataFileReader<RMF_avro_backend::Data> reader(
-          static_path.c_str(), get_Data_schema());
+          static_path.c_str(),
+          rmf_avro::compileJsonSchemaFromString(data_avro::data_json));
       success = reader.read(static_categories_[cat.get_id()]);
     }
     catch (const std::exception& e) {

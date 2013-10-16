@@ -72,8 +72,12 @@ def make_files(d):
     output = os.path.join(d[0], "Files.cmake")
     cppfiles = _get_files(d, ".cpp")
     pyfiles = _get_files(d, ".py")
-    _rewrite(output, ["set(pyfiles \"%s\")" % ";".join(pyfiles),
-                      "set(cppfiles \"%s\")" % ";".join(cppfiles)])
+    jsonfiles = _get_files(d, ".json")
+    out = ["set(pyfiles \"%s\")" % ";".join(pyfiles),
+           "set(cppfiles \"%s\")" % ";".join(cppfiles)]
+    if len(jsonfiles) > 0:
+        out.append("set(jsonfiles \"%s\")" % ";".join(jsonfiles))
+    _rewrite(output, out)
 
 make_all_rmf_header()
 make_all_hdf5_header()
