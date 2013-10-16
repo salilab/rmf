@@ -19,108 +19,111 @@
 #include <backend/avro/FrameJSON.h>
 #include <boost/shared_ptr.hpp>
 
-RMF_ENABLE_WARNINGS namespace RMF {
-  namespace avro_backend {
+RMF_ENABLE_WARNINGS
 
-  class MultipleAvroFileWriter : public MultipleAvroFileBase {
-    bool file_dirty_;
-    bool nodes_dirty_;
-    bool frames_dirty_;
-    std::vector<bool> static_categories_dirty_;
+namespace RMF {
+namespace avro_backend {
 
-    struct CategoryData {
-      boost::shared_ptr<rmf_avro::DataFileWriter<RMF_avro_backend::Data> >
-          writer;
-      RMF_avro_backend::Data data;
-      bool dirty;
-    };
+class MultipleAvroFileWriter : public MultipleAvroFileBase {
+  bool file_dirty_;
+  bool nodes_dirty_;
+  bool frames_dirty_;
+  std::vector<bool> static_categories_dirty_;
 
-    std::vector<CategoryData> categories_;
-
-    RMF_avro_backend::Data null_frame_data_;
-    RMF_avro_backend::Data null_static_frame_data_;
-    boost::shared_ptr<rmf_avro::DataFileWriter<RMF_avro_backend::Frame> >
-        frame_writer_;
-    RMF_avro_backend::Frame frame_;
-
-   protected:
-    const RMF_avro_backend::Data& get_frame_data(Category cat,
-                                                 FrameID frame) const {
-      if (frame == ALL_FRAMES) {
-        if (static_categories_.size() > cat.get_id()) {
-          return static_categories_[cat.get_id()];
-        } else {
-          return null_static_data_;
-        }
-      } else {
-        if (categories_.size() > cat.get_id()) {
-          return categories_[cat.get_id()].data;
-        } else {
-          return null_data_;
-        }
-      }
-    }
-
-    RMF_avro_backend::Data& access_frame_data(Category cat, FrameID frame) {
-      if (frame == ALL_FRAMES) {
-        if (static_categories_.size() <= cat.get_id()) {
-          RMF_avro_backend::Data data;
-          data.frame = -1;
-          static_categories_.resize(cat.get_id() + 1, data);
-          static_categories_dirty_.resize(cat.get_id() + 1, false);
-        }
-        static_categories_dirty_[cat.get_id()] = true;
-        return static_categories_[cat.get_id()];
-      } else {
-        while (categories_.size() <= cat.get_id()) {
-          categories_.push_back(CategoryData());
-          categories_.back().dirty = false;
-          categories_.back().data.frame = frame.get_index();
-        }
-        categories_[cat.get_id()].dirty = true;
-        return categories_[cat.get_id()].data;
-      }
-    }
-
-    RMF_avro_backend::Node& access_node(NodeID node) {
-      nodes_dirty_ = true;
-      if (nodes_.size() <= static_cast<unsigned int>(node.get_index())) {
-        nodes_.resize(node.get_index() + 1);
-      }
-      return nodes_[node.get_index()];
-    }
-
-    RMF_avro_backend::File& access_file() {
-      file_dirty_ = true;
-      return file_;
-    }
-    void commit();
-
-   public:
-    void flush() {}
-    void reload() {
-      RMF_THROW(Message("Can't reload writable file"), UsageException);
-    }
-
-    MultipleAvroFileWriter(std::string path, bool create, bool read_only);
-    RMF_BACKEND_VIRTUAL ~MultipleAvroFileWriter();
-
-    RMF_BACKEND_VIRTUAL void set_loaded_frame(
-        FrameID frame) RMF_BACKEND_OVERRIDE;
-
-    RMF_BACKEND_VIRTUAL FrameID
-        add_frame(std::string name, FrameType t) RMF_BACKEND_OVERRIDE;
-    RMF_BACKEND_VIRTUAL void add_child_frame(
-        FrameID child_node) RMF_BACKEND_OVERRIDE;
-    RMF_BACKEND_VIRTUAL FrameIDs get_children(FrameID node) const
-        RMF_BACKEND_OVERRIDE;
-    using AvroKeysAndCategories::get_name;
-    RMF_BACKEND_VIRTUAL std::string get_loaded_frame_name() const RMF_BACKEND_OVERRIDE;
-    RMF_BACKEND_VIRTUAL FrameType get_loaded_frame_type() const RMF_BACKEND_OVERRIDE;
-    RMF_BACKEND_VIRTUAL unsigned int get_number_of_frames() const RMF_BACKEND_OVERRIDE;
+  struct CategoryData {
+    boost::shared_ptr<rmf_avro::DataFileWriter<RMF_avro_backend::Data> > writer;
+    RMF_avro_backend::Data data;
+    bool dirty;
   };
 
-  }  // namespace avro_backend
+  std::vector<CategoryData> categories_;
+
+  RMF_avro_backend::Data null_frame_data_;
+  RMF_avro_backend::Data null_static_frame_data_;
+  boost::shared_ptr<rmf_avro::DataFileWriter<RMF_avro_backend::Frame> >
+      frame_writer_;
+  RMF_avro_backend::Frame frame_;
+
+ protected:
+  const RMF_avro_backend::Data& get_frame_data(Category cat,
+                                               FrameID frame) const {
+    if (frame == ALL_FRAMES) {
+      if (static_categories_.size() > cat.get_id()) {
+        return static_categories_[cat.get_id()];
+      } else {
+        return null_static_data_;
+      }
+    } else {
+      if (categories_.size() > cat.get_id()) {
+        return categories_[cat.get_id()].data;
+      } else {
+        return null_data_;
+      }
+    }
+  }
+
+  RMF_avro_backend::Data& access_frame_data(Category cat, FrameID frame) {
+    if (frame == ALL_FRAMES) {
+      if (static_categories_.size() <= cat.get_id()) {
+        RMF_avro_backend::Data data;
+        data.frame = -1;
+        static_categories_.resize(cat.get_id() + 1, data);
+        static_categories_dirty_.resize(cat.get_id() + 1, false);
+      }
+      static_categories_dirty_[cat.get_id()] = true;
+      return static_categories_[cat.get_id()];
+    } else {
+      while (categories_.size() <= cat.get_id()) {
+        categories_.push_back(CategoryData());
+        categories_.back().dirty = false;
+        categories_.back().data.frame = frame.get_index();
+      }
+      categories_[cat.get_id()].dirty = true;
+      return categories_[cat.get_id()].data;
+    }
+  }
+
+  RMF_avro_backend::Node& access_node(NodeID node) {
+    nodes_dirty_ = true;
+    if (nodes_.size() <= static_cast<unsigned int>(node.get_index())) {
+      nodes_.resize(node.get_index() + 1);
+    }
+    return nodes_[node.get_index()];
+  }
+
+  RMF_avro_backend::File& access_file() {
+    file_dirty_ = true;
+    return file_;
+  }
+  void commit();
+
+ public:
+  void flush() {}
+  void reload() {
+    RMF_THROW(Message("Can't reload writable file"), UsageException);
+  }
+
+  MultipleAvroFileWriter(std::string path, bool create, bool read_only);
+  RMF_BACKEND_VIRTUAL ~MultipleAvroFileWriter();
+
+  RMF_BACKEND_VIRTUAL void set_loaded_frame(FrameID frame) RMF_BACKEND_OVERRIDE;
+
+  RMF_BACKEND_VIRTUAL FrameID
+      add_frame(std::string name, FrameType t) RMF_BACKEND_OVERRIDE;
+  RMF_BACKEND_VIRTUAL void add_child_frame(
+      FrameID child_node) RMF_BACKEND_OVERRIDE;
+  RMF_BACKEND_VIRTUAL FrameIDs get_children(FrameID node) const
+      RMF_BACKEND_OVERRIDE;
+  using AvroKeysAndCategories::get_name;
+  RMF_BACKEND_VIRTUAL std::string get_loaded_frame_name() const
+      RMF_BACKEND_OVERRIDE;
+  RMF_BACKEND_VIRTUAL FrameType get_loaded_frame_type() const
+      RMF_BACKEND_OVERRIDE;
+  RMF_BACKEND_VIRTUAL unsigned int get_number_of_frames() const
+      RMF_BACKEND_OVERRIDE;
+};
+
+}  // namespace avro_backend
 } /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
