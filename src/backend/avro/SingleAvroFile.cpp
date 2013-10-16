@@ -163,7 +163,9 @@ RMF_ENABLE_WARNINGS namespace RMF {
     FrameID index = FrameID(get_number_of_frames());
     access_frame(index).name = name;
     access_frame(index).type = boost::lexical_cast<std::string>(t);
-    access_frame(get_loaded_frame()).children.push_back(index.get_index());
+    if (get_loaded_frame() != FrameID()) {
+      access_frame(get_loaded_frame()).children.push_back(index.get_index());
+    }
     RMF_INTERNAL_CHECK(get_number_of_frames() ==
                            static_cast<unsigned int>(index.get_index()) + 1,
                        "No frame added");

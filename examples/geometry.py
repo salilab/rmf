@@ -6,6 +6,7 @@ tfn=RMF._get_temporary_file_path("aliases.rmf")
 print "File is", tfn
 
 f = RMF.create_rmf_file(tfn)
+f.add_frame("root", RMF.FRAME)
 
 r = f.get_root_node()
 

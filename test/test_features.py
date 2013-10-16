@@ -5,6 +5,7 @@ import RMF
 class GenericTest(unittest.TestCase):
     def _create(self, path):
       fh= RMF.create_rmf_file(path)
+      fh.add_frame("root", RMF.FRAME)
       rt= fh.get_root_node()
       pf= RMF.ParticleFactory(fh)
       reps=[rt.add_child("rep"+str(i), RMF.REPRESENTATION) for i in range(0,5)]
@@ -20,6 +21,7 @@ class GenericTest(unittest.TestCase):
       sd.set_representation(reps)
     def _test(self, path):
       fh= RMF.open_rmf_file_read_only(path)
+      fh.set_current_frame(RMF.FrameID(0))
       rt= fh.get_root_node()
       ch= rt.get_children()
       fn= ch[-1]

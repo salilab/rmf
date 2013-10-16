@@ -7,7 +7,7 @@ class GenericTest(unittest.TestCase):
     def _show(self, g):
         for i in range(0, g.get_number_of_children()):
             print i, g.get_child_name(i), g.get_child_is_group(i)
-    def _copy_to(self, last_frame, suffix):
+    def _copy_to(self, suffix):
         nm= RMF._get_test_input_file_path("sink.rmf")
         onm= RMF._get_temporary_file_path("sink_out."+suffix)
         print nm, onm
@@ -16,19 +16,22 @@ class GenericTest(unittest.TestCase):
         RMF.clone_file_info(f, of)
         RMF.clone_hierarchy(f, of)
         RMF.clone_static_frame(f, of)
+        num_frames = f.get_number_of_frames()
         for fr in f.get_frames():
             f.set_current_frame(fr)
             nfid = of.add_frame(f.get_current_frame_name(), f.get_current_frame_type())
             self.assertEqual(nfid, fr)
             RMF.clone_loaded_frame(f, of)
+            print "number of frames", of.get_number_of_frames(), fr, f.get_number_of_frames()
         print "deling"
         del of
         print "reopening"
         of= RMF.open_rmf_file_read_only(onm)
         self.assert_(RMF.get_equal_structure(f, of))
         self.assert_(RMF.get_equal_static_values(f, of))
-        for i in range(0, last_frame+1):
+        for i in range(0, num_frames):
             fid = RMF.FrameID(i)
+            print fid
             f.set_current_frame(fid)
             of.set_current_frame(fid)
             if suffix != "rmft":
@@ -39,8 +42,7 @@ class GenericTest(unittest.TestCase):
         RMF.HDF5.set_show_errors(True)
         for suffix in RMF.suffixes:
             print suffix
-            self._copy_to(-1, suffix)
-            self._copy_to(1, suffix)
+            self._copy_to(suffix)
 
 if __name__ == '__main__':
     unittest.main()

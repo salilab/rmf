@@ -21,7 +21,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   namespace internal {
 
   SharedData::SharedData(std::string path)
-      : valid_(11111), loaded_frame_(0), cur_is_static_(true), path_(path) {
+      : valid_(11111), path_(path) {
     RMF_INFO(get_logger(), "Opening file " << path_);
   }
 

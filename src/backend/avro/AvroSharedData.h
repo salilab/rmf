@@ -108,7 +108,7 @@ class AvroSharedData : public Base {
   std::vector<Key<Traits> > get_keys(Category cat) {
     boost::unordered_set<Key<Traits> > ret;
     const RMF_avro_backend::Data& data =
-        P::get_frame_data(cat, P::get_current_frame());
+        P::get_frame_data(cat, P::get_loaded_frame());
     extract_keys(cat, get_key_index(data, Traits()), ret);
     const RMF_avro_backend::Data& staticdata =
         P::get_frame_data(cat, ALL_FRAMES);

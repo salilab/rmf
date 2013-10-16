@@ -74,7 +74,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
     boost::unordered_map<int, boost::any> user_data_;
     int valid_;
     FrameID loaded_frame_;
-    bool cur_is_static_;
     std::string path_;
 
    protected:
@@ -83,15 +82,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
    public:
     std::string get_file_path() const { return path_; }
     FrameID get_loaded_frame() const { return loaded_frame_; }
-    bool get_current_is_static() const { return cur_is_static_; }
     virtual void set_loaded_frame(FrameID frame) {
       loaded_frame_ = frame;
-    }
-    void set_current_is_static(bool tf) {
-      cur_is_static_ = tf;
-    }
-    FrameID get_current_frame() const {
-      return get_current_is_static() ? RMF::ALL_FRAMES : loaded_frame_;
     }
 
     RMF_FOREACH_TYPE(RMF_SHARED_TYPE);

@@ -46,6 +46,8 @@ RMF_ENABLE_WARNINGS
     return !get_value(k).get_is_null();                                    \
   }                                                                        \
   Nullable<UCName##Traits> get_frame_value(UCName##Key k) const {          \
+    RMF_USAGE_CHECK(shared_->get_loaded_frame() != FrameID(),              \
+                    "Need to set a current frame before setting values."); \
     return shared_->get_loaded_value(node_, k);                            \
   }                                                                        \
   Nullable<UCName##Traits> get_static_value(UCName##Key k) const {         \
@@ -94,10 +96,8 @@ class RMFEXPORT NodeConstHandle {
   // hopefully get_value will be inlined...
   template <class Traits>
   Nullable<Traits> get_value_impl(Key<Traits> k) const {
-    if (!shared_->get_current_is_static()) {
-      Nullable<Traits> ret = get_frame_value(k);
-      if (!ret.get_is_null()) return ret;
-    }
+    Nullable<Traits> ret = get_frame_value(k);
+    if (!ret.get_is_null()) return ret;
     return get_static_value(k);
   }
 

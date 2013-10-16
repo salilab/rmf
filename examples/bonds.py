@@ -11,6 +11,7 @@ def print_bonds(node, bf):
             print_bonds(c, bf)
 
 fh = RMF.open_rmf_file_read_only(RMF.get_example_path("simple.rmf"))
+fh.set_current_frame(RMF.FrameID(0))
 bf = RMF.BondConstFactory(fh)
 
 print_bonds(fh.get_root_node(), bf)

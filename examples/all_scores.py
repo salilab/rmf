@@ -10,9 +10,8 @@ scf= RMF.ScoreConstFactory(rmf)
 def traverse(n):
     if n.get_type() == RMF.FEATURE and scf.get_is(n):
         print n.get_name()
-        d= scf.get(n, RMF.ANY_FRAME)
-        print d.get_all_scores()
+        d= scf.get(n)
+        print d.get_score()
     for c in n.get_children():
         traverse(c)
-rmf.set_current_frame(RMF.ALL_FRAMES)
 traverse(rmf.get_root_node())

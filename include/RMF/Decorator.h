@@ -29,8 +29,16 @@ RMF_ENABLE_WARNINGS namespace RMF {
       return get_node().get_value(key);
     }
     template <class Key, class Value>
-    void set_value(Key& key, const Value& v) {
+    void set_current_value(Key& key, const Value& v) {
       get_node().set_value(key, v);
+    }
+    template <class KeyT>
+    typename KeyT::TypeTraits::Type get_static_value(const KeyT& key) const {
+      return get_node().get_static_value(key);
+    }
+    template <class Key, class Value>
+    void set_static_value(Key& key, const Value& v) {
+      get_node().set_static_value(key, v);
     }
 
    public:

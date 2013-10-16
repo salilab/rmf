@@ -31,16 +31,17 @@ class Tests(unittest.TestCase):
             name=RMF._get_temporary_file_path("test_file2."+suffix)
             print name
             f= RMF.create_rmf_file(name)
+            f.add_frame("root", RMF.FRAME)
             r= f.get_root_node()
             print r.get_type()
             sc= f.get_category("sequence")
             ik= f.get_int_key(sc, "ik0")
-            f.add_frame("0", RMF.FRAME)
             r.set_value(ik, 1)
             del f
             del r
 
             f= RMF.open_rmf_file_read_only(name)
+            f.set_current_frame(RMF.FrameID(0))
             r= f.get_root_node()
             print r.get_type()
             sc= f.get_category("sequence")

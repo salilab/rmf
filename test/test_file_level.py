@@ -25,11 +25,11 @@ class Tests(unittest.TestCase):
         for suffix in RMF.suffixes:
             path=RMF._get_temporary_file_path("test_file_frames."+suffix)
             f= RMF.create_rmf_file(path)
+            f.add_frame("root", RMF.FRAME)
             r= f.get_root_node()
             print r.get_type()
             sc= f.get_category("sequence")
             ik= f.get_int_key(sc, "ik0")
-            f.add_frame("0", RMF.FRAME)
             r.set_value(ik, 1)
             self.assertEqual(r.get_value(ik), 1, 0)
             f.add_frame("1", RMF.FRAME)
@@ -81,5 +81,21 @@ class Tests(unittest.TestCase):
             f.add_frame("1", RMF.FRAME)
             fkna= r.get_value(fk)
             self.assertEqual(fkna, None)
+    def test_base_frames(self):
+        """Test initialization of frames"""
+        for suffix in RMF.suffixes:
+            path=RMF._get_temporary_file_path("test_base_frames."+suffix)
+            f= RMF.create_rmf_file(path)
+            self.assertEqual(f.get_number_of_frames(), 0)
+            self.assertEqual(f.get_current_frame(), RMF.FrameID())
+            f.add_frame("hi", RMF.FRAME)
+            self.assertEqual(f.get_number_of_frames(), 1)
+            self.assertEqual(f.get_current_frame(), RMF.FrameID(0))
+            del f
+            f = RMF.open_rmf_file_read_only(path)
+            self.assertEqual(f.get_number_of_frames(), 1)
+            self.assertEqual(f.get_current_frame(), RMF.FrameID())
+            f.set_current_frame(RMF.FrameID(0))
+
 if __name__ == '__main__':
     unittest.main()

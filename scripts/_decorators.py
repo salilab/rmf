@@ -14,10 +14,16 @@ def replace(msg, to_replace, const):
     return msg
 
 class Base:
-  def __init__(self, name, data_type, return_type, doc):
+  def __init__(self, name, data_type, return_type, doc, is_static):
     self.names = [("NAME", name.replace(" ", "_")),
                   ("DOC", doc),
                   ("DATA", data_type)]
+    if is_static:
+        self.names.extend([("GET", "get_static_value"),
+                           ("SET", "set_static_value")])
+    else:
+        self.names.extend([("GET", "get_value"),
+                           ("SET", "set_current_value")])
     if return_type.endswith("s"):
       self.names.append(("TYPES", return_type + "List"))
     elif return_type.endswith("x"):
@@ -57,8 +63,8 @@ class Base:
     return replace(self.check, self.names, const)
 
 class Children(Base):
-  def __init__(self, name, doc):
-    Base.__init__(self, name,"AliasCONSTFactory", "NodeCONSTHandles", doc)
+  def __init__(self, name, doc, is_static):
+    Base.__init__(self, name,"AliasCONSTFactory", "NodeCONSTHandles", doc, is_static)
     self.names
     self.get_methods = """  /** DOC */
   TYPE get_NAME() const {
@@ -93,21 +99,21 @@ class Children(Base):
     self.data_initialize = "fh"
 
 class Attribute(Base):
-  def __init__(self, name, attribute_type, doc, function_name = None):
+  def __init__(self, name, attribute_type, doc, is_static, function_name = None):
     if not function_name:
       function_name = name.replace(" ", "_")
-    Base.__init__(self, name, attribute_type + "Key", attribute_type, doc)
+    Base.__init__(self, name, attribute_type + "Key", attribute_type, doc, is_static)
     self.get_methods = """  /** DOC */
   TYPE get_%s() const {
     try {
-      return P::get_value(NAME_);
+      return P::GET(NAME_);
     } RMF_DECORATOR_CATCH( );
   }
 """ % (function_name)
     self.set_methods = """  /** DOC */
   void set_%s(TYPE v) {
     try {
-      P::set_value(NAME_, v);
+      P::SET(NAME_, v);
     } RMF_DECORATOR_CATCH( );
   }
 
@@ -116,12 +122,12 @@ class Attribute(Base):
     self.data_initialize = "fh.get_key<TYPETraits>(cat_, \"%s\")" % name
 
 class NodeAttribute(Attribute):
-  def __init__(self, name, doc):
-    Attribute.__init__(self, name, "NodeID", doc)
+  def __init__(self, name, doc, is_static):
+    Attribute.__init__(self, name, "NodeID", doc, is_static, True)
     self.get_methods = """  /** DOC */
   NodeCONSTHandle get_NAME() const {
     try {
-      NodeID id = get_node().get_value(NAME_);
+      NodeID id = get_node().GET(NAME_);
       return get_node().get_file().get_node(id);
     } RMF_DECORATOR_CATCH( );
   }
@@ -129,18 +135,18 @@ class NodeAttribute(Attribute):
     self.set_methods = """  /** DOC */
   void set_NAME(NodeConstHandle v) {
     try {
-      get_node().set_value(NAME_, v.get_id());
+      get_node().SET(NAME_, v.get_id());
     } RMF_DECORATOR_CATCH( );
   }
 """
 
 class PathAttribute(Attribute):
-  def __init__(self, name, doc):
-    Attribute.__init__(self, name, "String", doc)
+  def __init__(self, name, doc, is_static):
+    Attribute.__init__(self, name, "String", doc, is_static)
     self.get_methods = """  /** DOC */
   String get_NAME() const {
     try {
-      String relpath = get_node().get_value(NAME_);
+      String relpath = get_node().GET(NAME_);
       String filename = get_node().get_file().get_path();
       return internal::get_absolute_path(filename, relpath);
     } RMF_DECORATOR_CATCH( );
@@ -151,14 +157,14 @@ class PathAttribute(Attribute):
    try {
      String filename = get_node().get_file().get_path();
      String relpath = internal::get_relative_path(filename, path);
-     get_node().set_value(NAME_, relpath);
+     get_node().SET(NAME_, relpath);
    } RMF_DECORATOR_CATCH( );
   }
 """
 
 class AttributePair(Base):
-  def __init__(self, name, data_type, return_type, begin, end, doc):
-    Base.__init__(self, name, "boost::array<%sKey, 2>" % data_type, return_type, doc)
+  def __init__(self, name, data_type, return_type, begin, end, doc, is_static):
+    Base.__init__(self, name, "boost::array<%sKey, 2>" % data_type, return_type, doc, is_static)
     self.helpers = """  DATA get_NAME_keys(FileCONSTHandle fh) {
      DATA ret;
      ret[0] = fh.get_key<%sTraits>(cat_, "%s");
@@ -171,48 +177,48 @@ class AttributePair(Base):
 
 
 class SingletonRangeAttribute(AttributePair):
-  def __init__(self, name, data_type, begin, end, doc):
-    AttributePair.__init__(self, name, data_type, data_type, begin, end, doc)
+  def __init__(self, name, data_type, begin, end, doc, is_static):
+    AttributePair.__init__(self, name, data_type, data_type, begin, end, doc, is_static)
     self.get_methods = """  /** DOC */
   TYPE get_NAME() const {
     try {
-      return get_node().get_value(NAME_[0]);
+      return get_node().GET(NAME_[0]);
     } RMF_DECORATOR_CATCH( );
   }
 """
     self.set_methods = """ /** DOC */
   void set_NAME(TYPE v) {
     try {
-      get_node().set_value(NAME_[0], v);
-      get_node().set_value(NAME_[1], v);
+      get_node().SET(NAME_[0], v);
+      get_node().SET(NAME_[1], v);
     } RMF_DECORATOR_CATCH( );
   }
 """
-    self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1]) && nh.get_value(NAME_[0]) == nh.get_value(NAME_[1])"
+    self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1]) && nh.GET(NAME_[0]) == nh.GET(NAME_[1])"
 
 class RangeAttribute(AttributePair):
-  def __init__(self, name, data_type, begin, end, doc):
-    AttributePair.__init__(self, name, data_type, data_type + "Range", begin, end, doc)
+  def __init__(self, name, data_type, begin, end, doc, is_static):
+    AttributePair.__init__(self, name, data_type, data_type + "Range", begin, end, doc, is_static)
     self.get_methods = """  /** DOC */
   TYPE get_NAME() const {
     try {
-      return std::make_pair(get_node().get_value(NAME_[0]), get_node().get_value(NAME_[1]));
+      return std::make_pair(get_node().GET(NAME_[0]), get_node().GET(NAME_[1]));
     } RMF_DECORATOR_CATCH( );
   }
 """
     self.set_methods = """ /** DOC */
   void set_NAME(TYPE v) {
     try {
-      get_node().set_value(NAME_[0], v.first);
-      get_node().set_value(NAME_[1], v.second);
+      get_node().SET(NAME_[0], v.first);
+      get_node().SET(NAME_[1], v.second);
     } RMF_DECORATOR_CATCH( );
   }
 """
-    self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1]) && nh.get_value(NAME_[0]) < nh.get_value(NAME_[1])"
+    self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1]) && nh.GET(NAME_[0]) < nh.GET(NAME_[1])"
 
 class Attributes(Base):
-  def __init__(self, name, attribute_type, keys, doc, bulk = False):
-    Base.__init__(self, name, attribute_type+"Keys", attribute_type, doc)
+  def __init__(self, name, attribute_type, keys, doc, is_static, bulk = False):
+    Base.__init__(self, name, attribute_type+"Keys", attribute_type, doc, is_static)
     self.helpers = """
   DATA get_NAME_keys(FileCONSTHandle fh) {
     DATA ret;
@@ -232,7 +238,7 @@ class Attributes(Base):
     try {
       TYPES ret(NAME_.size());
       for (unsigned int i = 0; i < NAME_.size(); ++i) {
-        ret[i] = P::get_value(NAME_[i]);
+        ret[i] = P::GET(NAME_[i]);
       }
       return ret;
     } RMF_DECORATOR_CATCH( );
@@ -242,7 +248,7 @@ class Attributes(Base):
   void set_NAME(TYPES v) {
     try {
       for (unsigned int i = 0; i< NAME_.size(); ++i) {
-         P::set_value(NAME_[i], v[i]);
+         P::SET(NAME_[i], v[i]);
       }
     } RMF_DECORATOR_CATCH( );
   }
@@ -260,7 +266,7 @@ class Attributes(Base):
         NodeConstHandle nh = fh.get_node(node_ids[i]);
         ret[i].resize(NAME_.size());
         for (unsigned int j = 0; j < NAME_.size(); ++j) {
-          ret[i][j] = nh.get_value(NAME_[j]);
+          ret[i][j] = nh.GET(NAME_[j]);
         }
       }
       return ret;

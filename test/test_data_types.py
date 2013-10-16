@@ -19,6 +19,7 @@ class GenericTest(unittest.TestCase):
       return lst
     def _test_write(self, name):
       f = RMF.create_rmf_file(name)
+      f.add_frame("root", RMF.FRAME)
       lst = self._make_list(f)
       nh = f.get_root_node().get_children()[0]
       cat= f.get_category("mine")
@@ -31,6 +32,7 @@ class GenericTest(unittest.TestCase):
         nh.set_value(k, p[1])
     def _test_read(self, name):
       f = RMF.open_rmf_file_read_only(name)
+      f.set_current_frame(RMF.FrameID(0))
       lst = self._make_list(f)
       nh = f.get_root_node().get_children()[0]
       cat= f.get_category("mine")

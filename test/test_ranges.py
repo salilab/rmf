@@ -6,15 +6,19 @@ class GenericTest(unittest.TestCase):
     def test_open_2x(self):
         """Test frame comments"""
         f = RMF.create_rmf_file(RMF._get_temporary_file_path("frames.rmf"))
+        f.add_frame("root", RMF.FRAME)
         cat = f.get_category("cat")
         key = f.get_int_key(cat, "key")
         n = f.get_root_node().add_child("node", RMF.REPRESENTATION)
         n.set_value(key, 1)
+        print "frames", f.get_number_of_frames()
         f.add_frame("next", RMF.FRAME)
-        print dir(f)
+        print "frames", f.get_number_of_frames()
         print f.get_keys(cat)
+        print "frames", f.get_number_of_frames()
         for fr in f.get_frames():
             print fr
+        print "frames", f.get_number_of_frames()
         self.assertEqual(len(f.get_frames()), 2)
 
 

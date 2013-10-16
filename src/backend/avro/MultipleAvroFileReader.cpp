@@ -168,7 +168,9 @@ void MultipleAvroFileReader::reload() {
   initialize_node_keys();
   // dance to read the correct data in
   FrameID current = get_loaded_frame();
-  set_loaded_frame(current);
+  if (current != FrameID()) {
+    set_loaded_frame(current);
+  }
 }
 
 void MultipleAvroFileReader::add_category_data(Category cat) {

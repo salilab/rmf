@@ -13,7 +13,7 @@ class GenericTest(unittest.TestCase):
         for suffix in RMF.suffixes:
             nm= RMF._get_temporary_file_path("bad_geom."+suffix)
             rmf= RMF.create_rmf_file(nm)
-            rmf.set_current_frame(RMF.ALL_FRAMES)
+            rmf.add_frame("root", RMF.FRAME)
             colored_factory= RMF.ColoredFactory(rmf)
             ball_factory = RMF.BallFactory(rmf)
             cylinder_factory = RMF.CylinderFactory(rmf)

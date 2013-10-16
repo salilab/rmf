@@ -4,6 +4,8 @@
 import RMF
 
 rmf= RMF.create_rmf_file("example.rmf")
+rmf.add_frame("root", RMF.FRAME)
+
 nframes=10
 colored_factory= RMF.ColoredFactory(rmf)
 particle_factory= RMF.ParticleFactory(rmf)

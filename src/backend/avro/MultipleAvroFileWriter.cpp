@@ -25,7 +25,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
             frame.get_index() == static_cast<unsigned int>(frame_.index),
         "Bad frame set. You probably didn't add a new frame.");
     MultipleAvroFileBase::set_loaded_frame(frame);
-    if (frame.get_index() != static_cast<unsigned int>(frame_.index)) {
+    if (frame_.index != -1 &&
+        frame.get_index() != static_cast<unsigned int>(frame_.index)) {
       commit();
     }
   }
@@ -116,8 +117,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
     set_loaded_frame(FrameID(index));
     frame_.name = name;
     frame_.type = boost::lexical_cast<std::string>(FrameType(t));
-    unsigned int findex = get_loaded_frame().get_index();
-    frame_.parents.push_back(findex);
+    if (get_loaded_frame() != FrameID()) {
+      unsigned int findex = get_loaded_frame().get_index();
+      frame_.parents.push_back(findex);
+    }
     frames_dirty_ = true;
     frame_.index = index;
     return FrameID(index);

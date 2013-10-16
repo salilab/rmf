@@ -10,6 +10,9 @@ print "File is", tfn
 # open the temporary file, clearing any existing contents
 fh = RMF.create_rmf_file(tfn)
 
+# add a frame to the file
+fh.add_frame("root", RMF.FRAME)
+
 rh= fh.get_root_node()
 # add a bunch of "molecules" with colors
 mrh= rh.add_child("molecules", RMF.REPRESENTATION)

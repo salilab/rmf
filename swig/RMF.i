@@ -147,24 +147,24 @@ RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DECLARE_TYPE);
            def __init__(self, mx):
                self.max = mx
            def __getitem__(self, i):
-               if i > self.max:
+               if i >= self.max:
                     raise IndexError()
                else:
                     return FrameID(i)
            def __len__(self):
-               return self.max + 1
+               return self.max
         return MyRange(self.get_number_of_frames())
     def get_node_ids(self):
         class MyRange:
            def __init__(self, mx):
                self.max = mx
            def __getitem__(self, i):
-               if i > self.max:
+               if i >= self.max:
                     raise IndexError()
                else:
                     return NodeID(i)
            def __len__(self):
-               return self.max + 1
+               return self.max
         return MyRange(self.get_number_of_nodes())
     def get_keys(self, kc):
         ret=[]
@@ -209,15 +209,22 @@ namespace RMF {
 
 RMF_DECORATOR(RMF, Particle);
 RMF_DECORATOR(RMF, IntermediateParticle);
-RMF_DECORATOR(RMF, Colored);
+RMF_DECORATOR(RMF, StaticParticle);
+RMF_DECORATOR(RMF, StaticIntermediateParticle);
 RMF_DECORATOR(RMF, External);
 RMF_DECORATOR(RMF, JournalArticle);
+RMF_DECORATOR(RMF, Colored);
 RMF_DECORATOR(RMF, Ball);
 RMF_DECORATOR(RMF, Cylinder);
 RMF_DECORATOR(RMF, Segment);
+RMF_DECORATOR(RMF, StaticColored);
+RMF_DECORATOR(RMF, StaticBall);
+RMF_DECORATOR(RMF, StaticCylinder);
+RMF_DECORATOR(RMF, StaticSegment);
 RMF_DECORATOR(RMF, Score);
 RMF_DECORATOR(RMF, RigidParticle);
 RMF_DECORATOR(RMF, ReferenceFrame);
+RMF_DECORATOR(RMF, StaticReferenceFrame);
 RMF_DECORATOR(RMF, Residue);
 RMF_DECORATOR(RMF, Atom);
 RMF_DECORATOR(RMF, Alias);

@@ -11,6 +11,7 @@ output_pdb= RMF._get_temporary_file_path("simple.pdb")
 print "file name is", rmf_name
 
 rmf= RMF.create_rmf_file(rmf_name)
+rmf.add_frame("root", RMF.FRAME)
 
 # copy simple.pdb to output dir
 open(output_pdb, "w").write(open(input_pdb, "r").read())

@@ -22,7 +22,16 @@ RMF_ENABLE_WARNINGS
   /** \brief  set the value of the attribute k for this node on the            \
       current frame.                                                           \
   */                                                                           \
-  void set_value(UCName##Key k, PassValue v) const { set_value_impl(k, v); }
+  void set_value(UCName##Key k, PassValue v) const {                           \
+    RMF_USAGE_CHECK(shared_->get_loaded_frame() != FrameID(),                  \
+                    "Need to set a current frame before setting values.");     \
+    shared_->set_loaded_value(node_, k, v);                                    \
+  }                                                                            \
+  /** \brief  set the value of the attribute k for all frames.                 \
+  */                                                                           \
+  void set_static_value(UCName##Key k, PassValue v) const {                    \
+    shared_->set_static_value(node_, k, v);                                    \
+  }
 
 RMF_VECTOR_DECL(NodeHandle);
 
@@ -39,14 +48,6 @@ class FileHandle;
  */
 class RMFEXPORT NodeHandle : public NodeConstHandle {
   friend class FileHandle;
-  template <class Traits>
-  void set_value_impl(Key<Traits> k, typename Traits::ArgumentType v) const {
-    if (shared_->get_current_is_static()) {
-      shared_->set_static_value(node_, k, v);
-    } else {
-      shared_->set_loaded_value(node_, k, v);
-    }
-  }
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
  public:
   NodeHandle(NodeID node, boost::shared_ptr<internal::SharedData> shared);

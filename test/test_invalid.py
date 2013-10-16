@@ -8,6 +8,7 @@ class GenericTest(unittest.TestCase):
         name=RMF._get_temporary_file_path("test_data_types.rmft")
         print "file is", name
         f = RMF.create_rmf_file(name)
+        f.add_frame("root", RMF.FRAME)
         cat = f.get_category("test")
         k0 = f.get_float_key(cat, "k0")
         k1 = f.get_float_key(cat, "k1")
@@ -19,6 +20,7 @@ class GenericTest(unittest.TestCase):
         del n0
         del n1
         f = RMF.open_rmf_file_read_only(name)
+        f.set_current_frame(RMF.FrameID(0))
         cat = f.get_category("test")
         k0 = f.get_float_key(cat, "k0")
         k1 = f.get_float_key(cat, "k1")

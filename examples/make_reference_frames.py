@@ -5,6 +5,7 @@ import RMF
 file_name= RMF._get_temporary_file_path("reference_frame.rmfa")
 print "file is", file_name
 fh= RMF.create_rmf_file(file_name)
+fh.add_frame("root", RMF.FRAME)
 
 rh= fh.get_root_node()
 

@@ -49,7 +49,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
           return null_static_data_;
         }
       } else {
-        RMF_USAGE_CHECK(frame == get_current_frame(),
+        RMF_USAGE_CHECK(frame == get_loaded_frame(),
                         "Asking for a non-current frame");
         if (categories_.size() > cat.get_id() &&
             static_cast<unsigned int>(categories_[cat.get_id()].data.frame) ==

@@ -5,6 +5,7 @@ import unittest
 class GenericTest(unittest.TestCase):
     def _create(self, name):
         rmf= RMF.create_rmf_file(name)
+        rmf.add_frame("root", RMF.FRAME)
         rt= rmf.get_root_node()
 
         # now make hierarchy

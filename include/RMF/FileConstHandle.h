@@ -154,12 +154,7 @@ class RMFEXPORT FileConstHandle {
 
       @{
    */
-  FrameID get_current_frame() const {
-    if (shared_->get_current_is_static())
-      return ALL_FRAMES;
-    else
-      return shared_->get_loaded_frame();
-  }
+  FrameID get_current_frame() const { return shared_->get_loaded_frame(); }
   FrameType get_current_frame_type() const {
     return shared_->get_loaded_frame_type();
   }
@@ -167,13 +162,11 @@ class RMFEXPORT FileConstHandle {
     return shared_->get_loaded_frame_name();
   }
   void set_current_frame(FrameID frame) const {
+    RMF_USAGE_CHECK(frame != ALL_FRAMES,
+                    "Use set_static_value() and get_static_value() to "
+                    "manipulate the static frame.");
     try {
-      if (frame == ALL_FRAMES) {
-        shared_->set_current_is_static(true);
-      } else {
-        shared_->set_loaded_frame(frame);
-        shared_->set_current_is_static(false);
-      }
+      shared_->set_loaded_frame(frame);
     }
     RMF_FILE_CATCH(<< Frame(frame));
   }
