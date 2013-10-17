@@ -643,18 +643,12 @@ class HDF5SharedData : public backends::BackwardsIOBase {
   NodeID add_child(NodeID node, std::string name, NodeType t);
   void add_child(NodeID node, NodeID child_node);
   NodeIDs get_children(NodeID node) const;
-  RMF_BACKEND_VIRTUAL unsigned int get_number_of_frames() const
-      RMF_BACKEND_OVERRIDE;
-  RMF_BACKEND_VIRTUAL unsigned int get_number_of_nodes() const
-      RMF_BACKEND_OVERRIDE {
-    return node_data_.get_size()[0];
-  }
+  unsigned int get_number_of_frames() const;
+  unsigned int get_number_of_nodes() const { return node_data_.get_size()[0]; }
 
-  RMF_BACKEND_VIRTUAL Categories get_categories() const RMF_BACKEND_OVERRIDE;
-  RMF_BACKEND_VIRTUAL Category
-      get_category(std::string name) RMF_BACKEND_OVERRIDE;
-  RMF_BACKEND_VIRTUAL std::string get_name(Category kc) const
-      RMF_BACKEND_OVERRIDE {
+  Categories get_categories() const;
+  Category get_category(std::string name);
+  std::string get_name(Category kc) const {
     return category_data_map_.find(kc)->second.name;
   }
 
@@ -664,28 +658,24 @@ class HDF5SharedData : public backends::BackwardsIOBase {
   std::string get_producer() const;
   void set_producer(std::string str);
 
-  RMF_BACKEND_VIRTUAL std::string get_loaded_frame_name() const
-      RMF_BACKEND_OVERRIDE;
+  std::string get_loaded_frame_name() const;
 
   bool get_supports_locking() const { return false; }
-  RMF_BACKEND_VIRTUAL void reload() RMF_BACKEND_OVERRIDE;
-  RMF_BACKEND_VIRTUAL void set_loaded_frame(FrameID frame) RMF_BACKEND_OVERRIDE;
+  void reload();
+  void set_loaded_frame(FrameID frame);
 
-  RMF_BACKEND_VIRTUAL std::string get_file_type() const RMF_BACKEND_OVERRIDE {
-    return "HDF5 version 1";
-  }
+  std::string get_file_type() const { return "HDF5 version 1"; }
 
-  RMF_BACKEND_VIRTUAL FrameID
-  add_frame(std::string name, FrameType /*t*/) RMF_BACKEND_OVERRIDE {
+  FrameID add_frame(std::string name, FrameType /*t*/) {
     // frame types not supported in rmf files right now
     unsigned int cindex = get_number_of_frames();
     FrameID index(cindex);
     set_name(index, name);
     return index;
   }
-  void add_child_frame(FrameID /*child_node*/) RMF_BACKEND_OVERRIDE {}
-  FrameType get_loaded_frame_type() const RMF_BACKEND_OVERRIDE { return FRAME; }
-  FrameIDs get_children(FrameID node) const RMF_BACKEND_OVERRIDE {
+  void add_child_frame(FrameID /*child_node*/) {}
+  FrameType get_loaded_frame_type() const { return FRAME; }
+  FrameIDs get_children(FrameID node) const {
     unsigned int cindex;
     if (node == ALL_FRAMES)
       cindex = 0;

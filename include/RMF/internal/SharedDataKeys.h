@@ -23,7 +23,8 @@ namespace internal {
 template <class Traits>
 class SharedDataKeys {
   typedef boost::unordered_map<std::string, Key<Traits> > KeyInfo;
-  boost::unordered_map<Category, KeyInfo> category_keys_;
+  typedef boost::unordered_map<Category, KeyInfo> CategoryKeys;
+  CategoryKeys category_keys_;
   boost::unordered_map<Key<Traits>, Category> key_categories_;
   boost::unordered_map<Key<Traits>, std::string> key_names_;
 
@@ -35,7 +36,7 @@ class SharedDataKeys {
   }
 
   Key<Traits> get_key(Category cat, std::string name, Traits) {
-    auto it = category_keys_[cat].find(name);
+    typename KeyInfo::iterator it = category_keys_[cat].find(name);
     if (it == category_keys_[cat].end()) {
       int index = key_names_.size();
       key_names_[index] = name;
@@ -57,7 +58,8 @@ class SharedDataKeys {
     }
     std::vector<Key<Traits> > ret;
     ret.reserve(category_keys_.find(cat)->second.size());
-    BOOST_FOREACH(auto it, category_keys_.find(cat)->second) {
+    BOOST_FOREACH(typename KeyInfo::value_type it,
+                  category_keys_.find(cat)->second) {
       ret.push_back(it.second);
     }
     return ret;

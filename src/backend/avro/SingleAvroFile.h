@@ -129,43 +129,35 @@ class SingleAvroFile : public AvroKeysAndCategories {
 
  public:
 
-  RMF_BACKEND_VIRTUAL unsigned int get_number_of_nodes() const
-      RMF_BACKEND_OVERRIDE {
-    return all_.nodes.size();
-  }
+  unsigned int get_number_of_nodes() const { return all_.nodes.size(); }
 
-  RMF_BACKEND_VIRTUAL void set_loaded_frame(
-      FrameID frame) RMF_BACKEND_OVERRIDE {
+  void set_loaded_frame(FrameID frame) {
     null_frame_data_.frame = frame.get_index();
     AvroKeysAndCategories::set_loaded_frame(frame);
   }
 
-  RMF_BACKEND_VIRTUAL void flush() RMF_BACKEND_OVERRIDE;
-  RMF_BACKEND_VIRTUAL void reload() RMF_BACKEND_OVERRIDE;
+  void flush();
+  void reload();
 
   SingleAvroFile(std::string path, bool create, bool read_only);
-  SingleAvroFile(const std::vector<char> &buffer);
+  SingleAvroFile(const std::vector<char>& buffer);
   SingleAvroFile();
   ~SingleAvroFile() { flush(); }
-  RMF_BACKEND_VIRTUAL FrameID
-      add_frame(std::string name, FrameType t) RMF_BACKEND_OVERRIDE;
-  RMF_BACKEND_VIRTUAL void add_child_frame(
-      FrameID child_node) RMF_BACKEND_OVERRIDE;
-  RMF_BACKEND_VIRTUAL FrameIDs get_children(FrameID node) const
-      RMF_BACKEND_OVERRIDE;
+  FrameID add_frame(std::string name, FrameType t);
+  void add_child_frame(FrameID child_node);
+  FrameIDs get_children(FrameID node) const;
   using AvroKeysAndCategories::get_name;
-  RMF_BACKEND_VIRTUAL std::string get_loaded_frame_name() const
-      RMF_BACKEND_OVERRIDE;
-  FrameType get_loaded_frame_type() const RMF_BACKEND_OVERRIDE;
+  std::string get_loaded_frame_name() const;
+  FrameType get_loaded_frame_type() const;
   unsigned int get_number_of_frames() const;
-  RMF_BACKEND_VIRTUAL std::string get_file_type() const RMF_BACKEND_OVERRIDE {
+  std::string get_file_type() const {
     if (text_) {
       return "Single avro version 1 (text)";
     } else {
       return "Single avro version 1 (binary)";
     }
   }
-  RMF_BACKEND_VIRTUAL std::vector<char> get_buffer() RMF_BACKEND_OVERRIDE;
+  std::vector<char> get_buffer();
 };
 
 }  // namespace avro_backend

@@ -56,7 +56,7 @@ class SharedDataHierarchy {
 
   void add_child(NodeID parent, NodeID child) {
     RMF_USAGE_CHECK(
-        parent != NodeID() && parent != NodeID(-1, typename NodeID::SpecialTag()),
+        parent != NodeID() && parent != NodeID(-1, NodeID::SpecialTag()),
         "Bad parent");
     hierarchy_[parent].children.push_back(child);
     hierarchy_[child].parents.push_back(child);
@@ -65,14 +65,14 @@ class SharedDataHierarchy {
 
   const std::vector<NodeID>& get_children(NodeID node) const {
     static std::vector<NodeID> missing;
-    typename Map::const_iterator it = hierarchy_.find(node);
+    Map::const_iterator it = hierarchy_.find(node);
     if (it == hierarchy_.end()) return missing;
     return it->second.children;
   }
 
   const std::vector<NodeID>& get_parents(NodeID node) const {
     static std::vector<NodeID> missing;
-    typename Map::const_iterator it = hierarchy_.find(node);
+    Map::const_iterator it = hierarchy_.find(node);
     if (it == hierarchy_.end()) return missing;
     return it->second.parents;
   }

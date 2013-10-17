@@ -27,7 +27,7 @@ class BackwardsIOBase {
   BackwardsIOBase(std::string path) : path_(path) {}
   std::string get_file_path() const { return path_; }
   void set_loaded_frame(FrameID frame) { loaded_frame_ = frame; }
-  FrameID get_loaded_frame() const {return loaded_frame_;}
+  FrameID get_loaded_frame() const { return loaded_frame_; }
   std::vector<char> get_buffer() {
     RMF_THROW(Message("Not implemented"), IOException);
   }
@@ -36,8 +36,5 @@ class BackwardsIOBase {
 } /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
-
-#define RMF_BACKEND_VIRTUAL
-#define RMF_BACKEND_OVERRIDE
 
 #endif /* RMF_INTERNAL_BACKWARDS_IO_BASE_H */

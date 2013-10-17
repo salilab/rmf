@@ -60,17 +60,12 @@ class MultipleAvroFileBase : public AvroKeysAndCategories {
   std::string get_static_file_path() const;
   std::string get_frames_file_path() const;
 
-public:
-  RMF_BACKEND_VIRTUAL std::string get_file_type() const RMF_BACKEND_OVERRIDE {
-    return "Multiple avro version 1";
-  }
+ public:
+  std::string get_file_type() const { return "Multiple avro version 1"; }
 
-  void set_loaded_frame(FrameID frame) RMF_BACKEND_OVERRIDE;
+  void set_loaded_frame(FrameID frame);
 
-  RMF_BACKEND_VIRTUAL unsigned int get_number_of_nodes() const
-      RMF_BACKEND_OVERRIDE {
-    return nodes_.size();
-  }
+  unsigned int get_number_of_nodes() const { return nodes_.size(); }
 
   MultipleAvroFileBase(std::string path);
 };

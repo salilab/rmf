@@ -122,7 +122,7 @@ class AvroSharedData : public Base {
 
   template <class TypeTraits>
   typename TypeTraits::Type get_loaded_value(NodeID node,
-                                              Key<TypeTraits> k) const {
+                                             Key<TypeTraits> k) const {
     return get_value_impl(P::get_loaded_frame(), node, k);
   }
   template <class TypeTraits>
@@ -132,7 +132,7 @@ class AvroSharedData : public Base {
   }
   template <class TypeTraits>
   void set_loaded_value(NodeID node, Key<TypeTraits> k,
-                         typename TypeTraits::Type v) {
+                        typename TypeTraits::Type v) {
     set_value_impl(P::get_loaded_frame(), node, k, v);
   }
   template <class TypeTraits>
@@ -146,14 +146,12 @@ class AvroSharedData : public Base {
   AvroSharedData();
   AvroSharedData(const std::vector<char>& buffer);
 
-  RMF_BACKEND_VIRTUAL ~AvroSharedData() {}
-  RMF_BACKEND_VIRTUAL std::string get_name(NodeID node) const
-      RMF_BACKEND_OVERRIDE;
-  NodeType get_type(NodeID node) const RMF_BACKEND_OVERRIDE;
-  NodeID add_child(NodeID node, std::string name,
-                   NodeType t) RMF_BACKEND_OVERRIDE;
-  void add_child(NodeID node, NodeID child_node) RMF_BACKEND_OVERRIDE;
-  NodeIDs get_children(NodeID node) const RMF_BACKEND_OVERRIDE;
+  ~AvroSharedData() {}
+  std::string get_name(NodeID node) const;
+  NodeType get_type(NodeID node) const;
+  NodeID add_child(NodeID node, std::string name, NodeType t);
+  void add_child(NodeID node, NodeID child_node);
+  NodeIDs get_children(NodeID node) const;
   std::string get_description() const;
   void set_description(std::string str);
   std::string get_producer() const;

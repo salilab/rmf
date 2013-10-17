@@ -28,9 +28,9 @@ class SharedDataFrameData {
  public:
   SharedDataFrameData() {}
   typename Traits::ReturnType get_value(NodeID node, Key<Traits> k) const {
-    auto it0 = node_datas_.find(node);
+    typename NodeDatas::const_iterator it0 = node_datas_.find(node);
     if (it0 == node_datas_.end()) return Traits::get_null_value();
-    auto it1 = it0->second.find(k);
+    typename Data::const_iterator it1 = it0->second.find(k);
     if (it1 == it0->second.end()) return Traits::get_null_value();
     return it1->second;
   }

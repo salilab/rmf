@@ -96,12 +96,11 @@ class AvroKeysAndCategories : public backends::BackwardsIOBase {
     node_keys_.push_back(oss.str());
   }
 
-  RMF_BACKEND_VIRTUAL std::string get_name(Category kc) const
-      RMF_BACKEND_OVERRIDE {
+  std::string get_name(Category kc) const {
     return category_name_map_.find(kc)->second;
   }
 
-  RMF_BACKEND_VIRTUAL Categories get_categories() const RMF_BACKEND_OVERRIDE {
+  Categories get_categories() const {
     Categories ret;
     for (CategoryNameMap::const_iterator it = category_name_map_.begin();
          it != category_name_map_.end(); ++it) {
@@ -109,8 +108,7 @@ class AvroKeysAndCategories : public backends::BackwardsIOBase {
     }
     return ret;
   }
-  RMF_BACKEND_VIRTUAL Category
-  get_category(std::string name) RMF_BACKEND_OVERRIDE {
+  Category get_category(std::string name) {
     NameCategoryMap::iterator it = name_category_map_.find(name);
     if (it == name_category_map_.end()) {
       unsigned int id = category_name_map_.size();

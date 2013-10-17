@@ -30,7 +30,7 @@ class SharedDataCategory {
 
   Categories get_categories() const {
     Categories ret;
-    BOOST_FOREACH(const typename From::value_type & it, from_name_) {
+    BOOST_FOREACH(const From::value_type & it, from_name_) {
       ret.push_back(it.second);
     }
     return ret;
@@ -44,7 +44,7 @@ class SharedDataCategory {
   }
 
   Category get_category(std::string name) const {
-    auto it = from_name_.find(name);
+    From::const_iterator it = from_name_.find(name);
     if (it == from_name_.end()) {
       return Category();
     } else {
