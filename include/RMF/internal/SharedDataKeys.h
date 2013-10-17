@@ -20,28 +20,34 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 namespace internal {
 
-template <class Traits>
-class SharedDataKeys {
+class SharedDataKeysBase {
+ protected:
+  boost::unordered_map<unsigned int, Category> key_categories_;
+  boost::unordered_map<unsigned int, std::string> key_names_;
+
+  SharedDataKeysBase() {}
+};
+
+template <class Traits, class P = SharedDataKeysBase>
+class SharedDataKeys : public P {
   typedef boost::unordered_map<std::string, Key<Traits> > KeyInfo;
   typedef boost::unordered_map<Category, KeyInfo> CategoryKeys;
   CategoryKeys category_keys_;
-  boost::unordered_map<Key<Traits>, Category> key_categories_;
-  boost::unordered_map<Key<Traits>, std::string> key_names_;
 
  public:
   SharedDataKeys() {}
 
   Category get_category(Key<Traits> k) const {
-    return key_categories_.find(k)->second;
+    return P::key_categories_.find(k.get_id())->second;
   }
 
   Key<Traits> get_key(Category cat, std::string name, Traits) {
     typename KeyInfo::iterator it = category_keys_[cat].find(name);
     if (it == category_keys_[cat].end()) {
-      int index = key_names_.size();
-      key_names_[index] = name;
+      int index = P::key_names_.size();
+      P::key_names_[index] = name;
       category_keys_[cat][name] = index;
-      key_categories_[index] = cat;
+      P::key_categories_[index] = cat;
       return Key<Traits>(index);
     } else {
       return Key<Traits>(it->second);
@@ -49,7 +55,7 @@ class SharedDataKeys {
   }
 
   std::string get_name(Key<Traits> k) const {
-    return key_names_.find(k)->second;
+    return P::key_names_.find(k.get_id())->second;
   }
 
   std::vector<Key<Traits> > get_keys(Category cat, Traits) const {
