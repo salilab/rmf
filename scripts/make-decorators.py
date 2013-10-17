@@ -83,7 +83,12 @@ static_refframe = Decorator(["REPRESENTATION", "ORGANIZATIONAL"], "physics",
 
 bond = Decorator(["BOND"], "physics",
                  "Bond", "A bond between particles.",
-                 [Children("bonded", "The bonded particles.", True)])
+                 [AttributePair("bonded", "NodeID", "BondEndpoints", "bond_0", "bond_1", "The bonded particles.", True)])
+
+old_bond = Decorator(["BOND"], "physics",
+                     "OldBond", "A bond between particles, for backwards compatibility.",
+                     [Children("bonded", "The bonded particles.", True)])
+
 
 atom = Decorator(["REPRESENTATION"], "physics",
                  "Atom", "Information regarding an atom.",
@@ -108,7 +113,7 @@ torque = Decorator(["REPRESENTATION"], "physics",
 
 make_header(
     "physics", [static_particle, particle, static_iparticle, iparticle, pparticle, diffuser,
-                atom, bond, refframe, static_refframe, force, torque],
+                atom, bond, old_bond, refframe, static_refframe, force, torque],
     ["alias"])
 
 
