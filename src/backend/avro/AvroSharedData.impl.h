@@ -33,18 +33,17 @@ AvroSharedData<Base>::AvroSharedData(std::string g, bool create, bool read_only)
 }
 
 template <class Base>
-AvroSharedData<Base>::AvroSharedData(std::string& g, bool create)
-    : Base(g, create) {
-  if (create) {
-    P::access_node(NodeID(0)).name = "root";
-    P::access_node(NodeID(0)).type = boost::lexical_cast<std::string>(ROOT);
-    P::add_node_key();
-  }
+AvroSharedData<Base>::AvroSharedData(const std::vector<char> &buffer)
+    : Base(buffer) {
 }
 
 template <class Base>
-AvroSharedData<Base>::AvroSharedData(const std::string& g)
-    : Base(g) {}
+AvroSharedData<Base>::AvroSharedData()
+    : Base() {
+  P::access_node(NodeID(0)).name = "root";
+  P::access_node(NodeID(0)).type = boost::lexical_cast<std::string>(ROOT);
+  P::add_node_key();
+}
 
 template <class Base>
 std::string AvroSharedData<Base>::get_name(NodeID node) const {

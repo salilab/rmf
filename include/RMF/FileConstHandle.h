@@ -91,7 +91,6 @@ class RMFEXPORT FileConstHandle {
   FileConstHandle() {}
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
   FileConstHandle(boost::shared_ptr<internal::SharedData> shared);
-  FileConstHandle(std::string name);
 #endif
 
   //! Return the root of the hierarchy
@@ -312,15 +311,6 @@ class RMFEXPORT FileConstHandle {
    \exception RMF::IOException couldn't open file, or unsupported file format
  */
 RMFEXPORT FileConstHandle open_rmf_file_read_only(std::string path);
-
-/**
-   Open an RMF from a buffer in read-only mode.
-
-   \param buffer a buffer containing an RMF
-   \exception RMF::IOException couldn't parse the buffer,
-   or unsupported file format
- */
-RMFEXPORT FileConstHandle open_rmf_buffer_read_only(const std::string& buffer);
 
 /** \name Batch data access
     These methods provide batch access to attribute data to try

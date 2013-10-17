@@ -58,8 +58,8 @@ template <class Base>
 class ImplementSharedData : public Base {
  public:
   ImplementSharedData(std::string path, bool a, bool b) : Base(path, a, b) {}
-  ImplementSharedData(std::string &buffer, bool a) : Base(buffer, a) {}
-  ImplementSharedData(const std::string &buffer) : Base(buffer) {}
+  ImplementSharedData(const std::vector<char> &buffer) : Base(buffer) {}
+  ImplementSharedData() : Base() {}
   using Base::get_name;
   using Base::get_category;
   RMF_FOREACH_TYPE(RMF_IMPLEMENT_SHARED_TYPE);

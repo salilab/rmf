@@ -139,8 +139,8 @@ class AvroSharedData : public Base {
 
   AvroSharedData(std::string g, bool create, bool read_only);
   // buffer versions
-  AvroSharedData(std::string& buffer, bool create);
-  AvroSharedData(const std::string& buffer);
+  AvroSharedData();
+  AvroSharedData(const std::vector<char>& buffer);
 
   RMF_BACKEND_VIRTUAL ~AvroSharedData() {}
   RMF_BACKEND_VIRTUAL std::string get_name(NodeID node) const

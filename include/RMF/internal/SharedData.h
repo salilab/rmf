@@ -184,38 +184,11 @@ RMF_ENABLE_WARNINGS namespace RMF {
     virtual std::string get_loaded_frame_name() const = 0;
     virtual FrameType get_loaded_frame_type() const = 0;
     virtual std::string get_file_type() const = 0;
+    virtual std::vector<char> get_buffer() {
+      RMF_THROW(Message("Not support with this backend"), ::RMF::IOException);
+    }
     virtual void reload() = 0;
   };
-
-  /**
-     Construct shared data for the RMF file in 'path', either creating or
-     the file or opening an existing file according to the value of 'create'.
-     Note on internal implementation - stores results in internal cache
-
-     @param path path to RMF file
-     @param create whether to create the file or just open it
-     @exception IOException if couldn't create file or unsupported file format
-   */
-  RMFEXPORT boost::shared_ptr<SharedData> create_shared_data(std::string path,
-                                                             bool create);
-
-  /**
-     Construct shared data for the RMF file in 'path' in read only mode
-     Note on internal implementation - stores results in internal cache
-
-     @param path path to RMF file
-     @param create whether to create the file or just open it
-     @exception RMF::IOException if couldn't open file or unsupported file
-                format
-   */
-  RMFEXPORT boost::shared_ptr<SharedData> create_read_only_shared_data(
-      std::string path);
-
-  RMFEXPORT boost::shared_ptr<SharedData> create_shared_data_in_buffer(
-      std::string& buffer, bool create);
-
-  RMFEXPORT boost::shared_ptr<SharedData>
-      create_read_only_shared_data_from_buffer(const std::string& buffer);
 
   }  // namespace internal
 } /* namespace RMF */

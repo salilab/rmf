@@ -8,6 +8,7 @@
 
 #include <RMF/FileConstHandle.h>
 #include <RMF/internal/SharedData.h>
+#include <RMF/internal/shared_data_factories.h>
 #include <RMF/Validator.h>
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <sstream>
@@ -18,11 +19,6 @@ namespace RMF {
 
 FileConstHandle::FileConstHandle(boost::shared_ptr<internal::SharedData> shared)
     : shared_(shared) {}
-
-// \exception RMF::IOException couldn't open file,
-//                             or if unsupported file format
-FileConstHandle::FileConstHandle(std::string name)
-    : shared_(internal::create_read_only_shared_data(name)) {}
 
 NodeConstHandle FileConstHandle::get_node(NodeID id) const {
   return NodeConstHandle(id, shared_);
@@ -54,12 +50,7 @@ Floats get_values(const NodeConstHandles& nodes, FloatKey k,
 }
 
 FileConstHandle open_rmf_file_read_only(std::string path) {
-  return FileConstHandle(path);
-}
-
-FileConstHandle open_rmf_buffer_read_only(const std::string& buffer) {
-  return FileConstHandle(
-      internal::create_read_only_shared_data_from_buffer(buffer));
+  return FileConstHandle(internal::read_file(path));
 }
 
 void FileConstHandle::validate(std::ostream& out = std::cerr) {

@@ -25,7 +25,7 @@ class SingleAvroFile : public AvroKeysAndCategories {
   bool dirty_;
   bool text_;
 
-  std::string* buffer_;
+  std::vector<char> buffer_;
   bool write_to_buffer_;
 
   RMF_avro_backend::Data null_frame_data_;
@@ -144,8 +144,8 @@ class SingleAvroFile : public AvroKeysAndCategories {
   RMF_BACKEND_VIRTUAL void reload() RMF_BACKEND_OVERRIDE;
 
   SingleAvroFile(std::string path, bool create, bool read_only);
-  SingleAvroFile(std::string& buffer, bool create);
-  SingleAvroFile(const std::string& buffer);
+  SingleAvroFile(const std::vector<char> &buffer);
+  SingleAvroFile();
   ~SingleAvroFile() { flush(); }
   RMF_BACKEND_VIRTUAL FrameID
       add_frame(std::string name, FrameType t) RMF_BACKEND_OVERRIDE;
@@ -165,6 +165,7 @@ class SingleAvroFile : public AvroKeysAndCategories {
       return "Single avro version 1 (binary)";
     }
   }
+  RMF_BACKEND_VIRTUAL std::vector<char> get_buffer() RMF_BACKEND_OVERRIDE;
 };
 
 }  // namespace avro_backend

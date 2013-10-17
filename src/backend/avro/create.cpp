@@ -51,14 +51,12 @@ boost::shared_ptr<internal::SharedData> create_shared_data(std::string path,
     return boost::shared_ptr<SingleAvroShareData>();
   }
 }
-boost::shared_ptr<internal::SharedData> create_shared_data_buffer(
-    std::string& buffer, bool create) {
-  RMF_INFO(get_avro_logger(),
-           (create ? "Created rmf in buffer" : "Opened rmf from buffer"));
-  return boost::make_shared<SingleAvroShareData>(boost::ref(buffer), create);
+boost::shared_ptr<internal::SharedData> create_shared_data_buffer() {
+  RMF_INFO(get_avro_logger(), "Created rmf in buffer");
+  return boost::make_shared<SingleAvroShareData>();
 }
-boost::shared_ptr<internal::SharedData> create_shared_data_buffer(
-    const std::string& buffer) {
+boost::shared_ptr<internal::SharedData> open_shared_data_buffer(
+    const std::vector<char>& buffer) {
   RMF_INFO(get_avro_logger(), "Opened rmf from buffer, read-only");
   return boost::make_shared<SingleAvroShareData>(buffer);
 }

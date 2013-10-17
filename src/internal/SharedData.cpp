@@ -13,8 +13,6 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/version.hpp>
-#include <backend/hdf5/create.h>
-#include <backend/avro/create.h>
 #include <RMF/log.h>
 
 RMF_ENABLE_WARNINGS namespace RMF {
@@ -75,72 +73,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
 #endif
   }
 
-  namespace {
-  boost::shared_ptr<SharedData> create_shared_data_internal(std::string path,
-                                                            bool create,
-                                                            bool read_only) {
-    try {
-      boost::shared_ptr<SharedData> ret;
-      if ((ret = hdf5_backend::create_shared_data(path, create, read_only))) {
-        return ret;
-      } else if ((ret = avro_backend::create_shared_data(path, create,
-                                                         read_only))) {
-        return ret;
-      } else {
-        RMF_THROW(Message("Don't know how to open file"), IOException);
-      }
-    }
-    catch (Exception& e) {
-      RMF_RETHROW(File(path), e);
-    }
-  }
-  }
-
-  // throws RMF::IOException if couldn't create file or unsupported file
-  // format
-  boost::shared_ptr<SharedData> create_shared_data(std::string path,
-                                                   bool create) {
-    return create_shared_data_internal(path, create, false);
-  }
-
-  boost::shared_ptr<SharedData> create_read_only_shared_data(std::string path) {
-    return create_shared_data_internal(path, false, true);
-  }
-
-  boost::shared_ptr<SharedData> create_shared_data_in_buffer(
-      std::string& buffer, bool create) {
-    try {
-      boost::shared_ptr<SharedData> ret;
-      if ((ret = hdf5_backend::create_shared_data_buffer(buffer, create))) {
-        return ret;
-      } else if ((ret = avro_backend::create_shared_data_buffer(buffer,
-                                                                create))) {
-        return ret;
-      } else {
-        RMF_THROW(Message("Don't know how to open file"), IOException);
-      }
-    }
-    catch (Exception& e) {
-      RMF_RETHROW(File("buffer"), e);
-    }
-  }
-
-  boost::shared_ptr<SharedData> create_read_only_shared_data_from_buffer(
-      const std::string& buffer) {
-    try {
-      boost::shared_ptr<SharedData> ret;
-      if ((ret = hdf5_backend::create_shared_data_buffer(buffer))) {
-        return ret;
-      } else if ((ret = avro_backend::create_shared_data_buffer(buffer))) {
-        return ret;
-      } else {
-        RMF_THROW(Message("Don't know how to open file"), IOException);
-      }
-    }
-    catch (Exception& e) {
-      RMF_RETHROW(File("buffer"), e);
-    }
-  }
 
   }  // namespace internal
 } /* namespace RMF */

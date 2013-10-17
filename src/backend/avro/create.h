@@ -11,6 +11,7 @@
 #include <RMF/config.h>
 #include <boost/shared_ptr.hpp>
 #include <string>
+#include <vector>
 
 RMF_ENABLE_WARNINGS
 
@@ -21,10 +22,9 @@ class SharedData;
 namespace avro_backend {
 RMFEXPORT boost::shared_ptr<internal::SharedData> create_shared_data(
     std::string path, bool create, bool read_only);
-RMFEXPORT boost::shared_ptr<internal::SharedData> create_shared_data_buffer(
-    std::string& buffer, bool create);
-RMFEXPORT boost::shared_ptr<internal::SharedData> create_shared_data_buffer(
-    const std::string& buffer);
+RMFEXPORT boost::shared_ptr<internal::SharedData> open_shared_data_buffer(
+    const std::vector<char>& buffer);
+RMFEXPORT boost::shared_ptr<internal::SharedData> create_shared_data_buffer();
 }  // namespace avro_backend
 } /* namespace RMF */
 

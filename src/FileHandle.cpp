@@ -8,6 +8,7 @@
 
 #include <RMF/FileHandle.h>
 #include <RMF/internal/SharedData.h>
+#include <RMF/internal/shared_data_factories.h>
 
 RMF_ENABLE_WARNINGS
 
@@ -17,11 +18,6 @@ namespace RMF {
 
 FileHandle::FileHandle(boost::shared_ptr<internal::SharedData> shared)
     : FileConstHandle(shared) {}
-
-// \exception RMF::IOException if couldn't create file,
-//                             or if unsupported file format
-FileHandle::FileHandle(std::string name, bool create)
-    : FileConstHandle(internal::create_shared_data(name, create)) {}
 
 NodeHandle FileHandle::get_node(NodeID id) const {
   return NodeHandle(id, shared_);
@@ -54,12 +50,20 @@ FrameID FileHandle::add_frame(std::string name, FrameType t) const {
   return ret;
 }
 
-FileHandle open_rmf_file(std::string path) { return FileHandle(path, false); }
+FileHandle open_rmf_file(std::string path) {
+  return FileHandle(internal::write_file(path));
+}
 
-FileHandle create_rmf_file(std::string path) { return FileHandle(path, true); }
+FileHandle create_rmf_file(std::string path) {
+  return FileHandle(internal::create_file(path));
+}
 
-FileHandle create_rmf_buffer(std::string& buffer) {
-  return FileHandle(internal::create_shared_data_in_buffer(buffer, true));
+FileHandle create_rmf_buffer() {
+  return FileHandle(internal::create_buffer());
+}
+
+FileHandle open_rmf_buffer(const std::vector<char> &buffer) {
+  return FileHandle(internal::open_buffer(buffer));
 }
 
 } /* namespace RMF */

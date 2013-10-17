@@ -40,34 +40,30 @@ SingleAvroFile::SingleAvroFile(std::string path, bool create,
   null_static_frame_data_.frame = -1;
 }
 
-SingleAvroFile::SingleAvroFile(std::string& path, bool create)
+SingleAvroFile::SingleAvroFile()
     : AvroKeysAndCategories("buffer"),
       dirty_(false),
       text_(false),
-      buffer_(&path),
       write_to_buffer_(true) {
-  if (!create) {
-    reload();
-  } else {
-    initialize_frames();
-    initialize_categories();
-    initialize_node_keys();
-    all_.file.version = 1;
-  }
+  initialize_frames();
+  initialize_categories();
+  initialize_node_keys();
+  all_.file.version = 1;
   null_static_frame_data_.frame = -1;
 }
 
-SingleAvroFile::SingleAvroFile(const std::string& path)
+SingleAvroFile::SingleAvroFile(const std::vector<char>& buffer)
     : AvroKeysAndCategories("buffer"),
       dirty_(false),
       text_(false),
-      buffer_(const_cast<std::string*>(&path)),
+      buffer_(buffer),
       write_to_buffer_(true) {
   reload();
   null_static_frame_data_.frame = -1;
-
-  // so we don't write to it
-  buffer_ = NULL;
+}
+std::vector<char> SingleAvroFile::get_buffer() {
+  flush();
+  return buffer_;
 }
 
 void SingleAvroFile::initialize_frames() {
@@ -104,7 +100,7 @@ void SingleAvroFile::flush() {
                  get_file_path());
     }
   } else {
-    buffer_->clear();
+    buffer_.clear();
     std::ostringstream oss(std::ios_base::binary);
     boost::scoped_ptr<rmf_avro::OutputStream> os(
         rmf_avro::ostreamOutputStream(oss).release());
@@ -114,7 +110,8 @@ void SingleAvroFile::flush() {
     os->flush();
     encoder.reset();
     os.reset();
-    *buffer_ = oss.str();
+    const std::string &str = oss.str();
+    buffer_ = std::vector<char>(str.begin(), str.end());
   }
   dirty_ = false;
 }
@@ -152,9 +149,8 @@ void SingleAvroFile::reload() {
       RMF_THROW(Message("Can't read input file on reload"), IOException);
     }
   } else {
-    std::istringstream iss(*buffer_, std::ios_base::binary);
-    boost::scoped_ptr<rmf_avro::InputStream> is(
-        rmf_avro::istreamInputStream(iss).release());
+    boost::scoped_ptr<rmf_avro::InputStream> is(rmf_avro::memoryInputStream(
+        reinterpret_cast<uint8_t*>(&buffer_[0]), buffer_.size()).release());
     boost::shared_ptr<rmf_avro::Decoder> decoder = rmf_avro::binaryDecoder();
     decoder->init(*is);
     rmf_avro::decode(*decoder, all_);

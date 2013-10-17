@@ -41,7 +41,6 @@ class RMFEXPORT FileHandle : public FileConstHandle {
   FileHandle() {}
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
   FileHandle(boost::shared_ptr<internal::SharedData> shared_);
-  FileHandle(std::string name, bool create);
 #endif
 
   /** Return the root of the hierarchy stored in the file.
@@ -88,6 +87,13 @@ class RMFEXPORT FileHandle : public FileConstHandle {
        should be safe to open the file in another process for reading.
    */
   void flush() const;
+
+#ifndef SWIG
+  /** Extract the current state of the RMF serialized into a std::vector. Throws
+      an exception if this is not supported by the used backend.
+   */
+  std::vector<char> get_buffer() const { return shared_->get_buffer(); }
+#endif
 };
 
 /**
@@ -104,7 +110,17 @@ RMFEXPORT FileHandle create_rmf_file(std::string path);
 
    \param buffer The buffer to place the contents in.
  */
-RMFEXPORT FileHandle create_rmf_buffer(std::string& buffer);
+RMFEXPORT FileHandle create_rmf_buffer();
+
+/**
+   Open an RMF from a buffer.
+
+   \param buffer a buffer containing an RMF
+   \exception RMF::IOException couldn't parse the buffer,
+   or unsupported file format
+ */
+RMFEXPORT FileHandle open_rmf_buffer(const std::vector<char>& buffer);
+
 #endif
 
 /**

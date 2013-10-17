@@ -3,7 +3,6 @@ import sys
 import os.path
 import os
 # first is directory, second data, third subnamespace
-print sys.argv
 output_directory = sys.argv[1]
 inputs = sys.argv[2:]
 
