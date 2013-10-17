@@ -11,8 +11,7 @@
 #include <RMF/Nullable.h>
 #include <RMF/SetCurrentFrame.h>
 #include <RMF/Validator.h>
-#include <RMF/Vector3D.h>
-#include <RMF/Vector4D.h>
+#include <RMF/Vector.h>
 #include <RMF/compiler_macros.h>
 #include <RMF/constants.h>
 #include <RMF/decorator_utility.h>

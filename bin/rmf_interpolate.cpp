@@ -17,22 +17,22 @@
 namespace {
 std::string description("Generate a new file that interpolates an old one.");
 
-#define RMF_INTERPOLATE(factory, attribute, noise, normalize)    \
-  {                                                              \
-    RMF::Floats c0 = factory##cf0.get(input0).get_##attribute(); \
-    RMF::Floats c1 = factory##cf1.get(input1).get_##attribute(); \
-    RMF::Floats result(c0.size());                               \
-    double mag2 = 0.0;                                           \
-    for (unsigned int i = 0; i < c0.size(); ++i) {               \
-      result[i] = (1.0 - frac) * c0[i] + frac * c1[i] + noise(); \
-      mag2 += result[i] * result[i];                             \
-    }                                                            \
-    if (normalize) {                                             \
-      for (unsigned int i = 0; i < c0.size(); ++i) {             \
-        result[i] /= std::sqrt(mag2);                            \
-      }                                                          \
-    }                                                            \
-    factory##f.get(output).set_##attribute(result);              \
+#define RMF_INTERPOLATE(factory, attribute, noise, normalize, D)    \
+  {                                                                 \
+    RMF::Vector<D> c0 = factory##cf0.get(input0).get_##attribute(); \
+    RMF::Vector<D> c1 = factory##cf1.get(input1).get_##attribute(); \
+    RMF::Vector<D> result;                                          \
+    double mag2 = 0.0;                                              \
+    for (unsigned int i = 0; i < D; ++i) {                          \
+      result[i] = (1.0 - frac) * c0[i] + frac * c1[i] + noise();    \
+      mag2 += result[i] * result[i];                                \
+    }                                                               \
+    if (normalize) {                                                \
+      for (unsigned int i = 0; i < D; ++i) {                        \
+        result[i] /= std::sqrt(mag2);                               \
+      }                                                             \
+    }                                                               \
+    factory##f.get(output).set_##attribute(result);                 \
   }
 
 #define RMF_INTERPOLATE_LIST(factory, attribute, noise)                     \
@@ -63,14 +63,14 @@ void interpolate_frame(
     RMF::CylinderFactory cf, RMF::NodeConstHandle input0,
     RMF::NodeConstHandle input1, RMF::NodeHandle output) {
   if (ipcf0.get_is(input0)) {
-    RMF_INTERPOLATE(ip, coordinates, noise, false);
+    RMF_INTERPOLATE(ip, coordinates, noise, false, 3);
   }
   if (bcf0.get_is(input0)) {
-    RMF_INTERPOLATE(b, coordinates, noise, false);
+    RMF_INTERPOLATE(b, coordinates, noise, false, 3);
   }
   if (rfcf0.get_is(input0)) {
-    RMF_INTERPOLATE(rf, translation, noise, false);
-    RMF_INTERPOLATE(rf, rotation, angle_noise, true);
+    RMF_INTERPOLATE(rf, translation, noise, false, 3);
+    RMF_INTERPOLATE(rf, rotation, angle_noise, true, 4);
   }
   if (ccf0.get_is(input0)) {
     RMF_INTERPOLATE_LIST(c, coordinates, noise);

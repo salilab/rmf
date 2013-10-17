@@ -32,14 +32,16 @@ RMF_ENABLE_WARNINGS namespace RMF {
     RMF_SHOWABLE(CoordinateTransformer, transform_);
     /** Return the global coordinates for a given set of internal coordinates.
      */
-    Floats get_global_coordinates(const Floats& internal) const {
+    Vector3 get_global_coordinates(const Vector3& internal) const {
       return transform_.get_transformed(internal);
     }
 
     /** Return the translational component of the transformation.*/
-    Floats get_translation() const { return transform_.get_translation(); }
+    const Vector3& get_translation() const {
+      return transform_.get_translation();
+    }
     /** Return the rotational component of the transformation as a quaternion.*/
-    Floats get_rotation() const { return transform_.get_rotation(); }
+    const Vector4& get_rotation() const { return transform_.get_rotation(); }
   };
 
 } /* namespace RMF */

@@ -130,7 +130,7 @@ RMF_ENABLE_WARNINGS namespace {
     }
     if (af.get_is(nh)) {
       RMF::AtomConst a = af.get(nh);
-      RMF::Floats coords = a.get_coordinates();
+      RMF::Vector3 coords = a.get_coordinates();
       int element = a.get_element();
       // not safe
       std::string element_name = element_names[element - 1];

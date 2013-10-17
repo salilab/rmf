@@ -11,7 +11,7 @@
 #define RMF_TRANSFORM(f, Name, attribute)       \
   if (f.get_is(nh)) {                           \
     RMF::Name d = f.get(nh);                    \
-    RMF::Floats cs = d.get_##attribute();       \
+    RMF::Vector3 cs = d.get_##attribute();      \
     for (unsigned int i = 0; i < 3; ++i) {      \
       cs[i] = scale * (cs[i] + translation[i]); \
     }                                           \

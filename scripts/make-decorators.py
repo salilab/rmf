@@ -11,22 +11,26 @@ except:
 coordinates = Attributes("coordinates", "Float", ["cartesian x",
                                                   "cartesian y",
                                                   "cartesian z"],
+                         "Vector3",
                          "The coordinates in angstroms.", False,
                          bulk=True)
 static_coordinates = Attributes("coordinates", "Float", ["cartesian x",
                                                          "cartesian y",
                                                          "cartesian z"],
+                                "Vector3",
                                 "The coordinates in angstroms.", True,
                                 bulk=True)
 orientation = Attributes("orientation", "Float", ["orientation r",
                                                   "orientation i",
                                                   "orientation j",
                                                   "orientation k"],
+                         "Vector4",
                          "The orientation as a quaternion.", False)
 static_orientation = Attributes("orientation", "Float", ["orientation r",
                                                          "orientation i",
                                                          "orientation j",
                                                          "orientation k"],
+                                "Vector4",
                                 "The orientation as a quaternion.", True)
 mass = Attribute("mass", "Float", "The mass in Daltons.", True)
 radius = Attribute("radius", "Float", "The radius in angstroms.", True)
@@ -55,12 +59,12 @@ refframe = Decorator(["REPRESENTATION", "ORGANIZATIONAL"], "physics",
                          "rotation", "Float", ["reference frame orientation r",
                                                "reference frame orientation i",
                                                "reference frame orientation j",
-                                               "reference frame orientation k"],
+                                               "reference frame orientation k"], "Vector4",
                          "The rotational part of the relative transformation as a quaternion.", False),
                       Attributes(
                           "translation", "Float", ["reference frame cartesian x",
                                                    "reference frame cartesian y",
-                                                   "reference frame cartesian z"],
+                                                   "reference frame cartesian z"], "Vector3",
                           "The translation part of the relative transformion in angstroms.", False)])
 static_refframe = Decorator(["REPRESENTATION", "ORGANIZATIONAL"], "physics",
                             "StaticReferenceFrame",
@@ -69,12 +73,12 @@ static_refframe = Decorator(["REPRESENTATION", "ORGANIZATIONAL"], "physics",
                                 "rotation", "Float", ["reference frame orientation r",
                                                       "reference frame orientation i",
                                                       "reference frame orientation j",
-                                                      "reference frame orientation k"],
+                                                      "reference frame orientation k"], "Vector4",
                                 "The rotational part of the relative transformation as a quaternion.", True),
                                 Attributes(
                                     "translation", "Float", ["reference frame cartesian x",
                                                              "reference frame cartesian y",
-                                                             "reference frame cartesian z"],
+                                                             "reference frame cartesian z"], "Vector3",
                                     "The translation part of the relative transformion in angstroms.", True)])
 
 bond = Decorator(["BOND"], "physics",
@@ -94,13 +98,13 @@ force = Decorator(["REPRESENTATION"], "physics",
                   "Force", "Forces acting on particles in kCal/mol/A.",
                   [Attributes("force", "Float", ["force cartesian x",
                                                  "force cartesian y",
-                                                 "force cartesian z"], "The force.", False)])
+                                                 "force cartesian z"], "Vector3", "The force.", False)])
 
 torque = Decorator(["REPRESENTATION"], "physics",
                    "Torque", "Torque acting on particles in kCal/mol/radian.",
                    [Attributes("torque", "Float", ["torque cartesian x",
                                                    "torque cartesian y",
-                                                   "torque cartesian z"], "The torque.", False)])
+                                                   "torque cartesian z"], "Vector3", "The torque.", False)])
 
 make_header(
     "physics", [static_particle, particle, static_iparticle, iparticle, pparticle, diffuser,
@@ -123,7 +127,7 @@ colored = Decorator(
     "Colored", "These particles have associated color information.",
     [Attributes("rgb color", "Float", ["rgb color red",
                                        "rgb color green",
-                                       "rgb color blue"],
+                                       "rgb color blue"], "Vector3",
                 "The RGB color. Each component has a value in [0...1].", False)])
 static_colored = Decorator(
     ["REPRESENTATION", "ORGANIZATIONAL", "ALIAS", "FEATURE", "GEOMETRY"],
@@ -131,16 +135,16 @@ static_colored = Decorator(
     "StaticColored", "These particles have associated color information.",
     [Attributes("rgb color", "Float", ["rgb color red",
                                        "rgb color green",
-                                       "rgb color blue"],
+                                       "rgb color blue"], "Vector3",
                 "The RGB color. Each component has a value in [0...1].", True)])
 geometry_coordinates = Attributes("coordinates", "Floats", ["cartesian xs",
                                                             "cartesian ys",
-                                                            "cartesian zs"],
+                                                            "cartesian zs"], "FloatsList",
                                   "Coordinates of the center in angstroms.", False)
 static_geometry_coordinates = Attributes(
     "coordinates", "Floats", ["cartesian xs",
                               "cartesian ys",
-                              "cartesian zs"],
+                              "cartesian zs"], "FloatsList",
     "Coordinates of the center in angstroms.", True)
 geometry_index = Attribute(
     "type", "Index", "The type of the geometric object.", True)

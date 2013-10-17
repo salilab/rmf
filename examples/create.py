@@ -36,7 +36,7 @@ for i in range(0, 5):
     pd.set_mass(120)
     pd.set_radius(4)
     cd = colored_factory.get(r)
-    cd.set_rgb_color([1, 0, 0])
+    cd.set_rgb_color(RMF.Vector3(1, 0, 0))
     if i > 0:
         bs = cg_bond_scores.add_child(str(i), RMF.FEATURE)
         sd = score_factory.get(bs)
@@ -44,7 +44,7 @@ for i in range(0, 5):
     for j in range(0, nframes):
         rmf.set_current_frame(RMF.FrameID(j))
         pdpf = particle_factory.get(r)
-        pdpf.set_coordinates([0, j * i * 4, j * 2])
+        pdpf.set_coordinates(RMF.Vector3(0, j * i * 4, j * 2))
         if i > 0:
             sdpf = score_factory.get(bs)
             sdpf.set_score(j)

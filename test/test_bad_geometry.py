@@ -27,7 +27,7 @@ class GenericTest(unittest.TestCase):
             cn = dg.add_child("cylinder", RMF.GEOMETRY)
 
             cd = colored_factory.get(bn)
-            cd.set_rgb_color([.5, .75, .95])
+            cd.set_rgb_color(RMF.Vector3(.5, .75, .95))
             sc = rmf.get_category("shape")
             rk = rmf.get_float_key(sc, "rgb color red")
             print "stuff"

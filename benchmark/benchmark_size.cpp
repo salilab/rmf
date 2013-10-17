@@ -69,7 +69,7 @@ void add_coordinates(RMF::NodeHandle nh, RMF::ParticleFactory pf) {
     }
   } else {
     RMF::Particle p = pf.get(nh);
-    RMF::Floats coords(3);
+    RMF::Vector3 coords;
     coords[0] = double(rand()) / RAND_MAX;
     coords[1] = double(rand()) / RAND_MAX;
     coords[2] = double(rand()) / RAND_MAX;

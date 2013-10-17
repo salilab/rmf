@@ -104,6 +104,8 @@ _types_list.append(#lcname)
 
 RMF_SWIG_VALUE_INSTANCE(RMF, NodeID, ID<NodeTag>, NodeIDs);
 RMF_SWIG_VALUE_INSTANCE(RMF, FrameID, ID<FrameTag>, FrameIDs);
+RMF_SWIG_VALUE_INSTANCE(RMF, Vector3, Vector<3>, Vector3s);
+RMF_SWIG_VALUE_INSTANCE(RMF, Vector4, Vector<4>, Vector4s);
 RMF_SWIG_NATIVE_VALUES_LIST(RMF, double, Floats, FloatsList);
 RMF_SWIG_NATIVE_VALUES_LIST(RMF, int, Ints, IntsList);
 RMF_SWIG_NATIVE_VALUES_LIST(RMF, std::string, Strings, StringsList);
@@ -179,6 +181,9 @@ RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DECLARE_TYPE);
 
 %include "RMF/constants.h"
 %include "RMF/types.h"
+%include "RMF/Vector.h"
+%template(Vector3) RMF::Vector<3>;
+%template(Vector4) RMF::Vector<4>;
 
 %include "RMF/Nullable.h"
 %include "RMF/Key.h"

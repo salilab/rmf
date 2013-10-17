@@ -249,7 +249,7 @@ class RangeAttribute(AttributePair):
 
 class Attributes(Base):
 
-    def __init__(self, name, attribute_type, keys, doc, is_static, bulk=False):
+    def __init__(self, name, attribute_type, keys, return_type, doc, is_static, bulk=False):
         Base.__init__(self, name, attribute_type +
                       "Keys", attribute_type, doc, is_static)
         self.helpers = """
@@ -267,25 +267,25 @@ class Attributes(Base):
 """ % ";".join("ret.push_back(fh.get_key<TYPETraits>(cat_, \"%s\"));" % x for x in keys)
         self.data_initialize = "get_NAME_keys(fh)"
         self.get_methods = """  /** DOC */
-  TYPES get_NAME() const {
+  %s get_NAME() const {
     try {
-      TYPES ret(NAME_.size());
+      %s ret(NAME_.size());
       for (unsigned int i = 0; i < NAME_.size(); ++i) {
         ret[i] = P::GET(NAME_[i]);
       }
       return ret;
     } RMF_DECORATOR_CATCH( );
   }
-"""
+""" % (return_type, return_type)
         self.set_methods = """  /** DOC */
-  void set_NAME(TYPES v) {
+  void set_NAME(%s v) {
     try {
       for (unsigned int i = 0; i< NAME_.size(); ++i) {
          P::SET(NAME_[i], v[i]);
       }
     } RMF_DECORATOR_CATCH( );
   }
-"""
+""" % return_type
         self.check = " && ".join(
             ["nh.get_has_value(NAME_[%d])" % i for i in range(len(keys))])
         if bulk:
@@ -293,9 +293,9 @@ class Attributes(Base):
   /** Get values from a list of NodeIDs all at the same time. This method
       is a bit experimental and may change.
     */
-  TYPESList get_NAME(FileConstHandle fh,
+  %ss get_NAME(FileConstHandle fh,
                        const NodeIDs &node_ids) const {
-      TYPESList ret(node_ids.size());
+      %ss ret(node_ids.size());
       for (unsigned int i = 0; i< node_ids.size(); ++i) {
         NodeConstHandle nh = fh.get_node(node_ids[i]);
         ret[i].resize(NAME_.size());
@@ -305,7 +305,7 @@ class Attributes(Base):
       }
       return ret;
   }
-"""
+""" % (return_type, return_type)
 decorator = """
   /** DESCRIPTION
 
@@ -508,6 +508,7 @@ def make_header(name, infos, deps):
 #include <RMF/Decorator.h>
 #include <RMF/Factory.h>
 #include <RMF/constants.h>
+#include <RMF/Vector.h>
 #include <RMF/internal/utility.h>
 #include <RMF/internal/paths.h>
 #include <boost/array.hpp>
