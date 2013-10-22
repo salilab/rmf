@@ -7,6 +7,22 @@ output_directory = sys.argv[1]
 inputs = sys.argv[2:]
 
 
+def mkdir(path, clean=True):
+    if os.path.isdir(path):
+        if clean:
+            # remove any old links
+            for f in glob.glob(os.path.join(path, "*")):
+                if os.path.islink(f):
+                    os.unlink(f)
+            # Remove old lists of Python tests
+            for f in glob.glob(os.path.join(path, "*.pytests")):
+                os.unlink(f)
+        return
+    if os.path.isfile(path):
+        os.unlink(path)
+    os.makedirs(path)
+
+
 def rewrite(filename, contents):
     try:
         old = open(filename, "r").read()

@@ -118,7 +118,7 @@ RMF_ENABLE_WARNINGS namespace {
   int write_atoms(std::ostream & out, int current_index,
                   RMF::NodeConstHandle nh, RMF::AtomConstFactory af,
                   RMF::ChainConstFactory cf, RMF::ResidueConstFactory rf,
-                  char chain = -1, int residue_index = -1,
+                  std::string chain = std::string(), int residue_index = -1,
                   std::string residue_type = std::string()) {
     if (cf.get_is(nh)) {
       chain = cf.get(nh).get_chain_id();
@@ -136,7 +136,7 @@ RMF_ENABLE_WARNINGS namespace {
       std::string element_name = element_names[element - 1];
       std::string str = get_pdb_string(
           coords[0], coords[1], coords[2], ++current_index, nh.get_name(),
-          residue_type, (chain == -1 ? ' ' : (chain + 'A')), residue_index, ' ',
+          residue_type, (chain == std::string() ? ' ' : (chain[0])), residue_index, ' ',
           1.0, 0.0, element_name);
       out << str;
     }

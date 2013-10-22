@@ -51,7 +51,9 @@ void fill_chains(RMF::FileHandle fh, RMF::NodeHandle nh) {
   for (unsigned int i = 0; i < 10; ++i) {
     RMF::NodeHandle cur = nh.add_child("chain", RMF::REPRESENTATION);
     RMF::Chain c = cf.get(cur);
-    c.set_chain_id(i);
+    std::ostringstream oss;
+    oss << i;
+    c.set_chain_id(oss.str());
     fill_residues(fh, cur);
   }
 }

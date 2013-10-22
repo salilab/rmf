@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
     RMF_ADD_INPUT_FILE("rmf");
     int frame = 0;
     options.add_options()("frame,f", boost::program_options::value<int>(&frame),
-                          "Frame to use, if -1 show static data");
+                          "Frame to use");
 
     boost::program_options::variables_map vm(process_options(argc, argv));
     RMF::FileConstHandle rh = RMF::open_rmf_file_read_only(input);
@@ -27,11 +27,7 @@ int main(int argc, char** argv) {
     if (!prod.empty()) {
       std::cout << prod << std::endl;
     }
-    if (frame == -1) {
-      rh.set_current_frame(RMF::ALL_FRAMES);
-    } else {
-      rh.set_current_frame(RMF::FrameID(frame));
-    }
+    rh.set_current_frame(RMF::FrameID(frame));
     if (vm.count("decorators")) {
       RMF::show_hierarchy_with_decorators(rh.get_root_node(),
                                           vm.count("verbose"), std::cout);

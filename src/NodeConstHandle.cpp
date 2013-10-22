@@ -95,14 +95,21 @@ std::istream& operator>>(std::istream& in, NodeType& t) {
 }
 
 namespace {
-template <class KT>
-void show_data(NodeConstHandle n, std::ostream& out, const std::vector<KT>& ks,
-               std::string prefix) {
+template <class Traits>
+void show_data(NodeConstHandle n, std::ostream& out,
+               const std::vector<Key<Traits> >& ks, std::string prefix) {
   using std::operator<<;
-  for (unsigned int i = 0; i < ks.size(); ++i) {
-    if (n.get_has_value(ks[i])) {
-      out << std::endl << prefix << n.get_file().get_name(ks[i]) << ": "
-          << Showable(n.get_value(ks[i]));
+  BOOST_FOREACH(Key<Traits> k, ks) {
+     Nullable<Traits> t = n.get_frame_value(k);
+    if (!t.get_is_null()) {
+      out << std::endl << prefix << n.get_file().get_name(k) << ": "
+          << Showable(t.get());
+    } else {
+      Nullable<Traits> ts = n.get_static_value(k);
+      if (!ts.get_is_null()) {
+        out << std::endl << prefix << n.get_file().get_name(k) << ": "
+            << Showable(ts.get()) << "(s)";
+      }
     }
   }
 }

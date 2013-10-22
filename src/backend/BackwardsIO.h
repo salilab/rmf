@@ -11,6 +11,7 @@
 
 #include <RMF/config.h>
 #include "IO.h"
+#include "shared_data_adaptors.h"
 #include <internal/clone_shared_data.h>
 #include <boost/scoped_ptr.hpp>
 #include <boost/foreach.hpp>
@@ -44,8 +45,9 @@ struct BackwardsIO : public IO {
   virtual void load_loaded_frame_category(
       Category category, internal::SharedData *shared_data) RMF_OVERRIDE {
     Category file_cat = sd_->get_category(shared_data->get_name(category));
-    RMF::internal::clone_loaded_values_category(sd_.get(), file_cat,
-                                                shared_data, category);
+    BackwardsAdaptor backwards_shared_data(shared_data);
+    RMF::internal::clone_loaded_values_category(
+        sd_.get(), file_cat, &backwards_shared_data, category);
   }
 
   virtual void save_loaded_frame_category(
@@ -63,9 +65,10 @@ struct BackwardsIO : public IO {
    RMF_INTERNAL_CHECK(
         shared_data->get_loaded_frame() == sd_->get_loaded_frame(),
         "Loaded frames don't match");
+    BackwardsAdaptor backwards_shared_data(shared_data);
     Category file_cat = sd_->get_category(shared_data->get_name(category));
-    RMF::internal::clone_static_values_category(sd_.get(), file_cat,
-                                                shared_data, category);
+    RMF::internal::clone_static_values_category(
+        sd_.get(), file_cat, &backwards_shared_data, category);
   }
 
   virtual void save_static_frame_category(

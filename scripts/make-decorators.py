@@ -222,7 +222,7 @@ residue = Decorator(["REPRESENTATION"], "sequence",
 
 chain = Decorator(["REPRESENTATION"], "sequence",
                   "Chain", "Information regarding a chain.",
-                  [Attribute("chain id", "Index", "The one letter id for the chain (A is 0 etc).", True)])
+                  [Attribute("chain id", "String", "A string identifying the chain.", True)])
 
 domain = Decorator(["REPRESENTATION"], "sequence",
                    "Domain", "Information regarding a domain of a molecule.",
