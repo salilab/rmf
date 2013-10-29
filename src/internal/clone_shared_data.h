@@ -64,10 +64,10 @@ void clone_file(SDA* sda, SDB* sdb) {
 }
 
 template <class Traits, class SDA, class SDB>
-void clone_static_values_type(SDA* sda, Category cata,
-                            SDB* sdb, Category catb) {
+void clone_static_values_type(SDA* sda, Category cata, SDB* sdb,
+                              Category catb) {
   boost::unordered_map<Key<Traits>, Key<Traits> > keys =
-    get_key_map<Traits>(sda, cata, sdb, catb);
+      get_key_map<Traits>(sda, cata, sdb, catb);
   if (keys.empty()) return;
   BOOST_FOREACH(NodeID n, get_nodes(sda)) {
     RMF_TRACE(get_logger(), "Cloning static node " << n);
@@ -82,8 +82,8 @@ void clone_static_values_type(SDA* sda, Category cata,
 }
 
 template <class SDA, class SDB>
-void clone_static_values_category(SDA* sda, Category cata,
-                                SDB* sdb, Category catb) {
+void clone_static_values_category(SDA* sda, Category cata, SDB* sdb,
+                                  Category catb) {
   RMF_INTERNAL_CHECK(sda->get_number_of_nodes() == sdb->get_number_of_nodes(),
                      "Number of nodes don't match.");
   RMF_INTERNAL_CHECK(boost::distance(get_nodes(sda)) >= 1,
@@ -111,10 +111,10 @@ void clone_static_data(SDA* sda, SDB* sdb) {
 }
 
 template <class Traits, class SDA, class SDB>
-void clone_loaded_values_type(SDA* sda, Category cata,
-                            SDB* sdb, Category catb) {
+void clone_loaded_values_type(SDA* sda, Category cata, SDB* sdb,
+                              Category catb) {
   boost::unordered_map<Key<Traits>, Key<Traits> > keys =
-    get_key_map<Traits>(sda, cata, sdb, catb);
+      get_key_map<Traits>(sda, cata, sdb, catb);
   if (keys.empty()) return;
   BOOST_FOREACH(NodeID n, get_nodes(sda)) {
     RMF_TRACE(get_logger(), "Cloning loaded node " << n);
@@ -132,8 +132,8 @@ void clone_loaded_values_type(SDA* sda, Category cata,
 }
 
 template <class SDA, class SDB>
-void clone_loaded_values_category(SDA* sda, Category cata,
-                                SDB* sdb, Category catb) {
+void clone_loaded_values_category(SDA* sda, Category cata, SDB* sdb,
+                                  Category catb) {
   RMF_INTERNAL_CHECK(sda->get_number_of_nodes() == sdb->get_number_of_nodes(),
                      "Number of nodes don't match.");
   RMF_INTERNAL_CHECK(boost::distance(get_nodes(sda)) >= 1,

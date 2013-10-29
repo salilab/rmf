@@ -59,7 +59,6 @@ RMF_ENABLE_WARNINGS
   std::string get_name(UCName##Key k) const;                               \
                                                                            \
  public:
-
 RMF_VECTOR_DECL(NodeConstHandle);
 
 namespace RMF {

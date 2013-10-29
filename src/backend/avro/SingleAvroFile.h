@@ -128,7 +128,6 @@ class SingleAvroFile : public AvroKeysAndCategories {
   }
 
  public:
-
   unsigned int get_number_of_nodes() const { return all_.nodes.size(); }
 
   void set_loaded_frame(FrameID frame) {

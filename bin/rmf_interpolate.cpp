@@ -154,7 +154,7 @@ int main(int argc, char** argv) {
     for (unsigned int j = 0; j < irh0.get_number_of_frames() - 1; ++j) {
       std::cout << "Processing frame " << j << std::endl;
       irh0.set_current_frame(RMF::FrameID(j));
-      irh1.set_current_frame(RMF::FrameID(j+1));
+      irh1.set_current_frame(RMF::FrameID(j + 1));
       orh.add_frame(irh0.get_current_frame_name(), RMF::FRAME);
       RMF::clone_loaded_frame(irh0, orh);
       if (j + 1 < irh0.get_number_of_frames()) {

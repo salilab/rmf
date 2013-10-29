@@ -37,6 +37,7 @@ class SharedDataLoadedFrame {
                        "ALL_FRAMES in SharedDataLoadedFrame.");
     id_ = id;
   }
+
  public:
   SharedDataLoadedFrame() {}
   std::string get_loaded_frame_name() const { return name_; }

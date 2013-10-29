@@ -62,8 +62,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     Transform(const Transform& a, const Transform& b) : rot_(a.rot_, b.rot_) {
       trans_ = a.get_transformed(b.get_translation());
     }
-    Transform(const Rotation& r, const Vector3& t) : rot_(r), trans_(t) {
-    }
+    Transform(const Rotation& r, const Vector3& t) : rot_(r), trans_(t) {}
     Vector3 get_transformed(const Vector3& o) const {
       Vector3 ret = rot_.get_rotated(o);
       ret[0] += trans_[0];

@@ -75,7 +75,7 @@ class IOFactory {
   virtual boost::shared_ptr<IO> write_file(const std::string &) const {
     return boost::shared_ptr<IO>();
   }
-  virtual boost::shared_ptr<IO> open_buffer(const std::vector<char>&) const {
+  virtual boost::shared_ptr<IO> open_buffer(const std::vector<char> &) const {
     return boost::shared_ptr<IO>();
   }
   virtual boost::shared_ptr<IO> create_file(const std::string &) const {

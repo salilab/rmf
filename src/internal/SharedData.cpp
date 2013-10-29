@@ -80,7 +80,7 @@ void SharedData::save_loaded_frame() {
   io_->save_loaded_frame(this);
   BOOST_FOREACH(Category cat, get_categories()) {
     RMF_TRACE(get_logger(), "Saving frame category " << get_loaded_frame()
-                                                    << ": " << get_name(cat));
+                                                     << ": " << get_name(cat));
     io_->save_loaded_frame_category(cat, this);
   }
 }

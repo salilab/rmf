@@ -100,7 +100,7 @@ void show_data(NodeConstHandle n, std::ostream& out,
                const std::vector<Key<Traits> >& ks, std::string prefix) {
   using std::operator<<;
   BOOST_FOREACH(Key<Traits> k, ks) {
-     Nullable<Traits> t = n.get_frame_value(k);
+    Nullable<Traits> t = n.get_frame_value(k);
     if (!t.get_is_null()) {
       out << std::endl << prefix << n.get_file().get_name(k) << ": "
           << Showable(t.get());

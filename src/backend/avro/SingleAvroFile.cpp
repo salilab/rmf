@@ -110,7 +110,7 @@ void SingleAvroFile::flush() {
     os->flush();
     encoder.reset();
     os.reset();
-    const std::string &str = oss.str();
+    const std::string& str = oss.str();
     buffer_ = std::vector<char>(str.begin(), str.end());
   }
   dirty_ = false;

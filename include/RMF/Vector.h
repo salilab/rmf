@@ -36,13 +36,13 @@ class Vector {
     std::copy(input.begin(), input.end(), data_);
   }
   Vector(double x, double y, double z) {
-    RMF_USAGE_CHECK(D==3, "3 args to non-3D constructor");
+    RMF_USAGE_CHECK(D == 3, "3 args to non-3D constructor");
     data_[0] = x;
     data_[1] = y;
     data_[2] = z;
   }
   Vector(double x, double y, double z, double q) {
-    RMF_USAGE_CHECK(D==4, "4 args to non-4D constructor");
+    RMF_USAGE_CHECK(D == 4, "4 args to non-4D constructor");
     data_[0] = x;
     data_[1] = y;
     data_[2] = z;

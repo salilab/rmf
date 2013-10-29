@@ -133,8 +133,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
       cache_[ijk[0]][ijk[1]] = value;
       dirty_ = true;
     }
-    typename TypeTraits::Type get_value(
-        const HDF5::DataSetIndexD<2>& ijk) const {
+    typename TypeTraits::Type get_value(const HDF5::DataSetIndexD<2>& ijk)
+        const {
       typename TypeTraits::Type ret = cache_[ijk[0]][ijk[1]];
       return ret;
     }

@@ -58,9 +58,7 @@ FileHandle create_rmf_file(std::string path) {
   return FileHandle(internal::create_file(path));
 }
 
-FileHandle create_rmf_buffer() {
-  return FileHandle(internal::create_buffer());
-}
+FileHandle create_rmf_buffer() { return FileHandle(internal::create_buffer()); }
 
 FileHandle open_rmf_buffer(const std::vector<char> &buffer) {
   return FileHandle(internal::open_buffer(buffer));

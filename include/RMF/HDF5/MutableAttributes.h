@@ -43,7 +43,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
     MutableAttributes();
 #endif
    public:
-
     /** \name Template attribute methods
         When manipulating attriutes from C++ you can use these
         templated methods.

@@ -156,8 +156,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
       flush();
       return get_as<typename TypeTraits::Types>(ds_.get_row(ij));
     }
-    typename TypeTraits::Type get_value(
-        const HDF5::DataSetIndexD<3>& ijk) const {
+    typename TypeTraits::Type get_value(const HDF5::DataSetIndexD<3>& ijk)
+        const {
       RMF_INTERNAL_CHECK(ijk[2] == get_current_frame(), "Frames don't match");
       typename TypeTraits::Type ret = cache_[ijk[0]][ijk[1]];
       return ret;

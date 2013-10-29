@@ -30,9 +30,7 @@ class SharedDataHierarchy {
   bool dirty_;
 
  public:
-  SharedDataHierarchy() {
-    clear();
-  }
+  SharedDataHierarchy() { clear(); }
 
   unsigned int get_number_of_nodes() const { return hierarchy_.size(); }
 

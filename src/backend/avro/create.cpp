@@ -28,8 +28,6 @@ typedef backends::BackwardsIO<avro_backend::AvroSharedData<
 typedef backends::BackwardsIO<avro_backend::AvroSharedData<
     avro_backend::MultipleAvroFileReader> > AvroReaderShareData;
 
-
-
 struct SingleTextAvroFactory : public RMF::backends::IOFactory {
   virtual std::string get_file_extension() const RMF_OVERRIDE {
     return ".rmft";
@@ -51,8 +49,6 @@ struct SingleTextAvroFactory : public RMF::backends::IOFactory {
 
 backends::IOFactoryRegistrar<SingleTextAvroFactory> registrart;
 
-
-
 class SingleAvroFactory : public SingleTextAvroFactory {
   virtual std::string get_file_extension() const RMF_OVERRIDE {
     return ".rmfa";
@@ -70,9 +66,6 @@ class SingleAvroFactory : public SingleTextAvroFactory {
 
 backends::IOFactoryRegistrar<SingleAvroFactory> registrars;
 
-
-
-
 class MultipleAvroFactory : public RMF::backends::IOFactory {
   virtual std::string get_file_extension() const RMF_OVERRIDE {
     return ".rmf2";
@@ -89,7 +82,6 @@ class MultipleAvroFactory : public RMF::backends::IOFactory {
 };
 
 backends::IOFactoryRegistrar<MultipleAvroFactory> registrar2;
-
 
 }  // namespace
 }  // namespace avro_backend

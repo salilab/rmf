@@ -21,14 +21,14 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 namespace avro_backend {
 
-std::string MultipleAvroFileBase::get_category_dynamic_file_path(
-    Category cat) const {
+std::string MultipleAvroFileBase::get_category_dynamic_file_path(Category cat)
+    const {
   boost::filesystem::path base = get_file_path();
   boost::filesystem::path full = base / (get_name(cat) + ".frames");
   return full.string();
 }
-std::string MultipleAvroFileBase::get_category_static_file_path(
-    Category cat) const {
+std::string MultipleAvroFileBase::get_category_static_file_path(Category cat)
+    const {
   boost::filesystem::path base = get_file_path();
   boost::filesystem::path full = base / (get_name(cat) + ".static");
   return full.string();

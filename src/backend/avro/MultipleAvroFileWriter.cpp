@@ -52,11 +52,11 @@ MultipleAvroFileWriter::MultipleAvroFileWriter(std::string path, bool create,
 
 MultipleAvroFileWriter::~MultipleAvroFileWriter() { commit(); }
 
-#define RMF_COMMIT(UCName, lcname)                                            \
-  if (lcname##_dirty_) {                                                      \
-    write(lcname##_,                                                          \
+#define RMF_COMMIT(UCName, lcname)                                         \
+  if (lcname##_dirty_) {                                                   \
+    write(lcname##_,                                                       \
           rmf_avro::compileJsonSchemaFromString(data_avro::lcname##_json), \
-          get_##lcname##_file_path());                                        \
+          get_##lcname##_file_path());                                     \
   }
 
 void MultipleAvroFileWriter::commit() {
@@ -68,8 +68,8 @@ void MultipleAvroFileWriter::commit() {
         try {
           categories_[i].writer.reset(
               new rmf_avro::DataFileWriter<RMF_avro_backend::Data>(
-                  name.c_str(), rmf_avro::compileJsonSchemaFromString(
-                                    data_avro::data_json)));
+                  name.c_str(),
+                  rmf_avro::compileJsonSchemaFromString(data_avro::data_json)));
         }
         catch (const std::exception& e) {
           RMF_THROW(Message(e.what()) << Component(name), IOException);

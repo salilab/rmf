@@ -78,9 +78,9 @@ bool get_equal_structure(FileConstHandle in, FileConstHandle out,
   return ret;
 }
 
-
 bool get_equal_current_values(FileConstHandle in, FileConstHandle out) {
-  return internal::get_equal_current_values(in.shared_.get(), out.shared_.get());
+  return internal::get_equal_current_values(in.shared_.get(),
+                                            out.shared_.get());
 }
 
 bool get_equal_static_values(FileConstHandle in, FileConstHandle out) {

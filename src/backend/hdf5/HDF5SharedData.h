@@ -556,7 +556,6 @@ class HDF5SharedData : public backends::BackwardsIOBase {
   }
 
  public:
-
   template <class TypeTraits>
   typename TypeTraits::Type get_loaded_value(NodeID node,
                                              Key<TypeTraits> k) const {

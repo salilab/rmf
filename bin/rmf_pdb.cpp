@@ -136,8 +136,8 @@ RMF_ENABLE_WARNINGS namespace {
       std::string element_name = element_names[element - 1];
       std::string str = get_pdb_string(
           coords[0], coords[1], coords[2], ++current_index, nh.get_name(),
-          residue_type, (chain == std::string() ? ' ' : (chain[0])), residue_index, ' ',
-          1.0, 0.0, element_name);
+          residue_type, (chain == std::string() ? ' ' : (chain[0])),
+          residue_index, ' ', 1.0, 0.0, element_name);
       out << str;
     }
     RMF::NodeConstHandles ch = nh.get_children();

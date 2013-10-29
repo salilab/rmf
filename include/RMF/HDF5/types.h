@@ -65,49 +65,48 @@ RMF_ENABLE_WARNINGS namespace RMF {
   RMF_TRAITS(String, Strings, string, 3, internal::get_string_type(),
              internal::get_string_type(), internal::get_string_type(),
              std::string, String(), i.empty(),
-             {
-               char* c;
-               if (!v.empty()) {
-                 c = const_cast<char*>(v.c_str());
-               } else {
-                 static char empty = '\0';
-                 c = &empty;
-               }
-               RMF_HDF5_CALL(
-                   H5Dwrite(d, get_hdf5_memory_type(), is, s, H5P_DEFAULT, &c));
-             },
-             {
-               char* c = NULL;
-               RMF_HDF5_HANDLE(mt, internal::create_string_type(), H5Tclose);
-               RMF_HDF5_CALL(H5Dread(d, mt, is, sp, H5P_DEFAULT, &c));
-               if (c) {
-                 ret = std::string(c);
-               }
-               free(c);
-             },
-             {
-               RMF_UNUSED(d);
-               RMF_UNUSED(is);
-               RMF_UNUSED(s);
-               RMF_NOT_IMPLEMENTED;
-             },
-             {
-               RMF_UNUSED(d);
-               RMF_UNUSED(is);
-               RMF_UNUSED(sp);
-               RMF_UNUSED(sz);
-               RMF_NOT_IMPLEMENTED;
-             },
-             {
-               RMF_UNUSED(a);
-               RMF_UNUSED(v);
-               RMF_NOT_IMPLEMENTED;
-             },
-             {
-               RMF_UNUSED(a);
-               RMF_UNUSED(sz);
-               RMF_NOT_IMPLEMENTED;
-             },
+  {
+    char* c;
+    if (!v.empty()) {
+      c = const_cast<char*>(v.c_str());
+    } else {
+      static char empty = '\0';
+      c = &empty;
+    }
+    RMF_HDF5_CALL(H5Dwrite(d, get_hdf5_memory_type(), is, s, H5P_DEFAULT, &c));
+  },
+  {
+    char* c = NULL;
+    RMF_HDF5_HANDLE(mt, internal::create_string_type(), H5Tclose);
+    RMF_HDF5_CALL(H5Dread(d, mt, is, sp, H5P_DEFAULT, &c));
+    if (c) {
+      ret = std::string(c);
+    }
+    free(c);
+  },
+  {
+    RMF_UNUSED(d);
+    RMF_UNUSED(is);
+    RMF_UNUSED(s);
+    RMF_NOT_IMPLEMENTED;
+  },
+  {
+    RMF_UNUSED(d);
+    RMF_UNUSED(is);
+    RMF_UNUSED(sp);
+    RMF_UNUSED(sz);
+    RMF_NOT_IMPLEMENTED;
+  },
+  {
+    RMF_UNUSED(a);
+    RMF_UNUSED(v);
+    RMF_NOT_IMPLEMENTED;
+  },
+  {
+    RMF_UNUSED(a);
+    RMF_UNUSED(sz);
+    RMF_NOT_IMPLEMENTED;
+  },
              false);
 
   RMF_TRAITS_ONE(Char, Chars, char, 6, H5T_STD_I8LE, H5T_NATIVE_CHAR,
@@ -118,32 +117,32 @@ RMF_ENABLE_WARNINGS namespace RMF {
                                                            RMF_UNUSED(v);
                                                            RMF_NOT_IMPLEMENTED;
                                                          },
-                 {
-                   RMF_UNUSED(d);
-                   RMF_UNUSED(is);
-                   RMF_UNUSED(sp);
-                   RMF_NOT_IMPLEMENTED;
-                   ret = '\0';
-                 },
-                 {
-                   RMF_UNUSED(d);
-                   RMF_UNUSED(is);
-                   RMF_UNUSED(s);
-                   RMF_NOT_IMPLEMENTED;
-                 },
-                 {
-                   RMF_UNUSED(d);
-                   RMF_UNUSED(is);
-                   RMF_UNUSED(sp);
-                   RMF_UNUSED(sz);
-                   RMF_NOT_IMPLEMENTED;
-                 },
-                 { RMF_HDF5_CALL(H5Awrite(a, H5T_NATIVE_CHAR, v.c_str())); },
-                 {
-                   std::vector<char> v(sz);
-                   RMF_HDF5_CALL(H5Aread(a, H5T_NATIVE_CHAR, &v[0]));
-                   ret = std::string(&v[0], v.size());
-                 },
+  {
+    RMF_UNUSED(d);
+    RMF_UNUSED(is);
+    RMF_UNUSED(sp);
+    RMF_NOT_IMPLEMENTED;
+    ret = '\0';
+  },
+  {
+    RMF_UNUSED(d);
+    RMF_UNUSED(is);
+    RMF_UNUSED(s);
+    RMF_NOT_IMPLEMENTED;
+  },
+  {
+    RMF_UNUSED(d);
+    RMF_UNUSED(is);
+    RMF_UNUSED(sp);
+    RMF_UNUSED(sz);
+    RMF_NOT_IMPLEMENTED;
+  },
+  { RMF_HDF5_CALL(H5Awrite(a, H5T_NATIVE_CHAR, v.c_str())); },
+  {
+    std::vector<char> v(sz);
+    RMF_HDF5_CALL(H5Aread(a, H5T_NATIVE_CHAR, &v[0]));
+    ret = std::string(&v[0], v.size());
+  },
                  false);
 
   } /* namespace HDF5 */

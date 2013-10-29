@@ -30,15 +30,16 @@ struct BackwardsIO : public IO {
 
  public:
   BackwardsIO(std::string name, bool create, bool read_only)
-      : sd_(new SD(name, create, read_only)),
-        name_(name) {}
+      : sd_(new SD(name, create, read_only)), name_(name) {}
   BackwardsIO(const std::vector<char> &buffer)
       : sd_(new SD(buffer)), name_("buffer") {}
   BackwardsIO() : sd_(new SD()), name_("buffer") {}
   virtual ~BackwardsIO() { flush(); }
 
  protected:
-  virtual std::vector<char> get_buffer() RMF_OVERRIDE { return sd_->get_buffer(); }
+  virtual std::vector<char> get_buffer() RMF_OVERRIDE {
+    return sd_->get_buffer();
+  }
 
   virtual void reload() RMF_OVERRIDE { sd_->reload(); }
 
@@ -62,7 +63,7 @@ struct BackwardsIO : public IO {
 
   virtual void load_static_frame_category(
       Category category, internal::SharedData *shared_data) RMF_OVERRIDE {
-   RMF_INTERNAL_CHECK(
+    RMF_INTERNAL_CHECK(
         shared_data->get_loaded_frame() == sd_->get_loaded_frame(),
         "Loaded frames don't match");
     BackwardsAdaptor backwards_shared_data(shared_data);
@@ -89,8 +90,8 @@ struct BackwardsIO : public IO {
     flush();
   }
 
-  virtual void save_loaded_frame(
-      const internal::SharedData *shared_data) RMF_OVERRIDE {
+  virtual void save_loaded_frame(const internal::SharedData *shared_data)
+      RMF_OVERRIDE {
     FrameID cur = shared_data->get_loaded_frame();
     RMF_TRACE(get_logger(), "Saving frame " << cur);
     // ignore nesting relationships for now
@@ -103,8 +104,8 @@ struct BackwardsIO : public IO {
     sd_->set_loaded_frame(cur);
   }
 
-  virtual void load_loaded_frame(
-      internal::SharedData *shared_data) RMF_OVERRIDE {
+  virtual void load_loaded_frame(internal::SharedData *shared_data)
+      RMF_OVERRIDE {
     FrameID cur = shared_data->get_loaded_frame();
     sd_->set_loaded_frame(cur);
     shared_data->set_loaded_frame_name(sd_->get_loaded_frame_name());
@@ -117,8 +118,8 @@ struct BackwardsIO : public IO {
     RMF::internal::clone_hierarchy(sd_.get(), shared_data);
   }
 
-  virtual void save_hierarchy(
-      const internal::SharedData *shared_data) RMF_OVERRIDE {
+  virtual void save_hierarchy(const internal::SharedData *shared_data)
+      RMF_OVERRIDE {
     RMF::internal::clone_hierarchy(shared_data, sd_.get());
   }
 

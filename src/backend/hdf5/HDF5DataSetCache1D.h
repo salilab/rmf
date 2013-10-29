@@ -109,8 +109,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
       dirty_begin_ = std::min<int>(dirty_begin_, ijk[0]);
       dirty_end_ = std::max<int>(dirty_end_, ijk[0] + 1);
     }
-    typename TypeTraits::Type get_value(
-        const HDF5::DataSetIndexD<1>& ijk) const {
+    typename TypeTraits::Type get_value(const HDF5::DataSetIndexD<1>& ijk)
+        const {
       return cache_[ijk[0]];
     }
     HDF5::DataSetIndexD<1> get_size() const {

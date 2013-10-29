@@ -31,11 +31,9 @@ RMF_ENABLE_WARNINGS namespace RMF {
       file to another.*/
   RMFEXPORT void clone_file_info(FileConstHandle input, FileHandle output);
 
-
   /** Copy the hierarchy structure and set structure from one rmf
       file to another.*/
   RMFEXPORT void clone_hierarchy(FileConstHandle input, FileHandle output);
-
 
   /** Copy the data of a single frame from between two files.*/
   RMFEXPORT void clone_loaded_frame(FileConstHandle input, FileHandle output);

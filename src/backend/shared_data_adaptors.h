@@ -22,6 +22,7 @@ class BackwardsAdaptor {
   internal::SharedData* sync_;
   IndexKey old_chain_id;
   StringKey new_chain_id;
+
  public:
   BackwardsAdaptor(internal::SharedData* sd) : sync_(sd) {
     Category sc = sync_->get_category("sequence");
@@ -62,9 +63,7 @@ class BackwardsAdaptor {
   std::string get_name(Key<Traits> k) const {
     return sync_->get_name(k);
   }
-  std::string get_name(Category c) const {
-    return sync_->get_name(c);
-  }
+  std::string get_name(Category c) const { return sync_->get_name(c); }
 };
 
 }  // namespace internal

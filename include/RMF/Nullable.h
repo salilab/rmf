@@ -25,13 +25,12 @@ namespace RMF {
 template <class Traits>
 class Nullable {
   typename Traits::ReturnType v_;
+
  public:
-  Nullable(typename Traits::ReturnType v): v_(v) {}
+  Nullable(typename Traits::ReturnType v) : v_(v) {}
 #ifndef SWIG
   /** \pre !get_is_null() */
-  operator const typename Traits::Type& () const {
-    return get();
-  }
+  operator const typename Traits::Type&() const { return get(); }
   /** \pre !get_is_null() */
   const typename Traits::Type& get() const {
     RMF_USAGE_CHECK(!get_is_null(), "Can't convert null value.");
@@ -46,7 +45,6 @@ class Nullable {
 #endif
 
   bool get_is_null() const { return Traits::get_is_null_value(v_); }
-
 };
 
 } /* namespace RMF */

@@ -34,8 +34,7 @@ AvroSharedData<Base>::AvroSharedData(std::string g, bool create, bool read_only)
 
 template <class Base>
 AvroSharedData<Base>::AvroSharedData(const std::vector<char> &buffer)
-    : Base(buffer) {
-}
+    : Base(buffer) {}
 
 template <class Base>
 AvroSharedData<Base>::AvroSharedData()

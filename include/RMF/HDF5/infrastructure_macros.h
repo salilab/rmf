@@ -68,8 +68,9 @@ using RMF::operator<<;
 #define RMF_TRAITS_ONE(UCName, UCNames, lcname, index, hdf5_disk, hdf5_memory, \
                        hdf5_fill, avro_type, null_value, null_test, wv_ds,     \
                        rv_ds, wvs_ds, rvs_ds, wvs_a, rvs_a, multiple)          \
-  struct RMFEXPORT UCName##Traits : public internal::BaseTraits<               \
-      UCName, UCNames, avro_type, index, multiple> {                           \
+  struct RMFEXPORT UCName##Traits                                              \
+      : public internal::BaseTraits<UCName, UCNames, avro_type, index,         \
+                                    multiple> {                                \
     static hid_t get_hdf5_disk_type() { return hdf5_disk; }                    \
     static hid_t get_hdf5_memory_type() { return hdf5_memory; }                \
     static void write_value_dataset(hid_t d, hid_t is, hid_t s, UCName v) {    \
@@ -117,8 +118,8 @@ using RMF::operator<<;
                  hdf5_fill, avro_type, null_value, null_test, wv_ds, rv_ds,    \
                  wvs_ds, rvs_ds, wvs_a, rvs_a, batch);                         \
   struct UCNames##Traits : public internal::BaseTraits<                        \
-      UCNames, std::vector<UCNames>, std::vector<avro_type>, index + 7,        \
-      false> {                                                                 \
+                               UCNames, std::vector<UCNames>,                  \
+                               std::vector<avro_type>, index + 7, false> {     \
     static hid_t get_hdf5_disk_type() {                                        \
       static RMF_HDF5_HANDLE(                                                  \
           ints_type, H5Tvlen_create(UCName##Traits::get_hdf5_disk_type()),     \
@@ -159,8 +160,7 @@ using RMF::operator<<;
       RMF_UNUSED(s);                                                           \
       RMF_UNUSED(v);                                                           \
       RMF_NOT_IMPLEMENTED;                                                     \
-    }                                                                          \
-    ;                                                                          \
+    };                                                                         \
     static std::vector<UCNames> read_values_dataset(hid_t d, hid_t is,         \
                                                     hid_t sp,                  \
                                                     unsigned int sz) {         \
