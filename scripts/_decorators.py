@@ -69,7 +69,9 @@ class Base:
         return replace("NAME_(NAME)", self.names, const)
 
     def get_data_initialize(self, const):
-        return replace("NAME_(" + self.data_initialize + ")", self.names, const)
+        return (
+            replace("NAME_(" + self.data_initialize + ")", self.names, const)
+        )
 
     def get_check(self, const):
         return replace(self.check, self.names, const)
@@ -116,7 +118,13 @@ class Children(Base):
 
 class Attribute(Base):
 
-    def __init__(self, name, attribute_type, doc, is_static, function_name=None):
+    def __init__(
+        self,
+        name,
+        attribute_type,
+        doc,
+        is_static,
+            function_name=None):
         if not function_name:
             function_name = name.replace(" ", "_")
         Base.__init__(self, name, attribute_type +
@@ -136,7 +144,10 @@ class Attribute(Base):
   }
 
 """ % function_name
-        self.check = "nh.get_has_value(NAME_)"
+        if is_static:
+            self.check = "!nh.get_static_value(NAME_).get_is_null()"
+        else:
+            self.check = "nh.get_has_value(NAME_)"
         self.data_initialize = "fh.get_key<TYPETraits>(cat_, \"%s\")" % name
 
 
@@ -187,7 +198,15 @@ class PathAttribute(Attribute):
 
 class AttributePair(Base):
 
-    def __init__(self, name, data_type, return_type, begin, end, doc, is_static):
+    def __init__(
+            self,
+            name,
+        data_type,
+        return_type,
+        begin,
+        end,
+        doc,
+            is_static):
         Base.__init__(self, name, "boost::array<%sKey, 2>" %
                       data_type, return_type, doc, is_static)
         self.helpers = """  DATA get_NAME_keys(FileCONSTHandle fh) {
@@ -197,7 +216,10 @@ class AttributePair(Base):
      return ret;
     }
 """ % (data_type, begin, data_type, end)
-        self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1])"
+        if is_static:
+            self.check = "!nh.get_static_value(NAME_[0]).get_is_null() && !nh.get_static_value(NAME_[1]).get_is_null()"
+        else:
+            self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1])"
         self.data_initialize = "get_NAME_keys(fh)"
 
 
@@ -221,7 +243,10 @@ class SingletonRangeAttribute(AttributePair):
     } RMF_DECORATOR_CATCH( );
   }
 """
-        self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1]) && nh.GET(NAME_[0]) == nh.GET(NAME_[1])"
+        if is_static:
+            self.check = "!nh.get_static_value(NAME_[0]).get_is_null() && !nh.get_static_value(NAME_[1]).get_is_null() && nh.GET(NAME_[0]) == nh.GET(NAME_[1])"
+        else:
+            self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1]) && nh.GET(NAME_[0]) == nh.GET(NAME_[1])"
 
 
 class RangeAttribute(AttributePair):
@@ -244,12 +269,23 @@ class RangeAttribute(AttributePair):
     } RMF_DECORATOR_CATCH( );
   }
 """
-        self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1]) && nh.GET(NAME_[0]) < nh.GET(NAME_[1])"
+        if is_static:
+            self.check = "!nh.get_static_value(NAME_[0]).get_is_null() && !nh.get_static_value(NAME_[1]).get_is_null() && nh.GET(NAME_[0]) < nh.GET(NAME_[1])"
+        else:
+            self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1]) && nh.GET(NAME_[0]) < nh.GET(NAME_[1])"
 
 
 class Attributes(Base):
 
-    def __init__(self, name, attribute_type, keys, return_type, doc, is_static, bulk=False):
+    def __init__(
+        self,
+        name,
+        attribute_type,
+        keys,
+        return_type,
+        doc,
+        is_static,
+            bulk=False):
         Base.__init__(self, name, attribute_type +
                       "Keys", attribute_type, doc, is_static)
         self.helpers = """
@@ -286,8 +322,12 @@ class Attributes(Base):
     } RMF_DECORATOR_CATCH( );
   }
 """ % return_type
-        self.check = " && ".join(
-            ["nh.get_has_value(NAME_[%d])" % i for i in range(len(keys))])
+        if is_static:
+            self.check = " && ".join(
+                ["!nh.get_static_value(NAME_[%d]).get_is_null()" % i for i in range(len(keys))])
+        else:
+            self.check = " && ".join(
+                ["nh.get_has_value(NAME_[%d])" % i for i in range(len(keys))])
         if bulk:
             self.bulk_get_methods = """
   /** Get values from a list of NodeIDs all at the same time. This method
