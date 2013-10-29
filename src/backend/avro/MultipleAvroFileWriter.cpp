@@ -39,6 +39,8 @@ MultipleAvroFileWriter::MultipleAvroFileWriter(std::string path, bool create,
     : MultipleAvroFileBase(path) {
   RMF_INTERNAL_CHECK(create, "Can only create files");
   RMF_INTERNAL_CHECK(!read_only, "Can only create files");
+  RMF_UNUSED(create);
+  RMF_UNUSED(read_only);
   boost::filesystem::remove_all(path);
   boost::filesystem::create_directory(path);
   frame_.index = -1;

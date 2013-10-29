@@ -99,6 +99,7 @@ struct BackwardsIO : public IO {
       RMF_TRACE(get_logger(), "Adding new frame for " << cur);
       FrameID nfid = sd_->add_frame(shared_data->get_loaded_frame_name(),
                                     shared_data->get_loaded_frame_type());
+      RMF_UNUSED(nfid);
       RMF_INTERNAL_CHECK(nfid == cur, "Number of frames don't match.");
     }
     sd_->set_loaded_frame(cur);

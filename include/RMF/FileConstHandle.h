@@ -179,6 +179,17 @@ class RMFEXPORT FileConstHandle {
     RMF_FILE_CATCH();
   }
 
+
+  /** Return the number of nodes in the file.
+   */
+  unsigned int get_number_of_nodes() const {
+    try {
+      return shared_->get_number_of_nodes();
+    }
+    RMF_FILE_CATCH();
+  }
+
+
   /** Return a string identifying the file type.
   */
   std::string get_file_type() const { return shared_->get_file_type(); }
