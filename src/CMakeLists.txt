@@ -24,6 +24,7 @@ add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/generated/embed_json.h" "${
 
 add_custom_target(RMF-embed DEPENDS "${PROJECT_BINARY_DIR}/src/generated/embed_json.cpp")
 
+set_source_files_properties("${PROJECT_BINARY_DIR}/src/generated/embed_jsons.cpp" PROPERTIES GENERATED True)
 
 add_library(RMF-lib SHARED ${cppfiles} ${avrocpp_sources} "${PROJECT_BINARY_DIR}/src/generated/embed_jsons.cpp")
 add_definitions(-DRMF_EXPORTS)
