@@ -13,7 +13,7 @@ include_directories("${PROJECT_SOURCE_DIR}/src/backend/AvroCpp/api")
 
 
 foreach (jf ${jsonfiles})
-set(jsonfiles_expanded ${jsonfiles_expanded} ${CMAKE_SOURCE_DIR}/src/${jf})
+set(jsonfiles_expanded ${jsonfiles_expanded} ${PROJECT_SOURCE_DIR}/src/${jf})
 endforeach()
 
 add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/generated/embed_json.h" "${PROJECT_BINARY_DIR}/src/generated/embed_json.cpp"
