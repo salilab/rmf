@@ -11,6 +11,7 @@
 
 #include <RMF/config.h>
 #include <RMF/internal/SharedData.h>
+#include <RMF/log.h>
 
 RMF_ENABLE_WARNINGS
 
