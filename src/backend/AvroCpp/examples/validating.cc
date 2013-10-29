@@ -25,44 +25,42 @@
 #include "avro/Specific.hh"
 
 namespace rmf_avro {
-template<typename T>
+template <typename T>
 struct codec_traits<std::complex<T> > {
-    static void encode(Encoder& e, const std::complex<T>& c) {
-        rmf_avro::encode(e, std::real(c));
-        rmf_avro::encode(e, std::imag(c));
-    }
+  static void encode(Encoder &e, const std::complex<T> &c) {
+    rmf_avro::encode(e, std::real(c));
+    rmf_avro::encode(e, std::imag(c));
+  }
 
-    static void decode(Decoder& d, std::complex<T>& c) {
-        T re, im;
-        rmf_avro::decode(d, re);
-        rmf_avro::decode(d, im);
-        c = std::complex<T>(re, im);
-    }
+  static void decode(Decoder &d, std::complex<T> &c) {
+    T re, im;
+    rmf_avro::decode(d, re);
+    rmf_avro::decode(d, im);
+    c = std::complex<T>(re, im);
+  }
 };
-
 }
-int
-main()
-{
-    std::ifstream ifs("cpx.json");
+int main() {
+  std::ifstream ifs("cpx.json");
 
-    rmf_avro::ValidSchema cpxSchema;
-    rmf_avro::compileJsonSchema(ifs, cpxSchema);
+  rmf_avro::ValidSchema cpxSchema;
+  rmf_avro::compileJsonSchema(ifs, cpxSchema);
 
-    std::auto_ptr<rmf_avro::OutputStream> out = rmf_avro::memoryOutputStream();
-    rmf_avro::EncoderPtr e = rmf_avro::validatingEncoder(cpxSchema,
-        rmf_avro::binaryEncoder());
-    e->init(*out);
-    std::complex<double> c1(1.0, 2.0);
-    rmf_avro::encode(*e, c1);
+  std::auto_ptr<rmf_avro::OutputStream> out = rmf_avro::memoryOutputStream();
+  rmf_avro::EncoderPtr e =
+      rmf_avro::validatingEncoder(cpxSchema, rmf_avro::binaryEncoder());
+  e->init(*out);
+  std::complex<double> c1(1.0, 2.0);
+  rmf_avro::encode(*e, c1);
 
-    std::auto_ptr<rmf_avro::InputStream> in = rmf_avro::memoryInputStream(*out);
-    rmf_avro::DecoderPtr d = rmf_avro::validatingDecoder(cpxSchema,
-        rmf_avro::binaryDecoder());
-    d->init(*in);
+  std::auto_ptr<rmf_avro::InputStream> in = rmf_avro::memoryInputStream(*out);
+  rmf_avro::DecoderPtr d =
+      rmf_avro::validatingDecoder(cpxSchema, rmf_avro::binaryDecoder());
+  d->init(*in);
 
-    std::complex<double> c2;
-    rmf_avro::decode(*d, c2);
-    std::cout << '(' << std::real(c2) << ", " << std::imag(c2) << ')' << std::endl;
-    return 0;
+  std::complex<double> c2;
+  rmf_avro::decode(*d, c2);
+  std::cout << '(' << std::real(c2) << ", " << std::imag(c2) << ')'
+            << std::endl;
+  return 0;
 }

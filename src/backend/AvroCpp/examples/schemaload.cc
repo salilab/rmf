@@ -21,12 +21,9 @@
 #include "avro/ValidSchema.hh"
 #include "avro/Compiler.hh"
 
+int main() {
+  std::ifstream in("cpx.json");
 
-int
-main()
-{
-    std::ifstream in("cpx.json");
-
-    rmf_avro::ValidSchema cpxSchema;
-    rmf_avro::compileJsonSchema(in, cpxSchema);
+  rmf_avro::ValidSchema cpxSchema;
+  rmf_avro::compileJsonSchema(in, cpxSchema);
 }

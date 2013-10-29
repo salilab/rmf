@@ -22,19 +22,18 @@
 #include "Compiler.hh"
 #include "ValidSchema.hh"
 
-int main()
-{
-    int ret = 0;
-    try {
-        rmf_avro::ValidSchema schema;
-        rmf_avro::compileJsonSchema(std::cin, schema);
+int main() {
+  int ret = 0;
+  try {
+    rmf_avro::ValidSchema schema;
+    rmf_avro::compileJsonSchema(std::cin, schema);
 
-        schema.toJson(std::cout);
-    }
-    catch (std::exception &e) {
-        std::cerr << "Failed to parse or compile schema: " << e.what() << std::endl;
-        ret = 1;
-    }
+    schema.toJson(std::cout);
+  }
+  catch (std::exception &e) {
+    std::cerr << "Failed to parse or compile schema: " << e.what() << std::endl;
+    ret = 1;
+  }
 
-    return ret;
+  return ret;
 }

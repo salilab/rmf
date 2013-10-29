@@ -30,207 +30,166 @@ namespace rmf_avro {
 using boost::make_shared;
 
 class BinaryDecoder : public Decoder {
-    StreamReader in_;
-    const uint8_t* next_;
-    const uint8_t* end_;
+  StreamReader in_;
+  const uint8_t *next_;
+  const uint8_t *end_;
 
-    void init(InputStream& ib);
-    void decodeNull();
-    bool decodeBool();
-    int32_t decodeInt();
-    int64_t decodeLong();
-    float decodeFloat();
-    double decodeDouble();
-    void decodeString(std::string& value);
-    void skipString();
-    void decodeBytes(std::vector<uint8_t>& value);
-    void skipBytes();
-    void decodeFixed(size_t n, std::vector<uint8_t>& value);
-    void skipFixed(size_t n);
-    size_t decodeEnum();
-    size_t arrayStart();
-    size_t arrayNext();
-    size_t skipArray();
-    size_t mapStart();
-    size_t mapNext();
-    size_t skipMap();
-    size_t decodeUnionIndex();
+  void init(InputStream &ib);
+  void decodeNull();
+  bool decodeBool();
+  int32_t decodeInt();
+  int64_t decodeLong();
+  float decodeFloat();
+  double decodeDouble();
+  void decodeString(std::string &value);
+  void skipString();
+  void decodeBytes(std::vector<uint8_t> &value);
+  void skipBytes();
+  void decodeFixed(size_t n, std::vector<uint8_t> &value);
+  void skipFixed(size_t n);
+  size_t decodeEnum();
+  size_t arrayStart();
+  size_t arrayNext();
+  size_t skipArray();
+  size_t mapStart();
+  size_t mapNext();
+  size_t skipMap();
+  size_t decodeUnionIndex();
 
-    int64_t doDecodeLong();
-    size_t doDecodeItemCount();
-    void more();
+  int64_t doDecodeLong();
+  size_t doDecodeItemCount();
+  void more();
 };
 
-DecoderPtr binaryDecoder()
-{
-    return make_shared<BinaryDecoder>();
+DecoderPtr binaryDecoder() { return make_shared<BinaryDecoder>(); }
+
+void BinaryDecoder::init(InputStream &is) { in_.reset(is); }
+
+void BinaryDecoder::decodeNull() {}
+
+bool BinaryDecoder::decodeBool() {
+  uint8_t v = in_.read();
+  if (v == 0) {
+    return false;
+  } else if (v == 1) {
+    return true;
+  }
+  throw Exception("Invalid value for bool");
 }
 
-void BinaryDecoder::init(InputStream& is)
-{
-    in_.reset(is);
+int32_t BinaryDecoder::decodeInt() {
+  int64_t val = doDecodeLong();
+  if (val < INT32_MIN || val > INT32_MAX) {
+    throw Exception(boost::format("Value out of range for Avro int: %1%") %
+                    val);
+  }
+  return static_cast<int32_t>(val);
 }
 
-void BinaryDecoder::decodeNull()
-{
+int64_t BinaryDecoder::decodeLong() { return doDecodeLong(); }
+
+float BinaryDecoder::decodeFloat() {
+  float result;
+  in_.readBytes(reinterpret_cast<uint8_t *>(&result), sizeof(float));
+  return result;
 }
 
-bool BinaryDecoder::decodeBool()
-{
-    uint8_t v = in_.read();
-    if (v == 0) {
-        return false;
-    } else if (v == 1) {
-        return true;
+double BinaryDecoder::decodeDouble() {
+  double result;
+  in_.readBytes(reinterpret_cast<uint8_t *>(&result), sizeof(double));
+  return result;
+}
+
+void BinaryDecoder::decodeString(std::string &value) {
+  size_t len = decodeInt();
+  value.resize(len);
+  if (len > 0) {
+    in_.readBytes(reinterpret_cast<uint8_t *>(&value[0]), len);
+  }
+}
+
+void BinaryDecoder::skipString() {
+  size_t len = decodeInt();
+  in_.skipBytes(len);
+}
+
+void BinaryDecoder::decodeBytes(std::vector<uint8_t> &value) {
+  size_t len = decodeInt();
+  value.resize(len);
+  if (len > 0) {
+    in_.readBytes(&value[0], len);
+  }
+}
+
+void BinaryDecoder::skipBytes() {
+  size_t len = decodeInt();
+  in_.skipBytes(len);
+}
+
+void BinaryDecoder::decodeFixed(size_t n, std::vector<uint8_t> &value) {
+  value.resize(n);
+  if (n > 0) {
+    in_.readBytes(&value[0], n);
+  }
+}
+
+void BinaryDecoder::skipFixed(size_t n) { in_.skipBytes(n); }
+
+size_t BinaryDecoder::decodeEnum() {
+  return static_cast<size_t>(doDecodeLong());
+}
+
+size_t BinaryDecoder::arrayStart() { return doDecodeItemCount(); }
+
+size_t BinaryDecoder::doDecodeItemCount() {
+  int64_t result = doDecodeLong();
+  if (result < 0) {
+    doDecodeLong();
+    return static_cast<size_t>(-result);
+  }
+  return static_cast<size_t>(result);
+}
+
+size_t BinaryDecoder::arrayNext() {
+  return static_cast<size_t>(doDecodeLong());
+}
+
+size_t BinaryDecoder::skipArray() {
+  for (;;) {
+    int64_t r = doDecodeLong();
+    if (r < 0) {
+      size_t n = static_cast<size_t>(doDecodeLong());
+      in_.skipBytes(n);
+    } else {
+      return static_cast<size_t>(r);
     }
-    throw Exception("Invalid value for bool");
+  }
 }
 
-int32_t BinaryDecoder::decodeInt()
-{
-    int64_t val = doDecodeLong();
-    if (val < INT32_MIN || val > INT32_MAX) {
-        throw Exception(
-            boost::format("Value out of range for Avro int: %1%") % val);
-    }
-    return static_cast<int32_t>(val);
-}
+size_t BinaryDecoder::mapStart() { return doDecodeItemCount(); }
 
-int64_t BinaryDecoder::decodeLong()
-{
-    return doDecodeLong();
-}
+size_t BinaryDecoder::mapNext() { return doDecodeItemCount(); }
 
-float BinaryDecoder::decodeFloat()
-{
-    float result;
-    in_.readBytes(reinterpret_cast<uint8_t *>(&result), sizeof(float));
-    return result;
-}
+size_t BinaryDecoder::skipMap() { return skipArray(); }
 
-double BinaryDecoder::decodeDouble()
-{
-    double result;
-    in_.readBytes(reinterpret_cast<uint8_t *>(&result), sizeof(double));
-    return result;
-}
-
-void BinaryDecoder::decodeString(std::string& value)
-{
-    size_t len = decodeInt();
-    value.resize(len);
-    if (len > 0) {
-        in_.readBytes(reinterpret_cast<uint8_t*>(&value[0]), len);
-    }
-}
-
-void BinaryDecoder::skipString()
-{
-    size_t len = decodeInt();
-    in_.skipBytes(len);
-}
-
-void BinaryDecoder::decodeBytes(std::vector<uint8_t>& value)
-{
-    size_t len = decodeInt();
-    value.resize(len);
-    if (len > 0) {
-        in_.readBytes(&value[0], len);
-    }
-}
-
-void BinaryDecoder::skipBytes()
-{
-    size_t len = decodeInt();
-    in_.skipBytes(len);
-}
-
-void BinaryDecoder::decodeFixed(size_t n, std::vector<uint8_t>& value)
-{
-    value.resize(n);
-    if (n > 0) {
-        in_.readBytes(&value[0], n);
-    }
-}
-
-void BinaryDecoder::skipFixed(size_t n)
-{
-    in_.skipBytes(n);
-}
-
-size_t BinaryDecoder::decodeEnum()
-{
-    return static_cast<size_t>(doDecodeLong());
-}
-
-size_t BinaryDecoder::arrayStart()
-{
-    return doDecodeItemCount();
-}
-
-size_t BinaryDecoder::doDecodeItemCount()
-{
-    int64_t result = doDecodeLong();
-    if (result < 0) {
-        doDecodeLong();
-        return static_cast<size_t>(-result);
-    }
-    return static_cast<size_t>(result);
-}
-
-size_t BinaryDecoder::arrayNext()
-{
-    return static_cast<size_t>(doDecodeLong());
-}
-
-size_t BinaryDecoder::skipArray()
-{
-    for (; ;) {
-        int64_t r = doDecodeLong();
-        if (r < 0) {
-            size_t n = static_cast<size_t>(doDecodeLong()); 
-            in_.skipBytes(n);
-        } else {
-            return static_cast<size_t>(r);
-        }
-    }
-}
-
-size_t BinaryDecoder::mapStart()
-{
-    return doDecodeItemCount();
-}
-
-size_t BinaryDecoder::mapNext()
-{
-    return doDecodeItemCount();
-}
-
-size_t BinaryDecoder::skipMap()
-{
-    return skipArray();
-}
-
-size_t BinaryDecoder::decodeUnionIndex()
-{
-    return static_cast<size_t>(doDecodeLong());
+size_t BinaryDecoder::decodeUnionIndex() {
+  return static_cast<size_t>(doDecodeLong());
 }
 
 int64_t BinaryDecoder::doDecodeLong() {
-    uint64_t encoded = 0;
-    int shift = 0;
-    uint8_t u;
-    do {
-        if (shift >= 64) {
-            throw Exception("Invalid Avro varint");
-        }
-        u = in_.read();
-        encoded |= static_cast<uint64_t>(u & 0x7f) << shift;
-        shift += 7;
-    } while (u & 0x80);
+  uint64_t encoded = 0;
+  int shift = 0;
+  uint8_t u;
+  do {
+    if (shift >= 64) {
+      throw Exception("Invalid Avro varint");
+    }
+    u = in_.read();
+    encoded |= static_cast<uint64_t>(u & 0x7f) << shift;
+    shift += 7;
+  } while (u & 0x80);
 
-    return decodeZigzag64(encoded);
+  return decodeZigzag64(encoded);
 }
 
-}   // namespace rmf_avro
-
+}  // namespace rmf_avro

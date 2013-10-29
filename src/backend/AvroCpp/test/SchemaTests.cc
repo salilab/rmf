@@ -23,56 +23,45 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/parameterized_test.hpp>
 
-
 namespace rmf_avro {
 namespace schema {
 
-const char* basicSchemas[] = {
-    "\"null\"",
-    "\"boolean\"",
-    "\"int\"",
-    "\"long\"",
-    "\"float\"",
-    "\"double\"",
-    "\"bytes\"",
-    "\"string\"",
+const char *basicSchemas[] = {
+    "\"null\"", "\"boolean\"", "\"int\"", "\"long\"", "\"float\"", "\"double\"",
+    "\"bytes\"", "\"string\"",
 
     // Primitive types - longer
-    "{ \"type\": \"null\" }",
-    "{ \"type\": \"boolean\" }",
-    "{ \"type\": \"int\" }",
-    "{ \"type\": \"long\" }",
-    "{ \"type\": \"float\" }",
-    "{ \"type\": \"double\" }",
-    "{ \"type\": \"bytes\" }",
-    "{ \"type\": \"string\" }",
+    "{ \"type\": \"null\" }", "{ \"type\": \"boolean\" }",
+    "{ \"type\": \"int\" }", "{ \"type\": \"long\" }",
+    "{ \"type\": \"float\" }", "{ \"type\": \"double\" }",
+    "{ \"type\": \"bytes\" }", "{ \"type\": \"string\" }",
 
     // Record
     "{\"type\": \"record\",\"name\": \"Test\",\"fields\": "
-        "[{\"name\": \"f\",\"type\": \"long\"}]}",
+    "[{\"name\": \"f\",\"type\": \"long\"}]}",
     "{\"type\": \"record\",\"name\": \"Test\",\"fields\": "
-        "[{\"name\": \"f1\",\"type\": \"long\"},"
-        "{\"name\": \"f2\", \"type\": \"int\"}]}",
+    "[{\"name\": \"f1\",\"type\": \"long\"},"
+    "{\"name\": \"f2\", \"type\": \"int\"}]}",
     "{\"type\": \"error\",\"name\": \"Test\",\"fields\": "
-        "[{\"name\": \"f1\",\"type\": \"long\"},"
-        "{\"name\": \"f2\", \"type\": \"int\"}]}",
+    "[{\"name\": \"f1\",\"type\": \"long\"},"
+    "{\"name\": \"f2\", \"type\": \"int\"}]}",
 
     // Recursive.
     "{\"type\":\"record\",\"name\":\"LongList\","
-        "\"fields\":[{\"name\":\"value\",\"type\":\"long\"},"
-        "{\"name\":\"next\",\"type\":[\"LongList\",\"null\"]}]}",
+    "\"fields\":[{\"name\":\"value\",\"type\":\"long\"},"
+    "{\"name\":\"next\",\"type\":[\"LongList\",\"null\"]}]}",
     // Enum
     "{\"type\": \"enum\", \"name\": \"Test\", \"symbols\": [\"A\", \"B\"]}",
 
     // Array
     "{\"type\": \"array\", \"items\": \"long\"}",
     "{\"type\": \"array\",\"items\": {\"type\": \"enum\", "
-        "\"name\": \"Test\", \"symbols\": [\"A\", \"B\"]}}",
+    "\"name\": \"Test\", \"symbols\": [\"A\", \"B\"]}}",
 
     // Map
     "{\"type\": \"map\", \"values\": \"long\"}",
     "{\"type\": \"map\",\"values\": {\"type\": \"enum\", "
-        "\"name\": \"Test\", \"symbols\": [\"A\", \"B\"]}}",
+    "\"name\": \"Test\", \"symbols\": [\"A\", \"B\"]}}",
 
     // Union
     "[\"string\", \"null\", \"long\"]",
@@ -80,12 +69,11 @@ const char* basicSchemas[] = {
     // Fixed
     "{ \"type\": \"fixed\", \"name\": \"Test\", \"size\": 1}",
     "{\"type\": \"fixed\", \"name\": \"MyFixed\", "
-        "\"namespace\": \"org.apache.hadoop.avro\", \"size\": 1}",
+    "\"namespace\": \"org.apache.hadoop.avro\", \"size\": 1}",
     "{ \"type\": \"fixed\", \"name\": \"Test\", \"size\": 1}",
-    "{ \"type\": \"fixed\", \"name\": \"Test\", \"size\": 1}",
-};
+    "{ \"type\": \"fixed\", \"name\": \"Test\", \"size\": 1}", };
 
-const char* basicSchemaErrors[] = {
+const char *basicSchemaErrors[] = {
     // Record
     // No fields
     "{\"type\":\"record\",\"name\":\"LongList\"}",
@@ -94,67 +82,61 @@ const char* basicSchemaErrors[] = {
 
     // Undefined name
     "{\"type\":\"record\",\"name\":\"LongList\","
-        "\"fields\":[{\"name\":\"value\",\"type\":\"long\"},"
-        "{\"name\":\"next\",\"type\":[\"LongListA\",\"null\"]}]}",
+    "\"fields\":[{\"name\":\"value\",\"type\":\"long\"},"
+    "{\"name\":\"next\",\"type\":[\"LongListA\",\"null\"]}]}",
 
     // Enum
     // Symbols not an array
     "{\"type\": \"enum\", \"name\": \"Status\", \"symbols\": "
-        "\"Normal Caution Critical\"}",
+    "\"Normal Caution Critical\"}",
     // Name not a string
     "{\"type\": \"enum\", \"name\": [ 0, 1, 1, 2, 3, 5, 8 ], "
-        "\"symbols\": [\"Golden\", \"Mean\"]}",
+    "\"symbols\": [\"Golden\", \"Mean\"]}",
     // No name
     "{\"type\": \"enum\", \"symbols\" : [\"I\", \"will\", "
-        "\"fail\", \"no\", \"name\"]}",
+    "\"fail\", \"no\", \"name\"]}",
     // Duplicate symbol
     "{\"type\": \"enum\", \"name\": \"Test\","
-        "\"symbols\" : [\"AA\", \"AA\"]}",
+    "\"symbols\" : [\"AA\", \"AA\"]}",
 
     // Union
     // Duplicate type
     "[\"string\", \"long\", \"long\"]",
     // Duplicate type
     "[{\"type\": \"array\", \"items\": \"long\"}, "
-        "{\"type\": \"array\", \"items\": \"string\"}]",
-        
+    "{\"type\": \"array\", \"items\": \"string\"}]",
+
     // Fixed
     // No size
     "{\"type\": \"fixed\", \"name\": \"Missing size\"}",
     // No name
-    "{\"type\": \"fixed\", \"size\": 314}",
-};
+    "{\"type\": \"fixed\", \"size\": 314}", };
 
-static void testBasic(const char* schema)
-{
-    BOOST_CHECKPOINT(schema);
-    compileJsonSchemaFromString(schema);
+static void testBasic(const char *schema) {
+  BOOST_CHECKPOINT(schema);
+  compileJsonSchemaFromString(schema);
 }
 
-static void testBasic_fail(const char* schema)
-{
-    BOOST_CHECKPOINT(schema);
-    BOOST_CHECK_THROW(compileJsonSchemaFromString(schema), Exception);
+static void testBasic_fail(const char *schema) {
+  BOOST_CHECKPOINT(schema);
+  BOOST_CHECK_THROW(compileJsonSchemaFromString(schema), Exception);
 }
-
 }
 }
 
-#define ENDOF(x)  (x + sizeof(x) / sizeof(x[0]))
+#define ENDOF(x) (x + sizeof(x) / sizeof(x[0]))
 
 #define ADD_PARAM_TEST(ts, func, data) \
-    ts->add(BOOST_PARAM_TEST_CASE(&func, data, ENDOF(data)))
-    
+  ts->add(BOOST_PARAM_TEST_CASE(&func, data, ENDOF(data)))
 
-boost::unit_test::test_suite*
-init_unit_test_suite(int argc, char* argv[]) 
-{
-    using namespace boost::unit_test;
+boost::unit_test::test_suite *init_unit_test_suite(int argc, char *argv[]) {
+  using namespace boost::unit_test;
 
-    test_suite* ts= BOOST_TEST_SUITE("Avro C++ unit tests for schemas");
-    ADD_PARAM_TEST(ts, rmf_avro::schema::testBasic, rmf_avro::schema::basicSchemas);
-    ADD_PARAM_TEST(ts, rmf_avro::schema::testBasic_fail,
-        rmf_avro::schema::basicSchemaErrors);
+  test_suite *ts = BOOST_TEST_SUITE("Avro C++ unit tests for schemas");
+  ADD_PARAM_TEST(ts, rmf_avro::schema::testBasic,
+                 rmf_avro::schema::basicSchemas);
+  ADD_PARAM_TEST(ts, rmf_avro::schema::testBasic_fail,
+                 rmf_avro::schema::basicSchemaErrors);
 
-    return ts;
+  return ts;
 }

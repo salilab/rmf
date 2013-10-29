@@ -27,27 +27,22 @@
 
 namespace rmf_avro {
 
-class AVRO_DECL ResolvingReader : private boost::noncopyable
-{
+class AVRO_DECL ResolvingReader : private boost::noncopyable {
 
-  public:
+ public:
+  ResolvingReader(const ResolverSchema &schema, const InputBuffer &in)
+      : reader_(in), schema_(schema) {}
 
-    ResolvingReader(const ResolverSchema &schema, const InputBuffer &in) :
-        reader_(in),
-        schema_(schema)
-    {}
+  template <typename T>
+  void parse(T &object) {
+    schema_.parse(reader_, reinterpret_cast<uint8_t *>(&object));
+  }
 
-    template<typename T>
-    void parse(T &object) {
-        schema_.parse(reader_, reinterpret_cast<uint8_t *>(&object));
-    }
-
-  private:
-
-    Reader reader_;
-    ResolverSchema schema_;
+ private:
+  Reader reader_;
+  ResolverSchema schema_;
 };
 
-} // namespace rmf_avro
+}  // namespace rmf_avro
 
 #endif

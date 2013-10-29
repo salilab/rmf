@@ -16,10 +16,8 @@
  * limitations under the License.
  */
 
-
 #ifndef CPX_HH_1278398428__H_
 #define CPX_HH_1278398428__H_
-
 
 #include "boost/any.hpp"
 #include "avro/Specific.hh"
@@ -28,22 +26,21 @@
 
 namespace c {
 struct cpx {
-    double re;
-    double im;
+  double re;
+  double im;
 };
-
 }
 namespace rmf_avro {
-template<> struct codec_traits<c::cpx> {
-    static void encode(Encoder& e, const c::cpx& v) {
-        rmf_avro::encode(e, v.re);
-        rmf_avro::encode(e, v.im);
-    }
-    static void decode(Decoder& d, c::cpx& v) {
-        rmf_avro::decode(d, v.re);
-        rmf_avro::decode(d, v.im);
-    }
+template <>
+struct codec_traits<c::cpx> {
+  static void encode(Encoder &e, const c::cpx &v) {
+    rmf_avro::encode(e, v.re);
+    rmf_avro::encode(e, v.im);
+  }
+  static void decode(Decoder &d, c::cpx &v) {
+    rmf_avro::decode(d, v.re);
+    rmf_avro::decode(d, v.im);
+  }
 };
-
 }
 #endif

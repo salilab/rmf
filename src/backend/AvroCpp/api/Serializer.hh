@@ -29,106 +29,64 @@ namespace rmf_avro {
 /// Class that wraps a Writer or ValidatingWriter with an interface that uses
 /// explicit write* names instead of writeValue
 
-template<class Writer>
-class Serializer : private boost::noncopyable
-{
+template <class Writer>
+class Serializer : private boost::noncopyable {
 
-  public:
+ public:
+  /// Constructor only works with Writer
+  explicit Serializer() : writer_() {}
 
-    /// Constructor only works with Writer
-    explicit Serializer() :
-        writer_()
-    {}
+  /// Constructor only works with ValidatingWriter
+  Serializer(const ValidSchema &schema) : writer_(schema) {}
 
-    /// Constructor only works with ValidatingWriter
-    Serializer(const ValidSchema &schema) :
-        writer_(schema)
-    {}
+  void writeNull() { writer_.writeValue(Null()); }
 
-    void writeNull() {
-        writer_.writeValue(Null());
-    }
+  void writeBool(bool val) { writer_.writeValue(val); }
 
-    void writeBool(bool val) {
-        writer_.writeValue(val);
-    }
+  void writeInt(int32_t val) { writer_.writeValue(val); }
 
-    void writeInt(int32_t val) {
-        writer_.writeValue(val);
-    }
+  void writeLong(int64_t val) { writer_.writeValue(val); }
 
-    void writeLong(int64_t val) {
-        writer_.writeValue(val);
-    }
+  void writeFloat(float val) { writer_.writeValue(val); }
 
-    void writeFloat(float val) {
-        writer_.writeValue(val);
-    }
+  void writeDouble(double val) { writer_.writeValue(val); }
 
-    void writeDouble(double val) {
-        writer_.writeValue(val);
-    }
+  void writeBytes(const void *val, size_t size) { writer_.writeBytes(val); }
 
-    void writeBytes(const void *val, size_t size) {
-        writer_.writeBytes(val);
-    }
+  template <size_t N>
+  void writeFixed(const uint8_t (&val)[N]) {
+    writer_.writeFixed(val);
+  }
 
-    template <size_t N>
-    void writeFixed(const uint8_t (&val)[N]) {
-        writer_.writeFixed(val);
-    }
+  template <size_t N>
+  void writeFixed(const boost::array<uint8_t, N> &val) {
+    writer_.writeFixed(val);
+  }
 
-    template <size_t N>
-    void writeFixed(const boost::array<uint8_t, N> &val) {
-        writer_.writeFixed(val);
-    }
+  void writeString(const std::string &val) { writer_.writeValue(val); }
 
-    void writeString(const std::string &val) {
-        writer_.writeValue(val);
-    }
+  void writeRecord() { writer_.writeRecord(); }
 
-    void writeRecord() {
-        writer_.writeRecord();
-    }
+  void writeRecordEnd() { writer_.writeRecordEnd(); }
 
-    void writeRecordEnd() {
-        writer_.writeRecordEnd();
-    }
+  void writeArrayBlock(int64_t size) { writer_.writeArrayBlock(size); }
 
-    void writeArrayBlock(int64_t size) {
-        writer_.writeArrayBlock(size);
-    }
+  void writeArrayEnd() { writer_.writeArrayEnd(); }
 
-    void writeArrayEnd() {
-        writer_.writeArrayEnd();
-    }
+  void writeMapBlock(int64_t size) { writer_.writeMapBlock(size); }
 
-    void writeMapBlock(int64_t size) {
-        writer_.writeMapBlock(size);
-    }
+  void writeMapEnd() { writer_.writeMapEnd(); }
 
-    void writeMapEnd() {
-        writer_.writeMapEnd();
-    }
+  void writeUnion(int64_t choice) { writer_.writeUnion(choice); }
 
-    void writeUnion(int64_t choice) {
-        writer_.writeUnion(choice);
-    }
+  void writeEnum(int64_t choice) { writer_.writeEnum(choice); }
 
-    void writeEnum(int64_t choice) {
-        writer_.writeEnum(choice);
-    }
+  InputBuffer buffer() const { return writer_.buffer(); }
 
-    InputBuffer buffer() const {
-        return writer_.buffer();
-    }
-
-  private:
-
-    Writer writer_;
-
+ private:
+  Writer writer_;
 };
 
-} // namespace rmf_avro
+}  // namespace rmf_avro
 
 #endif

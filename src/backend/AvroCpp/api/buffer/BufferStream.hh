@@ -21,7 +21,7 @@
 
 #include "BufferStreambuf.hh"
 
-/** 
+/**
  * \file BufferStream.hh
  *
  * \brief Custom istream and ostream classes for use with buffers
@@ -37,30 +37,21 @@ namespace rmf_avro {
 
 class AVRO_DECL ostream : public std::ostream {
 
-  public:
+ public:
+  /// Default constructor, creates a new OutputBuffer.
+  ostream() : std::ostream(&obuf_) {}
 
-    /// Default constructor, creates a new OutputBuffer.
-    ostream() : 
-        std::ostream(&obuf_) 
-    { }
+  /// Output to a specific buffer.
+  ostream(OutputBuffer &buf) : std::ostream(&obuf_), obuf_(buf) {}
 
-    /// Output to a specific buffer.
-    ostream(OutputBuffer &buf) : 
-        std::ostream(&obuf_),
-        obuf_(buf)
-    { }
+  /// Return the output buffer created by the write operations to this ostream.
+  const OutputBuffer &getBuffer() const { return obuf_.getBuffer(); }
 
-    /// Return the output buffer created by the write operations to this ostream.
-    const OutputBuffer &getBuffer() const {
-        return obuf_.getBuffer();
-    }
-
-  protected:
-
-    ostreambuf obuf_;
+ protected:
+  ostreambuf obuf_;
 };
 
-/** 
+/**
  * \brief Custom istream class for reading from an InputBuffer.
  *
  * If the buffer contains binary data, then it is recommended to only use the
@@ -73,29 +64,24 @@ class AVRO_DECL ostream : public std::ostream {
 
 class AVRO_DECL istream : public std::istream {
 
-  public:
+ public:
+  /// Constructor, requires an InputBuffer to read from.
+  explicit istream(const InputBuffer &buf) : std::istream(&ibuf_), ibuf_(buf) {}
 
-    /// Constructor, requires an InputBuffer to read from.
-    explicit istream(const InputBuffer &buf) : 
-        std::istream(&ibuf_), ibuf_(buf)
-    { }
+  /// Constructor, takes an OutputBuffer to read from (by making a shallow copy
+  /// to an InputBuffer).
+  /// Writing to the OutputBuffer while an istream is using it may lead to
+  /// undefined behavior.
+  explicit istream(const OutputBuffer &buf)
+      : std::istream(&ibuf_), ibuf_(buf) {}
 
-    /// Constructor, takes an OutputBuffer to read from (by making a shallow copy to an InputBuffer).
-    /// Writing to the OutputBuffer while an istream is using it may lead to undefined behavior.
-    explicit istream(const OutputBuffer &buf) : 
-        std::istream(&ibuf_), ibuf_(buf)
-    { }
+  /// Return the InputBuffer this stream is reading from.
+  const InputBuffer &getBuffer() const { return ibuf_.getBuffer(); }
 
-    /// Return the InputBuffer this stream is reading from.
-    const InputBuffer &getBuffer() const {
-        return ibuf_.getBuffer();
-    }
-
-  protected:
-
-    istreambuf ibuf_;
+ protected:
+  istreambuf ibuf_;
 };
 
-} // namespace rmf_avro
+}  // namespace rmf_avro
 
-#endif 
+#endif

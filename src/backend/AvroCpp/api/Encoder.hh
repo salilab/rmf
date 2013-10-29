@@ -50,91 +50,91 @@ namespace rmf_avro {
  * such as ability to verify the order of invocation of different functions.
  */
 class AVRO_DECL Encoder {
-public:
-    virtual ~Encoder() { };
-    /// All future encodings will go to os, which should be valid until
-    /// it is reset with another call to init() or the encoder is
-    /// destructed.
-    virtual void init(OutputStream& os) = 0;
+ public:
+  virtual ~Encoder() {};
+  /// All future encodings will go to os, which should be valid until
+  /// it is reset with another call to init() or the encoder is
+  /// destructed.
+  virtual void init(OutputStream &os) = 0;
 
-    /// Flushes any data in internal buffers.
-    virtual void flush() = 0;
+  /// Flushes any data in internal buffers.
+  virtual void flush() = 0;
 
-    /// Encodes a null to the current stream.
-    virtual void encodeNull() = 0;
+  /// Encodes a null to the current stream.
+  virtual void encodeNull() = 0;
 
-    /// Encodes a bool to the current stream
-    virtual void encodeBool(bool b) = 0;
+  /// Encodes a bool to the current stream
+  virtual void encodeBool(bool b) = 0;
 
-    /// Encodes a 32-bit int to the current stream.
-    virtual void encodeInt(int32_t i) = 0;
+  /// Encodes a 32-bit int to the current stream.
+  virtual void encodeInt(int32_t i) = 0;
 
-    /// Encodes a 64-bit signed int to the current stream.
-    virtual void encodeLong(int64_t l) = 0;
+  /// Encodes a 64-bit signed int to the current stream.
+  virtual void encodeLong(int64_t l) = 0;
 
-    /// Encodes a single-precision floating point number to the current stream.
-    virtual void encodeFloat(float f) = 0;
+  /// Encodes a single-precision floating point number to the current stream.
+  virtual void encodeFloat(float f) = 0;
 
-    /// Encodes a double-precision floating point number to the current stream.
-    virtual void encodeDouble(double d) = 0;
+  /// Encodes a double-precision floating point number to the current stream.
+  virtual void encodeDouble(double d) = 0;
 
-    /// Encodes a UTF-8 string to the current stream.
-    virtual void encodeString(const std::string& s) = 0;
+  /// Encodes a UTF-8 string to the current stream.
+  virtual void encodeString(const std::string &s) = 0;
 
-    /**
-     * Encodes aribtray binary data into tthe current stream as Avro "bytes"
-     * data type.
-     * \param bytes Where the data is
-     * \param len Number of bytes at \p bytes.
-     */
-    virtual void encodeBytes(const uint8_t *bytes, size_t len) = 0;
+  /**
+   * Encodes aribtray binary data into tthe current stream as Avro "bytes"
+   * data type.
+   * \param bytes Where the data is
+   * \param len Number of bytes at \p bytes.
+   */
+  virtual void encodeBytes(const uint8_t *bytes, size_t len) = 0;
 
-    /**
-     * Encodes aribtray binary data into tthe current stream as Avro "bytes"
-     * data type.
-     * \param bytes The data.
-     */
-    void encodeBytes(const std::vector<uint8_t>& bytes) {
-        uint8_t b = 0;
-        encodeBytes(bytes.empty() ? &b : &bytes[0], bytes.size());
-    }
+  /**
+   * Encodes aribtray binary data into tthe current stream as Avro "bytes"
+   * data type.
+   * \param bytes The data.
+   */
+  void encodeBytes(const std::vector<uint8_t> &bytes) {
+    uint8_t b = 0;
+    encodeBytes(bytes.empty() ? &b : &bytes[0], bytes.size());
+  }
 
-    /// Encodes fixed length binary to the current stream.
-    virtual void encodeFixed(const uint8_t *bytes, size_t len) = 0;
+  /// Encodes fixed length binary to the current stream.
+  virtual void encodeFixed(const uint8_t *bytes, size_t len) = 0;
 
-    /**
-     * Encodes an Avro data type Fixed.
-     * \param bytes The fixed, the length of which is taken as the size
-     * of fixed.
-     */
-    void encodeFixed(const std::vector<uint8_t>& bytes) {
-        encodeFixed(&bytes[0], bytes.size());
-    }
+  /**
+   * Encodes an Avro data type Fixed.
+   * \param bytes The fixed, the length of which is taken as the size
+   * of fixed.
+   */
+  void encodeFixed(const std::vector<uint8_t> &bytes) {
+    encodeFixed(&bytes[0], bytes.size());
+  }
 
-    /// Encodes enum to the current stream.
-    virtual void encodeEnum(size_t e) = 0;
+  /// Encodes enum to the current stream.
+  virtual void encodeEnum(size_t e) = 0;
 
-    /// Indicates that an array of items is being encoded.
-    virtual void arrayStart() = 0;
+  /// Indicates that an array of items is being encoded.
+  virtual void arrayStart() = 0;
 
-    /// Indicates that the current array of items have ended.
-    virtual void arrayEnd() = 0;
+  /// Indicates that the current array of items have ended.
+  virtual void arrayEnd() = 0;
 
-    /// Indicates that a map of items is being encoded.
-    virtual void mapStart() = 0;
+  /// Indicates that a map of items is being encoded.
+  virtual void mapStart() = 0;
 
-    /// Indicates that the current map of items have ended.
-    virtual void mapEnd() = 0;
+  /// Indicates that the current map of items have ended.
+  virtual void mapEnd() = 0;
 
-    /// Indicates that count number of items are to follow in the current array
-    /// or map.
-    virtual void setItemCount(size_t count) = 0;
+  /// Indicates that count number of items are to follow in the current array
+  /// or map.
+  virtual void setItemCount(size_t count) = 0;
 
-    /// Marks a beginning of an item in the current array or map.
-    virtual void startItem() = 0;
+  /// Marks a beginning of an item in the current array or map.
+  virtual void startItem() = 0;
 
-    /// Encodes a branch of a union. The actual value is to follow.
-    virtual void encodeUnionIndex(size_t e) = 0;
+  /// Encodes a branch of a union. The actual value is to follow.
+  virtual void encodeUnionIndex(size_t e) = 0;
 };
 
 /**
@@ -151,14 +151,14 @@ AVRO_DECL EncoderPtr binaryEncoder();
  *  Returns an encoder that validates sequence of calls to an underlying
  *  Encoder against the given schema.
  */
-AVRO_DECL EncoderPtr validatingEncoder(const ValidSchema& schema,
-    const EncoderPtr& base);
+AVRO_DECL EncoderPtr
+    validatingEncoder(const ValidSchema &schema, const EncoderPtr &base);
 
 /**
  *  Returns an encoder that can encode Avro standard for JSON.
  */
-AVRO_DECL EncoderPtr jsonEncoder(const ValidSchema& schema);
+AVRO_DECL EncoderPtr jsonEncoder(const ValidSchema &schema);
 
-}   // namespace rmf_avro
+}  // namespace rmf_avro
 
 #endif

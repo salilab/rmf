@@ -27,37 +27,31 @@
 #include "avro/Specific.hh"
 #include "avro/Generic.hh"
 
-
-
-rmf_avro::ValidSchema load(const char* filename)
-{
-    std::ifstream ifs(filename);
-    rmf_avro::ValidSchema result;
-    rmf_avro::compileJsonSchema(ifs, result);
-    return result;
+rmf_avro::ValidSchema load(const char *filename) {
+  std::ifstream ifs(filename);
+  rmf_avro::ValidSchema result;
+  rmf_avro::compileJsonSchema(ifs, result);
+  return result;
 }
 
-int
-main()
-{
-    rmf_avro::ValidSchema cpxSchema = load("cpx.json");
-    rmf_avro::ValidSchema imaginarySchema = load("imaginary.json");
+int main() {
+  rmf_avro::ValidSchema cpxSchema = load("cpx.json");
+  rmf_avro::ValidSchema imaginarySchema = load("imaginary.json");
 
-    std::auto_ptr<rmf_avro::OutputStream> out = rmf_avro::memoryOutputStream();
-    rmf_avro::EncoderPtr e = rmf_avro::binaryEncoder();
-    e->init(*out);
-    c::cpx c1;
-    c1.re = 100.23;
-    c1.im = 105.77;
-    rmf_avro::encode(*e, c1);
+  std::auto_ptr<rmf_avro::OutputStream> out = rmf_avro::memoryOutputStream();
+  rmf_avro::EncoderPtr e = rmf_avro::binaryEncoder();
+  e->init(*out);
+  c::cpx c1;
+  c1.re = 100.23;
+  c1.im = 105.77;
+  rmf_avro::encode(*e, c1);
 
-    std::auto_ptr<rmf_avro::InputStream> in = rmf_avro::memoryInputStream(*out);
-    rmf_avro::DecoderPtr d = rmf_avro::resolvingDecoder(cpxSchema, imaginarySchema,
-        rmf_avro::binaryDecoder());
-    d->init(*in);
+  std::auto_ptr<rmf_avro::InputStream> in = rmf_avro::memoryInputStream(*out);
+  rmf_avro::DecoderPtr d = rmf_avro::resolvingDecoder(
+      cpxSchema, imaginarySchema, rmf_avro::binaryDecoder());
+  d->init(*in);
 
-    i::cpx c2;
-    rmf_avro::decode(*d, c2);
-    std::cout << "Imaginary: " << c2.im << std::endl;
-
+  i::cpx c2;
+  rmf_avro::decode(*d, c2);
+  std::cout << "Imaginary: " << c2.im << std::endl;
 }

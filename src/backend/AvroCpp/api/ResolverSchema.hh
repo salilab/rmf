@@ -37,20 +37,18 @@ class Resolver;
 
 class AVRO_DECL ResolverSchema {
 
-  public:
+ public:
+  ResolverSchema(const ValidSchema &writer, const ValidSchema &reader,
+                 const Layout &readerLayout);
 
-    ResolverSchema(const ValidSchema &writer, const ValidSchema &reader, const Layout &readerLayout);
+ private:
+  friend class ResolvingReader;
 
-  private:
+  void parse(Reader &reader, uint8_t *address);
 
-    friend class ResolvingReader;
-
-    void parse(Reader &reader, uint8_t *address);
-
-    boost::shared_ptr<Resolver> resolver_;
-
+  boost::shared_ptr<Resolver> resolver_;
 };
 
-} // namespace rmf_avro
+}  // namespace rmf_avro
 
 #endif

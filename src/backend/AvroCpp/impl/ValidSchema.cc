@@ -32,97 +32,82 @@ namespace rmf_avro {
 
 typedef std::map<Name, NodePtr> SymbolMap;
 
-static bool validate(const NodePtr &node, SymbolMap &symbolMap)
-{
-    if (! node->isValid()) {
-        throw Exception(format("Schema is invalid, due to bad node of type %1%")
-            % node->type());
+static bool validate(const NodePtr &node, SymbolMap &symbolMap) {
+  if (!node->isValid()) {
+    throw Exception(format("Schema is invalid, due to bad node of type %1%") %
+                    node->type());
+  }
+
+  if (node->hasName()) {
+    const Name &nm = node->name();
+    SymbolMap::iterator it = symbolMap.find(nm);
+    bool found = it != symbolMap.end() && nm == it->first;
+
+    if (node->type() == AVRO_SYMBOLIC) {
+      if (!found) {
+        throw Exception(format("Symbolic name \"%1%\" is unknown") %
+                        node->name());
+      }
+
+      shared_ptr<NodeSymbolic> symNode =
+          static_pointer_cast<NodeSymbolic>(node);
+
+      // if the symbolic link is already resolved, we return true,
+      // otherwise returning false will force it to be resolved
+      return symNode->isSet();
     }
 
-    if (node->hasName()) {
-        const Name& nm = node->name();
-        SymbolMap::iterator it = symbolMap.find(nm);
-        bool found = it != symbolMap.end() && nm == it->first;
-
-        if (node->type() == AVRO_SYMBOLIC) {
-            if (! found) {
-                throw Exception(format("Symbolic name \"%1%\" is unknown") %
-                    node->name());
-            }
-
-            shared_ptr<NodeSymbolic> symNode =
-                static_pointer_cast<NodeSymbolic>(node);
-
-            // if the symbolic link is already resolved, we return true,
-            // otherwise returning false will force it to be resolved
-            return symNode->isSet();
-        }
-
-        if (found) {
-            return false;
-        }
-        symbolMap.insert(it, make_pair(nm, node));
+    if (found) {
+      return false;
     }
+    symbolMap.insert(it, make_pair(nm, node));
+  }
 
-    node->lock();
-    size_t leaves = node->leaves();
-    for (size_t i = 0; i < leaves; ++i) {
-        const NodePtr &leaf(node->leafAt(i));
+  node->lock();
+  size_t leaves = node->leaves();
+  for (size_t i = 0; i < leaves; ++i) {
+    const NodePtr &leaf(node->leafAt(i));
 
-        if (! validate(leaf, symbolMap)) {
+    if (!validate(leaf, symbolMap)) {
 
-            // if validate returns false it means a node with this name already
-            // existed in the map, instead of keeping this node twice in the
-            // map (which could potentially create circular shared pointer
-            // links that could not be easily freed), replace this node with a
-            // symbolic link to the original one.
+      // if validate returns false it means a node with this name already
+      // existed in the map, instead of keeping this node twice in the
+      // map (which could potentially create circular shared pointer
+      // links that could not be easily freed), replace this node with a
+      // symbolic link to the original one.
 
-            node->setLeafToSymbolic(i, symbolMap.find(leaf->name())->second);
-        }
+      node->setLeafToSymbolic(i, symbolMap.find(leaf->name())->second);
     }
+  }
 
-    return true;
+  return true;
 }
 
-static void validate(const NodePtr& p)
-{
-    SymbolMap m;
-    validate(p, m);
+static void validate(const NodePtr &p) {
+  SymbolMap m;
+  validate(p, m);
 }
 
-ValidSchema::ValidSchema(const NodePtr &root) : root_(root)
-{
-    validate(root_);
+ValidSchema::ValidSchema(const NodePtr &root) : root_(root) { validate(root_); }
+
+ValidSchema::ValidSchema(const Schema &schema) : root_(schema.root()) {
+  validate(root_);
 }
 
-ValidSchema::ValidSchema(const Schema &schema) : root_(schema.root())
-{
-    validate(root_);
+ValidSchema::ValidSchema() : root_(NullSchema().root()) { validate(root_); }
+
+void ValidSchema::setSchema(const Schema &schema) {
+  root_ = schema.root();
+  validate(root_);
 }
 
-ValidSchema::ValidSchema() : root_(NullSchema().root())
-{
-    validate(root_);
+void ValidSchema::toJson(std::ostream &os) const {
+  root_->printJson(os, 0);
+  os << '\n';
 }
 
-void
-ValidSchema::setSchema(const Schema &schema)
-{
-    root_ = schema.root();
-    validate(root_);
+void ValidSchema::toFlatList(std::ostream &os) const {
+  root_->printBasicInfo(os);
 }
 
-void
-ValidSchema::toJson(std::ostream &os) const
-{
-    root_->printJson(os, 0);
-    os << '\n';
-}
-
-void
-ValidSchema::toFlatList(std::ostream &os) const
-{
-    root_->printBasicInfo(os);
-}
-
-} // namespace rmf_avro
+}  // namespace rmf_avro

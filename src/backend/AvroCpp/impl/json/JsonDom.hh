@@ -40,76 +40,76 @@ class AVRO_DECL JsonParser;
 class AVRO_DECL JsonGenerator;
 
 enum EntityType {
-    etNull,
-    etBool,
-    etLong,
-    etDouble,
-    etString,
-    etArray,
-    etObject
+  etNull,
+  etBool,
+  etLong,
+  etDouble,
+  etString,
+  etArray,
+  etObject
 };
 
 class AVRO_DECL Entity {
-    EntityType type_;
-    boost::any value_;
-public:
-    Entity() : type_(etNull) { }
-    Entity(bool v) : type_(etBool), value_(v) { }
-    Entity(int64_t v) : type_(etLong), value_(v) { }
-    Entity(double v) : type_(etDouble), value_(v) { }
-    Entity(const std::string& v) : type_(etString), value_(v) { }
-    Entity(const std::vector<Entity> v) : type_(etArray), value_(v) { }
-    Entity(const std::map<std::string, Entity> v) : type_(etObject), value_(v) {
-    }
+  EntityType type_;
+  boost::any value_;
 
+ public:
+  Entity() : type_(etNull) {}
+  Entity(bool v) : type_(etBool), value_(v) {}
+  Entity(int64_t v) : type_(etLong), value_(v) {}
+  Entity(double v) : type_(etDouble), value_(v) {}
+  Entity(const std::string &v) : type_(etString), value_(v) {}
+  Entity(const std::vector<Entity> v) : type_(etArray), value_(v) {}
+  Entity(const std::map<std::string, Entity> v) : type_(etObject), value_(v) {}
 
-    EntityType type() const { return type_; }
+  EntityType type() const { return type_; }
 
-    template <typename T>
-    const T& value() const {
-        return *boost::any_cast<T>(&value_);
-    }
+  template <typename T>
+  const T &value() const {
+    return *boost::any_cast<T>(&value_);
+  }
 
-    template <typename T>
-    T& value() {
-        return *boost::any_cast<T>(&value_);
-    }
+  template <typename T>
+  T &value() {
+    return *boost::any_cast<T>(&value_);
+  }
 
-    template <typename T>
-    void set(const T& v) {
-        *boost::any_cast<T>(&value_) = v;
-    }
+  template <typename T>
+  void set(const T &v) {
+    *boost::any_cast<T>(&value_) = v;
+  }
 
-    std::string toString() const;
+  std::string toString() const;
 };
 
 template <typename T>
-struct type_traits {
+struct type_traits {};
+
+template <>
+struct type_traits<std::string> {
+  static EntityType type() { return etString; }
+  static const char *name() { return "string"; }
 };
 
-template <> struct type_traits<std::string> {
-    static EntityType type() { return etString; }
-    static const char* name() { return "string"; }
+template <>
+struct type_traits<std::vector<Entity> > {
+  static EntityType type() { return etArray; }
+  static const char *name() { return "array"; }
 };
 
-template <> struct type_traits<std::vector<Entity> > {
-    static EntityType type() { return etArray; }
-    static const char* name() { return "array"; }
+template <>
+struct type_traits<int64_t> {
+  static EntityType type() { return etLong; }
+  static const char *name() { return "integer"; }
 };
 
-template <> struct type_traits<int64_t> {
-    static EntityType type() { return etLong; }
-    static const char* name() { return "integer"; }
-};
+AVRO_DECL Entity readEntity(JsonParser &p);
 
-AVRO_DECL Entity readEntity(JsonParser& p);
+AVRO_DECL Entity loadEntity(InputStream &in);
+AVRO_DECL Entity loadEntity(const char *text);
+AVRO_DECL Entity loadEntity(const uint8_t *text, size_t len);
 
-AVRO_DECL Entity loadEntity(InputStream& in);
-AVRO_DECL Entity loadEntity(const char* text);
-AVRO_DECL Entity loadEntity(const uint8_t* text, size_t len);
-
-void writeEntity(JsonGenerator& g, const Entity& n);
-
+void writeEntity(JsonGenerator &g, const Entity &n);
 }
 }
 

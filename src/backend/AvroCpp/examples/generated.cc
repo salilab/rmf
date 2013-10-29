@@ -20,25 +20,21 @@
 #include "avro/Encoder.hh"
 #include "avro/Decoder.hh"
 
+int main() {
+  std::auto_ptr<rmf_avro::OutputStream> out = rmf_avro::memoryOutputStream();
+  rmf_avro::EncoderPtr e = rmf_avro::binaryEncoder();
+  e->init(*out);
+  c::cpx c1;
+  c1.re = 1.0;
+  c1.im = 2.13;
+  rmf_avro::encode(*e, c1);
 
-int
-main()
-{
-    std::auto_ptr<rmf_avro::OutputStream> out = rmf_avro::memoryOutputStream();
-    rmf_avro::EncoderPtr e = rmf_avro::binaryEncoder();
-    e->init(*out);
-    c::cpx c1;
-    c1.re = 1.0;
-    c1.im = 2.13;
-    rmf_avro::encode(*e, c1);
+  std::auto_ptr<rmf_avro::InputStream> in = rmf_avro::memoryInputStream(*out);
+  rmf_avro::DecoderPtr d = rmf_avro::binaryDecoder();
+  d->init(*in);
 
-    std::auto_ptr<rmf_avro::InputStream> in = rmf_avro::memoryInputStream(*out);
-    rmf_avro::DecoderPtr d = rmf_avro::binaryDecoder();
-    d->init(*in);
-
-    c::cpx c2;
-    rmf_avro::decode(*d, c2);
-    std::cout << '(' << c2.re << ", " << c2.im << ')' << std::endl;
-    return 0;
+  c::cpx c2;
+  rmf_avro::decode(*d, c2);
+  std::cout << '(' << c2.re << ", " << c2.im << ')' << std::endl;
+  return 0;
 }
-

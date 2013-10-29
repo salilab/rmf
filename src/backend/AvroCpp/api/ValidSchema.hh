@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef rmf_avro_ValidSchema_hh__ 
-#define rmf_avro_ValidSchema_hh__ 
+#ifndef rmf_avro_ValidSchema_hh__
+#define rmf_avro_ValidSchema_hh__
 
 #include "Config.hh"
 #include "Node.hh"
@@ -38,25 +38,23 @@ class AVRO_DECL Schema;
 ///
 
 class AVRO_DECL ValidSchema {
-public:
-    explicit ValidSchema(const NodePtr &root);
-    explicit ValidSchema(const Schema &schema);
-    ValidSchema();
+ public:
+  explicit ValidSchema(const NodePtr &root);
+  explicit ValidSchema(const Schema &schema);
+  ValidSchema();
 
-    void setSchema(const Schema &schema);
+  void setSchema(const Schema &schema);
 
-    const NodePtr &root() const {
-        return root_;
-    }
+  const NodePtr &root() const { return root_; }
 
-    void toJson(std::ostream &os) const;
+  void toJson(std::ostream &os) const;
 
-    void toFlatList(std::ostream &os) const;
+  void toFlatList(std::ostream &os) const;
 
-  protected:
-    NodePtr root_;
+ protected:
+  NodePtr root_;
 };
 
-} // namespace rmf_avro
+}  // namespace rmf_avro
 
 #endif

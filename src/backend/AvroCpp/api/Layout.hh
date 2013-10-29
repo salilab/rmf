@@ -27,58 +27,40 @@
 ///
 
 namespace rmf_avro {
-    
+
 class AVRO_DECL Layout : private boost::noncopyable {
 
-  protected:
+ protected:
+  Layout(size_t offset = 0) : offset_(offset) {}
 
-    Layout(size_t offset = 0) :
-        offset_(offset)
-    {}
+ public:
+  size_t offset() const { return offset_; }
 
-  public:
+  virtual ~Layout() {}
 
-    size_t offset() const {
-        return offset_;
-    }
-
-    virtual ~Layout() {}
-
-  private:
-
-    const size_t offset_;
+ private:
+  const size_t offset_;
 };
 
 class AVRO_DECL PrimitiveLayout : public Layout {
 
-  public:
-
-    PrimitiveLayout(size_t offset = 0) :
-        Layout(offset)
-    {}
+ public:
+  PrimitiveLayout(size_t offset = 0) : Layout(offset) {}
 };
 
 class AVRO_DECL CompoundLayout : public Layout {
 
-  public:
+ public:
+  CompoundLayout(size_t offset = 0) : Layout(offset) {}
 
-    CompoundLayout(size_t offset = 0) :
-        Layout(offset)
-    {}
+  void add(Layout *layout) { layouts_.push_back(layout); }
 
-    void add(Layout *layout) {
-        layouts_.push_back(layout);
-    }
+  const Layout &at(size_t idx) const { return layouts_.at(idx); }
 
-    const Layout &at (size_t idx) const {
-        return layouts_.at(idx);
-    }
-
-  private:
-
-    boost::ptr_vector<Layout> layouts_;
+ private:
+  boost::ptr_vector<Layout> layouts_;
 };
 
-} // namespace rmf_avro
+}  // namespace rmf_avro
 
 #endif

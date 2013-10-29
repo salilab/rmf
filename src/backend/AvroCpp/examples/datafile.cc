@@ -25,38 +25,33 @@
 #include "avro/Compiler.hh"
 #include "avro/DataFile.hh"
 
-
-rmf_avro::ValidSchema loadSchema(const char* filename)
-{
-    std::ifstream ifs(filename);
-    rmf_avro::ValidSchema result;
-    rmf_avro::compileJsonSchema(ifs, result);
-    return result;
+rmf_avro::ValidSchema loadSchema(const char *filename) {
+  std::ifstream ifs(filename);
+  rmf_avro::ValidSchema result;
+  rmf_avro::compileJsonSchema(ifs, result);
+  return result;
 }
 
-int
-main()
-{
-    rmf_avro::ValidSchema cpxSchema = loadSchema("cpx.json");
+int main() {
+  rmf_avro::ValidSchema cpxSchema = loadSchema("cpx.json");
 
-    {
-        rmf_avro::DataFileWriter<c::cpx> dfw("test.bin", cpxSchema);
-        c::cpx c1;
-        for (int i = 0; i < 100; i++) {
-            c1.re = i * 100;
-            c1.im = i + 100;
-            dfw.write(c1);
-        }
-        dfw.close();
+  {
+    rmf_avro::DataFileWriter<c::cpx> dfw("test.bin", cpxSchema);
+    c::cpx c1;
+    for (int i = 0; i < 100; i++) {
+      c1.re = i * 100;
+      c1.im = i + 100;
+      dfw.write(c1);
     }
+    dfw.close();
+  }
 
-    {
-        rmf_avro::DataFileReader<c::cpx> dfr("test.bin", cpxSchema);
-        c::cpx c2;
-        while (dfr.read(c2)) {
-            std::cout << '(' << c2.re << ", " << c2.im << ')' << std::endl;
-        }
+  {
+    rmf_avro::DataFileReader<c::cpx> dfr("test.bin", cpxSchema);
+    c::cpx c2;
+    while (dfr.read(c2)) {
+      std::cout << '(' << c2.re << ", " << c2.im << ')' << std::endl;
     }
-    return 0;
+  }
+  return 0;
 }
-

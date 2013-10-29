@@ -29,30 +29,26 @@ namespace rmf_avro {
  * The "type" for the schema.
  */
 enum Type {
+  AVRO_STRING,    /*!< String */
+  AVRO_BYTES,     /*!< Sequence of variable length bytes data */
+  AVRO_INT,       /*!< 32-bit integer */
+  AVRO_LONG,      /*!< 64-bit integer */
+  AVRO_FLOAT,     /*!< Floating point number */
+  AVRO_DOUBLE,    /*!< Double precision floating point number */
+  AVRO_BOOL,      /*!< Boolean value */
+  AVRO_NULL,      /*!< Null */
+  AVRO_RECORD,    /*!< Record, a sequence of fields */
+  AVRO_ENUM,      /*!< Enumeration */
+  AVRO_ARRAY,     /*!< Homogeneous array of some specific type */
+  AVRO_MAP,       /*!< Homogeneous map from string to some specific type */
+  AVRO_UNION,     /*!< Union of one or more types */
+  AVRO_FIXED,     /*!< Fixed number of bytes */
+  AVRO_NUM_TYPES, /*!< Marker */
 
-    AVRO_STRING,    /*!< String */
-    AVRO_BYTES,     /*!< Sequence of variable length bytes data */
-    AVRO_INT,       /*!< 32-bit integer */
-    AVRO_LONG,      /*!< 64-bit integer */
-    AVRO_FLOAT,     /*!< Floating point number */
-    AVRO_DOUBLE,    /*!< Double precision floating point number */
-    AVRO_BOOL,      /*!< Boolean value */
-    AVRO_NULL,      /*!< Null */
-
-    AVRO_RECORD,    /*!< Record, a sequence of fields */
-    AVRO_ENUM,      /*!< Enumeration */
-    AVRO_ARRAY,     /*!< Homogeneous array of some specific type */
-    AVRO_MAP,       /*!< Homogeneous map from string to some specific type */
-    AVRO_UNION,     /*!< Union of one or more types */
-    AVRO_FIXED,     /*!< Fixed number of bytes */
-
-    AVRO_NUM_TYPES, /*!< Marker */
-    
-    // The following is a pseudo-type used in implementation
-    
-    AVRO_SYMBOLIC = AVRO_NUM_TYPES, /*!< User internally to avoid circular references. */
-    AVRO_UNKNOWN  = -1 /*!< Used internally. */
-
+  // The following is a pseudo-type used in implementation
+  AVRO_SYMBOLIC =
+      AVRO_NUM_TYPES, /*!< User internally to avoid circular references. */
+  AVRO_UNKNOWN = -1   /*!< Used internally. */
 };
 
 /**
@@ -61,7 +57,7 @@ enum Type {
  * and null
  */
 inline bool isPrimitive(Type t) {
-    return (t >= AVRO_STRING) && (t < AVRO_RECORD);
+  return (t >= AVRO_STRING) && (t < AVRO_RECORD);
 }
 
 /**
@@ -70,14 +66,14 @@ inline bool isPrimitive(Type t) {
  * and null
  */
 inline bool isCompound(Type t) {
-    return (t>= AVRO_RECORD) && (t < AVRO_NUM_TYPES);
+  return (t >= AVRO_RECORD) && (t < AVRO_NUM_TYPES);
 }
 
 /**
  * Returns true if and only if the given type is a valid avro type.
  */
 inline bool isAvroType(Type t) {
-    return (t >= AVRO_STRING) && (t < AVRO_NUM_TYPES);
+  return (t >= AVRO_STRING) && (t < AVRO_NUM_TYPES);
 }
 
 /**
@@ -85,30 +81,29 @@ inline bool isAvroType(Type t) {
  * of enumeration.
  */
 inline bool isAvroTypeOrPseudoType(Type t) {
-    return (t >= AVRO_STRING) && (t <= AVRO_NUM_TYPES);
+  return (t >= AVRO_STRING) && (t <= AVRO_NUM_TYPES);
 }
 
 /**
  * Converts the given type into a string. Useful for generating messages.
  */
-AVRO_DECL const std::string& toString(Type type);
+AVRO_DECL const std::string &toString(Type type);
 
 /**
  * Writes a string form of the given type into the given ostream.
  */
-AVRO_DECL std::ostream &operator<< (std::ostream &os, rmf_avro::Type type);
+AVRO_DECL std::ostream &operator<<(std::ostream &os, rmf_avro::Type type);
 
 /// define a type to identify Null in template functions
-struct AVRO_DECL Null { };
+struct AVRO_DECL Null {};
 
 /**
  * Writes schema for null \p null type to \p os.
  * \param os The ostream to write to.
  * \param null The value to be written.
  */
-std::ostream& operator<< (std::ostream &os, const Null &null);
+std::ostream &operator<<(std::ostream &os, const Null &null);
 
-} // namespace rmf_avro
-
+}  // namespace rmf_avro
 
 #endif

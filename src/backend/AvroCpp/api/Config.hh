@@ -22,13 +22,13 @@
 // Windows DLL suport
 
 #ifdef _WIN32
-#pragma warning (disable: 4275 4251)
+#pragma warning(disable : 4275 4251)
 
 #if defined(AVRO_DYN_LINK)
 #ifdef AVRO_SOURCE
-# define AVRO_DECL __declspec(dllexport)
+#define AVRO_DECL __declspec(dllexport)
 #else
-# define AVRO_DECL __declspec(dllimport)
+#define AVRO_DECL __declspec(dllimport)
 #endif  // AVRO_SOURCE
 #endif  // AVRO_DYN_LINK
 #endif  // _WIN32
@@ -50,8 +50,8 @@ using boost::uint8_t;
 #define INT32_MIN _I32_MIN
 #define INT32_MAX _I32_MAX
 
-#else // _MSC_VER
+#else  // _MSC_VER
 #include <stdint.h>
-#endif // _MSC_VER
+#endif  // _MSC_VER
 
 #endif
