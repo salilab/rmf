@@ -197,7 +197,7 @@ class AVRO_DECL NodeSymbolic : public NodeImplSymbolic {
 
   bool isValid() const { return (nameAttribute_.size() == 1); }
 
-  bool isSet() const { return (actualNode_.lock() != 0); }
+  bool isSet() const { return static_cast<bool>(actualNode_.lock()); }
 
   NodePtr getNode() const {
     NodePtr node = actualNode_.lock();
