@@ -72,10 +72,7 @@ void SharedData::save_loaded_frame() {
     io_->save_hierarchy(this);
     SharedDataHierarchy::set_is_dirty(false);
   }
-  if (get_static_is_dirty()) {
-    RMF_INFO(get_logger(), "Flushing static frame");
-    save_static_frame();
-  }
+  save_static_frame();
   RMF_INFO(get_logger(), "Saving frame " << get_loaded_frame());
   io_->save_loaded_frame(this);
   BOOST_FOREACH(Category cat, get_categories()) {
@@ -125,13 +122,15 @@ FrameID SharedData::add_frame(std::string name, FrameType type) {
     add_child_frame(ret);
     save_loaded_frame();
   }
+  clear_loaded_values();
   SharedDataLoadedFrame::set_loaded_frame(ret);
   set_loaded_frame_name(name);
   set_loaded_frame_type(type);
-  clear_loaded_values();
   if (cl != FrameID()) {
     set_loaded_frame_parents(FrameIDs(1, cl));
   }
+  RMF_INTERNAL_CHECK(get_loaded_frame_children().empty(),
+                     "There are already children");
   return ret;
 }
 
