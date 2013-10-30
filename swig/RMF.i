@@ -251,6 +251,7 @@ RMF_DECORATOR(RMF, Torque);
 %include "RMF/publication_decorators.h"
 %include "RMF/decorator_utility.h"
 %include "RMF/utility.h"
+%include "RMF/info.h"
 %include "RMF/SetCurrentFrame.h"
 %include "RMF/CoordinateTransformer.h"
 %include "RMF/log.h"
