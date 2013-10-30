@@ -82,39 +82,11 @@ void HDF5SharedData::open_things(bool create, bool read_only) {
 
 #define RMF_LIST_KEYS(lcname, Ucname, PassValue, ReturnValue, PassValues, \
                       ReturnValues)                                       \
-  RMF_TRACE(get_logger(), "Checking for " << #lcname << " keys.");        \
-  for (int pf = 0; pf < 2; ++pf) {                                        \
-    bool per_frame = (pf == 1);                                           \
-    HDF5DataSetCacheD<StringTraits, 1>& nameds =                          \
-        get_key_list_data_set<Ucname##Traits>(cats[i], per_frame);        \
-    HDF5::DataSetIndexD<1> sz = nameds.get_size();                        \
-    for (unsigned int j = 0; j < sz[0]; ++j) {                            \
-      std::string name = nameds.get_value(HDF5::DataSetIndexD<1>(j));     \
-      int id;                                                             \
-      NameKeyInnerMap::iterator it = name_key_map_[cats[i]].find(name);   \
-      if (it == name_key_map_[cats[i]].end()) {                           \
-        id = key_data_map_.size();                                        \
-        name_key_map_[cats[i]][name] = id;                                \
-        key_data_map_[id].name = name;                                    \
-        key_data_map_[id].type_index =                                    \
-            Ucname##Traits::HDF5Traits::get_index();                      \
-        key_data_map_[id].per_frame_index = -1;                           \
-        key_data_map_[id].static_index = -1;                              \
-        key_data_map_[id].category = cats[i];                             \
-      } else {                                                            \
-        id = it->second;                                                  \
-      }                                                                   \
-      if (per_frame) {                                                    \
-        key_data_map_[id].per_frame_index = j;                            \
-      } else {                                                            \
-        key_data_map_[id].static_index = j;                               \
-      }                                                                   \
-    }                                                                     \
-  }
+  initialize_keys(cat, #lcname, Ucname##Traits());
 
 void HDF5SharedData::initialize_keys(int) {
   Categories cats = get_categories();
-  for (unsigned int i = 0; i < cats.size(); ++i) {
+  BOOST_FOREACH(Category cat, cats) {
     RMF_FOREACH_TYPE(RMF_LIST_KEYS);
   }
 }

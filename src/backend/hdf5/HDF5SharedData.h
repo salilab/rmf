@@ -29,6 +29,7 @@
 #include "HDF5DataSetCache3D.h"
 #include "names.h"
 #include <boost/array.hpp>
+#include <boost/foreach.hpp>
 #include <hdf5.h>
 #include <algorithm>
 #include <boost/ptr_container/ptr_vector.hpp>
@@ -582,11 +583,10 @@ class HDF5SharedData : public backends::BackwardsIOBase {
     std::vector<Key<TypeTraits> > ret;
     typename NameKeyMap::const_iterator oit = name_key_map_.find(cat);
     if (oit == name_key_map_.end()) return ret;
-    for (NameKeyInnerMap::const_iterator it = oit->second.begin();
-         it != oit->second.end(); ++it) {
-      if (key_data_map_.find(it->second)->second.type_index ==
+    BOOST_FOREACH(NameKeyInnerMap::const_reference rt, oit->second) {
+      if (key_data_map_.find(rt.second)->second.type_index ==
           TypeTraits::HDF5Traits::get_index()) {
-        ret.push_back(Key<TypeTraits>(it->second));
+        ret.push_back(Key<TypeTraits>(rt.second));
       }
     }
     return ret;
@@ -610,6 +610,38 @@ class HDF5SharedData : public backends::BackwardsIOBase {
               TypeTraits::HDF5Traits::get_index(),
           "Key already defined with a different type in that category.");
       return Key<TypeTraits>(it->second);
+    }
+  }
+
+  template <class Traits>
+  void initialize_keys(Category cat, std::string name, Traits) {
+    RMF_TRACE(get_logger(), "Checking for " << name << " keys.");
+    for (int pf = 0; pf < 2; ++pf) {
+      bool per_frame = (pf == 1);
+      HDF5DataSetCacheD<StringTraits, 1>& nameds =
+          get_key_list_data_set<Traits>(cat, per_frame);
+      HDF5::DataSetIndexD<1> sz = nameds.get_size();
+      for (unsigned int j = 0; j < sz[0]; ++j) {
+        std::string name = nameds.get_value(HDF5::DataSetIndexD<1>(j));
+        int id;
+        NameKeyInnerMap::iterator it = name_key_map_[cat].find(name);
+        if (it == name_key_map_[cat].end()) {
+          id = key_data_map_.size();
+          name_key_map_[cat][name] = id;
+          key_data_map_[id].name = name;
+          key_data_map_[id].type_index = Traits::HDF5Traits::get_index();
+          key_data_map_[id].per_frame_index = -1;
+          key_data_map_[id].static_index = -1;
+          key_data_map_[id].category = cat;
+        } else {
+          id = it->second;
+        }
+        if (per_frame) {
+          key_data_map_[id].per_frame_index = j;
+        } else {
+          key_data_map_[id].static_index = j;
+        }
+      }
     }
   }
 
