@@ -39,7 +39,7 @@ template <class Traits>
 void show_key_info(FileConstHandle rh, Category cat, std::string name,
                    std::ostream& out) {
   BOOST_FOREACH(Key<Traits> k, rh.get_keys<Traits>(cat)) {
-    out << "    " << rh.get_name(k) ", " << name ", "
+    out << "  " << rh.get_name(k) << ", " << name << ", "
         << GetCount<Traits>::get_count(rh, k) << " uses" << std::endl;
   }
 }
