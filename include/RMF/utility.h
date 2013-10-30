@@ -13,52 +13,55 @@
 #include "internal/errors.h"
 #include "NodeConstHandle.h"
 
-RMF_ENABLE_WARNINGS namespace RMF {
+RMF_ENABLE_WARNINGS
 
-  class FileConstHandle;
-  class FileHandle;
-  class AliasFactory;
-  class NodeHandle;
-  class NodeConstHandle;
+namespace RMF {
 
-  /** \name Copy functions
+class FileConstHandle;
+class FileHandle;
+class AliasFactory;
+class NodeHandle;
+class NodeConstHandle;
 
-      \note These functions make use of the association field.
-      @{
-   */
+/** \name Copy functions
 
-  /** Copy the hierarchy structure and set structure from one rmf
-      file to another.*/
-  RMFEXPORT void clone_file_info(FileConstHandle input, FileHandle output);
+    \note These functions make use of the association field.
+    @{
+ */
 
-  /** Copy the hierarchy structure and set structure from one rmf
-      file to another.*/
-  RMFEXPORT void clone_hierarchy(FileConstHandle input, FileHandle output);
+/** Copy the hierarchy structure and set structure from one rmf
+    file to another.*/
+RMFEXPORT void clone_file_info(FileConstHandle input, FileHandle output);
 
-  /** Copy the data of a single frame from between two files.*/
-  RMFEXPORT void clone_loaded_frame(FileConstHandle input, FileHandle output);
-  /** Copy the data of a single frame from between two files. Parts missing
-      in the output file will be skipped.*/
-  RMFEXPORT void clone_static_frame(FileConstHandle input, FileHandle output);
-  /** @} */
+/** Copy the hierarchy structure and set structure from one rmf
+    file to another.*/
+RMFEXPORT void clone_hierarchy(FileConstHandle input, FileHandle output);
 
-  /** Return true of the two have the same structure.*/
-  RMFEXPORT bool get_equal_structure(
-      FileConstHandle input, FileConstHandle output, bool print_diff = false);
-  /** Return true of the two have the same structure.*/
-  RMFEXPORT bool get_equal_current_values(FileConstHandle input,
-                                          FileConstHandle out);
+/** Copy the data of a single frame from between two files.*/
+RMFEXPORT void clone_loaded_frame(FileConstHandle input, FileHandle output);
+/** Copy the data of a single frame from between two files. Parts missing
+    in the output file will be skipped.*/
+RMFEXPORT void clone_static_frame(FileConstHandle input, FileHandle output);
+/** @} */
 
-  /** Return true of the two have the same structure.*/
-  RMFEXPORT bool get_equal_static_values(FileConstHandle input,
-                                         FileConstHandle out);
+/** Return true of the two have the same structure.*/
+RMFEXPORT bool get_equal_structure(FileConstHandle input,
+                                   FileConstHandle output,
+                                   bool print_diff = false);
+/** Return true of the two have the same structure.*/
+RMFEXPORT bool get_equal_current_values(FileConstHandle input,
+                                        FileConstHandle out);
 
-  /** Add the child node as an alias child of the parent. */
-  RMFEXPORT void add_child_alias(AliasFactory af, NodeHandle parent,
-                                 NodeConstHandle child);
+/** Return true of the two have the same structure.*/
+RMFEXPORT bool get_equal_static_values(FileConstHandle input,
+                                       FileConstHandle out);
 
-  /** This function simply throws an exception. It is here for testing.*/
-  RMFEXPORT void test_throw_exception();
+/** Add the child node as an alias child of the parent. */
+RMFEXPORT void add_child_alias(AliasFactory af, NodeHandle parent,
+                               NodeConstHandle child);
+
+/** This function simply throws an exception. It is here for testing.*/
+RMFEXPORT void test_throw_exception();
 
 } /* namespace RMF */
 
