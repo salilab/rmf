@@ -33,15 +33,7 @@ RMF_ENABLE_WARNINGS
       - if the attribute doesn't have a static value, set it,                  \
       - otherwise set the frame value.                                         \
   */                                                                           \
-  void set_value(UCName##Key k, PassValue v) const {                           \
-    Nullable<UCName##Traits> sv = get_static_value(k);                         \
-    if (sv.get_is_null()) {                                                    \
-      set_static_value(k, v);                                                  \
-      return;                                                                  \
-    }                                                                          \
-    if (UCName##Traits::get_are_equal(sv.get(), v)) return;                    \
-    set_frame_value(k, v);                                                     \
-  }                                                                            \
+  void set_value(UCName##Key k, PassValue v) const { set_value_impl(k, v); }   \
   /** \brief  set the value of the attribute k for all frames.                 \
    *                                                                           \
   */                                                                           \
@@ -64,6 +56,16 @@ class FileHandle;
  */
 class RMFEXPORT NodeHandle : public NodeConstHandle {
   friend class FileHandle;
+  template <class Traits>
+  void set_value_impl(Key<Traits> k, typename Traits::ArgumentType v) const {
+    Nullable<Traits> sv = get_static_value(k);
+    if (sv.get_is_null()) {
+      set_static_value(k, v);
+      return;
+    }
+    if (Traits::get_are_equal(sv.get(), v)) return;
+    set_frame_value(k, v);
+  }
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
  public:
   NodeHandle(NodeID node, boost::shared_ptr<internal::SharedData> shared);
