@@ -95,8 +95,10 @@ class RMFEXPORT NodeConstHandle {
   // hopefully get_value will be inlined...
   template <class Traits>
   Nullable<Traits> get_value_impl(Key<Traits> k) const {
-    Nullable<Traits> ret = get_frame_value(k);
-    if (!ret.get_is_null()) return ret;
+    if (shared_->get_loaded_frame() != FrameID()) {
+      Nullable<Traits> ret = get_frame_value(k);
+      if (!ret.get_is_null()) return ret;
+    }
     return get_static_value(k);
   }
 

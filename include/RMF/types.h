@@ -87,7 +87,7 @@ struct FloatTraits {
   typedef HDF5::FloatTraits HDF5Traits;
   typedef Type AvroType;
   static bool get_are_equal(ArgumentType a, ArgumentType b) {
-    return std::abs(a - b) < .01 * std::abs(a + b) + .01;
+    return std::abs(a - b) < .0000001 * std::abs(a + b) + .000000001;
   }
 };
 struct StringTraits {
