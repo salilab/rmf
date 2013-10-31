@@ -10,12 +10,13 @@
 namespace {
 std::string description("Print out information about categories and keys.");
 
-int frame = 0;
+unsigned int frame = 0;
 }
 
 int main(int argc, char** argv) {
   try {
-    options.add_options()("frame,f", boost::program_options::value<int>(&frame),
+    options.add_options()("frame,f",
+                          boost::program_options::value<unsigned int>(&frame),
                           "Frame to use");
     RMF_ADD_INPUT_FILE("rmf");
     process_options(argc, argv);
@@ -24,6 +25,7 @@ int main(int argc, char** argv) {
     if (!rh.get_description().empty()) {
       std::cout << "description: " << rh.get_description();
     }
+    rh.set_current_frame(RMF::FrameID(frame));
     std::cout << "frames: " << rh.get_number_of_frames() << std::endl;
     RMF::show_info(rh, std::cout);
     return 0;

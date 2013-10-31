@@ -85,7 +85,7 @@ void clone_static_values_type(SDA* sda, Category cata, SDB* sdb,
 template <class SDA, class SDB>
 void clone_static_values_category(SDA* sda, Category cata, SDB* sdb,
                                   Category catb) {
-  RMF_INTERNAL_CHECK(sda->get_number_of_nodes() == sdb->get_number_of_nodes(),
+  RMF_INTERNAL_CHECK(sda->get_number_of_nodes() <= sdb->get_number_of_nodes(),
                      "Number of nodes don't match.");
   RMF_INTERNAL_CHECK(boost::distance(get_nodes(sda)) >= 1,
                      "No root node found.");
@@ -135,7 +135,7 @@ void clone_loaded_values_type(SDA* sda, Category cata, SDB* sdb,
 template <class SDA, class SDB>
 void clone_loaded_values_category(SDA* sda, Category cata, SDB* sdb,
                                   Category catb) {
-  RMF_INTERNAL_CHECK(sda->get_number_of_nodes() == sdb->get_number_of_nodes(),
+  RMF_INTERNAL_CHECK(sda->get_number_of_nodes() <= sdb->get_number_of_nodes(),
                      "Number of nodes don't match.");
   RMF_INTERNAL_CHECK(boost::distance(get_nodes(sda)) >= 1,
                      "No root node found.");

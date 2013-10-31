@@ -21,14 +21,15 @@ namespace backends {
 
 class BackwardsAdaptor {
   internal::SharedData* sync_;
+  Category sequence_;
   IndexKey old_chain_id;
   StringKey new_chain_id;
 
  public:
   BackwardsAdaptor(internal::SharedData* sd) : sync_(sd) {
-    Category sc = sync_->get_category("sequence");
-    old_chain_id = sync_->get_key(sc, "chain id", IndexTraits());
-    new_chain_id = sync_->get_key(sc, "chain id", StringTraits());
+    sequence_ = sync_->SharedDataCategory::get_category("sequence");
+    old_chain_id = sync_->get_key(sequence_, "_private_chain_id", IndexTraits());
+    new_chain_id = sync_->get_key(sequence_, "chain id", StringTraits());
   }
 
   template <class Traits>
@@ -59,6 +60,12 @@ class BackwardsAdaptor {
   template <class Traits>
   Key<Traits> get_key(Category c, std::string name, Traits) const {
     return sync_->get_key(c, name, Traits());
+  }
+  Key<IndexTraits> get_key(Category c, std::string name, IndexTraits) const {
+    if (c == sequence_ && name == "chain id")
+      return old_chain_id;
+    else
+      return sync_->get_key(c, name, IndexTraits());
   }
   template <class Traits>
   std::string get_name(Key<Traits> k) const {

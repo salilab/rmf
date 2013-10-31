@@ -19,6 +19,7 @@ del fn
 del fh
 print "opening"
 fh = RMF.open_rmf_file_read_only(path)
+fh.set_current_frame(RMF.FrameID(0))
 RMF.show_info(fh)
 fh.set_current_frame(RMF.FrameID(0))
 RMF.show_hierarchy_with_values(fh.get_root_node())

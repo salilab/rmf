@@ -19,6 +19,7 @@ class GenericTest(unittest.TestCase):
         n.set_static_value(k2, 8)
         RMF.show_hierarchy_with_values(n)
         fh.flush()
+        print "closing"
         del n
         del fh
         del k

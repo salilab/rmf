@@ -8,7 +8,7 @@ foreach (test ${pyfiles})
   set_tests_properties("RMF.${name}"
     PROPERTIES ENVIRONMENT "PYTHONPATH=${CMAKE_BINARY_DIR}/lib")
   set_tests_properties("RMF.${name}" PROPERTIES LABELS "RMF;test")
-  set_tests_properties("RMF.${name}" PROPERTIES TIMEOUT 4)
+  set_tests_properties("RMF.${name}" PROPERTIES TIMEOUT 8)
   #add_dependencies(${name} RMFPython)
 endforeach()
 
@@ -24,7 +24,7 @@ foreach (test ${cppfiles})
    add_test("RMF-${name}"
             "${PROJECT_BINARY_DIR}/test/${name}${CMAKE_EXECUTABLE_SUFFIX}")
    set_tests_properties("RMF-${name}" PROPERTIES LABELS "RMF;test")
-   set_tests_properties("RMF-${name}" PROPERTIES TIMEOUT 4)
+   set_tests_properties("RMF-${name}" PROPERTIES TIMEOUT 8)
    list(APPEND tests "RMF-${name}")
 endforeach()
 

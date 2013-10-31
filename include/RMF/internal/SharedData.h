@@ -78,18 +78,13 @@ class RMFEXPORT SharedData : public SharedDataUserData,
                              public SharedDataData<IndexesTraits>,
                              public SharedDataData<NodeIDsTraits> {
   unsigned int number_of_frames_;
-  bool write_, created_;
+  bool write_;
   boost::shared_ptr<backends::IO> io_;
 
   bool get_static_is_dirty() const;
   void set_static_is_dirty(bool tf);
   void clear_loaded_values();
   void clear_static_values();
-
-  void save_static_frame();
-  void save_loaded_frame();
-  void load_static_frame();
-  void load_loaded_frame();
 
  public:
   using SharedDataHierarchy::get_name;
@@ -102,6 +97,7 @@ class RMFEXPORT SharedData : public SharedDataUserData,
   SharedData(boost::shared_ptr<backends::IO> io, std::string name, bool write,
              bool created);
   Category get_category(std::string name);
+  Categories get_categories();
   void set_loaded_frame(FrameID frame);
   FrameID add_frame(std::string name, FrameType type);
   void flush();

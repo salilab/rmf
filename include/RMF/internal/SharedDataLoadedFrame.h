@@ -32,10 +32,12 @@ class SharedDataLoadedFrame {
 
  protected:
   void set_loaded_frame(FrameID id) {
-    RMF_INTERNAL_CHECK(id != FrameID(), "Uninitialized SharedDataLoadedFrame.");
     RMF_INTERNAL_CHECK(id != ALL_FRAMES,
                        "ALL_FRAMES in SharedDataLoadedFrame.");
     id_ = id;
+    children_.clear();
+    parents_.clear();
+    name_.clear();
   }
 
  public:

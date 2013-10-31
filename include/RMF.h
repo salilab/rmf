@@ -18,6 +18,7 @@
 #include <RMF/decorators.h>
 #include <RMF/enums.h>
 #include <RMF/exceptions.h>
+#include <RMF/info.h>
 #include <RMF/infrastructure_macros.h>
 #include <RMF/log.h>
 #include <RMF/names.h>

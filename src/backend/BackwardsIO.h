@@ -43,8 +43,24 @@ struct BackwardsIO : public IO {
 
   virtual void reload() RMF_OVERRIDE { sd_->reload(); }
 
+  virtual Strings get_categories() RMF_OVERRIDE {
+    Strings ret;
+    BOOST_FOREACH(Category c, sd_->get_categories()) {
+      ret.push_back(sd_->get_name(c));
+    }
+    return ret;
+  }
+
+  virtual unsigned int get_number_of_frames() RMF_OVERRIDE {
+    return sd_->get_number_of_frames();
+  }
+
   virtual void load_loaded_frame_category(
       Category category, internal::SharedData *shared_data) RMF_OVERRIDE {
+    RMF_INFO(get_logger(), "Load loaded frame data for "
+                               << shared_data->get_name(category)
+                               << " for frame "
+                               << shared_data->get_loaded_frame());
     Category file_cat = sd_->get_category(shared_data->get_name(category));
     BackwardsAdaptor backwards_shared_data(shared_data);
     RMF::internal::clone_loaded_values_category(
@@ -53,6 +69,10 @@ struct BackwardsIO : public IO {
 
   virtual void save_loaded_frame_category(
       Category category, const internal::SharedData *shared_data) RMF_OVERRIDE {
+    RMF_INFO(get_logger(), "Save loaded frame data for "
+                               << shared_data->get_name(category)
+                               << " for frame "
+                               << shared_data->get_loaded_frame());
     RMF_INTERNAL_CHECK(
         shared_data->get_loaded_frame() == sd_->get_loaded_frame(),
         "Loaded frames don't match");
@@ -63,9 +83,8 @@ struct BackwardsIO : public IO {
 
   virtual void load_static_frame_category(
       Category category, internal::SharedData *shared_data) RMF_OVERRIDE {
-    RMF_INTERNAL_CHECK(
-        shared_data->get_loaded_frame() == sd_->get_loaded_frame(),
-        "Loaded frames don't match");
+    RMF_INFO(get_logger(), "Load static frame data for "
+                               << shared_data->get_name(category));
     BackwardsAdaptor backwards_shared_data(shared_data);
     Category file_cat = sd_->get_category(shared_data->get_name(category));
     RMF::internal::clone_static_values_category(
@@ -74,26 +93,31 @@ struct BackwardsIO : public IO {
 
   virtual void save_static_frame_category(
       Category category, const internal::SharedData *shared_data) RMF_OVERRIDE {
+    RMF_INFO(get_logger(), "Save static frame data for "
+                               << shared_data->get_name(category));
     Category file_cat = sd_->get_category(shared_data->get_name(category));
     RMF::internal::clone_static_values_category(shared_data, category,
                                                 sd_.get(), file_cat);
   }
 
   virtual void load_file(internal::SharedData *shared_data) RMF_OVERRIDE {
+    RMF_INFO(get_logger(), "Loading file");
     RMF::internal::clone_file(sd_.get(), shared_data);
     shared_data->set_file_type(sd_->get_file_type());
     shared_data->set_number_of_frames(sd_->get_number_of_frames());
   }
 
   virtual void save_file(const internal::SharedData *shared_data) RMF_OVERRIDE {
+    RMF_INFO(get_logger(), "Saving file");
     RMF::internal::clone_file(shared_data, sd_.get());
     flush();
   }
 
   virtual void save_loaded_frame(const internal::SharedData *shared_data)
       RMF_OVERRIDE {
+    RMF_INFO(get_logger(), "Saving frame " << shared_data->get_loaded_frame());
     FrameID cur = shared_data->get_loaded_frame();
-    RMF_TRACE(get_logger(), "Saving frame " << cur);
+    RMF_INFO(get_logger(), "Saving frame " << cur);
     // ignore nesting relationships for now
     if (cur.get_index() >= sd_->get_number_of_frames()) {
       RMF_TRACE(get_logger(), "Adding new frame for " << cur);
@@ -107,6 +131,7 @@ struct BackwardsIO : public IO {
 
   virtual void load_loaded_frame(internal::SharedData *shared_data)
       RMF_OVERRIDE {
+    RMF_INFO(get_logger(), "Loading frame " << shared_data->get_loaded_frame());
     FrameID cur = shared_data->get_loaded_frame();
     sd_->set_loaded_frame(cur);
     shared_data->set_loaded_frame_name(sd_->get_loaded_frame_name());
@@ -116,11 +141,13 @@ struct BackwardsIO : public IO {
   }
 
   virtual void load_hierarchy(internal::SharedData *shared_data) RMF_OVERRIDE {
+    RMF_INFO(get_logger(), "Loading hierarchy");
     RMF::internal::clone_hierarchy(sd_.get(), shared_data);
   }
 
   virtual void save_hierarchy(const internal::SharedData *shared_data)
       RMF_OVERRIDE {
+    RMF_INFO(get_logger(), "Saving hierarchy");
     RMF::internal::clone_hierarchy(shared_data, sd_.get());
   }
 

@@ -20,27 +20,20 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 
 template <class Traits>
-struct GetCount {
-  static int get_count(FileConstHandle rh, Key<Traits> k) {
-    return get_count(rh.get_root_node(), k);
-  }
-  static int get_count(NodeConstHandle rh, Key<Traits> k) {
-    int cur = 0;
-    if (rh.get_has_value(k)) ++cur;
-    NodeConstHandles nhs = rh.get_children();
-    for (unsigned int i = 0; i < nhs.size(); ++i) {
-      cur += get_count(nhs[i], k);
-    }
-    return cur;
-  }
-};
-
-template <class Traits>
 void show_key_info(FileConstHandle rh, Category cat, std::string name,
                    std::ostream& out) {
   BOOST_FOREACH(Key<Traits> k, rh.get_keys<Traits>(cat)) {
+    int static_count = 0, frame_count = 0;
+    BOOST_FOREACH(NodeID n, rh.get_node_ids()) {
+      NodeConstHandle nh = rh.get_node(n);
+      if (!nh.get_frame_value(k).get_is_null()) {
+        ++frame_count;
+      } else if (!nh.get_static_value(k).get_is_null()) {
+        ++static_count;
+      }
+    }
     out << "  " << rh.get_name(k) << ", " << name << ", "
-        << GetCount<Traits>::get_count(rh, k) << " uses" << std::endl;
+        << frame_count << " (" << static_count << ")" << std::endl;
   }
 }
 
