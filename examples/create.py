@@ -40,7 +40,7 @@ for i in range(0,5):
         sd= score_factory.get(bs)
         sd.set_representation([last,r])
     for j in range(0,nframes):
-        rmf.set_current_frame(j)
+        rmf.set_current_frame(RMF.FrameID(j))
         pdpf= particle_factory.get(r)
         pdpf.set_coordinates([0, j*i*4, j*2])
         if i >0:
@@ -54,7 +54,7 @@ chain= rmf.get_root_node().add_child("chain", RMF.REPRESENTATION)
 chain_factory.get(chain).set_chain_id(0)
 domain= chain.add_child("n-terminus", RMF.REPRESENTATION)
 dd= domain_factory.get(domain)
-dd.set_indexes(0,2)
+dd.set_indexes((0,2))
 
 atoms=[]
 res_data=[( "MET", 0 , [ ("N", 7 , 14.00 , 1.85 ,
@@ -120,7 +120,7 @@ for rdata in res_data:
         ad.set_mass(adata[2])
         ad.set_radius(adata[3])
         for i in range(0,nframes):
-            rmf.set_current_frame(i)
+            rmf.set_current_frame(RMF.FrameID(i))
             adpf= atom_factory.get(a)
             adpf.set_coordinates([adata[4][0]+i,
                                   adata[4][1]+i,
@@ -153,7 +153,7 @@ sn= dg.add_child("segment", RMF.GEOMETRY)
 cd= colored_factory.get(bn)
 cd.set_rgb_color([float(5)/float(nframes),1,0])
 for i in range(1, nframes, 2):
-    rmf.set_current_frame(i)
+    rmf.set_current_frame(RMF.FrameID(i))
     bd= ball_factory.get(bn)
     bd.set_radius(i)
     bd.set_coordinates([10+i, i, i])

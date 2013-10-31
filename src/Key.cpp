@@ -10,11 +10,9 @@
 
 RMF_ENABLE_WARNINGS
 
-#  define RMF_DEFINE_KEY(lcname, Ucname, PassValue, ReturnValue, \
-                          PassValues, ReturnValues)               \
+#define RMF_DEFINE_KEY(                                               \
+    lcname, Ucname, PassValue, ReturnValue, PassValues, ReturnValues) \
   RMF_TEMPLATE_DEF(Key, Ucname##Traits, Ucname##Key)
-
-
 RMF_FOREACH_TYPE(RMF_DEFINE_KEY);
 
 RMF_DISABLE_WARNINGS

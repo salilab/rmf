@@ -7,7 +7,7 @@ execute_process(COMMAND python -c "import sys; print '%d.%d.%d' % sys.version_in
                 OUTPUT_VARIABLE python_full_version
                 OUTPUT_STRIP_TRAILING_WHITESPACE)
 string(REGEX REPLACE "^([0-9]+\\.[0-9]+).*" "\\1" python_version
-       ${python_full_version})
+       "${python_full_version}")
 message(STATUS "Python version is " ${python_version})
 
 FIND_PACKAGE(PythonLibs ${python_full_version} EXACT REQUIRED)
@@ -32,45 +32,52 @@ FILE(GLOB SWIG_INCLUDES "${PROJECT_SOURCE_DIR}/swig/RMF.*.i")
 
 SET_SOURCE_FILES_PROPERTIES(RMF.i PROPERTIES CPLUSPLUS ON)
 SET(SWIG_MODULE_RMF_EXTRA_DEPS
-  ${rmf_headers}  ${headers} ${SWIG_INCLUDES}
-  rmf_h
+  ${rmf_headers}  ${headers} ${SWIG_INCLUDES} RMF-decorators
   )
 
+set(CMAKE_SWIG_OUTDIR ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" FORCE)
 SWIG_ADD_MODULE(RMF python RMF.i)
+set_property(TARGET "${SWIG_MODULE_RMF_REAL_NAME}" PROPERTY FOLDER "RMF")
+if(APPLE)
+  set_target_properties("${SWIG_MODULE_RMF_REAL_NAME}" PROPERTIES LINK_FLAGS "-flat_namespace -undefined suppress")
+endif(APPLE)
+set_target_properties("${SWIG_MODULE_RMF_REAL_NAME}" PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 
 # Don't link in libpython (that prevents the extension from being used in
 # later compatible versions of Python), except on Windows where all DLL
 # symbols must be defined
 IF(WIN32)
-  SWIG_LINK_LIBRARIES(RMF ${PYTHON_LIBRARIES} RMF)
+  SWIG_LINK_LIBRARIES(RMF ${PYTHON_LIBRARIES} RMF-lib)
 ELSE(WIN32)
-  SWIG_LINK_LIBRARIES(RMF RMF)
+  SWIG_LINK_LIBRARIES(RMF RMF-lib)
 ENDIF(WIN32)
-# Apple linkers complain by default if there are undefined symbols
-IF(APPLE)
-  SET(CMAKE_SHARED_MODULE_CREATE_CXX_FLAGS
-    "${CMAKE_SHARED_MODULE_CREATE_CXX_FLAGS} -flat_namespace -undefined suppress")
-ENDIF(APPLE)
 
 INSTALL(TARGETS ${SWIG_MODULE_RMF_REAL_NAME} DESTINATION ${CMAKE_INSTALL_PYTHONDIR})
-INSTALL(FILES "${PROJECT_BINARY_DIR}/RMF.py" DESTINATION ${CMAKE_INSTALL_PYTHONDIR})
+INSTALL(FILES "${CMAKE_BINARY_DIR}/lib/RMF.py" DESTINATION ${CMAKE_INSTALL_PYTHONDIR})
 
 
 SET_SOURCE_FILES_PROPERTIES(RMF_HDF5.i PROPERTIES CPLUSPLUS ON)
 SET(SWIG_MODULE_RMF_HDF5_EXTRA_DEPS
   ${headers}  ${hdf5_headers} ${SWIG_INCLUDES}
-  rmf_hdf5_h
   )
 
+set(CMAKE_SWIG_OUTDIR ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" FORCE)
 SWIG_ADD_MODULE(RMF_HDF5 python RMF_HDF5.i)
+set_property(TARGET "${SWIG_MODULE_RMF_HDF5_REAL_NAME}" PROPERTY FOLDER "RMF")
+if(APPLE)
+  set_target_properties("${SWIG_MODULE_RMF_HDF5_REAL_NAME}" PROPERTIES LINK_FLAGS "-flat_namespace -undefined suppress")
+endif(APPLE)
+set_target_properties("${SWIG_MODULE_RMF_HDF5_REAL_NAME}" PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+
+
 
 # Don't link in libpython (that prevents the extension from being used in
 # later compatible versions of Python), except on Windows where all DLL
 # symbols must be defined
 IF(WIN32)
-  SWIG_LINK_LIBRARIES(RMF_HDF5 ${PYTHON_LIBRARIES} RMF)
+  SWIG_LINK_LIBRARIES(RMF_HDF5 ${PYTHON_LIBRARIES} RMF-lib)
 ELSE(WIN32)
-  SWIG_LINK_LIBRARIES(RMF_HDF5 RMF)
+  SWIG_LINK_LIBRARIES(RMF_HDF5 RMF-lib)
 ENDIF(WIN32)
 # Apple linkers complain by default if there are undefined symbols
 IF(APPLE)
@@ -79,11 +86,11 @@ IF(APPLE)
 ENDIF(APPLE)
 
 INSTALL(TARGETS ${SWIG_MODULE_RMF_HDF5_REAL_NAME} DESTINATION ${CMAKE_INSTALL_PYTHONDIR})
-INSTALL(FILES "${PROJECT_BINARY_DIR}/RMF_HDF5.py" DESTINATION ${CMAKE_INSTALL_PYTHONDIR})
+INSTALL(FILES "${CMAKE_BINARY_DIR}/lib/RMF_HDF5.py" DESTINATION ${CMAKE_INSTALL_PYTHONDIR})
 
 
 FILE(GLOB swigfiles "*.i")
 
 INSTALL(FILES ${swigfiles} DESTINATION "${CMAKE_INSTALL_SWIGDIR}")
 
-add_custom_target("RMF_wrapper" ALL DEPENDS _RMF _RMF_HDF5)
+set(RMF_SWIG _RMF _RMF_HDF5 CACHE INTERNAL "" FORCE)

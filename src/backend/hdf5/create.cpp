@@ -9,32 +9,32 @@
 #include "create.h"
 #include "HDF5SharedData.h"
 #include <boost/algorithm/string/predicate.hpp>
-#include <RMF/internal/map.h>
+#include <boost/unordered_map.hpp>
+#include <boost/make_shared.hpp>
 #include <RMF/log.h>
 
-RMF_ENABLE_WARNINGS
+RMF_ENABLE_WARNINGS namespace RMF {
+  namespace hdf5_backend {
 
-namespace RMF {
-namespace hdf5_backend {
-
-  internal::SharedData* create_shared_data(std::string path, bool create,
+  boost::shared_ptr<internal::SharedData> create_shared_data(std::string path,
+                                           bool create,
                                            bool read_only) {
-   if (!boost::algorithm::ends_with(path, ".rmf")) {
-      return NULL;
+    if (!boost::algorithm::ends_with(path, ".rmf")) {
+      return boost::shared_ptr<internal::SharedData>();
     }
     RMF_INFO(get_logger(), "Using HDF5 hdf5_backend");
-    HDF5SharedData*ret= new HDF5SharedData(path, create, read_only);
-    return ret;
+    return boost::make_shared<HDF5SharedData>(path, create, read_only);
   }
-  internal::SharedData* create_shared_data_buffer(std::string &/*buffer*/,
+  boost::shared_ptr<internal::SharedData> create_shared_data_buffer(std::string& /*buffer*/,
                                                   bool /*create*/) {
-    return NULL;
+    return boost::shared_ptr<internal::SharedData>();
   }
-  internal::SharedData* create_shared_data_buffer(const std::string &/*buffer*/) {
-    return NULL;
+  boost::shared_ptr<internal::SharedData> create_shared_data_buffer(
+      const std::string& /*buffer*/) {
+    return boost::shared_ptr<internal::SharedData>();
   }
 
-}   // namespace avro_backend
-} /* namespace RMF */
+  }  // namespace avro_backend
+}    /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

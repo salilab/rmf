@@ -1,12 +1,18 @@
+include("Files.cmake")
 
-FILE(GLOB BIN_SOURCES "*.cpp")
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/bin)
-foreach (cpp ${BIN_SOURCES})
-   GET_FILENAME_COMPONENT(name ${cpp} NAME_WE)
-   add_executable(${name} ${cpp})
-   target_link_libraries(${name} RMF ${Boost_LIBRARIES} )
-   INSTALL(TARGETS ${name} DESTINATION ${CMAKE_INSTALL_BINDIR})
-   set(executables ${executables} ${name})
+include_directories(${PROJECT_SOURCE_DIR}/bin)
+include_directories(${PROJECT_SOURCE_DIR}/src)
+foreach (cpp ${cppfiles})
+   get_filename_component(name ${cpp} NAME_WE)
+   add_executable(RMF-${name} ${cpp})
+   add_dependencies(RMF-${name} RMF-decorators)
+   target_link_libraries(RMF-${name} RMF-lib ${Boost_LIBRARIES} )
+   set_target_properties(RMF-${name} PROPERTIES
+                         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+                         OUTPUT_NAME ${name})
+   set_property(TARGET "RMF-${name}" PROPERTY FOLDER "RMF")
+   install(TARGETS RMF-${name} DESTINATION ${CMAKE_INSTALL_BINDIR})
+   list(APPEND bins RMF-${name})
 endforeach()
 
-add_custom_target("RMF_bins" ALL DEPENDS ${executables})
+set(RMF_BINS ${bins} CACHE INTERNAL "" FORCE)

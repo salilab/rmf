@@ -4,31 +4,23 @@ project(RMF)
 # needs to be in main CMakeLists.txt
 enable_testing()
 
+message(STATUS "Running setup_cmake.py")
+execute_process(COMMAND python ${PROJECT_SOURCE_DIR}/scripts/setup-cmake.py
+                  RESULT_VARIABLE setup
+                  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+if(NOT ${setup} EQUAL 0)
+   message(FATAL_ERROR " Failed to setup cmake files")
+endif()
+
+  if(NOT "${output}" STREQUAL "")
+    message(STATUS ${output})
+  endif()
+
+
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 
 set(RMF_INCLUDE_PATH "" CACHE INTERNAL "" FORCE)
-include(FindAvroCPP)
-
-if ((${AvroCPP_LIBRARY} MATCHES "AvroCPP_LIBRARY-NOTFOUND")
-    OR (${avrogencpp_PROGRAM} MATCHES "avrogencpp_PROGRAM-NOTFOUND"))
-  if ((NOT ${AvroCPP_LIBRARY} MATCHES "AvroCPP_LIBRARY-NOTFOUND")
-    OR (NOT ${avrogencpp_PROGRAM} MATCHES "avrogencpp_PROGRAM-NOTFOUND"))
-    message(SEND_ERROR "A partial avro install exists on the system, this is a bad thing: "
-     ${AvroCPP_LIBRARY} " " ${avrogencpp_PROGRAM} " " ${AvroCPP_HEADER})
-  endif()
-  message(STATUS "Using internal Avro")
-  add_subdirectory(AvroCpp)
-  set(avrogencpp_PROGRAM "${PROJECT_BINARY_DIR}/AvroCpp/avrogencpp")
-  set(avrogen_DEPENDENCY "${PROJECT_BINARY_DIR}/AvroCpp/avrogencpp")
-  include_directories("${PROJECT_SOURCE_DIR}/AvroCpp")
-  set(AvroCPP_LIBRARY avrocpp)
-  set(RMF_AVRO "internal" CACHE INTERNAL "" FORCE)
-else()
-  message(STATUS "Using external Avro at " ${AvroCPP_LIBRARY})
-  include_directories(${AvroCPP_INCLUDE_DIR})
-  link_directories(${AvroCPP_LIBRARY_DIR})
-  set(RMF_AVRO "external" CACHE INTERNAL "" FORCE)
-endif()
 
 if(POLICY CMP0017)
 cmake_policy(SET CMP0017 NEW)
@@ -60,15 +52,13 @@ include_directories(${HDF5_INCLUDE_DIRS})
 set(RMF_INCLUDE_PATH ${RMF_INCLUDE_PATH} ${HDF5_INCLUDE_DIRS}
     CACHE INTERNAL "" FORCE)
 
-include(TestForExtern)
-
 include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
 
-set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR})
+set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 
 set (RMF_VERSION_MAJOR 1)
-set (RMF_VERSION_MINOR 0)
+set (RMF_VERSION_MINOR 1)
 
 set(RMF_HAS_DEBUG_VECTOR 0 CACHE BOOL "Whether to use a bounds checked vector")
 
@@ -82,11 +72,14 @@ configure_file (
 include_directories("${PROJECT_BINARY_DIR}/include"
   "${PROJECT_SOURCE_DIR}/include")
 
-include(data/CMakeLists.txt)
-include(include/CMakeLists.txt)
+add_subdirectory(data)
+add_subdirectory(include)
 
-include(src/CMakeLists.txt)
+add_subdirectory(src)
 add_subdirectory(bin)
+
+add_subdirectory(plugins/vmd/)
+
 # swig support is a little broken
 
 if (DEFINED CMAKE_INSTALL_PYTHONDIR)
@@ -104,10 +97,10 @@ endif()
 
 add_subdirectory(swig)
 
-include(test/CMakeLists.txt)
-include(examples/CMakeLists.txt)
-include(benchmark/CMakeLists.txt)
-include(doc/CMakeLists.txt)
+add_subdirectory(test)
+add_subdirectory(examples)
+add_subdirectory(benchmark)
+add_subdirectory(doc)
 
-add_custom_target(RMF_all DEPENDS RMF_benchmarks RMF_bins RMF_wrapper RMF_tests)
-add_custom_target(RMF_build DEPENDS RMF_bins RMF_wrapper)
+add_custom_target(RMF DEPENDS ${RMF_BINS} ${RMF_SWIG} ${RMF_TESTS} ${RMF_VMD} RMF-decorators)
+set_property(TARGET "RMF" PROPERTY FOLDER "RMF")

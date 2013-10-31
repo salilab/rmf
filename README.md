@@ -1,3 +1,17 @@
-The RMF library provides support for reading and writing coarse grained molecular structures.
+# RMF #
+The library provides support for the RMF
+file format for storing
+hierarchical molecular data (such as atomic or coarse
+grained representations of proteins), along with
+markup, including geometry and score data.
 
-See http://salilab.github.com/rmf/ for more information.
+The library uses the [HDF5](http://www.hdf5.org,HDF5) library or [Avro](http://avro.apache.org) library to manage the data on
+disk. Other backends (eg mmCIF) could be used, if desired.
+
+See
+- [RMF file format](\ref rmf) for more information about the files,
+- [RMF Library](\ref rmflib) for more information about using the library.
+- [Mapping data into RMF files](\ref mapping) for more information about how to structure data in RMF files.
+
+Also see the [rmf examples](http://www.github.com/salilab/rmf_examples) repository
+for examples of interesting or problematic RMF files.

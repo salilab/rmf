@@ -10,9 +10,8 @@
 #include <fstream>
 
 namespace {
-std::string description
-  = "Convert an rmf file into an xml file suitable for opening in a web browser.";
-
+std::string description = "Convert an rmf file into an xml file suitable for "
+                          "opening in a web browser.";
 
 std::string get_as_attribute_name(std::string name) {
   std::vector<char> data(name.begin(), name.end());
@@ -31,8 +30,9 @@ std::string get_as_attribute_name(std::string name) {
 template <class TypeT, class Handle>
 bool show_type_data_xml(Handle nh,
                         RMF::Category kc,
-                        bool opened, std::ostream &out) {
-  using RMF::operator<<;
+                        bool opened,
+                        std::ostream& out) {
+  using RMF::operator<< ;
   RMF::FileConstHandle rh = nh.get_file();
   std::vector<RMF::Key<TypeT> > keys = rh.get_keys<TypeT>(kc);
   for (unsigned int i = 0; i < keys.size(); ++i) {
@@ -48,15 +48,12 @@ bool show_type_data_xml(Handle nh,
   }
   return opened;
 }
-#define RMF_SHOW_TYPE_DATA_XML(lcname, UCName, PassValue, ReturnValue, \
-                               PassValues, ReturnValues)               \
-  opened = show_type_data_xml<RMF::UCName##Traits>(nh, kc, opened,     \
-                                                   out);
+#define RMF_SHOW_TYPE_DATA_XML(                                       \
+    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues) \
+  opened = show_type_data_xml<RMF::UCName##Traits>(nh, kc, opened, out);
 
 template <class Handle>
-void show_data_xml(Handle        nh,
-                   RMF::Category kc,
-                   std::ostream  &out) {
+void show_data_xml(Handle nh, RMF::Category kc, std::ostream& out) {
   bool opened = false;
   RMF_FOREACH_TYPE(RMF_SHOW_TYPE_DATA_XML);
   if (opened) {
@@ -64,14 +61,12 @@ void show_data_xml(Handle        nh,
   }
 }
 
-void show_hierarchy(RMF::NodeConstHandle           nh,
-                    const RMF::Categories          & cs,
-                    std::set<RMF::NodeConstHandle> &seen,
-                    std::ostream                   &out) {
-  out << "<node name=\"" << nh.get_name() << "\" id=\""
-      << nh.get_id() << "\" "
-      << "type=\"" << RMF::get_type_name(nh.get_type())
-      << "\">\n";
+void show_hierarchy(RMF::NodeConstHandle nh,
+                    const RMF::Categories& cs,
+                    std::set<RMF::NodeConstHandle>& seen,
+                    std::ostream& out) {
+  out << "<node name=\"" << nh.get_name() << "\" id=\"" << nh.get_id() << "\" "
+      << "type=\"" << RMF::get_type_name(nh.get_type()) << "\">\n";
   if (seen.find(nh) == seen.end()) {
     if (verbose) {
       for (unsigned int i = 0; i < cs.size(); ++i) {
@@ -90,22 +85,19 @@ void show_hierarchy(RMF::NodeConstHandle           nh,
 }
 }
 
-
-
-
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
   try {
     RMF_ADD_INPUT_FILE("rmf");
     RMF_ADD_OUTPUT_FILE("xml");
     int frame = 0;
-    options.add_options() ("frame,f",                                    \
-                           boost::program_options::value< int >(&frame), \
-                           "Frame to use, if -1 just show static data");
+    options.add_options()("frame,f",
+                          boost::program_options::value<int>(&frame),
+                          "Frame to use, if -1 just show static data");
 
     process_options(argc, argv);
 
     RMF::FileConstHandle rh = RMF::open_rmf_file_read_only(input);
-    std::ostream *out;
+    std::ostream* out;
     std::ofstream fout;
     if (!output.empty()) {
       fout.open(output.c_str());
@@ -127,11 +119,12 @@ int main(int argc, char **argv) {
     *out << input << std::endl;
     *out << "</path>\n";
     std::set<RMF::NodeConstHandle> seen;
-    rh.set_current_frame(frame);
+    rh.set_current_frame(RMF::FrameID(frame));
     show_hierarchy(rh.get_root_node(), cs, seen, *out);
     *out << "</rmf>\n";
     return 0;
-  } catch (const std::exception &e) {
+  }
+  catch (const std::exception & e) {
     std::cerr << "Error: " << e.what() << std::endl;
   }
 }

@@ -13,18 +13,15 @@
 #include <RMF/HDF5/DataSetD.h>
 #include <boost/utility.hpp>
 
-RMF_ENABLE_WARNINGS
+RMF_ENABLE_WARNINGS namespace RMF {
 
-namespace RMF {
+  namespace hdf5_backend {
 
-namespace hdf5_backend {
+  template <class Traits, unsigned int D> class HDF5DataSetCacheD {
+  };
 
-template <class Traits, unsigned int D>
-class HDF5DataSetCacheD {
-};
-
-}   // namespace hdf5_backend
-} /* namespace RMF */
+  }  // namespace hdf5_backend
+}    /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

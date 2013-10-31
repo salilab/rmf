@@ -48,7 +48,7 @@ def show_xml(nh, kcs):
 
 # open the file, and don't clear the contents
 rh= RMF.open_rmf_file(file_name);
-rh.set_current_frame(0)
+rh.set_current_frame(RMF.FrameID(0))
 print "<?xml version=\"1.0\"?>"
 print "<rmf>"
 print "<path>"

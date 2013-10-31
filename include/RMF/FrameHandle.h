@@ -17,16 +17,19 @@
 
 RMF_ENABLE_WARNINGS
 
-#define RMF_HDF5_FRAME_KEY_TYPE_METHODS(lcname, UCName, PassValue, ReturnValue, \
-                                        PassValues, ReturnValues)               \
-  /** \brief  set the value of the attribute k for this frame
-      If it is a per-frame attribute, frame must be specified.
-   */                                                  \
-  void set_value(UCName##Key k, PassValue v) {         \
-    get_shared_data()->set_value_frame(get_frame_id(), \
-                                       k, v);          \
+#define RMF_HDF5_FRAME_KEY_TYPE_METHODS(                              \
+    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues) \
+  /** \brief  set the value of the attribute k for this frame         \
+      If it is a per-frame attribute, frame must be specified.        \
+   */                                                              \
+  void set_value(UCName##Key k, PassValue v) {                        \
+    RMF_USAGE_CHECK(get_shared_data()->get_current_frame() == get_frame_id() \
+                     || get_frame_id() == ALL_FRAMES,\
+                    "Attributes can only be fetched on the current frame "\
+                    "or the static one.");\
+     if (get_frame_id() == ALL_FRAMES) get_shared_data()->set_static_frame_value(k, v);\
+     else get_shared_data()->set_current_frame_value(k, v);\
   }
-
 RMF_VECTOR_DECL(FrameHandle);
 
 namespace RMF {
@@ -40,16 +43,15 @@ class FileHandle;
     Make sure to check out the base class for the const
     methods.
  */
-class RMFEXPORT FrameHandle: public FrameConstHandle {
+class RMFEXPORT FrameHandle : public FrameConstHandle {
   friend class FileHandle;
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
-public:
-  FrameHandle(int frame, internal::SharedData *shared);
+ public:
+  FrameHandle(FrameID frame, boost::shared_ptr<internal::SharedData> shared);
 #endif
 
-public:
-  FrameHandle() {
-  }
+ public:
+  FrameHandle() {}
   /** Create a new frame as a child of this one and make it
       the current frame.
    */

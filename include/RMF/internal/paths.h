@@ -12,16 +12,12 @@
 #include <RMF/config.h>
 #include <string>
 
-RMF_ENABLE_WARNINGS
-
-namespace RMF {
-namespace internal {
-RMFEXPORT std::string get_relative_path(std::string base,
-                                        std::string file);
-RMFEXPORT std::string get_absolute_path(std::string base,
-                                        std::string file);
-}   // namespace internal
-} /* namespace RMF */
+RMF_ENABLE_WARNINGS namespace RMF {
+  namespace internal {
+  RMFEXPORT std::string get_relative_path(std::string base, std::string file);
+  RMFEXPORT std::string get_absolute_path(std::string base, std::string file);
+  }  // namespace internal
+}    /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

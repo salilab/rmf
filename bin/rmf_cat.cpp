@@ -7,16 +7,16 @@
 #include "common.h"
 
 namespace {
-  std::vector<std::string> inputs;
-  std::string description("Combine two or more rmf files.");
-  std::string output;
+std::vector<std::string> inputs;
+std::string description("Combine two or more rmf files.");
+std::string output;
 }
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
   try {
-    positional_options.add_options()
-      ("input-files,i",
-      boost::program_options::value< std::vector<std::string> >(&inputs),
-      "input rmf file");
+    positional_options.add_options()(
+        "input-files,i",
+        boost::program_options::value<std::vector<std::string> >(&inputs),
+        "input rmf file");
     positional_names.push_back("input_1.rmf input_2.rmf ... output.rmf");
     positional_options_description.add("input-files", -1);
     process_options(argc, argv);
@@ -38,14 +38,15 @@ int main(int argc, char **argv) {
       }
 
       for (unsigned int j = 0; j < rh.get_number_of_frames(); ++j) {
-        rh.set_current_frame(j);
-        orh.set_current_frame(out_frame);
+        rh.set_current_frame(RMF::FrameID(j));
+        orh.set_current_frame(RMF::FrameID(out_frame));
         RMF::copy_frame(rh, orh);
         ++out_frame;
       }
     }
     return 0;
-  } catch (const std::exception &e) {
+  }
+  catch (const std::exception & e) {
     std::cerr << "Error: " << e.what() << std::endl;
   }
 }

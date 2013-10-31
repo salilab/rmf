@@ -24,8 +24,7 @@
 
 namespace {
 const int D = 2;
-void set_size(hid_t ds,
-              int i, int j) {
+void set_size(hid_t ds, int i, int j) {
   hsize_t nd[D];
   nd[0] = i;
   nd[1] = j;
@@ -38,43 +37,38 @@ hid_t get_parameters() {
   return plist;
 }
 
-
-void set_value(hid_t ds,
-               int i, int j,
-               double v) {
-  hsize_t ij[2]; ij[0] = i; ij[1] = j;
+void set_value(hid_t ds, int i, int j, double v) {
+  hsize_t ij[2];
+  ij[0] = i;
+  ij[1] = j;
   hsize_t one = 1;
-  HDF5_HANDLE(ids,   H5Screate_simple(1, &one, NULL), &H5Sclose);
-  hsize_t ones[2]; ones[0] = 1; ones[1] = 1;
-  HDF5_HANDLE(space, H5Dget_space(ds),                &H5Sclose);
-  HDF5_CALL(H5Sselect_hyperslab(space,
-                                H5S_SELECT_SET, ij,
-                                ones, ones,
-                                NULL));
-  H5Dwrite(ds,
-           H5T_NATIVE_DOUBLE, ids, space,
-           H5P_DEFAULT, &v);
+  HDF5_HANDLE(ids, H5Screate_simple(1, &one, NULL), &H5Sclose);
+  hsize_t ones[2];
+  ones[0] = 1;
+  ones[1] = 1;
+  HDF5_HANDLE(space, H5Dget_space(ds), &H5Sclose);
+  HDF5_CALL(H5Sselect_hyperslab(space, H5S_SELECT_SET, ij, ones, ones, NULL));
+  H5Dwrite(ds, H5T_NATIVE_DOUBLE, ids, space, H5P_DEFAULT, &v);
 }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   HDF5_CALL(H5open());
   HDF5_HANDLE(plist, get_parameters(), H5Pclose);
-  HDF5_HANDLE(file,  H5Fcreate("test.hdf5",
-                               H5F_ACC_TRUNC, H5P_DEFAULT,
-                               plist), &H5Fclose);
-  hsize_t dims[D] = {0};
-  hsize_t cdims[D] = {64};
+  HDF5_HANDLE(file,
+              H5Fcreate("test.hdf5", H5F_ACC_TRUNC, H5P_DEFAULT, plist),
+              &H5Fclose);
+  hsize_t dims[D] = { 0 };
+  hsize_t cdims[D] = { 64 };
   cdims[D - 1] = 1;
   hsize_t maxs[D];
   maxs[0] = H5S_UNLIMITED;
   maxs[1] = H5S_UNLIMITED;
   double fill = -1;
-  HDF5_HANDLE(space,  H5Screate_simple(D, dims, maxs), &H5Sclose);
-  HDF5_HANDLE(dplist, H5Pcreate(H5P_DATASET_CREATE),   &H5Pclose);
-    HDF5_CALL(H5Pset_chunk(dplist, D, cdims));
-    HDF5_CALL(H5Pset_fill_value(dplist, H5T_NATIVE_DOUBLE,
-                              &fill));
+  HDF5_HANDLE(space, H5Screate_simple(D, dims, maxs), &H5Sclose);
+  HDF5_HANDLE(dplist, H5Pcreate(H5P_DATASET_CREATE), &H5Pclose);
+  HDF5_CALL(H5Pset_chunk(dplist, D, cdims));
+  HDF5_CALL(H5Pset_fill_value(dplist, H5T_NATIVE_DOUBLE, &fill));
   if (argc > 1 && argv[1][0] == '+') {
     std::cout << "old" << std::endl;
     HDF5_CALL(H5Pset_fill_time(dplist, H5D_FILL_TIME_IFSET));
@@ -88,10 +82,14 @@ int main(int argc, char *argv[]) {
     HDF5_CALL(H5Pset_fill_time(dplist, H5D_FILL_TIME_IFSET));
     HDF5_CALL(H5Pset_alloc_time(dplist, H5D_ALLOC_TIME_EARLY));
   }
-  HDF5_HANDLE(ds, H5Dcreate2(file,
-                             "dataset",
-                             H5T_IEEE_F64LE,
-                             space, H5P_DEFAULT, dplist, H5P_DEFAULT),
+  HDF5_HANDLE(ds,
+              H5Dcreate2(file,
+                         "dataset",
+                         H5T_IEEE_F64LE,
+                         space,
+                         H5P_DEFAULT,
+                         dplist,
+                         H5P_DEFAULT),
               &H5Dclose);
   set_size(ds, 1, 1);
   set_value(ds, 0, 0, .5);

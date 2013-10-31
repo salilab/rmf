@@ -13,8 +13,7 @@ struct MyInt {
   int i;
 };
 
-void test()
-{
+void test() {
   std::string buffer;
   {
     RMF::FileHandle fh = RMF::create_rmf_buffer(buffer);
@@ -30,7 +29,7 @@ void test()
 }
 }
 
-int main(int, char *[]) {
+int main(int, char * []) {
   test();
   return 0;
 }

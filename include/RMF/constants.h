@@ -12,14 +12,13 @@
 #include <RMF/config.h>
 
 RMF_ENABLE_WARNINGS
-
 namespace RMF {
-/** A constant used to denote that the particular operation
-    refers to all frames in the file.
- */
-static const int ALL_FRAMES = -1;
+  /** A constant used to denote that the particular operation
+      refers to all frames in the file.
+  */
+  static const FrameID ALL_FRAMES = FrameID(-1);
 }
 
 RMF_DISABLE_WARNINGS
 
-#endif  /* RMF_CONSTANTS_H */
+#endif /* RMF_CONSTANTS_H */

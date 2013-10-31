@@ -12,25 +12,23 @@
 #include <RMF/FileHandle.h>
 #include <RMF/decorators.h>
 
-RMF_ENABLE_WARNINGS
-
-RMF_VECTOR_DEF(FrameConstHandle);
+RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(FrameConstHandle);
 
 namespace RMF {
 
-FrameConstHandle::FrameConstHandle(int frame, internal::SharedData *shared):
-  frame_(frame), shared_(shared) {
-}
+FrameConstHandle::FrameConstHandle(FrameID frame,
+                                   boost::shared_ptr<internal::SharedData> shared)
+    : frame_(frame), shared_(shared) {}
 
 FileConstHandle FrameConstHandle::get_file() const {
-  return FileConstHandle(shared_.get());
+  return FileConstHandle(shared_);
 }
 
 FrameConstHandles FrameConstHandle::get_children() const {
-  Ints children = shared_->get_children_frame(frame_);
+  FrameIDs children = shared_->get_children(frame_);
   FrameConstHandles ret(children.size());
   for (unsigned int i = 0; i < ret.size(); ++i) {
-    ret[i] = FrameConstHandle(children[i], shared_.get());
+    ret[i] = FrameConstHandle(children[i], shared_);
   }
   return ret;
 }
@@ -41,28 +39,26 @@ void FrameConstHandle::set_as_current_frame() {
 
 std::string get_frame_type_name(FrameType t) {
   switch (t) {
-  case STATIC:
-    return "static";
-  case FRAME:
-    return "frame";
-  case MODEL:
-    return "model";
-  case CENTER:
-    return "center";
-  case FRAME_ALIAS:
-    return "alias";
-  default:
-    return "unknown";
+    case STATIC:
+      return "static";
+    case FRAME:
+      return "frame";
+    case MODEL:
+      return "model";
+    case CENTER:
+      return "center";
+    case FRAME_ALIAS:
+      return "alias";
+    default:
+      return "unknown";
   }
 }
 
-std::ostream &operator<<(std::ostream &out,
-                         FrameType    t) {
+std::ostream& operator<<(std::ostream& out, FrameType t) {
   out << get_frame_type_name(t);
   return out;
 }
-std::istream &operator>>(std::istream &in,
-                         FrameType    &t) {
+std::istream& operator>>(std::istream& in, FrameType& t) {
   std::string token;
   in >> token;
   for (FrameType i = STATIC; i <= FRAME_ALIAS; i = FrameType(i + 1)) {
@@ -77,4 +73,3 @@ std::istream &operator>>(std::istream &in,
 } /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
-

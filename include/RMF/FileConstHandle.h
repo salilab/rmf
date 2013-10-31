@@ -15,44 +15,37 @@
 #include "NodeConstHandle.h"
 #include "FrameConstHandle.h"
 #include <boost/functional/hash.hpp>
-#include <boost/intrusive_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 
 RMF_ENABLE_WARNINGS
 
-#define RMF_FILE_CATCH(extra_info)                                      \
-  catch (Exception &e) {                                                \
-    RMF_RETHROW(File(get_path())                                        \
-                << Frame(get_current_frame().get_id().get_index())      \
-                << Operation(BOOST_CURRENT_FUNCTION)                    \
-                extra_info, e);                                         \
+#define RMF_FILE_CATCH(extra_info)                                          \
+  catch (Exception & e) {                                                   \
+    RMF_RETHROW(                                                            \
+        File(get_path()) << Frame(get_current_frame().get_id()) \
+                         << Operation(BOOST_CURRENT_FUNCTION) extra_info,   \
+        e);                                                                 \
   }
 
-#define RMF_HDF5_ROOT_CONST_KEY_TYPE_METHODS(lcname, UCName, \
-                                             PassValue,      \
-                                             ReturnValue,    \
-                                             PassValues,     \
-                                             ReturnValues)   \
-  UCName##Key                                                \
-  get_##lcname##_key(Category category_id,                   \
-                     std::string nm) const {                 \
-    return get_key<UCName##Traits>(category_id, nm);         \
-  }                                                          \
-  std::string get_name(UCName##Key k) const {                \
-    try {                                                    \
-      return shared_->get_name(k);                           \
-    } RMF_FILE_CATCH( );                                     \
-  }                                                          \
-  Category get_category(UCName##Key k) const {               \
-    return shared_->get_category(k);                         \
-  }                                                          \
-  /** This returns all the keys that are used in the current frame.
-      Other frames may have different ones.*/     \
-  UCName##Key##s                                  \
-  get_##lcname##_keys(Category category_id) {     \
-    return get_keys<UCName##Traits>(category_id); \
+#define RMF_HDF5_ROOT_CONST_KEY_TYPE_METHODS(                                  \
+    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues)          \
+  UCName##Key get_##lcname##_key(Category category_id, std::string nm) const { \
+    return get_key<UCName##Traits>(category_id, nm);                           \
+  }                                                                            \
+  std::string get_name(UCName##Key k) const {                                  \
+    try {                                                                      \
+      return shared_->get_name(k);                                             \
+    }                                                                          \
+    RMF_FILE_CATCH();                                                          \
+  }                                                                            \
+  Category get_category(UCName##Key k) const {                                 \
+    return shared_->get_category(k);                                           \
+  }                                                                            \
+  /** This returns all the keys that are used in the current frame.            \
+      Other frames may have different ones.*/                                  \
+  UCName##Key##s get_##lcname##_keys(Category category_id) {                   \
+    return get_keys<UCName##Traits>(category_id);                              \
   }
-
-
 RMF_VECTOR_DECL(FileConstHandle);
 
 namespace RMF {
@@ -66,60 +59,57 @@ class NodeConstHandle;
     \see open_rmf_file_read_only
  */
 class RMFEXPORT FileConstHandle {
-  void gather_ids(NodeConstHandle n, Ints &ids,
-                  std::vector<std::string> &paths,
+  void gather_ids(NodeConstHandle n,
+                  Ints& ids,
+                  std::vector<std::string>& paths,
                   std::string path) const;
   friend class NodeConstHandle;
-  friend class internal::SharedData;
-  boost::intrusive_ptr<internal::SharedData> shared_;
-  int compare(const FileConstHandle &o) const {
-    if (get_name() < o.get_name()) return -1;
-    else if (get_name() > o.get_name()) return 1;
-    else return 0;
+  boost::shared_ptr<internal::SharedData> shared_;
+  int compare(const FileConstHandle& o) const {
+    if (get_name() < o.get_name())
+      return -1;
+    else if (get_name() > o.get_name())
+      return 1;
+    else
+      return 0;
   }
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
-protected:
-  internal::SharedData* get_shared_data() const {
-    return shared_.get();
-  }
+ protected:
+  boost::shared_ptr<internal::SharedData> get_shared_data() const { return shared_; }
 #endif
-public:
+ public:
   RMF_COMPARISONS(FileConstHandle);
-  RMF_HASHABLE(FileConstHandle, return boost::hash_value(get_name()); );
+  RMF_HASHABLE(FileConstHandle, return boost::hash_value(get_name()););
   RMF_SHOWABLE(FileConstHandle, get_name());
   //! Empty root handle, no open file.
-  FileConstHandle() {
-  }
+  FileConstHandle() {}
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
-  FileConstHandle(internal::SharedData *shared_);
+  FileConstHandle(boost::shared_ptr<internal::SharedData> shared);
   FileConstHandle(std::string name);
 #endif
 
   //! Return the root of the hierarchy
   NodeConstHandle get_root_node() const {
-    return NodeConstHandle(0, shared_.get());
+    return NodeConstHandle(NodeID(0), shared_);
   }
 
   //! Return the root of the hierarchy
   FrameConstHandle get_root_frame() const {
-    return FrameConstHandle(-1, shared_.get());
+    return FrameConstHandle(FrameID(-1), shared_);
   }
 
   //! Return the ith frame
-  FrameConstHandle get_frame(unsigned int i) const {
+  FrameConstHandle get_frame(FrameID i) const {
     try {
-      RMF_INDEX_CHECK(i, get_number_of_frames());
-      return FrameConstHandle(i, shared_.get());
-    } RMF_FILE_CATCH(<< Frame(i));
+      RMF_INDEX_CHECK(i.get_index(), get_number_of_frames());
+      return FrameConstHandle(FrameID(i), shared_);
+    }
+    RMF_FILE_CATCH( << Frame(i));
   }
 
-  std::string get_name() const {
-    return shared_->get_file_name();
-  }
+  std::string get_name() const { return shared_->get_file_name(); }
 
-  std::string get_path() const {
-    return shared_->get_file_path();
-  }
+  std::string get_path() const { return shared_->get_file_path(); }
 
   /** \name Methods for manipulating keys
       When using C++ it is most convenient to specify types
@@ -131,18 +121,16 @@ public:
       given type or Key() if the key is not found.
    */
   template <class TypeT>
-  Key<TypeT> get_key(Category    category,
-                     std::string name) const {
+  Key<TypeT> get_key(Category category, std::string name) const {
     try {
-      return internal::GenericSharedData<TypeT>
-             ::get_key(shared_.get(), category,
-                       name);
-    } RMF_FILE_CATCH(<< Category(get_name(category))
-                     << Key(name));
+      return internal::GenericSharedData<TypeT>::get_key(
+          shared_, category, name);
+    }
+    RMF_FILE_CATCH( << Category(get_name(category)) << Key(name));
   }
   template <class TypeT>
-      std::vector<Key<TypeT> > get_keys(Category      category_id,
-                               const Strings & names) const {
+  std::vector<Key<TypeT> > get_keys(Category category_id,
+                                    const Strings& names) const {
     try {
       std::vector<Key<TypeT> > ret(names.size());
       for (unsigned int i = 0; i < names.size(); ++i) {
@@ -153,17 +141,19 @@ public:
         }
       }
       return ret;
-    } RMF_FILE_CATCH(<< Category(get_name(category_id)));
+    }
+    RMF_FILE_CATCH( << Category(get_name(category_id)));
   }
   /** Get a list of all keys of the given type,
    */
-  template <class TypeT>
-      std::vector<Key<TypeT> > get_keys(Category category) {
+  template <class TypeT> std::vector<Key<TypeT> > get_keys(Category category) {
     try {
-      if (category == Category()) return std::vector<Key<TypeT> >();
-      return internal::GenericSharedData<TypeT>
-             ::get_keys(shared_.get(), category);
-    } RMF_FILE_CATCH(<< Category(get_name(category)));
+      if (category == Category())
+        return std::vector<Key<TypeT> >();
+      return internal::GenericSharedData<TypeT>::get_keys(shared_,
+                                                          category);
+    }
+    RMF_FILE_CATCH( << Category(get_name(category)));
   }
   /** @} */
 
@@ -175,13 +165,14 @@ public:
       @{
    */
   FrameConstHandle get_current_frame() const {
-    return FrameConstHandle(shared_->get_current_frame(), shared_.get());
+    return FrameConstHandle(shared_->get_current_frame(), shared_);
   }
 #ifndef IMP_DOXYGEN
-  void set_current_frame(int frame) {
+  void set_current_frame(FrameID frame) {
     try {
       shared_->set_current_frame(frame);
-    } RMF_FILE_CATCH(<< Frame(frame));
+    }
+    RMF_FILE_CATCH( << Frame(frame));
   }
 #endif
   /* @} */
@@ -192,7 +183,8 @@ public:
   unsigned int get_number_of_frames() const {
     try {
       return shared_->get_number_of_frames();
-    } RMF_FILE_CATCH( );
+    }
+    RMF_FILE_CATCH();
   }
 
   /** \name Non-template versions for python
@@ -203,7 +195,7 @@ public:
 
   RMF_FOREACH_TYPE(RMF_HDF5_ROOT_CONST_KEY_TYPE_METHODS);
 
-  /** @} */
+/** @} */
 #ifdef RMF_DOXYGEN
   /** \name Python only
       The following methods are only available in python.
@@ -211,7 +203,7 @@ public:
    */
   //! Return a list with all the keys from that category
   PythonList get_keys(Category c) const;
-  /** @} */
+/** @} */
 #endif
 #ifndef SWIG
   /** Each node in the hierarchy can be associated with some arbitrary bit
@@ -219,29 +211,26 @@ public:
       these bits of data.
    */
   template <class T>
-  NodeConstHandle get_node_from_association(const T &d) const {
+  NodeConstHandle get_node_from_association(const T& d) const {
     if (!shared_->get_has_associated_node(d)) {
       return NodeConstHandle();
     } else {
-      return NodeConstHandle(shared_->get_associated_node(d), shared_.get());
+      return NodeConstHandle(shared_->get_associated_node(d), shared_);
     }
   }
 #else
   NodeConstHandle get_node_from_association(void* v) const;
 #endif
-  NodeConstHandle get_node_from_id(NodeID id) const;
-
+  NodeConstHandle get_node(NodeID id) const;
 
   /** Along with the associations for nodes, arbitrary data can
       be associated with the file in memory to aid in processing.
    */
-  template <class T>
-  void add_associated_data(int index, const T &t) {
+  template <class T> void add_associated_data(int index, const T& t) {
     shared_->set_user_data(index, t);
   }
   /** To get back the ith user data.*/
-  template <class T>
-  T get_associated_data(int index) {
+  template <class T> T get_associated_data(int index) {
     return shared_->get_user_data<T>(index);
   }
 
@@ -270,26 +259,29 @@ public:
   Category get_category(std::string name) {
     try {
       return shared_->get_category(name);
-    } RMF_FILE_CATCH(<< Category(name));
+    }
+    RMF_FILE_CATCH( << Category(name));
   }
   /** This returns all the categories that are used in the current frame.
       Other frames may have different ones.*/
   Categories get_categories() const {
     try {
       return shared_->get_categories();
-    } RMF_FILE_CATCH( );
+    }
+    RMF_FILE_CATCH();
   }
   std::string get_name(Category kc) const {
     try {
       return shared_->get_category_name(kc);
-    } RMF_FILE_CATCH( );
+    }
+    RMF_FILE_CATCH();
   }
   /** @} */
 
   /** Run the various validators that attempt to check that the RMF file
       is correct. Print messages to the provided stream if errors are
       encounted.*/
-  void validate(std::ostream &out);
+  void validate(std::ostream& out);
 
   /** Like validate(std::ostream&) except it returns a sting describing
       the errors.*/
@@ -301,7 +293,6 @@ public:
    */
   void reload();
 };
-
 
 /**
    Open an RMF from a file system path in read-only mode.
@@ -320,7 +311,6 @@ RMFEXPORT FileConstHandle open_rmf_file_read_only(std::string path);
  */
 RMFEXPORT FileConstHandle open_rmf_buffer_read_only(const std::string& buffer);
 
-
 /** \name Batch data access
     These methods provide batch access to attribute data to try
     to reduce the overhead of repeated function calls.
@@ -331,12 +321,11 @@ RMFEXPORT FileConstHandle open_rmf_buffer_read_only(const std::string& buffer);
     \note These methods are experimental and subject to change.
     @{
  */
-RMFEXPORT Floats get_values(const NodeConstHandles            &nodes,
-                            FloatKey                          k,
-                            Float                             missing_value
-                              = std::numeric_limits<double>:: max());
+RMFEXPORT Floats get_values(const NodeConstHandles& nodes,
+                            FloatKey k,
+                            Float missing_value =
+                                std::numeric_limits<double>::max());
 /** @} */
-
 
 } /* namespace RMF */
 

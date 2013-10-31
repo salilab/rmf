@@ -11,12 +11,9 @@
 
 #include <RMF/config.h>
 #include "infrastructure_macros.h"
-#include <vector>
-#include <iostream>
+#include "exceptions.h"
 
-RMF_ENABLE_WARNINGS
-
-RMF_VECTOR_DECL(FrameID);
+RMF_ENABLE_WARNINGS RMF_VECTOR_DECL(FrameID);
 
 namespace RMF {
 
@@ -28,17 +25,22 @@ class FrameID {
   friend class FrameHandle;
   friend struct FrameIDTraits;
   friend class FileHandle;
-  int compare(const FrameID&o) const {
-    if (i_ < o.i_) return -1;
-    else if (i_ > o.i_) return 1;
-    else return 0;
+  int compare(const FrameID& o) const {
+    if (i_ < o.i_)
+      return -1;
+    else if (i_ > o.i_)
+      return 1;
+    else
+      return 0;
   }
-public:
-  explicit FrameID(unsigned int i): i_(i) {
-  }
-  FrameID(): i_(-1) {
-  }
+
+ public:
+  explicit FrameID(unsigned int i) : i_(i) {}
+  explicit FrameID(int i): i_(i) {}
+  FrameID() : i_(-2) {}
   int get_index() const {
+    RMF_USAGE_CHECK(i_ >= 0,
+                    "get_index called on uninitialized FrameID");
     return i_;
   }
   RMF_SHOWABLE(FrameID, i_);

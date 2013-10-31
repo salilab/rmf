@@ -141,9 +141,9 @@ IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DECLARE_TYPE);
   %}
 }
 
-%include "RMF/constants.h"
 %include "RMF/NodeID.h"
 %include "RMF/FrameID.h"
+%include "RMF/constants.h"
 %include "RMF/types.h"
 
 %include "RMF/Key.h"
@@ -153,7 +153,7 @@ IMP_RMF_SWIG_FOREACH_TYPE(IMP_RMF_SWIG_DEFINE_TYPE);
 %include "RMF/Category.h"
 
 %include "RMF/names.h"
-
+%include "RMF/enums.h"
 %include "RMF/NodeConstHandle.h"
 %include "RMF/FrameConstHandle.h"
 %include "RMF/NodeHandle.h"
@@ -227,11 +227,27 @@ def _get_test_input_file_path(name):
    dir= os.path.split(sys.argv[0])[0]
    return os.path.join(dir, "input", name)
 
+def _os_path_split_asunder(path):
+    import os.path
+    parts = []
+    while True:
+        newpath, tail = os.path.split(path)
+        if newpath == path:
+            assert not tail
+            if path: parts.append(path)
+            break
+        parts.append(tail)
+        path = newpath
+    parts.reverse()
+    return parts
+
+
 def get_example_path(name):
    import sys
    import os.path
-   dir= os.path.split(sys.argv[0])[0]
-   return os.path.join(dir, name)
+   dir= _os_path_split_asunder(sys.argv[0])[:-1]
+   dir.append(name)
+   return os.path.join(*dir)
 
 suffixes=["rmf", "rmf2", "rmfa", "rmft"]
 

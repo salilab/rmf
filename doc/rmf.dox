@@ -3,14 +3,12 @@
 \tableofcontents
 
 The %RMF file format (short for Rich Molecular Format) stores hierarchical data about a molecular
-structure in a binary file. This data can include
+structure in a file or buffer in memoery. This data can include
 
 - molecular structures stored hierarchically. These structures need not be atomic resolution.
-
 - feature information about parts
 of the structures, such as how well it fits a particular
 measurement.
-
 - geometric markup such as segments, surfaces, balls,
 colors which can be used to improve visualization
 
@@ -39,6 +37,13 @@ A hierarchical storage format was chose since
 - it reduces redundancy (eg the residue type is only stored once, as is the residue index)
 - most software uses a hierarchy of some sort to represent structures at runtime, so less translation is needed
 - low resolution and multiresolution structures are then more natural as they are just truncations of a full, atomic hierarchy.
+
+In addition to structural information, the file can also store information about
+- bonds
+- how different parts of the structure relate to different experimental data
+- different organization schemes on the structure
+- arbitrary extra data needed by other programs
+- associated authorship and publication information
 
 See \internal{simple.xml, simple.rmf} for an XML dump of the %RMF generated from
 \internal{simple.pdb.txt, simple.pdb}. For a larger example, see

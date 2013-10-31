@@ -1,26 +1,31 @@
+include(Files.cmake)
 
-file(GLOB python_tests "test/test_*.py")
+include_directories(${PROJECT_SOURCE_DIR}/src)
 
-foreach (test ${python_tests})
+foreach (test ${pyfiles})
    GET_FILENAME_COMPONENT(name ${test} NAME_WE)
-  add_test("RMF.${name}" "python" ${test})
+  add_test("RMF.${name}" "python" ${PROJECT_SOURCE_DIR}/test/${test})
   set_tests_properties("RMF.${name}"
-    PROPERTIES ENVIRONMENT "PYTHONPATH=${PROJECT_BINARY_DIR}")
+    PROPERTIES ENVIRONMENT "PYTHONPATH=${CMAKE_BINARY_DIR}/lib")
   set_tests_properties("RMF.${name}" PROPERTIES LABELS "RMF;test")
+  set_tests_properties("RMF.${name}" PROPERTIES TIMEOUT 4)
   #add_dependencies(${name} RMFPython)
 endforeach()
 
-file(GLOB cpp_tests "test/test_*.cpp")
-
-foreach (test ${cpp_tests})
+foreach (test ${cppfiles})
    GET_FILENAME_COMPONENT(name ${test} NAME_WE)
-   add_executable("RMF.${name}" ${test})
-   target_link_libraries("RMF.${name}" RMF)
-   set_target_properties("RMF.${name}" PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/test")
-   add_test("RMF.${name}"
-            "${CMAKE_BINARY_DIR}/test/RMF.${name}${CMAKE_EXECUTABLE_SUFFIX}")
-   set_tests_properties("RMF.${name}" PROPERTIES LABELS "RMF;test")
-   set(executables ${executables} "RMF.${name}")
+   add_executable("RMF-${name}" ${test})
+   add_dependencies("RMF-${name}" RMF-decorators)
+   target_link_libraries("RMF-${name}" RMF-lib)
+   set_target_properties("RMF-${name}" PROPERTIES
+                          RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/test"
+                          OUTPUT_NAME ${name})
+   set_property(TARGET "RMF-${name}" PROPERTY FOLDER "RMF")
+   add_test("RMF-${name}"
+            "${PROJECT_BINARY_DIR}/test/${name}${CMAKE_EXECUTABLE_SUFFIX}")
+   set_tests_properties("RMF-${name}" PROPERTIES LABELS "RMF;test")
+   set_tests_properties("RMF-${name}" PROPERTIES TIMEOUT 4)
+   list(APPEND tests "RMF-${name}")
 endforeach()
 
-add_custom_target("RMF_tests" ALL DEPENDS ${executables})
+set(RMF_TESTS ${tests} CACHE INTERNAL "" FORCE)
