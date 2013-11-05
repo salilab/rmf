@@ -81,6 +81,7 @@ class Vector {
   }
   unsigned int __len__() const { return D; }
 #endif
+  static unsigned int get_dimension() { return D; }
 };
 
 } /* namespace RMF */
