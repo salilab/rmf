@@ -8,6 +8,7 @@ class GenericTest(unittest.TestCase):
 
     def test_perturbed(self):
         """Test copying an rmf file"""
+        RMF.set_log_level("trace")
         name = RMF._get_temporary_file_path("chain.rmf")
         fh = RMF.create_rmf_file(name)
         fh.set_current_frame(RMF.FrameID(0))

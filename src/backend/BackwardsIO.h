@@ -11,7 +11,7 @@
 
 #include <RMF/config.h>
 #include "IO.h"
-#include "shared_data_adaptors.h"
+#include "KeyFilter.h"
 #include <internal/clone_shared_data.h>
 #include <boost/scoped_ptr.hpp>
 #include <boost/foreach.hpp>
@@ -27,6 +27,15 @@ template <class SD>
 struct BackwardsIO : public IO {
   boost::scoped_ptr<SD> sd_;
   std::string name_;
+
+  template <class Traits, class SDC>
+  Key<Traits> get_key_const(Category cat, std::string name, Traits,
+                            SDC *sd) const {
+    BOOST_FOREACH(Key<Traits> k, sd->get_keys(cat, Traits())) {
+      if (sd->get_name(k) == name) return k;
+    }
+    return Key<Traits>();
+  }
 
  public:
   BackwardsIO(std::string name, bool create, bool read_only)
@@ -62,9 +71,26 @@ struct BackwardsIO : public IO {
                                << " for frame "
                                << shared_data->get_loaded_frame());
     Category file_cat = sd_->get_category(shared_data->get_name(category));
-    BackwardsAdaptor backwards_shared_data(shared_data);
-    RMF::internal::clone_loaded_values_category(
-        sd_.get(), file_cat, &backwards_shared_data, category);
+    KeyFilter<SD> filter(sd_.get());
+    if (shared_data->get_name(category) == "sequence") {
+      filter.add_index_key(file_cat, "chain id");
+    }
+    RMF::internal::clone_loaded_values_category(&filter, file_cat, shared_data,
+                                                category);
+    if (shared_data->get_name(category) == "sequence") {
+      IndexKey cidk =
+          get_key_const(file_cat, "chain id", IndexTraits(), sd_.get());
+      if (cidk != IndexKey()) {
+        StringKey cidsk =
+            shared_data->get_key(category, "chain id", StringTraits());
+        BOOST_FOREACH(NodeID ni, get_nodes(shared_data)) {
+          int ci = sd_->get_loaded_value(ni, cidk);
+          if (!IndexTraits::get_is_null_value(ci)) {
+            shared_data->set_loaded_value(ni, cidsk, std::string(1, ci = 'A'));
+          }
+        }
+      }
+    }
   }
 
   virtual void save_loaded_frame_category(
@@ -77,7 +103,8 @@ struct BackwardsIO : public IO {
         shared_data->get_loaded_frame() == sd_->get_loaded_frame(),
         "Loaded frames don't match");
     Category file_cat = sd_->get_category(shared_data->get_name(category));
-    RMF::internal::clone_loaded_values_category(shared_data, category,
+    KeyFilter<const internal::SharedData> filter(shared_data);
+    RMF::internal::clone_loaded_values_category(&filter, category,
                                                 sd_.get(), file_cat);
   }
 
@@ -85,10 +112,28 @@ struct BackwardsIO : public IO {
       Category category, internal::SharedData *shared_data) RMF_OVERRIDE {
     RMF_INFO(get_logger(), "Load static frame data for "
                                << shared_data->get_name(category));
-    BackwardsAdaptor backwards_shared_data(shared_data);
     Category file_cat = sd_->get_category(shared_data->get_name(category));
-    RMF::internal::clone_static_values_category(
-        sd_.get(), file_cat, &backwards_shared_data, category);
+    KeyFilter<SD> filter(sd_.get());
+    if (shared_data->get_name(category) == "sequence") {
+      filter.add_index_key(file_cat, "chain id");
+    }
+    RMF::internal::clone_static_values_category(&filter, file_cat, shared_data,
+                                                category);
+
+    if (shared_data->get_name(category) == "sequence") {
+      IndexKey cidk =
+          get_key_const(file_cat, "chain id", IndexTraits(), sd_.get());
+      if (cidk != IndexKey()) {
+        StringKey cidsk =
+            shared_data->get_key(category, "chain id", StringTraits());
+        BOOST_FOREACH(NodeID ni, get_nodes(shared_data)) {
+          int ci = sd_->get_static_value(ni, cidk);
+          if (!IndexTraits::get_is_null_value(ci)) {
+            shared_data->set_static_value(ni, cidsk, std::string(1, 'A' + ci));
+          }
+        }
+      }
+    }
   }
 
   virtual void save_static_frame_category(
@@ -96,8 +141,9 @@ struct BackwardsIO : public IO {
     RMF_INFO(get_logger(), "Save static frame data for "
                                << shared_data->get_name(category));
     Category file_cat = sd_->get_category(shared_data->get_name(category));
-    RMF::internal::clone_static_values_category(shared_data, category,
-                                                sd_.get(), file_cat);
+    KeyFilter<const internal::SharedData> filter(shared_data);
+    RMF::internal::clone_static_values_category(&filter, category, sd_.get(),
+                                                file_cat);
   }
 
   virtual void load_file(internal::SharedData *shared_data) RMF_OVERRIDE {
