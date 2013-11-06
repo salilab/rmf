@@ -43,7 +43,7 @@ forwardDeclareList = []
 
 
 def addStruct(name, declaration):
-    if not structNames.has_key(name):
+    if name not in structNames:
         structNames[name] = True
         structList.append(declaration)
 
@@ -65,7 +65,7 @@ def doSymbolic(args):
 def addLayout(name, type, var):
     result = '        add(new $offsetType$(offset + offsetof($name$, $var$)));\n'
     result = result.replace('$name$', name)
-    if typeToC.has_key(type):
+    if type in typeToC:
         offsetType = 'avro::PrimitiveLayout'
     else:
         offsetType = type + '_Layout'
@@ -76,7 +76,7 @@ def addLayout(name, type, var):
 
 def addSimpleLayout(type):
     result = '        add(new $offsetType$);\n'
-    if typeToC.has_key(type):
+    if type in typeToC:
         offsetType = 'avro::PrimitiveLayout'
     else:
         offsetType = type + '_Layout'
@@ -109,7 +109,7 @@ class $name$_Layout : public avro::CompoundLayout {
         CompoundLayout(offset)
     {
 $offsetlist$    }
-}; 
+};
 '''
 
 
@@ -151,8 +151,8 @@ unionTemplate = '''struct $name$ {
 $typedeflist$
     typedef void* (*GenericSetter)($name$ *, int64_t);
 
-    $name$() : 
-        choice(0), 
+    $name$() :
+        choice(0),
         value(T0()),
         genericSetter(&$name$::genericSet)
     { }
@@ -179,7 +179,7 @@ $setfuncs$
         return data;
     }
 
-    int64_t choice; 
+    int64_t choice;
     boost::any value;
     GenericSetter genericSetter;
 };
@@ -210,7 +210,7 @@ class $name$_Layout : public avro::CompoundLayout {
         add(new avro::PrimitiveLayout(offset + offsetof($name$, choice)));
         add(new avro::PrimitiveLayout(offset + offsetof($name$, genericSetter)));
 $offsetlist$    }
-}; 
+};
 '''
 
 unionser = '      case $choice$:\n        serialize(s, val.getValue< $type$ >());\n        break;\n'
@@ -280,8 +280,8 @@ enumTemplate = '''struct $name$ {
         $enumsymbols$
     };
 
-    $name$() : 
-        value($firstsymbol$) 
+    $name$() :
+        value($firstsymbol$)
     { }
 
     EnumSymbols value;
@@ -304,7 +304,7 @@ class $name$_Layout : public avro::CompoundLayout {
     {
         add(new avro::PrimitiveLayout(offset + offsetof($name$, value)));
     }
-}; 
+};
 '''
 
 
@@ -336,7 +336,7 @@ arrayTemplate = '''struct $name$ {
     typedef $valuetype$ ValueType;
     typedef std::vector<ValueType> ArrayType;
     typedef ValueType* (*GenericSetter)($name$ *);
-    
+
     $name$() :
         value(),
         genericSetter(&$name$::genericSet)
@@ -375,7 +375,7 @@ inline void parse(Parser &p, $name$ &val, const boost::true_type &) {
         int size = p.readArrayBlockSize();
         if(size > 0) {
             val.value.reserve(val.value.size() + size);
-            while (size-- > 0) { 
+            while (size-- > 0) {
                 val.value.push_back($name$::ValueType());
                 parse(p, val.value.back());
             }
@@ -383,7 +383,7 @@ inline void parse(Parser &p, $name$ &val, const boost::true_type &) {
         else {
             break;
         }
-    } 
+    }
 }
 
 class $name$_Layout : public avro::CompoundLayout {
@@ -393,7 +393,7 @@ class $name$_Layout : public avro::CompoundLayout {
     {
         add(new avro::PrimitiveLayout(offset + offsetof($name$, genericSetter)));
 $offsetlist$    }
-}; 
+};
 '''
 
 
@@ -419,7 +419,7 @@ mapTemplate = '''struct $name$ {
     typedef $valuetype$ ValueType;
     typedef std::map<std::string, ValueType> MapType;
     typedef ValueType* (*GenericSetter)($name$ *, const std::string &);
-    
+
     $name$() :
         value(),
         genericSetter(&$name$::genericSet)
@@ -429,7 +429,7 @@ mapTemplate = '''struct $name$ {
         value.insert(MapType::value_type(key, val));
     }
 
-    static ValueType *genericSet($name$ *map, const std::string &key) { 
+    static ValueType *genericSet($name$ *map, const std::string &key) {
         map->value[key] = ValueType();
         return &(map->value[key]);
     }
@@ -460,7 +460,7 @@ inline void parse(Parser &p, $name$ &val, const boost::true_type &) {
     while(1) {
         int size = p.readMapBlockSize();
         if(size > 0) {
-            while (size-- > 0) { 
+            while (size-- > 0) {
                 std::string key;
                 parse(p, key);
                 $name$::ValueType m;
@@ -471,7 +471,7 @@ inline void parse(Parser &p, $name$ &val, const boost::true_type &) {
         else {
             break;
         }
-    } 
+    }
 }
 
 class $name$_Layout : public avro::CompoundLayout {
@@ -481,7 +481,7 @@ class $name$_Layout : public avro::CompoundLayout {
     {
         add(new avro::PrimitiveLayout(offset + offsetof($name$, genericSetter)));
 $offsetlist$    }
-}; 
+};
 '''
 
 
@@ -512,7 +512,7 @@ fixedTemplate = '''struct $name$ {
     $name$() {
         memset(value, 0, sizeof(value));
     }
-    
+
     uint8_t value[fixedSize];
 };
 
@@ -533,7 +533,7 @@ class $name$_Layout : public avro::CompoundLayout {
     {
         add(new avro::PrimitiveLayout(offset + offsetof($name$, value)));
     }
-}; 
+};
 '''
 
 
@@ -572,7 +572,7 @@ class $name$_Layout : public avro::CompoundLayout {
     {
         add(new avro::PrimitiveLayout(offset + offsetof($name$, value)));
     }
-}; 
+};
 '''
 
 
@@ -589,7 +589,7 @@ compoundBuilder = {'record': doRecord, 'union': doUnion, 'enum': doEnum,
 
 def processType(inputs):
     type = inputs[0]
-    if typeToC.has_key(type):
+    if type in typeToC:
         result = doPrimitive(type)
     else:
         func = compoundBuilder[type]
@@ -600,7 +600,7 @@ def processType(inputs):
 def generateCode():
     inputs = getNextLine()
     type = inputs[0]
-    if typeToC.has_key(type):
+    if type in typeToC:
         doPrimitiveStruct(type)
     else:
         func = compoundBuilder[type]
@@ -661,7 +661,7 @@ if __name__ == "__main__":
         opts, args = getopt.getopt(
             argv[1:], "hi:o:n:", ["help", "input=", "output=", "namespace="])
 
-    except getopt.GetoptError, err:
+    except getopt.GetoptError as err:
         print str(err)
         usage()
         sys.exit(2)

@@ -51,7 +51,7 @@ blueh = crh.add_child("blue", RMF.REPRESENTATION)
 
 af = RMF.AliasFactory(fh)
 for r in red:
-    RMF.add_child_alias(af, redh,  r)
+    RMF.add_child_alias(af, redh, r)
 for g in green:
     RMF.add_child_alias(af, greenh, g)
 for b in blue:

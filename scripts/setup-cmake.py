@@ -35,8 +35,7 @@ def _get_files(ds, suffix):
 
 def make_all_rmf_header():
     pat = os.path.join("include", "RMF", "*.h")
-    allh = glob.glob(pat)
-    allh.sort()
+    allh = sorted(glob.glob(pat))
 
     out = []
     for g in allh:
@@ -58,8 +57,7 @@ def make_all_rmf_header():
 
 def make_all_hdf5_header():
     pat = os.path.join("include", "RMF", "HDF5", "*.h")
-    allh = glob.glob(pat)
-    allh.sort()
+    allh = sorted(glob.glob(pat))
 
     out = []
     for g in allh:
