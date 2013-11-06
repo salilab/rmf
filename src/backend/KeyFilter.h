@@ -24,6 +24,7 @@ template <class SD>
 class KeyFilter : public SharedDataAdaptor<SD> {
   typedef SharedDataAdaptor<SD> P;
   IndexKeys index_keys_;
+  FloatKeys float_keys_;
 
  public:
   KeyFilter(SD* sd) : P(sd) {}
@@ -31,6 +32,15 @@ class KeyFilter : public SharedDataAdaptor<SD> {
     BOOST_FOREACH(IndexKey k, P::sync_->get_keys(cat, IndexTraits())) {
       if (P::sync_->get_name(k) == name) {
         index_keys_.push_back(k);
+        std::sort(index_keys_.begin(), index_keys_.end());
+        break;
+      }
+    }
+  }
+  void add_float_key(Category cat, std::string name) {
+    BOOST_FOREACH(FloatKey k, P::sync_->get_keys(cat, FloatTraits())) {
+      if (P::sync_->get_name(k) == name) {
+        float_keys_.push_back(k);
         std::sort(index_keys_.begin(), index_keys_.end());
         break;
       }
@@ -46,6 +56,14 @@ class KeyFilter : public SharedDataAdaptor<SD> {
     IndexKeys ret;
     std::set_difference(all.begin(), all.end(), index_keys_.begin(),
                         index_keys_.end(), std::back_inserter(ret));
+    return ret;
+  }
+  FloatKeys get_keys(Category cat, FloatTraits) {
+    FloatKeys all = P::sync_->get_keys(cat, FloatTraits());
+    std::sort(all.begin(), all.end());
+    FloatKeys ret;
+    std::set_difference(all.begin(), all.end(), float_keys_.begin(),
+                        float_keys_.end(), std::back_inserter(ret));
     return ret;
   }
 };
