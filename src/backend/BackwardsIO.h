@@ -103,8 +103,7 @@ struct BackwardsIO : public IO {
         shared_data->get_loaded_frame() == sd_->get_loaded_frame(),
         "Loaded frames don't match");
     Category file_cat = sd_->get_category(shared_data->get_name(category));
-    KeyFilter<const internal::SharedData> filter(shared_data);
-    RMF::internal::clone_loaded_values_category(&filter, category, sd_.get(),
+    RMF::internal::clone_loaded_values_category(shared_data, category, sd_.get(),
                                                 file_cat);
   }
 
@@ -141,8 +140,7 @@ struct BackwardsIO : public IO {
     RMF_INFO(get_logger(), "Save static frame data for "
                                << shared_data->get_name(category));
     Category file_cat = sd_->get_category(shared_data->get_name(category));
-    KeyFilter<const internal::SharedData> filter(shared_data);
-    RMF::internal::clone_static_values_category(&filter, category, sd_.get(),
+    RMF::internal::clone_static_values_category(shared_data, category, sd_.get(),
                                                 file_cat);
   }
 
