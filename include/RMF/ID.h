@@ -35,7 +35,17 @@ class ID {
     else
       return 0;
   }
-
+  std::string get_string() const {
+    if (i_ == -1)
+      return "(null)";
+    else if (i_ == std::numeric_limits<int>::min())
+      return "(invalid)";
+    else {
+      std::ostringstream oss;
+      oss << "(" << i_ << ")";
+      return oss.str();
+    }
+  }
  public:
 #if !defined(RMF_DOXGYGEN) && !defined(SWIG)
   class SpecialTag {};
@@ -57,7 +67,7 @@ class ID {
     RMF_USAGE_CHECK(i_ >= 0, "get_index called on special ID.");
     return i_;
   }
-  RMF_SHOWABLE(ID, i_);
+  RMF_SHOWABLE(ID, get_string());
   RMF_COMPARISONS(ID);
   RMF_HASHABLE(ID, return i_);
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)

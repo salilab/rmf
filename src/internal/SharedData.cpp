@@ -59,7 +59,7 @@ Categories SharedData::get_categories() {
 }
 
 void SharedData::set_loaded_frame(FrameID frame) {
-  RMF_USAGE_CHECK(frame != ALL_FRAMES, "Trying to set laoded to all frames");
+  RMF_USAGE_CHECK(frame != ALL_FRAMES, "Trying to set loaded to all frames");
   if (frame == get_loaded_frame()) return;
   RMF_INFO(get_logger(), "Setting loaded frame to " << frame);
   if (get_loaded_frame() != FrameID() && write_) {
@@ -75,8 +75,7 @@ void SharedData::set_loaded_frame(FrameID frame) {
   SharedDataLoadedFrame::set_loaded_frame(frame);
 
   clear_loaded_values();
-  if (frame != FrameID() &&
-      get_loaded_frame().get_index() < io_->get_number_of_frames()) {
+  if (frame != FrameID()) {
     io_->load_loaded_frame(this);
     BOOST_FOREACH(Category cat, SharedDataCategory::get_loaded_categories()) {
       io_->load_loaded_frame_category(cat, this);
@@ -88,11 +87,22 @@ FrameID SharedData::add_frame(std::string name, FrameType type) {
   FrameID ret(get_number_of_frames());
   ++number_of_frames_;
   FrameID cl = get_loaded_frame();
+  RMF_INTERNAL_CHECK(cl != ret, "Huh, frames are the same");
   if (cl != FrameID()) {
     add_child_frame(ret);
+    if (write_) {
+      flush();
+      io_->save_loaded_frame(this);
+      BOOST_FOREACH(Category cat, SharedDataCategory::get_loaded_categories()) {
+        RMF_TRACE(get_logger(), "Saving frame category " << get_loaded_frame()
+                                                         << ": "
+                                                         << get_name(cat));
+        io_->save_loaded_frame_category(cat, this);
+      }
+    }
   }
-  set_loaded_frame(ret);
   SharedDataLoadedFrame::set_loaded_frame(ret);
+
   set_loaded_frame_name(name);
   set_loaded_frame_type(type);
   if (cl != FrameID()) {
@@ -100,6 +110,7 @@ FrameID SharedData::add_frame(std::string name, FrameType type) {
   }
   RMF_INTERNAL_CHECK(get_loaded_frame_children().empty(),
                      "There are already children");
+  clear_loaded_values();
   return ret;
 }
 

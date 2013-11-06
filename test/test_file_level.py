@@ -83,10 +83,12 @@ class Tests(unittest.TestCase):
             sc = f.get_category("sequence")
             fk = f.get_float_key(sc, "fk0")
             f0 = f.add_frame("0", RMF.FRAME)
-            r.set_value(fk, 1)
+            r.set_frame_value(fk, 1)
             fka = r.get_value(fk)
             self.assertEqual(fka, 1)
+            RMF.show_hierarchy_with_values(r)
             f.add_frame("1", RMF.FRAME)
+            RMF.show_hierarchy_with_values(r)
             fkna = r.get_value(fk)
             self.assertEqual(fkna, None)
 
