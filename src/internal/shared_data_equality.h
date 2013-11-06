@@ -25,11 +25,11 @@ namespace internal {
 template <class Traits, class SDA, class SDB>
 bool get_equal_current_values_type(SDA* sda, Category cata, SDB* sdb,
                                    Category catb) {
-  boost::unordered_map<Key<Traits>, Key<Traits> > keys =
+  boost::unordered_map<ID<Traits>, ID<Traits> > keys =
       get_key_map<Traits>(sda, cata, sdb, catb);
   bool ret = true;
   BOOST_FOREACH(NodeID n, get_nodes(sda)) {
-    typedef std::pair<Key<Traits>, Key<Traits> > KP;
+    typedef std::pair<ID<Traits>, ID<Traits> > KP;
     BOOST_FOREACH(KP ks, keys) {
       typename Traits::ReturnType rta = sda->get_loaded_value(n, ks.first);
       typename Traits::ReturnType rtb = sdb->get_loaded_value(n, ks.second);
@@ -81,11 +81,11 @@ bool get_equal_current_values(SDA* sda, SDB* sdb) {
 template <class Traits, class SDA, class SDB>
 bool get_equal_static_values_type(SDA* sda, Category cata, SDB* sdb,
                                   Category catb) {
-  boost::unordered_map<Key<Traits>, Key<Traits> > keys =
+  boost::unordered_map<ID<Traits>, ID<Traits> > keys =
       get_key_map<Traits>(sda, cata, sdb, catb);
   bool ret = true;
   BOOST_FOREACH(NodeID n, get_nodes(sda)) {
-    typedef std::pair<Key<Traits>, Key<Traits> > KP;
+    typedef std::pair<ID<Traits>, ID<Traits> > KP;
     BOOST_FOREACH(KP ks, keys) {
       typename Traits::ReturnType rta = sda->get_static_value(n, ks.first);
       typename Traits::ReturnType rtb = sdb->get_static_value(n, ks.second);

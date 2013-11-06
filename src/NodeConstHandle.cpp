@@ -8,7 +8,6 @@
 
 #include <RMF/NodeConstHandle.h>
 #include <boost/tuple/tuple.hpp>
-#include <RMF/Category.h>
 #include <RMF/FileHandle.h>
 #include <RMF/decorators.h>
 
@@ -97,9 +96,9 @@ std::istream& operator>>(std::istream& in, NodeType& t) {
 namespace {
 template <class Traits>
 void show_data(NodeConstHandle n, std::ostream& out,
-               const std::vector<Key<Traits> >& ks, std::string prefix) {
+               const std::vector<ID<Traits> >& ks, std::string prefix) {
   using std::operator<<;
-  BOOST_FOREACH(Key<Traits> k, ks) {
+  BOOST_FOREACH(ID<Traits> k, ks) {
     Nullable<Traits> t = n.get_frame_value(k);
     if (!t.get_is_null()) {
       out << std::endl << prefix << n.get_file().get_name(k) << ": "
@@ -170,11 +169,11 @@ void show_node_decorators(NodeConstHandle n, std::ostream& out,
 }
 
 template <class TypeT>
-std::vector<Key<TypeT> > get_keys(FileConstHandle f) {
+std::vector<ID<TypeT> > get_keys(FileConstHandle f) {
   Categories kcs = f.get_categories();
-  std::vector<Key<TypeT> > ret;
+  std::vector<ID<TypeT> > ret;
   for (unsigned int i = 0; i < kcs.size(); ++i) {
-    std::vector<Key<TypeT> > curp = f.get_keys<TypeT>(kcs[i]);
+    std::vector<ID<TypeT> > curp = f.get_keys<TypeT>(kcs[i]);
     ret.insert(ret.end(), curp.begin(), curp.end());
   }
   return ret;

@@ -67,12 +67,12 @@ void clone_file(SDA* sda, SDB* sdb) {
 template <class Traits, class SDA, class SDB>
 void clone_static_values_type(SDA* sda, Category cata, SDB* sdb,
                               Category catb) {
-  boost::unordered_map<Key<Traits>, Key<Traits> > keys =
+  boost::unordered_map<ID<Traits>, ID<Traits> > keys =
       get_key_map<Traits>(sda, cata, sdb, catb);
   if (keys.empty()) return;
   BOOST_FOREACH(NodeID n, get_nodes(sda)) {
     RMF_TRACE(get_logger(), "Cloning static node " << n);
-    typedef std::pair<Key<Traits>, Key<Traits> > KP;
+    typedef std::pair<ID<Traits>, ID<Traits> > KP;
     BOOST_FOREACH(KP ks, keys) {
       typename Traits::ReturnType rt = sda->get_static_value(n, ks.first);
       if (!Traits::get_is_null_value(rt)) {
@@ -114,12 +114,12 @@ void clone_static_data(SDA* sda, SDB* sdb) {
 template <class Traits, class SDA, class SDB>
 void clone_loaded_values_type(SDA* sda, Category cata, SDB* sdb,
                               Category catb) {
-  boost::unordered_map<Key<Traits>, Key<Traits> > keys =
+  boost::unordered_map<ID<Traits>, ID<Traits> > keys =
       get_key_map<Traits>(sda, cata, sdb, catb);
   if (keys.empty()) return;
   BOOST_FOREACH(NodeID n, get_nodes(sda)) {
     RMF_TRACE(get_logger(), "Cloning loaded node " << n);
-    typedef std::pair<Key<Traits>, Key<Traits> > KP;
+    typedef std::pair<ID<Traits>, ID<Traits> > KP;
     BOOST_FOREACH(KP ks, keys) {
       typename Traits::ReturnType rt = sda->get_loaded_value(n, ks.first);
       if (!Traits::get_is_null_value(rt)) {

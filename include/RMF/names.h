@@ -11,7 +11,6 @@
 
 #include <RMF/config.h>
 #include "types.h"
-#include "Key.h"
 #include <sstream>
 
 RMF_ENABLE_WARNINGS namespace RMF {

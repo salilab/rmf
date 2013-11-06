@@ -19,7 +19,7 @@ class GenericTest(unittest.TestCase):
                 nh = rh.add_child("hi", RMF.REPRESENTATION)
                 d = f.get(nh)
                 d.set_coordinates(RMF.Vector3(i, i, i))
-                nids.append(nh.get_id())
+                nids.append(nh.get_index())
             allcoords = f.get_coordinates(fh, nids)
             print allcoords
             assert(len(allcoords) == len(nids))

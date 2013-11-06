@@ -18,16 +18,23 @@ RMF_ENABLE_WARNINGS
 
 namespace RMF {
 
-class FrameTag {};
-class NodeTag {};
+struct FrameTag {
+  static std::string get_tag() { return "f"; }
+};
+struct NodeTag {
+  static std::string get_tag() { return "n"; }
+};
+struct CategoryTag {
+  static std::string get_tag() { return "c"; }
+};
 
 /** Each frame or node in the hierarchy (RMF::FrameHandle)
     associated data has an associated identifier that is unique with
     that %RMF file. These are stored using ID classes with appropriate tags.*/
-template <class Tag>
+template <class TagT>
 class ID {
   int i_;
-  int compare(const ID<Tag>& o) const {
+  int compare(const ID<TagT>& o) const {
     if (i_ < o.i_)
       return -1;
     else if (i_ > o.i_)
@@ -37,16 +44,17 @@ class ID {
   }
   std::string get_string() const {
     if (i_ == -1)
-      return "(null)";
+      return Tag::get_tag() + "NULL";
     else if (i_ == std::numeric_limits<int>::min())
-      return "(invalid)";
+      return  Tag::get_tag() + "INV";
     else {
       std::ostringstream oss;
-      oss << "(" << i_ << ")";
+      oss <<  Tag::get_tag() << i_;
       return oss.str();
     }
   }
  public:
+  typedef TagT Tag;
 #if !defined(RMF_DOXGYGEN) && !defined(SWIG)
   class SpecialTag {};
   ID(int i, SpecialTag) : i_(i) {}
@@ -80,9 +88,11 @@ class ID {
 
 typedef ID<NodeTag> NodeID;
 typedef ID<FrameTag> FrameID;
+typedef ID<CategoryTag> Category;
 
 typedef std::vector<NodeID> NodeIDs;
 typedef std::vector<FrameID> FrameIDs;
+typedef std::vector<Category> Categories;
 
 } /* namespace RMF */
 

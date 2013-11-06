@@ -178,9 +178,9 @@ void MultipleAvroFileReader::reload() {
 }
 
 void MultipleAvroFileReader::add_category_data(Category cat) {
-  if (categories_.size() <= cat.get_id()) {
-    categories_.resize(cat.get_id() + 1);
-    static_categories_.resize(cat.get_id() + 1);
+  if (categories_.size() <= cat.get_index()) {
+    categories_.resize(cat.get_index() + 1);
+    static_categories_.resize(cat.get_index() + 1);
   }
 
   std::string dynamic_path = get_category_dynamic_file_path(cat);
@@ -189,8 +189,8 @@ void MultipleAvroFileReader::add_category_data(Category cat) {
     // std::cout << "Dynamic data found" << std::endl;
     try {
       // make sure it is closed before reopening on windows
-      categories_[cat.get_id()].reader.reset();
-      categories_[cat.get_id()]
+      categories_[cat.get_index()].reader.reset();
+      categories_[cat.get_index()]
           .reader.reset(new rmf_avro::DataFileReader<RMF_avro_backend::Data>(
                dynamic_path.c_str(),
                rmf_avro::compileJsonSchemaFromString(data_avro::data_json)));
@@ -199,14 +199,14 @@ void MultipleAvroFileReader::add_category_data(Category cat) {
       RMF_THROW(Message(e.what()) << Component(dynamic_path), IOException);
     }
     bool success =
-        categories_[cat.get_id()].reader->read(categories_[cat.get_id()].data);
+        categories_[cat.get_index()].reader->read(categories_[cat.get_index()].data);
     if (!success) {
       RMF_THROW(Message("Error reading from data file")
                     << Component(dynamic_path),
                 IOException);
     }
   } else {
-    categories_[cat.get_id()].data.frame = 0;
+    categories_[cat.get_index()].data.frame = 0;
   }
 
   std::string static_path = get_category_static_file_path(cat);
@@ -218,7 +218,7 @@ void MultipleAvroFileReader::add_category_data(Category cat) {
       rmf_avro::DataFileReader<RMF_avro_backend::Data> reader(
           static_path.c_str(),
           rmf_avro::compileJsonSchemaFromString(data_avro::data_json));
-      success = reader.read(static_categories_[cat.get_id()]);
+      success = reader.read(static_categories_[cat.get_index()]);
     }
     catch (const std::exception& e) {
       RMF_THROW(Message(e.what()) << Component(static_path), IOException);
@@ -229,7 +229,7 @@ void MultipleAvroFileReader::add_category_data(Category cat) {
                 IOException);
     }
   } else {
-    static_categories_[cat.get_id()].frame = -1;
+    static_categories_[cat.get_index()].frame = -1;
   }
 }
 

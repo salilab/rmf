@@ -43,7 +43,7 @@ class MultipleAvroFileBase : public AvroKeysAndCategories {
   const RMF_avro_backend::File& get_file() const { return file_; }
 
   const RMF_avro_backend::Data& get_static_data(Category cat) const {
-    return static_categories_[cat.get_id()];
+    return static_categories_[cat.get_index()];
   }
 
   void initialize_node_keys() {

@@ -11,7 +11,7 @@
 
 #include <RMF/config.h>
 #include "internal/SharedData.h"
-#include "Key.h"
+#include "types.h"
 #include "FileConstHandle.h"
 #include "NodeHandle.h"
 

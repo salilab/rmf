@@ -48,14 +48,14 @@ class MultipleAvroFileWriter : public MultipleAvroFileBase {
   const RMF_avro_backend::Data& get_frame_data(Category cat,
                                                FrameID frame) const {
     if (frame == ALL_FRAMES) {
-      if (static_categories_.size() > cat.get_id()) {
-        return static_categories_[cat.get_id()];
+      if (static_categories_.size() > cat.get_index()) {
+        return static_categories_[cat.get_index()];
       } else {
         return null_static_data_;
       }
     } else {
-      if (categories_.size() > cat.get_id()) {
-        return categories_[cat.get_id()].data;
+      if (categories_.size() > cat.get_index()) {
+        return categories_[cat.get_index()].data;
       } else {
         return null_data_;
       }
@@ -64,22 +64,22 @@ class MultipleAvroFileWriter : public MultipleAvroFileBase {
 
   RMF_avro_backend::Data& access_frame_data(Category cat, FrameID frame) {
     if (frame == ALL_FRAMES) {
-      if (static_categories_.size() <= cat.get_id()) {
+      if (static_categories_.size() <= cat.get_index()) {
         RMF_avro_backend::Data data;
         data.frame = -1;
-        static_categories_.resize(cat.get_id() + 1, data);
-        static_categories_dirty_.resize(cat.get_id() + 1, false);
+        static_categories_.resize(cat.get_index() + 1, data);
+        static_categories_dirty_.resize(cat.get_index() + 1, false);
       }
-      static_categories_dirty_[cat.get_id()] = true;
-      return static_categories_[cat.get_id()];
+      static_categories_dirty_[cat.get_index()] = true;
+      return static_categories_[cat.get_index()];
     } else {
-      while (categories_.size() <= cat.get_id()) {
+      while (categories_.size() <= cat.get_index()) {
         categories_.push_back(CategoryData());
         categories_.back().dirty = false;
         categories_.back().data.frame = frame.get_index();
       }
-      categories_[cat.get_id()].dirty = true;
-      return categories_[cat.get_id()].data;
+      categories_[cat.get_index()].dirty = true;
+      return categories_[cat.get_index()].data;
     }
   }
 

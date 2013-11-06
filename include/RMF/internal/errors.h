@@ -17,8 +17,8 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 template <class Tag>
 class ID;
-class NodeTag;
-class FrameTag;
+struct NodeTag;
+struct FrameTag;
 
 namespace internal {
 

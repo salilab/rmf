@@ -19,7 +19,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   /** Get the requested key, adding it to the file if necessary.
    */
   template <class TypeT>
-  inline RMF::Key<TypeT> get_or_add_key(RMF::FileHandle f,
+  inline RMF::ID<TypeT> get_or_add_key(RMF::FileHandle f,
                                         RMF::Category category_id,
                                         std::string name,
                                         bool per_frame = false) {

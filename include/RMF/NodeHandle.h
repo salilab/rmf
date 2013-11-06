@@ -57,7 +57,7 @@ class FileHandle;
 class RMFEXPORT NodeHandle : public NodeConstHandle {
   friend class FileHandle;
   template <class Traits>
-  void set_value_impl(Key<Traits> k, typename Traits::ArgumentType v) const {
+  void set_value_impl(ID<Traits> k, typename Traits::ArgumentType v) const {
     Nullable<Traits> sv = get_static_value(k);
     if (sv.get_is_null()) {
       set_static_value(k, v);

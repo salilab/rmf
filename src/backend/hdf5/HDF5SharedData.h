@@ -15,9 +15,8 @@
 #include <RMF/HDF5/Group.h>
 #include <RMF/HDF5/File.h>
 #include <RMF/infrastructure_macros.h>
-#include <RMF/Category.h>
 #include <RMF/ID.h>
-#include <RMF/Key.h>
+#include <RMF/types.h>
 #include <RMF/enums.h>
 #include <RMF/constants.h>
 #include <boost/unordered_map.hpp>
@@ -92,7 +91,7 @@ class HDF5SharedData : public backends::BackwardsIOBase {
   NameKeyMap name_key_map_;
 
   Category link_category_;
-  Key<NodeIDTraits> link_key_;
+  ID<NodeIDTraits> link_key_;
 
   // caches
   typedef std::vector<std::vector<int> > IndexCache;
@@ -188,26 +187,26 @@ class HDF5SharedData : public backends::BackwardsIOBase {
                                             bool per_frame) const {
       int pfi = per_frame ? 1 : 0;
       bool found = true;
-      if (cache_.size() <= cat.get_id()) {
+      if (cache_.size() <= cat.get_index()) {
         found = false;
-      } else if (cache_[cat.get_id()][pfi].size() <= type_index) {
+      } else if (cache_[cat.get_index()][pfi].size() <= type_index) {
         found = false;
-      } else if (cache_[cat.get_id()][pfi].is_null(type_index)) {
+      } else if (cache_[cat.get_index()][pfi].is_null(type_index)) {
         found = false;
       }
       if (!found) {
         std::string nm =
             get_key_list_data_set_name(kcname, type_name, per_frame);
         cache_.resize(
-            std::max(cache_.size(), static_cast<size_t>(cat.get_id() + 1)));
-        cache_[cat.get_id()][pfi]
-            .resize(std::max(cache_[cat.get_id()][pfi].size(),
+            std::max(cache_.size(), static_cast<size_t>(cat.get_index() + 1)));
+        cache_[cat.get_index()][pfi]
+            .resize(std::max(cache_[cat.get_index()][pfi].size(),
                              static_cast<size_t>(type_index + 1)),
                     NULL);
-        cache_[cat.get_id()][pfi].replace(type_index, new DS());
-        cache_[cat.get_id()][pfi][type_index].set(file, nm);
+        cache_[cat.get_index()][pfi].replace(type_index, new DS());
+        cache_[cat.get_index()][pfi][type_index].set(file, nm);
       }
-      return cache_[cat.get_id()][pfi][type_index];
+      return cache_[cat.get_index()][pfi][type_index];
     }
   };
   mutable Ints max_cache_;
@@ -265,7 +264,7 @@ class HDF5SharedData : public backends::BackwardsIOBase {
 
   template <class TypeTraits>
   typename TypeTraits::Type get_value(FrameID frame, NodeID node,
-                                      Key<TypeTraits> k) const {
+                                      ID<TypeTraits> k) const {
     int category_index = get_category_index(get_category(k));
     if (category_index == -1) {
       return TypeTraits::get_null_value();
@@ -280,7 +279,7 @@ class HDF5SharedData : public backends::BackwardsIOBase {
     }
   }
   template <class TypeTraits>
-  void set_value(FrameID frame, NodeID node, Key<TypeTraits> k,
+  void set_value(FrameID frame, NodeID node, ID<TypeTraits> k,
                  typename TypeTraits::Type v) {
     int category_index = get_category_index_create(get_category(k));
     int key_index = get_key_index_create(k, frame);
@@ -519,8 +518,8 @@ class HDF5SharedData : public backends::BackwardsIOBase {
   }
 
   template <class TypeTraits>
-  int get_key_index(Key<TypeTraits> key, bool per_frame) const {
-    KeyDataMap::const_iterator it = key_data_map_.find(key.get_id());
+  int get_key_index(ID<TypeTraits> key, bool per_frame) const {
+    KeyDataMap::const_iterator it = key_data_map_.find(key.get_index());
     if (per_frame) {
       return it->second.per_frame_index;
     } else {
@@ -529,16 +528,16 @@ class HDF5SharedData : public backends::BackwardsIOBase {
   }
 
   template <class TypeTraits>
-  int get_key_index(Key<TypeTraits> key, FrameID frame) const {
+  int get_key_index(ID<TypeTraits> key, FrameID frame) const {
     return get_key_index(key, frame != ALL_FRAMES);
   }
   template <class TypeTraits>
-  int get_key_index_create(Key<TypeTraits> key, FrameID frame) {
-    KeyDataMap::iterator it = key_data_map_.find(key.get_id());
+  int get_key_index_create(ID<TypeTraits> key, FrameID frame) {
+    KeyDataMap::iterator it = key_data_map_.find(key.get_index());
     if (frame != ALL_FRAMES) {
       if (it->second.per_frame_index == -1) {
         int index = add_key_impl<TypeTraits>(
-            get_category(key), key_data_map_[key.get_id()].name, true);
+            get_category(key), key_data_map_[key.get_index()].name, true);
         it->second.per_frame_index = index;
         return index;
       } else {
@@ -547,7 +546,7 @@ class HDF5SharedData : public backends::BackwardsIOBase {
     } else {
       if (it->second.static_index == -1) {
         int index = add_key_impl<TypeTraits>(
-            get_category(key), key_data_map_[key.get_id()].name, false);
+            get_category(key), key_data_map_[key.get_index()].name, false);
         it->second.static_index = index;
         return index;
       } else {
@@ -559,41 +558,41 @@ class HDF5SharedData : public backends::BackwardsIOBase {
  public:
   template <class TypeTraits>
   typename TypeTraits::Type get_loaded_value(NodeID node,
-                                             Key<TypeTraits> k) const {
+                                             ID<TypeTraits> k) const {
     return get_value(get_loaded_frame(), node, k);
   }
   template <class TypeTraits>
   typename TypeTraits::Type get_static_value(NodeID node,
-                                             Key<TypeTraits> k) const {
+                                             ID<TypeTraits> k) const {
     return get_value(ALL_FRAMES, node, k);
   }
   template <class TypeTraits>
-  void set_loaded_value(NodeID node, Key<TypeTraits> k,
+  void set_loaded_value(NodeID node, ID<TypeTraits> k,
                         typename TypeTraits::Type v) {
     set_value(get_loaded_frame(), node, k, v);
   }
   template <class TypeTraits>
-  void set_static_value(NodeID node, Key<TypeTraits> k,
+  void set_static_value(NodeID node, ID<TypeTraits> k,
                         typename TypeTraits::Type v) {
     set_value(ALL_FRAMES, node, k, v);
   }
 
   template <class TypeTraits>
-  std::vector<Key<TypeTraits> > get_keys(Category cat, TypeTraits) {
-    std::vector<Key<TypeTraits> > ret;
+  std::vector<ID<TypeTraits> > get_keys(Category cat, TypeTraits) {
+    std::vector<ID<TypeTraits> > ret;
     typename NameKeyMap::const_iterator oit = name_key_map_.find(cat);
     if (oit == name_key_map_.end()) return ret;
     BOOST_FOREACH(NameKeyInnerMap::const_reference rt, oit->second) {
       if (key_data_map_.find(rt.second)->second.type_index ==
           TypeTraits::HDF5Traits::get_index()) {
-        ret.push_back(Key<TypeTraits>(rt.second));
+        ret.push_back(ID<TypeTraits>(rt.second));
       }
     }
     return ret;
   }
 
   template <class TypeTraits>
-  Key<TypeTraits> get_key(Category category, std::string name, TypeTraits) {
+  ID<TypeTraits> get_key(Category category, std::string name, TypeTraits) {
     NameKeyInnerMap::iterator it = name_key_map_[category].find(name);
     if (it == name_key_map_[category].end()) {
       int id = key_data_map_.size();
@@ -603,13 +602,13 @@ class HDF5SharedData : public backends::BackwardsIOBase {
       key_data_map_[id].static_index = -1;
       key_data_map_[id].type_index = TypeTraits::HDF5Traits::get_index();
       key_data_map_[id].category = category;
-      return Key<TypeTraits>(id);
+      return ID<TypeTraits>(id);
     } else {
       RMF_USAGE_CHECK(
           key_data_map_.find(it->second)->second.type_index ==
               TypeTraits::HDF5Traits::get_index(),
           "Key already defined with a different type in that category.");
-      return Key<TypeTraits>(it->second);
+      return ID<TypeTraits>(it->second);
     }
   }
 
@@ -646,12 +645,12 @@ class HDF5SharedData : public backends::BackwardsIOBase {
   }
 
   template <class Traits>
-  std::string get_name(Key<Traits> k) const {
-    return key_data_map_.find(k.get_id())->second.name;
+  std::string get_name(ID<Traits> k) const {
+    return key_data_map_.find(k.get_index())->second.name;
   }
   template <class Traits>
-  Category get_category(Key<Traits> key) const {
-    return key_data_map_.find(key.get_id())->second.category;
+  Category get_category(ID<Traits> key) const {
+    return key_data_map_.find(key.get_index())->second.category;
   }
 
   void set_name(FrameID i, std::string str);

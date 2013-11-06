@@ -72,6 +72,7 @@ struct IntTraits {
   typedef HDF5::IntTraits HDF5Traits;
   typedef boost::int32_t AvroType;
   static bool get_are_equal(ArgumentType a, ArgumentType b) { return a == b; }
+  static std::string get_tag() { return "ki"; }
 };
 struct FloatTraits {
   typedef Float Type;
@@ -89,6 +90,7 @@ struct FloatTraits {
   static bool get_are_equal(ArgumentType a, ArgumentType b) {
     return std::abs(a - b) < .0000001 * std::abs(a + b) + .000000001;
   }
+  static std::string get_tag() { return "kf"; }
 };
 struct StringTraits {
   typedef String Type;
@@ -103,6 +105,7 @@ struct StringTraits {
   typedef HDF5::StringTraits HDF5Traits;
   typedef Type AvroType;
   static bool get_are_equal(ArgumentType a, ArgumentType b) { return a == b; }
+  static std::string get_tag() { return "ks"; }
 };
 struct IndexTraits {
   typedef Index Type;
@@ -114,6 +117,7 @@ struct IndexTraits {
   typedef HDF5::IndexTraits HDF5Traits;
   typedef boost::int32_t AvroType;
   static bool get_are_equal(ArgumentType a, ArgumentType b) { return a == b; }
+  static std::string get_tag() { return "kx"; }
 };
 struct IntsTraits {
   typedef Ints Type;
@@ -134,6 +138,7 @@ struct IntsTraits {
     }
     return true;
   }
+  static std::string get_tag() { return "kis"; }
 };
 struct FloatsTraits {
   typedef Floats Type;
@@ -154,6 +159,7 @@ struct FloatsTraits {
     }
     return true;
   }
+  static std::string get_tag() { return "kfs"; }
 };
 struct StringsTraits {
   typedef Strings Type;
@@ -174,6 +180,7 @@ struct StringsTraits {
     }
     return true;
   }
+  static std::string get_tag() { return "kss"; }
 };
 
 struct IndexesTraits {
@@ -195,6 +202,7 @@ struct IndexesTraits {
     }
     return true;
   }
+  static std::string get_tag() { return "kxs"; }
 };
 
 struct NodeIDTraits {
@@ -212,6 +220,7 @@ struct NodeIDTraits {
 #endif
   typedef boost::int32_t AvroType;
   static bool get_are_equal(ArgumentType a, ArgumentType b) { return a == b; }
+  static std::string get_tag() { return "kn"; }
 };
 
 struct NodeIDsTraits {
@@ -238,6 +247,7 @@ struct NodeIDsTraits {
     }
     return true;
   }
+  static std::string get_tag() { return "kns"; }
 };
 
 /** Get one type as another, handling vectors or scalars.*/
@@ -292,6 +302,28 @@ class BondEndpoints
       RMF_THROW(Message("Out of bounds"), UsageException);
   }
 };
+
+#define RMF_DECLARE_KEY(lcname, Ucname, PassValue, ReturnValue, PassValues, \
+                        ReturnValues)                                       \
+  typedef ID<Ucname##Traits> Ucname##Key;                                   \
+  typedef std::vector<Ucname##Key> Ucname##Keys
+
+/** \name Key types
+    RMF files support storing a variety of different types of data. These
+    include
+    - IntKey: store an arbitrary integher as a 64 bit integer
+    - FloatKey: store an arbitrary floating point number as a double
+    - StringKey: store an arbitrary length string
+    - IndexKey: store non-negative indexes as 64 bit integers
+    - NodeIDKey: store the ID of a node in the hierarchy
+    - NodeIDsKey: store a list of NodeIDs
+    - DataSetKey: store a reference to an HDF5 data set via the path to the
+    data set
+    - IntsKey: store a list of arbitrary integers
+    @{
+ */
+RMF_FOREACH_TYPE(RMF_DECLARE_KEY);
+/** @} */
 
 } /* namespace RMF */
 

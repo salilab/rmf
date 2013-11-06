@@ -20,13 +20,13 @@ namespace RMF {
 namespace internal {
 
 template <class Traits, class SDA, class SDB>
-boost::unordered_map<Key<Traits>, Key<Traits> > get_key_map(SDA* sda,
+boost::unordered_map<ID<Traits>, ID<Traits> > get_key_map(SDA* sda,
                                                             Category cata,
                                                             SDB* sdb,
                                                             Category catb) {
-  boost::unordered_map<Key<Traits>, Key<Traits> > ret;
-  std::vector<Key<Traits> > keysa = sda->get_keys(cata, Traits());
-  BOOST_FOREACH(Key<Traits> keya, keysa) {
+  boost::unordered_map<ID<Traits>, ID<Traits> > ret;
+  std::vector<ID<Traits> > keysa = sda->get_keys(cata, Traits());
+  BOOST_FOREACH(ID<Traits> keya, keysa) {
     ret[keya] = sdb->get_key(catb, sda->get_name(keya), Traits());
     RMF_TRACE(get_logger(), sda->get_name(keya) << " maps to "
                                                 << sdb->get_name(ret[keya]))

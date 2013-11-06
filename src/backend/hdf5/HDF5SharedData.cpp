@@ -115,7 +115,7 @@ void HDF5SharedData::initialize_categories() {
 }
 
 HDF5SharedData::HDF5SharedData(std::string g, bool create, bool read_only)
-    : BackwardsIOBase(g), frames_hint_(0), link_category_(-1) {
+    : BackwardsIOBase(g), frames_hint_(0) {
   open_things(create, read_only);
   link_category_ = get_category("link");
   link_key_ = get_key(link_category_, "linked", NodeIDTraits());

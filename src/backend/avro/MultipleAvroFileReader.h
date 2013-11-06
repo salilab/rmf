@@ -44,18 +44,18 @@ class MultipleAvroFileReader : public MultipleAvroFileBase {
   const RMF_avro_backend::Data& get_frame_data(Category cat,
                                                FrameID frame) const {
     if (frame == ALL_FRAMES) {
-      if (static_categories_.size() > cat.get_id()) {
-        return static_categories_[cat.get_id()];
+      if (static_categories_.size() > cat.get_index()) {
+        return static_categories_[cat.get_index()];
       } else {
         return null_static_data_;
       }
     } else {
       RMF_USAGE_CHECK(frame == get_loaded_frame(),
                       "Asking for a non-current frame");
-      if (categories_.size() > cat.get_id() &&
-          static_cast<unsigned int>(categories_[cat.get_id()].data.frame) ==
+      if (categories_.size() > cat.get_index() &&
+          static_cast<unsigned int>(categories_[cat.get_index()].data.frame) ==
               frame.get_index()) {
-        return categories_[cat.get_id()].data;
+        return categories_[cat.get_index()].data;
       } else {
         /*std::cout << "No data for category "
                   << get_category_name(cat)

@@ -1,11 +1,9 @@
-#include <RMF/Category.h>
 #include <RMF/CoordinateTransformer.h>
 #include <RMF/Decorator.h>
 #include <RMF/Factory.h>
 #include <RMF/FileConstHandle.h>
 #include <RMF/FileHandle.h>
 #include <RMF/ID.h>
-#include <RMF/Key.h>
 #include <RMF/NodeConstHandle.h>
 #include <RMF/NodeHandle.h>
 #include <RMF/Nullable.h>

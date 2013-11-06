@@ -29,12 +29,12 @@ struct BackwardsIO : public IO {
   std::string name_;
 
   template <class Traits, class SDC>
-  Key<Traits> get_key_const(Category cat, std::string name, Traits,
+  ID<Traits> get_key_const(Category cat, std::string name, Traits,
                             SDC *sd) const {
-    BOOST_FOREACH(Key<Traits> k, sd->get_keys(cat, Traits())) {
+    BOOST_FOREACH(ID<Traits> k, sd->get_keys(cat, Traits())) {
       if (sd->get_name(k) == name) return k;
     }
-    return Key<Traits>();
+    return ID<Traits>();
   }
 
  public:

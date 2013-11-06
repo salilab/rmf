@@ -87,7 +87,7 @@ _types_list.append(#lcname)
 %enddef
 
 %define RMF_SWIG_DEFINE_TYPE(lcname, Ucname, Ucnames, Type)
-%template(Ucname##Key) RMF::Key<RMF::Ucname##Traits>;
+%template(Ucname##Key) RMF::ID<RMF::Ucname##Traits>;
 %enddef
 
 %define RMF_SWIG_WRAP_NULLABLE(lcname, Ucname, Ucnames, Type)
@@ -103,6 +103,7 @@ _types_list.append(#lcname)
 
 
 RMF_SWIG_VALUE_INSTANCE(RMF, NodeID, ID<NodeTag>, NodeIDs);
+RMF_SWIG_VALUE_INSTANCE(RMF, Category, ID<CategoryTag>, Categories);
 RMF_SWIG_VALUE_INSTANCE(RMF, FrameID, ID<FrameTag>, FrameIDs);
 RMF_SWIG_VALUE_INSTANCE(RMF, Vector3, Vector<3>, Vector3s);
 RMF_SWIG_VALUE_INSTANCE(RMF, Vector4, Vector<4>, Vector4s);
@@ -124,8 +125,6 @@ RMF_SWIG_VALUE(RMF, FileConstHandle, FileConstHandles);
 RMF_SWIG_VALUE(RMF, NodeHandle, NodeHandles);
 RMF_SWIG_VALUE(RMF, FileHandle, FileHandles);
 RMF_SWIG_VALUE(RMF, SetCurrentFrame, SetCurrentFrames);
-RMF_SWIG_VALUE(RMF, Category, Categories);
-RMF_SWIG_VALUE_TEMPLATE(RMF, Key);
 RMF_SWIG_VALUE_TEMPLATE(RMF, ID);
 RMF_SWIG_PAIR(RMF, Index, IndexRange, IndexRanges)
 RMF_SWIG_PAIR(RMF, Int, IntRange, IntRanges)
@@ -141,6 +140,8 @@ RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DECLARE_TYPE);
 %include "RMF/ID.h"
 %template(FrameID) RMF::ID<RMF::FrameTag>;
 %template(NodeID) RMF::ID<RMF::NodeTag>;
+%template(Category) RMF::ID<RMF::CategoryTag>;
+RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DEFINE_TYPE);
 
 %extend RMF::FileConstHandle {
    %pythoncode %{
@@ -186,11 +187,7 @@ RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DECLARE_TYPE);
 %template(Vector4) RMF::Vector<4>;
 
 %include "RMF/Nullable.h"
-%include "RMF/Key.h"
-RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DEFINE_TYPE);
 RMF_SWIG_FOREACH_TYPE(RMF_SWIG_WRAP_NULLABLE);
-
-%include "RMF/Category.h"
 
 %include "RMF/names.h"
 %include "RMF/enums.h"

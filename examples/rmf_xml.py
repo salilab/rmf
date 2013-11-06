@@ -39,7 +39,7 @@ def show_data_xml(nh, kc):
 def show_xml(nh, kcs):
     name = nh.get_name()
     name.replace(" ", "_")
-    print "<node name=\"" + name + "\" id=\"" + str(nh.get_id().get_index())\
+    print "<node name=\"" + name + "\" id=\"" + str(nh.get_index().get_index())\
         + "\" type=\"" + RMF.get_type_name(nh.get_type()) + "\"/>"
     if verbose:
         for kc in kcs:

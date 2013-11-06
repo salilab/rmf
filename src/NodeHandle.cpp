@@ -8,7 +8,6 @@
 
 #include <RMF/NodeHandle.h>
 #include <boost/tuple/tuple.hpp>
-#include <RMF/Category.h>
 #include <RMF/FileHandle.h>
 #include <RMF/decorators.h>
 

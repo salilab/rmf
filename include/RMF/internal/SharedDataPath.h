@@ -10,7 +10,6 @@
 #define RMF_INTERNAL_SHARED_DATA_PATH_H
 
 #include <RMF/config.h>
-#include "../Key.h"
 #include "../types.h"
 #include "../names.h"
 #include "../enums.h"

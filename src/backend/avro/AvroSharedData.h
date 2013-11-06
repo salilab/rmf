@@ -32,7 +32,7 @@ class AvroSharedData : public Base {
 
   template <class TypeTraits>
   void extract_keys(Category cat, const KeyIndex& index,
-                    boost::unordered_set<Key<TypeTraits> >& ret) {
+                    boost::unordered_set<ID<TypeTraits> >& ret) {
     for (typename KeyIndex::const_iterator iti = index.begin();
          iti != index.end(); ++iti) {
       ret.insert(
@@ -43,7 +43,7 @@ class AvroSharedData : public Base {
   template <class TypeTraits>
   typename TypeTraits::Type get_one_value(
       const std::vector<typename TypeTraits::AvroType>& data,
-      const std::map<std::string, int>& index, Key<TypeTraits> k) const {
+      const std::map<std::string, int>& index, ID<TypeTraits> k) const {
     std::string keyname = P::get_name(k);
     typename std::map<std::string, int>::const_iterator it =
         index.find(keyname);
@@ -58,7 +58,7 @@ class AvroSharedData : public Base {
 
   template <class TypeTraits>
   void set_one_value(std::vector<typename TypeTraits::AvroType>& data,
-                     std::map<std::string, int>& index, Key<TypeTraits> k,
+                     std::map<std::string, int>& index, ID<TypeTraits> k,
                      const typename TypeTraits::Type& val) {
     std::string keyname = P::get_name(k);
     typename std::map<std::string, int>::const_iterator it =
@@ -79,7 +79,7 @@ class AvroSharedData : public Base {
   }
   template <class TypeTraits>
   typename TypeTraits::Type get_value_impl(FrameID frame, NodeID node,
-                                           Key<TypeTraits> k) const {
+                                           ID<TypeTraits> k) const {
     typedef std::vector<typename TypeTraits::AvroType> Data;
     typedef boost::tuple<const Data&, const KeyIndex&> Pair;
 
@@ -92,7 +92,7 @@ class AvroSharedData : public Base {
     }
   }
   template <class TypeTraits>
-  void set_value_impl(FrameID frame, NodeID node, Key<TypeTraits> k,
+  void set_value_impl(FrameID frame, NodeID node, ID<TypeTraits> k,
                       typename TypeTraits::Type v) {
     typedef std::vector<typename TypeTraits::AvroType> Data;
     typedef boost::tuple<Data&, KeyIndex&> Pair;
@@ -107,8 +107,8 @@ class AvroSharedData : public Base {
 
  public:
   template <class Traits>
-  std::vector<Key<Traits> > get_keys(Category cat, Traits) {
-    boost::unordered_set<Key<Traits> > ret;
+  std::vector<ID<Traits> > get_keys(Category cat, Traits) {
+    boost::unordered_set<ID<Traits> > ret;
     if (P::get_loaded_frame() != FrameID()) {
       const RMF_avro_backend::Data& data =
           P::get_frame_data(cat, P::get_loaded_frame());
@@ -117,26 +117,26 @@ class AvroSharedData : public Base {
     const RMF_avro_backend::Data& staticdata =
         P::get_frame_data(cat, ALL_FRAMES);
     extract_keys(cat, get_key_index(staticdata, Traits()), ret);
-    return std::vector<Key<Traits> >(ret.begin(), ret.end());
+    return std::vector<ID<Traits> >(ret.begin(), ret.end());
   }
 
   template <class TypeTraits>
   typename TypeTraits::Type get_loaded_value(NodeID node,
-                                             Key<TypeTraits> k) const {
+                                             ID<TypeTraits> k) const {
     return get_value_impl(P::get_loaded_frame(), node, k);
   }
   template <class TypeTraits>
   typename TypeTraits::Type get_static_value(NodeID node,
-                                             Key<TypeTraits> k) const {
+                                             ID<TypeTraits> k) const {
     return get_value_impl(ALL_FRAMES, node, k);
   }
   template <class TypeTraits>
-  void set_loaded_value(NodeID node, Key<TypeTraits> k,
+  void set_loaded_value(NodeID node, ID<TypeTraits> k,
                         typename TypeTraits::Type v) {
     set_value_impl(P::get_loaded_frame(), node, k, v);
   }
   template <class TypeTraits>
-  void set_static_value(NodeID node, Key<TypeTraits> k,
+  void set_static_value(NodeID node, ID<TypeTraits> k,
                         typename TypeTraits::Type v) {
     set_value_impl(ALL_FRAMES, node, k, v);
   }

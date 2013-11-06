@@ -158,7 +158,7 @@ class NodeAttribute(Attribute):
         self.set_methods = """  /** DOC */
   void set_NAME(NodeConstHandle v) {
     try {
-      get_node().SET(NAME_, v.get_id());
+      get_node().SET(NAME_, v.get_index());
     } RMF_DECORATOR_CATCH( );
   }
 """

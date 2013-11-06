@@ -12,7 +12,7 @@
 #include <RMF/config.h>
 #include "internal/SharedData.h"
 #include "internal/shared_data_ranges.h"
-#include "Key.h"
+#include "types.h"
 #include "NodeConstHandle.h"
 #include <boost/functional/hash.hpp>
 #include <boost/shared_ptr.hpp>
@@ -112,20 +112,20 @@ class RMFEXPORT FileConstHandle {
       given type or Key() if the key is not found.
    */
   template <class TypeT>
-  Key<TypeT> get_key(Category category, std::string name) const {
+  ID<TypeT> get_key(Category category, std::string name) const {
     try {
       return shared_->get_key(category, name, TypeT());
     }
     RMF_FILE_CATCH(<< Category(get_name(category)) << Key(name));
   }
   template <class TypeT>
-  std::vector<Key<TypeT> > get_keys(Category category_id,
+  std::vector<ID<TypeT> > get_keys(Category category_id,
                                     const Strings& names) const {
     try {
-      std::vector<Key<TypeT> > ret(names.size());
+      std::vector<ID<TypeT> > ret(names.size());
       for (unsigned int i = 0; i < names.size(); ++i) {
         ret[i] = get_key<TypeT>(category_id, names[i]);
-        if (ret[i] == Key<TypeT>()) {
+        if (ret[i] == ID<TypeT>()) {
           ret.clear();
           return ret;
         }
@@ -137,9 +137,9 @@ class RMFEXPORT FileConstHandle {
   /** Get a list of all keys of the given type,
    */
   template <class TypeT>
-  std::vector<Key<TypeT> > get_keys(Category category) const {
+  std::vector<ID<TypeT> > get_keys(Category category) const {
     try {
-      if (category == Category()) return std::vector<Key<TypeT> >();
+      if (category == Category()) return std::vector<ID<TypeT> >();
       return shared_->get_keys(category, TypeT());
     }
     RMF_FILE_CATCH(<< Category(get_name(category)));

@@ -181,11 +181,11 @@ bool Data::read_next_frame(molfile_timestep_t *frame) {
     }
   }
   RMF::FrameConstHandle curf = file_.get_current_frame();
-  unsigned int next = curf.get_id().get_index() + 1;
+  unsigned int next = curf.get_index().get_index() + 1;
   if (next == file_.get_number_of_frames()) {
     done_ = true;
   } else {
-    file_.set_current_frame(RMF::FrameID(curf.get_id().get_index() + 1));
+    file_.set_current_frame(RMF::FrameID(curf.get_index().get_index() + 1));
   }
   return true;
 }

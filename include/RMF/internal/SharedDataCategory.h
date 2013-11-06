@@ -10,7 +10,7 @@
 #define RMF_INTERNAL_SHARED_DATA_CATEGORY_H
 
 #include <RMF/config.h>
-#include "../Category.h"
+#include "../ID.h"
 #include <boost/unordered_map.hpp>
 #include <boost/foreach.hpp>
 

@@ -53,12 +53,10 @@ std::string get_message(const Exception& e) {
     const std::string* component = boost::get_error_info<Component>(e);
     if (component) {
       oss << " component \"" << *component << "\"";
-      ;
     }
     const std::string* file = boost::get_error_info<File>(e);
     if (file) {
       oss << " in file \"" << *file << "\"";
-      ;
     }
     const FrameID* frame = boost::get_error_info<Frame>(e);
     if (frame) {
@@ -71,12 +69,11 @@ std::string get_message(const Exception& e) {
     const std::string* key = boost::get_error_info<Key>(e);
     if (key) {
       oss << " processing key \"" << *key << "\"";
-      ;
     }
-    const std::string* category = boost::get_error_info<Category>(e);
+    const std::string* category =
+        boost::get_error_info<internal::ErrorInfo::Category>(e);
     if (category) {
       oss << " processing category \"" << *category << "\"";
-      ;
     }
     const std::string* decorator = boost::get_error_info<Decorator>(e);
     if (decorator) {

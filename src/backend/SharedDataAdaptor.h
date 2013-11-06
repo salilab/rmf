@@ -30,11 +30,11 @@ class SharedDataAdaptor {
     return sync_->get_number_of_nodes();
   }
   template <class Traits>
-  typename Traits::ReturnType get_loaded_value(NodeID n, Key<Traits> k) const {
+  typename Traits::ReturnType get_loaded_value(NodeID n, ID<Traits> k) const {
     return sync_->get_loaded_value(n, k);
   }
   template <class Traits>
-  typename Traits::ReturnType get_static_value(NodeID n, Key<Traits> k) const {
+  typename Traits::ReturnType get_static_value(NodeID n, ID<Traits> k) const {
     return sync_->get_static_value(n, k);
   }
   template <class T>
@@ -42,21 +42,21 @@ class SharedDataAdaptor {
     return sync_->get_name(k);
   }
   template <class Traits>
-  std::vector<Key<Traits> > get_keys(Category c, Traits) const {
+  std::vector<ID<Traits> > get_keys(Category c, Traits) const {
     return sync_->get_keys(c, Traits());
   }
   template <class Traits>
-  void set_static_value(NodeID n, Key<Traits> k,
+  void set_static_value(NodeID n, ID<Traits> k,
                         typename Traits::ArgumentType d) {
     sync_->set_static_value(n, k, d);
   }
   template <class Traits>
-  void set_loaded_value(NodeID n, Key<Traits> k,
+  void set_loaded_value(NodeID n, ID<Traits> k,
                         typename Traits::ArgumentType d) {
     sync_->set_loaded_value(n, k, d);
   }
   template <class Traits>
-  Key<Traits> get_key(Category c, std::string name, Traits) {
+  ID<Traits> get_key(Category c, std::string name, Traits) {
     return sync_->get_key(c, name, Traits());
   }
   Category get_category(std::string name) { return sync_->get_category(name); }

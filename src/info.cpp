@@ -22,7 +22,7 @@ namespace RMF {
 template <class Traits>
 void show_key_info(FileConstHandle rh, Category cat, std::string name,
                    std::ostream& out) {
-  BOOST_FOREACH(Key<Traits> k, rh.get_keys<Traits>(cat)) {
+  BOOST_FOREACH(ID<Traits> k, rh.get_keys<Traits>(cat)) {
     int static_count = 0, frame_count = 0;
     BOOST_FOREACH(NodeID n, rh.get_node_ids()) {
       NodeConstHandle nh = rh.get_node(n);

@@ -25,7 +25,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     Decorator(HandleType handle) : handle_(handle) {};
     // TypeTraits::Values
     template <class KeyT>
-    typename KeyT::TypeTraits::Type get_value(const KeyT& key) const {
+    typename KeyT::Tag::Type get_value(const KeyT& key) const {
       return get_node().get_value(key);
     }
     template <class Key, class Value>

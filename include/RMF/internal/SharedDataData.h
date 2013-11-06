@@ -10,7 +10,7 @@
 #define RMF_INTERNAL_SHARED_DATA_DATA_H
 
 #include <RMF/config.h>
-#include "../Key.h"
+#include "../types.h"
 #include "../infrastructure_macros.h"
 #include <boost/unordered_map.hpp>
 
@@ -61,21 +61,21 @@ class SharedDataData : public P {
 
  public:
   typename Traits::ReturnType get_static_value(NodeID node,
-                                               Key<Traits> k) const {
-    return get_value(P::ps_.node_datas_, node, k.get_id());
+                                               ID<Traits> k) const {
+    return get_value(P::ps_.node_datas_, node, k.get_index());
   }
   typename Traits::ReturnType get_loaded_value(NodeID node,
-                                               Key<Traits> k) const {
-    return get_value(P::pl_.node_datas_, node, k.get_id());
+                                               ID<Traits> k) const {
+    return get_value(P::pl_.node_datas_, node, k.get_index());
   }
-  void set_static_value(NodeID node, Key<Traits> k,
+  void set_static_value(NodeID node, ID<Traits> k,
                         typename Traits::ArgumentType v) {
-    set_value(P::ps_.node_datas_, node, k.get_id(), v);
+    set_value(P::ps_.node_datas_, node, k.get_index(), v);
     P::static_dirty_ = true;
   }
-  void set_loaded_value(NodeID node, Key<Traits> k,
+  void set_loaded_value(NodeID node, ID<Traits> k,
                         typename Traits::ArgumentType v) {
-    set_value(P::pl_.node_datas_, node, k.get_id(), v);
+    set_value(P::pl_.node_datas_, node, k.get_index(), v);
   }
 };
 

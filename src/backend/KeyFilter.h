@@ -36,7 +36,7 @@ class KeyFilter: public SharedDataAdaptor<SD> {
     }
   }
   template <class Traits>
-  std::vector<Key<Traits> > get_keys(Category cat, Traits) {
+  std::vector<ID<Traits> > get_keys(Category cat, Traits) {
     return P::sync_->get_keys(cat, Traits());
   }
   IndexKeys get_keys(Category cat, IndexTraits) {

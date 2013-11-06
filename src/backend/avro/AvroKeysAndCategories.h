@@ -11,8 +11,7 @@
 
 #include <RMF/config.h>
 #include <backend/BackwardsIOBase.h>
-#include <RMF/Category.h>
-#include <RMF/Key.h>
+#include <RMF/types.h>
 #include <RMF/ID.h>
 #include <RMF/infrastructure_macros.h>
 #include <RMF/constants.h>
@@ -50,15 +49,15 @@ class AvroKeysAndCategories : public backends::BackwardsIOBase {
 
  public:
   template <class Traits>
-  std::string get_name(Key<Traits> k) const {
-    return get_key_name(k.get_id());
+  std::string get_name(ID<Traits> k) const {
+    return get_key_name(k.get_index());
   }
   template <class Traits>
-  Category get_category(Key<Traits> k) const {
-    return get_category_impl(k.get_id());
+  Category get_category(ID<Traits> k) const {
+    return get_category_impl(k.get_index());
   }
   template <class TypeTraits>
-  Key<TypeTraits> get_key(Category category, std::string name, TypeTraits) {
+  ID<TypeTraits> get_key(Category category, std::string name, TypeTraits) {
     typename NameKeyInnerMap::const_iterator it =
         name_key_map_[category].find(name);
     if (it == name_key_map_[category].end()) {
@@ -67,13 +66,13 @@ class AvroKeysAndCategories : public backends::BackwardsIOBase {
       key_data_map_[id].category = category;
       name_key_map_[category][name] = id;
       RMF_INTERNAL_CHECK(get_key<TypeTraits>(category, name, TypeTraits()) ==
-                             Key<TypeTraits>(id),
+                             ID<TypeTraits>(id),
                          "Keys don't match");
-      return Key<TypeTraits>(id);
+      return ID<TypeTraits>(id);
     } else {
       int id = it->second;
       RMF_INTERNAL_CHECK(name == it->first, "Odd names");
-      return Key<TypeTraits>(id);
+      return ID<TypeTraits>(id);
     }
   }
 
@@ -83,9 +82,9 @@ class AvroKeysAndCategories : public backends::BackwardsIOBase {
   }
 
   template <class TypeTraits>
-  const std::string& get_key_string(Key<TypeTraits> k) const {
-    RMF_INTERNAL_CHECK(k.get_id() >= 0, "Bad key");
-    return key_data_map_.find(k.get_id())->second.name;
+  const std::string& get_key_string(ID<TypeTraits> k) const {
+    RMF_INTERNAL_CHECK(k.get_index() >= 0, "Bad key");
+    return key_data_map_.find(k.get_index())->second.name;
   }
 
   void clear_node_keys() { node_keys_.clear(); }
