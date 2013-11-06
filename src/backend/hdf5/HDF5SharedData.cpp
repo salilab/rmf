@@ -86,9 +86,7 @@ void HDF5SharedData::open_things(bool create, bool read_only) {
 
 void HDF5SharedData::initialize_keys(int) {
   Categories cats = get_categories();
-  BOOST_FOREACH(Category cat, cats) {
-    RMF_FOREACH_TYPE(RMF_LIST_KEYS);
-  }
+  BOOST_FOREACH(Category cat, cats) { RMF_FOREACH_TYPE(RMF_LIST_KEYS); }
 }
 
 void HDF5SharedData::initialize_free_nodes() {

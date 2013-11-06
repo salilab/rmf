@@ -51,16 +51,17 @@ class SharedDataCategory {
       loaded_.erase(cat);
     }
   }
+
  public:
   SharedDataCategory() {}
 
   Category get_category(std::string name) {
     From::const_iterator it = from_name_.find(name);
     if (it == from_name_.end()) {
-       Category ret(from_name_.size());
-       from_name_[name] = ret;
-       to_name_[ret] = name;
-       return ret;
+      Category ret(from_name_.size());
+      from_name_[name] = ret;
+      to_name_[ret] = name;
+      return ret;
     } else {
       return it->second;
     }

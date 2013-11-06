@@ -198,8 +198,8 @@ void MultipleAvroFileReader::add_category_data(Category cat) {
     catch (const std::exception& e) {
       RMF_THROW(Message(e.what()) << Component(dynamic_path), IOException);
     }
-    bool success =
-        categories_[cat.get_index()].reader->read(categories_[cat.get_index()].data);
+    bool success = categories_[cat.get_index()]
+                       .reader->read(categories_[cat.get_index()].data);
     if (!success) {
       RMF_THROW(Message("Error reading from data file")
                     << Component(dynamic_path),

@@ -85,12 +85,12 @@ RMF_ENABLE_WARNINGS
 /** @} */
 
 #ifndef SWIG
-#define RMF_SHOWABLE(Name, streamed)           \
-  operator Showable() const {                  \
-    std::ostringstream oss;                    \
-    oss << streamed;                           \
-    return Showable(oss.str(), Showable::Special());    \
-  }                                            \
+#define RMF_SHOWABLE(Name, streamed)                 \
+  operator Showable() const {                        \
+    std::ostringstream oss;                          \
+    oss << streamed;                                 \
+    return Showable(oss.str(), Showable::Special()); \
+  }                                                  \
   void show(std::ostream& out) const { out << streamed; }
 #else
 #define RMF_SHOWABLE(Name, streamed)

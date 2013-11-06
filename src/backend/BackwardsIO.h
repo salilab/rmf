@@ -30,7 +30,7 @@ struct BackwardsIO : public IO {
 
   template <class Traits, class SDC>
   ID<Traits> get_key_const(Category cat, std::string name, Traits,
-                            SDC *sd) const {
+                           SDC *sd) const {
     BOOST_FOREACH(ID<Traits> k, sd->get_keys(cat, Traits())) {
       if (sd->get_name(k) == name) return k;
     }
@@ -104,8 +104,8 @@ struct BackwardsIO : public IO {
         "Loaded frames don't match");
     Category file_cat = sd_->get_category(shared_data->get_name(category));
     KeyFilter<const internal::SharedData> filter(shared_data);
-    RMF::internal::clone_loaded_values_category(&filter, category,
-                                                sd_.get(), file_cat);
+    RMF::internal::clone_loaded_values_category(&filter, category, sd_.get(),
+                                                file_cat);
   }
 
   virtual void load_static_frame_category(

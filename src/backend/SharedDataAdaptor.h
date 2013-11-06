@@ -24,6 +24,7 @@ template <class SD>
 class SharedDataAdaptor {
  protected:
   SD* sync_;
+
  public:
   SharedDataAdaptor(SD* sd) : sync_(sd) {}
   unsigned int get_number_of_nodes() const {

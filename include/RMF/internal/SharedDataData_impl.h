@@ -61,7 +61,7 @@ inline std::vector<ID<Traits> > SharedData::get_keys_impl(
 }
 template <class Traits>
 inline ID<Traits> SharedData::get_key_impl(Category category, std::string name,
-                                            KeyTypeInfo &data) {
+                                           KeyTypeInfo &data) {
   auto it = data.from_name.find(name);
   if (it == data.from_name.end()) {
     int index = data.from_name.size();
@@ -123,7 +123,7 @@ inline Category SharedData::get_category(ID<Ucname##Traits> k) const {
 }
 template <class Traits>
 inline ID<Ucname##Traits> SharedData::get_##lcname##_key(Category category,
-                                                          std::string name) {
+                                                         std::string name) {
   return get_key_impl<Ucname##Traits>(category, name, key_infos_.lcname##_keys);
 }
 template <class Traits>

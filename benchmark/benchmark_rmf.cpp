@@ -26,7 +26,8 @@ void benchmark_size(std::string path, std::string type) {
   } else {
     size = boost::filesystem::file_size(path);
   }
-  std::cout << type << ", size, " << size/1000000 << "M, " << size << std::endl;
+  std::cout << type << ", size, " << size / 1000000 << "M, " << size
+            << std::endl;
 }
 
 void create_residue(RMF::NodeHandle nh, RMF::AtomFactory af,
@@ -159,7 +160,7 @@ int main(int, char**) {
   try {
     {
       boost::filesystem::path temp = boost::filesystem::unique_path();
-      const std::string name = temp.native()  + ".rmf";
+      const std::string name = temp.native() + ".rmf";
       {
         RMF::FileHandle fh = RMF::create_rmf_file(name);
         benchmark_create(fh, "rmf");
@@ -198,7 +199,6 @@ int main(int, char**) {
         benchmark_load(fh, "rmfa");
       }
       benchmark_size(name, "rmfa");
-
     }
     {
       boost::filesystem::path temp = boost::filesystem::unique_path();

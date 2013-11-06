@@ -32,8 +32,8 @@ void show_key_info(FileConstHandle rh, Category cat, std::string name,
         ++static_count;
       }
     }
-    out << "  " << rh.get_name(k) << ", " << name << ", "
-        << frame_count << " (" << static_count << ")" << std::endl;
+    out << "  " << rh.get_name(k) << ", " << name << ", " << frame_count << " ("
+        << static_count << ")" << std::endl;
   }
 }
 

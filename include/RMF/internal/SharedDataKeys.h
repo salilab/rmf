@@ -45,7 +45,7 @@ class SharedDataKeys : public P {
     if (it == category_keys_[cat].end()) {
       int index = P::key_names_.size();
       P::key_names_[index] = name;
-      category_keys_[cat][name] =  ID<Traits>(index);
+      category_keys_[cat][name] = ID<Traits>(index);
       P::key_categories_[index] = cat;
       return ID<Traits>(index);
     } else {

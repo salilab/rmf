@@ -46,13 +46,14 @@ class ID {
     if (i_ == -1)
       return Tag::get_tag() + "NULL";
     else if (i_ == std::numeric_limits<int>::min())
-      return  Tag::get_tag() + "INV";
+      return Tag::get_tag() + "INV";
     else {
       std::ostringstream oss;
-      oss <<  Tag::get_tag() << i_;
+      oss << Tag::get_tag() << i_;
       return oss.str();
     }
   }
+
  public:
   typedef TagT Tag;
 #if !defined(RMF_DOXGYGEN) && !defined(SWIG)

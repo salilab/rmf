@@ -23,7 +23,7 @@ RMF_ENABLE_WARNINGS
 #define RMF_NODE_CATCH(extra_info)                                             \
   catch (Exception& e) {                                                       \
     RMF_RETHROW(                                                               \
-        File(get_file_name()) << Node(get_index())                                \
+        File(get_file_name()) << Node(get_index())                             \
                               << Frame(get_current_frame_id())                 \
                               << Operation(BOOST_CURRENT_FUNCTION) extra_info, \
         e);                                                                    \

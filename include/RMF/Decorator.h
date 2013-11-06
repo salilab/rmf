@@ -36,6 +36,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     typename KeyT::TypeTraits::Type get_static_value(const KeyT& key) const {
       return get_node().get_static_value(key);
     }
+
    public:
     typedef HandleType Node;
     Node get_node() const { return handle_; }

@@ -27,7 +27,7 @@ namespace avro_backend {
       Ucname##DataIndexConstPair;                                              \
   typedef boost::tuple<Ucname##Data&, KeyIndex&> Ucname##DataIndexPair;        \
   const Ucname##DataIndexConstPair get_frame_type_data(                        \
-      ID<Ucname##Traits>, NodeID node, Category category,                     \
+      ID<Ucname##Traits>, NodeID node, Category category,                      \
       FrameID frame) const {                                                   \
     const RMF_avro_backend::Data& data = P::get_frame_data(category, frame);   \
     typename std::map<std::string, Ucname##Data>::const_iterator it =          \
@@ -40,7 +40,7 @@ namespace avro_backend {
     }                                                                          \
   }                                                                            \
   Ucname##DataIndexPair access_frame_type_data(                                \
-      ID<Ucname##Traits>, NodeID node, Category category, FrameID frame) {    \
+      ID<Ucname##Traits>, NodeID node, Category category, FrameID frame) {     \
     RMF_avro_backend::Data& data = P::access_frame_data(category, frame);      \
     std::string ns = P::get_node_string(node);                                 \
     return Ucname##DataIndexPair(data.lcname##_data.nodes[ns],                 \

@@ -21,9 +21,10 @@ namespace RMF {
 namespace backends {
 
 template <class SD>
-class KeyFilter: public SharedDataAdaptor<SD> {
+class KeyFilter : public SharedDataAdaptor<SD> {
   typedef SharedDataAdaptor<SD> P;
   IndexKeys index_keys_;
+
  public:
   KeyFilter(SD* sd) : P(sd) {}
   void add_index_key(Category cat, std::string name) {

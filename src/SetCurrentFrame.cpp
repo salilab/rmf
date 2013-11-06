@@ -21,7 +21,7 @@ SetCurrentFrame::SetCurrentFrame(FileConstHandle file, FrameID current_frame)
 }
 SetCurrentFrame::~SetCurrentFrame() {
   if (old_frame_ != ALL_FRAMES && old_frame_ != FrameID()) {
-      file_.set_current_frame(old_frame_);
+    file_.set_current_frame(old_frame_);
   }
 }
 }

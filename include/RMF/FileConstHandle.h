@@ -120,7 +120,7 @@ class RMFEXPORT FileConstHandle {
   }
   template <class TypeT>
   std::vector<ID<TypeT> > get_keys(Category category_id,
-                                    const Strings& names) const {
+                                   const Strings& names) const {
     try {
       std::vector<ID<TypeT> > ret(names.size());
       for (unsigned int i = 0; i < names.size(); ++i) {
@@ -179,7 +179,6 @@ class RMFEXPORT FileConstHandle {
     RMF_FILE_CATCH();
   }
 
-
   /** Return the number of nodes in the file.
    */
   unsigned int get_number_of_nodes() const {
@@ -188,7 +187,6 @@ class RMFEXPORT FileConstHandle {
     }
     RMF_FILE_CATCH();
   }
-
 
   /** Return a string identifying the file type.
   */

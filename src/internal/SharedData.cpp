@@ -23,10 +23,7 @@ namespace RMF {
 namespace internal {
 SharedData::SharedData(boost::shared_ptr<backends::IO> io, std::string name,
                        bool write, bool created)
-    : SharedDataPath(name),
-      number_of_frames_(0),
-      write_(write),
-      io_(io) {
+    : SharedDataPath(name), number_of_frames_(0), write_(write), io_(io) {
   if (!created) {
     reload();
   }
