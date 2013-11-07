@@ -218,23 +218,24 @@ Strings get_open_handle_names(ConstFile f) {
 
 void StringsTraits::write_value_dataset(hid_t d, hid_t iss, hid_t s,
                                         const StringsTraits::Type& v) {
-  std::vector<char*> buf(v.size(), NULL);
+  boost::scoped_array<char*> buf;
 
   hvl_t data;
   data.len = v.size();
   if (data.len > 0) {
+    buf.reset(new char*[v.size()]);
     for (unsigned int i = 0; i < v.size(); ++i) {
       buf[i] = new char[v[i].size() + 1];
       std::copy(v[i].begin(), v[i].end(), buf[i]);
       buf[i][v[i].size()] = '\0';
     }
-    data.p = &buf[0];
+    data.p = buf.get();
   } else {
     data.p = NULL;
   }
   RMF_HDF5_CALL(
       H5Dwrite(d, get_hdf5_memory_type(), iss, s, H5P_DEFAULT, &data));
-  for (unsigned int i = 0; i < buf.size(); ++i) {
+  for (unsigned int i = 0; i < v.size(); ++i) {
     delete[] buf[i];
   }
 }
@@ -254,8 +255,15 @@ StringsTraits::Type StringsTraits::read_value_dataset(hid_t d, hid_t iss,
   return ret;
 }
 
+const hvl_t& StringsTraits::get_fill_value() {
+  static hvl_t ret = {0, NULL};
+  return ret;
+}
+
 hid_t StringsTraits::get_hdf5_fill_type() {
-  return internal::get_string_type();
+  static RMF_HDF5_HANDLE(
+      ints_type, H5Tvlen_create(StringTraits::get_hdf5_disk_type()), H5Tclose);
+  return ints_type;
 }
 hid_t StringsTraits::get_hdf5_disk_type() {
   static RMF_HDF5_HANDLE(

@@ -285,7 +285,7 @@ struct RMFEXPORT StringsTraits {
   static hid_t get_hdf5_fill_type();
   static hid_t get_hdf5_disk_type();
   static hid_t get_hdf5_memory_type();
-  static const Type &get_fill_value() { return get_null_value(); }
+  static const hvl_t& get_fill_value();
   static std::string get_name() { return "strings"; }
   static void write_value_dataset(hid_t d, hid_t iss, hid_t s, const Type& v) ;
   static Type read_value_dataset(hid_t d, hid_t iss, hid_t sp) ;

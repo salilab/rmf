@@ -13,7 +13,7 @@ class GenericTest(unittest.TestCase):
         lst = [(f.get_int_key, 4),
                (f.get_float_key, 3.1415),
                (f.get_string_key, "there"),
-        #(f.get_strings_key, ["here", "there", "everywhere"]),
+               (f.get_strings_key, ["here", "there", "everywhere"]),
                (f.get_ints_key, [3, 4, 5, 6]),]
         #(f.get_vector3_key, RMF.Vector3(1,2,3)),
         #      (f.get_vector4_key, RMF.Vector4(1,2,3,4))]
@@ -49,6 +49,7 @@ class GenericTest(unittest.TestCase):
         """Test that the various data types work"""
         print "testing types"
         RMF.set_log_level("trace")
+        RMF.HDF5.set_show_errors(True)
         for suffix in RMF.suffixes:
             name = RMF._get_temporary_file_path("test_data_types." + suffix)
             #f= RMF.create_rmf_file(name)
