@@ -240,7 +240,7 @@ class AVRO_DECL NodeSymbolic : public NodeImplSymbolic
     }
 
     bool isSet() const {
-         return (actualNode_.lock() != 0);
+         return !!actualNode_.lock();
     }
 
     NodePtr getNode() const {
