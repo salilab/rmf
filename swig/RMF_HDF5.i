@@ -151,6 +151,32 @@ namespace RMF {
 }
 
 %include "RMF/HDF5/types.h"
+
+%template(_IntTraitsBaseClass) RMF::HDF5::SimpleTraits<RMF::HDF5::IntTraitsBase>;
+%template(_IntsTraitsBase) RMF::HDF5::SimplePluralTraits<RMF::HDF5::IntTraits>;
+%template(_FloatTraitsBaseClass) RMF::HDF5::SimpleTraits<RMF::HDF5::FloatTraitsBase>;
+%template(_FloatsTraitsBase) RMF::HDF5::SimplePluralTraits<RMF::HDF5::FloatTraits>;
+%template(_IndexTraitsBaseClass) RMF::HDF5::SimpleTraits<RMF::HDF5::IndexTraitsBase>;
+%template(_IndexesTraitsBase) RMF::HDF5::SimplePluralTraits<RMF::HDF5::IndexTraits>;
+%rename(_IntTraitsBase) IntTraitsBase;
+%rename(_FloatTraitsBase) FloatTraitsBase;
+%rename(_IndexTraitsBase) IndexTraitsBase;
+
+%inline %{
+  namespace RMF {
+    namespace HDF5 {
+#ifdef SWIG
+struct IntTraits : public RMF::HDF5::SimpleTraits<RMF::HDF5::IntTraitsBase> {};
+struct IntsTraits : public SimplePluralTraits<IntTraits> {};
+struct FloatTraits : public SimpleTraits<FloatTraitsBase> {};
+struct FloatsTraits : public SimplePluralTraits<FloatTraits> {};
+struct IndexTraits : public SimpleTraits<IndexTraitsBase> {};
+struct IndexesTraits : public SimplePluralTraits<IndexTraits> {};
+#endif
+    }
+  }
+%}
+
 %include "RMF/HDF5/handle.h"
 %include "RMF/HDF5/Object.h"
 %include "RMF/HDF5/ConstAttributes.h"

@@ -13,7 +13,10 @@ class GenericTest(unittest.TestCase):
         lst = [(f.get_int_key, 4),
                (f.get_float_key, 3.1415),
                (f.get_string_key, "there"),
-               (f.get_ints_key, [3, 4, 5, 6])]
+        #(f.get_strings_key, ["here", "there", "everywhere"]),
+               (f.get_ints_key, [3, 4, 5, 6]),]
+        #(f.get_vector3_key, RMF.Vector3(1,2,3)),
+        #      (f.get_vector4_key, RMF.Vector4(1,2,3,4))]
         #self.assertEqual(len(lst), len(RMF.get_data_types()) - 3)
         return lst
 
@@ -23,10 +26,6 @@ class GenericTest(unittest.TestCase):
         lst = self._make_list(f)
         nh = f.get_root_node().get_children()[0]
         cat = f.get_category("mine")
-            #g= f.get_hdf5_group()
-            # print g
-            #ds= g.add_child_float_data_set_2d("ds"+str(pccc))
-            #dsi= g.add_child_index_data_set_2d("dsi"+str(pccc))
         for i, p in enumerate(lst):
             k = p[0](cat, "hi" + str(i))
             nh.set_value(k, p[1])
@@ -49,6 +48,7 @@ class GenericTest(unittest.TestCase):
     def test_data_types(self):
         """Test that the various data types work"""
         print "testing types"
+        RMF.set_log_level("trace")
         for suffix in RMF.suffixes:
             name = RMF._get_temporary_file_path("test_data_types." + suffix)
             #f= RMF.create_rmf_file(name)

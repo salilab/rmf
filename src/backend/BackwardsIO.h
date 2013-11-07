@@ -58,11 +58,72 @@ struct BackwardsIO : public IO {
   }
 
   template <unsigned int D, class SDA, class SDB, class H>
-  void load_vector(SDA *sda, Category category_a, SDB *sbd, Category category_b,
-                   H) {}
+  void load_vector(SDA *sda, Category category_a, SDB *sdb, Category category_b,
+                   H) {
+    typedef ID<VectorTraits<D> > Key;
+    typedef std::pair<Key, int> Data;
+    boost::unordered_map<FloatKey, Data > map;
+    BOOST_FOREACH(std::string key_name, get_vector_names<D>(category_a)) {
+      for (unsigned int i = 0; i < D; ++i) {
+        std::ostringstream oss;
+        oss << "_" << key_name << " " << i;
+        FloatKey cur_key = sda->get_key(category_a, oss.str(), FloatTraits());
+        map[cur_key].first =
+            sdb->get_key(category_b, key_name, VectorTraits<D>());
+        map[cur_key].second = i;
+      }
+    }
+    if (map.empty()) return;
+    BOOST_FOREACH(NodeID n, internal::get_nodes(sda)) {
+      typedef std::pair<FloatKey, Data> KP;
+      BOOST_FOREACH(KP kp, map) {
+        double v = H::get(sda, n, kp.first);
+        if (!FloatTraits::get_is_null_value(v)) {
+          Vector<D> old = H::get(sdb, n, kp.second.first);
+          old[kp.second.second] = v;
+          H::set(sdb, n, kp.second.first, old);
+        }
+      }
+    }
+  }
   template <unsigned int D, class SDA, class SDB, class H>
-  void save_vector(SDA *sda, Category category_a, SDB *sbd, Category category_b,
-                   H) {}
+  void save_vector(SDA *sda, Category category_a, SDB *sdb, Category category_b,
+                   H) {
+    typedef ID<VectorTraits<D> > VectorKey;
+    std::vector<VectorKey> keys =
+      sda->get_keys(category_a, VectorTraits<D>());
+    typedef boost::array<ID<FloatTraits>, D > Data;
+    boost::unordered_map<VectorKey, Data > map;
+    Strings key_names;
+    BOOST_FOREACH(VectorKey k, keys) {
+      std::string name = sda->get_name(k);
+      key_names.push_back(name);
+      for (unsigned int i =0; i< D; ++i) {
+        std::ostringstream oss;
+        oss << "_" << name << " " << i;
+        map[k][i] = sdb->get_key(category_b, oss.str(), FloatTraits());
+      }
+    }
+    if (key_names.empty()) return;
+    {
+      std::ostringstream oss;
+      oss << "_vector" << D;
+      StringsKey k = sdb->get_key(category_b, oss.str(), StringsTraits());
+      sdb->set_static_value(NodeID(0), k, key_names);
+    }
+
+    BOOST_FOREACH(NodeID n, internal::get_nodes(sda)) {
+      typedef std::pair<VectorKey, Data> KP;
+      BOOST_FOREACH(KP kp, map) {
+        Vector<D> v = H::get(sda, n, kp.first);
+        if (!VectorTraits<D>::get_is_null_value(v)) {
+          for (unsigned int i = 0; i< D; ++i) {
+            H::set(sdb, n, kp.second[i], v[i]);
+          }
+        }
+      }
+    }
+  }
 
   template <class H>
   void load_frame_category(Category category, internal::SharedData *shared_data,
@@ -101,7 +162,7 @@ struct BackwardsIO : public IO {
       if (cidk != backward_types::IndexKey()) {
         StringKey cidsk =
             shared_data->get_key(category, "chain id", StringTraits());
-        BOOST_FOREACH(NodeID ni, get_nodes(shared_data)) {
+        BOOST_FOREACH(NodeID ni, internal::get_nodes(shared_data)) {
           int ci = H::get(sd_.get(), ni, cidk);
           if (!backward_types::IndexTraits::get_is_null_value(ci)) {
             H::set(shared_data, ni, cidsk, std::string(1, ci = 'A'));
