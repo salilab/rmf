@@ -11,6 +11,7 @@
 
 #include <RMF/config.h>
 #include <RMF/internal/SharedData.h>
+#include "backward_types.h"
 #include "SharedDataAdaptor.h"
 #include <RMF/log.h>
 
@@ -23,13 +24,14 @@ namespace backends {
 template <class SD>
 class KeyFilter : public SharedDataAdaptor<SD> {
   typedef SharedDataAdaptor<SD> P;
-  IndexKeys index_keys_;
+  backward_types::IndexKeys index_keys_;
   FloatKeys float_keys_;
 
  public:
   KeyFilter(SD* sd) : P(sd) {}
   void add_index_key(Category cat, std::string name) {
-    BOOST_FOREACH(IndexKey k, P::sync_->get_keys(cat, IndexTraits())) {
+    BOOST_FOREACH(backward_types::IndexKey k,
+                  P::sync_->get_keys(cat, backward_types::IndexTraits())) {
       if (P::sync_->get_name(k) == name) {
         index_keys_.push_back(k);
         std::sort(index_keys_.begin(), index_keys_.end());
@@ -50,10 +52,12 @@ class KeyFilter : public SharedDataAdaptor<SD> {
   std::vector<ID<Traits> > get_keys(Category cat, Traits) {
     return P::sync_->get_keys(cat, Traits());
   }
-  IndexKeys get_keys(Category cat, IndexTraits) {
-    IndexKeys all = P::sync_->get_keys(cat, IndexTraits());
+  backward_types::IndexKeys get_keys(Category cat,
+                                     backward_types::IndexTraits) {
+    backward_types::IndexKeys all =
+        P::sync_->get_keys(cat, backward_types::IndexTraits());
     std::sort(all.begin(), all.end());
-    IndexKeys ret;
+    backward_types::IndexKeys ret;
     std::set_difference(all.begin(), all.end(), index_keys_.begin(),
                         index_keys_.end(), std::back_inserter(ret));
     return ret;

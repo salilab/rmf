@@ -22,17 +22,17 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 namespace internal {
 
-template <class Traits, class SDA, class SDB>
-bool get_equal_current_values_type(SDA* sda, Category cata, SDB* sdb,
-                                   Category catb) {
+template <class Traits, class SDA, class SDB, class H>
+bool get_equal_values_type(SDA* sda, Category cata, SDB* sdb, Category catb,
+                           H) {
   boost::unordered_map<ID<Traits>, ID<Traits> > keys =
-      get_key_map<Traits>(sda, cata, sdb, catb);
+      get_key_map<Traits, Traits>(sda, cata, sdb, catb);
   bool ret = true;
   BOOST_FOREACH(NodeID n, get_nodes(sda)) {
     typedef std::pair<ID<Traits>, ID<Traits> > KP;
     BOOST_FOREACH(KP ks, keys) {
-      typename Traits::ReturnType rta = sda->get_loaded_value(n, ks.first);
-      typename Traits::ReturnType rtb = sdb->get_loaded_value(n, ks.second);
+      typename Traits::ReturnType rta = H::get(sda, n, ks.first);
+      typename Traits::ReturnType rtb = H::get(sdb, n, ks.second);
       bool ha = !Traits::get_is_null_value(rta);
       bool hb = !Traits::get_is_null_value(rtb);
       if (ha != hb) {
@@ -52,20 +52,16 @@ bool get_equal_current_values_type(SDA* sda, Category cata, SDB* sdb,
   return ret;
 }
 
+#define RMF_LOADED_EQUAL(lcname, UCName, PassValue, ReturnValue, PassValues, \
+                         ReturnValues)                                       \
+  ret &= get_equal_values_type<UCName##Traits>(sda, cata, sdb, catb,         \
+                                               LoadedValues());
+
 template <class SDA, class SDB>
 bool get_equal_current_values_category(SDA* sda, Category cata, SDB* sdb,
                                        Category catb) {
   bool ret = true;
-  ret &= get_equal_current_values_type<IntTraits>(sda, cata, sdb, catb);
-  ret &= get_equal_current_values_type<FloatTraits>(sda, cata, sdb, catb);
-  ret &= get_equal_current_values_type<StringTraits>(sda, cata, sdb, catb);
-  ret &= get_equal_current_values_type<IndexTraits>(sda, cata, sdb, catb);
-  ret &= get_equal_current_values_type<NodeIDTraits>(sda, cata, sdb, catb);
-  ret &= get_equal_current_values_type<IntsTraits>(sda, cata, sdb, catb);
-  ret &= get_equal_current_values_type<FloatsTraits>(sda, cata, sdb, catb);
-  ret &= get_equal_current_values_type<StringsTraits>(sda, cata, sdb, catb);
-  ret &= get_equal_current_values_type<IndexesTraits>(sda, cata, sdb, catb);
-  ret &= get_equal_current_values_type<NodeIDsTraits>(sda, cata, sdb, catb);
+  RMF_FOREACH_TYPE(RMF_LOADED_EQUAL);
   return ret;
 }
 
@@ -78,50 +74,16 @@ bool get_equal_current_values(SDA* sda, SDB* sdb) {
   return true;
 }
 
-template <class Traits, class SDA, class SDB>
-bool get_equal_static_values_type(SDA* sda, Category cata, SDB* sdb,
-                                  Category catb) {
-  boost::unordered_map<ID<Traits>, ID<Traits> > keys =
-      get_key_map<Traits>(sda, cata, sdb, catb);
-  bool ret = true;
-  BOOST_FOREACH(NodeID n, get_nodes(sda)) {
-    typedef std::pair<ID<Traits>, ID<Traits> > KP;
-    BOOST_FOREACH(KP ks, keys) {
-      typename Traits::ReturnType rta = sda->get_static_value(n, ks.first);
-      typename Traits::ReturnType rtb = sdb->get_static_value(n, ks.second);
-      bool ha = !Traits::get_is_null_value(rta);
-      bool hb = !Traits::get_is_null_value(rtb);
-      if (ha != hb) {
-        std::cout << "Nodes " << sda->get_name(n) << " and " << sdb->get_name(n)
-                  << " differ in having " << sda->get_name(ks.first)
-                  << " bits are " << ha << " and " << hb << std::endl;
-        ret = false;
-      }
-      if (ha && hb && !Traits::get_are_equal(rta, rtb)) {
-        std::cout << "Nodes " << sda->get_name(n) << " and " << sdb->get_name(n)
-                  << " differ in values " << sda->get_name(ks.first)
-                  << " values are " << rta << " and " << rtb << std::endl;
-        ret = false;
-      }
-    }
-  }
-  return ret;
-}
+#define RMF_STATIC_EQUAL(lcname, UCName, PassValue, ReturnValue, PassValues, \
+                         ReturnValues)                                       \
+  ret &= get_equal_values_type<UCName##Traits>(sda, cata, sdb, catb,         \
+                                               StaticValues());
 
 template <class SDA, class SDB>
 bool get_equal_static_values_category(SDA* sda, Category cata, SDB* sdb,
                                       Category catb) {
   bool ret = true;
-  ret &= get_equal_static_values_type<IntTraits>(sda, cata, sdb, catb);
-  ret &= get_equal_static_values_type<FloatTraits>(sda, cata, sdb, catb);
-  ret &= get_equal_static_values_type<StringTraits>(sda, cata, sdb, catb);
-  ret &= get_equal_static_values_type<IndexTraits>(sda, cata, sdb, catb);
-  ret &= get_equal_static_values_type<NodeIDTraits>(sda, cata, sdb, catb);
-  ret &= get_equal_static_values_type<IntsTraits>(sda, cata, sdb, catb);
-  ret &= get_equal_static_values_type<FloatsTraits>(sda, cata, sdb, catb);
-  ret &= get_equal_static_values_type<StringsTraits>(sda, cata, sdb, catb);
-  ret &= get_equal_static_values_type<IndexesTraits>(sda, cata, sdb, catb);
-  ret &= get_equal_static_values_type<NodeIDsTraits>(sda, cata, sdb, catb);
+  RMF_FOREACH_TYPE(RMF_STATIC_EQUAL);
   return ret;
 }
 

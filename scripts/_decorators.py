@@ -146,19 +146,19 @@ class Attribute(Base):
 class NodeAttribute(Attribute):
 
     def __init__(self, name, doc):
-        Attribute.__init__(self, name, "NodeID", doc, True)
+        Attribute.__init__(self, name, "Int", doc, True)
         self.get_methods = """  /** DOC */
   NodeCONSTHandle get_NAME() const {
     try {
-      NodeID id = get_node().GET(NAME_);
-      return get_node().get_file().get_node(id);
+      int id = get_node().GET(NAME_);
+      return get_node().get_file().get_node(NodeID(id));
     } RMF_DECORATOR_CATCH( );
   }
 """
         self.set_methods = """  /** DOC */
   void set_NAME(NodeConstHandle v) {
     try {
-      get_node().SET(NAME_, v.get_index());
+      get_node().SET(NAME_, v.get_index().get_index());
     } RMF_DECORATOR_CATCH( );
   }
 """

@@ -121,23 +121,23 @@ RMF_ENABLE_WARNINGS
     - the C++ type for accepting more than one value
     - the C++ type for returning more than one value
 */
-#define RMF_FOREACH_TYPE(macroname)                                         \
-  RMF_FOREACH_SIMPLE_TYPE(macroname);                                       \
-  macroname(string, String, RMF::String, RMF::String, const RMF::Strings&,  \
-            RMF::Strings);                                                  \
-  macroname(strings, Strings, const RMF::Strings&, RMF::Strings,            \
-            const RMF::StringsList&, RMF::                                  \
-                : StringsList);                                             \
-  macroname(node_id, NodeID, RMF::NodeID, RMF::NodeID, const RMF::NodeIDs&, \
-            RMF::NodeIDs);                                                  \
-  macroname(node_ids, NodeIDs, const RMF::NodeIDs&, RMF::NodeIDs,           \
-            const RMF::NodeIDsList&, RMF::NodeIDsList);                     \
-  macroname(floats, Floats, const RMF::Floats&, RMF::Floats,                \
-            const RMF::FloatsList&, RMF::FloatsList);                       \
-  macroname(ints, Ints, const RMF::Ints&, RMF::Ints, const RMF::IntsList&,  \
-            RMF::IntsList);                                                 \
-  macroname(indexes, Indexes, const RMF::Indexes&, RMF::Indexes,            \
-            const RMF::IndexesList&, RMF::IndexesList);
+#define RMF_FOREACH_TYPE(macroname)                                            \
+  macroname(int, Int, int, int, const Ints&, Ints)                             \
+      macroname(float, Float, double, double, const Floats&, Floats)           \
+      macroname(string, String, RMF::String, RMF::String, const RMF::Strings&, \
+                RMF::Strings)                                                  \
+      macroname(ints, Ints, const RMF::Ints&, RMF::Ints, const RMF::IntsList&, \
+                RMF::IntsList)                                                 \
+      macroname(floats, Floats, const RMF::Floats&, RMF::Floats,               \
+                const RMF::FloatsList&, RMF::FloatsList)                       \
+      macroname(strings, Strings, const RMF::Strings&, RMF::Strings,           \
+                const RMF::StringsList&, RMF::StringsList)                     \
+      macroname(vector3, Vector3, const RMF::Vector3&, RMF::Vector3,           \
+                const RMF::Vector3s&, RMF::Vector3s)                           \
+      macroname(vector4, Vector4, const RMF::Vector4&, RMF::Vector4,           \
+                const RMF::Vector4s&, RMF::Vector4s)                           \
+      macroname(vector3s, Vector3s, const RMF::Vector3s&, RMF::Vector3s,       \
+                const RMF::Vector3sList&, RMF::Vector3sList)
 #else
 #define RMF_FOREACH_TYPE(macroname) \
   macroname(type, Type, Type, Types, const Types&, Types);

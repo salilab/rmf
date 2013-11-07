@@ -37,13 +37,18 @@ struct BackwardsIO : public IO {
     return ID<Traits>();
   }
 
-  template <unsigned int D, class Filter>
-  void filter_vector(Filter &filter, Category cat) const {
+  template <unsigned int D>
+  Strings get_vector_names(Category cat) const {
     std::ostringstream oss;
     oss << "_vector" << D;
     StringsKey key = get_key_const(cat, oss.str(), StringsTraits(), sd_.get());
-    if (key == StringsKey()) return;
-    BOOST_FOREACH(std::string key_name, sd_->get_static_value(NodeID(0), key)) {
+    if (key == StringsKey()) return Strings();
+    return sd_->get_static_value(NodeID(0), key);
+  }
+
+  template <unsigned int D, class Filter>
+  void filter_vector(Filter &filter, Category cat) const {
+    BOOST_FOREACH(std::string key_name, get_vector_names<D>(cat)) {
       for (unsigned int i = 0; i < 3; ++i) {
         std::ostringstream ossk;
         ossk << "_" << key_name << " " << i;
@@ -52,11 +57,13 @@ struct BackwardsIO : public IO {
     }
   }
 
-  /*template <class SDA, class SDB, unsigned int D>
-  void load_vector_static(SDA *sda, Category category_a, SDB *sbd,
-                          Category category_b) {
+  template <unsigned int D, class SDA, class SDB, class H>
+  void load_vector(SDA *sda, Category category_a, SDB *sbd, Category category_b,
+                   H) {}
+  template <unsigned int D, class SDA, class SDB, class H>
+  void save_vector(SDA *sda, Category category_a, SDB *sbd, Category category_b,
+                   H) {}
 
-                          }*/
   template <class H>
   void load_frame_category(Category category, internal::SharedData *shared_data,
                            H) {
@@ -67,33 +74,63 @@ struct BackwardsIO : public IO {
     }
     filter_vector<3>(filter, file_cat);
     filter_vector<4>(filter, file_cat);
-    RMF::internal::clone_values_category(&filter, file_cat, shared_data,
-                                         category, H());
+    internal::clone_values_type<IntTraits, IntTraits>(
+        &filter, file_cat, shared_data, category, H());
+    internal::clone_values_type<backward_types::IndexTraits, IntTraits>(
+        &filter, file_cat, shared_data, category, H());
+    internal::clone_values_type<backward_types::NodeIDTraits, IntTraits>(
+        &filter, file_cat, shared_data, category, H());
+    internal::clone_values_type<FloatTraits, FloatTraits>(
+        &filter, file_cat, shared_data, category, H());
+    internal::clone_values_type<StringTraits, StringTraits>(
+        &filter, file_cat, shared_data, category, H());
+    internal::clone_values_type<IntsTraits, IntsTraits>(
+        &filter, file_cat, shared_data, category, H());
+    internal::clone_values_type<backward_types::IndexesTraits, IntsTraits>(
+        &filter, file_cat, shared_data, category, H());
+    internal::clone_values_type<backward_types::NodeIDsTraits, IntsTraits>(
+        &filter, file_cat, shared_data, category, H());
+    internal::clone_values_type<FloatsTraits, FloatsTraits>(
+        &filter, file_cat, shared_data, category, H());
+    internal::clone_values_type<StringsTraits, StringsTraits>(
+        &filter, file_cat, shared_data, category, H());
+
     if (shared_data->get_name(category) == "sequence") {
-      IndexKey cidk =
-          get_key_const(file_cat, "chain id", IndexTraits(), sd_.get());
-      if (cidk != IndexKey()) {
+      backward_types::IndexKey cidk = get_key_const(
+          file_cat, "chain id", backward_types::IndexTraits(), sd_.get());
+      if (cidk != backward_types::IndexKey()) {
         StringKey cidsk =
             shared_data->get_key(category, "chain id", StringTraits());
         BOOST_FOREACH(NodeID ni, get_nodes(shared_data)) {
           int ci = H::get(sd_.get(), ni, cidk);
-          if (!IndexTraits::get_is_null_value(ci)) {
+          if (!backward_types::IndexTraits::get_is_null_value(ci)) {
             H::set(shared_data, ni, cidsk, std::string(1, ci = 'A'));
           }
         }
       }
     }
-    // load_vector_loaded<3>(sd_.get(), file_cat, shared_data, category);
-    // load_vector_loaded<4>(sd_.get(), file_cat, shared_data, category);
+    load_vector<3>(sd_.get(), file_cat, shared_data, category, H());
+    load_vector<4>(sd_.get(), file_cat, shared_data, category, H());
   }
   template <class H>
   void save_frame_category(Category category,
                            const internal::SharedData *shared_data, H) {
     Category file_cat = sd_->get_category(shared_data->get_name(category));
-    RMF::internal::clone_values_category(shared_data, category, sd_.get(),
-                                         file_cat, H());
-    // save_vector_loaded<3>(shared_data, category, sd_.get(), file_cat);
-    // save_vector_loaded<4>(shared_data, category, sd_.get(), file_cat);
+    internal::clone_values_type<IntTraits, IntTraits>(
+        shared_data, category, sd_.get(), file_cat, H());
+    internal::clone_values_type<FloatTraits, FloatTraits>(
+        shared_data, category, sd_.get(), file_cat, H());
+    internal::clone_values_type<StringTraits, StringTraits>(
+        shared_data, category, sd_.get(), file_cat, H());
+    internal::clone_values_type<IntsTraits, IntsTraits>(
+        shared_data, category, sd_.get(), file_cat, H());
+    internal::clone_values_type<FloatsTraits, FloatsTraits>(
+        shared_data, category, sd_.get(), file_cat, H());
+    internal::clone_values_type<StringsTraits, StringsTraits>(
+        shared_data, category, sd_.get(), file_cat, H());
+
+    save_vector<3>(shared_data, category, sd_.get(), file_cat, H());
+    save_vector<4>(shared_data, category, sd_.get(), file_cat, H());
   }
 
  public:

@@ -11,7 +11,6 @@
 
 #include <RMF/config.h>
 #include <boost/array.hpp>
-#include "types.h"
 
 RMF_ENABLE_WARNINGS
 
@@ -31,7 +30,7 @@ class Vector {
 
  public:
   Vector() {}
-  Vector(const Floats& input) {
+  Vector(const std::vector<double>& input) {
     RMF_USAGE_CHECK(input.size() == D, "sizes don't match");
     std::copy(input.begin(), input.end(), data_);
   }
@@ -48,7 +47,7 @@ class Vector {
     data_[2] = z;
     data_[3] = q;
   }
-  RMF_SHOWABLE(Vector, Floats(data_, data_ + 3));
+  RMF_SHOWABLE(Vector, std::vector<double>(data_, data_ + 3));
 #ifndef SWIG
   double operator[](unsigned int i) const {
     RMF_USAGE_CHECK(i < D, "Out of range");

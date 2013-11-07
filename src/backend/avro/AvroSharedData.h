@@ -14,6 +14,7 @@
 #include <RMF/infrastructure_macros.h>
 #include <RMF/constants.h>
 #include <backend/BackwardsIOBase.h>
+#include <backend/backward_types.h>
 #include <boost/unordered_map.hpp>
 #include <boost/unordered_set.hpp>
 #include "AvroSharedData.types.h"
@@ -23,6 +24,7 @@ RMF_ENABLE_WARNINGS
 
 namespace RMF {
 namespace avro_backend {
+using namespace RMF::backward_types;
 
 template <class Base>
 class AvroSharedData : public Base {
@@ -103,7 +105,7 @@ class AvroSharedData : public Base {
   }
 
  public:
-  RMF_FOREACH_TYPE(RMF_AVRO_SHARED_TYPE);
+  RMF_FOREACH_BACKWARDS_TYPE(RMF_AVRO_SHARED_TYPE);
 
  public:
   template <class Traits>

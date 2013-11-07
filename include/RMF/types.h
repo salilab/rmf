@@ -11,6 +11,7 @@
 
 #include <RMF/config.h>
 #include "ID.h"
+#include "Vector.h"
 #include "infrastructure_macros.h"
 #include "internal/errors.h"
 #include <RMF/HDF5/types.h>
@@ -107,18 +108,6 @@ struct StringTraits {
   static bool get_are_equal(ArgumentType a, ArgumentType b) { return a == b; }
   static std::string get_tag() { return "ks"; }
 };
-struct IndexTraits {
-  typedef Index Type;
-  typedef Indexes Types;
-  typedef Type ReturnType;
-  typedef Type ArgumentType;
-  static bool get_is_null_value(const Type& t) { return t == -1; }
-  static ReturnType get_null_value() { return -1; }
-  typedef HDF5::IndexTraits HDF5Traits;
-  typedef boost::int32_t AvroType;
-  static bool get_are_equal(ArgumentType a, ArgumentType b) { return a == b; }
-  static std::string get_tag() { return "kx"; }
-};
 struct IntsTraits {
   typedef Ints Type;
   typedef IntsList Types;
@@ -183,72 +172,64 @@ struct StringsTraits {
   static std::string get_tag() { return "kss"; }
 };
 
-struct IndexesTraits {
-  typedef Indexes Type;
-  typedef IndexesList Types;
-  typedef Type ReturnType;
-  typedef const Type& ArgumentType;
-  static bool get_is_null_value(const Type& t) { return t.empty(); }
-  static const Type& get_null_value() {
-    static Type r;
-    return r;
-  }
-  typedef HDF5::IndexesTraits HDF5Traits;
-  typedef std::vector<IndexTraits::AvroType> AvroType;
-  static bool get_are_equal(ArgumentType a, ArgumentType b) {
-    if (a.size() != b.size()) return false;
-    for (unsigned int i = 0; i < a.size(); ++i) {
-      if (!IndexTraits::get_are_equal(a[i], b[i])) return false;
-    }
-    return true;
-  }
-  static std::string get_tag() { return "kxs"; }
-};
-
-struct NodeIDTraits {
-  typedef NodeID Type;
-  typedef NodeIDs Types;
+template <unsigned int D>
+struct VectorTraits {
+  typedef Vector<D> Type;
+  typedef std::vector<Vector<D> > Types;
   typedef Type ReturnType;
   typedef Type ArgumentType;
-  static bool get_is_null_value(const Type& t) { return t == Type(); }
-  static ReturnType get_null_value() { return NodeID(); }
-#ifndef SWIG
-  struct HDF5Traits : public HDF5::IndexTraits {
-    static int get_index() { return 4; }
-    static std::string get_name() { return "node_id"; }
-  };
-#endif
-  typedef boost::int32_t AvroType;
-  static bool get_are_equal(ArgumentType a, ArgumentType b) { return a == b; }
-  static std::string get_tag() { return "kn"; }
-};
-
-struct NodeIDsTraits {
-  typedef NodeIDs Type;
-  typedef NodeIDsList Types;
-  typedef Type ReturnType;
-  typedef const Type& ArgumentType;
-  static bool get_is_null_value(const Type& t) { return t.empty(); }
-  static ReturnType get_null_value() {
-    static Type r;
-    return r;
+  static bool get_is_null_value(const Type& t) {
+    return t[0] > std::numeric_limits<double>::max();
   }
-#ifndef SWIG
-  struct HDF5Traits : public HDF5::IndexesTraits {
-    static int get_index() { return 5; }
-    static std::string get_name() { return "node_ids"; }
-  };
-#endif
-  typedef std::vector<IndexTraits::AvroType> AvroType;
+  static ReturnType get_null_value() {
+    return Vector<D>(Floats(D, std::numeric_limits<double>::infinity()));
+  }
+  typedef boost::int32_t AvroType;
   static bool get_are_equal(ArgumentType a, ArgumentType b) {
-    if (a.size() != b.size()) return false;
-    for (unsigned int i = 0; i < a.size(); ++i) {
-      if (!NodeIDTraits::get_are_equal(a[i], b[i])) return false;
+    for (unsigned int i = 0; i < D; ++i) {
+      if (!FloatTraits::get_are_equal(a[i], b[i])) return false;
     }
     return true;
   }
-  static std::string get_tag() { return "kns"; }
+  static std::string get_tag() {
+    std::ostringstream oss;
+    oss << "v" << D;
+    return oss.str();
+  }
 };
+
+typedef VectorTraits<3> Vector3Traits;
+typedef VectorTraits<4> Vector4Traits;
+
+template <unsigned int D>
+struct VectorsTraits {
+  typedef std::vector<Vector<D> > Type;
+  typedef std::vector<std::vector<Vector<D> > > Types;
+  typedef Type ReturnType;
+  typedef Type ArgumentType;
+  static bool get_is_null_value(const Type& t) {
+    return t.empty();
+  }
+  static ReturnType get_null_value() {
+    return Type();
+  }
+  typedef boost::int32_t AvroType;
+  static bool get_are_equal(ArgumentType a, ArgumentType b) {
+    if (a.size() != b.size()) return false;
+    for (unsigned int i = 0; i < a.size(); ++i) {
+      if (!VectorTraits<D>::get_are_equal(a[i], b[i])) return false;
+    }
+    return true;
+  }
+  static std::string get_tag() {
+    std::ostringstream oss;
+    oss << "vs" << D;
+    return oss.str();
+  }
+};
+
+typedef VectorsTraits<3> Vector3sTraits;
+typedef VectorsTraits<4> Vector4sTraits;
 
 /** Get one type as another, handling vectors or scalars.*/
 template <class OutType, class InType>
@@ -306,7 +287,7 @@ class BondEndpoints
 #define RMF_DECLARE_KEY(lcname, Ucname, PassValue, ReturnValue, PassValues, \
                         ReturnValues)                                       \
   typedef ID<Ucname##Traits> Ucname##Key;                                   \
-  typedef std::vector<Ucname##Key> Ucname##Keys
+  typedef std::vector<Ucname##Key> Ucname##Keys;
 
 /** \name Key types
     RMF files support storing a variety of different types of data. These

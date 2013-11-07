@@ -33,7 +33,7 @@ void HDF5SharedData::close_things() {
   category_names_.reset();
   frame_names_.reset();
   max_cache_.clear();
-  RMF_FOREACH_TYPE(RMF_CLOSE);
+  RMF_FOREACH_BACKWARDS_TYPE(RMF_CLOSE);
   flush();
   file_ = HDF5::Group();
   H5garbage_collect();
@@ -86,7 +86,9 @@ void HDF5SharedData::open_things(bool create, bool read_only) {
 
 void HDF5SharedData::initialize_keys(int) {
   Categories cats = get_categories();
-  BOOST_FOREACH(Category cat, cats) { RMF_FOREACH_TYPE(RMF_LIST_KEYS); }
+  BOOST_FOREACH(Category cat, cats) {
+    RMF_FOREACH_BACKWARDS_TYPE(RMF_LIST_KEYS);
+  }
 }
 
 void HDF5SharedData::initialize_free_nodes() {
@@ -266,6 +268,7 @@ Categories HDF5SharedData::get_categories() const {
   Categories ret;
   for (CategoryDataMap::const_iterator it = category_data_map_.begin();
        it != category_data_map_.end(); ++it) {
+    if (it->second.name == "link") continue;
     ret.push_back(it->first);
   }
   return ret;
@@ -297,7 +300,7 @@ unsigned int HDF5SharedData::get_number_of_frames() const {
   Categories cats = get_categories();
   int ret = 0;
   for (unsigned int i = 0; i < cats.size(); ++i) {
-    RMF_FOREACH_TYPE(RMF_SEARCH_KEYS);
+    RMF_FOREACH_BACKWARDS_TYPE(RMF_SEARCH_KEYS);
   }
   return std::max<int>(frame_names_.get_size()[0], ret);
 }
@@ -355,7 +358,7 @@ void HDF5SharedData::reload() {
 void HDF5SharedData::set_loaded_frame(FrameID frame) {
   RMF_TRACE(get_logger(), "Loading frame " << frame);
   BackwardsIOBase::set_loaded_frame(frame);
-  RMF_FOREACH_TYPE(RMF_HDF5_SET_FRAME);
+  RMF_FOREACH_BACKWARDS_TYPE(RMF_HDF5_SET_FRAME);
 }
 }  // namespace hdf5_backend
 } /* namespace RMF */

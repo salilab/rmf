@@ -162,56 +162,36 @@ void SharedData::reload() {
   }
 }
 
+#define RMF_GET_STATIC_DIRTY(lcname, UCName, PassValue, ReturnValue, \
+                             PassValues, ReturnValues)               \
+  SharedDataData<UCName##Traits>::get_static_is_dirty() ||
+
 bool SharedData::get_static_is_dirty() const {
-  return SharedDataData<IntTraits>::get_static_is_dirty() ||
-         SharedDataData<StringTraits>::get_static_is_dirty() ||
-         SharedDataData<FloatTraits>::get_static_is_dirty() ||
-         SharedDataData<IndexTraits>::get_static_is_dirty() ||
-         SharedDataData<NodeIDTraits>::get_static_is_dirty() ||
-         SharedDataData<IntsTraits>::get_static_is_dirty() ||
-         SharedDataData<StringsTraits>::get_static_is_dirty() ||
-         SharedDataData<FloatsTraits>::get_static_is_dirty() ||
-         SharedDataData<IndexesTraits>::get_static_is_dirty() ||
-         SharedDataData<NodeIDsTraits>::get_static_is_dirty();
+  return RMF_FOREACH_TYPE(RMF_GET_STATIC_DIRTY) false;
 }
+
+#define RMF_SET_STATIC_DIRTY(lcname, UCName, PassValue, ReturnValue, \
+                             PassValues, ReturnValues)               \
+  SharedDataData<UCName##Traits>::set_static_is_dirty(tf);
 
 void SharedData::set_static_is_dirty(bool tf) {
-  SharedDataData<IntTraits>::set_static_is_dirty(tf);
-  SharedDataData<StringTraits>::set_static_is_dirty(tf);
-  SharedDataData<FloatTraits>::set_static_is_dirty(tf);
-  SharedDataData<IndexTraits>::set_static_is_dirty(tf);
-  SharedDataData<NodeIDTraits>::set_static_is_dirty(tf);
-  SharedDataData<IntsTraits>::set_static_is_dirty(tf);
-  SharedDataData<StringsTraits>::set_static_is_dirty(tf);
-  SharedDataData<FloatsTraits>::set_static_is_dirty(tf);
-  SharedDataData<IndexesTraits>::set_static_is_dirty(tf);
-  SharedDataData<NodeIDsTraits>::set_static_is_dirty(tf);
+  RMF_FOREACH_TYPE(RMF_SET_STATIC_DIRTY);
 }
+
+#define RMF_CLEAR_LOADED(lcname, UCName, PassValue, ReturnValue, PassValues, \
+                         ReturnValues)                                       \
+  SharedDataData<UCName##Traits>::clear_loaded_values();
 
 void SharedData::clear_loaded_values() {
-  SharedDataData<IntTraits>::clear_loaded_values();
-  SharedDataData<StringTraits>::clear_loaded_values();
-  SharedDataData<FloatTraits>::clear_loaded_values();
-  SharedDataData<IndexTraits>::clear_loaded_values();
-  SharedDataData<NodeIDTraits>::clear_loaded_values();
-  SharedDataData<IntsTraits>::clear_loaded_values();
-  SharedDataData<StringsTraits>::clear_loaded_values();
-  SharedDataData<FloatsTraits>::clear_loaded_values();
-  SharedDataData<IndexesTraits>::clear_loaded_values();
-  SharedDataData<NodeIDsTraits>::clear_loaded_values();
+  RMF_FOREACH_TYPE(RMF_CLEAR_LOADED);
 }
 
+#define RMF_CLEAR_STATIC(lcname, UCName, PassValue, ReturnValue, PassValues, \
+                         ReturnValues)                                       \
+  SharedDataData<UCName##Traits>::clear_static_values();
+
 void SharedData::clear_static_values() {
-  SharedDataData<IntTraits>::clear_static_values();
-  SharedDataData<StringTraits>::clear_static_values();
-  SharedDataData<FloatTraits>::clear_static_values();
-  SharedDataData<IndexTraits>::clear_static_values();
-  SharedDataData<NodeIDTraits>::clear_static_values();
-  SharedDataData<IntsTraits>::clear_static_values();
-  SharedDataData<StringsTraits>::clear_static_values();
-  SharedDataData<FloatsTraits>::clear_static_values();
-  SharedDataData<IndexesTraits>::clear_static_values();
-  SharedDataData<NodeIDsTraits>::clear_static_values();
+  RMF_FOREACH_TYPE(RMF_CLEAR_STATIC);
 }
 
 std::vector<char> SharedData::get_buffer() {

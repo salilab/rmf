@@ -48,34 +48,19 @@ struct IO;
   using SharedDataKeys<UCName##Traits>::get_keys;                     \
   using SharedDataKeys<UCName##Traits>::get_category;
 
+#define RMF_SHARED_DATA_PARENT(lcname, UCName, PassValue, ReturnValue, \
+                                       PassValues, ReturnValues) \
+  public SharedDataKeys<UCName##Traits>, public SharedDataData<UCName##Traits>,
+
 namespace internal {
 
-class RMFEXPORT SharedData : public SharedDataUserData,
-                             public SharedDataPath,
-                             public SharedDataFile,
-                             public SharedDataHierarchy,
-                             public SharedDataCategory,
-                             public SharedDataLoadedFrame,
-                             public SharedDataKeys<IntTraits>,
-                             public SharedDataKeys<StringTraits>,
-                             public SharedDataKeys<FloatTraits>,
-                             public SharedDataKeys<IndexTraits>,
-                             public SharedDataKeys<NodeIDTraits>,
-                             public SharedDataKeys<IntsTraits>,
-                             public SharedDataKeys<StringsTraits>,
-                             public SharedDataKeys<FloatsTraits>,
-                             public SharedDataKeys<IndexesTraits>,
-                             public SharedDataKeys<NodeIDsTraits>,
-                             public SharedDataData<IntTraits>,
-                             public SharedDataData<StringTraits>,
-                             public SharedDataData<FloatTraits>,
-                             public SharedDataData<IndexTraits>,
-                             public SharedDataData<NodeIDTraits>,
-                             public SharedDataData<IntsTraits>,
-                             public SharedDataData<StringsTraits>,
-                             public SharedDataData<FloatsTraits>,
-                             public SharedDataData<IndexesTraits>,
-                             public SharedDataData<NodeIDsTraits> {
+class RMFEXPORT SharedData
+    : public SharedDataUserData,
+      public SharedDataPath,
+      public SharedDataFile,
+      public SharedDataHierarchy,
+      public SharedDataCategory,
+      RMF_FOREACH_TYPE(RMF_SHARED_DATA_PARENT) public SharedDataLoadedFrame {
   unsigned int number_of_frames_;
   bool write_;
   boost::shared_ptr<backends::IO> io_;

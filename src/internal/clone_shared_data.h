@@ -23,27 +23,6 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 namespace internal {
 
-struct StaticValues {
-  template <class Traits, class SD>
-  static typename Traits::Type get(SD* sd, NodeID n, ID<Traits> k) {
-    return sd->get_static_value(n, k);
-  }
-  template <class Traits, class SD>
-  static void set(SD* sd, NodeID n, ID<Traits> k, typename Traits::Type v) {
-    sd->set_static_value(n, k, v);
-  }
-};
-struct LoadedValues {
-  template <class Traits, class SD>
-  static typename Traits::Type get(SD* sd, NodeID n, ID<Traits> k) {
-    return sd->get_loaded_value(n, k);
-  }
-  template <class Traits, class SD>
-  static void set(SD* sd, NodeID n, ID<Traits> k, typename Traits::Type v) {
-    sd->set_loaded_value(n, k, v);
-  }
-};
-
 template <class SDA, class SDB>
 void clone_hierarchy(SDA* sda, SDB* sdb) {
   RMF_INTERNAL_CHECK(boost::distance(get_nodes(sda)) >= 1,
@@ -85,23 +64,26 @@ void clone_file(SDA* sda, SDB* sdb) {
   sdb->set_producer(sda->get_producer());
 }
 
-template <class Traits, class SDA, class SDB, class H>
-void clone_values_type(SDA* sda, Category cata, SDB* sdb, Category catb,
-                       H) {
-    boost::unordered_map<ID<Traits>, ID<Traits> > keys =
-        get_key_map<Traits>(sda, cata, sdb, catb);
+template <class TraitsA, class TraitsB, class SDA, class SDB, class H>
+void clone_values_type(SDA* sda, Category cata, SDB* sdb, Category catb, H) {
+  boost::unordered_map<ID<TraitsA>, ID<TraitsB> > keys =
+      get_key_map<TraitsA, TraitsB>(sda, cata, sdb, catb);
   if (keys.empty()) return;
   BOOST_FOREACH(NodeID n, get_nodes(sda)) {
-    RMF_TRACE(get_logger(), "Cloning static node " << n);
-    typedef std::pair<ID<Traits>, ID<Traits> > KP;
+    RMF_TRACE(get_logger(), "Cloning node " << n);
+    typedef std::pair<ID<TraitsA>, ID<TraitsB> > KP;
     BOOST_FOREACH(KP ks, keys) {
-      typename Traits::ReturnType rt = H::get(sda, n, ks.first);
-      if (!Traits::get_is_null_value(rt)) {
-        H::set(sdb, n, ks.second, rt);
+      typename TraitsA::ReturnType rt = H::get(sda, n, ks.first);
+      if (!TraitsA::get_is_null_value(rt)) {
+        H::set(sdb, n, ks.second, get_as<typename TraitsB::Type>(rt));
       }
     }
   }
 }
+
+#define RMF_CLONE_VALUES(lcname, UCName, PassValue, ReturnValue, PassValues, \
+                         ReturnValues)                                       \
+  clone_values_type<UCName##Traits, UCName##Traits>(sda, cata, sdb, catb, H());
 
 template <class SDA, class SDB, class H>
 void clone_values_category(SDA* sda, Category cata, SDB* sdb, Category catb,
@@ -112,16 +94,7 @@ void clone_values_category(SDA* sda, Category cata, SDB* sdb, Category catb,
                      "No root node found.");
   RMF_INTERNAL_CHECK(boost::distance(get_nodes(sdb)) >= 1,
                      "No root node found.");
-  clone_values_type<IntTraits>(sda, cata, sdb, catb, H());
-  clone_values_type<FloatTraits>(sda, cata, sdb, catb, H());
-  clone_values_type<StringTraits>(sda, cata, sdb, catb, H());
-  clone_values_type<IndexTraits>(sda, cata, sdb, catb, H());
-  clone_values_type<NodeIDTraits>(sda, cata, sdb, catb, H());
-  clone_values_type<IntsTraits>(sda, cata, sdb, catb, H());
-  clone_values_type<FloatsTraits>(sda, cata, sdb, catb, H());
-  clone_values_type<StringsTraits>(sda, cata, sdb, catb, H());
-  clone_values_type<IndexesTraits>(sda, cata, sdb, catb, H());
-  clone_values_type<NodeIDsTraits>(sda, cata, sdb, catb, H());
+  RMF_FOREACH_TYPE(RMF_CLONE_VALUES);
 }
 
 template <class SDA, class SDB>

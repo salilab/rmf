@@ -66,12 +66,11 @@ def get_data_types():
   macroname(ints, Ints, IntsList, RMF::Ints);
   macroname(float, Float, Floats, double);
   macroname(floats, Floats, FloatsList, RMF::Floats);
-  macroname(index, Index, Indexes, int);
-  macroname(indexes, Indexes, IndexesList, RMF::Indexes);
   macroname(string, String, Strings, std::string);
   macroname(strings, Strings, StringsList, RMF::Strings);
-  macroname(node_id, NodeID, NodeIDs, RMF::NodeID);
-  macroname(node_ids, NodeIDs, NodeIDsList, RMF::NodeIDs);
+  macroname(vector3, Vector3, Vector3s, RMF::Vector3);
+  macroname(vector4, Vector4, Vector4s, RMF::Vector4);
+  macroname(vector3s, Vector3s, Vector3sList, RMF::Vector3s);
 %enddef
 
 /* Declare the needed things for each type */

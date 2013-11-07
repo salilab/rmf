@@ -50,7 +50,7 @@ refframe = Decorator(["REPRESENTATION", "ORGANIZATIONAL"], "physics",
 
 bond = Decorator(["BOND"], "physics",
                  "Bond", "A bond between particles.",
-                 [AttributePair("bonded", "NodeID", "BondEndpoints", "bond_0", "bond_1", "The bonded particles.")])
+                 [AttributePair("bonded", "Int", "BondEndpoints", "bond_0", "bond_1", "The bonded particles.")])
 
 old_bond = Decorator(["BOND"], "physics",
                      "OldBond", "A bond between particles, for backwards compatibility.",
@@ -60,7 +60,7 @@ old_bond = Decorator(["BOND"], "physics",
 atom = Decorator(["REPRESENTATION"], "physics",
                  "Atom", "Information regarding an atom.",
                  [coordinates, mass, radius,
-                  Attribute("element", "Index", "The atomic number of the element.")])
+                  Attribute("element", "Int", "The atomic number of the element.")])
 
 diffuser = Decorator(["REPRESENTATION"], "physics",
                      "Diffuser", "Information regarding diffusion coefficients.",
@@ -107,7 +107,7 @@ geometry_coordinates = Attributes("coordinates", "Floats", ["cartesian xs",
                                   "Coordinates of the center in angstroms.")
 
 geometry_index = Attribute(
-    "type", "Index", "The type of the geometric object.")
+    "type", "Int", "The type of the geometric object.")
 
 ball = Decorator(["GEOMETRY"], "shape",
                  "Ball", "A geometric ball.",
@@ -165,11 +165,11 @@ domain = Decorator(["REPRESENTATION"], "sequence",
 
 fragment = Decorator(["REPRESENTATION"], "sequence",
                      "Fragment", "Information regarding a fragment of a molecule.",
-                     [Attribute("indexes", "Indexes", "A list of indexes in the fragment")])
+                     [Attribute("indexes", "Ints", "A list of indexes in the fragment")])
 
 copy = Decorator(["REPRESENTATION"], "sequence",
                  "Copy", "Information regarding a copy of a molecule.",
-                 [Attribute("copy index", "Index",
+                 [Attribute("copy index", "Int",
                             "This is the copy_indexth copy of the original.")])
 
 typed = Decorator(["REPRESENTATION"], "sequence",

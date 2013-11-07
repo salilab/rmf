@@ -11,6 +11,7 @@
 
 #include <RMF/config.h>
 #include "../BackwardsIOBase.h"
+#include <backend/backward_types.h>
 #include <RMF/compiler_macros.h>
 #include <RMF/HDF5/Group.h>
 #include <RMF/HDF5/File.h>
@@ -38,6 +39,7 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 
 namespace hdf5_backend {
+using namespace RMF::backward_types;
 
 #define RMF_HDF5_SHARED_DATA_TYPE(lcname, Ucname, PassValue, ReturnValue, \
                                   PassValues, ReturnValues)               \
@@ -212,7 +214,7 @@ class HDF5SharedData : public backends::BackwardsIOBase {
   mutable Ints max_cache_;
   mutable boost::unordered_set<std::string> known_data_sets_;
   KeyNameDataSetCache key_name_data_sets_;
-  RMF_FOREACH_TYPE(RMF_HDF5_SHARED_DATA_TYPE);
+  RMF_FOREACH_BACKWARDS_TYPE(RMF_HDF5_SHARED_DATA_TYPE);
 
   template <class TypeTraits>
   HDF5DataSetCacheD<StringTraits, 1>& get_key_list_data_set(

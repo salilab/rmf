@@ -18,15 +18,23 @@ class GenericTest(unittest.TestCase):
         of = RMF.create_rmf_file(onm)
         RMF.clone_file_info(f, of)
         RMF.clone_hierarchy(f, of)
+        self.assert_(RMF.get_equal_structure(f, of))
         RMF.clone_static_frame(f, of)
+        self.assert_(RMF.get_equal_static_values(f, of))
         num_frames = f.get_number_of_frames()
         for fr in f.get_frames():
             f.set_current_frame(fr)
             nfid = of.add_frame(
                 f.get_current_frame_name(), f.get_current_frame_type())
+
             self.assertEqual(nfid, fr)
             RMF.clone_loaded_frame(f, of)
-            print "number of frames", of.get_number_of_frames(), fr, f.get_number_of_frames()
+            self.assert_(RMF.get_equal_current_values(f, of))
+            RMF.show_hierarchy_with_values(f.get_root_node())
+            RMF.show_hierarchy_with_values(of.get_root_node())
+
+            print "number of frames", of.get_number_of_frames(),\
+              fr, f.get_number_of_frames()
         print "deling"
         del of
         print "reopening"

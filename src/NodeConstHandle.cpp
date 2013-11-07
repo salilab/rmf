@@ -119,22 +119,17 @@ void show_node(NodeConstHandle n, std::ostream& out, std::string prefix = "") {
       << "]";
 }
 void show_node(NodeConstHandle n, std::ostream& out, FloatKeys fks,
-               FloatsKeys fsks, IntKeys iks, IntsKeys isks, IndexKeys xks,
-               IndexesKeys xsks, StringKeys sks, StringsKeys ssks,
-               NodeIDKeys nks, NodeIDsKeys nsks, std::string prefix) {
+               FloatsKeys fsks, IntKeys iks, IntsKeys isks, StringKeys sks,
+               StringsKeys ssks, std::string prefix) {
   using std::operator<<;
   if (true) {
     show_node(n, out);
     show_data(n, out, fks, prefix + "  ");
     show_data(n, out, iks, prefix + "  ");
-    show_data(n, out, xks, prefix + "  ");
     show_data(n, out, sks, prefix + "  ");
-    show_data(n, out, nks, prefix + "  ");
     show_data(n, out, fsks, prefix + "  ");
     show_data(n, out, isks, prefix + "  ");
-    show_data(n, out, xsks, prefix + "  ");
     show_data(n, out, ssks, prefix + "  ");
-    show_data(n, out, nsks, prefix + "  ");
   }
 }
 
@@ -216,29 +211,20 @@ void show_hierarchy(NodeConstHandle root, std::ostream& out) {
 void show_hierarchy_with_values(NodeConstHandle root, std::ostream& out) {
   FloatKeys fks;
   IntKeys iks;
-  IndexKeys xks;
   StringKeys sks;
-  NodeIDKeys nks;
   FloatsKeys fsks;
   IntsKeys isks;
-  IndexesKeys xsks;
   StringsKeys ssks;
-  NodeIDsKeys nsks;
   fks = get_keys<FloatTraits>(root.get_file());
   iks = get_keys<IntTraits>(root.get_file());
-  xks = get_keys<IndexTraits>(root.get_file());
   sks = get_keys<StringTraits>(root.get_file());
-  nks = get_keys<NodeIDTraits>(root.get_file());
   fsks = get_keys<FloatsTraits>(root.get_file());
   isks = get_keys<IntsTraits>(root.get_file());
-  xsks = get_keys<IndexesTraits>(root.get_file());
   ssks = get_keys<StringsTraits>(root.get_file());
-  nsks = get_keys<NodeIDsTraits>(root.get_file());
   using std::operator<<;
-  RMF_PRINT_TREE(out, NodeConstHandle, root, n.get_children().size(),
-                 n.get_children(),
-                 show_node(n, out, fks, fsks, iks, isks, xks, xsks, sks, ssks,
-                           nks, nsks, prefix0 + "   "));
+  RMF_PRINT_TREE(
+      out, NodeConstHandle, root, n.get_children().size(), n.get_children(),
+      show_node(n, out, fks, fsks, iks, isks, sks, ssks, prefix0 + "   "));
 }
 
 void show_hierarchy_with_decorators(NodeConstHandle root, bool,
