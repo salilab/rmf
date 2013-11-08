@@ -7,7 +7,7 @@
 #include <RMF/CoordinateTransformer.h>
 #include <RMF/log.h>
 #include <boost/scoped_array.hpp>
-#include <boost/foreach.hpp>
+
 
 namespace {
 molfile_plugin_t plugin;
@@ -96,7 +96,7 @@ std::pair<int, int> Data::get_structure(RMF::NodeConstHandle cur,
     resid = rf_.get(cur).get_index();
     resname = rf_.get(cur).get_type();
   }
-  BOOST_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
+  RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
     std::pair<int, int> count =
         get_structure(c, atoms, body, chain, resid, resname);
     ret.first += count.first;
@@ -263,7 +263,7 @@ int Data::get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
       ++ret;
     }
   }
-  BOOST_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
+  RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
     ret += get_graphics(c, tr, graphics);
     if (graphics) graphics += ret;
   }
@@ -286,7 +286,7 @@ int Data::get_bonds(RMF::NodeConstHandle cur,
       ++ret;
     }
   }
-  BOOST_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
+  RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
     int ci = get_bonds(c, index, from, to);
     if (from) {
       from += ci;

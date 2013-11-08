@@ -27,6 +27,7 @@ cmake_policy(SET CMP0017 NEW)
 endif(POLICY CMP0017)
 
 include(FindLog4CXX)
+include(FindC++11)
 
 if (${Log4CXX_LIBRARY} MATCHES "Log4CXX_LIBRARY-NOTFOUND")
   set(RMF_HAS_LOG4CXX "0" CACHE BOOL "Whether to use Log4CXX" FORCE)

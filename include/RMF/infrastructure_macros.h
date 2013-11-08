@@ -13,6 +13,13 @@
 #include <iostream>
 #include <string>
 #include <RMF/compiler_macros.h>
+#include <boost/config.hpp>
+#ifdef BOOST_NO_CXX11_RANGE_BASED_FOR
+#define RMF_FOREACH(v,r) BOOST_FOREACH(v,r)
+#include <boost/foreach.hpp>
+#else
+#define RMF_FOREACH(v,r) for(v:r)
+#endif
 
 #include <vector>
 

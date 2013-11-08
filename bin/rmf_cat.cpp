@@ -5,7 +5,7 @@
 #include <RMF/FileHandle.h>
 #include <RMF/utility.h>
 #include "common.h"
-#include <boost/foreach.hpp>
+
 
 namespace {
 std::vector<std::string> inputs;
@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
         RMF::clone_hierarchy(rh, orh);
       }
       orh.set_description(orh.get_description() + "\n" + rh.get_description());
-      BOOST_FOREACH(RMF::FrameID ni, rh.get_frames()) {
+      RMF_FOREACH(RMF::FrameID ni, rh.get_frames()) {
         rh.set_current_frame(ni);
         orh.add_frame(rh.get_current_frame_name(), rh.get_current_frame_type());
         RMF::clone_loaded_frame(rh, orh);

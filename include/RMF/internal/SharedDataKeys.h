@@ -12,7 +12,7 @@
 #include <RMF/config.h>
 #include "../types.h"
 #include <boost/unordered_map.hpp>
-#include <boost/foreach.hpp>
+
 
 RMF_ENABLE_WARNINGS
 
@@ -63,7 +63,7 @@ class SharedDataKeys : public P {
     }
     std::vector<ID<Traits> > ret;
     ret.reserve(category_keys_.find(cat)->second.size());
-    BOOST_FOREACH(typename KeyInfo::value_type it,
+    RMF_FOREACH(typename KeyInfo::value_type it,
                   category_keys_.find(cat)->second) {
       ret.push_back(it.second);
     }

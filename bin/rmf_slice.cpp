@@ -5,7 +5,7 @@
 #include <RMF/FileHandle.h>
 #include <RMF/utility.h>
 #include "common.h"
-#include <boost/foreach.hpp>
+
 
 namespace {
 std::string description("Grab frames from an rmf file");
@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
     RMF::clone_hierarchy(rh, orh);
     RMF::clone_static_frame(rh, orh);
     std::cout << "Copying frames";
-    BOOST_FOREACH(RMF::FrameID f, rh.get_frames()) {
+    RMF_FOREACH(RMF::FrameID f, rh.get_frames()) {
       if (f.get_index() < start_frame) continue;
       if ((f.get_index() - start_frame) % step_frame != 0) continue;
       rh.set_current_frame(f);

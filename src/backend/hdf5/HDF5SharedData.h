@@ -29,7 +29,7 @@
 #include "HDF5DataSetCache3D.h"
 #include "names.h"
 #include <boost/array.hpp>
-#include <boost/foreach.hpp>
+
 #include <hdf5.h>
 #include <algorithm>
 #include <boost/ptr_container/ptr_vector.hpp>
@@ -584,7 +584,7 @@ class HDF5SharedData : public backends::BackwardsIOBase {
     std::vector<ID<TypeTraits> > ret;
     typename NameKeyMap::const_iterator oit = name_key_map_.find(cat);
     if (oit == name_key_map_.end()) return ret;
-    BOOST_FOREACH(NameKeyInnerMap::const_reference rt, oit->second) {
+    RMF_FOREACH(NameKeyInnerMap::const_reference rt, oit->second) {
       if (key_data_map_.find(rt.second)->second.type_index ==
           TypeTraits::HDF5Traits::get_index()) {
         ret.push_back(ID<TypeTraits>(rt.second));

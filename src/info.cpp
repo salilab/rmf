@@ -22,9 +22,9 @@ namespace RMF {
 template <class Traits>
 void show_key_info(FileConstHandle rh, Category cat, std::string name,
                    std::ostream& out) {
-  BOOST_FOREACH(ID<Traits> k, rh.get_keys<Traits>(cat)) {
+  RMF_FOREACH(ID<Traits> k, rh.get_keys<Traits>(cat)) {
     int static_count = 0, frame_count = 0;
-    BOOST_FOREACH(NodeID n, rh.get_node_ids()) {
+    RMF_FOREACH(NodeID n, rh.get_node_ids()) {
       NodeConstHandle nh = rh.get_node(n);
       if (!nh.get_frame_value(k).get_is_null()) {
         ++frame_count;
@@ -50,14 +50,14 @@ int count(NodeConstHandle nh, std::set<NodeConstHandle>& seen) {
     return 0;
   }
   NodeConstHandles ch = nh.get_children();
-  BOOST_FOREACH(NodeConstHandle c, ch) { ret += count(c, seen); }
+  RMF_FOREACH(NodeConstHandle c, ch) { ret += count(c, seen); }
   return ret;
 }
 
 void show_info(FileConstHandle rh, std::ostream& out) {
   out << "Nodes: " << rh.get_number_of_nodes() << std::endl;
   out << "Frames: " << rh.get_number_of_frames() << std::endl;
-  BOOST_FOREACH(Category c, rh.get_categories()) {
+  RMF_FOREACH(Category c, rh.get_categories()) {
     out << rh.get_name(c) << ":" << std::endl;
     RMF_FOREACH_TYPE(RMF_SHOW_TYPE_DATA_INFO);
   }

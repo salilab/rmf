@@ -98,7 +98,7 @@ template <class Traits>
 void show_data(NodeConstHandle n, std::ostream& out,
                const std::vector<ID<Traits> >& ks, std::string prefix) {
   using std::operator<<;
-  BOOST_FOREACH(ID<Traits> k, ks) {
+  RMF_FOREACH(ID<Traits> k, ks) {
     Nullable<Traits> t = n.get_frame_value(k);
     if (!t.get_is_null()) {
       out << std::endl << prefix << n.get_file().get_name(k) << ": "

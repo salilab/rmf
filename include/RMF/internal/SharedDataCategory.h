@@ -12,7 +12,7 @@
 #include <RMF/config.h>
 #include "../ID.h"
 #include <boost/unordered_map.hpp>
-#include <boost/foreach.hpp>
+
 
 RMF_ENABLE_WARNINGS
 
@@ -29,14 +29,14 @@ class SharedDataCategory {
  protected:
   Categories get_categories() const {
     Categories ret;
-    BOOST_FOREACH(const From::value_type & it, from_name_) {
+    RMF_FOREACH(const From::value_type & it, from_name_) {
       ret.push_back(it.second);
     }
     return ret;
   }
   Categories get_loaded_categories() const {
     Categories ret;
-    BOOST_FOREACH(const From::value_type & it, from_name_) {
+    RMF_FOREACH(const From::value_type & it, from_name_) {
       if (get_is_loaded(it.second)) ret.push_back(it.second);
     }
     return ret;

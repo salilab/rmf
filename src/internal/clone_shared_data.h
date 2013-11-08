@@ -14,7 +14,7 @@
 #include <RMF/internal/shared_data_ranges.h>
 #include "shared_data_maps.h"
 #include "shared_data_equality.h"
-#include <boost/foreach.hpp>
+
 #include <boost/range/distance.hpp>
 #include <boost/unordered_map.hpp>
 
@@ -30,9 +30,9 @@ void clone_hierarchy(SDA* sda, SDB* sdb) {
   RMF_INTERNAL_CHECK(boost::distance(get_nodes(sdb)) >= 1,
                      "No root node found.");
   boost::unordered_map<NodeID, NodeID> parents;
-  BOOST_FOREACH(NodeID na, get_nodes(sda)) {
+  RMF_FOREACH(NodeID na, get_nodes(sda)) {
     NodeIDs children = sda->get_children(na);
-    BOOST_FOREACH(NodeID c, children) {
+    RMF_FOREACH(NodeID c, children) {
       if (parents.find(c) == parents.end() &&
           c.get_index() >= sdb->get_number_of_nodes()) {
         parents[c] = na;
@@ -40,7 +40,7 @@ void clone_hierarchy(SDA* sda, SDB* sdb) {
     }
   }
   if (parents.empty()) return;
-  BOOST_FOREACH(NodeID na, get_nodes(sda)) {
+  RMF_FOREACH(NodeID na, get_nodes(sda)) {
     if (parents.find(na) != parents.end()) {
       NodeID nid = sdb->add_child(parents.find(na)->second, sda->get_name(na),
                                   sda->get_type(na));
@@ -48,9 +48,9 @@ void clone_hierarchy(SDA* sda, SDB* sdb) {
       RMF_INTERNAL_CHECK(nid == na, "Don't match");
     }
   }
-  BOOST_FOREACH(NodeID na, get_nodes(sda)) {
+  RMF_FOREACH(NodeID na, get_nodes(sda)) {
     NodeIDs children = sda->get_children(na);
-    BOOST_FOREACH(NodeID c, children) {
+    RMF_FOREACH(NodeID c, children) {
       if (parents.find(c) != parents.end() && parents.find(c)->second != na) {
         sdb->add_child(na, c);
       }
@@ -69,10 +69,10 @@ void clone_values_type(SDA* sda, Category cata, SDB* sdb, Category catb, H) {
   boost::unordered_map<ID<TraitsA>, ID<TraitsB> > keys =
       get_key_map<TraitsA, TraitsB>(sda, cata, sdb, catb);
   if (keys.empty()) return;
-  BOOST_FOREACH(NodeID n, get_nodes(sda)) {
+  RMF_FOREACH(NodeID n, get_nodes(sda)) {
     RMF_TRACE(get_logger(), "Cloning node " << n);
     typedef std::pair<ID<TraitsA>, ID<TraitsB> > KP;
-    BOOST_FOREACH(KP ks, keys) {
+    RMF_FOREACH(KP ks, keys) {
       typename TraitsA::ReturnType rt = H::get(sda, n, ks.first);
       if (!TraitsA::get_is_null_value(rt)) {
         H::set(sdb, n, ks.second, get_as<typename TraitsB::Type>(rt));
@@ -99,7 +99,7 @@ void clone_values_category(SDA* sda, Category cata, SDB* sdb, Category catb,
 
 template <class SDA, class SDB>
 void clone_static_data(SDA* sda, SDB* sdb) {
-  BOOST_FOREACH(Category cata, sda->get_categories()) {
+  RMF_FOREACH(Category cata, sda->get_categories()) {
     Category catb = sdb->get_category(sda->get_name(cata));
     clone_values_category(sda, cata, sdb, catb, StaticValues());
   }
@@ -107,7 +107,7 @@ void clone_static_data(SDA* sda, SDB* sdb) {
 
 template <class SDA, class SDB>
 void clone_loaded_data(SDA* sda, SDB* sdb) {
-  BOOST_FOREACH(Category cata, sda->get_categories()) {
+  RMF_FOREACH(Category cata, sda->get_categories()) {
     Category catb = sdb->get_category(sda->get_name(cata));
     clone_values_category(sda, cata, sdb, catb, LoadedValues());
   }

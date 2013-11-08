@@ -13,7 +13,7 @@
 #include <RMF/log.h>
 #include "shared_data_maps.h"
 #include <RMF/internal/shared_data_ranges.h>
-#include <boost/foreach.hpp>
+
 #include <boost/range/distance.hpp>
 #include <boost/unordered_set.hpp>
 
@@ -28,9 +28,9 @@ bool get_equal_values_type(SDA* sda, Category cata, SDB* sdb, Category catb,
   boost::unordered_map<ID<Traits>, ID<Traits> > keys =
       get_key_map<Traits, Traits>(sda, cata, sdb, catb);
   bool ret = true;
-  BOOST_FOREACH(NodeID n, get_nodes(sda)) {
+  RMF_FOREACH(NodeID n, get_nodes(sda)) {
     typedef std::pair<ID<Traits>, ID<Traits> > KP;
-    BOOST_FOREACH(KP ks, keys) {
+    RMF_FOREACH(KP ks, keys) {
       typename Traits::ReturnType rta = H::get(sda, n, ks.first);
       typename Traits::ReturnType rtb = H::get(sdb, n, ks.second);
       bool ha = !Traits::get_is_null_value(rta);
@@ -67,7 +67,7 @@ bool get_equal_current_values_category(SDA* sda, Category cata, SDB* sdb,
 
 template <class SDA, class SDB>
 bool get_equal_current_values(SDA* sda, SDB* sdb) {
-  BOOST_FOREACH(Category cata, sda->get_categories()) {
+  RMF_FOREACH(Category cata, sda->get_categories()) {
     Category catb = sdb->get_category(sda->get_name(cata));
     if (!get_equal_current_values_category(sda, cata, sdb, catb)) return false;
   }
@@ -89,7 +89,7 @@ bool get_equal_static_values_category(SDA* sda, Category cata, SDB* sdb,
 
 template <class SDA, class SDB>
 bool get_equal_static_values(SDA* sda, SDB* sdb) {
-  BOOST_FOREACH(Category cata, sda->get_categories()) {
+  RMF_FOREACH(Category cata, sda->get_categories()) {
     Category catb = sdb->get_category(sda->get_name(cata));
     if (!get_equal_static_values_category(sda, cata, sdb, catb)) return false;
   }

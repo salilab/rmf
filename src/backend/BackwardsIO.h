@@ -14,7 +14,7 @@
 #include "KeyFilter.h"
 #include <internal/clone_shared_data.h>
 #include <boost/scoped_ptr.hpp>
-#include <boost/foreach.hpp>
+
 #include <boost/filesystem.hpp>
 
 RMF_ENABLE_WARNINGS
@@ -31,7 +31,7 @@ struct BackwardsIO : public IO {
   template <class Traits, class SDC>
   ID<Traits> get_key_const(Category cat, std::string name, Traits,
                            SDC *sd) const {
-    BOOST_FOREACH(ID<Traits> k, sd->get_keys(cat, Traits())) {
+    RMF_FOREACH(ID<Traits> k, sd->get_keys(cat, Traits())) {
       if (sd->get_name(k) == name) return k;
     }
     return ID<Traits>();
@@ -46,13 +46,22 @@ struct BackwardsIO : public IO {
     return sd_->get_static_value(NodeID(0), key);
   }
 
+  template <unsigned int D>
+  boost::array<std::string, D> get_subkey_names(std::string key_name) const {
+    boost::array<std::string, D> ret;
+    for (unsigned int i = 0; i < D; ++i) {
+      std::ostringstream ossk;
+      ossk << "_" << key_name << " " << i;
+      ret[i] = ossk.str();
+    }
+    return ret;
+  }
+
   template <unsigned int D, class Filter>
   void filter_vector(Filter &filter, Category cat) const {
-    BOOST_FOREACH(std::string key_name, get_vector_names<D>(cat)) {
-      for (unsigned int i = 0; i < 3; ++i) {
-        std::ostringstream ossk;
-        ossk << "_" << key_name << " " << i;
-        filter.add_float_key(cat, key_name);
+    RMF_FOREACH(std::string key_name, get_vector_names<D>(cat)) {
+      RMF_FOREACH(std::string subkey_name, get_subkey_names<D>(key_name)) {
+        filter.add_float_key(cat, subkey_name);
       }
     }
   }
@@ -63,20 +72,20 @@ struct BackwardsIO : public IO {
     typedef ID<VectorTraits<D> > Key;
     typedef std::pair<Key, int> Data;
     boost::unordered_map<FloatKey, Data > map;
-    BOOST_FOREACH(std::string key_name, get_vector_names<D>(category_a)) {
+    RMF_FOREACH(std::string key_name, get_vector_names<D>(category_a)) {
+      boost::array<std::string, D> subkey_names = get_subkey_names<D>(key_name);
       for (unsigned int i = 0; i < D; ++i) {
-        std::ostringstream oss;
-        oss << "_" << key_name << " " << i;
-        FloatKey cur_key = sda->get_key(category_a, oss.str(), FloatTraits());
+        FloatKey cur_key =
+            sda->get_key(category_a, subkey_names[i], FloatTraits());
         map[cur_key].first =
             sdb->get_key(category_b, key_name, VectorTraits<D>());
         map[cur_key].second = i;
       }
     }
     if (map.empty()) return;
-    BOOST_FOREACH(NodeID n, internal::get_nodes(sda)) {
+    RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
       typedef std::pair<FloatKey, Data> KP;
-      BOOST_FOREACH(KP kp, map) {
+      RMF_FOREACH(KP kp, map) {
         double v = H::get(sda, n, kp.first);
         if (!FloatTraits::get_is_null_value(v)) {
           Vector<D> old = H::get(sdb, n, kp.second.first);
@@ -95,13 +104,12 @@ struct BackwardsIO : public IO {
     typedef boost::array<ID<FloatTraits>, D > Data;
     boost::unordered_map<VectorKey, Data > map;
     Strings key_names;
-    BOOST_FOREACH(VectorKey k, keys) {
+    RMF_FOREACH(VectorKey k, keys) {
       std::string name = sda->get_name(k);
       key_names.push_back(name);
-      for (unsigned int i =0; i< D; ++i) {
-        std::ostringstream oss;
-        oss << "_" << name << " " << i;
-        map[k][i] = sdb->get_key(category_b, oss.str(), FloatTraits());
+      boost::array<std::string, D> subkey_names = get_subkey_names<D>(name);
+      for (unsigned int i = 0; i < D; ++i) {
+        map[k][i] = sdb->get_key(category_b, subkey_names[i], FloatTraits());
       }
     }
     if (key_names.empty()) return;
@@ -112,9 +120,9 @@ struct BackwardsIO : public IO {
       sdb->set_static_value(NodeID(0), k, key_names);
     }
 
-    BOOST_FOREACH(NodeID n, internal::get_nodes(sda)) {
+    RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
       typedef std::pair<VectorKey, Data> KP;
-      BOOST_FOREACH(KP kp, map) {
+      RMF_FOREACH(KP kp, map) {
         Vector<D> v = H::get(sda, n, kp.first);
         if (!VectorTraits<D>::get_is_null_value(v)) {
           for (unsigned int i = 0; i< D; ++i) {
@@ -162,7 +170,7 @@ struct BackwardsIO : public IO {
       if (cidk != backward_types::IndexKey()) {
         StringKey cidsk =
             shared_data->get_key(category, "chain id", StringTraits());
-        BOOST_FOREACH(NodeID ni, internal::get_nodes(shared_data)) {
+        RMF_FOREACH(NodeID ni, internal::get_nodes(shared_data)) {
           int ci = H::get(sd_.get(), ni, cidk);
           if (!backward_types::IndexTraits::get_is_null_value(ci)) {
             H::set(shared_data, ni, cidsk, std::string(1, ci = 'A'));
@@ -211,7 +219,7 @@ struct BackwardsIO : public IO {
 
   virtual Strings get_categories() RMF_OVERRIDE {
     Strings ret;
-    BOOST_FOREACH(Category c, sd_->get_categories()) {
+    RMF_FOREACH(Category c, sd_->get_categories()) {
       ret.push_back(sd_->get_name(c));
     }
     return ret;

@@ -14,7 +14,7 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/version.hpp>
 #include <RMF/log.h>
-#include <boost/foreach.hpp>
+
 #include "backend/IO.h"
 
 RMF_ENABLE_WARNINGS
@@ -43,7 +43,7 @@ Category SharedData::get_category(std::string name) {
 
 Categories SharedData::get_categories() {
   Categories ret = SharedDataCategory::get_categories();
-  BOOST_FOREACH(Category c, ret) {
+  RMF_FOREACH(Category c, ret) {
     if (!SharedDataCategory::get_is_loaded(c)) {
       SharedDataCategory::set_is_loaded(c, true);
       io_->load_static_frame_category(c, this);
@@ -62,7 +62,7 @@ void SharedData::set_loaded_frame(FrameID frame) {
   if (get_loaded_frame() != FrameID() && write_) {
     flush();
     io_->save_loaded_frame(this);
-    BOOST_FOREACH(Category cat, SharedDataCategory::get_loaded_categories()) {
+    RMF_FOREACH(Category cat, SharedDataCategory::get_loaded_categories()) {
       RMF_TRACE(get_logger(), "Saving frame category " << get_loaded_frame()
                                                        << ": "
                                                        << get_name(cat));
@@ -74,7 +74,7 @@ void SharedData::set_loaded_frame(FrameID frame) {
   clear_loaded_values();
   if (frame != FrameID()) {
     io_->load_loaded_frame(this);
-    BOOST_FOREACH(Category cat, SharedDataCategory::get_loaded_categories()) {
+    RMF_FOREACH(Category cat, SharedDataCategory::get_loaded_categories()) {
       io_->load_loaded_frame_category(cat, this);
     }
   }
@@ -90,7 +90,7 @@ FrameID SharedData::add_frame(std::string name, FrameType type) {
     if (write_) {
       flush();
       io_->save_loaded_frame(this);
-      BOOST_FOREACH(Category cat, SharedDataCategory::get_loaded_categories()) {
+      RMF_FOREACH(Category cat, SharedDataCategory::get_loaded_categories()) {
         RMF_TRACE(get_logger(), "Saving frame category " << get_loaded_frame()
                                                          << ": "
                                                          << get_name(cat));
@@ -126,7 +126,7 @@ void SharedData::flush() {
   }
   if (get_static_is_dirty()) {
     RMF_INFO(get_logger(), "Saving static frame");
-    BOOST_FOREACH(Category cat, SharedDataCategory::get_loaded_categories()) {
+    RMF_FOREACH(Category cat, SharedDataCategory::get_loaded_categories()) {
       RMF_TRACE(get_logger(), "Saving category " << get_name(cat));
       io_->save_static_frame_category(cat, this);
     }
@@ -142,12 +142,12 @@ void SharedData::reload() {
   SharedDataFile::set_is_dirty(false);
   io_->load_hierarchy(this);
   SharedDataHierarchy::set_is_dirty(false);
-  BOOST_FOREACH(std::string cat_name, io_->get_categories()) {
+  RMF_FOREACH(std::string cat_name, io_->get_categories()) {
     SharedDataCategory::get_category(cat_name);
   }
 
   clear_static_values();
-  BOOST_FOREACH(Category cat, SharedDataCategory::get_loaded_categories()) {
+  RMF_FOREACH(Category cat, SharedDataCategory::get_loaded_categories()) {
     io_->load_static_frame_category(cat, this);
   }
   set_static_is_dirty(false);
@@ -156,7 +156,7 @@ void SharedData::reload() {
   if (get_loaded_frame() != FrameID() &&
       get_loaded_frame().get_index() < io_->get_number_of_frames()) {
     io_->load_loaded_frame(this);
-    BOOST_FOREACH(Category cat, SharedDataCategory::get_loaded_categories()) {
+    RMF_FOREACH(Category cat, SharedDataCategory::get_loaded_categories()) {
       io_->load_loaded_frame_category(cat, this);
     }
   }
