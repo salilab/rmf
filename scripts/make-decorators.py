@@ -8,18 +8,15 @@ try:
 except:
     pass
 
-coordinates = Attributes("coordinates", "Float", ["cartesian x",
-                                                  "cartesian y",
-                                                  "cartesian z"],
-                         "Vector3",
-                         "The coordinates in angstroms.",
-                         bulk=True)
-orientation = Attributes("orientation", "Float", ["orientation r",
-                                                  "orientation i",
-                                                  "orientation j",
-                                                  "orientation k"],
-                         "Vector4",
-                         "The orientation as a quaternion.")
+coordinates = Attribute(
+    "coordinates",
+    "Vector3",
+    "The cartesian coordinates in angstroms")
+
+orientation = Attribute(
+    "orientation",
+    "Vector4",
+    "The orientation as a quaternion.")
 mass = Attribute("mass", "Float", "The mass in Daltons.")
 radius = Attribute("radius", "Float", "The radius in angstroms.")
 
@@ -36,17 +33,12 @@ pparticle = Decorator(["REPRESENTATION"], "physics",
 refframe = Decorator(["REPRESENTATION", "ORGANIZATIONAL"], "physics",
                      "ReferenceFrame",
                      "Define a transformation to be applied the the attributes of this and child particles, relative to the reference frame of the parent.",
-                     [Attributes(
-                         "rotation", "Float", ["reference frame orientation r",
-                                               "reference frame orientation i",
-                                               "reference frame orientation j",
-                                               "reference frame orientation k"], "Vector4",
+                     [Attribute(
+                         "rotation", "Vector4",
                          "The rotational part of the relative transformation as a quaternion."),
-                      Attributes(
-                          "translation", "Float", ["reference frame cartesian x",
-                                                   "reference frame cartesian y",
-                                                   "reference frame cartesian z"], "Vector3",
-                          "The translation part of the relative transformion in angstroms.", False)])
+                         Attribute(
+                             "translation", "Vector3",
+                             "The translation part of the relative transformion in angstroms.")])
 
 bond = Decorator(["BOND"], "physics",
                  "Bond", "A bond between particles.",
@@ -68,15 +60,11 @@ diffuser = Decorator(["REPRESENTATION"], "physics",
 
 force = Decorator(["REPRESENTATION"], "physics",
                   "Force", "Forces acting on particles in kCal/mol/A.",
-                  [Attributes("force", "Float", ["force cartesian x",
-                                                 "force cartesian y",
-                                                 "force cartesian z"], "Vector3", "The force.")])
+                  [Attribute("force", "Vector3", "The force.")])
 
 torque = Decorator(["REPRESENTATION"], "physics",
                    "Torque", "Torque acting on particles in kCal/mol/radian.",
-                   [Attributes("torque", "Float", ["torque cartesian x",
-                                                   "torque cartesian y",
-                                                   "torque cartesian z"], "Vector3", "The torque.")])
+                   [Attribute("torque", "Vector3", "The torque.")])
 
 make_header(
     "physics", [particle, iparticle, pparticle, diffuser,
@@ -97,10 +85,7 @@ colored = Decorator(
     ["REPRESENTATION", "ORGANIZATIONAL", "ALIAS", "FEATURE", "GEOMETRY"],
     "shape",
     "Colored", "These particles have associated color information.",
-    [Attributes("rgb color", "Float", ["rgb color red",
-                                       "rgb color green",
-                                       "rgb color blue"], "Vector3",
-                "The RGB color. Each component has a value in [0...1].", False)])
+    [Attribute("rgb color", "Vector3", "The RGB color. Each component has a value in [0...1].")])
 geometry_coordinates = Attributes("coordinates", "Floats", ["cartesian xs",
                                                             "cartesian ys",
                                                             "cartesian zs"], "FloatsList",

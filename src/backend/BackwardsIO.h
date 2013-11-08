@@ -22,6 +22,51 @@ namespace RMF {
 
 namespace backends {
 
+typedef boost::unordered_map<std::string, boost::array<std::string, 3> > V3N;
+extern V3N vector_3_names_map;
+typedef boost::unordered_map<std::string, boost::array<std::string, 4> > V4N;
+extern V4N vector_4_names_map;
+
+V3N &get_vector_names_map(Vector<3>) { return vector_3_names_map; }
+V4N &get_vector_names_map(Vector<4>) { return vector_4_names_map; }
+
+template <unsigned int D>
+inline boost::array<std::string, D> get_vector_subkey_names(
+    std::string key_name, Vector<D>) {
+  boost::unordered_map<std::string,
+                       boost::array<std::string, D> >::const_iterator it =
+      get_vector_names_map(Vector<D>()).find(key_name);
+  if (it == get_vector_names_map(Vector<D>()).end()) {
+    boost::array<std::string, D> ret;
+    for (unsigned int i = 0; i < D; ++i) {
+      std::ostringstream ossk;
+      ossk << "_" << key_name << "_" << i;
+      ret[i] = ossk.str();
+    }
+    return ret;
+  } else {
+    return it->second;
+  }
+}
+
+  template <unsigned int D>
+inline Strings get_vector_names(Category cat, Vector<D>) const {
+  std::ostringstream oss;
+  oss << "_vector" << D;
+  Strings ret;
+  StringsKey key = get_key_const(cat, oss.str(), StringsTraits(), sd_.get());
+  if (key != StringsKey()) {
+    ret = sd_->get_static_value(NodeID(0), key);
+  }
+  RMF_FOREACH(std::pair<std::string, boost::array<std::string, 3> > kp,
+              get_vector_names_map(Vector<D>())) {
+    ret.push_back(kp.first);
+  }
+  std::sort(ret.begin(), ret.end());
+  ret.erase(std::unique(ret.begin(), ret.end()), ret.end());
+  return ret;
+}
+
 template <class SD>
 struct BackwardsIO : public IO {
   boost::scoped_ptr<SD> sd_;
@@ -36,30 +81,11 @@ struct BackwardsIO : public IO {
     return ID<Traits>();
   }
 
-  template <unsigned int D>
-  Strings get_vector_names(Category cat) const {
-    std::ostringstream oss;
-    oss << "_vector" << D;
-    StringsKey key = get_key_const(cat, oss.str(), StringsTraits(), sd_.get());
-    if (key == StringsKey()) return Strings();
-    return sd_->get_static_value(NodeID(0), key);
-  }
-
-  template <unsigned int D>
-  boost::array<std::string, D> get_subkey_names(std::string key_name) const {
-    boost::array<std::string, D> ret;
-    for (unsigned int i = 0; i < D; ++i) {
-      std::ostringstream ossk;
-      ossk << "_" << key_name << "_" << i;
-      ret[i] = ossk.str();
-    }
-    return ret;
-  }
-
   template <unsigned int D, class Filter>
   void filter_vector(Filter &filter, Category cat) const {
-    RMF_FOREACH(std::string key_name, get_vector_names<D>(cat)) {
-      RMF_FOREACH(std::string subkey_name, get_subkey_names<D>(key_name)) {
+    RMF_FOREACH(std::string key_name, get_vector_names(cat, Vector<D>())) {
+      RMF_FOREACH(std::string subkey_name,
+                  get_vector_subkey_names(key_name, Vector<D>())) {
         filter.add_float_key(cat, subkey_name);
       }
     }
@@ -71,8 +97,10 @@ struct BackwardsIO : public IO {
     typedef ID<VectorTraits<D> > Key;
     typedef std::pair<Key, int> Data;
     boost::unordered_map<FloatKey, Data > map;
-    RMF_FOREACH(std::string key_name, get_vector_names<D>(category_a)) {
-      boost::array<std::string, D> subkey_names = get_subkey_names<D>(key_name);
+    RMF_FOREACH(std::string key_name,
+                get_vector_names(category_a, Vector<D>())) {
+      boost::array<std::string, D> subkey_names =
+          get_vector_subkey_names(key_name, Vector<D>());
       for (unsigned int i = 0; i < D; ++i) {
         FloatKey cur_key =
             sda->get_key(category_a, subkey_names[i], FloatTraits());
@@ -106,7 +134,8 @@ struct BackwardsIO : public IO {
     RMF_FOREACH(VectorKey k, keys) {
       std::string name = sda->get_name(k);
       key_names.push_back(name);
-      boost::array<std::string, D> subkey_names = get_subkey_names<D>(name);
+      boost::array<std::string, D> subkey_names =
+          get_vector_subkey_names(name, Vector<D>());
       for (unsigned int i = 0; i < D; ++i) {
         map[k][i] = sdb->get_key(category_b, subkey_names[i], FloatTraits());
       }
