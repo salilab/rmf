@@ -21,10 +21,10 @@
 #define RMF_TRANSFORM_LIST(f, Name, attribute)          \
   if (f.get_is(nh)) {                                   \
     RMF::Name d = f.get(nh);                            \
-    RMF::FloatsList cs = d.get_##attribute();           \
-    for (unsigned int i = 0; i < 3; ++i) {              \
-      for (unsigned int j = 0; j < cs[i].size(); ++j) { \
-        cs[i][j] = scale * (cs[i][j] + translation[i]); \
+    RMF::Vector3s cs = d.get_##attribute();             \
+    for (unsigned int j = 0; j < cs.size(); ++j) {      \
+      for (unsigned int i = 0; i < 3; ++i) {            \
+        cs[j][i] = scale * (cs[j][i] + translation[i]); \
       }                                                 \
     }                                                   \
     d.set_##attribute(cs);                              \
@@ -48,8 +48,8 @@ void transform(RMF::NodeHandle nh, RMF::IntermediateParticleFactory ipf,
   }
   RMF_TRANSFORM(rff, ReferenceFrame, translation);
   RMF_TRANSFORM(bf, Ball, coordinates);
-  RMF_TRANSFORM_LIST(cf, Cylinder, coordinates);
-  RMF_TRANSFORM_LIST(sf, Segment, coordinates);
+  RMF_TRANSFORM_LIST(cf, Cylinder, coordinates_list);
+  RMF_TRANSFORM_LIST(sf, Segment, coordinates_list);
   RMF::NodeHandles children = nh.get_children();
   for (unsigned int i = 0; i < children.size(); ++i) {
     transform(children[i], ipf, rpf, rff, bf, cf, sf, scale, translation);

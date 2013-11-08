@@ -20,4 +20,4 @@ b.set_coordinates([0, 0, 0])
 
 c = cf.get(r.add_child("cylinder", RMF.GEOMETRY))
 c.set_radius(.5)
-c.set_coordinates([[0, 5], [0, 5], [0, 5]])
+c.set_coordinates_list([RMF.Vector3(0, 0, 0), RMF.Vector3(5, 5, 5)])

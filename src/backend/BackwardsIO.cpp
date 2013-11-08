@@ -32,7 +32,7 @@ const int vector_4_names_size =
 V4N vector_4_names_map(vector_4_names, vector_4_names + vector_4_names_size);
 
 const std::pair<std::string, boost::array<std::string, 3> > vectors_3_names[] =
-    {};
+    {{"coordinates list", {{"cartesian xs", "cartesian ys", "cartesian zs"}}}};
 const int vectors_3_names_size =
     sizeof(vectors_3_names) /
     sizeof(std::pair<std::string, boost::array<std::string, 3> >);

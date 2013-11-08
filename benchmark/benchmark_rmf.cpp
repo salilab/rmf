@@ -34,9 +34,9 @@ void create_residue(RMF::NodeHandle nh, RMF::AtomFactory af,
                     RMF::ParticleFactory pf) {
   for (unsigned int i = 0; i < 2 * scale; ++i) {
     RMF::NodeHandle child = nh.add_child("CA", RMF::REPRESENTATION);
-    pf.get(child).set_mass(1);
-    pf.get(child).set_radius(1.0 + i / 18.77);
-    af.get(child).set_element(7);
+    pf.get(child).set_static_mass(1);
+    pf.get(child).set_static_radius(1.0 + i / 18.77);
+    af.get(child).set_static_element(7);
   }
 }
 void create_chain(RMF::NodeHandle nh, RMF::ResidueFactory rf,
@@ -45,8 +45,8 @@ void create_chain(RMF::NodeHandle nh, RMF::ResidueFactory rf,
     std::ostringstream oss;
     oss << i;
     RMF::NodeHandle child = nh.add_child(oss.str(), RMF::REPRESENTATION);
-    rf.get(child).set_type("cys");
-    rf.get(child).set_index(i);
+    rf.get(child).set_static_type("cys");
+    rf.get(child).set_static_index(i);
     create_residue(child, af, pf);
   }
 }
@@ -60,7 +60,7 @@ void create_hierarchy(RMF::FileHandle file) {
     std::ostringstream oss;
     oss << i;
     RMF::NodeHandle child = n.add_child(oss.str(), RMF::REPRESENTATION);
-    cf.get(child).set_chain_id(oss.str());
+    cf.get(child).set_static_chain_id(oss.str());
     create_chain(child, rf, af, pf);
   }
 }
@@ -75,7 +75,7 @@ double create_frame(RMF::FileHandle fh, RMF::IntermediateParticleFactory ipf,
     ret[0] += v[0];
     ret[1] += v[1];
     ret[2] += v[2];
-    ipf.get(fh.get_node(n)).set_coordinates(v);
+    ipf.get(fh.get_node(n)).set_frame_coordinates(v);
   }
   return ret[0] + ret[1] + ret[2];
 }

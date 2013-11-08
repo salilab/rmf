@@ -21,8 +21,12 @@ class Base:
         self.names = [("NAME", name.replace(" ", "_")),
                       ("DOC", doc),
                       ("DATA", data_type)]
-        self.names.extend([("GET", "get_value"),
-                           ("SET", "set_value")])
+        self.names.extend([("GET_BOTH", "get_value"),
+                           ("SET_BOTH", "set_value"),
+                           ("GET_STATIC", "get_static_value"),
+                           ("SET_STATIC", "set_static_value"),
+                           ("GET_FRAME", "get_frame_value"),
+                           ("SET_FRAME", "set_frame_value")])
         if return_type.endswith("s"):
             self.names.append(("TYPES", return_type + "List"))
         elif return_type.endswith("x"):
@@ -127,18 +131,37 @@ class Attribute(Base):
         self.get_methods = """  /** DOC */
   TYPE get_%s() const {
     try {
-      return P::GET(NAME_);
+      return P::GET_BOTH(NAME_);
     } RMF_DECORATOR_CATCH( );
   }
-""" % (function_name)
+  TYPE get_frame_%s() const {
+    try {
+      return P::GET_FRAME(NAME_);
+    } RMF_DECORATOR_CATCH( );
+  }
+  TYPE get_static_%s() const {
+    try {
+      return P::GET_STATIC(NAME_);
+    } RMF_DECORATOR_CATCH( );
+  }
+""" % (function_name, function_name, function_name)
         self.set_methods = """  /** DOC */
   void set_%s(TYPE v) {
     try {
-      P::SET(NAME_, v);
+      P::SET_BOTH(NAME_, v);
     } RMF_DECORATOR_CATCH( );
   }
-
-""" % function_name
+  void set_frame_%s(TYPE v) {
+    try {
+      P::SET_FRAME(NAME_, v);
+    } RMF_DECORATOR_CATCH( );
+  }
+  void set_static_%s(TYPE v) {
+    try {
+      P::SET_STATIC(NAME_, v);
+    } RMF_DECORATOR_CATCH( );
+  }
+""" % (function_name, function_name, function_name)
         self.check = "nh.get_has_value(NAME_)"
         self.data_initialize = "fh.get_key<TYPETraits>(cat_, \"%s\")" % name
 
@@ -150,7 +173,7 @@ class NodeAttribute(Attribute):
         self.get_methods = """  /** DOC */
   NodeCONSTHandle get_NAME() const {
     try {
-      int id = get_node().GET(NAME_);
+      int id = get_node().GET_BOTH(NAME_);
       return get_node().get_file().get_node(NodeID(id));
     } RMF_DECORATOR_CATCH( );
   }
@@ -158,7 +181,7 @@ class NodeAttribute(Attribute):
         self.set_methods = """  /** DOC */
   void set_NAME(NodeConstHandle v) {
     try {
-      get_node().SET(NAME_, v.get_index().get_index());
+      get_node().SET_BOTH(NAME_, v.get_index().get_index());
     } RMF_DECORATOR_CATCH( );
   }
 """
@@ -171,7 +194,7 @@ class PathAttribute(Attribute):
         self.get_methods = """  /** DOC */
   String get_NAME() const {
     try {
-      String relpath = get_node().GET(NAME_);
+      String relpath = get_node().GET_BOTH(NAME_);
       String filename = get_node().get_file().get_path();
       return internal::get_absolute_path(filename, relpath);
     } RMF_DECORATOR_CATCH( );
@@ -182,7 +205,7 @@ class PathAttribute(Attribute):
    try {
      String filename = get_node().get_file().get_path();
      String relpath = internal::get_relative_path(filename, path);
-     get_node().SET(NAME_, relpath);
+     get_node().SET_BOTH(NAME_, relpath);
    } RMF_DECORATOR_CATCH( );
   }
 """
@@ -219,19 +242,41 @@ class SingletonRangeAttribute(AttributePair):
         self.get_methods = """  /** DOC */
   TYPE get_NAME() const {
     try {
-      return get_node().GET(NAME_[0]);
+      return get_node().GET_BOTH(NAME_[0]);
+    } RMF_DECORATOR_CATCH( );
+  }
+  TYPE get_frame_NAME() const {
+    try {
+      return get_node().GET_FRAME(NAME_[0]);
+    } RMF_DECORATOR_CATCH( );
+  }
+  TYPE get_static_NAME() const {
+    try {
+      return get_node().GET_STATIC(NAME_[0]);
     } RMF_DECORATOR_CATCH( );
   }
 """
         self.set_methods = """ /** DOC */
   void set_NAME(TYPE v) {
     try {
-      get_node().SET(NAME_[0], v);
-      get_node().SET(NAME_[1], v);
+      get_node().SET_BOTH(NAME_[0], v);
+      get_node().SET_BOTH(NAME_[1], v);
+    } RMF_DECORATOR_CATCH( );
+  }
+  void set_frame_NAME(TYPE v) {
+    try {
+      get_node().SET_FRAME(NAME_[0], v);
+      get_node().SET_FRAME(NAME_[1], v);
+    } RMF_DECORATOR_CATCH( );
+  }
+  void set_static_NAME(TYPE v) {
+    try {
+      get_node().SET_STATIC(NAME_[0], v);
+      get_node().SET_STATIC(NAME_[1], v);
     } RMF_DECORATOR_CATCH( );
   }
 """
-        self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1]) && nh.GET(NAME_[0]) == nh.GET(NAME_[1])"
+        self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1]) && nh.GET_BOTH(NAME_[0]) == nh.GET_BOTH(NAME_[1])"
 
 
 class RangeAttribute(AttributePair):
@@ -242,87 +287,42 @@ class RangeAttribute(AttributePair):
         self.get_methods = """  /** DOC */
   TYPE get_NAME() const {
     try {
-      return std::make_pair(get_node().GET(NAME_[0]), get_node().GET(NAME_[1]));
+      return std::make_pair(get_node().GET_BOTH(NAME_[0]), get_node().GET_BOTH(NAME_[1]));
+    } RMF_DECORATOR_CATCH( );
+  }
+  TYPE get_static_NAME() const {
+    try {
+      return std::make_pair(get_node().GET_STATIC(NAME_[0]), get_node().GET_STATIC(NAME_[1]));
+    } RMF_DECORATOR_CATCH( );
+  }
+  TYPE get_frame_NAME() const {
+    try {
+      return std::make_pair(get_node().GET_FRAME(NAME_[0]), get_node().GET_FRAME(NAME_[1]));
     } RMF_DECORATOR_CATCH( );
   }
 """
         self.set_methods = """ /** DOC */
   void set_NAME(TYPE v) {
     try {
-      get_node().SET(NAME_[0], v.first);
-      get_node().SET(NAME_[1], v.second);
+      get_node().SET_BOTH(NAME_[0], v.first);
+      get_node().SET_BOTH(NAME_[1], v.second);
+    } RMF_DECORATOR_CATCH( );
+  }
+  void set_frame_NAME(TYPE v) {
+    try {
+      get_node().SET_FRAME(NAME_[0], v.first);
+      get_node().SET_FRAME(NAME_[1], v.second);
+    } RMF_DECORATOR_CATCH( );
+  }
+    void set_static_NAME(TYPE v) {
+    try {
+      get_node().SET_STATIC(NAME_[0], v.first);
+      get_node().SET_STATIC(NAME_[1], v.second);
     } RMF_DECORATOR_CATCH( );
   }
 """
-        self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1]) && nh.GET(NAME_[0]) < nh.GET(NAME_[1])"
+        self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1]) && nh.GET_BOTH(NAME_[0]) < nh.GET_BOTH(NAME_[1])"
 
-
-class Attributes(Base):
-
-    def __init__(
-        self,
-        name,
-        attribute_type,
-        keys,
-        return_type,
-        doc,
-            bulk=False):
-        Base.__init__(self, name, attribute_type +
-                      "Keys", attribute_type, doc)
-        self.helpers = """
-  DATA get_NAME_keys(FileCONSTHandle fh) {
-    DATA ret;
-    %s;
-    return ret;
-  }
-  bool get_has_NAME_attributes(NodeConstHandle nh) const {
-    for (unsigned int i = 0; i< NAME_.size(); ++i) {
-      if (!nh.get_has_value(NAME_[i])) return false;
-    }
-    return true;
-  }
-""" % ";".join("ret.push_back(fh.get_key<TYPETraits>(cat_, \"%s\"));" % x for x in keys)
-        self.data_initialize = "get_NAME_keys(fh)"
-        self.get_methods = """  /** DOC */
-  %s get_NAME() const {
-    try {
-      %s ret(NAME_.size());
-      for (unsigned int i = 0; i < NAME_.size(); ++i) {
-        ret[i] = P::GET(NAME_[i]);
-      }
-      return ret;
-    } RMF_DECORATOR_CATCH( );
-  }
-""" % (return_type, return_type)
-        self.set_methods = """  /** DOC */
-  void set_NAME(%s v) {
-    try {
-      for (unsigned int i = 0; i< NAME_.size(); ++i) {
-         P::SET(NAME_[i], v[i]);
-      }
-    } RMF_DECORATOR_CATCH( );
-  }
-""" % return_type
-        self.check = " && ".join(
-            ["nh.get_has_value(NAME_[%d])" % i for i in range(len(keys))])
-        if bulk:
-            self.bulk_get_methods = """
-  /** Get values from a list of NodeIDs all at the same time. This method
-      is a bit experimental and may change.
-    */
-  %ss get_NAME(FileConstHandle fh,
-                       const NodeIDs &node_ids) const {
-      %ss ret(node_ids.size());
-      for (unsigned int i = 0; i< node_ids.size(); ++i) {
-        NodeConstHandle nh = fh.get_node(node_ids[i]);
-        ret[i].resize(NAME_.size());
-        for (unsigned int j = 0; j < NAME_.size(); ++j) {
-          ret[i][j] = nh.GET(NAME_[j]);
-        }
-      }
-      return ret;
-  }
-""" % (return_type, return_type)
 decorator = """
   /** DESCRIPTION
 
