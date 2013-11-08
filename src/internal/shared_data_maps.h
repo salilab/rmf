@@ -44,6 +44,10 @@ struct StaticValues {
   static void set(SD* sd, NodeID n, ID<Traits> k, typename Traits::Type v) {
     sd->set_static_value(n, k, v);
   }
+  template <class Traits, class SD>
+  static typename Traits::Type& access(SD* sd, NodeID n, ID<Traits> k) {
+    return sd->access_static_value(n, k);
+  }
 };
 struct LoadedValues {
   template <class Traits, class SD>
@@ -53,6 +57,10 @@ struct LoadedValues {
   template <class Traits, class SD>
   static void set(SD* sd, NodeID n, ID<Traits> k, typename Traits::Type v) {
     sd->set_loaded_value(n, k, v);
+  }
+  template <class Traits, class SD>
+  static typename Traits::Type& access(SD* sd, NodeID n, ID<Traits> k) {
+    return sd->access_loaded_value(n, k);
   }
 };
 

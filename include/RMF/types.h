@@ -201,10 +201,10 @@ struct VectorTraits {
 typedef VectorTraits<3> Vector3Traits;
 typedef VectorTraits<4> Vector4Traits;
 
-template <unsigned int D>
-struct VectorsTraits {
-  typedef std::vector<Vector<D> > Type;
-  typedef std::vector<std::vector<Vector<D> > > Types;
+  //template <unsigned int D>
+struct Vector3sTraits {
+  typedef Vector3s Type;
+  typedef std::vector<std::vector<Vector<3> > > Types;
   typedef Type ReturnType;
   typedef Type ArgumentType;
   static bool get_is_null_value(const Type& t) {
@@ -217,19 +217,19 @@ struct VectorsTraits {
   static bool get_are_equal(ArgumentType a, ArgumentType b) {
     if (a.size() != b.size()) return false;
     for (unsigned int i = 0; i < a.size(); ++i) {
-      if (!VectorTraits<D>::get_are_equal(a[i], b[i])) return false;
+      if (!VectorTraits<3>::get_are_equal(a[i], b[i])) return false;
     }
     return true;
   }
   static std::string get_tag() {
     std::ostringstream oss;
-    oss << "vs" << D;
+    oss << "vs" << 3;
     return oss.str();
   }
 };
 
-typedef VectorsTraits<3> Vector3sTraits;
-typedef VectorsTraits<4> Vector4sTraits;
+  //typedef VectorsTraits<3> Vector3sTraits;
+  //typedef VectorsTraits<4> Vector4sTraits;
 
 /** Get one type as another, handling vectors or scalars.*/
 template <class OutType, class InType>

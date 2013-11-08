@@ -39,9 +39,11 @@ struct IO;
                   ReturnValues)                                       \
   using SharedDataData<UCName##Traits>::get_static_value;             \
   using SharedDataData<UCName##Traits>::set_static_value;             \
+  using SharedDataData<UCName##Traits>::access_static_value;          \
   using SharedDataData<UCName##Traits>::clear_static_values;          \
   using SharedDataData<UCName##Traits>::get_loaded_value;             \
   using SharedDataData<UCName##Traits>::set_loaded_value;             \
+  using SharedDataData<UCName##Traits>::access_loaded_value;          \
   using SharedDataData<UCName##Traits>::clear_loaded_values;          \
   using SharedDataKeys<UCName##Traits>::get_key;                      \
   using SharedDataKeys<UCName##Traits>::get_name;                     \
@@ -49,8 +51,9 @@ struct IO;
   using SharedDataKeys<UCName##Traits>::get_category;
 
 #define RMF_SHARED_DATA_PARENT(lcname, UCName, PassValue, ReturnValue, \
-                                       PassValues, ReturnValues) \
-  public SharedDataKeys<UCName##Traits>, public SharedDataData<UCName##Traits>,
+                               PassValues, ReturnValues)               \
+ public                                                                \
+  SharedDataKeys<UCName##Traits>, public SharedDataData<UCName##Traits>,
 
 namespace internal {
 

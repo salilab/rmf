@@ -58,7 +58,10 @@ class SharedDataData : public P {
                  typename Traits::ArgumentType v) {
     data[node][k] = v;
   }
-
+  typename Traits::Type& access_value(typename P::Data::NodeDatas& data,
+                                     NodeID node, unsigned int k) {
+    return data[node][k];
+  }
  public:
   typename Traits::ReturnType get_static_value(NodeID node,
                                                ID<Traits> k) const {
@@ -76,6 +79,12 @@ class SharedDataData : public P {
   void set_loaded_value(NodeID node, ID<Traits> k,
                         typename Traits::ArgumentType v) {
     set_value(P::pl_.node_datas_, node, k.get_index(), v);
+  }
+  typename Traits::Type& access_static_value(NodeID node, ID<Traits> k) {
+    return access_value(P::ps_.node_datas_, node, k.get_index());
+  }
+  typename Traits::Type& access_loaded_value(NodeID node, ID<Traits> k) {
+    return access_value(P::pl_.node_datas_, node, k.get_index());
   }
 };
 

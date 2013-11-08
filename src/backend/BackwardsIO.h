@@ -24,48 +24,13 @@ namespace backends {
 
 typedef boost::unordered_map<std::string, boost::array<std::string, 3> > V3N;
 extern V3N vector_3_names_map;
+extern V3N vectors_3_names_map;
 typedef boost::unordered_map<std::string, boost::array<std::string, 4> > V4N;
 extern V4N vector_4_names_map;
 
-V3N &get_vector_names_map(Vector<3>) { return vector_3_names_map; }
-V4N &get_vector_names_map(Vector<4>) { return vector_4_names_map; }
-
-template <unsigned int D>
-inline boost::array<std::string, D> get_vector_subkey_names(
-    std::string key_name, Vector<D>) {
-  boost::unordered_map<std::string,
-                       boost::array<std::string, D> >::const_iterator it =
-      get_vector_names_map(Vector<D>()).find(key_name);
-  if (it == get_vector_names_map(Vector<D>()).end()) {
-    boost::array<std::string, D> ret;
-    for (unsigned int i = 0; i < D; ++i) {
-      std::ostringstream ossk;
-      ossk << "_" << key_name << "_" << i;
-      ret[i] = ossk.str();
-    }
-    return ret;
-  } else {
-    return it->second;
-  }
-}
-
-  template <unsigned int D>
-inline Strings get_vector_names(Category cat, Vector<D>) const {
-  std::ostringstream oss;
-  oss << "_vector" << D;
-  Strings ret;
-  StringsKey key = get_key_const(cat, oss.str(), StringsTraits(), sd_.get());
-  if (key != StringsKey()) {
-    ret = sd_->get_static_value(NodeID(0), key);
-  }
-  RMF_FOREACH(std::pair<std::string, boost::array<std::string, 3> > kp,
-              get_vector_names_map(Vector<D>())) {
-    ret.push_back(kp.first);
-  }
-  std::sort(ret.begin(), ret.end());
-  ret.erase(std::unique(ret.begin(), ret.end()), ret.end());
-  return ret;
-}
+inline V3N &get_vector_names_map(Vector<3>) { return vector_3_names_map; }
+inline V4N &get_vector_names_map(Vector<4>) { return vector_4_names_map; }
+inline V3N &get_vectors_names_map(Vector<3>) { return vectors_3_names_map; }
 
 template <class SD>
 struct BackwardsIO : public IO {
@@ -91,12 +56,96 @@ struct BackwardsIO : public IO {
     }
   }
 
+  template <unsigned int D, class Filter>
+  void filter_vectors(Filter &filter, Category cat) const {
+    RMF_FOREACH(std::string key_name, get_vectors_names(cat, Vector<D>())) {
+      RMF_FOREACH(std::string subkey_name,
+                  get_vectors_subkey_names(key_name, Vector<D>())) {
+        filter.add_floats_key(cat, subkey_name);
+      }
+    }
+  }
+
+  template <unsigned int D>
+  inline boost::array<std::string, D> get_vector_subkey_names(
+      std::string key_name, Vector<D>) const {
+    typename boost::unordered_map<
+        std::string, boost::array<std::string, D> >::const_iterator it =
+        get_vector_names_map(Vector<D>()).find(key_name);
+    if (it == get_vector_names_map(Vector<D>()).end()) {
+      boost::array<std::string, D> ret;
+      for (unsigned int i = 0; i < D; ++i) {
+        std::ostringstream ossk;
+        ossk << "_" << key_name << "_" << i;
+        ret[i] = ossk.str();
+      }
+      return ret;
+    } else {
+      return it->second;
+    }
+  }
+
+  template <unsigned int D>
+  inline boost::array<std::string, D> get_vectors_subkey_names(
+      std::string key_name, Vector<D>) const {
+    typename boost::unordered_map<
+        std::string, boost::array<std::string, D> >::const_iterator it =
+        get_vectors_names_map(Vector<D>()).find(key_name);
+    if (it == get_vectors_names_map(Vector<D>()).end()) {
+      boost::array<std::string, D> ret;
+      for (unsigned int i = 0; i < D; ++i) {
+        std::ostringstream ossk;
+        ossk << "_" << key_name << "_" << i;
+        ret[i] = ossk.str();
+      }
+      return ret;
+    } else {
+      return it->second;
+    }
+  }
+
+  template <unsigned int D>
+  inline Strings get_vector_names(Category cat, Vector<D>) const {
+    std::ostringstream oss;
+    oss << "_vector" << D;
+    Strings ret;
+    StringsKey key = get_key_const(cat, oss.str(), StringsTraits(), sd_.get());
+    if (key != StringsKey()) {
+      ret = sd_->get_static_value(NodeID(0), key);
+    }
+    typedef std::pair<std::string, boost::array<std::string, D> > KP;
+    RMF_FOREACH(KP kp, get_vector_names_map(Vector<D>())) {
+      ret.push_back(kp.first);
+    }
+    std::sort(ret.begin(), ret.end());
+    ret.erase(std::unique(ret.begin(), ret.end()), ret.end());
+    return ret;
+  }
+
+  template <unsigned int D>
+  inline Strings get_vectors_names(Category cat, Vector<D>) const {
+    std::ostringstream oss;
+    oss << "_vectors" << D;
+    Strings ret;
+    StringsKey key = get_key_const(cat, oss.str(), StringsTraits(), sd_.get());
+    if (key != StringsKey()) {
+      ret = sd_->get_static_value(NodeID(0), key);
+    }
+    typedef std::pair<std::string, boost::array<std::string, D> > KP;
+    RMF_FOREACH(KP kp, get_vectors_names_map(Vector<D>())) {
+      ret.push_back(kp.first);
+    }
+    std::sort(ret.begin(), ret.end());
+    ret.erase(std::unique(ret.begin(), ret.end()), ret.end());
+    return ret;
+  }
+
   template <unsigned int D, class SDA, class SDB, class H>
   void load_vector(SDA *sda, Category category_a, SDB *sdb, Category category_b,
                    H) {
     typedef ID<VectorTraits<D> > Key;
     typedef std::pair<Key, int> Data;
-    boost::unordered_map<FloatKey, Data > map;
+    boost::unordered_map<FloatKey, Data> map;
     RMF_FOREACH(std::string key_name,
                 get_vector_names(category_a, Vector<D>())) {
       boost::array<std::string, D> subkey_names =
@@ -115,9 +164,8 @@ struct BackwardsIO : public IO {
       RMF_FOREACH(KP kp, map) {
         double v = H::get(sda, n, kp.first);
         if (!FloatTraits::get_is_null_value(v)) {
-          Vector<D> old = H::get(sdb, n, kp.second.first);
+          Vector<D> &old = H::access(sdb, n, kp.second.first);
           old[kp.second.second] = v;
-          H::set(sdb, n, kp.second.first, old);
         }
       }
     }
@@ -126,10 +174,9 @@ struct BackwardsIO : public IO {
   void save_vector(SDA *sda, Category category_a, SDB *sdb, Category category_b,
                    H) {
     typedef ID<VectorTraits<D> > VectorKey;
-    std::vector<VectorKey> keys =
-      sda->get_keys(category_a, VectorTraits<D>());
-    typedef boost::array<ID<FloatTraits>, D > Data;
-    boost::unordered_map<VectorKey, Data > map;
+    std::vector<VectorKey> keys = sda->get_keys(category_a, VectorTraits<D>());
+    typedef boost::array<ID<FloatTraits>, D> Data;
+    boost::unordered_map<VectorKey, Data> map;
     Strings key_names;
     RMF_FOREACH(VectorKey k, keys) {
       std::string name = sda->get_name(k);
@@ -153,8 +200,84 @@ struct BackwardsIO : public IO {
       RMF_FOREACH(KP kp, map) {
         Vector<D> v = H::get(sda, n, kp.first);
         if (!VectorTraits<D>::get_is_null_value(v)) {
-          for (unsigned int i = 0; i< D; ++i) {
+          for (unsigned int i = 0; i < D; ++i) {
             H::set(sdb, n, kp.second[i], v[i]);
+          }
+        }
+      }
+    }
+  }
+
+  template <class SDA, class SDB, class H>
+  void load_vectors(SDA *sda, Category category_a, SDB *sdb,
+                    Category category_b, H) {
+    typedef Vector3sKey Key;
+    typedef std::pair<Key, int> Data;
+    boost::unordered_map<FloatsKey, Data> map;
+    RMF_FOREACH(std::string key_name,
+                get_vectors_names(category_a, Vector<3>())) {
+      boost::array<std::string, 3> subkey_names =
+          get_vectors_subkey_names(key_name, Vector<3>());
+      for (unsigned int i = 0; i < 3; ++i) {
+        FloatsKey cur_key =
+            sda->get_key(category_a, subkey_names[i], FloatsTraits());
+        map[cur_key].first =
+            sdb->get_key(category_b, key_name, Vector3sTraits());
+        map[cur_key].second = i;
+      }
+    }
+    if (map.empty()) return;
+    RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
+      typedef std::pair<FloatsKey, Data> KP;
+      RMF_FOREACH(KP kp, map) {
+        Floats v = H::get(sda, n, kp.first);
+        if (!v.empty()) {
+          std::vector<Vector<3> > &old = H::access(sdb, n, kp.second.first);
+          old.resize(v.size());
+          for (unsigned int i = 0; i < v.size(); ++i) {
+            old[i][kp.second.second] = v[i];
+          }
+        }
+      }
+    }
+  }
+
+  template <class SDA, class SDB, class H>
+  void save_vectors(SDA *sda, Category category_a, SDB *sdb,
+                    Category category_b, H) {
+    typedef Vector3sKey VectorKey;
+    std::vector<VectorKey> keys = sda->get_keys(category_a, Vector3sTraits());
+    typedef boost::array<ID<FloatsTraits>, 3> Data;
+    boost::unordered_map<VectorKey, Data> map;
+    Strings key_names;
+    RMF_FOREACH(VectorKey k, keys) {
+      std::string name = sda->get_name(k);
+      key_names.push_back(name);
+      boost::array<std::string, 3> subkey_names =
+          get_vectors_subkey_names(name, Vector<3>());
+      for (unsigned int i = 0; i < 3; ++i) {
+        map[k][i] = sdb->get_key(category_b, subkey_names[i], FloatsTraits());
+      }
+    }
+    if (key_names.empty()) return;
+    {
+      std::ostringstream oss;
+      oss << "_vectors" << 3;
+      StringsKey k = sdb->get_key(category_b, oss.str(), StringsTraits());
+      sdb->set_static_value(NodeID(0), k, key_names);
+    }
+
+    RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
+      typedef std::pair<VectorKey, Data> KP;
+      RMF_FOREACH(KP kp, map) {
+        std::vector<Vector<3> > v = H::get(sda, n, kp.first);
+        if (!v.empty()) {
+          for (unsigned int i = 0; i < 3; ++i) {
+            Floats cur(v.size());
+            for (unsigned int j = 0; j < v.size(); ++j) {
+              cur[j] = v[j][i];
+            }
+            H::set(sdb, n, kp.second[i], cur);
           }
         }
       }
@@ -171,6 +294,7 @@ struct BackwardsIO : public IO {
     }
     filter_vector<3>(filter, file_cat);
     filter_vector<4>(filter, file_cat);
+    filter_vectors<3>(filter, file_cat);
     internal::clone_values_type<IntTraits, IntTraits>(
         &filter, file_cat, shared_data, category, H());
     internal::clone_values_type<backward_types::IndexTraits, IntTraits>(
@@ -208,13 +332,14 @@ struct BackwardsIO : public IO {
     }
     load_vector<3>(sd_.get(), file_cat, shared_data, category, H());
     load_vector<4>(sd_.get(), file_cat, shared_data, category, H());
+    load_vectors(sd_.get(), file_cat, shared_data, category, H());
   }
   template <class H>
   void save_frame_category(Category category,
                            const internal::SharedData *shared_data, H) {
     Category file_cat = sd_->get_category(shared_data->get_name(category));
-    internal::clone_values_type<IntTraits, IntTraits>(
-        shared_data, category, sd_.get(), file_cat, H());
+    internal::clone_values_type<IntTraits, IntTraits>(shared_data, category,
+                                                      sd_.get(), file_cat, H());
     internal::clone_values_type<FloatTraits, FloatTraits>(
         shared_data, category, sd_.get(), file_cat, H());
     internal::clone_values_type<StringTraits, StringTraits>(
@@ -228,6 +353,7 @@ struct BackwardsIO : public IO {
 
     save_vector<3>(shared_data, category, sd_.get(), file_cat, H());
     save_vector<4>(shared_data, category, sd_.get(), file_cat, H());
+    save_vectors(shared_data, category, sd_.get(), file_cat, H());
   }
 
  public:

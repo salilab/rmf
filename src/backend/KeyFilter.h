@@ -26,6 +26,7 @@ class KeyFilter : public SharedDataAdaptor<SD> {
   typedef SharedDataAdaptor<SD> P;
   backward_types::IndexKeys index_keys_;
   FloatKeys float_keys_;
+  FloatsKeys floats_keys_;
 
  public:
   KeyFilter(SD* sd) : P(sd) {}
@@ -43,7 +44,16 @@ class KeyFilter : public SharedDataAdaptor<SD> {
     RMF_FOREACH(FloatKey k, P::sync_->get_keys(cat, FloatTraits())) {
       if (P::sync_->get_name(k) == name) {
         float_keys_.push_back(k);
-        std::sort(index_keys_.begin(), index_keys_.end());
+        std::sort(float_keys_.begin(), float_keys_.end());
+        break;
+      }
+    }
+  }
+  void add_floats_key(Category cat, std::string name) {
+    RMF_FOREACH(FloatsKey k, P::sync_->get_keys(cat, FloatsTraits())) {
+      if (P::sync_->get_name(k) == name) {
+        floats_keys_.push_back(k);
+        std::sort(floats_keys_.begin(), floats_keys_.end());
         break;
       }
     }

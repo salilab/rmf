@@ -202,8 +202,8 @@ RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DEFINE_TYPE);
 %include "RMF/types.h"
 %template(Vector3Traits) RMF::VectorTraits<3>;
 %template(Vector4Traits) RMF::VectorTraits<4>;
-%template(Vector3sTraits) RMF::VectorsTraits<3>;
-%template(Vector4sTraits) RMF::VectorsTraits<4>;
+//%template(Vector3sTraits) RMF::VectorsTraits<3>;
+//%template(Vector4sTraits) RMF::VectorsTraits<4>;
 
 %include "RMF/Nullable.h"
 RMF_SWIG_FOREACH_TYPE(RMF_SWIG_WRAP_NULLABLE);
