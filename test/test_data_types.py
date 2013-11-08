@@ -14,8 +14,8 @@ class GenericTest(unittest.TestCase):
                (f.get_float_key, 3.1415),
                (f.get_string_key, "there"),
                (f.get_strings_key, ["here", "there", "everywhere"]),
+               (f.get_vector3_key, RMF.Vector3(1,2,3)),
                (f.get_ints_key, [3, 4, 5, 6]),]
-        #(f.get_vector3_key, RMF.Vector3(1,2,3)),
         #      (f.get_vector4_key, RMF.Vector4(1,2,3,4))]
         #self.assertEqual(len(lst), len(RMF.get_data_types()) - 3)
         return lst

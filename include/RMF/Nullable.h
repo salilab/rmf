@@ -25,7 +25,14 @@ namespace RMF {
 template <class Traits>
 class Nullable {
   typename Traits::ReturnType v_;
-
+  std::string get_string() const {
+    if (get_is_null()) return "<null>";
+    else {
+      std::ostringstream oss;
+      oss << v_;
+      return oss.str();
+    }
+  }
  public:
   Nullable(typename Traits::ReturnType v) : v_(v) {}
 #ifndef SWIG
@@ -45,6 +52,7 @@ class Nullable {
 #endif
 
   bool get_is_null() const { return Traits::get_is_null_value(v_); }
+  RMF_SHOWABLE(Nullable, get_string());
 };
 
 } /* namespace RMF */
