@@ -14,7 +14,6 @@
 #include "KeyFilter.h"
 #include <internal/clone_shared_data.h>
 #include <boost/scoped_ptr.hpp>
-
 #include <boost/filesystem.hpp>
 
 RMF_ENABLE_WARNINGS
@@ -51,7 +50,7 @@ struct BackwardsIO : public IO {
     boost::array<std::string, D> ret;
     for (unsigned int i = 0; i < D; ++i) {
       std::ostringstream ossk;
-      ossk << "_" << key_name << " " << i;
+      ossk << "_" << key_name << "_" << i;
       ret[i] = ossk.str();
     }
     return ret;

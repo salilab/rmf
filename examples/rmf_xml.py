@@ -51,7 +51,7 @@ def show_xml(nh, kcs):
         print "</child>"
 
 # open the file, and don't clear the contents
-rh = RMF.open_rmf_file(file_name)
+rh = RMF.open_rmf_file_read_only(file_name)
 rh.set_current_frame(RMF.FrameID(0))
 print "<?xml version=\"1.0\"?>"
 print "<rmf>"
