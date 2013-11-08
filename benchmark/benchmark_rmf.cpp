@@ -6,6 +6,7 @@
 #include <boost/timer.hpp>
 #include <RMF/physics_decorators.h>
 #include <RMF/sequence_decorators.h>
+#include <RMF/log.h>
 #include <boost/filesystem.hpp>
 #include <sstream>
 
@@ -158,6 +159,7 @@ void benchmark_load(RMF::FileConstHandle file, std::string type) {
 
 int main(int, char**) {
   try {
+    RMF::set_log_level("Off");
     {
       boost::filesystem::path temp = boost::filesystem::unique_path();
       const std::string name = temp.native() + ".rmf";
