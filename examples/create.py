@@ -169,9 +169,11 @@ for i in range(1, nframes, 2):
     # cd.set_rgb_color([float(i)/float(nframes),1,0])
     cd = cylinder_factory.get(cn)
     cd.set_radius(i)
-    cd.set_coordinates([RMF.Vector3(10 + 1, i, i), RMF.Vector3(12 + i, i, i)])
+    cd.set_coordinates_list(
+        [RMF.Vector3(10 + 1, i, i), RMF.Vector3(12 + i, i, i)])
     sd = segment_factory.get(sn)
-    sd.set_coordinates([RMF.Vector3(12 + i, i, i), RMF.Vector3(14 + i, i, i)])
+    sd.set_coordinates_list(
+        [RMF.Vector3(12 + i, i, i), RMF.Vector3(14 + i, i, i)])
 
 sg = rmf.get_root_node().add_child("static geometry", RMF.GEOMETRY)
 bn = sg.add_child("ball", RMF.GEOMETRY)
@@ -179,13 +181,13 @@ sn = sg.add_child("segment", RMF.GEOMETRY)
 cn = sg.add_child("cylinder", RMF.GEOMETRY)
 bd = ball_factory.get(bn)
 bd.set_radius(3)
-bd.set_coordinates([-10, 0, 0])
+bd.set_coordinates(RMF.Vector3(-10, 0, 0))
 #cd= colored_factory.get(bn)
 # cd.set_rgb_color([0,0,1])
 
 sd = segment_factory.get(sn)
-sd.set_coordinates([[-18, -20], [0, 0], [0, 0]])
+sd.set_coordinates_list([RMF.Vector3(-18, 0, 0), RMF.Vector3(-20, 0, 0)])
 cd = cylinder_factory.get(cn)
 cd.set_radius(2)
-cd.set_coordinates([[-12, -14], [0, 0], [0, 0]])
+cd.set_coordinates_list([RMF.Vector3(-12, 0, 0), RMF.Vector3(-14, 0, 0)])
 print "done"
