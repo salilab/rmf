@@ -18,7 +18,7 @@ class GenericTest(unittest.TestCase):
         ds = f.add_child_float_data_set_2d("ds" + str(pccc))
         dsi = f.add_child_index_data_set_2d("dsi" + str(pccc))
         lst = [(f.add_child_int_data_set_1d, 4),
-               (f.add_child_float_data_set_1d, 3.1415),
+               (f.add_child_float_data_set_1d, 3.25),
                (f.add_child_string_data_set_1d, "there"),
                (f.add_child_index_data_set_1d, 3),
                #(f.add_child_float_data_set_2d_data_set_1d, ds),

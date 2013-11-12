@@ -11,7 +11,7 @@ class GenericTest(unittest.TestCase):
         else:
             nh = f.get_root_node().get_children()[0]
         lst = [(f.get_int_key, 4),
-               (f.get_float_key, 3.1415),
+               (f.get_float_key, 3.25),
                (f.get_string_key, "there"),
                (f.get_strings_key, ["here", "there", "everywhere"]),
                (f.get_vector3_key, RMF.Vector3(1, 2, 3)),

@@ -28,7 +28,7 @@ typedef int Int;
 /** The type used to store lists of integral values.*/
 typedef std::vector<Int> Ints;
 /** The type used to store lists of floating point values.*/
-typedef double Float;
+typedef float Float;
 /** The type used to store lists of floating point values.*/
 typedef std::vector<Float> Floats;
 /** The type used to store lists of floating point values.*/
@@ -72,18 +72,18 @@ struct IntTraitsBase {
 };
 
 struct FloatTraitsBase {
-  typedef double Type;
-  typedef std::vector<double> Types;
+  typedef float Type;
+  typedef std::vector<float> Types;
   static const bool BatchOperations = true;
   static int get_index() { return 1; }
   static const Type& get_null_value() {
-    static Type null = std::numeric_limits<double>::max();
+    static Type null = std::numeric_limits<float>::max();
     return null;
   }
   static bool get_is_null_value(Type t) { return t == get_null_value(); }
-  static hid_t get_hdf5_fill_type() { return H5T_NATIVE_DOUBLE; }
+  static hid_t get_hdf5_fill_type() { return H5T_NATIVE_FLOAT; }
   static hid_t get_hdf5_disk_type() { return H5T_IEEE_F64LE; }
-  static hid_t get_hdf5_memory_type() { return H5T_NATIVE_DOUBLE; }
+  static hid_t get_hdf5_memory_type() { return H5T_NATIVE_FLOAT; }
   static const Type& get_fill_value() { return get_null_value(); }
   static std::string get_name() { return "float"; }
 };

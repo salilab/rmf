@@ -169,9 +169,9 @@ for i in range(1, nframes, 2):
     # cd.set_rgb_color([float(i)/float(nframes),1,0])
     cd = cylinder_factory.get(cn)
     cd.set_radius(i)
-    cd.set_coordinates([[10 + i, 12 + i], [i, i], [i, i]])
+    cd.set_coordinates([RMF.Vector3(10 + 1, i, i), RMF.Vector3(12 + i, i, i)])
     sd = segment_factory.get(sn)
-    sd.set_coordinates([[12 + i, 14 + i], [i, i], [i, i]])
+    sd.set_coordinates([RMF.Vector3(12 + i, i, i), RMF.Vector3(14 + i, i, i)])
 
 sg = rmf.get_root_node().add_child("static geometry", RMF.GEOMETRY)
 bn = sg.add_child("ball", RMF.GEOMETRY)

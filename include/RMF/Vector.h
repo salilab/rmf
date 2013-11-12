@@ -26,35 +26,35 @@ typedef std::vector<Vector4> Vector4s;
  */
 template <unsigned int D>
 class Vector {
-  double data_[D];
+  float data_[D];
 
  public:
   Vector() {}
-  Vector(const std::vector<double>& input) {
+  Vector(const std::vector<float>& input) {
     RMF_USAGE_CHECK(input.size() == D, "sizes don't match");
     std::copy(input.begin(), input.end(), data_);
   }
-  Vector(double x, double y, double z) {
+  Vector(float x, float y, float z) {
     RMF_USAGE_CHECK(D == 3, "3 args to non-3D constructor");
     data_[0] = x;
     data_[1] = y;
     data_[2] = z;
   }
-  Vector(double x, double y, double z, double q) {
+  Vector(float x, float y, float z, float q) {
     RMF_USAGE_CHECK(D == 4, "4 args to non-4D constructor");
     data_[0] = x;
     data_[1] = y;
     data_[2] = z;
     data_[3] = q;
   }
-  RMF_SHOWABLE(Vector, std::vector<double>(data_, data_ + 3));
+  RMF_SHOWABLE(Vector, std::vector<float>(data_, data_ + 3));
 #ifndef SWIG
-  double operator[](unsigned int i) const {
+  float operator[](unsigned int i) const {
     RMF_USAGE_CHECK(i < D, "Out of range");
     return data_[i];
   }
-  typedef const double* const_iterator;
-  typedef double* iterator;
+  typedef const float* const_iterator;
+  typedef float* iterator;
   const_iterator begin() const { return data_; }
   const_iterator end() const { return data_ + D; }
   iterator begin() { return data_; }
@@ -62,19 +62,19 @@ class Vector {
 #endif
 #if !defined(RMF_DOXYGEN)
 #ifndef SWIG
-  typedef double value_type;
+  typedef float value_type;
   typedef std::random_access_iterator_tag iterator_category;
   typedef std::ptrdiff_t difference_type;
-  typedef double* pointer;
-  typedef double& reference;
+  typedef float* pointer;
+  typedef float& reference;
   Vector(unsigned int s) { RMF_USAGE_CHECK(s == D, "Sizes don't match."); }
   void resize(unsigned int s) { RMF_USAGE_CHECK(s == D, "Sizes don't match."); }
-  double& operator[](unsigned int i) {
+  float& operator[](unsigned int i) {
     RMF_USAGE_CHECK(i < D, "Out of range");
     return data_[i];
   }
 #endif
-  double __getitem__(unsigned int i) const {
+  float __getitem__(unsigned int i) const {
     if (i >= D) throw UsageException();
     return data_[i];
   }

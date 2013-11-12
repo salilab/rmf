@@ -115,7 +115,7 @@ RMF_ENABLE_WARNINGS
  */
 #define RMF_FOREACH_SIMPLE_TYPE(macroname)                        \
   macroname(int, Int, int, int, const Ints&, Ints);               \
-  macroname(float, Float, double, double, const Floats&, Floats); \
+  macroname(float, Float, float, float, const Floats&, Floats); \
   macroname(index, Index, int, int, const Ints&, Ints)
 
 #ifndef RMF_DOXYGEN
@@ -130,7 +130,7 @@ RMF_ENABLE_WARNINGS
 */
 #define RMF_FOREACH_TYPE(macroname)                                            \
   macroname(int, Int, int, int, const Ints&, Ints)                             \
-      macroname(float, Float, double, double, const Floats&, Floats)           \
+      macroname(float, Float, float, float, const Floats&, Floats)             \
       macroname(string, String, RMF::String, RMF::String, const RMF::Strings&, \
                 RMF::Strings)                                                  \
       macroname(ints, Ints, const RMF::Ints&, RMF::Ints, const RMF::IntsList&, \

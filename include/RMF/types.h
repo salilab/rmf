@@ -32,7 +32,7 @@ typedef int Int;
 /** The type used to store lists of integral values.*/
 typedef std::vector<Int> Ints;
 /** The type used to store lists of floating point values.*/
-typedef double Float;
+typedef float Float;
 /** The type used to store lists of floating point values.*/
 typedef std::vector<Float> Floats;
 /** The type used to store lists of floating point values.*/
@@ -87,7 +87,7 @@ struct FloatTraits {
     return std::numeric_limits<Type>::infinity();
   }
   typedef HDF5::FloatTraits HDF5Traits;
-  typedef Type AvroType;
+  typedef double AvroType;
   static bool get_are_equal(ArgumentType a, ArgumentType b) {
     return std::abs(a - b) < .0000001 * std::abs(a + b) + .000000001;
   }
@@ -140,7 +140,7 @@ struct FloatsTraits {
     return r;
   }
   typedef HDF5::FloatsTraits HDF5Traits;
-  typedef Type AvroType;
+  typedef std::vector<double> AvroType;
   static bool get_are_equal(ArgumentType a, ArgumentType b) {
     if (a.size() != b.size()) return false;
     for (unsigned int i = 0; i < a.size(); ++i) {
@@ -182,7 +182,8 @@ struct VectorTraits {
     return t[0] > std::numeric_limits<double>::max();
   }
   static ReturnType get_null_value() {
-    return Vector<D>(Floats(D, std::numeric_limits<double>::infinity()));
+    return Vector<D>(
+        Floats(D, std::numeric_limits<typename FloatTraits::Type>::infinity()));
   }
   typedef boost::int32_t AvroType;
   static bool get_are_equal(ArgumentType a, ArgumentType b) {
