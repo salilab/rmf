@@ -76,6 +76,7 @@ class RMFEXPORT SharedData
  public:
   using SharedDataHierarchy::get_name;
   using SharedDataCategory::get_name;
+  using SharedDataCategory::get_category;
   using SharedDataHierarchy::set_name;
   using SharedDataHierarchy::set_type;
 
@@ -83,8 +84,6 @@ class RMFEXPORT SharedData
 
   SharedData(boost::shared_ptr<backends::IO> io, std::string name, bool write,
              bool created);
-  Category get_category(std::string name);
-  Categories get_categories();
   void set_loaded_frame(FrameID frame);
   FrameID add_frame(std::string name, FrameType type);
   void flush();

@@ -21,26 +21,12 @@ namespace RMF {
 namespace backends {
 
 struct IO {
-  /** \name Frame
-      - parents (and possibly children) of current frame
-    @{
-  */
   virtual void save_loaded_frame(const internal::SharedData *shared_data) = 0;
   virtual void load_loaded_frame(internal::SharedData *shared_data) = 0;
-  /** @} */
-  /** \name Category
-      - all data for all nodes
-   @{
-  */
-  virtual Strings get_categories() = 0;
-  virtual void load_loaded_frame_category(
-      Category category, internal::SharedData *shared_data) = 0;
-  virtual void save_loaded_frame_category(
-      Category category, const internal::SharedData *shared_data) = 0;
-  virtual void load_static_frame_category(
-      Category category, internal::SharedData *shared_data) = 0;
-  virtual void save_static_frame_category(
-      Category category, const internal::SharedData *shared_data) = 0;
+
+  virtual void save_static_frame(const internal::SharedData *shared_data) = 0;
+  virtual void load_static_frame(internal::SharedData *shared_data) = 0;
+
   /** @} */
   /** \name File
       - description

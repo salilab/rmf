@@ -20,13 +20,13 @@ namespace RMF {
 namespace internal {
 
 class SharedDataCategory {
-  typedef boost::unordered_map<std::string, Category> From;
+  typedef RMF_SMALL_UNORDERED_MAP(std::string, Category) From;
   From from_name_;
-  typedef boost::unordered_map<Category, std::string> To;
+  typedef RMF_SMALL_UNORDERED_MAP(Category, std::string) To;
   To to_name_;
-  boost::unordered_set<Category> loaded_;
 
- protected:
+ public:
+  SharedDataCategory() {}
   Categories get_categories() const {
     Categories ret;
     RMF_FOREACH(const From::value_type & it, from_name_) {
@@ -34,27 +34,6 @@ class SharedDataCategory {
     }
     return ret;
   }
-  Categories get_loaded_categories() const {
-    Categories ret;
-    RMF_FOREACH(const From::value_type & it, from_name_) {
-      if (get_is_loaded(it.second)) ret.push_back(it.second);
-    }
-    return ret;
-  }
-  bool get_is_loaded(Category cat) const {
-    return loaded_.find(cat) != loaded_.end();
-  }
-  void set_is_loaded(Category cat, bool tf) {
-    if (tf) {
-      loaded_.insert(cat);
-    } else {
-      loaded_.erase(cat);
-    }
-  }
-
- public:
-  SharedDataCategory() {}
-
   Category get_category(std::string name) {
     From::const_iterator it = from_name_.find(name);
     if (it == from_name_.end()) {
