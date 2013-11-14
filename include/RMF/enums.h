@@ -18,6 +18,7 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 //! The types of the nodes.
 enum NodeType {
+  INVALID_NODE_TYPE = -1,
   //! The root node
   ROOT,
   //! Represent part of a molecule
@@ -65,6 +66,7 @@ RMFEXPORT std::istream& operator>>(std::istream& in, NodeType& t);
 
 //! The types of the frames.
 enum FrameType {
+  INVALID_FRAME_TYPE = -1,
   //! The root frame
   STATIC,
   //! A frame in a sequence of frames
