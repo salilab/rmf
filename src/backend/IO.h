@@ -21,7 +21,6 @@ namespace RMF {
 namespace backends {
 
 struct IO {
-  virtual void reload() = 0;
   /** \name Frame
       - parents (and possibly children) of current frame
     @{

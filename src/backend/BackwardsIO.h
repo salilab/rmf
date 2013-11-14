@@ -369,8 +369,6 @@ struct BackwardsIO : public IO {
     return sd_->get_buffer();
   }
 
-  virtual void reload() RMF_OVERRIDE { sd_->reload(); }
-
   virtual Strings get_categories() RMF_OVERRIDE {
     Strings ret;
     RMF_FOREACH(Category c, sd_->get_categories()) {
@@ -419,6 +417,7 @@ struct BackwardsIO : public IO {
   }
 
   virtual void load_file(internal::SharedData *shared_data) RMF_OVERRIDE {
+    sd_->reload();
     RMF_INFO(get_logger(), "Loading file");
     RMF::internal::clone_file(sd_.get(), shared_data);
     shared_data->set_file_type(sd_->get_file_type());
