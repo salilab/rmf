@@ -33,7 +33,6 @@ struct IO {
    @{
   */
   virtual Strings get_categories() = 0;
-  virtual unsigned int get_number_of_frames() = 0;
   virtual void load_loaded_frame_category(
       Category category, internal::SharedData *shared_data) = 0;
   virtual void save_loaded_frame_category(

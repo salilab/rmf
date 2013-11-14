@@ -35,7 +35,7 @@ Category SharedData::get_category(std::string name) {
     SharedDataCategory::set_is_loaded(ret, true);
     io_->load_static_frame_category(ret, this);
     if (get_loaded_frame() != FrameID() &&
-        get_loaded_frame().get_index() < io_->get_number_of_frames())
+        get_loaded_frame().get_index() < get_number_of_frames())
       io_->load_loaded_frame_category(ret, this);
   }
   return ret;
@@ -48,7 +48,7 @@ Categories SharedData::get_categories() {
       SharedDataCategory::set_is_loaded(c, true);
       io_->load_static_frame_category(c, this);
       if (get_loaded_frame() != FrameID() &&
-          get_loaded_frame().get_index() < io_->get_number_of_frames())
+          get_loaded_frame().get_index() < get_number_of_frames())
         io_->load_loaded_frame_category(c, this);
     }
   }
@@ -154,7 +154,7 @@ void SharedData::reload() {
 
   clear_loaded_values();
   if (get_loaded_frame() != FrameID() &&
-      get_loaded_frame().get_index() < io_->get_number_of_frames()) {
+      get_loaded_frame().get_index() < get_number_of_frames()) {
     io_->load_loaded_frame(this);
     RMF_FOREACH(Category cat, SharedDataCategory::get_loaded_categories()) {
       io_->load_loaded_frame_category(cat, this);

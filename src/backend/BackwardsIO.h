@@ -377,10 +377,6 @@ struct BackwardsIO : public IO {
     return ret;
   }
 
-  virtual unsigned int get_number_of_frames() RMF_OVERRIDE {
-    return sd_->get_number_of_frames();
-  }
-
   virtual void load_loaded_frame_category(
       Category category, internal::SharedData *shared_data) RMF_OVERRIDE {
     RMF_INFO(get_logger(), "Load loaded frame data for "
