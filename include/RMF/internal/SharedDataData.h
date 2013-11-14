@@ -12,6 +12,7 @@
 #include <RMF/config.h>
 #include "../types.h"
 #include "../infrastructure_macros.h"
+#include "small_set_map.h"
 #include <boost/unordered_map.hpp>
 
 RMF_ENABLE_WARNINGS
@@ -22,7 +23,7 @@ namespace internal {
 template <class Traits>
 class SharedDataFrameData {
  public:
-  typedef boost::unordered_map<unsigned int, typename Traits::Type> Data;
+  typedef RMF_SMALL_UNORDERED_MAP(unsigned int, typename Traits::Type) Data;
   typedef boost::unordered_map<NodeID, Data> NodeDatas;
   NodeDatas node_datas_;
   SharedDataFrameData() {}

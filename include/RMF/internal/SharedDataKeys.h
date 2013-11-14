@@ -11,6 +11,7 @@
 
 #include <RMF/config.h>
 #include "../types.h"
+#include "small_set_map.h"
 #include <boost/unordered_map.hpp>
 
 
@@ -21,8 +22,8 @@ namespace internal {
 
 class SharedDataKeysBase {
  protected:
-  boost::unordered_map<unsigned int, Category> key_categories_;
-  boost::unordered_map<unsigned int, std::string> key_names_;
+  RMF_SMALL_UNORDERED_MAP(unsigned int, Category) key_categories_;
+  RMF_SMALL_UNORDERED_MAP(unsigned int, std::string) key_names_;
 
   SharedDataKeysBase() {}
 };
