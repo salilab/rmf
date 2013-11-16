@@ -68,9 +68,8 @@ void clone_file(SDA* sda, SDB* sdb) {
   sdb->set_producer(sda->get_producer());
 }
 
-#define RMF_CLONE_KEYS(lcname, UCName, PassValue, ReturnValue, PassValues, \
-                       ReturnValues)                                       \
-  sdb->access_key_data(UCName##Traits()) = sda->get_key_data(UCName##Traits());
+#define RMF_CLONE_KEYS(Traits, UCName, lcname) \
+  sdb->access_key_data(Traits()) = sda->get_key_data(Traits());
 
 inline void clone_file(const SharedData* sda, SharedData* sdb) {
   sdb->set_description(sda->get_description());
@@ -95,9 +94,8 @@ void clone_values_type(SDA* sda, Category cata, SDB* sdb, Category catb, H) {
   }
 }
 
-#define RMF_CLONE_VALUES(lcname, UCName, PassValue, ReturnValue, PassValues, \
-                         ReturnValues)                                       \
-  clone_values_type<UCName##Traits, UCName##Traits>(sda, cata, sdb, catb, H());
+#define RMF_CLONE_VALUES(Traits, UCName, lcname) \
+  clone_values_type<Traits, Traits>(sda, cata, sdb, catb, H());
 
 template <class SDA, class SDB, class H>
 void clone_values_category(SDA* sda, Category cata, SDB* sdb, Category catb,
@@ -127,9 +125,8 @@ void clone_loaded_data(SDA* sda, SDB* sdb) {
   }
 }
 
-#define RMF_CLONE_DATA(lcname, UCName, PassValue, ReturnValue, PassValues, \
-                       ReturnValues)                                       \
-  H::access_data(sdb, UCName##Traits()) = H::get_data(sda, UCName##Traits());
+#define RMF_CLONE_DATA(Traits, UCName, lcname) \
+  H::access_data(sdb, Traits()) = H::get_data(sda, Traits());
 
 inline void clone_static_data(const SharedData* sda, SharedData* sdb) {
   typedef StaticValues H;

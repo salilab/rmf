@@ -33,25 +33,23 @@ RMF_ENABLE_WARNINGS
   RMF_NODE_CATCH(<< Key(get_name(k))      \
                  << Category(get_category_name(k)) extra_info)
 
-#define RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DECL(                         \
-    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues)      \
+#define RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DECL(Traits, UCName, lcname)  \
  public:                                                                   \
   /** \brief get the value of the attribute k from this node or null if it \
    * doesn't have a value.                                                 \
   */                                                                       \
-  Nullable<UCName##Traits> get_value(UCName##Key k) const {                \
-    return get_value_impl(k);                                              \
-  }                                                                        \
+  Nullable<Traits> get_value(UCName##Key k) const { return get_value_impl( \
+      k); }                                                                \
   bool get_has_value(UCName##Key k) const {                                \
     return !get_value(k).get_is_null();                                    \
   }                                                                        \
-  Nullable<UCName##Traits> get_frame_value(UCName##Key k) const {          \
+  Nullable<Traits> get_frame_value(UCName##Key k) const {                  \
     RMF_USAGE_CHECK(                                                       \
         shared_->get_loaded_frame() != FrameID(),                          \
         "Need to set a current frame before getting frame values.");       \
     return shared_->get_loaded_value(node_, k);                            \
   }                                                                        \
-  Nullable<UCName##Traits> get_static_value(UCName##Key k) const {         \
+  Nullable<Traits> get_static_value(UCName##Key k) const {                 \
     return shared_->get_static_value(node_, k);                            \
   }                                                                        \
                                                                            \

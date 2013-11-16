@@ -128,26 +128,19 @@ RMF_ENABLE_WARNINGS
     - the C++ type for accepting more than one value
     - the C++ type for returning more than one value
 */
-#define RMF_FOREACH_TYPE(macroname)                                            \
-  macroname(int, Int, int, int, const Ints&, Ints)                             \
-      macroname(float, Float, float, float, const Floats&, Floats)             \
-      macroname(string, String, RMF::String, RMF::String, const RMF::Strings&, \
-                RMF::Strings)                                                  \
-      macroname(ints, Ints, const RMF::Ints&, RMF::Ints, const RMF::IntsList&, \
-                RMF::IntsList)                                                 \
-      macroname(floats, Floats, const RMF::Floats&, RMF::Floats,               \
-                const RMF::FloatsList&, RMF::FloatsList)                       \
-      macroname(strings, Strings, const RMF::Strings&, RMF::Strings,           \
-                const RMF::StringsList&, RMF::StringsList)                     \
-      macroname(vector3, Vector3, const RMF::Vector3&, RMF::Vector3,           \
-                const RMF::Vector3s&, RMF::Vector3s)                           \
-      macroname(vector4, Vector4, const RMF::Vector4&, RMF::Vector4,           \
-                const RMF::Vector4s&, RMF::Vector4s)                           \
-      macroname(vector3s, Vector3s, const RMF::Vector3s&, RMF::Vector3s,       \
-                const RMF::Vector3sList&, RMF::Vector3sList)
+#define RMF_FOREACH_TYPE(macroname)                   \
+  macroname(RMF::IntTraits, Int, int)                 \
+      macroname(RMF::FloatTraits, Float, float)       \
+      macroname(RMF::StringTraits, String, string)    \
+      macroname(RMF::IntsTraits, Ints, ints)          \
+      macroname(RMF::FloatsTraits, Floats, floats)    \
+      macroname(RMF::StringsTraits, Strings, strings) \
+      macroname(RMF::Vector3Traits, Vector3, vector3) \
+      macroname(RMF::Vector4Traits, Vector4, vector4) \
+      macroname(RMF::Vector3sTraits, Vector3s, vector3s)
 #else
 #define RMF_FOREACH_TYPE(macroname) \
-  macroname(type, Type, Type, Types, const Types&, Types);
+  macroname(Traits, UCname, lcname);
 #endif
 
 #define RMF_DECORATOR_CATCH(extra_info)               \

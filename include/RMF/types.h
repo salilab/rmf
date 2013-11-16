@@ -172,6 +172,8 @@ struct StringsTraits {
   static std::string get_tag() { return "kss"; }
 };
 
+#if !defined(SWIG)
+  // swig gets confused
 template <unsigned int D>
 struct VectorTraits {
   typedef Vector<D> Type;
@@ -203,6 +205,32 @@ struct VectorTraits {
 
 typedef VectorTraits<3> Vector3Traits;
 typedef VectorTraits<4> Vector4Traits;
+#else
+struct Vector3Traits {
+  typedef Vector3 Type;
+  typedef Vector3s Types;
+  typedef const Type& ReturnType;
+  typedef const Type& ArgumentType;
+  static bool get_is_null_value(const Type& t);
+  static ReturnType get_null_value();
+  typedef boost::int32_t AvroType;
+  static bool get_are_equal(ArgumentType a, ArgumentType b);
+  static std::string get_tag();
+};
+struct Vector4Traits {
+  typedef Vector4 Type;
+  typedef Vector4s Types;
+  typedef const Type& ReturnType;
+  typedef const Type& ArgumentType;
+  static bool get_is_null_value(const Type& t);
+  static ReturnType get_null_value();
+  typedef boost::int32_t AvroType;
+  static bool get_are_equal(ArgumentType a, ArgumentType b);
+  static std::string get_tag();
+};
+#endif
+
+
 
   //template <unsigned int D>
 struct Vector3sTraits {
@@ -288,9 +316,8 @@ class BondEndpoints
   }
 };
 
-#define RMF_DECLARE_KEY(lcname, Ucname, PassValue, ReturnValue, PassValues, \
-                        ReturnValues)                                       \
-  typedef ID<Ucname##Traits> Ucname##Key;                                   \
+#define RMF_DECLARE_KEY(Traits, Ucname, lcname) \
+  typedef ID<Traits> Ucname##Key;               \
   typedef std::vector<Ucname##Key> Ucname##Keys;
 
 /** \name Key types

@@ -47,9 +47,8 @@ bool show_type_data_xml(Handle nh, RMF::Category kc, bool opened,
   }
   return opened;
 }
-#define RMF_SHOW_TYPE_DATA_XML(lcname, UCName, PassValue, ReturnValue, \
-                               PassValues, ReturnValues)               \
-  opened = show_type_data_xml<RMF::UCName##Traits>(nh, kc, opened, out);
+#define RMF_SHOW_TYPE_DATA_XML(Traits, UCName, lcname) \
+  opened = show_type_data_xml<Traits>(nh, kc, opened, out);
 
 template <class Handle>
 void show_data_xml(Handle nh, RMF::Category kc, std::ostream& out) {

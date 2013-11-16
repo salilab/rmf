@@ -27,10 +27,9 @@ RMF_ENABLE_WARNINGS
         e);                                                               \
   }
 
-#define RMF_HDF5_ROOT_CONST_KEY_TYPE_METHODS(                                  \
-    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues)          \
+#define RMF_HDF5_ROOT_CONST_KEY_TYPE_METHODS(Traits, UCName, lcname)           \
   UCName##Key get_##lcname##_key(Category category_id, std::string nm) const { \
-    return get_key<UCName##Traits>(category_id, nm);                           \
+    return get_key<Traits>(category_id, nm);                                   \
   }                                                                            \
   std::string get_name(UCName##Key k) const {                                  \
     try {                                                                      \
@@ -44,7 +43,7 @@ RMF_ENABLE_WARNINGS
   /** This returns all the keys that are used in the current frame.            \
       Other frames may have different ones.*/                                  \
   UCName##Key##s get_##lcname##_keys(Category category_id) {                   \
-    return get_keys<UCName##Traits>(category_id);                              \
+    return get_keys<Traits>(category_id);                                      \
   }
 RMF_VECTOR_DECL(FileConstHandle);
 

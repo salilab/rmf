@@ -52,10 +52,8 @@ bool get_equal_values_type(SDA* sda, Category cata, SDB* sdb, Category catb,
   return ret;
 }
 
-#define RMF_LOADED_EQUAL(lcname, UCName, PassValue, ReturnValue, PassValues, \
-                         ReturnValues)                                       \
-  ret &= get_equal_values_type<UCName##Traits>(sda, cata, sdb, catb,         \
-                                               LoadedValues());
+#define RMF_LOADED_EQUAL(Traits, UCName, lcname) \
+  ret &= get_equal_values_type<Traits>(sda, cata, sdb, catb, LoadedValues());
 
 template <class SDA, class SDB>
 bool get_equal_current_values_category(SDA* sda, Category cata, SDB* sdb,
@@ -74,10 +72,8 @@ bool get_equal_current_values(SDA* sda, SDB* sdb) {
   return true;
 }
 
-#define RMF_STATIC_EQUAL(lcname, UCName, PassValue, ReturnValue, PassValues, \
-                         ReturnValues)                                       \
-  ret &= get_equal_values_type<UCName##Traits>(sda, cata, sdb, catb,         \
-                                               StaticValues());
+#define RMF_STATIC_EQUAL(Traits, UCName, lcname) \
+  ret &= get_equal_values_type<Traits>(sda, cata, sdb, catb, StaticValues());
 
 template <class SDA, class SDB>
 bool get_equal_static_values_category(SDA* sda, Category cata, SDB* sdb,

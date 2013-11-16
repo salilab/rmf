@@ -37,9 +37,8 @@ void show_key_info(FileConstHandle rh, Category cat, std::string name,
   }
 }
 
-#define RMF_SHOW_TYPE_DATA_INFO(lcname, UCName, PassValue, ReturnValue, \
-                                PassValues, ReturnValues)               \
-  show_key_info<UCName##Traits>(rh, c, #lcname, out);
+#define RMF_SHOW_TYPE_DATA_INFO(Traits, UCName, lcname) \
+  show_key_info<Traits>(rh, c, #lcname, out);
 
 int count(NodeConstHandle nh, std::set<NodeConstHandle>& seen) {
   int ret = 0;

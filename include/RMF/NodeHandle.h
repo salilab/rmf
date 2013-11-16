@@ -17,28 +17,29 @@
 
 RMF_ENABLE_WARNINGS
 
-#define RMF_HDF5_NODE_KEY_TYPE_METHODS(lcname, UCName, PassValue, ReturnValue, \
-                                       PassValues, ReturnValues)               \
-  /** \brief  set the value of the attribute k for this node on the            \
-      current frame.                                                           \
-  */                                                                           \
-  void set_frame_value(UCName##Key k, PassValue v) const {                     \
-    RMF_USAGE_CHECK(shared_->get_loaded_frame() != FrameID(),                  \
-                    "Need to set a current frame before setting values.");     \
-    shared_->set_loaded_value(node_, k, v);                                    \
-  }                                                                            \
-  /** Set the value                                                            \
-      - if the attribute has a static value and it is equal the current one    \
-        do nothing.                                                            \
-      - if the attribute doesn't have a static value, set it,                  \
-      - otherwise set the frame value.                                         \
-  */                                                                           \
-  void set_value(UCName##Key k, PassValue v) const { set_value_impl(k, v); }   \
-  /** \brief  set the value of the attribute k for all frames.                 \
-   *                                                                           \
-  */                                                                           \
-  void set_static_value(UCName##Key k, PassValue v) const {                    \
-    shared_->set_static_value(node_, k, v);                                    \
+#define RMF_HDF5_NODE_KEY_TYPE_METHODS(Traits, UCName, lcname)              \
+  /** \brief  set the value of the attribute k for this node on the         \
+      current frame.                                                        \
+  */                                                                        \
+  void set_frame_value(UCName##Key k, Traits::ArgumentType v) const {       \
+    RMF_USAGE_CHECK(shared_->get_loaded_frame() != FrameID(),               \
+                    "Need to set a current frame before setting values.");  \
+    shared_->set_loaded_value(node_, k, v);                                 \
+  }                                                                         \
+  /** Set the value                                                         \
+      - if the attribute has a static value and it is equal the current one \
+        do nothing.                                                         \
+      - if the attribute doesn't have a static value, set it,               \
+      - otherwise set the frame value.                                      \
+  */                                                                        \
+  void set_value(UCName##Key k, Traits::ArgumentType v) const {             \
+    set_value_impl(k, v);                                                   \
+  }                                                                         \
+  /** \brief  set the value of the attribute k for all frames.              \
+   *                                                                        \
+  */                                                                        \
+  void set_static_value(UCName##Key k, Traits::ArgumentType v) const {      \
+    shared_->set_static_value(node_, k, v);                                 \
   }
 
 RMF_VECTOR_DECL(NodeHandle);

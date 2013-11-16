@@ -35,32 +35,30 @@ namespace backends {
 struct IO;
 }
 
-#define RMF_HOIST(lcname, UCName, PassValue, ReturnValue, PassValues, \
-                  ReturnValues)                                       \
-  using SharedDataData<UCName##Traits>::get_static_data;              \
-  using SharedDataData<UCName##Traits>::get_static_value;             \
-  using SharedDataData<UCName##Traits>::set_static_value;             \
-  using SharedDataData<UCName##Traits>::access_static_value;          \
-  using SharedDataData<UCName##Traits>::access_static_data;           \
-  using SharedDataData<UCName##Traits>::clear_static_values;          \
-  using SharedDataData<UCName##Traits>::get_loaded_data;              \
-  using SharedDataData<UCName##Traits>::get_loaded_value;             \
-  using SharedDataData<UCName##Traits>::set_loaded_value;             \
-  using SharedDataData<UCName##Traits>::access_loaded_value;          \
-  using SharedDataData<UCName##Traits>::access_loaded_data;           \
-  using SharedDataData<UCName##Traits>::clear_loaded_values;          \
-  using SharedDataKeys<UCName##Traits>::get_key;                      \
-  using SharedDataKeys<UCName##Traits>::get_name;                     \
-  using SharedDataKeys<UCName##Traits>::get_keys;                     \
-  using SharedDataKeys<UCName##Traits>::get_category;                 \
-  using SharedDataKeys<UCName##Traits>::ensure_key;                   \
-  using SharedDataKeys<UCName##Traits>::access_key_data;              \
-  using SharedDataKeys<UCName##Traits>::get_key_data;
+#define RMF_HOIST(Traits, UCName, lcname)            \
+  using SharedDataData<Traits>::get_static_data;     \
+  using SharedDataData<Traits>::get_static_value;    \
+  using SharedDataData<Traits>::set_static_value;    \
+  using SharedDataData<Traits>::access_static_value; \
+  using SharedDataData<Traits>::access_static_data;  \
+  using SharedDataData<Traits>::clear_static_values; \
+  using SharedDataData<Traits>::get_loaded_data;     \
+  using SharedDataData<Traits>::get_loaded_value;    \
+  using SharedDataData<Traits>::set_loaded_value;    \
+  using SharedDataData<Traits>::access_loaded_value; \
+  using SharedDataData<Traits>::access_loaded_data;  \
+  using SharedDataData<Traits>::clear_loaded_values; \
+  using SharedDataKeys<Traits>::get_key;             \
+  using SharedDataKeys<Traits>::get_name;            \
+  using SharedDataKeys<Traits>::get_keys;            \
+  using SharedDataKeys<Traits>::get_category;        \
+  using SharedDataKeys<Traits>::ensure_key;          \
+  using SharedDataKeys<Traits>::access_key_data;     \
+  using SharedDataKeys<Traits>::get_key_data;
 
-#define RMF_SHARED_DATA_PARENT(lcname, UCName, PassValue, ReturnValue, \
-                               PassValues, ReturnValues)               \
- public                                                                \
-  SharedDataKeys<UCName##Traits>, public SharedDataData<UCName##Traits>,
+#define RMF_SHARED_DATA_PARENT(Traits, UCName, lcname) \
+ public                                                \
+  SharedDataKeys<Traits>, public SharedDataData<Traits>,
 
 namespace internal {
 
