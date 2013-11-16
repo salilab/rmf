@@ -41,6 +41,7 @@ class GenericTest(unittest.TestCase):
         for i, p in enumerate(lst):
             k = p[0](cat, "hi" + str(i))
             v = nh.get_value(k)
+            print v, p[1]
             self.assertEqual(v, p[1])
 
     def _do_test_types(self, name):

@@ -58,10 +58,25 @@ void clone_hierarchy(SDA* sda, SDB* sdb) {
   }
 }
 
+inline void clone_hierarchy(const SharedData* sda, SharedData* sdb) {
+  sdb->access_node_hierarchy() = sda->get_node_hierarchy();
+}
+
 template <class SDA, class SDB>
 void clone_file(SDA* sda, SDB* sdb) {
   sdb->set_description(sda->get_description());
   sdb->set_producer(sda->get_producer());
+}
+
+#define RMF_CLONE_KEYS(lcname, UCName, PassValue, ReturnValue, PassValues, \
+                       ReturnValues)                                       \
+  sdb->access_key_data(UCName##Traits()) = sda->get_key_data(UCName##Traits());
+
+inline void clone_file(const SharedData* sda, SharedData* sdb) {
+  sdb->set_description(sda->get_description());
+  sdb->set_producer(sda->get_producer());
+  sdb->access_category_data() = sda->get_category_data();
+  RMF_FOREACH_TYPE(RMF_CLONE_KEYS);
 }
 
 template <class TraitsA, class TraitsB, class SDA, class SDB, class H>
@@ -69,10 +84,9 @@ void clone_values_type(SDA* sda, Category cata, SDB* sdb, Category catb, H) {
   boost::unordered_map<ID<TraitsA>, ID<TraitsB> > keys =
       get_key_map<TraitsA, TraitsB>(sda, cata, sdb, catb);
   if (keys.empty()) return;
-  RMF_FOREACH(NodeID n, get_nodes(sda)) {
-    RMF_TRACE(get_logger(), "Cloning node " << n);
-    typedef std::pair<ID<TraitsA>, ID<TraitsB> > KP;
-    RMF_FOREACH(KP ks, keys) {
+  typedef std::pair<ID<TraitsA>, ID<TraitsB> > KP;
+  RMF_FOREACH(KP ks, keys) {
+    RMF_FOREACH(NodeID n, get_nodes(sda)) {
       typename TraitsA::ReturnType rt = H::get(sda, n, ks.first);
       if (!TraitsA::get_is_null_value(rt)) {
         H::set(sdb, n, ks.second, get_as<typename TraitsB::Type>(rt));
@@ -111,6 +125,21 @@ void clone_loaded_data(SDA* sda, SDB* sdb) {
     Category catb = sdb->get_category(sda->get_name(cata));
     clone_values_category(sda, cata, sdb, catb, LoadedValues());
   }
+}
+
+#define RMF_CLONE_DATA(lcname, UCName, PassValue, ReturnValue, PassValues, \
+                       ReturnValues)                                       \
+  H::access_data(sdb, UCName##Traits()) = H::get_data(sda, UCName##Traits());
+
+inline void clone_static_data(const SharedData* sda, SharedData* sdb) {
+  typedef StaticValues H;
+  RMF_FOREACH_TYPE(RMF_CLONE_DATA);
+  sdb->set_static_is_dirty(true);
+}
+
+inline void clone_loaded_data(const SharedData* sda, SharedData* sdb) {
+  typedef LoadedValues H;
+  RMF_FOREACH_TYPE(RMF_CLONE_DATA);
 }
 
 }  // namespace internal

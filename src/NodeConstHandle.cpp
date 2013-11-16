@@ -99,7 +99,10 @@ void show_data(NodeConstHandle n, std::ostream& out,
                const std::vector<ID<Traits> >& ks, std::string prefix) {
   using std::operator<<;
   RMF_FOREACH(ID<Traits> k, ks) {
-    Nullable<Traits> t = n.get_frame_value(k);
+    Nullable<Traits> t(Traits::get_null_value());
+    if (n.get_file().get_current_frame() != FrameID()) {
+      t = n.get_frame_value(k);
+    }
     if (!t.get_is_null()) {
       out << std::endl << prefix << n.get_file().get_name(k) << ": "
           << Showable(t.get());
@@ -120,7 +123,8 @@ void show_node(NodeConstHandle n, std::ostream& out, std::string prefix = "") {
 }
 void show_node(NodeConstHandle n, std::ostream& out, FloatKeys fks,
                FloatsKeys fsks, IntKeys iks, IntsKeys isks, StringKeys sks,
-               StringsKeys ssks, std::string prefix) {
+               StringsKeys ssks, Vector3Keys v3ks, Vector4Keys v4ks,
+               Vector3sKeys v3sks, std::string prefix) {
   using std::operator<<;
   if (true) {
     show_node(n, out);
@@ -130,6 +134,9 @@ void show_node(NodeConstHandle n, std::ostream& out, FloatKeys fks,
     show_data(n, out, fsks, prefix + "  ");
     show_data(n, out, isks, prefix + "  ");
     show_data(n, out, ssks, prefix + "  ");
+    show_data(n, out, v3ks, prefix + "  ");
+    show_data(n, out, v4ks, prefix + "  ");
+    show_data(n, out, v3sks, prefix + "  ");
   }
 }
 
@@ -215,16 +222,23 @@ void show_hierarchy_with_values(NodeConstHandle root, std::ostream& out) {
   FloatsKeys fsks;
   IntsKeys isks;
   StringsKeys ssks;
+  Vector3Keys v3ks;
+  Vector4Keys v4ks;
+  Vector3sKeys v3sks;
   fks = get_keys<FloatTraits>(root.get_file());
   iks = get_keys<IntTraits>(root.get_file());
   sks = get_keys<StringTraits>(root.get_file());
   fsks = get_keys<FloatsTraits>(root.get_file());
   isks = get_keys<IntsTraits>(root.get_file());
   ssks = get_keys<StringsTraits>(root.get_file());
+  v3ks = get_keys<Vector3Traits>(root.get_file());
+  v4ks = get_keys<Vector4Traits>(root.get_file());
+  v3sks = get_keys<Vector3sTraits>(root.get_file());
   using std::operator<<;
-  RMF_PRINT_TREE(
-      out, NodeConstHandle, root, n.get_children().size(), n.get_children(),
-      show_node(n, out, fks, fsks, iks, isks, sks, ssks, prefix0 + "   "));
+  RMF_PRINT_TREE(out, NodeConstHandle, root, n.get_children().size(),
+                 n.get_children(),
+                 show_node(n, out, fks, fsks, iks, isks, sks, ssks, v3ks, v4ks,
+                           v3sks, prefix0 + "   "));
 }
 
 void show_hierarchy_with_decorators(NodeConstHandle root, bool,

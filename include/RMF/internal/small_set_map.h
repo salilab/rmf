@@ -7,20 +7,20 @@
 #if BOOST_VERSION >= 104900
 #include <boost/container/flat_set.hpp>
 #include <boost/container/flat_map.hpp>
-#define RMF_SMALL_ORDERED_SET(k) boost::container::flat_set<k>
-#define RMF_SMALL_ORDERED_MAP(k,v) boost::container::flat_map<k, v>
-#define RMF_SMALL_UNORDERED_SET(k) boost::container::flat_set<k>
-#define RMF_SMALL_UNORDERED_MAP(k,v) boost::container::flat_map<k, v>
+#define RMF_SMALL_ORDERED_SET boost::container::flat_set
+#define RMF_SMALL_ORDERED_MAP boost::container::flat_map
+#define RMF_SMALL_UNORDERED_SET boost::container::flat_set
+#define RMF_SMALL_UNORDERED_MAP boost::container::flat_map
 #else
 #include <set>
 #include <map>
 #include <boost/unordered_set.hpp>
 #include <boost/unordered_map.hpp>
 
-#define RMF_SMALL_ORDERED_SET(k) std::set<k>
-#define RMF_SMALL_ORDERED_MAP(k, v) std::map<k,v>
-#define RMF_SMALL_UNORDERED_SET(k) boost::unordered_set<k>
-#define RMF_SMALL_UNORDERED_MAP(k, v) boost::unordered_map<k,v>
+#define RMF_SMALL_ORDERED_SET std::set
+#define RMF_SMALL_ORDERED_MAP std::map
+#define RMF_SMALL_UNORDERED_SET boost::unordered_set
+#define RMF_SMALL_UNORDERED_MAP boost::unordered_map
 #endif
 
 #endif

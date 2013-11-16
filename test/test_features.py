@@ -40,6 +40,7 @@ class GenericTest(unittest.TestCase):
 
     def test_multiparent(self):
         """Test that feature nodes work right"""
+        RMF.set_log_level("trace")
         for suffix in RMF.suffixes:
             path = RMF._get_temporary_file_path("feature." + suffix)
             print "file is", path

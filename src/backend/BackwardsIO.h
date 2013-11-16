@@ -159,9 +159,9 @@ struct BackwardsIO : public IO {
       }
     }
     if (map.empty()) return;
-    RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
-      typedef std::pair<FloatKey, Data> KP;
-      RMF_FOREACH(KP kp, map) {
+    typedef std::pair<FloatKey, Data> KP;
+    RMF_FOREACH(KP kp, map) {
+      RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
         double v = H::get(sda, n, kp.first);
         if (!FloatTraits::get_is_null_value(v)) {
           Vector<D> &old = H::access(sdb, n, kp.second.first);
@@ -195,9 +195,9 @@ struct BackwardsIO : public IO {
       sdb->set_static_value(NodeID(0), k, key_names);
     }
 
-    RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
-      typedef std::pair<VectorKey, Data> KP;
-      RMF_FOREACH(KP kp, map) {
+    typedef std::pair<VectorKey, Data> KP;
+    RMF_FOREACH(KP kp, map) {
+      RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
         Vector<D> v = H::get(sda, n, kp.first);
         if (!VectorTraits<D>::get_is_null_value(v)) {
           for (unsigned int i = 0; i < D; ++i) {
@@ -227,9 +227,9 @@ struct BackwardsIO : public IO {
       }
     }
     if (map.empty()) return;
-    RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
-      typedef std::pair<FloatsKey, Data> KP;
-      RMF_FOREACH(KP kp, map) {
+    typedef std::pair<FloatsKey, Data> KP;
+    RMF_FOREACH(KP kp, map) {
+      RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
         Floats v = H::get(sda, n, kp.first);
         if (!v.empty()) {
           std::vector<Vector<3> > &old = H::access(sdb, n, kp.second.first);
@@ -267,9 +267,9 @@ struct BackwardsIO : public IO {
       sdb->set_static_value(NodeID(0), k, key_names);
     }
 
-    RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
-      typedef std::pair<VectorKey, Data> KP;
-      RMF_FOREACH(KP kp, map) {
+    typedef std::pair<VectorKey, Data> KP;
+    RMF_FOREACH(KP kp, map) {
+      RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
         std::vector<Vector<3> > v = H::get(sda, n, kp.first);
         if (!v.empty()) {
           for (unsigned int i = 0; i < 3; ++i) {

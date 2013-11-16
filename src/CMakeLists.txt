@@ -1,6 +1,3 @@
-include_directories("${PROJECT_BINARY_DIR}/src"
-  "${PROJECT_SOURCE_DIR}/src")
-
 include("Files.cmake")
 
 file(GLOB_RECURSE avrocpp_sources "${PROJECT_SOURCE_DIR}/src/backend/AvroCpp/impl/*.cc")

@@ -20,56 +20,77 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 namespace internal {
 
-class SharedDataKeysBase {
- protected:
-  RMF_SMALL_UNORDERED_MAP(unsigned int, Category) key_categories_;
-  RMF_SMALL_UNORDERED_MAP(unsigned int, std::string) key_names_;
+template <class Traits>
+struct Keys {
+  RMF_SMALL_UNORDERED_MAP<ID<Traits>, Category> key_categories;
+  RMF_SMALL_UNORDERED_MAP<ID<Traits>, std::string> key_names;
 
-  SharedDataKeysBase() {}
-};
-
-template <class Traits, class P = SharedDataKeysBase>
-class SharedDataKeys : public P {
   typedef boost::unordered_map<std::string, ID<Traits> > KeyInfo;
   typedef boost::unordered_map<Category, KeyInfo> CategoryKeys;
-  CategoryKeys category_keys_;
+  CategoryKeys category_keys;
+};
+
+template <class Traits>
+class SharedDataKeys {
+  Keys<Traits> data_;
 
  public:
   SharedDataKeys() {}
 
   Category get_category(ID<Traits> k) const {
-    return P::key_categories_.find(k.get_index())->second;
+    return data_.key_categories.find(k)->second;
   }
 
   ID<Traits> get_key(Category cat, std::string name, Traits) {
-    typename KeyInfo::iterator it = category_keys_[cat].find(name);
-    if (it == category_keys_[cat].end()) {
-      int index = P::key_names_.size();
-      P::key_names_[index] = name;
-      category_keys_[cat][name] = ID<Traits>(index);
-      P::key_categories_[index] = cat;
-      return ID<Traits>(index);
+    typename Keys<Traits>::KeyInfo::iterator it =
+        data_.category_keys[cat].find(name);
+    if (it == data_.category_keys[cat].end()) {
+      ID<Traits> k(data_.key_names.size());
+      ensure_key(cat, k, name, Traits());
+      return k;
     } else {
       return ID<Traits>(it->second);
     }
   }
 
+  void ensure_key(Category cat, ID<Traits> key, std::string name, Traits) {
+    if (data_.category_keys[cat].find(name) == data_.category_keys[cat].end()) {
+      data_.category_keys[cat][name] = key;
+      data_.key_names[key] = name;
+      data_.key_categories[key] = cat;
+    } else {
+      RMF_INTERNAL_CHECK(data_.category_keys[cat].find(name)->second == key,
+                         "Keys don't match");
+    }
+}
+
   std::string get_name(ID<Traits> k) const {
-    return P::key_names_.find(k.get_index())->second;
+    return data_.key_names.find(k)->second;
   }
 
   std::vector<ID<Traits> > get_keys(Category cat, Traits) const {
-    if (category_keys_.find(cat) == category_keys_.end()) {
+    if (data_.category_keys.find(cat) == data_.category_keys.end()) {
       return std::vector<ID<Traits> >();
     }
     std::vector<ID<Traits> > ret;
-    ret.reserve(category_keys_.find(cat)->second.size());
-    RMF_FOREACH(typename KeyInfo::value_type it,
-                  category_keys_.find(cat)->second) {
+    ret.reserve(data_.category_keys.find(cat)->second.size());
+    RMF_FOREACH(typename Keys<Traits>::KeyInfo::value_type it,
+                data_.category_keys.find(cat)->second) {
       ret.push_back(it.second);
     }
     return ret;
   }
+  std::vector<ID<Traits> > get_keys(Traits) const {
+    std::vector<ID<Traits> > ret;
+    typedef std::pair<ID<Traits>, Category> KP;
+    RMF_FOREACH(KP kp, data_.key_categories) {
+      ret.push_back(kp.first);
+    }
+    return ret;
+  }
+
+  Keys<Traits> &access_key_data(Traits) { return data_; }
+  const Keys<Traits> &get_key_data(Traits) const { return data_; }
 };
 
 }  // namespace internal

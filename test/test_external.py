@@ -7,7 +7,7 @@ class GenericTest(unittest.TestCase):
 
     def _create(self, name):
         rmf = RMF.create_rmf_file(name)
-        rmf.add_frame("root", RMF.FRAME)
+        rmf.add_frame("zero", RMF.FRAME)
         rt = rmf.get_root_node()
 
         # now make hierarchy
@@ -51,6 +51,7 @@ class GenericTest(unittest.TestCase):
 
     def test_data_types(self):
         """Test external file references"""
+        RMF.set_log_level("trace")
         for suffix in RMF.suffixes:
             name = RMF._get_temporary_file_path("externals." + suffix)
             print name

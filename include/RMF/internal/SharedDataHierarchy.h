@@ -75,7 +75,7 @@ class SharedDataHierarchy {
     dirty_ = true;
   }
 
-  const std::vector<NodeID>& get_children(NodeID node) const {
+  std::vector<NodeID> get_children(NodeID node) const {
     static std::vector<NodeID> missing;
     if (node.get_index() >= hierarchy_.size()) return missing;
     return hierarchy_[node.get_index()].children;
@@ -102,7 +102,8 @@ class SharedDataHierarchy {
     return hierarchy_;
   }
 
-  const std::vector<HierarchyNode<NodeID, NodeType> >& get_node_hierarchy() {
+  const std::vector<HierarchyNode<NodeID, NodeType> >& get_node_hierarchy()
+      const {
     return hierarchy_;
   }
 };

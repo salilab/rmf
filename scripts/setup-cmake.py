@@ -83,6 +83,7 @@ src = ["src",
        os.path.join("src", "internal"),
        os.path.join("src", "backend"),
        os.path.join("src", "backend", "hdf5"),
-       os.path.join("src", "backend", "avro")]
+       os.path.join("src", "backend", "avro"),
+       os.path.join("src", "backend", "avro2")]
 for d in [src, ["examples"], ["bin"], ["test"], ["benchmark"]]:
     make_files(d)

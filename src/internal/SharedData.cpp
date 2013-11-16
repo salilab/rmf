@@ -53,7 +53,16 @@ FrameID SharedData::add_frame(std::string name, FrameType type) {
   if (cl != FrameID()) {
     add_child_frame(ret);
     if (write_) {
-      flush();
+      if (SharedDataFile::get_is_dirty()) {
+        RMF_INFO(get_logger(), "Flushing file info");
+        io_->save_file(this);
+        SharedDataFile::set_is_dirty(false);
+      }
+      if (SharedDataHierarchy::get_is_dirty()) {
+        RMF_INFO(get_logger(), "Flushing node hierarchy");
+        io_->save_hierarchy(this);
+        SharedDataHierarchy::set_is_dirty(false);
+      }
       io_->save_loaded_frame(this);
     }
   }

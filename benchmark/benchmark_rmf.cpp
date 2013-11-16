@@ -190,6 +190,20 @@ int main(int, char**) {
     }
     {
       boost::filesystem::path temp = boost::filesystem::unique_path();
+      const std::string name = temp.native() + ".rmf3";
+      {
+        RMF::FileHandle fh = RMF::create_rmf_file(name);
+        benchmark_create(fh, "rmf3");
+      }
+      {
+        RMF::FileConstHandle fh = RMF::open_rmf_file_read_only(name);
+        benchmark_traverse(fh, "rmf3");
+        benchmark_load(fh, "rmf3");
+      }
+      benchmark_size(name, "rmf3");
+    }
+    {
+      boost::filesystem::path temp = boost::filesystem::unique_path();
       const std::string name = temp.native() + ".rmfa";
       {
         RMF::FileHandle fh = RMF::create_rmf_file(name);

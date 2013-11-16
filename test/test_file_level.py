@@ -51,6 +51,7 @@ class Tests(unittest.TestCase):
             f.set_current_frame(RMF.FrameID(0))
             self.assertEqual(r.get_value(ik), 1, 0)
             f.set_current_frame(RMF.FrameID(1))
+            RMF.show_hierarchy_with_values(f.get_root_node())
             self.assertEqual(r.get_value(ik), 2)
             f.set_current_frame(RMF.FrameID(0))
             self.assertEqual(r.get_value(ik), 1)

@@ -148,9 +148,6 @@ class RMFEXPORT FileConstHandle {
 
   /** The file always has a single frame that is currently active at any given
       point.
-
-      A value of ALL_FRAMES means one is only dealing with static data.
-
       @{
    */
   FrameID get_current_frame() const { return shared_->get_loaded_frame(); }

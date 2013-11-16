@@ -48,6 +48,14 @@ struct StaticValues {
   static typename Traits::Type& access(SD* sd, NodeID n, ID<Traits> k) {
     return sd->access_static_value(n, k);
   }
+  template <class Traits, class SD>
+  static const TypeData<Traits>& get_data(const SD* sd, Traits) {
+    return sd->get_static_data(Traits());
+  }
+  template <class Traits, class SD>
+  static TypeData<Traits>& access_data(SD* sd, Traits) {
+    return sd->access_static_data(Traits());
+  }
 };
 struct LoadedValues {
   template <class Traits, class SD>
@@ -61,6 +69,14 @@ struct LoadedValues {
   template <class Traits, class SD>
   static typename Traits::Type& access(SD* sd, NodeID n, ID<Traits> k) {
     return sd->access_loaded_value(n, k);
+  }
+  template <class Traits, class SD>
+  static const TypeData<Traits>& get_data(const SD* sd, Traits) {
+    return sd->get_loaded_data(Traits());
+  }
+  template <class Traits, class SD>
+  static TypeData<Traits>& access_data(SD* sd, Traits) {
+    return sd->access_loaded_data(Traits());
   }
 };
 

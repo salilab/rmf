@@ -311,7 +311,7 @@ def get_example_path(name):
    dir.append(name)
    return os.path.join(*dir)
 
-suffixes=["rmf", "rmf2", "rmfa", "rmft"]
+suffixes=["rmf3", "rmf", "rmf2", "rmfa", "rmft", "rmf3"]
 
 read_write_suffixes=["rmf", "rmfa", "rmft"]
 
