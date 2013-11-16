@@ -31,11 +31,11 @@ class SharedDataAdaptor {
     return sync_->get_number_of_nodes();
   }
   template <class Traits>
-  typename Traits::ReturnType get_loaded_value(NodeID n, ID<Traits> k) const {
+  typename Traits::Type get_loaded_value(NodeID n, ID<Traits> k) const {
     return sync_->get_loaded_value(n, k);
   }
   template <class Traits>
-  typename Traits::ReturnType get_static_value(NodeID n, ID<Traits> k) const {
+  typename Traits::Type get_static_value(NodeID n, ID<Traits> k) const {
     return sync_->get_static_value(n, k);
   }
   template <class T>

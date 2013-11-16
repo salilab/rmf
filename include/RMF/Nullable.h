@@ -34,6 +34,7 @@ class Nullable {
     }
   }
  public:
+  Nullable(const Nullable &o) : v_(o.v_) {}
   Nullable(typename Traits::ReturnType v) : v_(v) {}
 #ifndef SWIG
   /** \pre !get_is_null() */

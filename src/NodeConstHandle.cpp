@@ -99,13 +99,10 @@ void show_data(NodeConstHandle n, std::ostream& out,
                const std::vector<ID<Traits> >& ks, std::string prefix) {
   using std::operator<<;
   RMF_FOREACH(ID<Traits> k, ks) {
-    Nullable<Traits> t(Traits::get_null_value());
-    if (n.get_file().get_current_frame() != FrameID()) {
-      t = n.get_frame_value(k);
-    }
-    if (!t.get_is_null()) {
+    if (n.get_file().get_current_frame() != FrameID() &&
+        !n.get_frame_value(k).get_is_null()) {
       out << std::endl << prefix << n.get_file().get_name(k) << ": "
-          << Showable(t.get());
+          << Showable(n.get_frame_value(k));
     } else {
       Nullable<Traits> ts = n.get_static_value(k);
       if (!ts.get_is_null()) {

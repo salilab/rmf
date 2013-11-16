@@ -111,7 +111,7 @@ struct StringTraits {
 struct IntsTraits {
   typedef Ints Type;
   typedef IntsList Types;
-  typedef Type ReturnType;
+  typedef const Type& ReturnType;
   typedef const Type& ArgumentType;
   static bool get_is_null_value(const Type& t) { return t.empty(); }
   static ReturnType get_null_value() {
@@ -132,7 +132,7 @@ struct IntsTraits {
 struct FloatsTraits {
   typedef Floats Type;
   typedef FloatsList Types;
-  typedef Type ReturnType;
+  typedef const Type& ReturnType;
   typedef const Type& ArgumentType;
   static bool get_is_null_value(const Type& t) { return t.empty(); }
   static ReturnType get_null_value() {
@@ -153,7 +153,7 @@ struct FloatsTraits {
 struct StringsTraits {
   typedef Strings Type;
   typedef StringsList Types;
-  typedef Type ReturnType;
+  typedef const Type& ReturnType;
   typedef const Type& ArgumentType;
   static bool get_is_null_value(const Type& t) { return t.empty(); }
   static ReturnType get_null_value() {
@@ -176,14 +176,16 @@ template <unsigned int D>
 struct VectorTraits {
   typedef Vector<D> Type;
   typedef std::vector<Vector<D> > Types;
-  typedef Type ReturnType;
-  typedef Type ArgumentType;
+  typedef const Type& ReturnType;
+  typedef const Type& ArgumentType;
   static bool get_is_null_value(const Type& t) {
     return t[0] > std::numeric_limits<double>::max();
   }
   static ReturnType get_null_value() {
-    return Vector<D>(
-        Floats(D, std::numeric_limits<typename FloatTraits::Type>::infinity()));
+    static const Vector<D> null(
+        Floats(D, std::numeric_limits<
+                 typename FloatTraits::Type>::infinity()));
+    return null;
   }
   typedef boost::int32_t AvroType;
   static bool get_are_equal(ArgumentType a, ArgumentType b) {
@@ -206,13 +208,14 @@ typedef VectorTraits<4> Vector4Traits;
 struct Vector3sTraits {
   typedef Vector3s Type;
   typedef std::vector<std::vector<Vector<3> > > Types;
-  typedef Type ReturnType;
-  typedef Type ArgumentType;
+  typedef const Type& ReturnType;
+  typedef const Type& ArgumentType;
   static bool get_is_null_value(const Type& t) {
     return t.empty();
   }
   static ReturnType get_null_value() {
-    return Type();
+    static const Type null;
+    return null;
   }
   typedef boost::int32_t AvroType;
   static bool get_are_equal(ArgumentType a, ArgumentType b) {
