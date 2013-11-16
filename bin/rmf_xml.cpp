@@ -47,7 +47,7 @@ bool show_type_data_xml(Handle nh, RMF::Category kc, bool opened,
   }
   return opened;
 }
-#define RMF_SHOW_TYPE_DATA_XML(Traits, UCName, lcname) \
+#define RMF_SHOW_TYPE_DATA_XML(Traits, UCName) \
   opened = show_type_data_xml<Traits>(nh, kc, opened, out);
 
 template <class Handle>

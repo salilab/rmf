@@ -10,7 +10,7 @@ class GenericTest(unittest.TestCase):
         f = RMF.create_rmf_file(RMF._get_temporary_file_path("frames.rmf"))
         f.add_frame("root", RMF.FRAME)
         cat = f.get_category("cat")
-        key = f.get_int_key(cat, "key")
+        key = f.get_key(cat, "key", RMF.int_traits)
         n = f.get_root_node().add_child("node", RMF.REPRESENTATION)
         n.set_value(key, 1)
         print "frames", f.get_number_of_frames()

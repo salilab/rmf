@@ -35,7 +35,7 @@ namespace backends {
 struct IO;
 }
 
-#define RMF_HOIST(Traits, UCName, lcname)            \
+#define RMF_HOIST(Traits, UCName)            \
   using SharedDataData<Traits>::get_static_data;     \
   using SharedDataData<Traits>::get_static_value;    \
   using SharedDataData<Traits>::set_static_value;    \
@@ -56,7 +56,7 @@ struct IO;
   using SharedDataKeys<Traits>::access_key_data;     \
   using SharedDataKeys<Traits>::get_key_data;
 
-#define RMF_SHARED_DATA_PARENT(Traits, UCName, lcname) \
+#define RMF_SHARED_DATA_PARENT(Traits, UCName) \
  public                                                \
   SharedDataKeys<Traits>, public SharedDataData<Traits>,
 

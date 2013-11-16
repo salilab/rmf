@@ -17,7 +17,7 @@
 
 RMF_ENABLE_WARNINGS
 
-#define RMF_HDF5_NODE_KEY_TYPE_METHODS(Traits, UCName, lcname)              \
+#define RMF_HDF5_NODE_KEY_TYPE_METHODS(Traits, UCName)              \
   /** \brief  set the value of the attribute k for this node on the         \
       current frame.                                                        \
   */                                                                        \

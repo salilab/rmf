@@ -54,42 +54,47 @@ _plural_types=[]
 %include "RMF/infrastructure_macros.h"
 
 %pythoncode %{
-_types_list=[]
+_types_list = []
+_traits_list = []
 def get_data_types():
    return _types_list
+def get_data_traits():
+   return _traits_list
 %}
 
 
 /* Apply the passed macro to each type used in RMF */
 %define RMF_SWIG_FOREACH_TYPE(macroname)
-  macroname(int, Int, Ints, int);
-  macroname(ints, Ints, IntsList, RMF::Ints);
-  macroname(float, Float, Floats, double);
-  macroname(floats, Floats, FloatsList, RMF::Floats);
-  macroname(string, String, Strings, std::string);
-  macroname(strings, Strings, StringsList, RMF::Strings);
-  macroname(vector3, Vector3, Vector3s, RMF::Vector3);
-  macroname(vector4, Vector4, Vector4s, RMF::Vector4);
-  macroname(vector3s, Vector3s, Vector3sList, RMF::Vector3s);
+  macroname(int, Int);
+  macroname(ints, Ints);
+  macroname(float, Float);
+  macroname(floats, Floats);
+  macroname(string, String);
+  macroname(strings, Strings);
+  macroname(vector3, Vector3);
+  macroname(vector4, Vector4);
+  macroname(vector3s, Vector3s);
 %enddef
 
 /* Declare the needed things for each type */
-%define RMF_SWIG_DECLARE_TYPE(lcname, Ucname, Ucnames, Type)
-namespace RMF {
-%rename(_##Ucname##Traits) Ucname##Traits;
-}
-
+%define RMF_SWIG_DECLARE_TYPE(lcname, Ucname)
+%rename(_##Ucname##Traits) RMF::Ucname##Traits;
 RMF_SWIG_VALUE_INSTANCE(RMF, Ucname##Key, Ucname##Key, Ucname##Keys);
+%enddef
+
+%define RMF_SWIG_TYPE_LIST(lcname, UCname)
 %pythoncode %{
+lcname##_traits = _##UCname##Traits()
 _types_list.append(#lcname)
+_traits_list.append(lcname##_traits)
 %}
 %enddef
 
-%define RMF_SWIG_DEFINE_TYPE(lcname, Ucname, Ucnames, Type)
+%define RMF_SWIG_DEFINE_TYPE(lcname, Ucname)
 %template(Ucname##Key) RMF::ID<RMF::Ucname##Traits>;
 %enddef
 
-%define RMF_SWIG_WRAP_NULLABLE(lcname, Ucname, Ucnames, Type)
+%define RMF_SWIG_WRAP_NULLABLE(lcname, Ucname)
 %template(_##Ucname##Nullable) RMF::Nullable<RMF::Ucname##Traits>;
 %enddef
 
@@ -142,6 +147,10 @@ RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DECLARE_TYPE);
 %template(Category) RMF::ID<RMF::CategoryTag>;
 RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DEFINE_TYPE);
 
+namespace RMF {
+%rename(_get_keys) FileConstHandle::get_keys;
+}
+
 %extend RMF::FileConstHandle {
    %pythoncode %{
     def get_frames(self):
@@ -170,12 +179,11 @@ RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DEFINE_TYPE);
         return MyRange(self.get_number_of_nodes())
     def get_keys(self, kc):
         ret=[]
-        for t in _types_list:
-           fn= getattr(self, "get_"+t+"_keys")
-           ret.extend(fn(kc))
+        for t in _traits_list:
+           ret.extend(self._get_keys(kc, t))
         return ret
   %}
- }
+}
 
 
 
@@ -200,6 +208,8 @@ RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DEFINE_TYPE);
 %template(Vector4) RMF::Vector<4>;
 
 %include "RMF/types.h"
+
+RMF_SWIG_FOREACH_TYPE(RMF_SWIG_TYPE_LIST)
 
 %include "RMF/Nullable.h"
 RMF_SWIG_FOREACH_TYPE(RMF_SWIG_WRAP_NULLABLE);

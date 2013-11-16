@@ -74,6 +74,7 @@ struct IntTraits {
   typedef boost::int32_t AvroType;
   static bool get_are_equal(ArgumentType a, ArgumentType b) { return a == b; }
   static std::string get_tag() { return "ki"; }
+  static std::string get_name() { return "int"; }
 };
 struct FloatTraits {
   typedef Float Type;
@@ -92,6 +93,7 @@ struct FloatTraits {
     return std::abs(a - b) < .0000001 * std::abs(a + b) + .000000001;
   }
   static std::string get_tag() { return "kf"; }
+  static std::string get_name() { return "float"; }
 };
 struct StringTraits {
   typedef String Type;
@@ -107,6 +109,7 @@ struct StringTraits {
   typedef Type AvroType;
   static bool get_are_equal(ArgumentType a, ArgumentType b) { return a == b; }
   static std::string get_tag() { return "ks"; }
+  static std::string get_name() { return "string"; }
 };
 struct IntsTraits {
   typedef Ints Type;
@@ -128,6 +131,7 @@ struct IntsTraits {
     return true;
   }
   static std::string get_tag() { return "kis"; }
+  static std::string get_name() { return "ints"; }
 };
 struct FloatsTraits {
   typedef Floats Type;
@@ -149,6 +153,7 @@ struct FloatsTraits {
     return true;
   }
   static std::string get_tag() { return "kfs"; }
+  static std::string get_name() { return "floats"; }
 };
 struct StringsTraits {
   typedef Strings Type;
@@ -170,12 +175,25 @@ struct StringsTraits {
     return true;
   }
   static std::string get_tag() { return "kss"; }
+  static std::string get_name() { return "strings"; }
 };
 
 #if !defined(SWIG)
   // swig gets confused
 template <unsigned int D>
-struct VectorTraits {
+class VectorTraits {
+  static std::string make_tag() {
+    std::ostringstream oss;
+    oss << "v" << D;
+    return oss.str();
+  }
+  static std::string make_name() {
+    std::ostringstream oss;
+    oss << "vector" << D;
+    return oss.str();
+  }
+
+public:
   typedef Vector<D> Type;
   typedef std::vector<Vector<D> > Types;
   typedef const Type& ReturnType;
@@ -197,9 +215,13 @@ struct VectorTraits {
     return true;
   }
   static std::string get_tag() {
-    std::ostringstream oss;
-    oss << "v" << D;
-    return oss.str();
+    static std::string tag = make_tag();
+    return tag;
+  }
+
+  static std::string get_name() {
+   static std::string name = make_name();
+    return name;
   }
 };
 
@@ -258,6 +280,7 @@ struct Vector3sTraits {
     oss << "vs" << 3;
     return oss.str();
   }
+  static std::string get_name() { return "vector3s"; }
 };
 
   //typedef VectorsTraits<3> Vector3sTraits;
@@ -316,9 +339,9 @@ class BondEndpoints
   }
 };
 
-#define RMF_DECLARE_KEY(Traits, Ucname, lcname) \
-  typedef ID<Traits> Ucname##Key;               \
-  typedef std::vector<Ucname##Key> Ucname##Keys;
+#define RMF_DECLARE_KEY(Traits, UCName) \
+  typedef ID<Traits> UCName##Key;       \
+  typedef std::vector<UCName##Key> UCName##Keys;
 
 /** \name Key types
     RMF files support storing a variety of different types of data. These

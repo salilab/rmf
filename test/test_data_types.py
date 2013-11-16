@@ -10,14 +10,14 @@ class GenericTest(unittest.TestCase):
             nh = f.get_root_node().add_child("testn", RMF.REPRESENTATION)
         else:
             nh = f.get_root_node().get_children()[0]
-        lst = [(f.get_int_key, 4),
-               (f.get_float_key, 3.25),
-               (f.get_string_key, "there"),
-               (f.get_strings_key, ["here", "there", "everywhere"]),
-               (f.get_vector3_key, RMF.Vector3(1, 2, 3)),
-               (f.get_vector4_key, RMF.Vector4(1, 2, 3, 4)),
-               (f.get_vector3s_key, [RMF.Vector3(1, 2, 3)]),
-               (f.get_ints_key, [3, 4, 5, 6]), ]
+        lst = [(RMF.int_traits, 4),
+               (RMF.float_traits, 3.25),
+               (RMF.string_traits, "there"),
+               (RMF.strings_traits, ["here", "there", "everywhere"]),
+               (RMF.vector3_traits, RMF.Vector3(1, 2, 3)),
+               (RMF.vector4_traits, RMF.Vector4(1, 2, 3, 4)),
+               (RMF.vector3s_traits, [RMF.Vector3(1, 2, 3)]),
+               (RMF.ints_traits, [3, 4, 5, 6]), ]
         #      (f.get_vector4_key, RMF.Vector4(1,2,3,4))]
         #self.assertEqual(len(lst), len(RMF.get_data_types()) - 3)
         return lst
@@ -29,7 +29,7 @@ class GenericTest(unittest.TestCase):
         nh = f.get_root_node().get_children()[0]
         cat = f.get_category("mine")
         for i, p in enumerate(lst):
-            k = p[0](cat, "hi" + str(i))
+            k = f.get_key(cat, "hi" + str(i), p[0])
             nh.set_value(k, p[1])
 
     def _test_read(self, name):
@@ -39,7 +39,7 @@ class GenericTest(unittest.TestCase):
         nh = f.get_root_node().get_children()[0]
         cat = f.get_category("mine")
         for i, p in enumerate(lst):
-            k = p[0](cat, "hi" + str(i))
+            k = f.get_key(cat, "hi" + str(i), p[0])
             v = nh.get_value(k)
             print v, p[1]
             self.assertEqual(v, p[1])

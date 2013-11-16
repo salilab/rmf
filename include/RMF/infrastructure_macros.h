@@ -118,7 +118,6 @@ RMF_ENABLE_WARNINGS
   macroname(float, Float, float, float, const Floats&, Floats); \
   macroname(index, Index, int, int, const Ints&, Ints)
 
-#ifndef RMF_DOXYGEN
 /** Expand to applying the macro to each type supported by
     the rmf library. The macro should take six argments
     - the lower case name of the type
@@ -128,20 +127,14 @@ RMF_ENABLE_WARNINGS
     - the C++ type for accepting more than one value
     - the C++ type for returning more than one value
 */
-#define RMF_FOREACH_TYPE(macroname)                   \
-  macroname(RMF::IntTraits, Int, int)                 \
-      macroname(RMF::FloatTraits, Float, float)       \
-      macroname(RMF::StringTraits, String, string)    \
-      macroname(RMF::IntsTraits, Ints, ints)          \
-      macroname(RMF::FloatsTraits, Floats, floats)    \
-      macroname(RMF::StringsTraits, Strings, strings) \
-      macroname(RMF::Vector3Traits, Vector3, vector3) \
-      macroname(RMF::Vector4Traits, Vector4, vector4) \
-      macroname(RMF::Vector3sTraits, Vector3s, vector3s)
-#else
-#define RMF_FOREACH_TYPE(macroname) \
-  macroname(Traits, UCname, lcname);
-#endif
+#define RMF_FOREACH_TYPE(macroname)                                         \
+  macroname(RMF::IntTraits, Int) macroname(RMF::FloatTraits, Float)         \
+      macroname(RMF::StringTraits, String) macroname(RMF::IntsTraits, Ints) \
+      macroname(RMF::FloatsTraits, Floats)                                  \
+      macroname(RMF::StringsTraits, Strings)                                \
+      macroname(RMF::Vector3Traits, Vector3)                                \
+      macroname(RMF::Vector4Traits, Vector4)                                \
+      macroname(RMF::Vector3sTraits, Vector3s)
 
 #define RMF_DECORATOR_CATCH(extra_info)               \
   catch (Exception& e) {                              \

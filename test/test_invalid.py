@@ -12,8 +12,8 @@ class GenericTest(unittest.TestCase):
         f = RMF.create_rmf_file(name)
         f.add_frame("root", RMF.FRAME)
         cat = f.get_category("test")
-        k0 = f.get_float_key(cat, "k0")
-        k1 = f.get_float_key(cat, "k1")
+        k0 = f.get_key(cat, "k0", RMF.float_traits)
+        k1 = f.get_key(cat, "k1", RMF.float_traits)
         n0 = f.get_root_node().add_child("n0", RMF.REPRESENTATION)
         n1 = f.get_root_node().add_child("n1", RMF.REPRESENTATION)
         n0.set_value(k0, 1.0)
@@ -24,8 +24,8 @@ class GenericTest(unittest.TestCase):
         f = RMF.open_rmf_file_read_only(name)
         f.set_current_frame(RMF.FrameID(0))
         cat = f.get_category("test")
-        k0 = f.get_float_key(cat, "k0")
-        k1 = f.get_float_key(cat, "k1")
+        k0 = f.get_key(cat, "k0", RMF.float_traits)
+        k1 = f.get_key(cat, "k1", RMF.float_traits)
         n0 = f.get_root_node().get_children()[0]
         n1 = f.get_root_node().get_children()[1]
         self.assert_(not n1.get_has_value(k0))

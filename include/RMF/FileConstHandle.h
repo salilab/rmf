@@ -27,23 +27,23 @@ RMF_ENABLE_WARNINGS
         e);                                                               \
   }
 
-#define RMF_HDF5_ROOT_CONST_KEY_TYPE_METHODS(Traits, UCName, lcname)           \
-  UCName##Key get_##lcname##_key(Category category_id, std::string nm) const { \
-    return get_key<Traits>(category_id, nm);                                   \
-  }                                                                            \
-  std::string get_name(UCName##Key k) const {                                  \
-    try {                                                                      \
-      return shared_->get_name(k);                                             \
-    }                                                                          \
-    RMF_FILE_CATCH();                                                          \
-  }                                                                            \
-  Category get_category(UCName##Key k) const {                                 \
-    return shared_->get_category(k);                                           \
-  }                                                                            \
-  /** This returns all the keys that are used in the current frame.            \
-      Other frames may have different ones.*/                                  \
-  UCName##Key##s get_##lcname##_keys(Category category_id) {                   \
-    return get_keys<Traits>(category_id);                                      \
+#define RMF_HDF5_ROOT_CONST_KEY_TYPE_METHODS(Traits, UCName)        \
+  UCName##Key get_key(Category category_id, std::string nm, Traits) const { \
+    return get_key<Traits>(category_id, nm);                                \
+  }                                                                         \
+  std::string get_name(UCName##Key k) const {                               \
+    try {                                                                   \
+      return shared_->get_name(k);                                          \
+    }                                                                       \
+    RMF_FILE_CATCH();                                                       \
+  }                                                                         \
+  Category get_category(UCName##Key k) const {                              \
+    return shared_->get_category(k);                                        \
+  }                                                                         \
+  /** This returns all the keys that are used in the current frame.         \
+      Other frames may have different ones.*/                               \
+  UCName##Key##s get_keys(Category category_id, Traits) {                   \
+    return get_keys<Traits>(category_id);                                   \
   }
 RMF_VECTOR_DECL(FileConstHandle);
 

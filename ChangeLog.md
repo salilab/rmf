@@ -1,4 +1,6 @@
 # Change Log #
+- You now get keys by passing the appropriate traits object instead of
+	having the type in the function name: eg `f.get_key(cat, "name", RMF.IntTraits())`
 - Appropriate decorators now return RMF::Vector3, RMF::Vector4 or
 	RMF::Vector3s instead of RMF::Floats.
 - There are now static and non-static versions of the decorators.

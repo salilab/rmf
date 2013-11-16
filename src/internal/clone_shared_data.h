@@ -68,7 +68,7 @@ void clone_file(SDA* sda, SDB* sdb) {
   sdb->set_producer(sda->get_producer());
 }
 
-#define RMF_CLONE_KEYS(Traits, UCName, lcname) \
+#define RMF_CLONE_KEYS(Traits, UCName) \
   sdb->access_key_data(Traits()) = sda->get_key_data(Traits());
 
 inline void clone_file(const SharedData* sda, SharedData* sdb) {
@@ -94,7 +94,7 @@ void clone_values_type(SDA* sda, Category cata, SDB* sdb, Category catb, H) {
   }
 }
 
-#define RMF_CLONE_VALUES(Traits, UCName, lcname) \
+#define RMF_CLONE_VALUES(Traits, UCName) \
   clone_values_type<Traits, Traits>(sda, cata, sdb, catb, H());
 
 template <class SDA, class SDB, class H>
@@ -125,7 +125,7 @@ void clone_loaded_data(SDA* sda, SDB* sdb) {
   }
 }
 
-#define RMF_CLONE_DATA(Traits, UCName, lcname) \
+#define RMF_CLONE_DATA(Traits, UCName) \
   H::access_data(sdb, Traits()) = H::get_data(sda, Traits());
 
 inline void clone_static_data(const SharedData* sda, SharedData* sdb) {
