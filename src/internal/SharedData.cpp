@@ -21,12 +21,20 @@ RMF_ENABLE_WARNINGS
 
 namespace RMF {
 namespace internal {
+
+namespace {
+  boost::unordered_set<std::string> open_for_writing;
+}
 SharedData::SharedData(boost::shared_ptr<backends::IO> io, std::string name,
                        bool write, bool created)
     : SharedDataPath(name), number_of_frames_(0), write_(write), io_(io) {
   if (!created) {
     reload();
   }
+  RMF_USAGE_CHECK(
+      open_for_writing.find(get_file_path()) == open_for_writing.end(),
+      "Opening a file that is still being written is asking for trouble.");
+  if (write) open_for_writing.insert(get_file_path());
 }
 
 void SharedData::set_loaded_frame(FrameID frame) {
@@ -165,6 +173,7 @@ SharedData::~SharedData() {
     std::cerr << "Exception caught in shared data destructor " << e.what()
               << std::endl;
   }
+  open_for_writing.erase(get_file_path());
 }
 
 }  // namespace internal
