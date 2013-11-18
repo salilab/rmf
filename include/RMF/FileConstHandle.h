@@ -157,6 +157,7 @@ class RMFEXPORT FileConstHandle {
     return shared_->get_loaded_frame_name();
   }
   void set_current_frame(FrameID frame) const {
+    RMF_USAGE_CHECK(frame != FrameID(), "Invalid frame passed.");
     RMF_USAGE_CHECK(frame != ALL_FRAMES,
                     "Use set_static_value() and get_static_value() to "
                     "manipulate the static frame.");
