@@ -676,7 +676,7 @@ class HDF5SharedData : public backends::BackwardsIOBase {
   void add_child(NodeID node, NodeID child_node);
   NodeIDs get_children(NodeID node) const;
   unsigned int get_number_of_frames() const;
-  unsigned int get_number_of_nodes() const { return node_data_.get_size()[0]; }
+  unsigned int get_number_of_nodes() const { return node_names_.get_size()[0]; }
 
   Categories get_categories() const;
   Category get_category(std::string name);
