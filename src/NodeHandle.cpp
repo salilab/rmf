@@ -30,7 +30,7 @@ NodeHandle NodeHandle::add_child(std::string name, NodeType t) const {
 
 void NodeHandle::add_child(NodeConstHandle nh) const {
   try {
-    shared_->add_child(node_, nh.get_node_id());
+    shared_->add_child(node_, nh.get_id());
   }
   RMF_NODE_CATCH();
 }

@@ -188,7 +188,7 @@ namespace RMF {
 
 
 %include "RMF/constants.h"
-%include "RMF/Vector.h"
+
 %extend RMF::Vector {
  // hack for testing
   bool __eq__(const Vector<D>& o) const {
@@ -203,7 +203,16 @@ namespace RMF {
     }
     return false;
   }
+%pythoncode %{
+    def __str__(self):
+       return str([x for x in self])
+    def __repr__(self):
+         return self.__str__()
+  %}
  }
+
+%include "RMF/Vector.h"
+
 %template(Vector3) RMF::Vector<3>;
 %template(Vector4) RMF::Vector<4>;
 

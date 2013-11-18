@@ -404,6 +404,8 @@ struct BackwardsIO : public IO {
       RMF_OVERRIDE {
     RMF_INFO(get_logger(), "Saving frame " << shared_data->get_loaded_frame());
     FrameID cur = shared_data->get_loaded_frame();
+    RMF_USAGE_CHECK(cur.get_index() == sd_->get_number_of_frames(),
+                    "Saving a frame that is not the next one");
     // ignore nesting relationships for now
     if (cur.get_index() >= sd_->get_number_of_frames()) {
       RMF_TRACE(get_logger(), "Adding new frame for " << cur);

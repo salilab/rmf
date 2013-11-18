@@ -31,6 +31,9 @@ SharedData::SharedData(boost::shared_ptr<backends::IO> io, std::string name,
 
 void SharedData::set_loaded_frame(FrameID frame) {
   RMF_USAGE_CHECK(frame != ALL_FRAMES, "Trying to set loaded to all frames");
+  RMF_USAGE_CHECK(
+      frame == FrameID() || frame.get_index() < get_number_of_frames(),
+      "Trying to load a frame that isn't there");
   if (frame == get_loaded_frame()) return;
   RMF_INFO(get_logger(), "Setting loaded frame to " << frame);
   if (get_loaded_frame() != FrameID() && write_) {
@@ -153,9 +156,15 @@ std::vector<char> SharedData::get_buffer() {
 }
 
 SharedData::~SharedData() {
-  RMF_INFO(get_logger(), "Closing file " << get_file_path());
-  set_loaded_frame(FrameID());
-  flush();
+  try {
+    RMF_INFO(get_logger(), "Closing file " << get_file_path());
+    set_loaded_frame(FrameID());
+    flush();
+    io_.reset();
+  } catch(const std::exception &e) {
+    std::cerr << "Exception caught in shared data destructor " << e.what()
+              << std::endl;
+  }
 }
 
 }  // namespace internal
