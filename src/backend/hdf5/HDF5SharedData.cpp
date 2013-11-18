@@ -89,6 +89,7 @@ void HDF5SharedData::initialize_keys(int) {
   RMF_FOREACH(Category cat, cats) {
     RMF_FOREACH_BACKWARDS_TYPE(RMF_LIST_KEYS);
   }
+  initialize_keys(get_category("link"), "nodeid", NodeIDTraits());
 }
 
 void HDF5SharedData::initialize_free_nodes() {
@@ -122,7 +123,10 @@ HDF5SharedData::HDF5SharedData(std::string g, bool create, bool read_only)
   if (create) {
     add_node("root", ROOT);
   } else {
-    RMF_USAGE_CHECK(get_name(NodeID(0)) == "root", "Root node is not so named");
+    RMF_INFO(get_logger(), "Found " << node_names_.get_size() << " nodes");
+    RMF_USAGE_CHECK(
+        get_name(NodeID(0)) == "root",
+        std::string("Root node is not so named ") + get_name(NodeID(0)));
   }
 }
 
