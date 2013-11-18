@@ -162,7 +162,7 @@ class Attribute(Base):
     } RMF_DECORATOR_CATCH( );
   }
 """ % (function_name, function_name, function_name)
-        self.check = "nh.get_has_value(NAME_)"
+        self.check = "!nh.GET(NAME_).get_is_null()"
         self.data_initialize = "fh.get_key<TYPETraits>(cat_, \"%s\")" % name
 
 
@@ -230,7 +230,7 @@ class AttributePair(Base):
      return ret;
     }
 """ % (data_type, begin, data_type, end)
-        self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1])"
+        self.check = "!nh.GET(NAME_[0]).get_is_null() && !nh.GET(NAME_[1]).get_is_null()"
         self.data_initialize = "get_NAME_keys(fh)"
 
 
@@ -276,7 +276,7 @@ class SingletonRangeAttribute(AttributePair):
     } RMF_DECORATOR_CATCH( );
   }
 """
-        self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1]) && nh.GET_BOTH(NAME_[0]) == nh.GET_BOTH(NAME_[1])"
+        self.check = "!nh.GET(NAME_[0]).get_is_null() && !nh.GET(NAME_[1]).get_is_null() && nh.GET_BOTH(NAME_[0]) == nh.GET_BOTH(NAME_[1])"
 
 
 class RangeAttribute(AttributePair):
@@ -321,7 +321,7 @@ class RangeAttribute(AttributePair):
     } RMF_DECORATOR_CATCH( );
   }
 """
-        self.check = "nh.get_has_value(NAME_[0]) && nh.get_has_value(NAME_[1]) && nh.GET_BOTH(NAME_[0]) < nh.GET_BOTH(NAME_[1])"
+        self.check = "!nh.GET(NAME_[0]).get_is_null() && !nh.GET(NAME_[1]).get_is_null() && nh.GET_BOTH(NAME_[0]) < nh.GET_BOTH(NAME_[1])"
 
 decorator = """
   /** DESCRIPTION
@@ -373,7 +373,10 @@ HELPERS
     /** Check whether nh has all the attributes required to be a
         NAMECONST.*/
     bool get_is(NodeCONSTHandle nh) const {
-      return CHECKS;
+      return FRAME_CHECKS;
+    }
+    bool get_is_static(NodeCONSTHandle nh) const {
+      return STATIC_CHECKS;
     }
     BULK_METHODS
   };
@@ -490,7 +493,12 @@ class Decorator:
                                       """ % (self._get_type_check(), self.name,
                                              self.init_function)))
 
-        ret.append(("CHECKS", self._get_checks(const)))
+        ret.append(
+            ("FRAME_CHECKS", self._get_checks(const)
+             .replace("GET", "get_value")))
+        ret.append(
+            ("STATIC_CHECKS", self._get_checks(const)
+             .replace("GET", "get_static_value")))
         return ret
 
     def get(self):

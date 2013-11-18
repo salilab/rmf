@@ -74,11 +74,13 @@ make_header(
 
 score = Decorator(["FEATURE"], "feature",
                   "Score", "Associate a score with some set of particles. If the score is an energy, it should be in kJ/mol.",
-                  [Children(
-                      "representation", "The various components of this score node."),
-                   Attribute("score", "Float", "The score.")])
+                  [Attribute("score", "Float", "The score.")])
+representation = Decorator(["FEATURE"], "feature",
+                           "Representation", "Associate a score with some set of particles. If the score is an energy, it should be in kJ/mol.",
+                           [Attribute(
+                               "representation", "Ints", "Node IDs of the various components.")])
 
-make_header("feature", [score], [])
+make_header("feature", [score, representation], [])
 
 
 colored = Decorator(
