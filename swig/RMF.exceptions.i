@@ -3,6 +3,8 @@ namespace {
 void handle_imp_exception(void) {
     try {
       throw;
+    } catch (const RMF::IndexException &e) {
+      PyErr_SetString(PyExc_IndexError, e.what());
     } catch (const RMF::Exception &e) {
       // for windows where there may be multiple std::exceptions
       // the order  is to avoid warnings about redundancy

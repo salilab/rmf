@@ -11,6 +11,7 @@
 
 #include <RMF/config.h>
 #include <boost/array.hpp>
+#include <algorithm>
 
 RMF_ENABLE_WARNINGS
 
@@ -30,6 +31,16 @@ class Vector {
 
  public:
   Vector() {}
+  template <class It>
+  Vector(It b, It e) {
+    std::copy(b, e, data_);
+  }
+  template <class Range>
+  explicit Vector(Range r) {
+    RMF_USAGE_CHECK(std::distance(r.begin(), r.end()) == D,
+                    "sizes don't match");
+    std::copy(r.begin(), r.end(), data_);
+  }
   Vector(const std::vector<float>& input) {
     RMF_USAGE_CHECK(input.size() == D, "sizes don't match");
     std::copy(input.begin(), input.end(), data_);
@@ -75,7 +86,7 @@ class Vector {
   }
 #endif
   float __getitem__(unsigned int i) const {
-    if (i >= D) throw UsageException();
+    if (i >= D) throw IndexException();
     return data_[i];
   }
   unsigned int __len__() const { return D; }

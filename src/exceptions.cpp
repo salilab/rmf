@@ -98,8 +98,11 @@ UsageException::~UsageException() throw() {}
 
 IOException::IOException() : Exception() {}
 IOException::~IOException() throw() {}
-InternalException::InternalException() : Exception() {}
 
+IndexException::IndexException() : Exception() {}
+IndexException::~IndexException() throw() {}
+
+InternalException::InternalException() : Exception() {}
 InternalException::~InternalException() throw() {}
 
 } /* namespace RMF */

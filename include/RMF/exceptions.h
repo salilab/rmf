@@ -69,6 +69,15 @@ RMF_ENABLE_WARNINGS namespace RMF {
     InternalException();
     ~InternalException() RMF_NOEXCEPT;
   };
+
+  /** IndexExceptions are thrown when you walk off the end of something.
+   */
+  class RMFEXPORT IndexException : public Exception {
+   public:
+    RMF_CXX11_DEFAULT_COPY_CONSTRUCTOR(IndexException);
+    IndexException();
+    ~IndexException() RMF_NOEXCEPT;
+  };
 }
 
 #define RMF_THROW(m, e)                          \
