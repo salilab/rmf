@@ -32,20 +32,32 @@ Frame get_frame(const FileData& fd, std::string path, FrameID id,
   RMF_INTERNAL_CHECK(
       fd.frame_block_offsets.find(id) != fd.frame_block_offsets.end(),
       "No such frame found");
+  RMF_TRACE(get_logger(), "Looking for frame " << id);
   int64_t offset = fd.frame_block_offsets.find(id)->second;
   if (!reader || reader->blockOffsetBytes() > offset) {
+    RMF_TRACE(get_logger(), "Creating new reader");
     reader.reset(new rmf_avro::DataFileReader<Frame>(
         path.c_str(),
         rmf_avro::compileJsonSchemaFromString(data_avro2::frame_json)));
   }
-  reader->seekBlockBytes(offset);
+  RMF_INTERNAL_CHECK(reader->blockOffsetBytes() <= offset,
+                     "Too high an offset");
+  if (reader->blockOffsetBytes() != offset) {
+    RMF_TRACE(get_logger(), "Seeking to " << offset << " from "
+                                          << reader->blockOffsetBytes());
+    reader->seekBlockBytes(offset);
+  }
   do {
+    RMF_INTERNAL_CHECK(reader->blockOffsetBytes() == offset,
+                       "Not at right offset");
     Frame ret;
     reader->read(ret);
     if (ret.id == id) {
       RMF_INFO(get_logger(), "Loaded frame " << ret.id << " " << id
                                              << std::endl);
       return ret;
+    } else {
+      RMF_TRACE(get_logger(), "Found frame for frame " << ret.id);
     }
   } while (true);
 }
