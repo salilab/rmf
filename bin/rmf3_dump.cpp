@@ -24,16 +24,23 @@ int main(int argc, char** argv) {
     rmf_avro::DataFileReader<rmf_raw_avro2::Frame> reader(input.c_str(),
                                                           schema);
     rmf_raw_avro2::Frame frame;
-    while (reader.read(frame)) {
-      rmf_avro::EncoderPtr encoder = rmf_avro::jsonEncoder(schema);
-      std::auto_ptr<rmf_avro::OutputStream> os =
-          rmf_avro::ostreamOutputStream(std::cout);
-      encoder->init(*os);
-      rmf_avro::encode(*encoder, frame);
+    try {
+      while (reader.read(frame)) {
+        std::size_t offset = reader.blockOffsetBytes();
+        std::cout << "Block offset " << offset << std::endl;
+        rmf_avro::EncoderPtr encoder = rmf_avro::jsonEncoder(schema);
+        std::auto_ptr<rmf_avro::OutputStream> os =
+            rmf_avro::ostreamOutputStream(std::cout);
+        encoder->init(*os);
+        rmf_avro::encode(*encoder, frame);
 
-      // apparently these are necessary
-      encoder->flush();
-      os->flush();
+        // apparently these are necessary
+        encoder->flush();
+        os->flush();
+        std::cout << std::endl;
+      }
+    }
+    catch (std::exception e) {
     }
     return 0;
   }
