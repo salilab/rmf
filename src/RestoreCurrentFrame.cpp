@@ -6,18 +6,16 @@
  *
  */
 
-#include <RMF/SetCurrentFrame.h>
+#include <RMF/RestoreCurrentFrame.h>
 
 RMF_ENABLE_WARNINGS
 
-RMF_VECTOR_DEF(SetCurrentFrame);
+RMF_VECTOR_DEF(RestoreCurrentFrame);
 
 namespace RMF {
-SetCurrentFrame::SetCurrentFrame(FileConstHandle file, FrameID current_frame)
-    : file_(file), old_frame_(file.get_current_frame()) {
-  file.set_current_frame(current_frame);
-}
-SetCurrentFrame::~SetCurrentFrame() {
+RestoreCurrentFrame::RestoreCurrentFrame(FileConstHandle file)
+    : file_(file), old_frame_(file.get_current_frame()) {}
+RestoreCurrentFrame::~RestoreCurrentFrame() {
   if (old_frame_ != FrameID()) {
     file_.set_current_frame(old_frame_);
   }
