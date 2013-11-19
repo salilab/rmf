@@ -57,8 +57,12 @@ namespace {
 }
 
 int main(int, char*[]) {
+#if BOOST_VERSION > 104100
   boost::filesystem::path temp = boost::filesystem::unique_path();
   const std::string name = temp.native();
+#else
+  std::string name = tmpnam(NULL);
+#endif
   std::cout << "File is " << name << std::endl;
   write(name);
   read(name);
