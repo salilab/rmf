@@ -5,7 +5,7 @@ hierarchical molecular data (such as atomic or coarse
 grained representations of proteins), along with
 markup, including geometry and score data.
 
-The library uses the [HDF5](http://www.hdf5.org,HDF5) library or [Avro](http://avro.apache.org) library to manage the data on
+The library uses the [HDF5](http://www.hdf5.org) library or [Avro](http://avro.apache.org) library to manage the data on
 disk. Other backends (eg mmCIF) could be used, if desired.
 
 See

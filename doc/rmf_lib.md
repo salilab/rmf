@@ -1,7 +1,8 @@
-/**
-\page rmflib The RMF library
+# RMF Library
 
-\tableofcontents
+# Overview # {#rmflib}
+
+[TOC]
 
 The %RMF library provides an intermediate level interface to facilitate I/O of
 %RMF data into and out of programs. The primary classes of interest are
@@ -10,7 +11,7 @@ representing a node in the hierarchy.
 
 The file is automatically closed when the last handle to it is destroyed.
 
-\section basics Basics
+## Basics ## {#basics}
 
 The library defines many classes, some of which are implemented using \c C++
 templates. Every class support output to a \c std::ostream in \c C++ and
@@ -19,23 +20,11 @@ to other instances of the same class and can be inserted in hash tables both
 in \c C++ and \c Python. The methods necessary to support these things are
 omitted for brevity.
 
-Template classes are, in general parameterized by one of two things
-- Arity, meaning whether they relate to a single node, a pair of nodes etc
-- type, meaning whether they relate to \ref rmf_types "integers, floats etc"
-.
-For any class that is parameterized by Arity, typedefs (and \c Python types)
-are provided for 1 through 4 nodes, with names like \c Category, \c PairCategory,
-\c TripletCategory, \c QuadCategory. For classes parameterized by type, typedefs
-and \c Python classes are provides for all the \ref rmf_types "standard types"
-with names like \c IntKey, \c FloatKey etc. Some classes, like RMF::Key are parameterized
-by both, so the full cross product of types is provided with names like
-\c PairFloatKey.
-
 In addition, there is a typedef for each type for managing lists of the objects.
-For example, a list of \c Category objects is passed using a \c Categories type.
+For example, a list of RMF::Category objects is passed using a RMF::Categories type.
 It looks like a \c std::vector in \c C++ and is a \c list in \c Python.
 
-\section assoc Associations
+## Associations ## {#associations}
 
 The %RMF wrapper has the concept of an association between nodes in
 its hierarchy and objects in the program accessing. The methods
@@ -47,27 +36,20 @@ data structures corresponding to the nodes and so avoid maintaining
 ones own lookup table. Any function used in an association must support
 a \c get_uint() function. An implementation is provided for pointers.
 
-\section accelerating Accelerated I/O
-
-Traversing large %RMF files can be slow, especially when doing so in scripting
-languages. The library provides a few methods RMF::get_values() to accelerate
-this process when loading values for each of a number of frames. Other such
-batch methods can be added as appropriate.
-
-\section parallel Parallel I/O
+## Parallel I/O ## {#parallel}
 
 If RMF::FileHandle::flush() has been called since the last change, it is safe
 to read the file from another process. Writing from more than one process is not
 supported. Nor is reading or writing from more than one thread of the same
 program.
 
-\section invariants Invariants
+## Invariants ## {#invariants}
 
 Currently, there is little explicit checking of invariants between attributes
 in the %RMF file. An extensible framework for checking invariants on file
 close and open will be added.
 
-\section rmfdecorators Decorators and Factories
+## Decorators and factories ## {#rmfdecorators}
 
 The nicest way to interact with data stored in nodes is through decorators and
 factories. A factory (eg RMF::ParticleFactory or RMF::ParticleConstFactory) is
@@ -78,16 +60,16 @@ for that node at that frame. The decorator (eg RMF::Particle or RMF::ParticleCon
 can then be used to access the attributes and set them (for non-const variants). The
 accessing is done through appropriately named functions (eg RMF::Particle::set_radius()).
 
-\section bindings Other language bindings
+## Language bindings ## {#bindings}
 
 The %RMF library currently supports C++ and Python. The API is
-written so that \external{http://www.swig.org,SWIG} can be used to
+written so that [SWIG](http://www.swig.org) can be used to
 easily generate bindings for most languages. The two main
 exceptions are C and Fortran. Until the SWIG %C target support is
 finished, these can be supported by writing a simple %C %API
 manually, probably a weeks work.
 
-\section bins Helper programs
+## Helper programs ## {#helpers}
 
 Several helper programs are provided. They all take the name of the RMF file as
 the first argument and an argument "-f" which is the frame to act on. Negative
@@ -111,4 +93,4 @@ every other frame.
 
 - \c rmf_validate checks for errors in an RMF file.
 
-*/
+- \c rmf3_dump shows a low level dump of an rmf3 file
