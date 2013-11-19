@@ -10,7 +10,7 @@
 #define RMF_INTERNAL_SHARED_DATA_RANGES_H
 
 #include <RMF/config.h>
-#include <boost/range/irange.hpp>
+#include "irange.h"
 #include "../ID.h"
 
 RMF_ENABLE_WARNINGS
@@ -21,13 +21,13 @@ namespace internal {
 template <class SD>
 boost::iterator_range<boost::range_detail::integer_iterator<NodeID> > get_nodes(
     SD* sd) {
-  return boost::irange(NodeID(0), NodeID(sd->get_number_of_nodes()));
+  return irange(NodeID(0), NodeID(sd->get_number_of_nodes()));
 }
 
 template <class SD>
 boost::iterator_range<boost::range_detail::integer_iterator<FrameID> >
 get_frames(SD* sd) {
-  return boost::irange(FrameID(0), FrameID(sd->get_number_of_frames()));
+  return irange(FrameID(0), FrameID(sd->get_number_of_frames()));
 }
 
 }  // namespace internal

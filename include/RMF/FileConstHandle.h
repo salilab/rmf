@@ -27,7 +27,7 @@ RMF_ENABLE_WARNINGS
         e);                                                               \
   }
 
-#define RMF_HDF5_ROOT_CONST_KEY_TYPE_METHODS(Traits, UCName)        \
+#define RMF_HDF5_ROOT_CONST_KEY_TYPE_METHODS(Traits, UCName)                \
   UCName##Key get_key(Category category_id, std::string nm, Traits) const { \
     return get_key<Traits>(category_id, nm);                                \
   }                                                                         \
@@ -190,13 +190,13 @@ class RMFEXPORT FileConstHandle {
   std::string get_file_type() const { return shared_->get_file_type(); }
 
 #ifndef SWIG
-  boost::iterator_range<boost::range_detail::integer_iterator<FrameID> >
-  get_frames() const {
+  boost::iterator_range<internal::integer_iterator<FrameID> > get_frames()
+      const {
     return internal::get_frames(shared_.get());
   }
 
-  boost::iterator_range<boost::range_detail::integer_iterator<NodeID> >
-  get_node_ids() const {
+  boost::iterator_range<internal::integer_iterator<NodeID> > get_node_ids()
+      const {
     return internal::get_nodes(shared_.get());
   }
 #endif

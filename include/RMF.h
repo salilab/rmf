@@ -7,6 +7,7 @@
 #include <RMF/NodeConstHandle.h>
 #include <RMF/NodeHandle.h>
 #include <RMF/Nullable.h>
+#include <RMF/RestoreCurrentFrame.h>
 #include <RMF/SetCurrentFrame.h>
 #include <RMF/Validator.h>
 #include <RMF/Vector.h>

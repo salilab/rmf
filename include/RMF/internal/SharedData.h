@@ -24,7 +24,6 @@
 #include "../ID.h"
 #include "../constants.h"
 #include "../infrastructure_macros.h"
-#include <boost/range/irange.hpp>
 #include <boost/shared_ptr.hpp>
 
 RMF_ENABLE_WARNINGS
