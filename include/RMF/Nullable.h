@@ -58,6 +58,13 @@ class Nullable {
   RMF_SHOWABLE(Nullable, get_string());
 };
 
+#if !defined(SWIG) && !defined(RMF_DOXYGEN)
+template <class Traits>
+inline std::ostream& operator<<(std::ostream& out, Nullable<Traits> null) {
+  return out << Showable(null);
+}
+#endif
+
 } /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

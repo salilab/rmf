@@ -95,6 +95,14 @@ typedef std::vector<NodeID> NodeIDs;
 typedef std::vector<FrameID> FrameIDs;
 typedef std::vector<Category> Categories;
 
+
+#if !defined(SWIG) && !defined(RMF_DOXYGEN)
+template <class Traits>
+inline std::ostream& operator<<(std::ostream& out, ID<Traits> null) {
+  return out << Showable(null);
+}
+#endif
+
 } /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
