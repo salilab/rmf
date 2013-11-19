@@ -132,26 +132,13 @@ class integer_iterator_with_step
 
 template <typename Integer>
 class integer_range
-    : public iterator_range<range_detail::integer_iterator<Integer> > {
-  typedef range_detail::integer_iterator<Integer> iterator_t;
-  typedef iterator_range<iterator_t> base_t;
+  : public boost::iterator_range<integer_iterator<Integer> > {
+    typedef integer_iterator<Integer> iterator_t;
+    typedef boost::iterator_range<iterator_t> base_t;
 
  public:
   integer_range(Integer first, Integer last)
       : base_t(iterator_t(first), iterator_t(last)) {}
-};
-
-template <typename Integer>
-class strided_integer_range
-    : public iterator_range<
-          range_detail::integer_iterator_with_step<Integer> > {
-  typedef range_detail::integer_iterator_with_step<Integer> iterator_t;
-  typedef iterator_range<iterator_t> base_t;
-
- public:
-  template <typename Iterator>
-  strided_integer_range(Iterator first, Iterator last)
-      : base_t(first, last) {}
 };
 
 template <typename Integer>
@@ -160,24 +147,6 @@ integer_range<Integer> irange(Integer first, Integer last) {
   return integer_range<Integer>(first, last);
 }
 
-template <typename Integer, typename StepSize>
-strided_integer_range<Integer> irange(Integer first, Integer last,
-                                      StepSize step_size) {
-  BOOST_ASSERT(step_size != 0);
-  BOOST_ASSERT((step_size > 0) ? (last >= first) : (last <= first));
-
-  typedef typename range_detail::integer_iterator_with_step<Integer> iterator_t;
-
-  const std::ptrdiff_t sz =
-      static_cast<std::ptrdiff_t>(step_size >= 0 ? step_size : -step_size);
-  const Integer l = step_size >= 0 ? last : first;
-  const Integer f = step_size >= 0 ? first : last;
-  const std::ptrdiff_t num_steps = (l - f) / sz + ((l - f) % sz ? 1 : 0);
-  BOOST_ASSERT(num_steps >= 0);
-
-  return strided_integer_range<Integer>(
-      iterator_t(first, 0, step_size), iterator_t(first, num_steps, step_size));
-}
 #endif
 
 }

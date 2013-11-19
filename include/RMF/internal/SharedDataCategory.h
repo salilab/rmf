@@ -12,7 +12,7 @@
 #include <RMF/config.h>
 #include "../ID.h"
 #include <boost/unordered_map.hpp>
-
+#include "../infrastructure_macros.h"
 
 RMF_ENABLE_WARNINGS
 
