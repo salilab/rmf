@@ -223,7 +223,7 @@ void StringsTraits::write_value_dataset(hid_t d, hid_t iss, hid_t s,
   hvl_t data;
   data.len = v.size();
   if (data.len > 0) {
-    buf.reset(new char*[v.size()]);
+    buf.reset(new char* [v.size()]);
     for (unsigned int i = 0; i < v.size(); ++i) {
       buf[i] = new char[v[i].size() + 1];
       std::copy(v[i].begin(), v[i].end(), buf[i]);
@@ -241,7 +241,7 @@ void StringsTraits::write_value_dataset(hid_t d, hid_t iss, hid_t s,
 }
 
 StringsTraits::Type StringsTraits::read_value_dataset(hid_t d, hid_t iss,
-                                                     hid_t sp) {
+                                                      hid_t sp) {
   hvl_t data;
   H5Dread(d, get_hdf5_memory_type(), iss, sp, H5P_DEFAULT, &data);
   Type ret(data.len);

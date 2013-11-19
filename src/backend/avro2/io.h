@@ -29,6 +29,7 @@ struct Avro2IO : public backends::IO {
   avro2::Frame frame_;
   void commit();
   unsigned int get_number_of_frames() const;
+
  public:
   Avro2IO(std::string name);
   virtual void save_loaded_frame(const internal::SharedData *shared_data)

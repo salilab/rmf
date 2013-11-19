@@ -52,8 +52,6 @@ typedef char Char;
 /** The type used to store lists of char values.*/
 typedef std::string Chars;
 
-
-
 struct IntTraitsBase {
   typedef int Type;
   typedef std::vector<int> Types;
@@ -121,8 +119,8 @@ struct SimpleTraits : public Base {
   static typename Base::Types read_values_dataset(hid_t d, hid_t iss, hid_t sp,
                                                   unsigned int sz) {
     typename Base::Types ret(sz, Base::get_null_value());
-    RMF_HDF5_CALL(
-        H5Dread(d, Base::get_hdf5_memory_type(), iss, sp, H5P_DEFAULT, &ret[0]));
+    RMF_HDF5_CALL(H5Dread(d, Base::get_hdf5_memory_type(), iss, sp, H5P_DEFAULT,
+                          &ret[0]));
     return ret;
   }
   static void write_values_attribute(hid_t a, const typename Base::Types& v) {
@@ -152,14 +150,14 @@ struct CharTraits {
   static const Type& get_fill_value() { return get_null_value(); }
   static std::string get_name() { return "char"; }
 
-  static void write_value_dataset(hid_t, hid_t, hid_t , char ) {
+  static void write_value_dataset(hid_t, hid_t, hid_t, char) {
     RMF_NOT_IMPLEMENTED;
   }
   static char read_value_dataset(hid_t, hid_t, hid_t) {
     RMF_NOT_IMPLEMENTED;
     return '\0';
   }
-  static void write_values_dataset(hid_t, hid_t, hid_t, const Types& ) {
+  static void write_values_dataset(hid_t, hid_t, hid_t, const Types&) {
     RMF_NOT_IMPLEMENTED;
   }
   static Types read_values_dataset(hid_t, hid_t, hid_t, unsigned int) {
@@ -200,8 +198,7 @@ struct SimplePluralTraits {
   static const Type& get_fill_value() { return get_null_value(); }
   static std::string get_name() { return Traits::get_name() + "s"; }
 
-  static void write_value_dataset(hid_t d, hid_t iss, hid_t s,
-                                  const Type& v) {
+  static void write_value_dataset(hid_t d, hid_t iss, hid_t s, const Type& v) {
     hvl_t data;
     data.len = v.size();
     if (data.len > 0) {
@@ -229,7 +226,7 @@ struct SimplePluralTraits {
     RMF_NOT_IMPLEMENTED;
     return Types();
   }
-  static Types read_values_attribute(hid_t , unsigned int) {
+  static Types read_values_attribute(hid_t, unsigned int) {
     RMF_NOT_IMPLEMENTED;
     return Types();
   }
@@ -251,15 +248,14 @@ struct RMFEXPORT StringTraits {
   static hid_t get_hdf5_fill_type() { return internal::get_string_type(); }
   static hid_t get_hdf5_disk_type() { return internal::get_string_type(); }
   static hid_t get_hdf5_memory_type() { return internal::get_string_type(); }
-  static const Type &get_fill_value() { return get_null_value(); }
+  static const Type& get_fill_value() { return get_null_value(); }
   static std::string get_name() { return "string"; }
   static void write_value_dataset(hid_t d, hid_t iss, hid_t s, const Type& v);
   static Type read_value_dataset(hid_t d, hid_t iss, hid_t sp);
   static void write_values_dataset(hid_t, hid_t, hid_t, Types) {
     RMF_NOT_IMPLEMENTED;
   };
-  static Types read_values_dataset(hid_t, hid_t, hid_t,
-                                               unsigned int) {
+  static Types read_values_dataset(hid_t, hid_t, hid_t, unsigned int) {
     RMF_NOT_IMPLEMENTED;
     return Types();
   }
@@ -287,8 +283,8 @@ struct RMFEXPORT StringsTraits {
   static hid_t get_hdf5_memory_type();
   static const hvl_t& get_fill_value();
   static std::string get_name() { return "strings"; }
-  static void write_value_dataset(hid_t d, hid_t iss, hid_t s, const Type& v) ;
-  static Type read_value_dataset(hid_t d, hid_t iss, hid_t sp) ;
+  static void write_value_dataset(hid_t d, hid_t iss, hid_t s, const Type& v);
+  static Type read_value_dataset(hid_t d, hid_t iss, hid_t sp);
   static void write_values_dataset(hid_t, hid_t, hid_t, const Types&) {
     RMF_NOT_IMPLEMENTED;
   };

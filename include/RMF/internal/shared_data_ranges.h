@@ -19,14 +19,12 @@ namespace RMF {
 namespace internal {
 
 template <class SD>
-boost::iterator_range<integer_iterator<NodeID> > get_nodes(
-    SD* sd) {
+boost::iterator_range<integer_iterator<NodeID> > get_nodes(SD* sd) {
   return irange(NodeID(0), NodeID(sd->get_number_of_nodes()));
 }
 
 template <class SD>
-boost::iterator_range<integer_iterator<FrameID> >
-get_frames(SD* sd) {
+boost::iterator_range<integer_iterator<FrameID> > get_frames(SD* sd) {
   return irange(FrameID(0), FrameID(sd->get_number_of_frames()));
 }
 

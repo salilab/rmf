@@ -14,7 +14,6 @@
 #include "small_set_map.h"
 #include <boost/unordered_map.hpp>
 
-
 RMF_ENABLE_WARNINGS
 
 namespace RMF {
@@ -62,7 +61,7 @@ class SharedDataKeys {
       RMF_INTERNAL_CHECK(data_.category_keys[cat].find(name)->second == key,
                          "Keys don't match");
     }
-}
+  }
 
   std::string get_name(ID<Traits> k) const {
     return data_.key_names.find(k)->second;
@@ -83,9 +82,7 @@ class SharedDataKeys {
   std::vector<ID<Traits> > get_keys(Traits) const {
     std::vector<ID<Traits> > ret;
     typedef std::pair<ID<Traits>, Category> KP;
-    RMF_FOREACH(KP kp, data_.key_categories) {
-      ret.push_back(kp.first);
-    }
+    RMF_FOREACH(KP kp, data_.key_categories) { ret.push_back(kp.first); }
     return ret;
   }
 

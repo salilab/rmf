@@ -6,7 +6,6 @@
 #include <generated/embed_jsons.h>
 #include "backend/avro2/raw_frame.h"
 
-
 RMF_ENABLE_WARNINGS
 
 namespace RMF {
@@ -17,7 +16,7 @@ void validate_one(Tout fr, Tin) {
   fr.data.int_data[IntKey(0)][NodeID(0)] = 1;
   fr.data.float_data[FloatKey(1)][NodeID(1)] = 2.0;
   fr.data.string_data[StringKey(2)][NodeID(2)] = "hi";
-  fr.data.ints_data[IntsKey(3)][NodeID(3)] = Ints(2,3);
+  fr.data.ints_data[IntsKey(3)][NodeID(3)] = Ints(2, 3);
   fr.data.floats_data[FloatsKey(4)][NodeID(4)] = Floats(3, 2.0);
   fr.data.strings_data[StringsKey(5)][NodeID(5)] = Strings(4, "his");
   fr.data.vector3_data[Vector3Key(8)][NodeID(1)] = Vector3(2, 3, 4);

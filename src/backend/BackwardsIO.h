@@ -369,15 +369,15 @@ struct BackwardsIO : public IO {
     return sd_->get_buffer();
   }
 
-  virtual void load_static_frame(
-      internal::SharedData *shared_data) RMF_OVERRIDE {
+  virtual void load_static_frame(internal::SharedData *shared_data)
+      RMF_OVERRIDE {
     RMF_FOREACH(Category category, shared_data->get_categories()) {
       load_frame_category(category, shared_data, internal::StaticValues());
     }
   }
 
-  virtual void save_static_frame(
-      const internal::SharedData *shared_data) RMF_OVERRIDE {
+  virtual void save_static_frame(const internal::SharedData *shared_data)
+      RMF_OVERRIDE {
     RMF_FOREACH(Category category, shared_data->get_categories()) {
       save_frame_category(category, shared_data, internal::StaticValues());
     }

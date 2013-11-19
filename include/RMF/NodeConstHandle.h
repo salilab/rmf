@@ -33,7 +33,7 @@ RMF_ENABLE_WARNINGS
   RMF_NODE_CATCH(<< Key(get_name(k))      \
                  << Category(get_category_name(k)) extra_info)
 
-#define RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DECL(Traits, UCName)  \
+#define RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DECL(Traits, UCName)          \
  public:                                                                   \
   /** \brief get the value of the attribute k from this node or null if it \
    * doesn't have a value.                                                 \

@@ -6,7 +6,6 @@
 #include <RMF/utility.h>
 #include "common.h"
 
-
 namespace {
 std::vector<std::string> inputs;
 std::string description("Combine two or more rmf files.");

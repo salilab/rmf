@@ -76,7 +76,7 @@ struct codec_traits<RMF::Vector<V> > {
 };
 
 template <>
-struct codec_traits<RMF::NodeType > {
+struct codec_traits<RMF::NodeType> {
   static void encode(Encoder& e, const RMF::NodeType& v) {
     rmf_avro::encode<int32_t>(e, v);
   }
@@ -88,7 +88,7 @@ struct codec_traits<RMF::NodeType > {
 };
 
 template <>
-struct codec_traits<RMF::FrameType > {
+struct codec_traits<RMF::FrameType> {
   static void encode(Encoder& e, const RMF::FrameType& v) {
     rmf_avro::encode<int32_t>(e, v);
   }
@@ -142,7 +142,6 @@ struct codec_traits<boost::unordered_map<K, V> > {
   }
 };
 
-
 template <class K>
 struct codec_traits<boost::unordered_set<K> > {
   static void encode(Encoder& e, const boost::unordered_set<K>& v) {
@@ -170,7 +169,6 @@ struct codec_traits<boost::container::flat_map<K, V> > {
     v.insert(values.begin(), values.end());
   }
 };
-
 
 template <class K>
 struct codec_traits<boost::container::flat_set<K> > {
@@ -200,7 +198,6 @@ struct codec_traits<std::map<K, V> > {
   }
 };
 
-
 template <class K>
 struct codec_traits<std::set<K> > {
   static void encode(Encoder& e, const std::set<K>& v) {
@@ -213,7 +210,6 @@ struct codec_traits<std::set<K> > {
     v.insert(values.begin(), values.end());
   }
 };
-
 }
 
 RMF_DISABLE_WARNINGS

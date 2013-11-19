@@ -26,15 +26,17 @@ template <class Traits>
 class Nullable {
   typename Traits::ReturnType v_;
   std::string get_string() const {
-    if (get_is_null()) return "<null>";
+    if (get_is_null())
+      return "<null>";
     else {
       std::ostringstream oss;
       oss << v_;
       return oss.str();
     }
   }
+
  public:
-  Nullable(const Nullable &o) : v_(o.v_) {}
+  Nullable(const Nullable& o) : v_(o.v_) {}
   Nullable(typename Traits::ReturnType v) : v_(v) {}
 #ifndef SWIG
   /** \pre !get_is_null() */

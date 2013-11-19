@@ -23,7 +23,7 @@ namespace RMF {
 namespace internal {
 
 namespace {
-  boost::unordered_set<std::string> open_for_writing;
+boost::unordered_set<std::string> open_for_writing;
 }
 SharedData::SharedData(boost::shared_ptr<backends::IO> io, std::string name,
                        bool write, bool created)
@@ -147,16 +147,12 @@ void SharedData::set_static_is_dirty(bool tf) {
 #define RMF_CLEAR_LOADED(Traits, UCName) \
   SharedDataData<Traits>::clear_loaded_values();
 
-void SharedData::clear_loaded_values() {
-  RMF_FOREACH_TYPE(RMF_CLEAR_LOADED);
-}
+void SharedData::clear_loaded_values() { RMF_FOREACH_TYPE(RMF_CLEAR_LOADED); }
 
 #define RMF_CLEAR_STATIC(Traits, UCName) \
   SharedDataData<Traits>::clear_static_values();
 
-void SharedData::clear_static_values() {
-  RMF_FOREACH_TYPE(RMF_CLEAR_STATIC);
-}
+void SharedData::clear_static_values() { RMF_FOREACH_TYPE(RMF_CLEAR_STATIC); }
 
 std::vector<char> SharedData::get_buffer() {
   flush();
@@ -169,7 +165,8 @@ SharedData::~SharedData() {
     set_loaded_frame(FrameID());
     flush();
     io_.reset();
-  } catch(const std::exception &e) {
+  }
+  catch (const std::exception &e) {
     std::cerr << "Exception caught in shared data destructor " << e.what()
               << std::endl;
   }

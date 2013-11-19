@@ -179,7 +179,7 @@ struct StringsTraits {
 };
 
 #if !defined(SWIG)
-  // swig gets confused
+// swig gets confused
 template <unsigned int D>
 class VectorTraits {
   static std::string make_tag() {
@@ -193,7 +193,7 @@ class VectorTraits {
     return oss.str();
   }
 
-public:
+ public:
   typedef Vector<D> Type;
   typedef std::vector<Vector<D> > Types;
   typedef const Type& ReturnType;
@@ -203,8 +203,7 @@ public:
   }
   static ReturnType get_null_value() {
     static const Vector<D> null(
-        Floats(D, std::numeric_limits<
-                 typename FloatTraits::Type>::infinity()));
+        Floats(D, std::numeric_limits<typename FloatTraits::Type>::infinity()));
     return null;
   }
   typedef boost::int32_t AvroType;
@@ -220,7 +219,7 @@ public:
   }
 
   static std::string get_name() {
-   static std::string name = make_name();
+    static std::string name = make_name();
     return name;
   }
 };
@@ -252,17 +251,13 @@ struct Vector4Traits {
 };
 #endif
 
-
-
-  //template <unsigned int D>
+// template <unsigned int D>
 struct Vector3sTraits {
   typedef Vector3s Type;
   typedef std::vector<std::vector<Vector<3> > > Types;
   typedef const Type& ReturnType;
   typedef const Type& ArgumentType;
-  static bool get_is_null_value(const Type& t) {
-    return t.empty();
-  }
+  static bool get_is_null_value(const Type& t) { return t.empty(); }
   static ReturnType get_null_value() {
     static const Type null;
     return null;
@@ -283,8 +278,8 @@ struct Vector3sTraits {
   static std::string get_name() { return "vector3s"; }
 };
 
-  //typedef VectorsTraits<3> Vector3sTraits;
-  //typedef VectorsTraits<4> Vector4sTraits;
+// typedef VectorsTraits<3> Vector3sTraits;
+// typedef VectorsTraits<4> Vector4sTraits;
 
 /** Get one type as another, handling vectors or scalars.*/
 template <class OutType, class InType>

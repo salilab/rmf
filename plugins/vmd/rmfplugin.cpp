@@ -8,7 +8,6 @@
 #include <RMF/log.h>
 #include <boost/scoped_array.hpp>
 
-
 namespace {
 molfile_plugin_t plugin;
 class Data {

@@ -27,7 +27,7 @@ struct HierarchyNode {
   Type type;
   std::vector<ID> parents;
   std::vector<ID> children;
-  HierarchyNode(): type(Type(-1)) {}
+  HierarchyNode() : type(Type(-1)) {}
 };
 
 class SharedDataHierarchy {

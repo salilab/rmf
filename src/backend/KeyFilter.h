@@ -32,7 +32,7 @@ class KeyFilter : public SharedDataAdaptor<SD> {
   KeyFilter(SD* sd) : P(sd) {}
   void add_index_key(Category cat, std::string name) {
     RMF_FOREACH(backward_types::IndexKey k,
-                  P::sync_->get_keys(cat, backward_types::IndexTraits())) {
+                P::sync_->get_keys(cat, backward_types::IndexTraits())) {
       if (P::sync_->get_name(k) == name) {
         index_keys_.push_back(k);
         std::sort(index_keys_.begin(), index_keys_.end());

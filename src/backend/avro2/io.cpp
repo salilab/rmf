@@ -71,16 +71,16 @@ bool save(KeyType key_type, const internal::SharedData *shared_data,
     }
   }
 
- if (change_data) {
-   RMF_FOREACH(typename internal::TypeData<Traits>::const_reference kpd,
-               Loader::get_data(shared_data, Traits())) {
-    if (data.find(kpd.first) == data.end() && !kpd.second.empty()) {
-      ret = true;
-      change_data->operator[](kpd.first) = kpd.second;
-    } else {
-      RMF_FOREACH(typename internal::KeyData<Traits>::const_reference npd,
-                  kpd.second) {
-        if (data[kpd.first].find(npd.first) == data[kpd.first].end()) {
+  if (change_data) {
+    RMF_FOREACH(typename internal::TypeData<Traits>::const_reference kpd,
+                Loader::get_data(shared_data, Traits())) {
+      if (data.find(kpd.first) == data.end() && !kpd.second.empty()) {
+        ret = true;
+        change_data->operator[](kpd.first) = kpd.second;
+      } else {
+        RMF_FOREACH(typename internal::KeyData<Traits>::const_reference npd,
+                    kpd.second) {
+          if (data[kpd.first].find(npd.first) == data[kpd.first].end()) {
             ret = true;
             change_data->operator[](kpd.first)[npd.first] = npd.second;
           }
@@ -109,8 +109,7 @@ void load_all(const std::vector<std::pair<Category, std::string> > &categories,
 
   load(shared_data, keys.vector3_keys, data.vector3_data, Loader());
   load(shared_data, keys.vector4_keys, data.vector4_data, Loader());
-  load(shared_data, keys.vector3s_keys, data.vector3s_data,
-       Loader());
+  load(shared_data, keys.vector3s_keys, data.vector3s_data, Loader());
 }
 
 template <class Loader>
@@ -167,7 +166,6 @@ bool save_all(FileData &file_data, FileDataChanges &file_data_changes,
   return ret;
 }
 }
-
 
 void Avro2IO::commit() {
   if (file_data_dirty_) {
@@ -229,8 +227,8 @@ void Avro2IO::load_loaded_frame(internal::SharedData *shared_data) {
 }
 
 void Avro2IO::load_static_frame(internal::SharedData *shared_data) {
-  load_all(file_data_.categories, shared_data, file_data_.keys,
-           file_data_.data, internal::StaticValues());
+  load_all(file_data_.categories, shared_data, file_data_.keys, file_data_.data,
+           internal::StaticValues());
 }
 
 void Avro2IO::save_static_frame(const internal::SharedData *shared_data) {
@@ -293,12 +291,12 @@ void Avro2IO::save_hierarchy(const internal::SharedData *shared_data) {
     if (shared_data->get_parents(n).size() !=
         file_data_.nodes[n.get_index()].parents.size()) {
       cur_dirty = true;
-      NodeIDs cur_parents= shared_data->get_parents(n);
+      NodeIDs cur_parents = shared_data->get_parents(n);
       NodeIDs new_parents(
           cur_parents.begin() + file_data_.nodes[n.get_index()].parents.size(),
           cur_parents.end());
       file_data_.nodes[n.get_index()].parents = cur_parents;
-      cur.parents= new_parents;
+      cur.parents = new_parents;
     }
     if (cur_dirty) {
       file_data_changes_.nodes.push_back(cur);

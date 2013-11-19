@@ -18,7 +18,6 @@ namespace RMF {
 
 namespace backward_types {
 
-
 #define RMF_FOREACH_BACKWARDS_TYPE(macroname)                               \
   RMF_FOREACH_SIMPLE_TYPE(macroname);                                       \
   macroname(string, String, RMF::String, RMF::String, const RMF::Strings&,  \
@@ -35,7 +34,6 @@ namespace backward_types {
             RMF::IntsList);                                                 \
   macroname(indexes, Indexes, const RMF::Indexes&, RMF::Indexes,            \
             const RMF::IndexesList&, RMF::IndexesList);
-
 
 struct IndexTraits {
   typedef Index Type;

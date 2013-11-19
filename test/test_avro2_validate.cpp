@@ -4,8 +4,7 @@
 #include <backend/AvroCpp/api/Compiler.hh>
 #include <generated/embed_jsons.h>
 
-
-int main(int, char*[]) {
+int main(int, char * []) {
   RMF::avro2::validate();
   return 0;
 }

@@ -64,7 +64,7 @@ class SharedDataCategory {
     return data_.to_name.find(kc)->second;
   }
 
-  CategoryData &access_category_data() {return data_;}
+  CategoryData &access_category_data() { return data_; }
   const CategoryData &get_category_data() const { return data_; }
 };
 

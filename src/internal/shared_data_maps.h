@@ -34,7 +34,6 @@ boost::unordered_map<ID<TraitsA>, ID<TraitsB> > get_key_map(SDA* sda,
   return ret;
 }
 
-
 struct StaticValues {
   template <class Traits, class SD>
   static typename Traits::Type get(SD* sd, NodeID n, ID<Traits> k) {

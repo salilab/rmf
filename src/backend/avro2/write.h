@@ -16,4 +16,4 @@ RMFEXPORT void write(rmf_avro::DataFileWriterBase *writer,
 }
 
 RMF_DISABLE_WARNINGS
-#endif //  RMF_AVRO2_WRITE_H
+#endif  //  RMF_AVRO2_WRITE_H

@@ -26,8 +26,6 @@
 
 RMF_ENABLE_WARNINGS
 
-
-
 namespace RMF {
 namespace avro2 {
 FileData get_file_data(std::string name) {

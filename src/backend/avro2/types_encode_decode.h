@@ -56,7 +56,6 @@ inline void sort_keys(const std::vector<KeyInfo>& in, KeyData& out) {
 }
 }
 
-
 namespace rmf_avro {
 
 template <>
@@ -71,10 +70,9 @@ struct codec_traits<RMF::avro2::StringAccumulator> {
   }
 };
 
-  template <class T, class Ty>
-  struct codec_traits<RMF::internal::HierarchyNode<T, Ty> > {
-    static void encode(Encoder& e,
-                       const RMF::internal::HierarchyNode<T, Ty>& v) {
+template <class T, class Ty>
+struct codec_traits<RMF::internal::HierarchyNode<T, Ty> > {
+  static void encode(Encoder& e, const RMF::internal::HierarchyNode<T, Ty>& v) {
     RMF_TRACE(RMF::get_logger(), "Encoding node " << v.name << " " << v.type);
     rmf_avro::encode(e, v.name);
     rmf_avro::encode(e, v.type);
@@ -91,11 +89,10 @@ struct codec_traits<RMF::avro2::StringAccumulator> {
 };
 
 template <>
-struct codec_traits<RMF::avro2::HierarchyNode > {
-    static void encode(Encoder& e,
-                       const RMF::avro2::HierarchyNode& v) {
-      RMF_TRACE(RMF::get_logger(), "Encoding node " << v.id << " " << v.name
-                                                    << " " << v.type);
+struct codec_traits<RMF::avro2::HierarchyNode> {
+  static void encode(Encoder& e, const RMF::avro2::HierarchyNode& v) {
+    RMF_TRACE(RMF::get_logger(), "Encoding node " << v.id << " " << v.name
+                                                  << " " << v.type);
     rmf_avro::encode(e, v.id);
     rmf_avro::encode(e, v.name);
     rmf_avro::encode(e, v.type);
@@ -111,18 +108,16 @@ struct codec_traits<RMF::avro2::HierarchyNode > {
   }
 };
 
-template<> struct codec_traits<RMF::avro2::KeyType> {
-    static void encode(Encoder& e, RMF::avro2::KeyType v) {
-        e.encodeEnum(v);
-    }
-    static void decode(Decoder& d, RMF::avro2::KeyType& v) {
-        v = static_cast<RMF::avro2::KeyType>(d.decodeEnum());
-    }
+template <>
+struct codec_traits<RMF::avro2::KeyType> {
+  static void encode(Encoder& e, RMF::avro2::KeyType v) { e.encodeEnum(v); }
+  static void decode(Decoder& d, RMF::avro2::KeyType& v) {
+    v = static_cast<RMF::avro2::KeyType>(d.decodeEnum());
+  }
 };
 
-
 template <>
-struct codec_traits<RMF::avro2::KeyInfo > {
+struct codec_traits<RMF::avro2::KeyInfo> {
   static void encode(Encoder& e, const RMF::avro2::KeyInfo& v) {
     rmf_avro::encode(e, v.id);
     rmf_avro::encode(e, v.name);
@@ -185,7 +180,7 @@ struct codec_traits<RMF::avro2::DataTypes> {
 
 template <>
 struct codec_traits<RMF::avro2::Frame> {
-  static void encode(Encoder &e, const RMF::avro2::Frame &v) {
+  static void encode(Encoder& e, const RMF::avro2::Frame& v) {
     e.encodeUnionIndex(0);
     rmf_avro::encode(e, v.id);
     rmf_avro::encode(e, v.name);
@@ -198,7 +193,7 @@ struct codec_traits<RMF::avro2::Frame> {
   }
   static void decode(Decoder& d, RMF::avro2::Frame& v) {
     size_t n = d.decodeUnionIndex();
-    if (n==0) {
+    if (n == 0) {
       rmf_avro::decode(d, v.id);
       rmf_avro::decode(d, v.name);
       rmf_avro::decode(d, v.type);
@@ -229,7 +224,7 @@ template <>
 struct codec_traits<RMF::avro2::FileData> {
   static void decode(Decoder& d, RMF::avro2::FileData& v) {
     size_t n = d.decodeUnionIndex();
-    if (n==0) {
+    if (n == 0) {
       rmf_avro::decode(d, v.cur_id);
       v.max_id = std::max<int32_t>(v.max_id, v.cur_id.get_index());
       RMF::avro2::Skip<std::string> junk_name;
@@ -237,7 +232,7 @@ struct codec_traits<RMF::avro2::FileData> {
       RMF::avro2::Skip<RMF::FrameType> junk_type;
       rmf_avro::decode(d, junk_type);
       RMF::FrameIDs frame_parents;
-      rmf_avro::decode(d,  frame_parents);
+      rmf_avro::decode(d, frame_parents);
       RMF_INFO(RMF::get_logger(), "Found frame " << v.cur_id);
       RMF_FOREACH(RMF::FrameID p, frame_parents) {
         v.frame_children.resize(
@@ -256,7 +251,7 @@ struct codec_traits<RMF::avro2::FileData> {
     }
     std::vector<RMF::avro2::HierarchyNode> nodes;
     rmf_avro::decode(d, nodes);
-    RMF_FOREACH(const RMF::avro2::HierarchyNode &hn, nodes) {
+    RMF_FOREACH(const RMF::avro2::HierarchyNode & hn, nodes) {
       v.nodes.resize(
           std::max<std::size_t>(v.nodes.size(), hn.id.get_index() + 1));
       v.nodes[hn.id.get_index()].name = hn.name;
@@ -275,7 +270,7 @@ struct codec_traits<RMF::avro2::FileData> {
     rmf_avro::decode(d, keys);
     RMF::avro2::sort_keys(keys, v.keys);
 
-    if (n==1 ) {
+    if (n == 1) {
       rmf_avro::decode(d, v.data);
     } else {
       RMF::avro2::Skip<RMF::avro2::DataTypes> skip_data;
@@ -286,7 +281,7 @@ struct codec_traits<RMF::avro2::FileData> {
 
 template <>
 struct codec_traits<RMF::avro2::FileDataChanges> {
-  static void encode(Encoder &e, const RMF::avro2::FileDataChanges &v) {
+  static void encode(Encoder& e, const RMF::avro2::FileDataChanges& v) {
     e.encodeUnionIndex(1);
     rmf_avro::encode(e, v.description);
     rmf_avro::encode(e, v.producer);
@@ -300,6 +295,5 @@ struct codec_traits<RMF::avro2::FileDataChanges> {
     rmf_avro::encode(e, v.data);
   }
 };
-
 }
-#endif // RMF_AVRO2_TYPE_ENCODE_DECODE_H
+#endif  // RMF_AVRO2_TYPE_ENCODE_DECODE_H

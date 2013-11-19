@@ -25,8 +25,8 @@ namespace RMF {
 namespace internal {
 
 #if BOOST_VERSION > 104400
-  using boost::irange;
-  using boost::range_detail::integer_iterator;
+using boost::irange;
+using boost::range_detail::integer_iterator;
 #else
 // integer_iterator is an iterator over an integer sequence that
 // is bounded only by the limits of the underlying integer
@@ -131,10 +131,9 @@ class integer_iterator_with_step
 };
 
 template <typename Integer>
-class integer_range
-  : public boost::iterator_range<integer_iterator<Integer> > {
-    typedef integer_iterator<Integer> iterator_t;
-    typedef boost::iterator_range<iterator_t> base_t;
+class integer_range : public boost::iterator_range<integer_iterator<Integer> > {
+  typedef integer_iterator<Integer> iterator_t;
+  typedef boost::iterator_range<iterator_t> base_t;
 
  public:
   integer_range(Integer first, Integer last)
@@ -148,7 +147,6 @@ integer_range<Integer> irange(Integer first, Integer last) {
 }
 
 #endif
-
 }
 }
 
