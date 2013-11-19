@@ -26,10 +26,6 @@ class HDF5Factory : public RMF::backends::IOFactory {
       const std::string& name) const RMF_OVERRIDE {
     return boost::make_shared<MIO>(name, false, true);
   }
-  virtual boost::shared_ptr<RMF::backends::IO> write_file(
-      const std::string& name) const RMF_OVERRIDE {
-    return boost::make_shared<MIO>(name, false, false);
-  }
   virtual boost::shared_ptr<RMF::backends::IO> create_file(
       const std::string& name) const RMF_OVERRIDE {
     return boost::make_shared<MIO>(name, true, false);

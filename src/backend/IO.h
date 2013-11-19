@@ -11,6 +11,8 @@
 
 #include <RMF/config.h>
 #include <RMF/internal/SharedData.h>
+#include <RMF/BufferHandle.h>
+#include <RMF/BufferConstHandle.h>
 #include <RMF/infrastructure_macros.h>
 #include <boost/shared_ptr.hpp>
 
@@ -43,25 +45,19 @@ struct IO {
   virtual void save_hierarchy(const internal::SharedData *shared_data) = 0;
   /** @} */
   virtual void flush() = 0;
-  virtual std::vector<char> get_buffer() {
-    RMF_THROW(Message("Not supported"), IOException);
-  }
   virtual ~IO() {}
 };
 
 class IOFactory {
  public:
   virtual std::string get_file_extension() const = 0;
-  virtual boost::shared_ptr<IO> read_file(const std::string &) const {
+  virtual boost::shared_ptr<IO> read_buffer(BufferConstHandle ) const {
     return boost::shared_ptr<IO>();
   }
-  virtual boost::shared_ptr<IO> create_buffer() const {
+   virtual boost::shared_ptr<IO> read_file(const std::string &) const {
     return boost::shared_ptr<IO>();
   }
-  virtual boost::shared_ptr<IO> write_file(const std::string &) const {
-    return boost::shared_ptr<IO>();
-  }
-  virtual boost::shared_ptr<IO> open_buffer(const std::vector<char> &) const {
+  virtual boost::shared_ptr<IO> create_buffer(BufferHandle ) const {
     return boost::shared_ptr<IO>();
   }
   virtual boost::shared_ptr<IO> create_file(const std::string &) const {
@@ -72,10 +68,9 @@ class IOFactory {
 
 RMFEXPORT void add_io_factory(IOFactory *f);
 RMFEXPORT boost::shared_ptr<IO> create_file(const std::string &name);
-RMFEXPORT boost::shared_ptr<IO> create_buffer();
+RMFEXPORT boost::shared_ptr<IO> create_buffer(BufferHandle buffer);
 RMFEXPORT boost::shared_ptr<IO> read_file(const std::string &name);
-RMFEXPORT boost::shared_ptr<IO> open_buffer(const std::vector<char> &buffer);
-RMFEXPORT boost::shared_ptr<IO> write_file(const std::string &name);
+RMFEXPORT boost::shared_ptr<IO> read_buffer(BufferConstHandle buffer);
 
 template <class Type>
 struct IOFactoryRegistrar {

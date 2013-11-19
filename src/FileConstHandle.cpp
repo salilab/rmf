@@ -53,6 +53,10 @@ FileConstHandle open_rmf_file_read_only(std::string path) {
   return FileConstHandle(internal::read_file(path));
 }
 
+FileConstHandle open_rmf_buffer_read_only(BufferConstHandle buffer) {
+  return FileConstHandle(internal::read_buffer(buffer));
+}
+
 void FileConstHandle::validate(std::ostream& out = std::cerr) {
   try {
     Creators cs = get_validators();

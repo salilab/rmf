@@ -160,9 +160,15 @@ void benchmark_load(RMF::FileConstHandle file, std::string type) {
 int main(int, char**) {
   try {
     RMF::set_log_level("Off");
+#if BOOST_VERSION > 104100
+    boost::filesystem::path temp = boost::filesystem::unique_path();
+    const std::string name_base = temp.native();
+#else
+    std::string name_base = tmpnam(NULL);
+#endif
+
     {
-      boost::filesystem::path temp = boost::filesystem::unique_path();
-      const std::string name = temp.native() + ".rmf";
+      const std::string name = name_base + ".rmf";
       {
         RMF::FileHandle fh = RMF::create_rmf_file(name);
         benchmark_create(fh, "rmf");
@@ -176,7 +182,7 @@ int main(int, char**) {
     }
     {
       boost::filesystem::path temp = boost::filesystem::unique_path();
-      const std::string name = temp.native() + ".rmf2";
+      const std::string name = name_base + ".rmf2";
       {
         RMF::FileHandle fh = RMF::create_rmf_file(name);
         benchmark_create(fh, "rmf2");
@@ -190,7 +196,7 @@ int main(int, char**) {
     }
     {
       boost::filesystem::path temp = boost::filesystem::unique_path();
-      const std::string name = temp.native() + ".rmf3";
+      const std::string name = name_base + ".rmf3";
       {
         RMF::FileHandle fh = RMF::create_rmf_file(name);
         benchmark_create(fh, "rmf3");
@@ -204,7 +210,7 @@ int main(int, char**) {
     }
     {
       boost::filesystem::path temp = boost::filesystem::unique_path();
-      const std::string name = temp.native() + ".rmfa";
+      const std::string name = name_base + ".rmfa";
       {
         RMF::FileHandle fh = RMF::create_rmf_file(name);
         benchmark_create(fh, "rmfa");
@@ -218,7 +224,7 @@ int main(int, char**) {
     }
     {
       boost::filesystem::path temp = boost::filesystem::unique_path();
-      const std::string name = temp.native() + ".rmft";
+      const std::string name = name_base + ".rmft";
       {
         RMF::FileHandle fh = RMF::create_rmf_file(name);
         benchmark_create(fh, "rmft");
@@ -231,8 +237,8 @@ int main(int, char**) {
       benchmark_size(name, "rmft");
     }
     {
-      std::string buffer;
-      RMF::FileHandle fh = RMF::create_rmf_buffer();
+      RMF::BufferHandle buffer;
+      RMF::FileHandle fh = RMF::create_rmf_buffer(buffer);
       benchmark_create(fh, "buffer");
       benchmark_traverse(fh, "buffer");
       benchmark_load(fh, "buffer");

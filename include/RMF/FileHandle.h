@@ -14,6 +14,7 @@
 #include "types.h"
 #include "FileConstHandle.h"
 #include "NodeHandle.h"
+#include "BufferHandle.h"
 
 RMF_ENABLE_WARNINGS
 
@@ -87,13 +88,6 @@ class RMFEXPORT FileHandle : public FileConstHandle {
        should be safe to open the file in another process for reading.
    */
   void flush() const;
-
-#ifndef SWIG
-  /** Extract the current state of the RMF serialized into a std::vector. Throws
-      an exception if this is not supported by the used backend.
-   */
-  std::vector<char> get_buffer() const { return shared_->get_buffer(); }
-#endif
 };
 
 /**
@@ -104,32 +98,12 @@ class RMFEXPORT FileHandle : public FileConstHandle {
  */
 RMFEXPORT FileHandle create_rmf_file(std::string path);
 
-#ifndef SWIG
 /**
    Create an RMF in a buffer.
 
    \param buffer The buffer to place the contents in.
  */
-RMFEXPORT FileHandle create_rmf_buffer();
-
-/**
-   Open an RMF from a buffer.
-
-   \param buffer a buffer containing an RMF
-   \exception RMF::IOException couldn't parse the buffer,
-   or unsupported file format
- */
-RMFEXPORT FileHandle open_rmf_buffer(const std::vector<char>& buffer);
-
-#endif
-
-/**
-   Open an RMF from a file system path.
-
-   \param path the system path to the rmf file
-   \exception RMF::IOException couldn't create file, or unsupported file format
- */
-RMFEXPORT FileHandle open_rmf_file(std::string path);
+RMFEXPORT FileHandle create_rmf_buffer(BufferHandle buffer);
 
 } /* namespace RMF */
 

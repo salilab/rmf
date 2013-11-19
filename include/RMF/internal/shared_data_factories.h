@@ -11,6 +11,8 @@
 
 #include <RMF/config.h>
 #include "SharedData.h"
+#include <RMF/BufferHandle.h>
+#include <RMF/BufferConstHandle.h>
 #include <vector>
 
 RMF_ENABLE_WARNINGS
@@ -20,11 +22,9 @@ namespace RMF {
 namespace internal {
 
 RMFEXPORT boost::shared_ptr<SharedData> create_file(const std::string& name);
-RMFEXPORT boost::shared_ptr<SharedData> create_buffer();
+RMFEXPORT boost::shared_ptr<SharedData> create_buffer(BufferHandle buffer);
 RMFEXPORT boost::shared_ptr<SharedData> read_file(const std::string& name);
-RMFEXPORT boost::shared_ptr<SharedData> open_buffer(
-    const std::vector<char>& buffer);
-RMFEXPORT boost::shared_ptr<SharedData> write_file(const std::string& name);
+RMFEXPORT boost::shared_ptr<SharedData> read_buffer(BufferConstHandle buffer);
 
 }  // namespace internal
 } /* namespace RMF */

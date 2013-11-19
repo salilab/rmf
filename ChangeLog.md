@@ -1,4 +1,8 @@
 # Change Log #
+- You can now only either create a new RMF or open an existing one read
+	only. Most backends only supported those two anyway.
+- Managing of data buffers has been revamped and wrapped in the
+	RMF::BufferHandle class which tracks a shared buffer.
 - Indexes and NodeID attributes are now just ints.
 - You now get keys by passing the appropriate traits object instead of
 	having the type in the function name: eg `f.get_key(cat, "name", RMF.IntTraits())`

@@ -14,6 +14,7 @@
 #include "internal/shared_data_ranges.h"
 #include "types.h"
 #include "NodeConstHandle.h"
+#include "BufferHandle.h"
 #include <boost/functional/hash.hpp>
 #include <boost/shared_ptr.hpp>
 
@@ -317,6 +318,14 @@ class RMFEXPORT FileConstHandle {
    \exception RMF::IOException couldn't open file, or unsupported file format
  */
 RMFEXPORT FileConstHandle open_rmf_file_read_only(std::string path);
+
+/**
+   Open an RMF from a buffer in read-only mode.
+
+   \exception RMF::IOException couldn't open file, or unsupported file format
+ */
+RMFEXPORT FileConstHandle open_rmf_buffer_read_only(BufferConstHandle buffer);
+
 
 /** \name Batch data access
     These methods provide batch access to attribute data to try

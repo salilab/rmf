@@ -36,10 +36,6 @@ struct SingleTextAvroFactory : public RMF::backends::IOFactory {
       const std::string& name) const RMF_OVERRIDE {
     return boost::make_shared<SingleAvroShareData>(name, false, true);
   }
-  virtual boost::shared_ptr<RMF::backends::IO> write_file(
-      const std::string& name) const RMF_OVERRIDE {
-    return boost::make_shared<SingleAvroShareData>(name, false, false);
-  }
   virtual boost::shared_ptr<RMF::backends::IO> create_file(
       const std::string& name) const RMF_OVERRIDE {
     return boost::make_shared<SingleAvroShareData>(name, true, false);
@@ -53,12 +49,12 @@ class SingleAvroFactory : public SingleTextAvroFactory {
   virtual std::string get_file_extension() const RMF_OVERRIDE {
     return ".rmfa";
   }
-  virtual boost::shared_ptr<RMF::backends::IO> create_buffer() const
-      RMF_OVERRIDE {
-    return boost::make_shared<SingleAvroShareData>();
+  virtual boost::shared_ptr<RMF::backends::IO> create_buffer(
+      BufferHandle buffer) const RMF_OVERRIDE {
+    return boost::make_shared<SingleAvroShareData>(buffer);
   }
-  virtual boost::shared_ptr<RMF::backends::IO> open_buffer(
-      const std::vector<char>& buffer) const RMF_OVERRIDE {
+  virtual boost::shared_ptr<RMF::backends::IO> read_buffer(
+      BufferConstHandle buffer) const RMF_OVERRIDE {
     return boost::make_shared<SingleAvroShareData>(buffer);
   }
   virtual ~SingleAvroFactory() {}

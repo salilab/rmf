@@ -110,11 +110,11 @@ class RMFEXPORT NodeConstHandle {
   FrameID get_current_frame_id() const;
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
  public:
-  NodeID get_id() const { return node_; }
   NodeConstHandle(NodeID node, boost::shared_ptr<internal::SharedData> shared);
 #endif
 
  public:
+  NodeID get_id() const { return node_; }
   RMF_COMPARISONS(NodeConstHandle);
   RMF_HASHABLE(NodeConstHandle, return node_.get_index());
   NodeConstHandle() {}

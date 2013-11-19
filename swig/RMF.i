@@ -122,6 +122,8 @@ RMF_SWIG_NATIVE_VALUE(double);
 RMF_SWIG_NATIVE_VALUE(int);
 RMF_SWIG_NATIVE_VALUE(std::string);
 
+RMF_SWIG_VALUE(RMF, BufferHandle, BufferHandles);
+RMF_SWIG_VALUE(RMF, BufferConstHandle, BufferConstHandles);
 
 RMF_SWIG_GRAPH(RMF, NodeTree, NodeTree, RMF::NodeHandle);
 RMF_SWIG_VALUE(RMF, NodeConstHandle, NodeConstHandles);
@@ -185,7 +187,8 @@ namespace RMF {
   %}
 }
 
-
+%include "RMF/BufferConstHandle.h"
+%include "RMF/BufferHandle.h"
 
 %include "RMF/constants.h"
 
@@ -327,10 +330,7 @@ def get_example_path(name):
    dir.append(name)
    return os.path.join(*dir)
 
-# rmf3
-suffixes=["rmf", "rmf2", "rmfa", "rmft", "rmf3"]
-
-read_write_suffixes=["rmf", "rmfa", "rmft"]
+suffixes=["rmf", "rmf2", "rmfa", "rmft", "rmf3", "_rmf_test_buffer"]
 
 import RMF_HDF5
 HDF5=RMF_HDF5

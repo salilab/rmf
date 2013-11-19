@@ -1,3 +1,5 @@
+#include <RMF/BufferConstHandle.h>
+#include <RMF/BufferHandle.h>
 #include <RMF/CoordinateTransformer.h>
 #include <RMF/Decorator.h>
 #include <RMF/Factory.h>

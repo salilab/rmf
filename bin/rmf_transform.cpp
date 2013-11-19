@@ -68,6 +68,7 @@ int main(int argc, char** argv) {
         boost::program_options::value<std::string>(&translation_str),
         "What to translate the model by as \"x y z\"");
     RMF_ADD_INPUT_FILE("rmf");
+    RMF_ADD_OUTPUT_FILE("rmf");
     process_options(argc, argv);
     RMF::Floats translation;
     if (!translation_str.empty()) {
@@ -89,18 +90,21 @@ int main(int argc, char** argv) {
                                                         << translation[1] << " "
                                                         << translation[2]);
 
-    RMF::FileHandle rh = RMF::open_rmf_file(input);
-    int num_frames = rh.get_number_of_frames();
-    RMF_INFO(RMF::get_logger(), "File has " << num_frames << " frames");
+    RMF::FileConstHandle rhi = RMF::open_rmf_file_read_only(input);
+    RMF::FileHandle rh = RMF::create_rmf_file(output);
+    RMF::clone_file_info(rhi, rh);
+    RMF::clone_hierarchy(rhi, rh);
+    RMF::clone_static_frame(rhi, rh);
     RMF::IntermediateParticleFactory ipf(rh);
     RMF::RigidParticleFactory rpf(rh);
     RMF::ReferenceFrameFactory rff(rh);
     RMF::BallFactory bf(rh);
     RMF::CylinderFactory cf(rh);
     RMF::SegmentFactory sf(rh);
-    for (int i = RMF::ALL_FRAMES.get_index(); i < num_frames; ++i) {
-      RMF_INFO(RMF::get_logger(), "Processing frame " << i);
-      rh.set_current_frame(RMF::FrameID(i));
+    RMF_FOREACH(RMF::FrameID frame, rhi.get_frames()) {
+      RMF::clone_loaded_frame(rhi, rh);
+      RMF_INFO(RMF::get_logger(), "Processing frame " << frame);
+      rh.set_current_frame(frame);
       transform(rh.get_root_node(), ipf, rpf, rff, bf, cf, sf, scale,
                 translation);
     }

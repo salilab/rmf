@@ -26,9 +26,7 @@ SingleAvroFile::SingleAvroFile(std::string path, bool create,
                                bool /*read_only*/)
     : AvroKeysAndCategories(path),
       dirty_(false),
-      text_(get_is_text(path)),
-      buffer_(NULL),
-      write_to_buffer_(false) {
+      text_(get_is_text(path)) {
   if (!create) {
     reload();
   } else {
@@ -40,30 +38,21 @@ SingleAvroFile::SingleAvroFile(std::string path, bool create,
   null_static_frame_data_.frame = -1;
 }
 
-SingleAvroFile::SingleAvroFile()
+SingleAvroFile::SingleAvroFile(boost::shared_ptr<std::vector<char> > buffer,
+                               bool create, bool)
     : AvroKeysAndCategories("buffer"),
       dirty_(false),
       text_(false),
-      write_to_buffer_(true) {
-  initialize_frames();
-  initialize_categories();
-  initialize_node_keys();
-  all_.file.version = 1;
+      buffer_(buffer) {
+  if (!create) {
+    reload();
+  } else {
+    initialize_frames();
+    initialize_categories();
+    initialize_node_keys();
+    all_.file.version = 1;
+  }
   null_static_frame_data_.frame = -1;
-}
-
-SingleAvroFile::SingleAvroFile(const std::vector<char>& buffer)
-    : AvroKeysAndCategories("buffer"),
-      dirty_(false),
-      text_(false),
-      buffer_(buffer),
-      write_to_buffer_(true) {
-  reload();
-  null_static_frame_data_.frame = -1;
-}
-std::vector<char> SingleAvroFile::get_buffer() {
-  flush();
-  return buffer_;
 }
 
 void SingleAvroFile::initialize_frames() {
@@ -90,7 +79,7 @@ void SingleAvroFile::initialize_node_keys() {
 
 void SingleAvroFile::flush() {
   if (!dirty_) return;
-  if (!write_to_buffer_) {
+  if (!buffer_) {
     if (!text_) {
       write(all_, rmf_avro::compileJsonSchemaFromString(data_avro::all_json),
             get_file_path());
@@ -100,7 +89,7 @@ void SingleAvroFile::flush() {
                  get_file_path());
     }
   } else {
-    buffer_.clear();
+    buffer_->clear();
     std::ostringstream oss(std::ios_base::binary);
     boost::scoped_ptr<rmf_avro::OutputStream> os(
         rmf_avro::ostreamOutputStream(oss).release());
@@ -111,13 +100,13 @@ void SingleAvroFile::flush() {
     encoder.reset();
     os.reset();
     const std::string& str = oss.str();
-    buffer_ = std::vector<char>(str.begin(), str.end());
+    buffer_->insert(buffer_->end(), str.begin(), str.end());
   }
   dirty_ = false;
 }
 
 void SingleAvroFile::reload() {
-  if (!write_to_buffer_ && !text_) {
+  if (!buffer_ && !text_) {
     bool success;
     try {
       rmf_avro::DataFileReader<RMF_avro_backend::All> rd(
@@ -131,7 +120,7 @@ void SingleAvroFile::reload() {
     if (!success) {
       RMF_THROW(Message("Can't read input file on reload"), IOException);
     }
-  } else if (!write_to_buffer_ && text_) {
+  } else if (!buffer_ && text_) {
     boost::shared_ptr<rmf_avro::Decoder> decoder = rmf_avro::jsonDecoder(
         rmf_avro::compileJsonSchemaFromString(data_avro::all_json));
     std::auto_ptr<rmf_avro::InputStream> stream =
@@ -150,7 +139,7 @@ void SingleAvroFile::reload() {
     }
   } else {
     boost::scoped_ptr<rmf_avro::InputStream> is(rmf_avro::memoryInputStream(
-        reinterpret_cast<uint8_t*>(&buffer_[0]), buffer_.size()).release());
+        reinterpret_cast<uint8_t*>(&(*buffer_)[0]), buffer_->size()).release());
     boost::shared_ptr<rmf_avro::Decoder> decoder = rmf_avro::binaryDecoder();
     decoder->init(*is);
     rmf_avro::decode(*decoder, all_);

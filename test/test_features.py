@@ -18,10 +18,12 @@ class GenericTest(unittest.TestCase):
             pd.set_mass(1)
             pd.set_radius(.5)
         sf = RMF.ScoreFactory(fh)
+        rf = RMF.RepresentationFactory(fh)
         fn = rt.add_child("feature", RMF.FEATURE)
         sd = sf.get(fn)
         sd.set_score(10.0)
-        sd.set_representation(reps)
+        rd = rf.get(fn)
+        rd.set_representation([r.get_id().get_index() for r in reps])
 
     def _test(self, path):
         fh = RMF.open_rmf_file_read_only(path)
@@ -29,14 +31,16 @@ class GenericTest(unittest.TestCase):
         rt = fh.get_root_node()
         ch = rt.get_children()
         fn = ch[-1]
-        reps = ch[:-1]
+        reps = [x.get_id().get_index() for x in ch[:-1]]
         sf = RMF.ScoreConstFactory(fh)
+        rf = RMF.RepresentationConstFactory(fh)
         sd = sf.get(fn)
+        rd = rf.get(fn)
         print sd.get_score()
         print reps
-        print sd.get_representation()
+        print rd.get_representation()
         self.assert_(sd.get_score() == 10)
-        self.assert_(sd.get_representation() == reps)
+        self.assert_(rd.get_representation() == reps)
 
     def test_multiparent(self):
         """Test that feature nodes work right"""

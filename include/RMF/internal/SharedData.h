@@ -95,7 +95,6 @@ class RMFEXPORT SharedData
   void reload();
   unsigned int get_number_of_frames() const { return number_of_frames_; }
   void set_number_of_frames(unsigned int n) { number_of_frames_ = n; }
-  std::vector<char> get_buffer();
   ~SharedData();
 };
 

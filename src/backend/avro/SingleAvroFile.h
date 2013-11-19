@@ -25,8 +25,7 @@ class SingleAvroFile : public AvroKeysAndCategories {
   bool dirty_;
   bool text_;
 
-  std::vector<char> buffer_;
-  bool write_to_buffer_;
+  boost::shared_ptr<std::vector<char> > buffer_;
 
   RMF_avro_backend::Data null_frame_data_;
   RMF_avro_backend::Data null_static_frame_data_;
@@ -139,7 +138,8 @@ class SingleAvroFile : public AvroKeysAndCategories {
   void reload();
 
   SingleAvroFile(std::string path, bool create, bool read_only);
-  SingleAvroFile(const std::vector<char>& buffer);
+  SingleAvroFile(boost::shared_ptr<std::vector<char> > buffer, bool create,
+                 bool read_only);
   SingleAvroFile();
   ~SingleAvroFile() { flush(); }
   FrameID add_frame(std::string name, FrameType t);

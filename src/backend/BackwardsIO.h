@@ -359,15 +359,13 @@ struct BackwardsIO : public IO {
  public:
   BackwardsIO(std::string name, bool create, bool read_only)
       : sd_(new SD(name, create, read_only)), name_(name) {}
-  BackwardsIO(const std::vector<char> &buffer)
+  BackwardsIO(BufferConstHandle buffer)
       : sd_(new SD(buffer)), name_("buffer") {}
-  BackwardsIO() : sd_(new SD()), name_("buffer") {}
+  BackwardsIO(BufferHandle buffer)
+      : sd_(new SD(buffer)), name_("buffer") {}
   virtual ~BackwardsIO() { flush(); }
 
  protected:
-  virtual std::vector<char> get_buffer() RMF_OVERRIDE {
-    return sd_->get_buffer();
-  }
 
   virtual void load_static_frame(internal::SharedData *shared_data)
       RMF_OVERRIDE {

@@ -15,6 +15,8 @@
 #include <RMF/constants.h>
 #include <backend/BackwardsIOBase.h>
 #include <backend/backward_types.h>
+#include <RMF/BufferHandle.h>
+#include <RMF/BufferConstHandle.h>
 #include <boost/unordered_map.hpp>
 #include <boost/unordered_set.hpp>
 #include "AvroSharedData.types.h"
@@ -145,8 +147,8 @@ class AvroSharedData : public Base {
 
   AvroSharedData(std::string g, bool create, bool read_only);
   // buffer versions
-  AvroSharedData();
-  AvroSharedData(const std::vector<char>& buffer);
+  AvroSharedData(BufferHandle buffer);
+  AvroSharedData(BufferConstHandle buffer);
 
   ~AvroSharedData() {}
   std::string get_name(NodeID node) const;

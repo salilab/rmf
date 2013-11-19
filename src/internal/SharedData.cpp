@@ -154,11 +154,6 @@ void SharedData::clear_loaded_values() { RMF_FOREACH_TYPE(RMF_CLEAR_LOADED); }
 
 void SharedData::clear_static_values() { RMF_FOREACH_TYPE(RMF_CLEAR_STATIC); }
 
-std::vector<char> SharedData::get_buffer() {
-  flush();
-  return io_->get_buffer();
-}
-
 SharedData::~SharedData() {
   try {
     RMF_INFO(get_logger(), "Closing file " << get_file_path());

@@ -28,9 +28,6 @@ class BackwardsIOBase {
   std::string get_file_path() const { return path_; }
   void set_loaded_frame(FrameID frame) { loaded_frame_ = frame; }
   FrameID get_loaded_frame() const { return loaded_frame_; }
-  std::vector<char> get_buffer() {
-    RMF_THROW(Message("Not implemented"), IOException);
-  }
 };
 }  // namespace internal
 } /* namespace RMF */

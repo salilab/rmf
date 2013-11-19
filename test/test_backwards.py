@@ -22,7 +22,7 @@ class GenericTest(unittest.TestCase):
         print pks
         tfn = RMF._get_temporary_file_path("test_fileold.rmf")
         shutil.copy(ifn, tfn)
-        fw = RMF.open_rmf_file(tfn)
+        fw = RMF.open_rmf_file_read_only(tfn)
         pc = f.get_category("physics")
         pks = f.get_keys(pc)
         print pks

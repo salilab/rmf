@@ -14,15 +14,14 @@ struct MyInt {
 };
 
 void test() {
-  std::vector<char> buffer;
+  RMF::BufferHandle buffer;
   {
-    RMF::FileHandle fh = RMF::create_rmf_buffer();
+    RMF::FileHandle fh = RMF::create_rmf_buffer(buffer);
     RMF::NodeHandle c0 = fh.get_root_node().add_child("c0", RMF::GEOMETRY);
     RMF::NodeHandle c1 = fh.get_root_node().add_child("c1", RMF::GEOMETRY);
-    buffer = fh.get_buffer();
   }
   {
-    RMF::FileConstHandle fh = RMF::open_rmf_buffer(buffer);
+    RMF::FileConstHandle fh = RMF::open_rmf_buffer_read_only(buffer);
     RMF::NodeConstHandle rt = fh.get_root_node();
     RMF::NodeConstHandles ch = rt.get_children();
     assert(ch.size() == 2);
