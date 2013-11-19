@@ -76,10 +76,12 @@ class ID {
     RMF_USAGE_CHECK(i_ >= 0, "get_index called on special ID.");
     return i_;
   }
-  RMF_SHOWABLE(ID, get_string());
   RMF_COMPARISONS(ID);
   RMF_HASHABLE(ID, return i_);
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
+  void show(std::ostream &out) const {
+    out << get_string();
+  }
   ID operator++() {
     ++i_;
     return *this;
@@ -99,7 +101,8 @@ typedef std::vector<Category> Categories;
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
 template <class Traits>
 inline std::ostream& operator<<(std::ostream& out, ID<Traits> null) {
-  return out << Showable(null);
+  null.show(out);
+  return out;
 }
 #endif
 

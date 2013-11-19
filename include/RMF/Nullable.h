@@ -53,15 +53,20 @@ class Nullable {
     return v_;
   }
 #endif
+#if !defined(RMF_DOXYGEN) && !defined(SWIG)
+  void show(std::ostream &out) const {
+    out << get_string();
+  }
+#endif
 
   bool get_is_null() const { return Traits::get_is_null_value(v_); }
-  RMF_SHOWABLE(Nullable, get_string());
 };
 
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
 template <class Traits>
 inline std::ostream& operator<<(std::ostream& out, Nullable<Traits> null) {
-  return out << Showable(null);
+  null.show(out);
+  return out;
 }
 #endif
 
