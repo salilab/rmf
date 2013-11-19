@@ -14,7 +14,7 @@
 #include <string>
 #include <RMF/compiler_macros.h>
 #include <boost/config.hpp>
-#ifdef BOOST_NO_CXX11_RANGE_BASED_FOR
+#if defined(BOOST_NO_CXX11_RANGE_BASED_FOR) || BOOST_VERSION <= 104100
 #define RMF_FOREACH(v,r) BOOST_FOREACH(v,r)
 #include <boost/foreach.hpp>
 #else
