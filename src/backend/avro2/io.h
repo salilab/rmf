@@ -46,22 +46,20 @@ struct Avro2IO : public backends::IO {
   virtual void save_hierarchy(const internal::SharedData *shared_data)
       RMF_OVERRIDE;
   virtual void flush() RMF_OVERRIDE;
-  virtual std::vector<char> get_buffer();
   virtual ~Avro2IO();
 };
 
 class Avro2IOFactory : public backends::IOFactory {
  public:
-  virtual std::string get_file_extension() const;
+  virtual std::string get_file_extension() const RMF_OVERRIDE;
   virtual boost::shared_ptr<backends::IO> read_file(const std::string &name)
-      const;
-  virtual boost::shared_ptr<backends::IO> create_buffer() const;
-  virtual boost::shared_ptr<backends::IO> write_file(const std::string &name)
-      const;
-  virtual boost::shared_ptr<backends::IO> open_buffer(const std::vector<char> &)
-      const;
+      const RMF_OVERRIDE;
+  virtual boost::shared_ptr<backends::IO> create_buffer(BufferHandle) const
+      RMF_OVERRIDE;
+  virtual boost::shared_ptr<backends::IO> read_buffer(BufferConstHandle)
+      const RMF_OVERRIDE;
   virtual boost::shared_ptr<backends::IO> create_file(const std::string &name)
-      const;
+      const RMF_OVERRIDE;
   virtual ~Avro2IOFactory();
 };
 

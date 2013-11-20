@@ -310,10 +310,6 @@ unsigned int Avro2IO::get_number_of_frames() const {
   return file_data_.max_id + 1;
 }
 
-std::vector<char> Avro2IO::get_buffer() {
-  RMF_THROW(Message("Not supported"), IOException);
-}
-
 Avro2IO::~Avro2IO() {
   if (writer_) {
     commit();
@@ -326,15 +322,12 @@ boost::shared_ptr<backends::IO> Avro2IOFactory::read_file(
     const std::string &name) const {
   return boost::make_shared<Avro2IO>(name);
 }
-boost::shared_ptr<backends::IO> Avro2IOFactory::create_buffer() const {
-  return boost::shared_ptr<backends::IO>();
-}
-boost::shared_ptr<backends::IO> Avro2IOFactory::write_file(const std::string &)
+boost::shared_ptr<backends::IO> Avro2IOFactory::create_buffer(BufferHandle)
     const {
   return boost::shared_ptr<backends::IO>();
 }
-boost::shared_ptr<backends::IO> Avro2IOFactory::open_buffer(
-    const std::vector<char> &) const {
+boost::shared_ptr<backends::IO> Avro2IOFactory::read_buffer(BufferConstHandle)
+    const {
   return boost::shared_ptr<backends::IO>();
 }
 boost::shared_ptr<backends::IO> Avro2IOFactory::create_file(
