@@ -240,7 +240,9 @@ void Avro2IO::save_static_frame(const internal::SharedData *shared_data) {
 
 void Avro2IO::load_file(internal::SharedData *shared_data) {
   // set producer and description
-  file_data_ = get_file_data(path_);
+  // for some weird reason, mac os 10.8 clang needs this two step thing
+  FileData fd = get_file_data(path_);
+  file_data_ = fd; // get_file_data(path_);
   RMF_INFO(get_logger(), "Found " << get_number_of_frames() << " frames");
   shared_data->set_description(file_data_.description);
   shared_data->set_producer(file_data_.producer);
@@ -307,7 +309,8 @@ void Avro2IO::save_hierarchy(const internal::SharedData *shared_data) {
 
 void Avro2IO::flush() { commit(); }
 unsigned int Avro2IO::get_number_of_frames() const {
-  return file_data_.max_id + 1;
+  if (file_data_.max_id == FrameID()) return 0;  
+  else return file_data_.max_id.get_index() + 1;
 }
 
 Avro2IO::~Avro2IO() {

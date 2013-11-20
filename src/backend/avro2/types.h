@@ -102,13 +102,12 @@ struct FileData {
   RMF_SMALL_UNORDERED_MAP<int32_t, RMF_SMALL_UNORDERED_SET<RMF::NodeID> >
       node_sets;
 
-  int32_t max_id;
+  FrameID max_id;
   std::vector<internal::HierarchyNode<NodeID, NodeType> > nodes;
   std::vector<FrameIDs> frame_children;
   KeyData keys;
   DataTypes data;
   boost::unordered_map<FrameID, int32_t> frame_block_offsets;
-  FileData() : max_id(-1) {}
 };
 
 struct FileDataChanges {

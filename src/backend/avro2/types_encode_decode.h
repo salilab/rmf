@@ -226,7 +226,7 @@ struct codec_traits<RMF::avro2::FileData> {
     size_t n = d.decodeUnionIndex();
     if (n == 0) {
       rmf_avro::decode(d, v.cur_id);
-      v.max_id = std::max<int32_t>(v.max_id, v.cur_id.get_index());
+      v.max_id = std::max(v.max_id, v.cur_id);
       RMF::avro2::Skip<std::string> junk_name;
       rmf_avro::decode(d, junk_name);
       RMF::avro2::Skip<RMF::FrameType> junk_type;

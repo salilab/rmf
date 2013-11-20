@@ -24,6 +24,14 @@ struct CategoryData {
   From from_name;
   typedef RMF_SMALL_UNORDERED_MAP<Category, std::string> To;
   To to_name;
+  // Mac OS 10.8 and earlied Clang needs these for some reason
+  CategoryData() {}
+  CategoryData& operator=(const CategoryData &o) {
+    from_name = o.from_name;
+    to_name = o.to_name;
+    return *this;
+  }
+  CategoryData(const CategoryData &o): from_name(o.from_name), to_name(o.to_name) {}
 };
 
 class SharedDataCategory {
@@ -64,8 +72,8 @@ class SharedDataCategory {
     return data_.to_name.find(kc)->second;
   }
 
-  CategoryData &access_category_data() { return data_; }
   const CategoryData &get_category_data() const { return data_; }
+  CategoryData &access_category_data() { return data_; }
 };
 
 }  // namespace internal

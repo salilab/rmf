@@ -29,8 +29,8 @@ void write(std::string name) {
 void read(std::string name) {
   RMF::avro2::FileData file_data = RMF::avro2::get_file_data(name);
   assert(file_data.description == "description1");
-  assert(file_data.max_id == 2);
-  for (unsigned int i = 0; i <= file_data.max_id; ++i) {
+  assert(file_data.max_id.get_index() == 2);
+  for (unsigned int i = 0; i <= file_data.max_id.get_index(); ++i) {
     boost::scoped_ptr<rmf_avro::DataFileReader<RMF::avro2::Frame> > reader;
     RMF::avro2::Frame frame =
         get_frame(file_data, name, RMF::FrameID(i), reader);
