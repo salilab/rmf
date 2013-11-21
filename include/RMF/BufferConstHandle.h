@@ -29,12 +29,12 @@ class BufferConstHandle {
     else return 0;
   }
  public:
-  BufferConstHandle(const BufferConstHandle &o) : data_(o.data_) {}
   template <class R>
   explicit BufferConstHandle(const R &r)
       : data_(boost::make_shared<std::vector<char> >()) {
     data_->insert(data_->end(), r.begin(), r.end());
   }
+  BufferConstHandle(const BufferConstHandle &o) : data_(o.data_) {}
   const std::vector<char> &get_buffer() const { return *data_; }
   RMF_COMPARISONS(BufferConstHandle);
   RMF_HASHABLE(BufferConstHandle,
