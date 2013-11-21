@@ -25,13 +25,13 @@ namespace backends {
 class IOFactory {
  public:
   virtual std::string get_file_extension() const = 0;
-  virtual boost::shared_ptr<IO> read_buffer(BufferConstHandle ) const {
+  virtual boost::shared_ptr<IO> read_buffer(BufferConstHandle) const {
     return boost::shared_ptr<IO>();
   }
-   virtual boost::shared_ptr<IO> read_file(const std::string &) const {
+  virtual boost::shared_ptr<IO> read_file(const std::string &) const {
     return boost::shared_ptr<IO>();
   }
-  virtual boost::shared_ptr<IO> create_buffer(BufferHandle ) const {
+  virtual boost::shared_ptr<IO> create_buffer(BufferHandle) const {
     return boost::shared_ptr<IO>();
   }
   virtual boost::shared_ptr<IO> create_file(const std::string &) const {

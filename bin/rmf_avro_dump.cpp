@@ -5,8 +5,8 @@
 #include <RMF/FileHandle.h>
 #include <RMF/utility.h>
 #include "common.h"
-#include <backend/AvroCpp/api/Compiler.hh>
-#include <backend/AvroCpp/api/DataFile.hh>
+#include <avrocpp/api/Compiler.hh>
+#include <avrocpp/api/DataFile.hh>
 #include <generated/embed_jsons.h>
 #include <backend/avro/AllJSON.h>
 #include <backend/avro/FrameJSON.h>
@@ -36,16 +36,17 @@ bool show_type(std::string node_name, bool shown,
   return true;
 }
 template <class Type>
-bool try_read(std::string type, std::string input, rmf_avro::ValidSchema schema,
-              bool count) {
+bool try_read(std::string type, std::string input,
+              internal_avro::ValidSchema schema, bool count) {
   std::cout << "Trying " << type << std::endl;
-  boost::shared_ptr<rmf_avro::Encoder> encoder = rmf_avro::jsonEncoder(
-      rmf_avro::compileJsonSchemaFromString(RMF::data_avro::data_json));
-  std::auto_ptr<rmf_avro::OutputStream> stream =
-      rmf_avro::ostreamOutputStream(std::cout);
+  boost::shared_ptr<internal_avro::Encoder> encoder =
+      internal_avro::jsonEncoder(internal_avro::compileJsonSchemaFromString(
+          RMF::data_avro::data_json));
+  boost::shared_ptr<internal_avro::OutputStream> stream =
+      internal_avro::ostreamOutputStream(std::cout);
   encoder->init(*stream);
   try {
-    rmf_avro::DataFileReader<Type> reader(input.c_str(), schema);
+    internal_avro::DataFileReader<Type> reader(input.c_str(), schema);
     Type data;
     bool ok = false;
     int frame = 0;
@@ -60,7 +61,7 @@ bool try_read(std::string type, std::string input, rmf_avro::ValidSchema schema,
       ok = true;
       std::cout << "frame: " << frame << std::endl;
       if (!count) {
-        rmf_avro::encode(*encoder, data);
+        internal_avro::encode(*encoder, data);
         encoder->flush();
         stream->flush();
       }
@@ -88,26 +89,26 @@ int main(int argc, char** argv) {
   bool count = variables_map.count("count");
   if (try_read<RMF_avro_backend::Data>(
           "data", input,
-          rmf_avro::compileJsonSchemaFromString(RMF::data_avro::data_json),
+          internal_avro::compileJsonSchemaFromString(RMF::data_avro::data_json),
           count)) {
     return 0;
   } else if (try_read<RMF_avro_backend::File>(
-                 "file", input, rmf_avro::compileJsonSchemaFromString(
+                 "file", input, internal_avro::compileJsonSchemaFromString(
                                     RMF::data_avro::file_json),
                  count)) {
     return 0;
   } else if (try_read<RMF_avro_backend::Node>(
-                 "node", input, rmf_avro::compileJsonSchemaFromString(
+                 "node", input, internal_avro::compileJsonSchemaFromString(
                                     RMF::data_avro::nodes_json),
                  count)) {
     return 0;
   } else if (try_read<RMF_avro_backend::All>(
-                 "all", input, rmf_avro::compileJsonSchemaFromString(
+                 "all", input, internal_avro::compileJsonSchemaFromString(
                                    RMF::data_avro::all_json),
                  count)) {
     return 0;
   } else if (try_read<RMF_avro_backend::Frame>(
-                 "frame", input, rmf_avro::compileJsonSchemaFromString(
+                 "frame", input, internal_avro::compileJsonSchemaFromString(
                                      RMF::data_avro::frame_json),
                  count)) {
     return 0;

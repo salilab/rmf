@@ -12,7 +12,7 @@
 import RMF
 
 # don't bother with command line arguments, to keep in simple
-file_name = RMF.get_example_path("simple.rmf")
+file_name = RMF.get_example_path("simple.rmf3")
 verbose = True
 
 # show the data with the specified key category

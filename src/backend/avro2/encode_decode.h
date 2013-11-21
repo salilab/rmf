@@ -20,9 +20,9 @@
 #define SRC_BACKEND_AVRO2_FRAME_H_1753077812__H_
 
 #include "boost/any.hpp"
-#include "backend/AvroCpp/api/Specific.hh"
-#include "backend/AvroCpp/api/Encoder.hh"
-#include "backend/AvroCpp/api/Decoder.hh"
+#include "avrocpp/api/Specific.hh"
+#include "avrocpp/api/Encoder.hh"
+#include "avrocpp/api/Decoder.hh"
 #include <RMF/Vector.h>
 #include <RMF/ID.h>
 #include <boost/unordered_map.hpp>
@@ -50,14 +50,14 @@ void add_to_list(std::vector<V>& in, const V& to_add) {
 }
 }
 
-namespace rmf_avro {
+namespace internal_avro {
 
 template <class B>
 struct codec_traits<RMF::avro2::Skip<B> > {
   static void encode(Encoder&, RMF::avro2::Skip<B>) {}
   static void decode(Decoder& d, RMF::avro2::Skip<B>&) {
     B b;
-    rmf_avro::decode(d, b);
+    internal_avro::decode(d, b);
   }
 };
 
@@ -65,12 +65,12 @@ template <unsigned int V>
 struct codec_traits<RMF::Vector<V> > {
   static void encode(Encoder& e, const RMF::Vector<V>& v) {
     for (unsigned int i = 0; i < V; ++i) {
-      rmf_avro::encode<float>(e, v[i]);
+      internal_avro::encode<float>(e, v[i]);
     }
   }
   static void decode(Decoder& d, RMF::Vector<V>& v) {
     for (unsigned int i = 0; i < V; ++i) {
-      rmf_avro::decode<float>(d, v[i]);
+      internal_avro::decode<float>(d, v[i]);
     }
   }
 };
@@ -78,11 +78,11 @@ struct codec_traits<RMF::Vector<V> > {
 template <>
 struct codec_traits<RMF::NodeType> {
   static void encode(Encoder& e, const RMF::NodeType& v) {
-    rmf_avro::encode<int32_t>(e, v);
+    internal_avro::encode<int32_t>(e, v);
   }
   static void decode(Decoder& d, RMF::NodeType& v) {
     int32_t vv;
-    rmf_avro::decode(d, vv);
+    internal_avro::decode(d, vv);
     v = RMF::NodeType(vv);
   }
 };
@@ -90,11 +90,11 @@ struct codec_traits<RMF::NodeType> {
 template <>
 struct codec_traits<RMF::FrameType> {
   static void encode(Encoder& e, const RMF::FrameType& v) {
-    rmf_avro::encode<int32_t>(e, v);
+    internal_avro::encode<int32_t>(e, v);
   }
   static void decode(Decoder& d, RMF::FrameType& v) {
     int32_t vv;
-    rmf_avro::decode(d, vv);
+    internal_avro::decode(d, vv);
     v = RMF::FrameType(vv);
   }
 };
@@ -103,11 +103,11 @@ template <class V>
 struct codec_traits<RMF::ID<V> > {
   static void encode(Encoder& e, const RMF::ID<V>& v) {
     RMF_INTERNAL_CHECK(v != RMF::ID<V>(), "Uninitialized ID");
-    rmf_avro::encode<int32_t>(e, v.get_index_always());
+    internal_avro::encode<int32_t>(e, v.get_index_always());
   }
   static void decode(Decoder& d, RMF::ID<V>& v) {
     int32_t index;
-    rmf_avro::decode(d, index);
+    internal_avro::decode(d, index);
     if (index >= 0) {
       v = RMF::ID<V>(index);
     } else {
@@ -119,12 +119,12 @@ struct codec_traits<RMF::ID<V> > {
 template <class K, class V>
 struct codec_traits<std::pair<K, V> > {
   static void encode(Encoder& e, const std::pair<K, V>& v) {
-    rmf_avro::encode(e, v.first);
-    rmf_avro::encode(e, v.second);
+    internal_avro::encode(e, v.first);
+    internal_avro::encode(e, v.second);
   }
   static void decode(Decoder& d, std::pair<K, V>& v) {
-    rmf_avro::decode(d, v.first);
-    rmf_avro::decode(d, v.second);
+    internal_avro::decode(d, v.first);
+    internal_avro::decode(d, v.second);
   }
 };
 
@@ -133,11 +133,11 @@ struct codec_traits<boost::unordered_map<K, V> > {
   typedef std::pair<K, V> KP;
   static void encode(Encoder& e, const boost::unordered_map<K, V>& v) {
     std::vector<KP> pairs(v.begin(), v.end());
-    rmf_avro::encode(e, pairs);
+    internal_avro::encode(e, pairs);
   }
   static void decode(Decoder& d, boost::unordered_map<K, V>& v) {
     std::vector<KP> values;
-    rmf_avro::decode(d, values);
+    internal_avro::decode(d, values);
     v.insert(values.begin(), values.end());
   }
 };
@@ -146,11 +146,11 @@ template <class K>
 struct codec_traits<boost::unordered_set<K> > {
   static void encode(Encoder& e, const boost::unordered_set<K>& v) {
     std::vector<K> values(v.begin(), v.end());
-    rmf_avro::encode(e, values);
+    internal_avro::encode(e, values);
   }
   static void decode(Decoder& d, boost::unordered_set<K>& v) {
     std::vector<K> values;
-    rmf_avro::decode(d, values);
+    internal_avro::decode(d, values);
     v.insert(values.begin(), values.end());
   }
 };
@@ -161,11 +161,11 @@ struct codec_traits<boost::container::flat_map<K, V> > {
   typedef std::pair<K, V> KP;
   static void encode(Encoder& e, const boost::container::flat_map<K, V>& v) {
     std::vector<KP> pairs(v.begin(), v.end());
-    rmf_avro::encode(e, pairs);
+    internal_avro::encode(e, pairs);
   }
   static void decode(Decoder& d, boost::container::flat_map<K, V>& v) {
     std::vector<KP> values;
-    rmf_avro::decode(d, values);
+    internal_avro::decode(d, values);
     v.insert(values.begin(), values.end());
   }
 };
@@ -174,11 +174,11 @@ template <class K>
 struct codec_traits<boost::container::flat_set<K> > {
   static void encode(Encoder& e, const boost::container::flat_set<K>& v) {
     std::vector<K> values(v.begin(), v.end());
-    rmf_avro::encode(e, values);
+    internal_avro::encode(e, values);
   }
   static void decode(Decoder& d, boost::container::flat_set<K>& v) {
     std::vector<K> values;
-    rmf_avro::decode(d, values);
+    internal_avro::decode(d, values);
     v.insert(values.begin(), values.end());
   }
 };
@@ -189,11 +189,11 @@ struct codec_traits<std::map<K, V> > {
   typedef std::pair<K, V> KP;
   static void encode(Encoder& e, const std::map<K, V>& v) {
     std::vector<KP> pairs(v.begin(), v.end());
-    rmf_avro::encode(e, pairs);
+    internal_avro::encode(e, pairs);
   }
   static void decode(Decoder& d, std::map<K, V>& v) {
     std::vector<KP> values;
-    rmf_avro::decode(d, values);
+    internal_avro::decode(d, values);
     v.insert(values.begin(), values.end());
   }
 };
@@ -202,11 +202,11 @@ template <class K>
 struct codec_traits<std::set<K> > {
   static void encode(Encoder& e, const std::set<K>& v) {
     std::vector<K> values(v.begin(), v.end());
-    rmf_avro::encode(e, values);
+    internal_avro::encode(e, values);
   }
   static void decode(Decoder& d, std::set<K>& v) {
     std::vector<K> values;
-    rmf_avro::decode(d, values);
+    internal_avro::decode(d, values);
     v.insert(values.begin(), values.end());
   }
 };

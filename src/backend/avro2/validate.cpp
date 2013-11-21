@@ -1,8 +1,8 @@
 
 #include "validate.h"
 #include "types_encode_decode.h"
-#include <backend/AvroCpp/api/Encoder.hh>
-#include <backend/AvroCpp/api/Compiler.hh>
+#include <avrocpp/api/Encoder.hh>
+#include <avrocpp/api/Compiler.hh>
 #include <generated/embed_jsons.h>
 #include "backend/avro2/raw_frame.h"
 
@@ -32,46 +32,50 @@ void validate_one(Tout fr, Tin) {
   fr.nodes.back().id = NodeID(1);
   fr.nodes.back().type = ROOT;
   fr.nodes.back().parents.push_back(NodeID(1));
-  std::auto_ptr<rmf_avro::OutputStream> out_stream =
-      rmf_avro::memoryOutputStream();
+  boost::shared_ptr<internal_avro::OutputStream> out_stream =
+      internal_avro::memoryOutputStream();
   {
-    rmf_avro::EncoderPtr encoder = rmf_avro::binaryEncoder();
+    internal_avro::EncoderPtr encoder = internal_avro::binaryEncoder();
     encoder->init(*out_stream);
-    rmf_avro::EncoderPtr ve = rmf_avro::validatingEncoder(
-        rmf_avro::compileJsonSchemaFromString(data_avro2::frame_json), encoder);
-    rmf_avro::encode(*ve, fr);
+    internal_avro::EncoderPtr ve = internal_avro::validatingEncoder(
+        internal_avro::compileJsonSchemaFromString(data_avro2::frame_json),
+        encoder);
+    internal_avro::encode(*ve, fr);
   }
   {
-    std::auto_ptr<rmf_avro::InputStream> in_stream =
-        rmf_avro::memoryInputStream(*out_stream);
-    rmf_avro::DecoderPtr decoder = rmf_avro::binaryDecoder();
+    boost::shared_ptr<internal_avro::InputStream> in_stream =
+        internal_avro::memoryInputStream(*out_stream);
+    internal_avro::DecoderPtr decoder = internal_avro::binaryDecoder();
     decoder->init(*in_stream);
-    rmf_avro::DecoderPtr ve = rmf_avro::validatingDecoder(
-        rmf_avro::compileJsonSchemaFromString(data_avro2::frame_json), decoder);
+    internal_avro::DecoderPtr ve = internal_avro::validatingDecoder(
+        internal_avro::compileJsonSchemaFromString(data_avro2::frame_json),
+        decoder);
     Tin fd;
-    rmf_avro::decode(*ve, fd);
+    internal_avro::decode(*ve, fd);
   }
 }
 template <class T>
 void validate_raw(T fr) {
-  std::auto_ptr<rmf_avro::OutputStream> out_stream =
-      rmf_avro::memoryOutputStream();
+  boost::shared_ptr<internal_avro::OutputStream> out_stream =
+      internal_avro::memoryOutputStream();
   {
-    rmf_avro::EncoderPtr encoder = rmf_avro::binaryEncoder();
+    internal_avro::EncoderPtr encoder = internal_avro::binaryEncoder();
     encoder->init(*out_stream);
-    rmf_avro::EncoderPtr ve = rmf_avro::validatingEncoder(
-        rmf_avro::compileJsonSchemaFromString(data_avro2::frame_json), encoder);
-    rmf_avro::encode(*ve, fr);
+    internal_avro::EncoderPtr ve = internal_avro::validatingEncoder(
+        internal_avro::compileJsonSchemaFromString(data_avro2::frame_json),
+        encoder);
+    internal_avro::encode(*ve, fr);
   }
   {
-    std::auto_ptr<rmf_avro::InputStream> in_stream =
-        rmf_avro::memoryInputStream(*out_stream);
-    rmf_avro::DecoderPtr decoder = rmf_avro::binaryDecoder();
+    boost::shared_ptr<internal_avro::InputStream> in_stream =
+        internal_avro::memoryInputStream(*out_stream);
+    internal_avro::DecoderPtr decoder = internal_avro::binaryDecoder();
     decoder->init(*in_stream);
-    rmf_avro::DecoderPtr ve = rmf_avro::validatingDecoder(
-        rmf_avro::compileJsonSchemaFromString(data_avro2::frame_json), decoder);
+    internal_avro::DecoderPtr ve = internal_avro::validatingDecoder(
+        internal_avro::compileJsonSchemaFromString(data_avro2::frame_json),
+        decoder);
     rmf_raw_avro2::Frame fd;
-    rmf_avro::decode(*ve, fd);
+    internal_avro::decode(*ve, fd);
   }
 }
 }

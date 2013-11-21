@@ -14,7 +14,7 @@
 #include <RMF/Validator.h>
 #include <boost/unordered_set.hpp>
 #include <boost/lexical_cast.hpp>
-#include <backend/AvroCpp/api/DataFile.hh>
+#include <avrocpp/api/DataFile.hh>
 #include <algorithm>
 
 RMF_ENABLE_WARNINGS
@@ -34,7 +34,7 @@ AvroSharedData<Base>::AvroSharedData(std::string g, bool create, bool read_only)
 
 template <class Base>
 AvroSharedData<Base>::AvroSharedData(BufferHandle buffer)
-: Base(buffer.get(), true, false) {
+    : Base(buffer.get(), true, false) {
   P::access_node(NodeID(0)).name = "root";
   P::access_node(NodeID(0)).type = boost::lexical_cast<std::string>(ROOT);
   P::add_node_key();
@@ -42,7 +42,7 @@ AvroSharedData<Base>::AvroSharedData(BufferHandle buffer)
 
 template <class Base>
 AvroSharedData<Base>::AvroSharedData(BufferConstHandle buffer)
-: Base(buffer.get(), false, true) {}
+    : Base(buffer.get(), false, true) {}
 
 template <class Base>
 std::string AvroSharedData<Base>::get_name(NodeID node) const {

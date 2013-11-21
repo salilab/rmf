@@ -79,9 +79,7 @@ class ID {
   RMF_COMPARISONS(ID);
   RMF_HASHABLE(ID, return i_);
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
-  void show(std::ostream &out) const {
-    out << get_string();
-  }
+  void show(std::ostream& out) const { out << get_string(); }
   ID operator++() {
     ++i_;
     return *this;
@@ -96,7 +94,6 @@ typedef ID<CategoryTag> Category;
 typedef std::vector<NodeID> NodeIDs;
 typedef std::vector<FrameID> FrameIDs;
 typedef std::vector<Category> Categories;
-
 
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
 template <class Traits>

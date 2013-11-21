@@ -24,10 +24,14 @@ class BufferConstHandle {
  protected:
   boost::shared_ptr<std::vector<char> > data_;
   int compare(BufferConstHandle o) const {
-    if (&*data_ < &*o.data_) return -1;
-    else if (&*data_ > &*o.data_) return 1;
-    else return 0;
+    if (&*data_ < &*o.data_)
+      return -1;
+    else if (&*data_ > &*o.data_)
+      return 1;
+    else
+      return 0;
   }
+
  public:
   template <class R>
   explicit BufferConstHandle(const R &r)
@@ -37,8 +41,7 @@ class BufferConstHandle {
   BufferConstHandle(const BufferConstHandle &o) : data_(o.data_) {}
   const std::vector<char> &get_buffer() const { return *data_; }
   RMF_COMPARISONS(BufferConstHandle);
-  RMF_HASHABLE(BufferConstHandle,
-               return reinterpret_cast<size_t>(&*data_););
+  RMF_HASHABLE(BufferConstHandle, return reinterpret_cast<size_t>(&*data_););
   RMF_SHOWABLE(BufferConstHandle, "buffer");
 #if !defined(IMP_DOXYGEN) && !defined(SWIG)
   boost::shared_ptr<std::vector<char> > get() const { return data_; }

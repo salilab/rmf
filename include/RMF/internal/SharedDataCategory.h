@@ -26,12 +26,13 @@ struct CategoryData {
   To to_name;
   // Mac OS 10.8 and earlied Clang needs these for some reason
   CategoryData() {}
-  CategoryData& operator=(const CategoryData &o) {
+  CategoryData &operator=(const CategoryData &o) {
     from_name = o.from_name;
     to_name = o.to_name;
     return *this;
   }
-  CategoryData(const CategoryData &o): from_name(o.from_name), to_name(o.to_name) {}
+  CategoryData(const CategoryData &o)
+      : from_name(o.from_name), to_name(o.to_name) {}
 };
 
 class SharedDataCategory {

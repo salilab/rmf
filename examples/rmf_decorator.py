@@ -15,7 +15,7 @@ def traverse(nh, pf):
     for c in children:
         traverse(c, pf)
 
-fch = RMF.open_rmf_file_read_only(RMF.get_example_path("simple.rmf"))
+fch = RMF.open_rmf_file_read_only(RMF.get_example_path("simple.rmf3"))
 pf = RMF.ParticleConstFactory(fch)
 fch.set_current_frame(RMF.FrameID(0))
 traverse(fch.get_root_node(), pf)

@@ -14,7 +14,7 @@ def print_bonds(node, bf, obf):
         for c in node.get_children():
             print_bonds(c, bf, obf)
 
-fh = RMF.open_rmf_file_read_only(RMF.get_example_path("simple.rmf"))
+fh = RMF.open_rmf_file_read_only(RMF.get_example_path("simple.rmf3"))
 fh.set_current_frame(RMF.FrameID(0))
 bf = RMF.BondConstFactory(fh)
 # bonds are now stored in a more efficient manner, but for backwards

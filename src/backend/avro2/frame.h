@@ -4,7 +4,7 @@
 
 #include <RMF/config.h>
 #include "types.h"
-#include <backend/AvroCpp/api/DataFile.hh>
+#include <avrocpp/api/DataFile.hh>
 #include <boost/scoped_ptr.hpp>
 
 RMF_ENABLE_WARNINGS
@@ -14,7 +14,7 @@ namespace avro2 {
 // reuse reader later
 RMFEXPORT Frame
     get_frame(const FileData &fd, std::string path, FrameID id,
-              boost::scoped_ptr<rmf_avro::DataFileReader<Frame> > &reader);
+              boost::scoped_ptr<internal_avro::DataFileReader<Frame> > &reader);
 }
 }
 

@@ -24,8 +24,8 @@ struct Avro2IO : public backends::IO {
   avro2::FileData file_data_;
   bool file_data_dirty_;
   avro2::FileDataChanges file_data_changes_;
-  boost::scoped_ptr<rmf_avro::DataFileWriterBase> writer_;
-  boost::scoped_ptr<rmf_avro::DataFileReader<Frame> > reader_;
+  boost::scoped_ptr<internal_avro::DataFileWriterBase> writer_;
+  boost::scoped_ptr<internal_avro::DataFileReader<Frame> > reader_;
   avro2::Frame frame_;
   void commit();
   unsigned int get_number_of_frames() const;
@@ -56,8 +56,8 @@ class Avro2IOFactory : public backends::IOFactory {
       const RMF_OVERRIDE;
   virtual boost::shared_ptr<backends::IO> create_buffer(BufferHandle) const
       RMF_OVERRIDE;
-  virtual boost::shared_ptr<backends::IO> read_buffer(BufferConstHandle)
-      const RMF_OVERRIDE;
+  virtual boost::shared_ptr<backends::IO> read_buffer(BufferConstHandle) const
+      RMF_OVERRIDE;
   virtual boost::shared_ptr<backends::IO> create_file(const std::string &name)
       const RMF_OVERRIDE;
   virtual ~Avro2IOFactory();

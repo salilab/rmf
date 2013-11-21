@@ -9,9 +9,9 @@
 #include <RMF/internal/SharedDataData.h>
 #include <RMF/internal/small_set_map.h>
 
-#include "backend/AvroCpp/api/Specific.hh"
-#include "backend/AvroCpp/api/Encoder.hh"
-#include "backend/AvroCpp/api/Decoder.hh"
+#include "avrocpp/api/Specific.hh"
+#include "avrocpp/api/Encoder.hh"
+#include "avrocpp/api/Decoder.hh"
 
 #include <boost/unordered_set.hpp>
 #include <boost/unordered_map.hpp>

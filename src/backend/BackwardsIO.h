@@ -361,12 +361,10 @@ struct BackwardsIO : public IO {
       : sd_(new SD(name, create, read_only)), name_(name) {}
   BackwardsIO(BufferConstHandle buffer)
       : sd_(new SD(buffer)), name_("buffer") {}
-  BackwardsIO(BufferHandle buffer)
-      : sd_(new SD(buffer)), name_("buffer") {}
+  BackwardsIO(BufferHandle buffer) : sd_(new SD(buffer)), name_("buffer") {}
   virtual ~BackwardsIO() { flush(); }
 
  protected:
-
   virtual void load_static_frame(internal::SharedData *shared_data)
       RMF_OVERRIDE {
     RMF_FOREACH(Category category, shared_data->get_categories()) {

@@ -20,9 +20,9 @@
 #define _USR_LOCAL_GOOGLE_HOME_DRUSSEL_SRC_IMP_DEBUG_SRC_DEPENDENCY_RMF_SRC_BACKEND_AVRO_FRAMEJSON_H_779595758__H_
 
 #include "boost/any.hpp"
-#include "backend/AvroCpp/api/Specific.hh"
-#include "backend/AvroCpp/api/Encoder.hh"
-#include "backend/AvroCpp/api/Decoder.hh"
+#include "avrocpp/api/Specific.hh"
+#include "avrocpp/api/Encoder.hh"
+#include "avrocpp/api/Decoder.hh"
 
 namespace RMF_avro_backend {
 struct Frame {
@@ -32,20 +32,20 @@ struct Frame {
   std::vector<int32_t> parents;
 };
 }
-namespace rmf_avro {
+namespace internal_avro {
 template <>
 struct codec_traits<RMF_avro_backend::Frame> {
   static void encode(Encoder& e, const RMF_avro_backend::Frame& v) {
-    rmf_avro::encode(e, v.index);
-    rmf_avro::encode(e, v.name);
-    rmf_avro::encode(e, v.type);
-    rmf_avro::encode(e, v.parents);
+    internal_avro::encode(e, v.index);
+    internal_avro::encode(e, v.name);
+    internal_avro::encode(e, v.type);
+    internal_avro::encode(e, v.parents);
   }
   static void decode(Decoder& d, RMF_avro_backend::Frame& v) {
-    rmf_avro::decode(d, v.index);
-    rmf_avro::decode(d, v.name);
-    rmf_avro::decode(d, v.type);
-    rmf_avro::decode(d, v.parents);
+    internal_avro::decode(d, v.index);
+    internal_avro::decode(d, v.name);
+    internal_avro::decode(d, v.type);
+    internal_avro::decode(d, v.parents);
   }
 };
 }

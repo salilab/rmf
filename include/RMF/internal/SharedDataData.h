@@ -32,8 +32,8 @@ struct TypeData : RMF_SMALL_UNORDERED_MAP<ID<Traits>, KeyData<Traits> > {
   typedef RMF_SMALL_UNORDERED_MAP<ID<Traits>, KeyData<Traits> > P;
   // Mac OS 10.8 and earlier clang needs this for some reason
   TypeData() {}
- TypeData(const TypeData& o): P(o) {}
-  TypeData<Traits> operator=(const TypeData &o) {
+  TypeData(const TypeData& o) : P(o) {}
+  TypeData<Traits> operator=(const TypeData& o) {
     P::operator=(o);
     return *this;
   }

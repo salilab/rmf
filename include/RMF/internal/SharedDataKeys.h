@@ -29,7 +29,7 @@ struct Keys {
   CategoryKeys category_keys;
   // Mac OS 10.8 and earlier clang needs this for some reason
   Keys() {}
-  Keys(const Keys<Traits> &o): category_keys(o.category_keys){}
+  Keys(const Keys<Traits> &o) : category_keys(o.category_keys) {}
   Keys<Traits> &operator=(const Keys<Traits> &o) {
     category_keys = o.category_keys;
     return *this;

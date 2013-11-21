@@ -1,0 +1,9 @@
+[submodule "src/backend/AvroCpp"]
+	path = src/backend/AvroCpp
+	url = git@github.com:salilab/avrocpp
+[submodule "src/backend/internal_avro"]
+	path = src/backend/internal_avro
+	url = ../avrocpp.git
+[submodule "src/avrocpp"]
+	path = src/avrocpp
+	url = ../avrocpp.git

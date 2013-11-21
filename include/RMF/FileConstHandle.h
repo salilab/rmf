@@ -326,7 +326,6 @@ RMFEXPORT FileConstHandle open_rmf_file_read_only(std::string path);
  */
 RMFEXPORT FileConstHandle open_rmf_buffer_read_only(BufferConstHandle buffer);
 
-
 /** \name Batch data access
     These methods provide batch access to attribute data to try
     to reduce the overhead of repeated function calls.

@@ -9,7 +9,7 @@
 #include "MultipleAvroFileWriter.h"
 #include "generated/embed_jsons.h"
 #include "avro_schema_io.h"
-#include "Compiler.hh"
+#include "avrocpp/api/Compiler.hh"
 #include <RMF/internal/paths.h>
 #include <RMF/decorators.h>
 #include <RMF/log.h>
@@ -54,11 +54,11 @@ MultipleAvroFileWriter::MultipleAvroFileWriter(std::string path, bool create,
 
 MultipleAvroFileWriter::~MultipleAvroFileWriter() { commit(); }
 
-#define RMF_COMMIT(UCName, lcname)                                         \
-  if (lcname##_dirty_) {                                                   \
-    write(lcname##_,                                                       \
-          rmf_avro::compileJsonSchemaFromString(data_avro::lcname##_json), \
-          get_##lcname##_file_path());                                     \
+#define RMF_COMMIT(UCName, lcname)                               \
+  if (lcname##_dirty_) {                                         \
+    write(lcname##_, internal_avro::compileJsonSchemaFromString( \
+                         data_avro::lcname##_json),              \
+          get_##lcname##_file_path());                           \
   }
 
 void MultipleAvroFileWriter::commit() {
@@ -69,9 +69,9 @@ void MultipleAvroFileWriter::commit() {
         std::string name = get_category_dynamic_file_path(Category(i));
         try {
           categories_[i].writer.reset(
-              new rmf_avro::DataFileWriter<RMF_avro_backend::Data>(
-                  name.c_str(),
-                  rmf_avro::compileJsonSchemaFromString(data_avro::data_json)));
+              new internal_avro::DataFileWriter<RMF_avro_backend::Data>(
+                  name.c_str(), internal_avro::compileJsonSchemaFromString(
+                                    data_avro::data_json)));
         }
         catch (const std::exception& e) {
           RMF_THROW(Message(e.what()) << Component(name), IOException);
@@ -91,9 +91,9 @@ void MultipleAvroFileWriter::commit() {
     if (static_categories_dirty_[i]) {
       std::string name = get_category_static_file_path(Category(i));
       try {
-        rmf_avro::DataFileWriter<RMF_avro_backend::Data> writer(
+        internal_avro::DataFileWriter<RMF_avro_backend::Data> writer(
             name.c_str(),
-            rmf_avro::compileJsonSchemaFromString(data_avro::data_json));
+            internal_avro::compileJsonSchemaFromString(data_avro::data_json));
         writer.write(static_categories_[i]);
         writer.flush();
       }
@@ -110,9 +110,11 @@ void MultipleAvroFileWriter::commit() {
   RMF_COMMIT(Nodes, nodes);
   if (frames_dirty_) {
     if (!frame_writer_) {
-      frame_writer_.reset(new rmf_avro::DataFileWriter<RMF_avro_backend::Frame>(
-          get_frames_file_path().c_str(),
-          rmf_avro::compileJsonSchemaFromString(data_avro::frame_json)));
+      frame_writer_.reset(
+          new internal_avro::DataFileWriter<RMF_avro_backend::Frame>(
+              get_frames_file_path().c_str(),
+              internal_avro::compileJsonSchemaFromString(
+                  data_avro::frame_json)));
     }
     frame_writer_->write(frame_);
     frames_dirty_ = false;

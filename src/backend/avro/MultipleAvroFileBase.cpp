@@ -10,7 +10,7 @@
 #include "generated/embed_jsons.h"
 #include <RMF/internal/paths.h>
 #include <RMF/decorators.h>
-#include <backend/AvroCpp/api/Compiler.hh>
+#include <avrocpp/api/Compiler.hh>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <RMF/log.h>

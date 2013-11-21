@@ -35,7 +35,6 @@ struct HDF5Factory : public RMF::backends::IOFactory {
   virtual ~HDF5Factory() {}
 };
 
-
 }  // namespace
 std::vector<boost::shared_ptr<backends::IOFactory> > get_factories() {
   return std::vector<boost::shared_ptr<backends::IOFactory> >(

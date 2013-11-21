@@ -1,36 +1,36 @@
-#include <backend/AvroCpp/api/Compiler.hh>
-#include <backend/AvroCpp/api/Stream.hh>
-#include <backend/AvroCpp/api/Encoder.hh>
-#include <backend/AvroCpp/api/Decoder.hh>
-#include <backend/AvroCpp/api/Specific.hh>
+#include <avrocpp/api/Compiler.hh>
+#include <avrocpp/api/Stream.hh>
+#include <avrocpp/api/Encoder.hh>
+#include <avrocpp/api/Decoder.hh>
+#include <avrocpp/api/Specific.hh>
 #include <sstream>
 
 namespace {
 const char* schema = "{\"type\" : \"array\", \"items\" : \"double\"}";
-::rmf_avro::ValidSchema get_valid_schema() {
-  return ::rmf_avro::compileJsonSchemaFromString(schema);
+::internal_avro::ValidSchema get_valid_schema() {
+  return ::internal_avro::compileJsonSchemaFromString(schema);
 }
 std::string encode(std::vector<double> data) {
-  boost::shared_ptr<rmf_avro::Encoder> encoder =
-      rmf_avro::jsonEncoder(get_valid_schema());
+  boost::shared_ptr<internal_avro::Encoder> encoder =
+      internal_avro::jsonEncoder(get_valid_schema());
   std::ostringstream oss;
-  std::auto_ptr<rmf_avro::OutputStream> stream =
-      rmf_avro::ostreamOutputStream(oss);
+  boost::shared_ptr<internal_avro::OutputStream> stream =
+      internal_avro::ostreamOutputStream(oss);
   encoder->init(*stream);
-  rmf_avro::encode(*encoder, data);
+  internal_avro::encode(*encoder, data);
   encoder->flush();
   stream->flush();
   return oss.str();
 }
 std::vector<double> decode(std::string buffer) {
-  boost::shared_ptr<rmf_avro::Decoder> decoder =
-      rmf_avro::jsonDecoder(get_valid_schema());
+  boost::shared_ptr<internal_avro::Decoder> decoder =
+      internal_avro::jsonDecoder(get_valid_schema());
   std::istringstream iss(buffer);
-  std::auto_ptr<rmf_avro::InputStream> stream =
-      rmf_avro::istreamInputStream(iss);
+  boost::shared_ptr<internal_avro::InputStream> stream =
+      internal_avro::istreamInputStream(iss);
   decoder->init(*stream);
   std::vector<double> data;
-  rmf_avro::decode(*decoder, data);
+  internal_avro::decode(*decoder, data);
   return data;
 }
 }

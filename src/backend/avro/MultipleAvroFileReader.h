@@ -13,7 +13,7 @@
 #include <RMF/internal/SharedData.h>
 #include <RMF/infrastructure_macros.h>
 #include "MultipleAvroFileBase.h"
-#include <backend/AvroCpp/api/DataFile.hh>
+#include <avrocpp/api/DataFile.hh>
 #include "AllJSON.h"
 #include "FrameJSON.h"
 #include <boost/shared_ptr.hpp>
@@ -26,7 +26,8 @@ namespace avro_backend {
 class MultipleAvroFileReader : public MultipleAvroFileBase {
   typedef MultipleAvroFileBase P;
   struct CategoryData {
-    boost::shared_ptr<rmf_avro::DataFileReader<RMF_avro_backend::Data> > reader;
+    boost::shared_ptr<internal_avro::DataFileReader<RMF_avro_backend::Data> >
+        reader;
     // frame is always something valid
     RMF_avro_backend::Data data;
   };

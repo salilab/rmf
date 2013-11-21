@@ -20,18 +20,18 @@
 #include "types.h"
 #include "types_encode_decode.h"
 #include "generated/embed_jsons.h"
-#include <backend/AvroCpp/api/DataFile.hh>
-#include <backend/AvroCpp/api/Compiler.hh>
-#include <backend/AvroCpp/api/Decoder.hh>
+#include <avrocpp/api/DataFile.hh>
+#include <avrocpp/api/Compiler.hh>
+#include <avrocpp/api/Decoder.hh>
 
 RMF_ENABLE_WARNINGS
 
 namespace RMF {
 namespace avro2 {
 FileData get_file_data(std::string name) {
-  typedef rmf_avro::DataFileReader<FileData> Reader;
-  Reader reader(name.c_str(),
-                rmf_avro::compileJsonSchemaFromString(data_avro2::frame_json));
+  typedef internal_avro::DataFileReader<FileData> Reader;
+  Reader reader(name.c_str(), internal_avro::compileJsonSchemaFromString(
+                                  data_avro2::frame_json));
   FileData ret;
   try {
     while (reader.read(ret)) {
@@ -43,11 +43,11 @@ FileData get_file_data(std::string name) {
   return ret;
 }
 void validate_file_data() {
-  rmf_avro::DecoderPtr ve = rmf_avro::validatingDecoder(
-      rmf_avro::compileJsonSchemaFromString(data_avro2::frame_json),
-      rmf_avro::binaryDecoder());
+  internal_avro::DecoderPtr ve = internal_avro::validatingDecoder(
+      internal_avro::compileJsonSchemaFromString(data_avro2::frame_json),
+      internal_avro::binaryDecoder());
   FileData fd;
-  rmf_avro::decode(*ve, fd);
+  internal_avro::decode(*ve, fd);
 }
 }
 }

@@ -19,16 +19,17 @@
 #include "file_data.h"
 #include "types_encode_decode.h"
 #include "generated/embed_jsons.h"
-#include <backend/AvroCpp/api/DataFile.hh>
-#include <backend/AvroCpp/api/Compiler.hh>
+#include <avrocpp/api/DataFile.hh>
+#include <avrocpp/api/Compiler.hh>
 #include <boost/scoped_ptr.hpp>
 
 RMF_ENABLE_WARNINGS
 
 namespace RMF {
 namespace avro2 {
-Frame get_frame(const FileData& fd, std::string path, FrameID id,
-                boost::scoped_ptr<rmf_avro::DataFileReader<Frame> >& reader) {
+Frame get_frame(
+    const FileData& fd, std::string path, FrameID id,
+    boost::scoped_ptr<internal_avro::DataFileReader<Frame> >& reader) {
   RMF_INTERNAL_CHECK(
       fd.frame_block_offsets.find(id) != fd.frame_block_offsets.end(),
       "No such frame found");
@@ -36,9 +37,9 @@ Frame get_frame(const FileData& fd, std::string path, FrameID id,
   int64_t offset = fd.frame_block_offsets.find(id)->second;
   if (!reader || reader->blockOffsetBytes() > offset) {
     RMF_TRACE(get_logger(), "Creating new reader");
-    reader.reset(new rmf_avro::DataFileReader<Frame>(
+    reader.reset(new internal_avro::DataFileReader<Frame>(
         path.c_str(),
-        rmf_avro::compileJsonSchemaFromString(data_avro2::frame_json)));
+        internal_avro::compileJsonSchemaFromString(data_avro2::frame_json)));
   }
   RMF_INTERNAL_CHECK(reader->blockOffsetBytes() <= offset,
                      "Too high an offset");

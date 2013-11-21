@@ -12,8 +12,8 @@
 #include "AllJSON.h"
 #include <RMF/internal/paths.h>
 #include <RMF/decorators.h>
-#include <backend/AvroCpp/api/Compiler.hh>
-#include <boost/scoped_ptr.hpp>
+#include <avrocpp/api/Compiler.hh>
+#include <boost/make_shared.hpp>
 #include <boost/lexical_cast.hpp>
 #include <stdexcept>
 
@@ -24,9 +24,7 @@ namespace avro_backend {
 
 SingleAvroFile::SingleAvroFile(std::string path, bool create,
                                bool /*read_only*/)
-    : AvroKeysAndCategories(path),
-      dirty_(false),
-      text_(get_is_text(path)) {
+    : AvroKeysAndCategories(path), dirty_(false), text_(get_is_text(path)) {
   if (!create) {
     reload();
   } else {
@@ -81,21 +79,23 @@ void SingleAvroFile::flush() {
   if (!dirty_) return;
   if (!buffer_) {
     if (!text_) {
-      write(all_, rmf_avro::compileJsonSchemaFromString(data_avro::all_json),
+      write(all_,
+            internal_avro::compileJsonSchemaFromString(data_avro::all_json),
             get_file_path());
     } else {
-      write_text(all_,
-                 rmf_avro::compileJsonSchemaFromString(data_avro::all_json),
-                 get_file_path());
+      write_text(
+          all_, internal_avro::compileJsonSchemaFromString(data_avro::all_json),
+          get_file_path());
     }
   } else {
     buffer_->clear();
     std::ostringstream oss(std::ios_base::binary);
-    boost::scoped_ptr<rmf_avro::OutputStream> os(
-        rmf_avro::ostreamOutputStream(oss).release());
-    boost::shared_ptr<rmf_avro::Encoder> encoder = rmf_avro::binaryEncoder();
+    boost::shared_ptr<internal_avro::OutputStream> os =
+        internal_avro::ostreamOutputStream(oss);
+    boost::shared_ptr<internal_avro::Encoder> encoder =
+        internal_avro::binaryEncoder();
     encoder->init(*os);
-    rmf_avro::encode(*encoder, all_);
+    internal_avro::encode(*encoder, all_);
     os->flush();
     encoder.reset();
     os.reset();
@@ -109,9 +109,9 @@ void SingleAvroFile::reload() {
   if (!buffer_ && !text_) {
     bool success;
     try {
-      rmf_avro::DataFileReader<RMF_avro_backend::All> rd(
+      internal_avro::DataFileReader<RMF_avro_backend::All> rd(
           get_file_path().c_str(),
-          rmf_avro::compileJsonSchemaFromString(data_avro::all_json));
+          internal_avro::compileJsonSchemaFromString(data_avro::all_json));
       success = rd.read(all_);
     }
     catch (std::exception& e) {
@@ -121,14 +121,15 @@ void SingleAvroFile::reload() {
       RMF_THROW(Message("Can't read input file on reload"), IOException);
     }
   } else if (!buffer_ && text_) {
-    boost::shared_ptr<rmf_avro::Decoder> decoder = rmf_avro::jsonDecoder(
-        rmf_avro::compileJsonSchemaFromString(data_avro::all_json));
-    std::auto_ptr<rmf_avro::InputStream> stream =
-        rmf_avro::fileInputStream(get_file_path().c_str());
+    boost::shared_ptr<internal_avro::Decoder> decoder =
+        internal_avro::jsonDecoder(
+            internal_avro::compileJsonSchemaFromString(data_avro::all_json));
+    boost::shared_ptr<internal_avro::InputStream> stream =
+        internal_avro::fileInputStream(get_file_path().c_str());
     decoder->init(*stream);
     bool success = false;
     try {
-      rmf_avro::decode(*decoder, all_);
+      internal_avro::decode(*decoder, all_);
       success = true;
     }
     catch (std::exception& e) {
@@ -138,11 +139,13 @@ void SingleAvroFile::reload() {
       RMF_THROW(Message("Can't read input file on reload"), IOException);
     }
   } else {
-    boost::scoped_ptr<rmf_avro::InputStream> is(rmf_avro::memoryInputStream(
-        reinterpret_cast<uint8_t*>(&(*buffer_)[0]), buffer_->size()).release());
-    boost::shared_ptr<rmf_avro::Decoder> decoder = rmf_avro::binaryDecoder();
+    boost::shared_ptr<internal_avro::InputStream> is =
+        internal_avro::memoryInputStream(
+            reinterpret_cast<uint8_t*>(&(*buffer_)[0]), buffer_->size());
+    boost::shared_ptr<internal_avro::Decoder> decoder =
+        internal_avro::binaryDecoder();
     decoder->init(*is);
-    rmf_avro::decode(*decoder, all_);
+    internal_avro::decode(*decoder, all_);
   }
   initialize_categories();
   initialize_node_keys();

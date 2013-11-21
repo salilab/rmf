@@ -54,9 +54,7 @@ class Nullable {
   }
 #endif
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
-  void show(std::ostream &out) const {
-    out << get_string();
-  }
+  void show(std::ostream& out) const { out << get_string(); }
 #endif
 
   bool get_is_null() const { return Traits::get_is_null_value(v_); }
