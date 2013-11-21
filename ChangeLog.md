@@ -1,4 +1,8 @@
 # Change Log #
+- The RMF repository now has a git submodule. This means you need to do
+	`git submodule init` after cloning (or `git clone
+	git@github.com:salilab/RMF.git --recursive`) and then update with
+	`git pull --recursive origin develop`.
 - You can now only either create a new RMF or open an existing one read
 	only. Most backends only supported those two anyway.
 - Managing of data buffers has been revamped and wrapped in the
