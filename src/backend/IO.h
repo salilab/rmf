@@ -48,34 +48,10 @@ struct IO {
   virtual ~IO() {}
 };
 
-class IOFactory {
- public:
-  virtual std::string get_file_extension() const = 0;
-  virtual boost::shared_ptr<IO> read_buffer(BufferConstHandle ) const {
-    return boost::shared_ptr<IO>();
-  }
-   virtual boost::shared_ptr<IO> read_file(const std::string &) const {
-    return boost::shared_ptr<IO>();
-  }
-  virtual boost::shared_ptr<IO> create_buffer(BufferHandle ) const {
-    return boost::shared_ptr<IO>();
-  }
-  virtual boost::shared_ptr<IO> create_file(const std::string &) const {
-    return boost::shared_ptr<IO>();
-  }
-  virtual ~IOFactory() {}
-};
-
-RMFEXPORT void add_io_factory(IOFactory *f);
 RMFEXPORT boost::shared_ptr<IO> create_file(const std::string &name);
 RMFEXPORT boost::shared_ptr<IO> create_buffer(BufferHandle buffer);
 RMFEXPORT boost::shared_ptr<IO> read_file(const std::string &name);
 RMFEXPORT boost::shared_ptr<IO> read_buffer(BufferConstHandle buffer);
-
-template <class Type>
-struct IOFactoryRegistrar {
-  IOFactoryRegistrar() { add_io_factory(new Type()); }
-};
 
 }  // namespace internal
 } /* namespace RMF */

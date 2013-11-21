@@ -8,6 +8,8 @@
 
 #include "HDF5SharedData.h"
 #include "../IO.h"
+#include "../IOFactory.h"
+#include "factory.h"
 #include "../BackwardsIO.h"
 #include <boost/make_shared.hpp>
 #include <RMF/log.h>
@@ -20,7 +22,7 @@ namespace {
 
 typedef backends::BackwardsIO<HDF5SharedData> MIO;
 
-class HDF5Factory : public RMF::backends::IOFactory {
+struct HDF5Factory : public RMF::backends::IOFactory {
   virtual std::string get_file_extension() const RMF_OVERRIDE { return ".rmf"; }
   virtual boost::shared_ptr<RMF::backends::IO> read_file(
       const std::string& name) const RMF_OVERRIDE {
@@ -33,8 +35,12 @@ class HDF5Factory : public RMF::backends::IOFactory {
   virtual ~HDF5Factory() {}
 };
 
-backends::IOFactoryRegistrar<HDF5Factory> registrar;
+
 }  // namespace
+std::vector<boost::shared_ptr<backends::IOFactory> > get_factories() {
+  return std::vector<boost::shared_ptr<backends::IOFactory> >(
+      1, boost::make_shared<HDF5Factory>());
+}
 }  // namespace avro_backend
 }  // namespace RMF
 

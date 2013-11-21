@@ -10,6 +10,7 @@
 #include "SingleAvroFile.h"
 #include "MultipleAvroFileWriter.h"
 #include "MultipleAvroFileReader.h"
+#include "factory.h"
 #include "../IO.h"
 #include "../BackwardsIO.h"
 #include <boost/make_shared.hpp>
@@ -43,9 +44,7 @@ struct SingleTextAvroFactory : public RMF::backends::IOFactory {
   virtual ~SingleTextAvroFactory() {}
 };
 
-backends::IOFactoryRegistrar<SingleTextAvroFactory> registrart;
-
-class SingleAvroFactory : public SingleTextAvroFactory {
+struct SingleAvroFactory : public SingleTextAvroFactory {
   virtual std::string get_file_extension() const RMF_OVERRIDE {
     return ".rmfa";
   }
@@ -60,9 +59,7 @@ class SingleAvroFactory : public SingleTextAvroFactory {
   virtual ~SingleAvroFactory() {}
 };
 
-backends::IOFactoryRegistrar<SingleAvroFactory> registrars;
-
-class MultipleAvroFactory : public RMF::backends::IOFactory {
+struct MultipleAvroFactory : public RMF::backends::IOFactory {
   virtual std::string get_file_extension() const RMF_OVERRIDE {
     return ".rmf2";
   }
@@ -76,10 +73,14 @@ class MultipleAvroFactory : public RMF::backends::IOFactory {
   }
   virtual ~MultipleAvroFactory() {}
 };
-
-backends::IOFactoryRegistrar<MultipleAvroFactory> registrar2;
-
 }  // namespace
+std::vector<boost::shared_ptr<backends::IOFactory> > get_factories() {
+  std::vector<boost::shared_ptr<backends::IOFactory> > ret;
+  ret.push_back(boost::make_shared<MultipleAvroFactory>());
+  ret.push_back(boost::make_shared<SingleAvroFactory>());
+  ret.push_back(boost::make_shared<SingleTextAvroFactory>());
+  return ret;
+}
 }  // namespace avro_backend
 }  // namespace RMF
 

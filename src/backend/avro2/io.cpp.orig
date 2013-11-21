@@ -9,7 +9,6 @@
 #include <RMF/config.h>
 #include "write.h"
 #include "file_data.h"
-#include "factory.h"
 #include "frame.h"
 #include "io.h"
 #include <RMF/internal/shared_data_ranges.h>
@@ -21,11 +20,7 @@
 #include <boost/make_shared.hpp>
 
 RMF_ENABLE_WARNINGS
-/*
- Todo:
-   store keys in Frame frames as needed
-assume category/key equality. that will simplify things a lot.
- */
+
 namespace RMF {
 
 namespace avro2 {
@@ -168,7 +163,58 @@ bool save_all(FileData &file_data, FileDataChanges &file_data_changes,
 }
 }
 
+<<<<<<< HEAD
 void Avro2IO::commit() {
+=======
+rmf_avro::DataFileWriterBase *Avro2FileIO::create_writer() {
+  return new rmf_avro::DataFileWriterBase(
+      path_.c_str(),
+      rmf_avro::compileJsonSchemaFromString(RMF::data_avro2::frame_json),
+      16 * 1024);
+}
+Frame Avro2FileIO::get_frame(
+    const avro2::FileData &file_data, FrameID id,
+    boost::scoped_ptr<rmf_avro::DataFileReader<Frame> > &reader) {
+  RMF::avro2::get_frame(file_data, path_, id, reader);
+}
+FileData Avro2FileIO::get_file_data() const {
+  return RMF::avro2::get_file_data(path_);
+}
+
+
+rmf_avro::DataFileWriterBase *Avro2FileMemoryIO::create_writer() {
+  writer_ = new rmf_avro::DataFileWriterBase(
+      rmf_avro::compileJsonSchemaFromString(RMF::data_avro2::frame_json),
+      16 * 1024);
+  return writer_;
+}
+Frame Avro2FileMemoryIO::get_frame(
+    const avro2::FileData &file_data, FrameID id,
+    boost::scoped_ptr<rmf_avro::DataFileReader<Frame> > &reader) {
+  RMF::avro2::get_frame(file_data, buffer_, id, reader);
+}
+FileData Avro2FileMemoryIO::get_file_data() const {
+  return RMF::avro2::get_file_data(buffer_);
+}
+std::vector<char> Avro2FileMemoryIO::get_buffer() {
+  if (writer_) {
+    std::vector<char> ret;
+    std::auto_ptr<rmf_avro::InputStream> mis =
+        rmf_avro::memoryInputStream(writer_->stream());
+    uint8_t *cur;
+    size_t len;
+    while (mis->next(&cur, &len)) {
+      ret.insert(buffer.end(), cur, cur + len);
+    }
+    return ret;
+  } else {
+    return buffer_;
+  }
+}
+
+template <class RW>
+void Avro2IO<RW>::commit() {
+>>>>>>> initial files
   if (file_data_dirty_) {
     RMF_INFO(get_logger(), "Writing static data in commit");
     write(writer_.get(), file_data_changes_);
@@ -182,16 +228,16 @@ void Avro2IO::commit() {
   }
 }
 
-Avro2IO::Avro2IO(std::string name) : path_(name), file_data_dirty_(false) {
-  if (boost::filesystem::exists(name)) {
+template <class RW>
+Avro2IO<RW>::Avro2IO(RW rw, bool write) : rw_(rw), file_data_dirty_(false) {
+  if (write) {
   } else {
-    writer_.reset(new rmf_avro::DataFileWriterBase(
-        path_.c_str(),
-        rmf_avro::compileJsonSchemaFromString(RMF::data_avro2::frame_json),
-        16 * 1024));
+    writer_.reset(rw_.create_writer());
   }
 }
-void Avro2IO::save_loaded_frame(const internal::SharedData *shared_data) {
+
+template <class RW>
+void Avro2IO<RW>::save_loaded_frame(const internal::SharedData *shared_data) {
   if (frame_.id != FrameID()) {
     RMF_INFO(get_logger(), "Writing frame " << frame_.id
                                             << " to make space for new one");
@@ -206,14 +252,16 @@ void Avro2IO::save_loaded_frame(const internal::SharedData *shared_data) {
   save_all(file_data_, file_data_changes_, shared_data, frame_.data, NULL,
            internal::LoadedValues());
 }
-void Avro2IO::load_loaded_frame(internal::SharedData *shared_data) {
+
+template <class RW>
+void Avro2IO<RW>::load_loaded_frame(internal::SharedData *shared_data) {
   FrameID id = shared_data->get_loaded_frame();
   RMF_INFO(get_logger(), "Loading frame " << id << " from file");
   if (frame_.id != FrameID() && id < frame_.id) {
     // kind of icky hack to handle being in the block
     reader_.reset();
   }
-  frame_ = avro2::get_frame(file_data_, path_, id, reader_);
+  frame_ = rw_.get_frame(file_data_, id, reader_);
   shared_data->set_loaded_frame_name(frame_.name);
   shared_data->set_loaded_frame_type(FrameType(frame_.type));
   if (file_data_.frame_children.size() > id.get_index()) {
@@ -227,23 +275,30 @@ void Avro2IO::load_loaded_frame(internal::SharedData *shared_data) {
            internal::LoadedValues());
 }
 
+<<<<<<< HEAD
 void Avro2IO::load_static_frame(internal::SharedData *shared_data) {
   load_all(file_data_.categories, shared_data, file_data_.keys, file_data_.data,
            internal::StaticValues());
+=======
+template <class RW>
+void Avro2IO<RW>::load_static_frame(internal::SharedData *shared_data) {
+  load_all(file_data_.categories, shared_data, file_data_.keys,
+           file_data_.data, internal::StaticValues());
+>>>>>>> initial files
 }
 
-void Avro2IO::save_static_frame(const internal::SharedData *shared_data) {
+template <class RW>
+void Avro2IO<RW>::save_static_frame(const internal::SharedData *shared_data) {
   bool changed =
       save_all(file_data_, file_data_changes_, shared_data, file_data_.data,
                &file_data_changes_.data, internal::StaticValues());
   file_data_dirty_ = changed || file_data_dirty_;
 }
 
-void Avro2IO::load_file(internal::SharedData *shared_data) {
+template <class RW>
+void Avro2IO<RW>::load_file(internal::SharedData *shared_data) {
   // set producer and description
-  // for some weird reason, mac os 10.8 clang needs this two step thing
-  FileData fd = get_file_data(path_);
-  file_data_ = fd; // get_file_data(path_);
+  file_data_ = rw_.get_file_data();
   RMF_INFO(get_logger(), "Found " << get_number_of_frames() << " frames");
   shared_data->set_description(file_data_.description);
   shared_data->set_producer(file_data_.producer);
@@ -256,7 +311,8 @@ void Avro2IO::load_file(internal::SharedData *shared_data) {
   }
 }
 
-void Avro2IO::save_file(const internal::SharedData *shared_data) {
+template <class RW>
+void Avro2IO<RW>::save_file(const internal::SharedData *shared_data) {
   if (shared_data->get_description() != file_data_.description) {
     file_data_changes_.description = shared_data->get_description();
     file_data_.description.set(shared_data->get_description());
@@ -269,12 +325,14 @@ void Avro2IO::save_file(const internal::SharedData *shared_data) {
   }
 }
 
-void Avro2IO::load_hierarchy(internal::SharedData *shared_data) {
+template <class RW>
+void Avro2IO<RW>::load_hierarchy(internal::SharedData *shared_data) {
   // can swap later
   shared_data->access_node_hierarchy() = file_data_.nodes;
 }
 
-void Avro2IO::save_hierarchy(const internal::SharedData *shared_data) {
+template <class RW>
+void Avro2IO<RW>::save_hierarchy(const internal::SharedData *shared_data) {
   RMF_FOREACH(NodeID n, get_nodes(shared_data)) {
     HierarchyNode cur;
     cur.id = n;
@@ -308,13 +366,24 @@ void Avro2IO::save_hierarchy(const internal::SharedData *shared_data) {
   }
 }
 
-void Avro2IO::flush() { commit(); }
-unsigned int Avro2IO::get_number_of_frames() const {
-  if (file_data_.max_id == FrameID()) return 0;  
-  else return file_data_.max_id.get_index() + 1;
+template <class RW>
+void Avro2IO<RW>::flush() { commit(); }
+template <class RW>
+unsigned int Avro2IO<RW>::get_number_of_frames() const {
+  return file_data_.max_id + 1;
 }
 
+<<<<<<< HEAD
 Avro2IO::~Avro2IO() {
+=======
+template <class RW>
+std::vector<char> Avro2IO<RW>::get_buffer() {
+  return rw_.get_buffer();
+}
+
+template <class RW>
+Avro2IO<RW>::~Avro2IO() {
+>>>>>>> initial files
   if (writer_) {
     commit();
     writer_->flush();
@@ -324,7 +393,7 @@ Avro2IO::~Avro2IO() {
 std::string Avro2IOFactory::get_file_extension() const { return ".rmf3"; }
 boost::shared_ptr<backends::IO> Avro2IOFactory::read_file(
     const std::string &name) const {
-  return boost::make_shared<Avro2IO>(name);
+  return boost::make_shared<Avro2IO<Avro2FileIO> >(Avro2FileIO(name), false);
 }
 boost::shared_ptr<backends::IO> Avro2IOFactory::create_buffer(BufferHandle)
     const {
@@ -336,15 +405,11 @@ boost::shared_ptr<backends::IO> Avro2IOFactory::read_buffer(BufferConstHandle)
 }
 boost::shared_ptr<backends::IO> Avro2IOFactory::create_file(
     const std::string &name) const {
-  return boost::make_shared<Avro2IO>(name);
+  return boost::make_shared<Avro2IO<Avro2FileIO> >(Avro2FileIO(name), true);
 }
 Avro2IOFactory::~Avro2IOFactory() {}
 
-std::vector<boost::shared_ptr<backends::IOFactory> > get_factories() {
-  std::vector<boost::shared_ptr<backends::IOFactory> > ret;
-  ret.push_back(boost::make_shared<Avro2IOFactory>());
-  return ret;
-}
+backends::IOFactoryRegistrar<Avro2IOFactory> registrar;
 
 }  // namespace
 } /* namespace RMF */
