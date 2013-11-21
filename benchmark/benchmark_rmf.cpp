@@ -181,7 +181,6 @@ int main(int, char**) {
       benchmark_size(name, "rmf");
     }
     {
-      boost::filesystem::path temp = boost::filesystem::unique_path();
       const std::string name = name_base + ".rmf2";
       {
         RMF::FileHandle fh = RMF::create_rmf_file(name);
@@ -195,7 +194,6 @@ int main(int, char**) {
       benchmark_size(name, "rmf2");
     }
     {
-      boost::filesystem::path temp = boost::filesystem::unique_path();
       const std::string name = name_base + ".rmf3";
       {
         RMF::FileHandle fh = RMF::create_rmf_file(name);
@@ -209,7 +207,6 @@ int main(int, char**) {
       benchmark_size(name, "rmf3");
     }
     {
-      boost::filesystem::path temp = boost::filesystem::unique_path();
       const std::string name = name_base + ".rmfa";
       {
         RMF::FileHandle fh = RMF::create_rmf_file(name);
@@ -223,7 +220,6 @@ int main(int, char**) {
       benchmark_size(name, "rmfa");
     }
     {
-      boost::filesystem::path temp = boost::filesystem::unique_path();
       const std::string name = name_base + ".rmft";
       {
         RMF::FileHandle fh = RMF::create_rmf_file(name);
