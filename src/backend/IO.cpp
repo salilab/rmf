@@ -6,7 +6,6 @@
 
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/path_traits.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <unistd.h>
 
