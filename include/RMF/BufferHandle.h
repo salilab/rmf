@@ -23,9 +23,6 @@ class BufferHandle : public BufferConstHandle {
  public:
   //! Empty buffer
   BufferHandle() : BufferConstHandle(std::vector<char>()) {}
-  template <class R>
-  BufferHandle(const R &r)
-      : BufferConstHandle(r) {}
 #if !defined(IMP_DOXYGEN) && !defined(SWIG)
   std::vector<char> &access_buffer() const { return *data_; }
 #endif
