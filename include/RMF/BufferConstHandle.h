@@ -41,6 +41,10 @@ class BufferConstHandle {
   explicit BufferConstHandle(const std::vector<uint8_t> &r)
       : data_(boost::make_shared<std::vector<char> >(r.begin(), r.end())) {}
   const std::vector<char> &get_buffer() const { return *data_; }
+  //! get the buffer encoded in a string
+  std::string get_string() const {
+    return std::string(data_->begin(), data_->end());
+  }
   RMF_COMPARISONS(BufferConstHandle);
   RMF_HASHABLE(BufferConstHandle, return reinterpret_cast<size_t>(&*data_););
   RMF_SHOWABLE(BufferConstHandle, "buffer");
