@@ -33,12 +33,11 @@ class BufferConstHandle {
   }
 
  public:
-  template <class R>
-  explicit BufferConstHandle(const R &r)
-      : data_(boost::make_shared<std::vector<char> >()) {
-    data_->insert(data_->end(), r.begin(), r.end());
+  explicit BufferConstHandle(const std::vector<char> &r)
+  : data_(boost::make_shared<std::vector<char> >(r.begin(), r.end())) {
   }
-  BufferConstHandle(const BufferConstHandle &o) : data_(o.data_) {}
+  explicit BufferConstHandle(const std::vector<uint8_t> &r)
+      : data_(boost::make_shared<std::vector<char> >(r.begin(), r.end())) {}
   const std::vector<char> &get_buffer() const { return *data_; }
   RMF_COMPARISONS(BufferConstHandle);
   RMF_HASHABLE(BufferConstHandle, return reinterpret_cast<size_t>(&*data_););
