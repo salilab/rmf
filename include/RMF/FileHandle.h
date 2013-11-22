@@ -31,7 +31,7 @@ namespace RMF {
     for the non-modifying methods.
 
     \see create_rmf_file
-    \see open_rmf_file
+    \see create_rmf_buffer
  */
 class RMFEXPORT FileHandle : public FileConstHandle {
   friend class NodeHandle;

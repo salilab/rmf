@@ -33,6 +33,8 @@ class BufferConstHandle {
   }
 
  public:
+  explicit BufferConstHandle(std::string r)
+      : data_(boost::make_shared<std::vector<char> >(r.begin(), r.end())) {}
   explicit BufferConstHandle(const std::vector<char> &r)
   : data_(boost::make_shared<std::vector<char> >(r.begin(), r.end())) {
   }
