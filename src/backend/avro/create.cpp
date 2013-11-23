@@ -52,10 +52,10 @@ struct SingleAvroFactory : public SingleTextAvroFactory {
       BufferHandle buffer) const RMF_OVERRIDE {
     return boost::make_shared<SingleAvroShareData>(buffer);
   }
-  virtual boost::shared_ptr<RMF::backends::IO> read_buffer(
+  /*virtual boost::shared_ptr<RMF::backends::IO> read_buffer(
       BufferConstHandle buffer) const RMF_OVERRIDE {
     return boost::make_shared<SingleAvroShareData>(buffer);
-  }
+    }*/
   virtual ~SingleAvroFactory() {}
 };
 

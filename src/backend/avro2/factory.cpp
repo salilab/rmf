@@ -30,6 +30,14 @@ class Avro2IOFileFactory : public backends::IOFactory {
       const RMF_OVERRIDE {
     return boost::make_shared<Avro2IO<FileWriterTraits> >(name);
   }
+  virtual boost::shared_ptr<backends::IO> read_buffer(BufferConstHandle buffer)
+      const RMF_OVERRIDE {
+    return boost::make_shared<Avro2IO<BufferReaderTraits> >(buffer);
+  }
+  virtual boost::shared_ptr<backends::IO> create_buffer(BufferHandle buffer)
+      const RMF_OVERRIDE {
+    return boost::make_shared<Avro2IO<BufferWriterTraits> >(buffer);
+  }
   virtual ~Avro2IOFileFactory() {}
 };
 

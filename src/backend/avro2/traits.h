@@ -103,11 +103,9 @@ struct BufferWriterTraits {
         internal_avro::memoryInputStream(*stream_);
     const uint8_t *data;
     size_t len;
-    while (true) {
-      input_stream->next(&data, &len);
+    while (input_stream->next(&data, &len)) {
       buffer_.access_buffer().insert(buffer_.access_buffer().end(), data,
-                                    data + len);
-      if (len == 0) break;
+                                     data + len);
     }
   }
   Frame get_frame(const FileData &, FrameID, FrameID) { return Frame(); }

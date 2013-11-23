@@ -40,7 +40,8 @@ struct Avro2IO : public backends::IO {
   unsigned int get_number_of_frames() const;
 
  public:
-  Avro2IO(std::string name);
+  template <class T>
+  Avro2IO(T t);
   virtual void save_loaded_frame(const internal::SharedData *shared_data)
       RMF_OVERRIDE;
   virtual void load_loaded_frame(internal::SharedData *shared_data)
@@ -211,9 +212,11 @@ void Avro2IO<RW>::commit() {
   }
 }
 
+// Woah
 template <class RW>
-Avro2IO<RW>::Avro2IO(std::string name)
-    : rw_(name), file_data_dirty_(false) {}
+template <class T>
+Avro2IO<RW>::Avro2IO(T t)
+    : rw_(t), file_data_dirty_(false) {}
 
 template <class RW>
 void Avro2IO<RW>::save_loaded_frame(const internal::SharedData *shared_data) {
