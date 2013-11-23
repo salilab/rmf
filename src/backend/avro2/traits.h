@@ -41,7 +41,9 @@ struct FileWriterTraitsBase {
   void write(const T &t) {
     avro2::write(writer_.get(), t);
   }
-  void flush() { writer_->flush(); }
+  void flush() {
+    if (writer_) writer_->flush();
+  }
   Frame get_frame(const FileData &, FrameID, FrameID) { return Frame(); }
   FileData get_file_data() { return FileData(); }
   ~FileWriterTraitsBase() { flush(); }
@@ -49,12 +51,12 @@ struct FileWriterTraitsBase {
 
 template <class Base>
 struct ReaderTraits {
-  Base base_;
+  Base base_file_data_, base_frame_;
   boost::shared_ptr<internal_avro::DataFileReader<Frame> > reader_;
 
   template <class T>
   ReaderTraits(T path)
-      : base_(path) {}
+      : base_file_data_(path), base_frame_(path) {}
   template <class T>
   void write(const T &) {}
   Frame get_frame(const FileData &file_data, FrameID old_frame, FrameID id) {
@@ -69,7 +71,7 @@ struct ReaderTraits {
 
     if (!reader_) {
       RMF_INFO(get_logger(), "Creating new reader");
-      reader_ = base_.template get_reader<Frame>();
+      reader_ = base_frame_.template get_reader<Frame>();
     }
     if (reader_->blockOffsetBytes() != offset) {
       RMF_TRACE(get_logger(), "Seeking to " << offset << " from "
@@ -80,7 +82,7 @@ struct ReaderTraits {
   }
   FileData get_file_data() {
     boost::shared_ptr<internal_avro::DataFileReader<FileData> > reader =
-        base_.template get_reader<FileData>();
+        base_file_data_.template get_reader<FileData>();
     return avro2::get_file_data(*reader);
   }
   void flush() {}
@@ -157,31 +159,36 @@ struct BufferReaderBase {
 };
 
 struct GzipFileWriterTraits : public FileWriterTraitsBase {
+  boost::iostreams::filtering_ostream ostream_;
+  boost::shared_ptr<internal_avro::OutputStream> stream_;
   GzipFileWriterTraits(std::string path) : FileWriterTraitsBase(path) {
-      boost::iostreams::filtering_ostream ostream;
-      ostream.push(boost::iostreams::gzip_compressor());
-      ostream.push(boost::iostreams::file_sink(
+      ostream_.push(boost::iostreams::gzip_compressor());
+      ostream_.push(boost::iostreams::file_sink(
           path_, std::ios_base::out | std::ios_base::binary));
-      boost::shared_ptr<internal_avro::OutputStream> stream =
-          internal_avro::ostreamOutputStream(ostream);
+      stream_ = internal_avro::ostreamOutputStream(ostream_);
       writer_ = boost::make_shared<internal_avro::DataFileWriterBase>(
-          stream, get_schema(), 16 * 1024);
+          stream_, get_schema(), 16 * 1024);
+  }
+  ~GzipFileWriterTraits() {
+    writer_->flush();
+    stream_->flush();
+    writer_.reset();
   }
 };
 
 struct GzipFileReaderBase{
   std::string path_;
-
+  boost::shared_ptr<boost::iostreams::filtering_istream> istream_;
+  boost::shared_ptr<internal_avro::InputStream> stream_;
   GzipFileReaderBase(std::string path) : path_(path) {}
   template <class T>
   boost::shared_ptr<internal_avro::DataFileReader<T> > get_reader() {
-    boost::iostreams::filtering_istream istream;
-    istream.push(boost::iostreams::gzip_decompressor());
-    istream.push(boost::iostreams::file_source(
+    istream_ = boost::make_shared<boost::iostreams::filtering_istream>();
+    istream_->push(boost::iostreams::gzip_decompressor());
+    istream_->push(boost::iostreams::file_source(
         path_, std::ios_base::in | std::ios_base::binary));
-    boost::shared_ptr<internal_avro::InputStream> stream =
-        internal_avro::istreamInputStream(istream);
-    return boost::make_shared<internal_avro::DataFileReader<T> >(stream,
+    stream_ = internal_avro::istreamInputStream(*istream_);
+    return boost::make_shared<internal_avro::DataFileReader<T> >(stream_,
                                                                  get_schema());
   }
 };
