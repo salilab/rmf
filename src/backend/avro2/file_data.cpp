@@ -22,7 +22,9 @@ FileData get_file_data(internal_avro::DataFileReader<FileData> &reader) {
   FileData ret;
   try {
     while (reader.read(ret)) {
-      ret.frame_block_offsets[ret.cur_id] = reader.blockOffsetBytes();
+      if (ret.cur_id != FrameID()) {
+        ret.frame_block_offsets[ret.cur_id] = reader.blockOffsetBytes();
+      }
     }
   }
   catch (const std::exception &e) {

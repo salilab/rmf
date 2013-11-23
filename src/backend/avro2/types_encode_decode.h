@@ -241,6 +241,7 @@ struct codec_traits<RMF::avro2::FileData> {
       }
     } else {
       RMF_INFO(RMF::get_logger(), "Found static frame");
+      v.cur_id = RMF::FrameID();
       internal_avro::decode(d, v.description);
       internal_avro::decode(d, v.producer);
       internal_avro::decode(d, v.categories);
