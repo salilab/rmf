@@ -17,10 +17,14 @@ namespace RMF {
 
 namespace avro2 {
 
+template <bool GZIP>
 class Avro2IOFileFactory : public backends::IOFactory {
  public:
   virtual std::string get_file_extension() const RMF_OVERRIDE {
-    return ".rmf3";
+    if (GZIP)
+      return ".rmfz";
+    else
+      return ".rmf3";
   }
   virtual boost::shared_ptr<backends::IO> read_file(const std::string &name)
       const RMF_OVERRIDE {
@@ -28,7 +32,14 @@ class Avro2IOFileFactory : public backends::IOFactory {
   }
   virtual boost::shared_ptr<backends::IO> create_file(const std::string &name)
       const RMF_OVERRIDE {
-    return boost::make_shared<Avro2IO<FileWriterTraits> >(name);
+    return boost::make_shared<Avro2IO<FileWriterTraits<GZIP> > >(name);
+  }
+};
+
+class Avro2IOBufferFactory : public backends::IOFactory {
+ public:
+  virtual std::string get_file_extension() const RMF_OVERRIDE {
+    return ".none";
   }
   virtual boost::shared_ptr<backends::IO> read_buffer(BufferConstHandle buffer)
       const RMF_OVERRIDE {
@@ -39,30 +50,14 @@ class Avro2IOFileFactory : public backends::IOFactory {
       const RMF_OVERRIDE {
     return boost::make_shared<Avro2IO<BufferWriterTraits> >(buffer);
   }
-  virtual ~Avro2IOFileFactory() {}
-};
-
-class Avro2IOGzipFileFactory : public backends::IOFactory {
- public:
-  virtual std::string get_file_extension() const RMF_OVERRIDE {
-    return ".rmfz";
-  }
-  virtual boost::shared_ptr<backends::IO> read_file(const std::string &name)
-      const RMF_OVERRIDE {
-    return boost::make_shared<Avro2IO<ReaderTraits<GzipFileReaderBase> > >(name);
-  }
-  virtual boost::shared_ptr<backends::IO> create_file(const std::string &name)
-      const RMF_OVERRIDE {
-    return boost::make_shared<Avro2IO<GzipFileWriterTraits> >(name);
-  }
-  virtual ~Avro2IOGzipFileFactory() {}
 };
 
 
 std::vector<boost::shared_ptr<backends::IOFactory> > get_factories() {
   std::vector<boost::shared_ptr<backends::IOFactory> > ret;
-  ret.push_back(boost::make_shared<Avro2IOFileFactory>());
-  ret.push_back(boost::make_shared<Avro2IOGzipFileFactory>());
+  ret.push_back(boost::make_shared<Avro2IOFileFactory<false> >());
+  ret.push_back(boost::make_shared<Avro2IOFileFactory<true> >());
+  ret.push_back(boost::make_shared<Avro2IOBufferFactory>());
   return ret;
 }
 

@@ -14,10 +14,6 @@
 #include "file_data.h"
 #include "frame.h"
 #include "generated/embed_jsons.h"
-
-#include <boost/iostreams/filtering_stream.hpp>
-#include <boost/iostreams/device/file.hpp>
-#include <boost/iostreams/filter/gzip.hpp>
 #include <avrocpp/api/Compiler.hh>
 
 RMF_ENABLE_WARNINGS
@@ -98,13 +94,13 @@ struct ReaderTraits {
   void flush() {}
 };
 
-
+template <bool GZIP>
 struct FileWriterTraits : public FileWriterTraitsBase {
   FileWriterTraits(std::string path) : FileWriterTraitsBase(path) {
     writer_.reset(new internal_avro::DataFileWriterBase(
         path_.c_str(),
         internal_avro::compileJsonSchemaFromString(RMF::data_avro2::frame_json),
-        16 * 1024));
+        16 * 1024, GZIP));
   }
 };
 
@@ -168,41 +164,6 @@ struct BufferReaderBase {
                                                                  get_schema());
   }
 
-};
-
-struct GzipFileWriterTraits : public FileWriterTraitsBase {
-  boost::iostreams::filtering_ostream ostream_;
-  boost::shared_ptr<internal_avro::OutputStream> stream_;
-  GzipFileWriterTraits(std::string path) : FileWriterTraitsBase(path) {
-      ostream_.push(boost::iostreams::gzip_compressor());
-      ostream_.push(boost::iostreams::file_sink(
-          path_, std::ios_base::out | std::ios_base::binary));
-      stream_ = internal_avro::ostreamOutputStream(ostream_);
-      writer_ = boost::make_shared<internal_avro::DataFileWriterBase>(
-          stream_, get_schema(), 16 * 1024);
-  }
-  ~GzipFileWriterTraits() {
-    writer_->flush();
-    stream_->flush();
-    writer_.reset();
-  }
-};
-
-struct GzipFileReaderBase{
-  std::string path_;
-  boost::shared_ptr<boost::iostreams::filtering_istream> istream_;
-  boost::shared_ptr<internal_avro::InputStream> stream_;
-  GzipFileReaderBase(std::string path) : path_(path) {}
-  template <class T>
-  boost::shared_ptr<internal_avro::DataFileReader<T> > get_reader() {
-    istream_ = boost::make_shared<boost::iostreams::filtering_istream>();
-    istream_->push(boost::iostreams::gzip_decompressor());
-    istream_->push(boost::iostreams::file_source(
-        path_, std::ios_base::in | std::ios_base::binary));
-    stream_ = internal_avro::istreamInputStream(*istream_);
-    return boost::make_shared<internal_avro::DataFileReader<T> >(stream_,
-                                                                 get_schema());
-  }
 };
 }
 }
