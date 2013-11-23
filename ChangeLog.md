@@ -1,4 +1,7 @@
 # Change Log #
+- Two new formats have been added: `.rmf3` and its compressed version
+	`.rmfz`. You should use those in preference to the prior formats
+	for new files.
 - The RMF repository now has a git submodule. This means you need to do
 	`git submodule init` after cloning (or `git clone
 	git@github.com:salilab/RMF.git --recursive`) and then update with

@@ -176,6 +176,15 @@ on-disk formats. They are differentiated by the file suffix. The API
 for accessing all of them are the same with any exceptions noted
 below.
 
+A quick comparison of the various options (taken from benchmark/benchmark_rmf.cpp).
+
+| type | create | traverse | load | size |
+|-----:|-------:|---------:|-----:|-----:|
+|rmf3  | 1.1    | 0.09     | 1.4  | 14M  |
+|rmfz  | 1.9    | 0.08     | 1.3  | 10M  |
+|rmf   | 6.2    | 0.17     | 3.3  |  9M  |
+|buffer| 1.1    | 0.07     | 1.2  | 14M  |
+
 ### RMF3 ### {#rmf_and_avro}
 
 RMF3 stores the structure in an [Avro Object
