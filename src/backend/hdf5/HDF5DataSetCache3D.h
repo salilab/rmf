@@ -36,6 +36,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
       if (ds == DS()) return;
       extents_ = ds_.get_size();
       cache_.resize(boost::extents[extents_[0]][extents_[1]]);
+      std::fill(cache_.data(), cache_.data() + cache_.size(),
+                TypeTraits::get_null_value());
       if (get_current_frame() >= extents_[2]) return;
       if (TypeTraits::HDF5Traits::BatchOperations) {
         HDF5::DataSetIndexD<3> lb(0, 0, get_current_frame());
