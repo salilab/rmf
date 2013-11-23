@@ -151,19 +151,21 @@ void SharedData::clear_loaded_values() { RMF_FOREACH_TYPE(RMF_CLEAR_LOADED); }
 void SharedData::clear_static_values() { RMF_FOREACH_TYPE(RMF_CLEAR_STATIC); }
 
 SharedData::~SharedData() {
-  try {
-    RMF_INFO(get_logger(), "Closing file " << get_file_path());
-    flush();
-    if (get_loaded_frame() != FrameID()) {
-      io_->save_loaded_frame(this);
+  if (write_) {
+    try {
+      RMF_INFO(get_logger(), "Closing file " << get_file_path());
+      flush();
+      if (get_loaded_frame() != FrameID()) {
+        io_->save_loaded_frame(this);
+      }
+      io_.reset();
     }
-    io_.reset();
+    catch (const std::exception &e) {
+      std::cerr << "Exception caught in shared data destructor " << e.what()
+                << std::endl;
+    }
+    open_for_writing.erase(get_file_path());
   }
-  catch (const std::exception &e) {
-    std::cerr << "Exception caught in shared data destructor " << e.what()
-              << std::endl;
-  }
-  open_for_writing.erase(get_file_path());
 }
 
 }  // namespace internal
