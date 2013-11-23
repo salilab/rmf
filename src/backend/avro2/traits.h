@@ -39,10 +39,14 @@ struct FileWriterTraitsBase {
   FileWriterTraitsBase(std::string path) : path_(path) {}
   template <class T>
   void write(const T &t) {
+    RMF_INFO(get_logger(), "Writing to file");
     avro2::write(writer_.get(), t);
   }
   void flush() {
-    if (writer_) writer_->flush();
+    if (writer_) {
+      RMF_INFO(get_logger(), "Flushing file");
+      writer_->flush();
+    }
   }
   Frame get_frame(const FileData &, FrameID, FrameID) { return Frame(); }
   FileData get_file_data() { return FileData(); }
@@ -60,6 +64,7 @@ struct ReaderTraits {
   template <class T>
   void write(const T &) {}
   Frame get_frame(const FileData &file_data, FrameID old_frame, FrameID id) {
+    RMF_INFO(get_logger(), "Loading frame " << id);
     if (old_frame == FrameID() || id < old_frame) reader_.reset();
 
     RMF_INTERNAL_CHECK(file_data.frame_block_offsets.find(id) !=
@@ -74,13 +79,14 @@ struct ReaderTraits {
       reader_ = base_frame_.template get_reader<Frame>();
     }
     if (reader_->blockOffsetBytes() != offset) {
-      RMF_TRACE(get_logger(), "Seeking to " << offset << " from "
+      RMF_INFO(get_logger(), "Seeking to " << offset << " from "
                                             << reader_->blockOffsetBytes());
       reader_->seekBlockBytes(offset);
     }
     return avro2::get_frame(id, *reader_);
   }
   FileData get_file_data() {
+ RMF_INFO(get_logger(), "Loading file data");
     boost::shared_ptr<internal_avro::DataFileReader<FileData> > reader =
         base_file_data_.template get_reader<FileData>();
     return avro2::get_file_data(*reader);
@@ -124,9 +130,11 @@ struct BufferWriterTraits {
   }
   template <class T>
   void write(const T &t) {
+    RMF_INFO(get_logger(), "Writing to buffer");
     avro2::write(writer_.get(), t);
   }
   void flush() {
+    RMF_INFO(get_logger(), "Flushing to buffer");
     // avoid rewriting later
     writer_->flush();
     buffer_.access_buffer().clear();

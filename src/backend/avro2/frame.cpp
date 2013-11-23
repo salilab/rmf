@@ -28,7 +28,7 @@ Frame get_frame(FrameID id, internal_avro::DataFileReader<Frame>& reader) {
                                              << std::endl);
       return ret;
     } else {
-      RMF_TRACE(get_logger(), "Found frame for frame " << ret.id);
+      RMF_INFO(get_logger(), "Found frame for frame " << ret.id);
     }
   } while (true);
 }

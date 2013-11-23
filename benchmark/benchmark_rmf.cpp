@@ -159,7 +159,7 @@ void benchmark_load(RMF::FileConstHandle file, std::string type) {
 
 int main(int, char**) {
   try {
-    RMF::set_log_level("Off");
+    RMF::set_log_level("info");
 #if BOOST_VERSION > 104100
     boost::filesystem::path temp = boost::filesystem::unique_path();
     const std::string name_base = temp.native();
@@ -167,6 +167,19 @@ int main(int, char**) {
     std::string name_base = tmpnam(NULL);
 #endif
 
+    {
+      const std::string name = name_base + ".rmf3";
+      {
+        RMF::FileHandle fh = RMF::create_rmf_file(name);
+        benchmark_create(fh, "rmf3");
+      }
+      {
+        RMF::FileConstHandle fh = RMF::open_rmf_file_read_only(name);
+        benchmark_traverse(fh, "rmf3");
+        benchmark_load(fh, "rmf3");
+      }
+      benchmark_size(name, "rmf3");
+    }
     {
       const std::string name = name_base + ".rmf";
       {
@@ -181,6 +194,19 @@ int main(int, char**) {
       benchmark_size(name, "rmf");
     }
     {
+      const std::string name = name_base + ".rmfz";
+      {
+        RMF::FileHandle fh = RMF::create_rmf_file(name);
+        benchmark_create(fh, "rmfz");
+      }
+      {
+        RMF::FileConstHandle fh = RMF::open_rmf_file_read_only(name);
+        benchmark_traverse(fh, "rmfz");
+        benchmark_load(fh, "rmfz");
+      }
+      benchmark_size(name, "rmfz");
+    }
+    {
       const std::string name = name_base + ".rmf2";
       {
         RMF::FileHandle fh = RMF::create_rmf_file(name);
@@ -192,19 +218,6 @@ int main(int, char**) {
         benchmark_load(fh, "rmf2");
       }
       benchmark_size(name, "rmf2");
-    }
-    {
-      const std::string name = name_base + ".rmf3";
-      {
-        RMF::FileHandle fh = RMF::create_rmf_file(name);
-        benchmark_create(fh, "rmf3");
-      }
-      {
-        RMF::FileConstHandle fh = RMF::open_rmf_file_read_only(name);
-        benchmark_traverse(fh, "rmf3");
-        benchmark_load(fh, "rmf3");
-      }
-      benchmark_size(name, "rmf3");
     }
     {
       const std::string name = name_base + ".rmfa";

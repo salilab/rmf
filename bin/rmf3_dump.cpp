@@ -28,15 +28,24 @@ int main(int argc, char** argv) {
       while (reader.read(frame)) {
         std::size_t offset = reader.blockOffsetBytes();
         std::cout << "Block offset " << offset << std::endl;
-        internal_avro::EncoderPtr encoder = internal_avro::jsonEncoder(schema);
-        boost::shared_ptr<internal_avro::OutputStream> os =
-            internal_avro::ostreamOutputStream(std::cout);
-        encoder->init(*os);
-        internal_avro::encode(*encoder, frame);
+        if (variables_map.count("verbose")) {
+          internal_avro::EncoderPtr encoder =
+              internal_avro::jsonEncoder(schema);
+          boost::shared_ptr<internal_avro::OutputStream> os =
+              internal_avro::ostreamOutputStream(std::cout);
+          encoder->init(*os);
+          internal_avro::encode(*encoder, frame);
 
-        // apparently these are necessary
-        encoder->flush();
-        os->flush();
+          // apparently these are necessary
+          encoder->flush();
+          os->flush();
+        } else {
+          if (frame.info.idx() == 0) {
+            std::cout << "Frame: " << frame.info.get_FrameInfo().id;
+          } else {
+            std::cout << "static";
+          }
+        }
         std::cout << std::endl;
       }
     }

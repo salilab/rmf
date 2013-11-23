@@ -200,13 +200,11 @@ bool save_all(FileData &file_data, FileDataChanges &file_data_changes,
 template <class RW>
 void Avro2IO<RW>::commit() {
   if (file_data_dirty_) {
-    RMF_INFO(get_logger(), "Writing static data in commit");
     rw_.write(file_data_changes_);
     file_data_dirty_ = false;
     file_data_changes_ = FileDataChanges();
   }
   if (frame_.id != FrameID()) {
-    RMF_INFO(get_logger(), "Writing frame " << frame_.id << " in commit");
     rw_.write(frame_);
     frame_.id = FrameID();
   }
@@ -221,8 +219,6 @@ Avro2IO<RW>::Avro2IO(T t)
 template <class RW>
 void Avro2IO<RW>::save_loaded_frame(const internal::SharedData *shared_data) {
   if (frame_.id != FrameID()) {
-    RMF_INFO(get_logger(), "Writing frame " << frame_.id
-                                            << " to make space for new one");
     rw_.write(frame_);
   }
   FrameID id = shared_data->get_loaded_frame();
@@ -238,7 +234,6 @@ void Avro2IO<RW>::save_loaded_frame(const internal::SharedData *shared_data) {
 template <class RW>
 void Avro2IO<RW>::load_loaded_frame(internal::SharedData *shared_data) {
   FrameID id = shared_data->get_loaded_frame();
-  RMF_INFO(get_logger(), "Loading frame " << id << " from file");
   frame_ = rw_.get_frame(file_data_, frame_.id, id);
   shared_data->set_loaded_frame_name(frame_.name);
   shared_data->set_loaded_frame_type(FrameType(frame_.type));
