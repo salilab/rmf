@@ -31,7 +31,7 @@ void read(std::string name) {
   assert(file_data.description == "description1");
   assert(file_data.max_id.get_index() == 2);
   for (unsigned int i = 0; i <= file_data.max_id.get_index(); ++i) {
-    boost::scoped_ptr<internal_avro::DataFileReader<RMF::avro2::Frame> > reader;
+    boost::shared_ptr<internal_avro::DataFileReader<RMF::avro2::Frame> > reader;
     RMF::avro2::Frame frame =
         get_frame(file_data, name, RMF::FrameID(i), reader);
   }

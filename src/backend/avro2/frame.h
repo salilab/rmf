@@ -1,3 +1,10 @@
+/**
+ *  \file RMF/internal/SharedData.h
+ *  \brief Handle read/write of Model data from/to files.
+ *
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *
+ */
 
 #ifndef SRC_BACKEND_AVRO2_FRAME_H_1753077812__H_
 #define SRC_BACKEND_AVRO2_FRAME_H_1753077812__H_
@@ -5,7 +12,7 @@
 #include <RMF/config.h>
 #include "types.h"
 #include <avrocpp/api/DataFile.hh>
-#include <boost/scoped_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 
 RMF_ENABLE_WARNINGS
 
@@ -14,7 +21,7 @@ namespace avro2 {
 // reuse reader later
 RMFEXPORT Frame
     get_frame(const FileData &fd, std::string path, FrameID id,
-              boost::scoped_ptr<internal_avro::DataFileReader<Frame> > &reader);
+              boost::shared_ptr<internal_avro::DataFileReader<Frame> > &reader);
 }
 }
 
