@@ -7,5 +7,9 @@ for suffix in RMF.suffixes:
     k = f.get_key(cat, "key", RMF.int_traits)
     n = f.get_root_node()
     n.set_static_value(k, 1)
+    del f
+    del n
+    f = RMF.open_rmf_file_read_only(path)
     f.set_current_frame(f0)
+    n = f.get_root_node()
     assert(n.get_value(k) == 1)

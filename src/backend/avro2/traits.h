@@ -81,7 +81,11 @@ struct ReaderTraits {
     if (reader_->blockOffsetBytes() != offset) {
       RMF_INFO(get_logger(), "Seeking to " << offset << " from "
                                             << reader_->blockOffsetBytes());
-      reader_->seekBlockBytes(offset);
+      try {
+        reader_->seekBlockBytes(offset);
+      } catch (std::exception) {
+        RMF_INFO(get_logger(), "Seeking not supported");
+      }
     }
     return avro2::get_frame(id, *reader_);
   }

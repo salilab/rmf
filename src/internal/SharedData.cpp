@@ -38,16 +38,13 @@ SharedData::SharedData(boost::shared_ptr<backends::IO> io, std::string name,
 }
 
 void SharedData::set_loaded_frame(FrameID frame) {
+  RMF_USAGE_CHECK(!write_, "Can't call set loaded frame when writing.");
   RMF_USAGE_CHECK(frame != ALL_FRAMES, "Trying to set loaded to all frames");
   RMF_USAGE_CHECK(
       frame == FrameID() || frame.get_index() < get_number_of_frames(),
       "Trying to load a frame that isn't there");
   if (frame == get_loaded_frame()) return;
   RMF_INFO(get_logger(), "Setting loaded frame to " << frame);
-  if (get_loaded_frame() != FrameID() && write_) {
-    flush();
-    io_->save_loaded_frame(this);
-  }
   SharedDataLoadedFrame::set_loaded_frame(frame);
 
   clear_loaded_values();
@@ -57,25 +54,24 @@ void SharedData::set_loaded_frame(FrameID frame) {
 }
 
 FrameID SharedData::add_frame(std::string name, FrameType type) {
+  RMF_INTERNAL_CHECK(write_, "Can't add frame if not writing");
   FrameID ret(get_number_of_frames());
   ++number_of_frames_;
   FrameID cl = get_loaded_frame();
   RMF_INTERNAL_CHECK(cl != ret, "Huh, frames are the same");
   if (cl != FrameID()) {
     add_child_frame(ret);
-    if (write_) {
-      if (SharedDataFile::get_is_dirty()) {
-        RMF_INFO(get_logger(), "Flushing file info");
-        io_->save_file(this);
-        SharedDataFile::set_is_dirty(false);
-      }
-      if (SharedDataHierarchy::get_is_dirty()) {
-        RMF_INFO(get_logger(), "Flushing node hierarchy");
-        io_->save_hierarchy(this);
-        SharedDataHierarchy::set_is_dirty(false);
-      }
-      io_->save_loaded_frame(this);
+    if (SharedDataFile::get_is_dirty()) {
+      RMF_INFO(get_logger(), "Flushing file info");
+      io_->save_file(this);
+      SharedDataFile::set_is_dirty(false);
     }
+    if (SharedDataHierarchy::get_is_dirty()) {
+      RMF_INFO(get_logger(), "Flushing node hierarchy");
+      io_->save_hierarchy(this);
+      SharedDataHierarchy::set_is_dirty(false);
+    }
+    io_->save_loaded_frame(this);
   }
   SharedDataLoadedFrame::set_loaded_frame(ret);
 
@@ -157,8 +153,10 @@ void SharedData::clear_static_values() { RMF_FOREACH_TYPE(RMF_CLEAR_STATIC); }
 SharedData::~SharedData() {
   try {
     RMF_INFO(get_logger(), "Closing file " << get_file_path());
-    set_loaded_frame(FrameID());
     flush();
+    if (get_loaded_frame() != FrameID()) {
+      io_->save_loaded_frame(this);
+    }
     io_.reset();
   }
   catch (const std::exception &e) {

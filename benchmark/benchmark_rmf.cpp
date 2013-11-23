@@ -159,7 +159,7 @@ void benchmark_load(RMF::FileConstHandle file, std::string type) {
 
 int main(int, char**) {
   try {
-    RMF::set_log_level("info");
+    RMF::set_log_level("Off");
 #if BOOST_VERSION > 104100
     boost::filesystem::path temp = boost::filesystem::unique_path();
     const std::string name_base = temp.native();
