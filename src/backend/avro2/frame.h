@@ -20,8 +20,7 @@ namespace RMF {
 namespace avro2 {
 // reuse reader later
 RMFEXPORT Frame
-    get_frame(const FileData &fd, std::string path, FrameID id,
-              boost::shared_ptr<internal_avro::DataFileReader<Frame> > &reader);
+    get_frame(FrameID id, internal_avro::DataFileReader<Frame> &reader);
 }
 }
 

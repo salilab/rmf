@@ -18,10 +18,7 @@ RMF_ENABLE_WARNINGS
 
 namespace RMF {
 namespace avro2 {
-FileData get_file_data(std::string name) {
-  typedef internal_avro::DataFileReader<FileData> Reader;
-  Reader reader(name.c_str(), internal_avro::compileJsonSchemaFromString(
-                                  data_avro2::frame_json));
+FileData get_file_data(internal_avro::DataFileReader<FileData> &reader) {
   FileData ret;
   try {
     while (reader.read(ret)) {
@@ -31,13 +28,6 @@ FileData get_file_data(std::string name) {
   catch (const std::exception &e) {
   }
   return ret;
-}
-void validate_file_data() {
-  internal_avro::DecoderPtr ve = internal_avro::validatingDecoder(
-      internal_avro::compileJsonSchemaFromString(data_avro2::frame_json),
-      internal_avro::binaryDecoder());
-  FileData fd;
-  internal_avro::decode(*ve, fd);
 }
 }
 }

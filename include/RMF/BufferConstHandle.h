@@ -49,6 +49,10 @@ class BufferConstHandle {
   RMF_HASHABLE(BufferConstHandle, return reinterpret_cast<size_t>(&*data_););
   RMF_SHOWABLE(BufferConstHandle, "buffer");
 #if !defined(IMP_DOXYGEN) && !defined(SWIG)
+  std::pair<const uint8_t*, size_t> get_uint8_t() const {
+    return std::make_pair(reinterpret_cast<const uint8_t*>(&(*data_)[0]),
+                                                          data_->size());
+  }
   boost::shared_ptr<std::vector<char> > get() const { return data_; }
 #endif
 };

@@ -351,7 +351,6 @@ unsigned int Avro2IO<RW>::get_number_of_frames() const {
 template <class RW>
 Avro2IO<RW>::~Avro2IO() {
   commit();
-  rw_.flush();
 }
 
 }  // namespace avro2

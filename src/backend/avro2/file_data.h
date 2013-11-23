@@ -10,12 +10,14 @@
 #define RMF_AVRO2_FILE_DATA_H
 
 #include "types.h"
+#include "avrocpp/api/DataFile.hh"
 
 RMF_ENABLE_WARNINGS
 
 namespace RMF {
 namespace avro2 {
-RMFEXPORT FileData get_file_data(std::string path);
+RMFEXPORT FileData
+    get_file_data(internal_avro::DataFileReader<FileData> &reader);
 }
 }
 
