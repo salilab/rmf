@@ -244,7 +244,10 @@ struct codec_traits<RMF::avro2::FileData> {
       v.cur_id = RMF::FrameID();
       internal_avro::decode(d, v.description);
       internal_avro::decode(d, v.producer);
-      internal_avro::decode(d, v.categories);
+      std::vector<std::pair<RMF::Category, std::string> > categories;
+      internal_avro::decode(d, categories);
+      v.categories.insert(v.categories.end(), categories.begin(),
+                          categories.end());
       internal_avro::decode(d, v.extra_node_types);
       internal_avro::decode(d, v.extra_frame_types);
 
