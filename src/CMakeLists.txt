@@ -34,6 +34,7 @@ target_link_libraries(RMF-lib
   ${Boost_FILESYSTEM_LIBRARY}
   ${Boost_SYSTEM_LIBRARY}
   ${Boost_THREAD_LIBRARY}
+  ${Boost_IOSTREAMS_LIBRARY}
   ${HDF5_LIBRARIES}
   ${Log4CXX_LIBRARY}
   )
