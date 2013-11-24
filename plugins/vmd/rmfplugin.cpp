@@ -1,9 +1,9 @@
 #include "molfile_plugin.h"
 
 #include <RMF/FileConstHandle.h>
-#include <RMF/physics_decorators.h>
-#include <RMF/sequence_decorators.h>
-#include <RMF/shape_decorators.h>
+#include <RMF/decorator/physics.h>
+#include <RMF/decorator/sequence.h>
+#include <RMF/decorator/shape.h>
 #include <RMF/CoordinateTransformer.h>
 #include <RMF/log.h>
 #include <boost/scoped_array.hpp>
@@ -12,17 +12,17 @@ namespace {
 molfile_plugin_t plugin;
 class Data {
   RMF::FileConstHandle file_;
-  RMF::AtomConstFactory af_;
-  RMF::ResidueConstFactory rf_;
-  RMF::ChainConstFactory chf_;
-  RMF::ParticleConstFactory pf_;
-  RMF::ReferenceFrameConstFactory rff_;
-  RMF::BallConstFactory bf_;
-  RMF::SegmentConstFactory sf_;
-  RMF::CylinderConstFactory cf_;
-  RMF::BondConstFactory bdf_;
+  RMF::decorator::AtomConstFactory af_;
+  RMF::decorator::ResidueConstFactory rf_;
+  RMF::decorator::ChainConstFactory chf_;
+  RMF::decorator::ParticleConstFactory pf_;
+  RMF::decorator::ReferenceFrameConstFactory rff_;
+  RMF::decorator::BallConstFactory bf_;
+  RMF::decorator::SegmentConstFactory sf_;
+  RMF::decorator::CylinderConstFactory cf_;
+  RMF::decorator::BondConstFactory bdf_;
   struct Body {
-    std::vector<RMF::ReferenceFrameConst> frames;
+    std::vector<RMF::decorator::ReferenceFrameConst> frames;
     RMF::NodeConstHandles atoms;
     RMF::NodeConstHandles balls;
   };
@@ -37,8 +37,9 @@ class Data {
 
   // find nodes to push to vmd
   std::pair<int, int> get_structure(RMF::NodeConstHandle cur,
-                                    molfile_atom_t *atoms, int body, char chain,
-                                    int resid, std::string resname);
+                                    molfile_atom_t *atoms, int body,
+                                    std::string chain, int resid,
+                                    std::string resname);
   int get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
                    molfile_graphics_t *graphics);
   int get_bonds(RMF::NodeConstHandle cur,
@@ -71,14 +72,14 @@ Data::Data(std::string name)
   file_.set_current_frame(RMF::FrameID(0));
   bodies_.push_back(Body());
   std::pair<int, int> na =
-      get_structure(file_.get_root_node(), NULL, 0, ' ', -1, std::string());
+      get_structure(file_.get_root_node(), NULL, 0, " ", -1, std::string());
   num_atoms_ = na.first + na.second;
 }
 
 //
 std::pair<int, int> Data::get_structure(RMF::NodeConstHandle cur,
                                         molfile_atom_t *atoms, int body,
-                                        char chain, int resid,
+                                        std::string chain, int resid,
                                         std::string resname) {
   std::pair<int, int> ret(0, 0);
   if (cur.get_type() == RMF::ALIAS) return ret;
@@ -117,7 +118,7 @@ std::pair<int, int> Data::get_structure(RMF::NodeConstHandle cur,
       std::copy(at.begin(), at.end(), atoms->type);
       std::copy(resname.begin(), resname.end(), atoms->resname);
       atoms->resid = resid;
-      atoms->chain[0] = chain;
+      atoms->chain[0] = chain[0];
       atoms->chain[1] = '\0';
       atoms->segid[0] = '\0';
       atoms->mass = pf_.get(cur).get_mass();
@@ -135,7 +136,7 @@ std::pair<int, int> Data::get_structure(RMF::NodeConstHandle cur,
       std::copy(ball.begin(), ball.end(), atoms->type);
       std::copy(resname.begin(), resname.end(), atoms->resname);
       atoms->resid = resid;
-      atoms->chain[0] = chain;
+      atoms->chain[0] = chain[0];
       atoms->chain[1] = '\0';
       atoms->segid[0] = '\0';
       atoms->mass = 0;
@@ -150,7 +151,7 @@ std::pair<int, int> Data::get_structure(RMF::NodeConstHandle cur,
 
 void Data::read_structure(molfile_atom_t *atoms) {
   std::pair<int, int> found =
-      get_structure(file_.get_root_node(), atoms, 0, ' ', -1, "NONE");
+      get_structure(file_.get_root_node(), atoms, 0, " ", -1, "NONE");
   std::cout << "found " << found.first + found.second << " structural particles"
             << std::endl;
 }
@@ -165,26 +166,26 @@ bool Data::read_next_frame(molfile_timestep_t *frame) {
       tr = RMF::CoordinateTransformer(tr, bodies_[i].frames[j]);
     }
     for (unsigned int j = 0; j < bodies_[i].atoms.size(); ++j) {
-      RMF::Floats cc;
+      RMF::Vector3 cc;
       cc = pf_.get(bodies_[i].atoms[j]).get_coordinates();
       cc = tr.get_global_coordinates(cc);
       std::copy(cc.begin(), cc.end(), coords);
       coords += 3;
     }
     for (unsigned int j = 0; j < bodies_[i].balls.size(); ++j) {
-      RMF::Floats cc;
+      RMF::Vector3 cc;
       cc = bf_.get(bodies_[i].atoms[j]).get_coordinates();
       cc = tr.get_global_coordinates(cc);
       std::copy(cc.begin(), cc.end(), coords);
       coords += 3;
     }
   }
-  RMF::FrameConstHandle curf = file_.get_current_frame();
-  unsigned int next = curf.get_index().get_index() + 1;
+  RMF::FrameID curf = file_.get_current_frame();
+  unsigned int next = curf.get_index() + 1;
   if (next == file_.get_number_of_frames()) {
     done_ = true;
   } else {
-    file_.set_current_frame(RMF::FrameID(curf.get_index().get_index() + 1));
+    file_.set_current_frame(RMF::FrameID(curf.get_index() + 1));
   }
   return true;
 }
@@ -231,30 +232,26 @@ int Data::get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
     tr = RMF::CoordinateTransformer(tr, rff_.get(cur));
   }
   if (sf_.get_is(cur)) {
-    RMF::SegmentConst s = sf_.get(cur);
-    RMF::FloatsList coords = s.get_coordinates();
+    RMF::decorator::SegmentConst s = sf_.get(cur);
+    RMF::Vector3s coords = s.get_coordinates_list();
     int type = MOLFILE_LINE;
     double size = 0;
     if (cf_.get_is(cur)) {
       type = MOLFILE_CYLINDER;
       size = cf_.get(cur).get_radius();
     }
-    RMF::Floats last_coords(3);
+    RMF::Vector3 last_coords;
     if (graphics) {
-      last_coords[0] = coords[0][0];
-      last_coords[1] = coords[1][0];
-      last_coords[2] = coords[2][0];
+      last_coords = coords[0];
       last_coords = tr.get_global_coordinates(last_coords);
     }
-    for (unsigned int i = 1; i < coords[0].size(); ++i) {
+    for (unsigned int i = 1; i < coords.size(); ++i) {
       if (graphics) {
         graphics->type = type;
         graphics->size = size;
         graphics->style = 0;
         std::copy(last_coords.begin(), last_coords.end(), graphics->data);
-        last_coords[0] = coords[0][i];
-        last_coords[1] = coords[1][i];
-        last_coords[2] = coords[2][i];
+        last_coords = coords[i];
         last_coords = tr.get_global_coordinates(last_coords);
         std::copy(last_coords.begin(), last_coords.end(), graphics->data + 3);
         ++graphics;
@@ -273,12 +270,16 @@ int Data::get_bonds(RMF::NodeConstHandle cur,
                     int *to) {
   int ret = 0;
   if (bdf_.get_is(cur)) {
-    RMF::NodeConstHandles bonded = bdf_.get(cur).get_bonded();
-    if (bonded.size() == 2 && index.find(bonded[0]) != index.end() &&
-        index.find(bonded[1]) != index.end()) {
+    RMF::NodeConstHandle bonded0(
+        cur.get_file().get_node(RMF::NodeID(bdf_.get(cur).get_bonded_0())));
+    RMF::NodeConstHandle bonded1(
+        cur.get_file().get_node(RMF::NodeID(bdf_.get(cur).get_bonded_1())));
+
+    if (index.find(bonded0) != index.end() &&
+        index.find(bonded1) != index.end()) {
       if (from) {
-        *from = index.find(bonded[0])->second + 1;
-        *to = index.find(bonded[1])->second + 1;
+        *from = index.find(bonded0)->second + 1;
+        *to = index.find(bonded1)->second + 1;
         ++from;
         ++to;
       }
