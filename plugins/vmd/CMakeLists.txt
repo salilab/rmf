@@ -2,7 +2,7 @@ set(VMDPLUGIN_INCLUDE_DIR ${VMDPLUGIN_INCLUDE_DIR} CACHE STRING "Path to vmd plu
 
 find_path(VMDPLUGIN_INCLUDE_PATH
           NAMES molfile_plugin.h
-          PATHS ${VMDPLUGIN_INCLUDE_DIR}
+          PATHS ${VMDPLUGIN_INCLUDE_DIR} ${PROJECT_SOURCE_DIR}/plugins/vmd/include
           )
 
 if(${VMDPLUGIN_INCLUDE_PATH} MATCHES "VMDPLUGIN_INCLUDE_PATH-NOTFOUND")
@@ -10,6 +10,8 @@ message(STATUS "Compilation of VMD plugin disabled. Defined VMDPLUGIN_INCLUDE_DI
 set(RMF_VMD "" CACHE INTERNAL "" FORCE)
 else()
 include_directories(${VMDPLUGIN_INCLUDE_PATH})
+
+message(STATUS "Using VMD headers found in ${VMDPLUGIN_INCLUDE_PATH}")
 
 add_library(RMF-vmd MODULE "rmfplugin.cpp")
 set_target_properties("RMF-vmd" PROPERTIES OUTPUT_NAME "rmfplugin")
