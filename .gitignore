@@ -17,3 +17,4 @@ include/RMF/HDF5.h
 test/Files.cmake
 benchmark/Files.cmake
 bin/Files.cmake
+include/RMF.h
