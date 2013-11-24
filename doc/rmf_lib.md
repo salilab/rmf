@@ -52,13 +52,13 @@ close and open will be added.
 ## Decorators and factories ## {#rmfdecorators}
 
 The nicest way to interact with data stored in nodes is through decorators and
-factories. A factory (eg RMF::ParticleFactory or RMF::ParticleConstFactory) is
+factories (see the RMF::decorator). A factory (eg RMF::decorator::ParticleFactory or RMF::decorator::ParticleConstFactory) is
 constructed from a file (RMF::FileHandle or RMF::FileConstHandle). It can be used
 to check if given nodes have the requested data at a given frame (eg if the RMF::NodeConstHandle has
-mass, coordinates and radius and so is an RMF::Particle) and construct a decorator
-for that node at that frame. The decorator (eg RMF::Particle or RMF::ParticleConst)
+mass, coordinates and radius and so is an RMF::decorator::Particle) and construct a decorator
+for that node at that frame. The decorator (eg RMF::decorator::Particle or RMF::decorator::ParticleConst)
 can then be used to access the attributes and set them (for non-const variants). The
-accessing is done through appropriately named functions (eg RMF::Particle::set_radius()).
+accessing is done through appropriately named functions (eg RMF::decorator::Particle::set_radius()).
 
 ## Language bindings ## {#bindings}
 

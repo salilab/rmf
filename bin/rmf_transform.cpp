@@ -10,7 +10,7 @@
 
 #define RMF_TRANSFORM(f, Name, attribute)       \
   if (f.get_is(nh)) {                           \
-    RMF::Name d = f.get(nh);                    \
+    RMF::decorator::Name d = f.get(nh);         \
     RMF::Vector3 cs = d.get_##attribute();      \
     for (unsigned int i = 0; i < 3; ++i) {      \
       cs[i] = scale * (cs[i] + translation[i]); \
@@ -20,7 +20,7 @@
 
 #define RMF_TRANSFORM_LIST(f, Name, attribute)          \
   if (f.get_is(nh)) {                                   \
-    RMF::Name d = f.get(nh);                            \
+    RMF::decorator::Name d = f.get(nh);                 \
     RMF::Vector3s cs = d.get_##attribute();             \
     for (unsigned int j = 0; j < cs.size(); ++j) {      \
       for (unsigned int i = 0; i < 3; ++i) {            \
@@ -35,15 +35,18 @@ std::string description(
     "Transform an rmf file in place. IntermediateParticle, Ball, Cylinder, "
     "Segment, RigidParticle and ReferenceFrame nodes are handled.");
 
-void transform(RMF::NodeHandle nh, RMF::IntermediateParticleFactory ipf,
-               RMF::RigidParticleFactory rpf, RMF::ReferenceFrameFactory rff,
-               RMF::BallFactory bf, RMF::CylinderFactory cf,
-               RMF::SegmentFactory sf, double scale,
+void transform(RMF::NodeHandle nh,
+               RMF::decorator::IntermediateParticleFactory ipf,
+               RMF::decorator::RigidParticleFactory rpf,
+               RMF::decorator::ReferenceFrameFactory rff,
+               RMF::decorator::BallFactory bf,
+               RMF::decorator::CylinderFactory cf,
+               RMF::decorator::SegmentFactory sf, double scale,
                const RMF::Floats& translation) {
   RMF_TRANSFORM(ipf, IntermediateParticle, coordinates)
   else RMF_TRANSFORM(rpf, RigidParticle, coordinates);
   if (ipf.get_is(nh)) {
-    RMF::IntermediateParticle d = ipf.get(nh);
+    RMF::decorator::IntermediateParticle d = ipf.get(nh);
     d.set_radius(scale * d.get_radius());
   }
   RMF_TRANSFORM(rff, ReferenceFrame, translation);
@@ -95,12 +98,12 @@ int main(int argc, char** argv) {
     RMF::clone_file_info(rhi, rh);
     RMF::clone_hierarchy(rhi, rh);
     RMF::clone_static_frame(rhi, rh);
-    RMF::IntermediateParticleFactory ipf(rh);
-    RMF::RigidParticleFactory rpf(rh);
-    RMF::ReferenceFrameFactory rff(rh);
-    RMF::BallFactory bf(rh);
-    RMF::CylinderFactory cf(rh);
-    RMF::SegmentFactory sf(rh);
+    RMF::decorator::IntermediateParticleFactory ipf(rh);
+    RMF::decorator::RigidParticleFactory rpf(rh);
+    RMF::decorator::ReferenceFrameFactory rff(rh);
+    RMF::decorator::BallFactory bf(rh);
+    RMF::decorator::CylinderFactory cf(rh);
+    RMF::decorator::SegmentFactory sf(rh);
     RMF_FOREACH(RMF::FrameID frame, rhi.get_frames()) {
       RMF::clone_loaded_frame(rhi, rh);
       RMF_INFO(RMF::get_logger(), "Processing frame " << frame);

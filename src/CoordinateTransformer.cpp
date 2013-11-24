@@ -9,11 +9,13 @@
 #include <RMF/CoordinateTransformer.h>
 #include <RMF/decorators.h>
 
-RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(CoordinateTransformer);
+RMF_ENABLE_WARNINGS
+
+RMF_VECTOR_DEF(CoordinateTransformer);
 
 namespace RMF {
 CoordinateTransformer::CoordinateTransformer(CoordinateTransformer base,
-                                             ReferenceFrameConst rb)
+                                             decorator::ReferenceFrameConst rb)
     : transform_(base.transform_,
                  internal::Transform(internal::Rotation(rb.get_rotation()),
                                      rb.get_translation())) {}

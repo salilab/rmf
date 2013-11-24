@@ -13,10 +13,15 @@
 #include "internal/Transform.h"
 #include "infrastructure_macros.h"
 
-RMF_ENABLE_WARNINGS RMF_VECTOR_DECL(CoordinateTransformer);
+RMF_ENABLE_WARNINGS
 
-RMF_ENABLE_WARNINGS namespace RMF {
-  class ReferenceFrameConst;
+RMF_VECTOR_DECL(CoordinateTransformer);
+
+RMF_ENABLE_WARNINGS
+namespace RMF {
+namespace decorator {
+class ReferenceFrameConst;
+}
   /** Transform coordinates into the global reference frame from
       a nested one.
    */
@@ -28,7 +33,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
         transformed at all.*/
     CoordinateTransformer() {};
     /** Compose an outer CoordinateTransformer with the nested ReferenceFrame.*/
-    CoordinateTransformer(CoordinateTransformer base, ReferenceFrameConst rb);
+    CoordinateTransformer(CoordinateTransformer base,
+                          decorator::ReferenceFrameConst rb);
     RMF_SHOWABLE(CoordinateTransformer, transform_);
     /** Return the global coordinates for a given set of internal coordinates.
      */

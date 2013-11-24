@@ -7,8 +7,8 @@
 
 #include <RMF/FileHandle.h>
 #include <boost/timer.hpp>
-#include <RMF/physics_decorators.h>
-#include <RMF/sequence_decorators.h>
+#include <RMF/decorator/physics.h>
+#include <RMF/decorator/sequence.h>
 #include <RMF/log.h>
 #include <boost/filesystem.hpp>
 #include <sstream>
@@ -34,8 +34,8 @@ void benchmark_size(std::string path, std::string type) {
             << std::endl;
 }
 
-void create_residue(RMF::NodeHandle nh, RMF::AtomFactory af,
-                    RMF::ParticleFactory pf) {
+void create_residue(RMF::NodeHandle nh, RMF::decorator::AtomFactory af,
+                    RMF::decorator::ParticleFactory pf) {
   for (unsigned int i = 0; i < 2 * scale; ++i) {
     RMF::NodeHandle child = nh.add_child("CA", RMF::REPRESENTATION);
     pf.get(child).set_static_mass(1);
@@ -43,8 +43,9 @@ void create_residue(RMF::NodeHandle nh, RMF::AtomFactory af,
     af.get(child).set_static_element(7);
   }
 }
-void create_chain(RMF::NodeHandle nh, RMF::ResidueFactory rf,
-                  RMF::AtomFactory af, RMF::ParticleFactory pf) {
+void create_chain(RMF::NodeHandle nh, RMF::decorator::ResidueFactory rf,
+                  RMF::decorator::AtomFactory af,
+                  RMF::decorator::ParticleFactory pf) {
   for (unsigned int i = 0; i < 60 * scale; ++i) {
     std::ostringstream oss;
     oss << i;
@@ -55,10 +56,10 @@ void create_chain(RMF::NodeHandle nh, RMF::ResidueFactory rf,
   }
 }
 void create_hierarchy(RMF::FileHandle file) {
-  RMF::ChainFactory cf(file);
-  RMF::AtomFactory af(file);
-  RMF::ResidueFactory rf(file);
-  RMF::ParticleFactory pf(file);
+  RMF::decorator::ChainFactory cf(file);
+  RMF::decorator::AtomFactory af(file);
+  RMF::decorator::ResidueFactory rf(file);
+  RMF::decorator::ParticleFactory pf(file);
   RMF::NodeHandle n = file.get_root_node();
   for (unsigned int i = 0; i < 3 * scale; ++i) {
     std::ostringstream oss;
@@ -69,7 +70,8 @@ void create_hierarchy(RMF::FileHandle file) {
   }
 }
 
-double create_frame(RMF::FileHandle fh, RMF::IntermediateParticleFactory ipf,
+double create_frame(RMF::FileHandle fh,
+                    RMF::decorator::IntermediateParticleFactory ipf,
                     const RMF::NodeIDs& atoms, int frame) {
   RMF::Vector3 ret(0, 0, 0);
   RMF_FOREACH(RMF::NodeID n, atoms) {
@@ -92,7 +94,7 @@ double create(RMF::FileHandle file) {
       atoms.push_back(n);
     }
   }
-  RMF::IntermediateParticleFactory ipf(file);
+  RMF::decorator::IntermediateParticleFactory ipf(file);
   double ret = 0;
   for (unsigned int i = 0; i < 20; ++i) {
     file.add_frame("frame", RMF::FRAME);
@@ -104,7 +106,7 @@ double create(RMF::FileHandle file) {
 double traverse(RMF::FileConstHandle file) {
   double ret = 0;
   RMF::NodeConstHandles queue(1, file.get_root_node());
-  RMF::IntermediateParticleConstFactory ipcf(file);
+  RMF::decorator::IntermediateParticleConstFactory ipcf(file);
   do {
     RMF::NodeConstHandle cur = queue.back();
     queue.pop_back();
@@ -118,7 +120,7 @@ double traverse(RMF::FileConstHandle file) {
 }
 
 double load(RMF::FileConstHandle file, const RMF::NodeIDs& nodes) {
-  RMF::IntermediateParticleConstFactory ipcf(file);
+  RMF::decorator::IntermediateParticleConstFactory ipcf(file);
   RMF::Vector3 v(0, 0, 0);
   RMF_FOREACH(RMF::FrameID fr, file.get_frames()) {
     file.set_current_frame(fr);
@@ -149,7 +151,7 @@ void benchmark_traverse(RMF::FileConstHandle file, std::string type) {
 
 void benchmark_load(RMF::FileConstHandle file, std::string type) {
   RMF::NodeIDs nodes;
-  RMF::IntermediateParticleConstFactory ipcf(file);
+  RMF::decorator::IntermediateParticleConstFactory ipcf(file);
   RMF_FOREACH(RMF::NodeID n, file.get_node_ids()) {
     if (ipcf.get_is(file.get_node(n))) nodes.push_back(n);
   }

@@ -87,7 +87,7 @@ bool get_equal_static_values(FileConstHandle in, FileConstHandle out) {
   return internal::get_equal_static_values(in.shared_.get(), out.shared_.get());
 }
 
-void add_child_alias(AliasFactory af, NodeHandle parent,
+void add_child_alias(decorator::AliasFactory af, NodeHandle parent,
                      NodeConstHandle child) {
   internal::add_child_alias(af, parent, child);
 }

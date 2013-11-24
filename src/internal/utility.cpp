@@ -13,7 +13,7 @@
 RMF_ENABLE_WARNINGS namespace RMF {
   namespace internal {
 
-  NodeHandle add_child_alias(AliasFactory af, NodeHandle parent,
+  NodeHandle add_child_alias(decorator::AliasFactory af, NodeHandle parent,
                              NodeConstHandle child) {
     NodeHandle nh = parent.add_child(child.get_name() + " alias", ALIAS);
     af.get(nh).set_aliased(child);

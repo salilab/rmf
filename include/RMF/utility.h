@@ -16,10 +16,12 @@
 RMF_ENABLE_WARNINGS
 
 namespace RMF {
+namespace decorator {
+class AliasFactory;
+}
 
 class FileConstHandle;
 class FileHandle;
-class AliasFactory;
 class NodeHandle;
 class NodeConstHandle;
 
@@ -39,6 +41,7 @@ RMFEXPORT void clone_hierarchy(FileConstHandle input, FileHandle output);
 
 /** Copy the data of a single frame from between two files.*/
 RMFEXPORT void clone_loaded_frame(FileConstHandle input, FileHandle output);
+
 /** Copy the data of a single frame from between two files. Parts missing
     in the output file will be skipped.*/
 RMFEXPORT void clone_static_frame(FileConstHandle input, FileHandle output);
@@ -57,7 +60,7 @@ RMFEXPORT bool get_equal_static_values(FileConstHandle input,
                                        FileConstHandle out);
 
 /** Add the child node as an alias child of the parent. */
-RMFEXPORT void add_child_alias(AliasFactory af, NodeHandle parent,
+RMFEXPORT void add_child_alias(decorator::AliasFactory af, NodeHandle parent,
                                NodeConstHandle child);
 
 /** This function simply throws an exception. It is here for testing.*/

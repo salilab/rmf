@@ -1,4 +1,5 @@
 # Change Log #
+- Decorators and factories have been moved into the RMF::decorator namespace in C++.
 - Two new formats have been added: `.rmf3` and its compressed version
 	`.rmfz`. You should use those in preference to the prior formats
 	for new files.

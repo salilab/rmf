@@ -6,10 +6,14 @@
  *
  */
 
-#include <RMF/physics_decorators.h>
-#include <RMF/sequence_decorators.h>
-#include <RMF/shape_decorators.h>
-#include <RMF/external_decorators.h>
-#include <RMF/feature_decorators.h>
-#include <RMF/alias_decorators.h>
-#include <RMF/publication_decorators.h>
+#include <RMF/decorator/physics.h>
+#include <RMF/decorator/sequence.h>
+#include <RMF/decorator/shape.h>
+#include <RMF/decorator/external.h>
+#include <RMF/decorator/feature.h>
+#include <RMF/decorator/alias.h>
+#include <RMF/decorator/publication.h>
+
+/** \namespace RMF::decorator
+
+    Decorators for nodes. */

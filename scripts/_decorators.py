@@ -514,7 +514,11 @@ class Decorator:
 
 
 def make_header(name, infos, deps):
-    fl = open(os.path.join("include", "RMF", name + "_decorators.h"), "w")
+    path = os.path.join("include", "RMF", "decorator")
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+    fl = open(os.path.join("include", "RMF", "decorator", name + ".h"), "w")
     print >> fl, """/**
  *  \\file RMF/%(name)s_decorators.h
  *  \\brief Helper functions for manipulating RMF files.
@@ -539,14 +543,17 @@ def make_header(name, infos, deps):
 #include <boost/array.hpp>
 #include <boost/lexical_cast.hpp>""" % {"name": name, "NAME": name.upper()}
     for d in deps:
-        print >> fl, """#include "%s_decorators.h" """ % d
+        print >> fl, """#include "%s.h" """ % d
     print >> fl, """
 RMF_ENABLE_WARNINGS
 namespace RMF {
+namespace decorator {
 """ % {"name": name, "NAME": name.upper()}
     for i in infos:
         print >> fl, i.get()
-    print >> fl, """} /* namespace RMF */
+    print >> fl, """
+} /* namespace decorator */
+} /* namespace RMF */
 RMF_DISABLE_WARNINGS
 
 #endif /* RMF_%(NAME)s_DECORATORS_H */""" % {"name": name, "NAME": name.upper()}

@@ -136,16 +136,17 @@ void show_node(NodeConstHandle n, std::ostream& out, FloatKeys fks,
   }
 }
 
-void show_node_decorators(NodeConstHandle n, std::ostream& out,
-                          ColoredConstFactory ccf, ParticleConstFactory pcf,
-                          IntermediateParticleConstFactory ipcf,
-                          RigidParticleConstFactory rpcf, ScoreConstFactory scf,
-                          BallConstFactory bcf, CylinderConstFactory cycf,
-                          SegmentConstFactory segcf, ResidueConstFactory rcf,
-                          AtomConstFactory acf, ChainConstFactory chaincf,
-                          DomainConstFactory fragcf, CopyConstFactory copycf,
-                          DiffuserConstFactory diffusercf,
-                          TypedConstFactory typedcf, std::string) {
+void show_node_decorators(
+    NodeConstHandle n, std::ostream& out, decorator::ColoredConstFactory ccf,
+    decorator::ParticleConstFactory pcf,
+    decorator::IntermediateParticleConstFactory ipcf,
+    decorator::RigidParticleConstFactory rpcf, decorator::ScoreConstFactory scf,
+    decorator::BallConstFactory bcf, decorator::CylinderConstFactory cycf,
+    decorator::SegmentConstFactory segcf, decorator::ResidueConstFactory rcf,
+    decorator::AtomConstFactory acf, decorator::ChainConstFactory chaincf,
+    decorator::DomainConstFactory fragcf, decorator::CopyConstFactory copycf,
+    decorator::DiffuserConstFactory diffusercf,
+    decorator::TypedConstFactory typedcf, std::string) {
   using std::operator<<;
   out << "\"" << n.get_name() << "\" [" << get_type_name(n.get_type()) << ": ";
   if (ccf.get_is(n)) out << " color";
@@ -239,21 +240,21 @@ void show_hierarchy_with_values(NodeConstHandle root, std::ostream& out) {
 
 void show_hierarchy_with_decorators(NodeConstHandle root, bool,
                                     std::ostream& out) {
-  ColoredConstFactory ccf(root.get_file());
-  ParticleConstFactory pcf(root.get_file());
-  IntermediateParticleConstFactory ipcf(root.get_file());
-  RigidParticleConstFactory rpcf(root.get_file());
-  ScoreConstFactory scf(root.get_file());
-  BallConstFactory bcf(root.get_file());
-  CylinderConstFactory cycf(root.get_file());
-  SegmentConstFactory segcf(root.get_file());
-  ResidueConstFactory rcf(root.get_file());
-  AtomConstFactory acf(root.get_file());
-  ChainConstFactory chaincf(root.get_file());
-  DomainConstFactory fragcf(root.get_file());
-  CopyConstFactory copycf(root.get_file());
-  DiffuserConstFactory diffusercf(root.get_file());
-  TypedConstFactory typedcf(root.get_file());
+  decorator::ColoredConstFactory ccf(root.get_file());
+  decorator::ParticleConstFactory pcf(root.get_file());
+  decorator::IntermediateParticleConstFactory ipcf(root.get_file());
+  decorator::RigidParticleConstFactory rpcf(root.get_file());
+  decorator::ScoreConstFactory scf(root.get_file());
+  decorator::BallConstFactory bcf(root.get_file());
+  decorator::CylinderConstFactory cycf(root.get_file());
+  decorator::SegmentConstFactory segcf(root.get_file());
+  decorator::ResidueConstFactory rcf(root.get_file());
+  decorator::AtomConstFactory acf(root.get_file());
+  decorator::ChainConstFactory chaincf(root.get_file());
+  decorator::DomainConstFactory fragcf(root.get_file());
+  decorator::CopyConstFactory copycf(root.get_file());
+  decorator::DiffuserConstFactory diffusercf(root.get_file());
+  decorator::TypedConstFactory typedcf(root.get_file());
   using std::operator<<;
   RMF_PRINT_TREE(
       out, NodeConstHandle, root, n.get_children().size(), n.get_children(),

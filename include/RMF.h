@@ -15,7 +15,6 @@
 #include <RMF/Vector.h>
 #include <RMF/compiler_macros.h>
 #include <RMF/constants.h>
-#include <RMF/decorator_utility.h>
 #include <RMF/decorators.h>
 #include <RMF/enums.h>
 #include <RMF/exceptions.h>
@@ -25,10 +24,3 @@
 #include <RMF/names.h>
 #include <RMF/types.h>
 #include <RMF/utility.h>
-#include <RMF/alias_decorators.h>
-#include <RMF/publication_decorators.h>
-#include <RMF/external_decorators.h>
-#include <RMF/sequence_decorators.h>
-#include <RMF/feature_decorators.h>
-#include <RMF/shape_decorators.h>
-#include <RMF/physics_decorators.h>

@@ -115,21 +115,21 @@ RMF_ENABLE_WARNINGS namespace {
     return out.str();
   }
 
-  int write_atoms(std::ostream & out, int current_index,
-                  RMF::NodeConstHandle nh, RMF::AtomConstFactory af,
-                  RMF::ChainConstFactory cf, RMF::ResidueConstFactory rf,
-                  std::string chain = std::string(), int residue_index = -1,
-                  std::string residue_type = std::string()) {
+  int write_atoms(
+      std::ostream & out, int current_index, RMF::NodeConstHandle nh,
+      RMF::decorator::AtomConstFactory af, RMF::decorator::ChainConstFactory cf,
+      RMF::decorator::ResidueConstFactory rf, std::string chain = std::string(),
+      int residue_index = -1, std::string residue_type = std::string()) {
     if (cf.get_is(nh)) {
       chain = cf.get(nh).get_chain_id();
     }
     if (rf.get_is(nh)) {
-      RMF::ResidueConst r = rf.get(nh);
+      RMF::decorator::ResidueConst r = rf.get(nh);
       residue_index = r.get_index();
       residue_type = r.get_type();
     }
     if (af.get_is(nh)) {
-      RMF::AtomConst a = af.get(nh);
+      RMF::decorator::AtomConst a = af.get(nh);
       RMF::Vector3 coords = a.get_coordinates();
       int element = a.get_element();
       // not safe
@@ -169,9 +169,9 @@ int main(int argc, char** argv) {
     } else {
       out = &std::cout;
     }
-    RMF::AtomConstFactory af(rh);
-    RMF::ChainConstFactory cf(rh);
-    RMF::ResidueConstFactory rf(rh);
+    RMF::decorator::AtomConstFactory af(rh);
+    RMF::decorator::ChainConstFactory cf(rh);
+    RMF::decorator::ResidueConstFactory rf(rh);
     RMF::NodeConstHandle rn = rh.get_root_node();
     for (unsigned int input_frame = start_frame, output_frame = 0;
          input_frame < rh.get_number_of_frames();

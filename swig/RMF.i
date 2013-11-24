@@ -136,7 +136,7 @@ RMF_SWIG_PAIR(RMF, Index, IndexRange, IndexRanges)
 RMF_SWIG_PAIR(RMF, Int, IntRange, IntRanges)
 
 
-RMF_SWIG_VALUE(RMF, ReferenceFrame, ReferenceFrames);
+RMF_SWIG_VALUE(RMF::decorator, ReferenceFrame, ReferenceFrames);
 
 
 RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DECLARE_TYPE);
@@ -246,44 +246,43 @@ namespace RMF {
 }
 
 
-RMF_DECORATOR(RMF, Particle);
-RMF_DECORATOR(RMF, IntermediateParticle);
-RMF_DECORATOR(RMF, StaticParticle);
-RMF_DECORATOR(RMF, StaticIntermediateParticle);
-RMF_DECORATOR(RMF, External);
-RMF_DECORATOR(RMF, JournalArticle);
-RMF_DECORATOR(RMF, Colored);
-RMF_DECORATOR(RMF, Ball);
-RMF_DECORATOR(RMF, Cylinder);
-RMF_DECORATOR(RMF, Segment);
-RMF_DECORATOR(RMF, StaticColored);
-RMF_DECORATOR(RMF, StaticBall);
-RMF_DECORATOR(RMF, StaticCylinder);
-RMF_DECORATOR(RMF, StaticSegment);
-RMF_DECORATOR(RMF, Score);
-RMF_DECORATOR(RMF, RigidParticle);
-RMF_DECORATOR(RMF, ReferenceFrame);
-RMF_DECORATOR(RMF, StaticReferenceFrame);
-RMF_DECORATOR(RMF, Residue);
-RMF_DECORATOR(RMF, Atom);
-RMF_DECORATOR(RMF, Alias);
-RMF_DECORATOR(RMF, Bond);
-RMF_DECORATOR(RMF, Chain);
-RMF_DECORATOR(RMF, Domain);
-RMF_DECORATOR(RMF, Copy);
-RMF_DECORATOR(RMF, Diffuser);
-RMF_DECORATOR(RMF, Typed);
-RMF_DECORATOR(RMF, Force);
-RMF_DECORATOR(RMF, Torque);
+RMF_DECORATOR(RMF::decorator, Particle);
+RMF_DECORATOR(RMF::decorator, IntermediateParticle);
+RMF_DECORATOR(RMF::decorator, StaticParticle);
+RMF_DECORATOR(RMF::decorator, StaticIntermediateParticle);
+RMF_DECORATOR(RMF::decorator, External);
+RMF_DECORATOR(RMF::decorator, JournalArticle);
+RMF_DECORATOR(RMF::decorator, Colored);
+RMF_DECORATOR(RMF::decorator, Ball);
+RMF_DECORATOR(RMF::decorator, Cylinder);
+RMF_DECORATOR(RMF::decorator, Segment);
+RMF_DECORATOR(RMF::decorator, StaticColored);
+RMF_DECORATOR(RMF::decorator, StaticBall);
+RMF_DECORATOR(RMF::decorator, StaticCylinder);
+RMF_DECORATOR(RMF::decorator, StaticSegment);
+RMF_DECORATOR(RMF::decorator, Score);
+RMF_DECORATOR(RMF::decorator, RigidParticle);
+RMF_DECORATOR(RMF::decorator, ReferenceFrame);
+RMF_DECORATOR(RMF::decorator, StaticReferenceFrame);
+RMF_DECORATOR(RMF::decorator, Residue);
+RMF_DECORATOR(RMF::decorator, Atom);
+RMF_DECORATOR(RMF::decorator, Alias);
+RMF_DECORATOR(RMF::decorator, Bond);
+RMF_DECORATOR(RMF::decorator, Chain);
+RMF_DECORATOR(RMF::decorator, Domain);
+RMF_DECORATOR(RMF::decorator, Copy);
+RMF_DECORATOR(RMF::decorator, Diffuser);
+RMF_DECORATOR(RMF::decorator, Typed);
+RMF_DECORATOR(RMF::decorator, Force);
+RMF_DECORATOR(RMF::decorator, Torque);
 
-%include "RMF/physics_decorators.h"
-%include "RMF/sequence_decorators.h"
-%include "RMF/shape_decorators.h"
-%include "RMF/external_decorators.h"
-%include "RMF/feature_decorators.h"
-%include "RMF/alias_decorators.h"
-%include "RMF/publication_decorators.h"
-%include "RMF/decorator_utility.h"
+%include "RMF/decorator/physics.h"
+%include "RMF/decorator/sequence.h"
+%include "RMF/decorator/shape.h"
+%include "RMF/decorator/external.h"
+%include "RMF/decorator/feature.h"
+%include "RMF/decorator/alias.h"
+%include "RMF/decorator/publication.h"
 %include "RMF/utility.h"
 %include "RMF/info.h"
 %include "RMF/SetCurrentFrame.h"
