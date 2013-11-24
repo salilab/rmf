@@ -1,3 +1,6 @@
+## \example buffers.py
+## Showing how to read and write from buffers
+
 import RMF
 
 buf = RMF.BufferHandle()

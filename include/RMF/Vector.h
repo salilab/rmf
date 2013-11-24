@@ -18,9 +18,13 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 template <unsigned int>
 class Vector;
+/** A Vector3 */
 typedef Vector<3> Vector3;
+/** A Vector3 */
 typedef Vector<4> Vector4;
+/** Many Vector3s */
 typedef std::vector<Vector3> Vector3s;
+/** Many Vector4s */
 typedef std::vector<Vector4> Vector4s;
 
 /** Represent a point.

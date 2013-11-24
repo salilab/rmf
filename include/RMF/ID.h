@@ -28,9 +28,7 @@ struct CategoryTag {
   static std::string get_tag() { return "c"; }
 };
 
-/** Each frame or node in the hierarchy (RMF::FrameHandle)
-    associated data has an associated identifier that is unique with
-    that %RMF file. These are stored using ID classes with appropriate tags.*/
+/** A general purpose ID in RMF used, with different tags, to idenfity things.*/
 template <class TagT>
 class ID {
   int i_;
@@ -87,12 +85,18 @@ class ID {
 #endif
 };
 
+/** Identify a node within a file. */
 typedef ID<NodeTag> NodeID;
+/** Identify a frame within a file. */
 typedef ID<FrameTag> FrameID;
+/** Identify a category within a file. */
 typedef ID<CategoryTag> Category;
 
+/** List of node ids. */
 typedef std::vector<NodeID> NodeIDs;
+/** List of frame ids. */
 typedef std::vector<FrameID> FrameIDs;
+/** List of categories. */
 typedef std::vector<Category> Categories;
 
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)

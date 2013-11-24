@@ -1,4 +1,7 @@
-/**
+/** \example benchmark_rmf.cpp
+ * \brief Benchmark typical creation, traversal and loading with different RMF
+ *        backends.
+ *
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 

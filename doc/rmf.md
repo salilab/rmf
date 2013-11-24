@@ -98,27 +98,27 @@ RMF::Colored, RMF::Ball etc. See [Decorators](\ref #rmfdecorators) for
 more information.
 
 The data types that can currently be stored in an \ref rmf "RMF File" are
-   - \c Float: a floating point value
-   - \c String: an ASCII string
-   - \c Int: a 64 bit integer
-   - \c Vector3: a 3-vector
-   - \c Vector4: a 4-vector
+| Name    |  Description | C++ type | Python type |
+|--------:|--------------|:--------:|:-----------:|
+| RMF::Float   | a floating point value | `float` | `float` |
+| RMF::String  | a utf8 string | `std::string` | `string` |
+| RMF::Int | an 64 bit integer | `int` | `int`|
+| RMF::Vector3 | three Float values | RMF::Vector3 | RMF.Vector3 |
+| RMF::Vector4 | four Float values | RMF::Vector4 | RMF.Vector4 |
 
 In addition, an arbitrary length list of any of the above can be stored. The type for that
 is the type for the single data with an \c s on the end, eg \c Floats for a list of \c Float
 values. These are passed as \c std::vector like lists in \c C++ and \c lists in \c Python.
 
 Each data type has associated typedefs such as
-<table>
-<tr><td><b>Name</b></td><td><b>role</b></td></tr>
-<tr><td>\c Float</td><td>the type used to pass a floating point value</td></tr>
-<tr><td>\c Floats</td><td>the type used to pass a list of floating point values. It looks like an \c std::vector in \c C++ and a \c list in \c Python</td></tr>
-<tr><td>\c FloatKey</td><td>a RMF::Key used to identify a floating point value associated with a node in the RMF hierarchy</td></tr>
-<tr><td>\c FloatsKey</td><td>a RMF::Key used to identify a list of floating points value associated with a node in the RMF hierarchy</td></tr>
-<tr><td>\c FloatTraits</td><td>a traits classes to tell HDF5 how to read and write one or more floating point values</td></tr>
-<tr><td>\c FloatsTraits</td><td>a traits classes to tell HDF5 how to read and write one or more lists of floating point values</td></tr>
-<tr><td>\c etc</td><td></td></tr>
-</table>
+| Name    | Type  |Role                                       |
+|--------:|:-----:|--------------------------------------|
+|RMF::Float | `float` | the type used to pass a floating point value |
+|RMF::Floats | std::vector<RMF::Float> | the type used to pass a list of floating point values. It looks like an \c std::vector in \c C++ and a \c list in \c Python |
+|RMF::FloatKey | RMF::ID<RMF::FloatTraits> | a RMF::Key used to identify a floating point value associated with a node in the RMF hierarchy |
+|RMF::FloatsKey | std::vector<RMF::FloatKey> | a RMF::Key used to identify a list of floating points value associated with a node in the RMF hierarchy |
+|RMF::FloatTraits | RMF::FloatTraits | a traits classes to tell HDF5 how to read and write one or more floating point values |
+|RMF::FloatsTraits | RMF::FloatsTraits | a traits classes to tell HDF5 how to read and write one or more lists of floating point values |
 
 
 ## Inheritance of properties ## {#inheritance}
@@ -188,16 +188,20 @@ A quick comparison of the various options (taken from benchmark/benchmark_rmf.cp
 ### RMF3 ### {#rmf_and_avro}
 
 RMF3 stores the structure in an [Avro Object
-Container](http://avro.apache.org/docs/1.7.5/spec.html#Object+Container+Files). The
-structure is stored as a series of records, each containing either a
-frame or static data (there can be multiple static data frames, they
-are implicitly merged).  Upon opening, the file is scanned once, after
+Container](http://avro.apache.org/docs/1.7.5/spec.html#Object+Container+Files). If
+the `.rmfz` suffix is used, the contents are compressed. The structure
+is stored as a series of records, each containing either a frame or
+static data (there can be multiple static data frames, they are
+implicitly merged).  Upon opening, the file is scanned once, after
 that, frames can be accessed in a random access fashion. See
 [Frame.json](Frame.json) for the schema.
 
 The format is robust to corruption (all on disk data is safe if
-garbage data is written). It will also, soon, support storage in a
-memory buffer.
+garbage data is written or the process is killed).
+
+There are several ways that the files can be made more compact
+(without breaking forwards compatibility of existing files). They can be investigated
+further if there is sufficient demand.
 
 ### RMF and HDF5 ### {#rmf_hdf5}
 

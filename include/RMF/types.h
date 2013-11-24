@@ -334,8 +334,10 @@ class BondEndpoints
   }
 };
 
-#define RMF_DECLARE_KEY(Traits, UCName) \
-  typedef ID<Traits> UCName##Key;       \
+#define RMF_DECLARE_KEY(Traits, UCName)      \
+  /** Identify a value stored for a node. */ \
+  typedef ID<Traits> UCName##Key;            \
+  /** A list of identifiers. */              \
   typedef std::vector<UCName##Key> UCName##Keys;
 
 /** \name Key types
