@@ -42,7 +42,9 @@ refframe = Decorator(["REPRESENTATION", "ORGANIZATIONAL"], "physics",
 
 bond = Decorator(["BOND"], "physics",
                  "Bond", "A bond between particles.",
-                 [AttributePair("bonded", "Int", "BondEndpoints", "bond_0", "bond_1", "The bonded particles.")])
+                 [Attribute(
+                     "bonded_0", "Int", "The first endpoint of the bond"),
+                  Attribute("bonded_1", "Int", "The second endpoint of the bond")])
 
 old_bond = Decorator(["BOND"], "physics",
                      "OldBond", "A bond between particles, for backwards compatibility.",

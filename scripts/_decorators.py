@@ -323,6 +323,9 @@ class RangeAttribute(AttributePair):
 """
         self.check = "!nh.GET(NAME_[0]).get_is_null() && !nh.GET(NAME_[1]).get_is_null() && nh.GET_BOTH(NAME_[0]) < nh.GET_BOTH(NAME_[1])"
 
+        self.check = "!nh.GET(NAME_[0]).get_is_null() && !nh.GET(NAME_[1]).get_is_null() && nh.GET_BOTH(NAME_[0]) < nh.GET_BOTH(NAME_[1])"
+
+
 decorator = """
   /** DESCRIPTION
 

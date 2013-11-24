@@ -33,39 +33,6 @@ def _get_files(ds, suffix):
     return files
 
 
-def make_all_rmf_header():
-    pat = os.path.join("include", "RMF", "*.h")
-    allh = sorted(glob.glob(pat))
-
-    out = []
-    for g in allh:
-        name = os.path.split(g)[1]
-        if name == "HDF5.h":
-            continue
-        out.append("#include <RMF/" + name + ">")
-    # a bit icky
-    for d in ["alias_decorators.h",
-              "publication_decorators.h",
-              "external_decorators.h",
-              "sequence_decorators.h",
-              "feature_decorators.h",
-              "shape_decorators.h",
-              "physics_decorators.h"]:
-        out.append("#include <RMF/%s>" % d)
-    _rewrite(os.path.join("include", "RMF.h"), out)
-
-
-def make_all_hdf5_header():
-    pat = os.path.join("include", "RMF", "HDF5", "*.h")
-    allh = sorted(glob.glob(pat))
-
-    out = []
-    for g in allh:
-        name = os.path.split(g)[1]
-        out.append("#include <RMF/HDF5/" + name + ">")
-    _rewrite(os.path.join("include", "RMF", "HDF5.h"), out)
-
-
 def make_files(d):
     output = os.path.join(d[0], "Files.cmake")
     cppfiles = _get_files(d, ".cpp")
@@ -77,8 +44,6 @@ def make_files(d):
         out.append("set(jsonfiles \"%s\")" % ";".join(jsonfiles))
     _rewrite(output, out)
 
-make_all_rmf_header()
-make_all_hdf5_header()
 src = ["src",
        os.path.join("src", "internal"),
        os.path.join("src", "backend"),
