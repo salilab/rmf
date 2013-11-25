@@ -561,17 +561,19 @@ Objavro.codecnullavro.schemaø˜{
         }
     ]
 }
- „Ôûåä‡r^O±T%‚gø"  
+ $ğ‰pÌèğê*[Fõzÿì  
 IMP 
 aliasphysicssequence
-shape    À root  `/Users/drussel/src/rmf/rmf/examples/simple.pdb:   A 0 N 
+shape    h root  l/flute1/home/drussel/src/rmf/rmf/examples/simple.pdb:   A 0 N 
 CA C O CB CG SD CE 1 N CA C  O "CB $CG1 &CG2 (2 *N( ,CA( .C( 0O( 2CB( 4CG( 6CD1( 8CD2( :
-bonds <bond: >N alias< @CA alias< Bbond: DO aliasB FC aliasB Hbond: JC aliasH LCA aliasH Nbond: PC aliasN RN aliasN Tbond: VCB aliasT XCA aliasT Zbond: \CG aliasZ ^CB aliasZ `bond: bSD alias` dCG alias` fbond: hCE aliasf jSD aliasf lbond: nN aliasl pCA aliasl rbond: tC aliasr vCA aliasr xbond: zO aliasx |C aliasx ~bond: €CB alias~ ‚CA alias~ „bond: †CG1 alias„ ˆCB alias„ Šbond: ŒCG2 aliasŠ CB aliasŠ bond: ’C alias ”N alias –bond: ˜CB alias– šCA alias– œbond: N aliasœ  CA aliasœ ¢bond: ¤C alias¢ ¦CA alias¢ ¨bond: ªO alias¨ ¬C alias¨ ®bond: °CG alias® ²CB alias® ´bond: ¶CD1 alias´ ¸CG alias´ ºbond: ¼CD2 aliasº ¾CG aliasº  $ massradius*diffusion coefficient aliased  element &first residue index $last residue index copy index 
-rigid body non rigid  residue typechain idtype name indexes coordinatesrgb colortranslation rotation  X¾4¶6²2¬.ª0¤. ,˜2”*’€"|tz *pj¸4b^d\"X
-ˆ"V†$Ph°4L
-J‚R¼8š,FnDvŒ&¦,@
-> .820.,&$"6 4* 
- (  (    .8Ô+@A2Ô+@A0‹ıA.Ô+@A,Ô+@A&Ô+@A$Ô+@A"Ô+@AÔ+@A6Ô+@AB B4Ô+@AÔ+@AÔ+@AÔ+@A*q`A‹ıA ‹ıAÔ+@AÔ+@A
+bonds <bond: >bond: @bond: Bbond: Dbond: Fbond: Hbond: Jbond: Lbond: Nbond: Pbond: Rbond: Tbond: Vbond: Xbond: Zbond: \bond: ^bond: `bond: bbond: dbond: fbond:  ( massradius*diffusion coefficient aliased  element &first residue index $last residue index copy index 
+bonded_0 bonded_1 rigid body non rigid  residue typechain idtype name indexes coordinatesrgb colortranslation rotation 
+.820.,&$"6 4* 
+ (  (  
+,`2d6b4^0\.Z*T PL"JHX&RFV$Bf8N@D>< ,`,d4b2^.\,Z,TPLJHX"R*FV"B
+f4N@D>
+<
+   .8Ô+@A2Ô+@A0‹ıA.Ô+@A,Ô+@A&Ô+@A$Ô+@A"Ô+@AÔ+@A6Ô+@AB B4Ô+@AÔ+@AÔ+@AÔ+@A*q`A‹ıA ‹ıAÔ+@AÔ+@A
 Ô+@Aq`Aq`A .8
 ×@233@0š™Ù?.   @,š™@&
 ×@$
@@ -583,4 +585,4 @@ J‚R¼8š,FnDvŒ&¦,@
 ×åAÙÎ_AázìÀ“ÂAHá(Aï»À4¬èAğ§vA1øÀ=
 ÇA%Aİ$îÀ ÚA´È>Aw¾5Á\ÀA…ë'A7‰	Á*¤päA®]A-*ÁçûÕAAé&#Á D‹ÓAªñbAd;5ÁƒÎAçû#Aw¾%ÁÑ"ÛAÙVA
 ×1Á
-d;ÃAw¾A%ÁL7ÂAçûAü©ÁF¶ÏA}?7A°r.Á    „Ôûåä‡r^O±T%‚g  „Ôûåä‡r^O±T%‚g
+d;ÃAw¾A%ÁL7ÂAçûAü©ÁF¶ÏA}?7A°r.Á    $ğ‰pÌèğê*[Fõzÿ  $ğ‰pÌèğê*[Fõzÿ
