@@ -369,7 +369,7 @@ VMDPLUGIN_API int VMDPLUGIN_init() {
   plugin.abiversion = vmdplugin_ABIVERSION;
   plugin.type = MOLFILE_PLUGIN_TYPE;
   plugin.name = "rmf";
-  plugin.prettyname = "Rich Molecular Format";
+  plugin.prettyname = "RMF";
   plugin.author = "Daniel Russel";
   plugin.majorv = 0;
   plugin.minorv = 9;
@@ -385,11 +385,17 @@ VMDPLUGIN_API int VMDPLUGIN_init() {
 }
 VMDPLUGIN_API int VMDPLUGIN_register(void *v, vmdplugin_register_cb cb) {
   std::cout << "Register" << std::endl;
-  plugin.filename_extension = "rmf";
-  (*cb)(v, (vmdplugin_t *)&plugin);
-  plugin.filename_extension = "rmf2";
-  (*cb)(v, (vmdplugin_t *)&plugin);
-  plugin.filename_extension = "rmfa";
+  /*plugin.filename_extension = "rmf";
+  plugin.prettyname = "RMF";
+  plugin.name = "rmf";
+  (*cb)(v, (vmdplugin_t *)&plugin);*/
+  /*plugin.filename_extension = "rmfz";
+  plugin.prettyname = "RMFz";
+  plugin.name = "rmfz";
+  (*cb)(v, (vmdplugin_t *)&plugin);*/
+  plugin.filename_extension = "rmf3";
+  plugin.prettyname = "RMF3";
+  plugin.name = "rmf3";
   (*cb)(v, (vmdplugin_t *)&plugin);
   return 0;
 }
