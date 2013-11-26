@@ -46,10 +46,6 @@ bond = Decorator(["BOND"], "physics",
                      "bonded_0", "Int", "The first endpoint of the bond"),
                   Attribute("bonded_1", "Int", "The second endpoint of the bond")])
 
-old_bond = Decorator(["BOND"], "physics",
-                     "OldBond", "A bond between particles, for backwards compatibility.",
-                     [Children("bonded", "The bonded particles.")])
-
 
 atom = Decorator(["REPRESENTATION"], "physics",
                  "Atom", "Information regarding an atom.",
@@ -70,7 +66,7 @@ torque = Decorator(["REPRESENTATION"], "physics",
 
 make_header(
     "physics", [particle, iparticle, pparticle, diffuser,
-                atom, bond, old_bond, refframe, torque],
+                atom, bond, refframe, torque],
     ["alias"])
 
 
