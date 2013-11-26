@@ -75,7 +75,19 @@ class AvroKeysAndCategories : public backends::BackwardsIOBase {
       return ID<TypeTraits>(id);
     }
   }
-
+  template <class TypeTraits>
+  ID<TypeTraits> get_key(Category category, std::string name, TypeTraits) const {
+    typename NameKeyMap::const_iterator it0 = name_key_map_.find(category);
+    RMF_INTERNAL_CHECK(it0 != name_key_map_.end(),
+                       "Category is not found, but should be");
+    typename NameKeyInnerMap::const_iterator it =
+      it0->second.find(name);
+    RMF_INTERNAL_CHECK(it != it0->second.end(),
+                       "Key is not found, but should be");
+    int id = it->second;
+    RMF_INTERNAL_CHECK(name == it->first, "Odd names");
+    return ID<TypeTraits>(id);
+  }
   const std::string& get_node_string(NodeID node) const {
     if (node == NodeID()) return frame_key_;
     return node_keys_[node.get_index()];

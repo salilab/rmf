@@ -36,6 +36,16 @@ class AvroSharedData : public Base {
 
   template <class TypeTraits>
   void extract_keys(Category cat, const KeyIndex& index,
+                    boost::unordered_set<ID<TypeTraits> >& ret) const {
+    for (typename KeyIndex::const_iterator iti = index.begin();
+         iti != index.end(); ++iti) {
+      ret.insert(
+          P::template get_key<TypeTraits>(cat, iti->first, TypeTraits()));
+    }
+  }
+
+  template <class TypeTraits>
+  void extract_keys(Category cat, const KeyIndex& index,
                     boost::unordered_set<ID<TypeTraits> >& ret) {
     for (typename KeyIndex::const_iterator iti = index.begin();
          iti != index.end(); ++iti) {
@@ -111,6 +121,19 @@ class AvroSharedData : public Base {
 
  public:
   template <class Traits>
+  std::vector<ID<Traits> > get_keys(Category cat, Traits) const {
+    boost::unordered_set<ID<Traits> > ret;
+    if (P::get_loaded_frame() != FrameID()) {
+      const RMF_avro_backend::Data& data =
+          P::get_frame_data(cat, P::get_loaded_frame());
+      extract_keys(cat, get_key_index(data, Traits()), ret);
+    }
+    const RMF_avro_backend::Data& staticdata =
+        P::get_frame_data(cat, ALL_FRAMES);
+    extract_keys(cat, get_key_index(staticdata, Traits()), ret);
+    return std::vector<ID<Traits> >(ret.begin(), ret.end());
+  }
+  template <class Traits>
   std::vector<ID<Traits> > get_keys(Category cat, Traits) {
     boost::unordered_set<ID<Traits> > ret;
     if (P::get_loaded_frame() != FrameID()) {
@@ -123,6 +146,7 @@ class AvroSharedData : public Base {
     extract_keys(cat, get_key_index(staticdata, Traits()), ret);
     return std::vector<ID<Traits> >(ret.begin(), ret.end());
   }
+
 
   template <class TypeTraits>
   typename TypeTraits::Type get_loaded_value(NodeID node,

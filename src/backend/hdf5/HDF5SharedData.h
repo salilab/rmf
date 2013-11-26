@@ -580,7 +580,7 @@ class HDF5SharedData : public backends::BackwardsIOBase {
   }
 
   template <class TypeTraits>
-  std::vector<ID<TypeTraits> > get_keys(Category cat, TypeTraits) {
+  std::vector<ID<TypeTraits> > get_keys(Category cat, TypeTraits) const {
     std::vector<ID<TypeTraits> > ret;
     typename NameKeyMap::const_iterator oit = name_key_map_.find(cat);
     if (oit == name_key_map_.end()) return ret;
