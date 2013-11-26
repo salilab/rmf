@@ -10,6 +10,7 @@ RMF_PUSH_WARNINGS
 RMF_GCC_PRAGMA(diagnostic ignored "-Wunused-but-set-variable")
 RMF_GCC_PRAGMA(diagnostic ignored "-Wunused-value")
 RMF_GCC_PRAGMA(diagnostic ignored "-Wmissing-declarations")
+RMF_GCC_PRAGMA(diagnostic ignored "-Wunused-but-set-variable")
 RMF_CLANG_PRAGMA(diagnostic ignored "-Wunused-parameter")
 RMF_CLANG_PRAGMA(diagnostic ignored "-Wused-but-marked-unused")
 RMF_CLANG_PRAGMA(diagnostic ignored "-Wunused-function")
