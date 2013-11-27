@@ -37,9 +37,7 @@ void show_key_info(FileConstHandle rh, Category cat, std::string name,
   }
 }
 
-#define RMF_SHOW_TYPE_DATA_INFO(Traits, UCName) \
-  show_key_info<Traits>(rh, c, Traits::get_name(), out);
-
+namespace {
 int count(NodeConstHandle nh, std::set<NodeConstHandle>& seen) {
   int ret = 0;
   if (seen.find(nh) == seen.end()) {
@@ -52,6 +50,11 @@ int count(NodeConstHandle nh, std::set<NodeConstHandle>& seen) {
   RMF_FOREACH(NodeConstHandle c, ch) { ret += count(c, seen); }
   return ret;
 }
+}
+
+
+#define RMF_SHOW_TYPE_DATA_INFO(Traits, UCName) \
+  show_key_info<Traits>(rh, c, Traits::get_name(), out);
 
 void show_info(FileConstHandle rh, std::ostream& out) {
   out << "Nodes: " << rh.get_number_of_nodes() << std::endl;

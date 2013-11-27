@@ -8,6 +8,7 @@
 
 // needs to go beyond the POP
 RMF_GCC_PRAGMA( diagnostic ignored "-Wmissing-declarations")
+RMF_GCC_PRAGMA( diagnostic ignored "-Wunused-but-set-variable")
 RMF_PUSH_WARNINGS
 RMF_GCC_PRAGMA( diagnostic ignored "-Wunused-value")
 

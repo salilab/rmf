@@ -617,6 +617,7 @@ class HDF5SharedData : public backends::BackwardsIOBase {
   template <class Traits>
   void initialize_keys(Category cat, std::string name, Traits) {
     RMF_TRACE(get_logger(), "Checking for " << name << " keys.");
+    RMF_UNUSED(name);
     for (int pf = 0; pf < 2; ++pf) {
       bool per_frame = (pf == 1);
       HDF5DataSetCacheD<StringTraits, 1>& nameds =

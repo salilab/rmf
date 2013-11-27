@@ -28,7 +28,6 @@ int main(int argc, char** argv) {
     inputs.pop_back();
     RMF::FileHandle orh = RMF::create_rmf_file(output);
     orh.set_producer("rmf_cat");
-    int out_frame = 0;
     for (unsigned int i = 0; i < inputs.size(); ++i) {
       RMF::FileConstHandle rh = RMF::open_rmf_file_read_only(inputs[i]);
       if (i == 0) {

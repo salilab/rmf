@@ -9,7 +9,6 @@
 #include "common.h"
 namespace {
 std::string description("Try to upgrade an out of date RMF file.");
-int frame = 0;
 }
 int main(int argc, char** argv) {
   try {

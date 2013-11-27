@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
     RMF::clone_static_frame(rh, orh);
     std::cout << "Copying frames";
     RMF_FOREACH(RMF::FrameID f, rh.get_frames()) {
-      if (f.get_index() < start_frame) continue;
+      if (f.get_index() < static_cast<unsigned int>(start_frame)) continue;
       if ((f.get_index() - start_frame) % step_frame != 0) continue;
       rh.set_current_frame(f);
       orh.add_frame(rh.get_current_frame_name(), rh.get_current_frame_type());
