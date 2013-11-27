@@ -272,6 +272,9 @@ int Data::get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
   if (sf_.get_is(cur)) {
     RMF::decorator::SegmentConst s = sf_.get(cur);
     RMF::Vector3s coords = s.get_coordinates_list();
+    RMF_INTERNAL_CHECK(coords.size() > 0,
+                       "Empty coordinates");
+    std::cout << coords << " read" << std::endl;
     int type = MOLFILE_LINE;
     double size = 0;
     if (cf_.get_is(cur)) {
@@ -298,9 +301,11 @@ int Data::get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
     }
   }
   RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
-    ret += get_graphics(c, tr, graphics);
-    if (graphics) graphics += ret;
+    int cur = get_graphics(c, tr, graphics);
+    if (graphics) graphics += cur;
+    ret += cur;
   }
+  std::cout << "Ret for " << cur.get_name() << " is " << ret << std::endl;
   return ret;
 }
 int Data::get_bonds(RMF::NodeConstHandle cur,
