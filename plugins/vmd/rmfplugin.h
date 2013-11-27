@@ -4,6 +4,7 @@
 #include <RMF/decorator/physics.h>
 #include <RMF/decorator/sequence.h>
 #include <RMF/decorator/shape.h>
+#include <RMF/decorator/feature.h>
 #include <RMF/CoordinateTransformer.h>
 #include <RMF/log.h>
 #include <boost/scoped_array.hpp>
@@ -12,6 +13,7 @@ namespace {
 molfile_plugin_t plugin;
 molfile_plugin_t plugin3;
 molfile_plugin_t pluginz;
+molfile_plugin_t pluginrestraints;
 
 class Data {
   RMF::FileConstHandle file_;
@@ -24,6 +26,12 @@ class Data {
   RMF::decorator::SegmentConstFactory sf_;
   RMF::decorator::CylinderConstFactory cf_;
   RMF::decorator::BondConstFactory bdf_;
+  RMF::decorator::ScoreConstFactory scf_;
+  RMF::decorator::RepresentationConstFactory rcf_;
+  RMF::decorator::DomainConstFactory df_;
+  RMF::decorator::FragmentConstFactory ff_;
+  RMF::decorator::CopyConstFactory cpf_;
+  RMF::decorator::TypedConstFactory tf_;
   struct Body {
     std::vector<RMF::decorator::ReferenceFrameConst> frames;
     RMF::NodeConstHandles atoms;
@@ -33,9 +41,9 @@ class Data {
   unsigned int num_atoms_;
 
   boost::scoped_array<molfile_graphics_t> graphics_;
-  boost::scoped_array<int> bonds_to_, bonds_from_;
-  boost::scoped_array<char> bond_type_;
-  char *bt_char_;
+  boost::scoped_array<int> bonds_to_, bonds_from_,bond_types_;
+  boost::scoped_array<char> bond_type_, restraint_bond_type_;
+  char *bt_char_, *rbt_char_;
   bool done_;
 
   // find nodes to push to vmd
@@ -47,7 +55,7 @@ class Data {
                    molfile_graphics_t *graphics);
   int get_bonds(RMF::NodeConstHandle cur,
                 const std::map<RMF::NodeConstHandle, int> &index, int *from,
-                int *to);
+                int *to, int *type, bool restraints);
 
  public:
   Data(std::string name);
@@ -55,7 +63,7 @@ class Data {
   bool read_next_frame(molfile_timestep_t *frame);
   void read_graphics(int *nelem, const molfile_graphics_t **gdata);
   void read_bonds(int *nbonds, int **fromptr, int **toptr, float **bondorderptr,
-                  int **bondtype, int *nbondtypes, char ***bondtypename);
+                  int **bondtype, int *nbondtypes, char ***bondtypename, bool restraints = false);
   void read_timestep_data(molfile_timestep_metadata_t *data);
   unsigned int get_number_of_atoms() const { return num_atoms_; }
 };
@@ -71,6 +79,12 @@ Data::Data(std::string name)
       sf_(file_),
       cf_(file_),
       bdf_(file_),
+      scf_(file_),
+      rcf_(file_),
+      df_(file_),
+      ff_(file_),
+      cpf_(file_),
+      tf_(file_),
       done_(false) {
   file_.set_current_frame(RMF::FrameID(0));
   bodies_.push_back(Body());
@@ -116,14 +130,29 @@ std::pair<int, int> Data::get_structure(RMF::NodeConstHandle cur,
       std::string at;
       if (af_.get_is(cur)) {
         at = cur.get_name();
+      } else if (ff_.get_is(cur)) {
+        at = "FRAGMENT";
+      } else if (df_.get_is(cur)) {
+        at = "DOMAIN";
+      } else if (tf_.get_is(cur)) {
+        at = tf_.get(cur).get_type_name();
       }
-      std::copy(nm.begin(), nm.end(), atoms->name);
+      if (nm.size() >= 16) {
+        std::copy_n(nm.begin(), 15, atoms->name);
+        nm[15] = '\0';
+      } else {
+        std::copy(nm.begin(), nm.end(), atoms->name);
+      }
       std::copy(at.begin(), at.end(), atoms->type);
       std::copy(resname.begin(), resname.end(), atoms->resname);
       atoms->resid = resid;
       atoms->chain[0] = chain[0];
       atoms->chain[1] = '\0';
-      atoms->segid[0] = '\0';
+      if (cpf_.get_is(cur)) {
+        sprintf(atoms->segid, "%d", cpf_.get(cur).get_copy_index());
+      } else {
+        atoms->segid[0] = '\0';
+      }
       atoms->mass = pf_.get(cur).get_mass();
       atoms->radius = pf_.get(cur).get_radius();
     } else {
@@ -194,6 +223,7 @@ bool Data::read_next_frame(molfile_timestep_t *frame) {
 }
 
 void Data::read_graphics(int *nelem, const molfile_graphics_t **gdata) {
+  std::cout << "read graphics" << std::endl;
   *nelem =
       get_graphics(file_.get_root_node(), RMF::CoordinateTransformer(), NULL);
   graphics_.reset(new molfile_graphics_t[*nelem]);
@@ -204,7 +234,7 @@ void Data::read_graphics(int *nelem, const molfile_graphics_t **gdata) {
 
 void Data::read_bonds(int *nbonds, int **fromptr, int **toptr,
                       float **bondorderptr, int **bondtype, int *nbondtypes,
-                      char ***bondtypename) {
+                      char ***bondtypename, bool restraints) {
   std::map<RMF::NodeConstHandle, int> index;
   for (unsigned int i = 0; i < bodies_.size(); ++i) {
     for (unsigned int j = 0; j < bodies_[i].atoms.size(); ++j) {
@@ -212,20 +242,25 @@ void Data::read_bonds(int *nbonds, int **fromptr, int **toptr,
       index[bodies_[i].atoms[j]] = c;
     }
   }
-  *nbonds = get_bonds(file_.get_root_node(), index, NULL, NULL);
+  *nbonds = get_bonds(file_.get_root_node(), index, NULL, NULL, NULL, restraints);
   bonds_from_.reset(new int[*nbonds]);
   *fromptr = bonds_from_.get();
   bonds_to_.reset(new int[*nbonds]);
   *toptr = bonds_to_.get();
   *bondorderptr = NULL;
-  *bondtype = NULL;
-  *nbondtypes = 1;
+  bond_types_.reset(new int[*nbonds]);
+  *bondtype = bond_types_.get();
+  *nbondtypes = 2;
   bond_type_.reset(new char[2]);
   bond_type_[0] = 'B';
   bond_type_[1] = '\0';
+  restraint_bond_type_.reset(new char[2]);
+  restraint_bond_type_[0] = 'R';
+  restraint_bond_type_[1] = '\0';
   bt_char_ = bond_type_.get();
-  *bondtypename = &bt_char_;
-  get_bonds(file_.get_root_node(), index, *fromptr, *toptr);
+  rbt_char_ = restraint_bond_type_.get();
+  bondtypename[0] = &bt_char_;
+  get_bonds(file_.get_root_node(), index, *fromptr, *toptr, *bondtype, restraints);
 }
 
 int Data::get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
@@ -270,7 +305,7 @@ int Data::get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
 }
 int Data::get_bonds(RMF::NodeConstHandle cur,
                     const std::map<RMF::NodeConstHandle, int> &index, int *from,
-                    int *to) {
+                    int *to, int *type, bool restraints) {
   int ret = 0;
   if (bdf_.get_is(cur)) {
     RMF::NodeConstHandle bonded0(
@@ -283,14 +318,48 @@ int Data::get_bonds(RMF::NodeConstHandle cur,
       if (from) {
         *from = index.find(bonded0)->second + 1;
         *to = index.find(bonded1)->second + 1;
+        *type = 0;
         ++from;
         ++to;
+        ++type;
       }
       ++ret;
     }
   }
+  if (restraints && cur.get_type() == RMF::FEATURE) {
+    bool child_feature = false;
+    RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
+      if (c.get_type() == RMF::FEATURE) {
+        child_feature = true;
+        break;
+      }
+    }
+    if (!child_feature && rcf_.get_is(cur)) {
+      RMF::Ints reps = rcf_.get(cur).get_representation();
+      for (unsigned int i = 0; i < reps.size(); ++i) {
+        RMF::NodeConstHandle bonded0(
+                             cur.get_file().get_node(RMF::NodeID(reps[i])));
+        for (unsigned int j = 0; j < i; ++j) {
+          RMF::NodeConstHandle bonded1(
+                                       cur.get_file().get_node(RMF::NodeID(reps[j])));
+          if (index.find(bonded0) != index.end() &&
+              index.find(bonded1) != index.end()) {
+            if (from) {
+              *from = index.find(bonded0)->second + 1;
+              *to = index.find(bonded1)->second + 1;
+              *type = 1;
+              ++from;
+              ++to;
+              ++type;
+            }
+            ++ret;
+          }
+        }
+      }
+    }
+  }
   RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
-    int ci = get_bonds(c, index, from, to);
+    int ci = get_bonds(c, index, from, to, type, restraints);
     if (from) {
       from += ci;
       to += ci;
@@ -350,6 +419,17 @@ int read_rmf_bonds(void *mydata, int *nbonds, int **fromptr, int **toptr,
   // scan hierarchy and extract bonds
   return VMDPLUGIN_SUCCESS;
 }
+
+int read_rmf_bonds_and_restraints(void *mydata, int *nbonds, int **fromptr, int **toptr,
+                   float **bondorderptr, int **bondtype, int *nbondtypes,
+                   char ***bondtypename) {
+  Data *data = reinterpret_cast<Data *>(mydata);
+  data->read_bonds(nbonds, fromptr, toptr, bondorderptr, bondtype, nbondtypes,
+                   bondtypename, true);
+  // scan hierarchy and extract bonds
+  return VMDPLUGIN_SUCCESS;
+}
+
 int read_rmf_graphics(void *mydata, int *nelem,
                       const molfile_graphics_t **gdata) {
   std::cout << "read graphics" << std::endl;
@@ -398,5 +478,10 @@ void init_plugins() {
   pluginz.name="rmfz";
   pluginz.prettyname="RMFz";
   pluginz.filename_extension = "rmfz";
+  init_plugin(pluginrestraints);
+  pluginrestraints.name="rmf-with-restraints";
+  pluginrestraints.prettyname="RMF with restraints";
+  pluginrestraints.filename_extension = "rmf-with-restraints";
+  pluginrestraints.read_bonds = read_rmf_bonds_and_restraints;
 }
 }
