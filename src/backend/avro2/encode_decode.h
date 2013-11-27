@@ -8,6 +8,12 @@
 #include <RMF/Vector.h>
 #include <RMF/ID.h>
 #include <boost/unordered_map.hpp>
+#include <boost/unordered_set.hpp>
+#include <set>
+#if BOOST_VERSION >= 104900
+#include <boost/container/flat_set.hpp>
+#include <boost/container/flat_map.hpp>
+#endif
 
 RMF_ENABLE_WARNINGS
 
