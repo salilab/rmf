@@ -14,5 +14,5 @@ for h in sys.argv[3:]:
 if os.path.exists(sys.argv[1]):
     old = open(sys.argv[1], "r").read()
     if old == "\n".join(output):
-        exit(0)
+        sys.exit(0)
 open(sys.argv[1], "w").write("\n".join(output))
