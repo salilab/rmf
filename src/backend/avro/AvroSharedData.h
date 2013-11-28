@@ -147,7 +147,6 @@ class AvroSharedData : public Base {
     return std::vector<ID<Traits> >(ret.begin(), ret.end());
   }
 
-
   template <class TypeTraits>
   typename TypeTraits::Type get_loaded_value(NodeID node,
                                              ID<TypeTraits> k) const {

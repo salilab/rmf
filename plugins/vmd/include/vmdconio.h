@@ -16,8 +16,8 @@
  ***************************************************************************/
 
 /** @file
- * APIs for console output management.  The calling application may 
- * optionally provide callback routines for console output that direct 
+ * APIs for console output management.  The calling application may
+ * optionally provide callback routines for console output that direct
  * output to GUI consoles and other places besides stdout.
  */
 
@@ -25,12 +25,12 @@
 #define VMDCON_PLUGIN_H
 
 /* this has to correspond to vmdconsole.h */
-#define VMDCON_ALL       0      /**< "print all messages" log level   */
-#define VMDCON_INFO      1      /**< informational messages log level */
-#define VMDCON_WARN      2      /**< warning messages" log level      */
-#define VMDCON_ERROR     3      /**< error messages log level         */
-#define VMDCON_ALWAYS    4      /**< print always log level           */
-#define VMDCON_LOG       5      /**< store only in syslog log level   */
+#define VMDCON_ALL 0    /**< "print all messages" log level   */
+#define VMDCON_INFO 1   /**< informational messages log level */
+#define VMDCON_WARN 2   /**< warning messages" log level      */
+#define VMDCON_ERROR 3  /**< error messages log level         */
+#define VMDCON_ALWAYS 4 /**< print always log level           */
+#define VMDCON_LOG 5    /**< store only in syslog log level   */
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -48,10 +48,10 @@ extern "C" {
 /* forward declaration */
 static molfile_plugin_t THISPLUGIN;
 
-/* 
- * Emulate printf. unfortunately, we cannot rely on 
+/*
+ * Emulate printf. unfortunately, we cannot rely on
  * snprintf being available, so we have to write to
- * a very large buffer and then free it. :-( 
+ * a very large buffer and then free it. :-(
  */
 static int vmdcon_printf(int lvl, const char *fmt, ...) {
   va_list ap;
@@ -63,12 +63,12 @@ static int vmdcon_printf(int lvl, const char *fmt, ...) {
   va_start(ap, fmt);
   len = vsprintf(buf, fmt, ap);
 
-  /* 
+  /*
    * Check result. we may get a segfault, but if not
-   * let the user know that he/she is in trouble. 
+   * let the user know that he/she is in trouble.
    */
   if (len >= MOLFILE_BIGBUFSIZ) {
-    fprintf(stderr,"WARNING! buffer overflow in vmdcon_printf. %d vs %d.\n",
+    fprintf(stderr, "WARNING! buffer overflow in vmdcon_printf. %d vs %d.\n",
             len, MOLFILE_BIGBUFSIZ);
     free(buf);
 #if 0
@@ -77,10 +77,10 @@ static int vmdcon_printf(int lvl, const char *fmt, ...) {
     return -1;
   }
 
-  /* 
-   * write to registered console output function.
-   * fall back to stdout, if vmdcon not available. 
-   */
+/*
+ * write to registered console output function.
+ * fall back to stdout, if vmdcon not available.
+ */
 #if vmdplugin_ABIVERSION > 13
   if (THISPLUGIN.cons_fputs) {
     (*THISPLUGIN.cons_fputs)(lvl, buf);
@@ -91,7 +91,7 @@ static int vmdcon_printf(int lvl, const char *fmt, ...) {
   fputs(buf, stdout);
 #endif
   free(buf);
-  return 0;    
+  return 0;
 }
 
 #ifdef __cplusplus
@@ -99,4 +99,3 @@ static int vmdcon_printf(int lvl, const char *fmt, ...) {
 #endif
 
 #endif /* VMDCON_PLUGIN_H */
-

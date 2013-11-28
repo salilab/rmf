@@ -336,7 +336,9 @@ void Avro2IO<RW>::save_hierarchy(const internal::SharedData *shared_data) {
 }
 
 template <class RW>
-void Avro2IO<RW>::flush() { commit(); }
+void Avro2IO<RW>::flush() {
+  commit();
+}
 
 template <class RW>
 unsigned int Avro2IO<RW>::get_number_of_frames() const {
@@ -356,4 +358,4 @@ Avro2IO<RW>::~Avro2IO() {
 
 RMF_DISABLE_WARNINGS
 
-#endif // RMF_AVRO2_IO_H
+#endif  // RMF_AVRO2_IO_H

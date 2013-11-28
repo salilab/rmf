@@ -68,7 +68,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
   }
 #else
-  void set_log_level(std::string ) {}
+  void set_log_level(std::string) {}
 #endif
 }
 

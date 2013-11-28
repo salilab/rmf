@@ -36,8 +36,7 @@ class BufferConstHandle {
   explicit BufferConstHandle(std::string r)
       : data_(boost::make_shared<std::vector<char> >(r.begin(), r.end())) {}
   explicit BufferConstHandle(const std::vector<char> &r)
-  : data_(boost::make_shared<std::vector<char> >(r.begin(), r.end())) {
-  }
+      : data_(boost::make_shared<std::vector<char> >(r.begin(), r.end())) {}
   explicit BufferConstHandle(const std::vector<uint8_t> &r)
       : data_(boost::make_shared<std::vector<char> >(r.begin(), r.end())) {}
   const std::vector<char> &get_buffer() const { return *data_; }
@@ -49,9 +48,9 @@ class BufferConstHandle {
   RMF_HASHABLE(BufferConstHandle, return reinterpret_cast<size_t>(&*data_););
   RMF_SHOWABLE(BufferConstHandle, "buffer");
 #if !defined(IMP_DOXYGEN) && !defined(SWIG)
-  std::pair<const uint8_t*, size_t> get_uint8_t() const {
-    return std::make_pair(reinterpret_cast<const uint8_t*>(&(*data_)[0]),
-                                                          data_->size());
+  std::pair<const uint8_t *, size_t> get_uint8_t() const {
+    return std::make_pair(reinterpret_cast<const uint8_t *>(&(*data_)[0]),
+                          data_->size());
   }
   boost::shared_ptr<std::vector<char> > get() const { return data_; }
 #endif

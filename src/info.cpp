@@ -52,7 +52,6 @@ int count(NodeConstHandle nh, std::set<NodeConstHandle>& seen) {
 }
 }
 
-
 #define RMF_SHOW_TYPE_DATA_INFO(Traits, UCName) \
   show_key_info<Traits>(rh, c, Traits::get_name(), out);
 

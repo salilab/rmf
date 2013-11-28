@@ -286,30 +286,32 @@ struct BackwardsIO : public IO {
 
   template <class SDA>
   ID<backward_types::NodeIDTraits> get_alias_key(const SDA *a) {
-   Category alias_cat;
-   RMF_FOREACH(Category cur_cat, a->get_categories()) {
-     if (a->get_name(cur_cat) == "alias") {
-       alias_cat = cur_cat;
-     }
-   }
-   if (alias_cat == Category()) return ID<backward_types::NodeIDTraits>();
+    Category alias_cat;
+    RMF_FOREACH(Category cur_cat, a->get_categories()) {
+      if (a->get_name(cur_cat) == "alias") {
+        alias_cat = cur_cat;
+      }
+    }
+    if (alias_cat == Category()) return ID<backward_types::NodeIDTraits>();
 
-   ID<backward_types::NodeIDTraits> alias_key;
-   RMF_FOREACH(ID<backward_types::NodeIDTraits> nik_cur, a->get_keys(alias_cat, backward_types::NodeIDTraits())) {
-     if (a->get_name(nik_cur) == "alias") {
-       alias_key = nik_cur;
-     }
-   }
-   return alias_key;
+    ID<backward_types::NodeIDTraits> alias_key;
+    RMF_FOREACH(ID<backward_types::NodeIDTraits> nik_cur,
+                a->get_keys(alias_cat, backward_types::NodeIDTraits())) {
+      if (a->get_name(nik_cur) == "alias") {
+        alias_key = nik_cur;
+      }
+    }
+    return alias_key;
   }
 
   template <class SDA, class SDB>
-  void load_restraints(const SDA* a, SDB *b) {
-   ID<backward_types::NodeIDTraits> alias_key = get_alias_key(a);
-   if (alias_key == ID<backward_types::NodeIDTraits>()) return;
+  void load_restraints(const SDA *a, SDB *b) {
+    ID<backward_types::NodeIDTraits> alias_key = get_alias_key(a);
+    if (alias_key == ID<backward_types::NodeIDTraits>()) return;
 
-   Category feature_category = b->get_category("feature");
-   IntsKey rep_key = b->get_key(feature_category, "representation", IntsTraits());
+    Category feature_category = b->get_category("feature");
+    IntsKey rep_key =
+        b->get_key(feature_category, "representation", IntsTraits());
 
     RMF_FOREACH(NodeID n, internal::get_nodes(a)) {
       if (a->get_type(n) == FEATURE) {
@@ -327,21 +329,24 @@ struct BackwardsIO : public IO {
     }
   }
 
- template <class SDA, class SDB>
-  void load_bonds(const SDA* a, SDB *b) {
+  template <class SDA, class SDB>
+  void load_bonds(const SDA *a, SDB *b) {
 
-   ID<backward_types::NodeIDTraits> alias_key = get_alias_key(a);
-   if (alias_key == ID<backward_types::NodeIDTraits>()) return;
+    ID<backward_types::NodeIDTraits> alias_key = get_alias_key(a);
+    if (alias_key == ID<backward_types::NodeIDTraits>()) return;
 
-   Category bond_cat = b->get_category("bond");
-   IntKey k0 = b->get_key(bond_cat, "bonded_0", IntTraits());
-   IntKey k1 = b->get_key(bond_cat, "bonded_1", IntTraits());
-   RMF_FOREACH(NodeID n, internal::get_nodes(a)) {
+    Category bond_cat = b->get_category("bond");
+    IntKey k0 = b->get_key(bond_cat, "bonded_0", IntTraits());
+    IntKey k1 = b->get_key(bond_cat, "bonded_1", IntTraits());
+    RMF_FOREACH(NodeID n, internal::get_nodes(a)) {
       if (a->get_type(n) == BOND) {
         NodeIDs ch = a->get_children(n);
-        if (ch.size() == 2 && a->get_type(ch[0]) == ALIAS && b->get_type(ch[1]) == ALIAS) {
-          b->set_static_value(n, k0, a->get_static_value(ch[0], alias_key).get_index());
-          b->set_static_value(n, k1, a->get_static_value(ch[1], alias_key).get_index());
+        if (ch.size() == 2 && a->get_type(ch[0]) == ALIAS &&
+            b->get_type(ch[1]) == ALIAS) {
+          b->set_static_value(
+              n, k0, a->get_static_value(ch[0], alias_key).get_index());
+          b->set_static_value(
+              n, k1, a->get_static_value(ch[1], alias_key).get_index());
         }
       }
     }

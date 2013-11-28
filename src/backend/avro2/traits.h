@@ -76,17 +76,18 @@ struct ReaderTraits {
     }
     if (reader_->blockOffsetBytes() != offset) {
       RMF_INFO(get_logger(), "Seeking to " << offset << " from "
-                                            << reader_->blockOffsetBytes());
+                                           << reader_->blockOffsetBytes());
       try {
         reader_->seekBlockBytes(offset);
-      } catch (std::exception) {
+      }
+      catch (std::exception) {
         RMF_INFO(get_logger(), "Seeking not supported");
       }
     }
     return avro2::get_frame(id, *reader_);
   }
   FileData get_file_data() {
- RMF_INFO(get_logger(), "Loading file data");
+    RMF_INFO(get_logger(), "Loading file data");
     boost::shared_ptr<internal_avro::DataFileReader<FileData> > reader =
         base_file_data_.template get_reader<FileData>();
     return avro2::get_file_data(*reader);
@@ -109,13 +110,11 @@ struct FileReaderBase {
 
   FileReaderBase(std::string path) : path_(path) {}
   template <class T>
-  boost::shared_ptr<internal_avro::DataFileReader<T> >
-  get_reader() {
+  boost::shared_ptr<internal_avro::DataFileReader<T> > get_reader() {
     return boost::make_shared<internal_avro::DataFileReader<T> >(path_.c_str(),
                                                                  get_schema());
   }
 };
-
 
 struct BufferWriterTraits {
   boost::shared_ptr<internal_avro::DataFileWriterBase> writer_;
@@ -157,13 +156,12 @@ struct BufferReaderBase {
   BufferReaderBase(BufferConstHandle buffer) : buffer_(buffer) {}
   template <class T>
   boost::shared_ptr<internal_avro::DataFileReader<T> > get_reader() {
-    boost::shared_ptr<internal_avro::InputStream> stream
-      = internal_avro::memoryInputStream(buffer_.get_uint8_t().first,
+    boost::shared_ptr<internal_avro::InputStream> stream =
+        internal_avro::memoryInputStream(buffer_.get_uint8_t().first,
                                          buffer_.get_uint8_t().second);
     return boost::make_shared<internal_avro::DataFileReader<T> >(stream,
                                                                  get_schema());
   }
-
 };
 }
 }

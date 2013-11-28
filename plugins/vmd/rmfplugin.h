@@ -41,7 +41,7 @@ class Data {
   unsigned int num_atoms_;
 
   boost::scoped_array<molfile_graphics_t> graphics_;
-  boost::scoped_array<int> bonds_to_, bonds_from_,bond_types_;
+  boost::scoped_array<int> bonds_to_, bonds_from_, bond_types_;
   boost::scoped_array<char> bond_type_, restraint_bond_type_;
   char *bt_char_, *rbt_char_;
   bool done_;
@@ -63,7 +63,8 @@ class Data {
   bool read_next_frame(molfile_timestep_t *frame);
   void read_graphics(int *nelem, const molfile_graphics_t **gdata);
   void read_bonds(int *nbonds, int **fromptr, int **toptr, float **bondorderptr,
-                  int **bondtype, int *nbondtypes, char ***bondtypename, bool restraints = false);
+                  int **bondtype, int *nbondtypes, char ***bondtypename,
+                  bool restraints = false);
   void read_timestep_data(molfile_timestep_metadata_t *data);
   unsigned int get_number_of_atoms() const { return num_atoms_; }
 };
@@ -242,7 +243,8 @@ void Data::read_bonds(int *nbonds, int **fromptr, int **toptr,
       index[bodies_[i].atoms[j]] = c;
     }
   }
-  *nbonds = get_bonds(file_.get_root_node(), index, NULL, NULL, NULL, restraints);
+  *nbonds =
+      get_bonds(file_.get_root_node(), index, NULL, NULL, NULL, restraints);
   bonds_from_.reset(new int[*nbonds]);
   *fromptr = bonds_from_.get();
   bonds_to_.reset(new int[*nbonds]);
@@ -260,7 +262,8 @@ void Data::read_bonds(int *nbonds, int **fromptr, int **toptr,
   bt_char_ = bond_type_.get();
   rbt_char_ = restraint_bond_type_.get();
   bondtypename[0] = &bt_char_;
-  get_bonds(file_.get_root_node(), index, *fromptr, *toptr, *bondtype, restraints);
+  get_bonds(file_.get_root_node(), index, *fromptr, *toptr, *bondtype,
+            restraints);
 }
 
 int Data::get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
@@ -272,8 +275,7 @@ int Data::get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
   if (sf_.get_is(cur)) {
     RMF::decorator::SegmentConst s = sf_.get(cur);
     RMF::Vector3s coords = s.get_coordinates_list();
-    RMF_INTERNAL_CHECK(coords.size() > 0,
-                       "Empty coordinates");
+    RMF_INTERNAL_CHECK(coords.size() > 0, "Empty coordinates");
     std::cout << coords << " read" << std::endl;
     int type = MOLFILE_LINE;
     double size = 0;
@@ -343,10 +345,10 @@ int Data::get_bonds(RMF::NodeConstHandle cur,
       RMF::Ints reps = rcf_.get(cur).get_representation();
       for (unsigned int i = 0; i < reps.size(); ++i) {
         RMF::NodeConstHandle bonded0(
-                             cur.get_file().get_node(RMF::NodeID(reps[i])));
+            cur.get_file().get_node(RMF::NodeID(reps[i])));
         for (unsigned int j = 0; j < i; ++j) {
           RMF::NodeConstHandle bonded1(
-                                       cur.get_file().get_node(RMF::NodeID(reps[j])));
+              cur.get_file().get_node(RMF::NodeID(reps[j])));
           if (index.find(bonded0) != index.end() &&
               index.find(bonded1) != index.end()) {
             if (from) {
@@ -425,9 +427,10 @@ int read_rmf_bonds(void *mydata, int *nbonds, int **fromptr, int **toptr,
   return VMDPLUGIN_SUCCESS;
 }
 
-int read_rmf_bonds_and_restraints(void *mydata, int *nbonds, int **fromptr, int **toptr,
-                   float **bondorderptr, int **bondtype, int *nbondtypes,
-                   char ***bondtypename) {
+int read_rmf_bonds_and_restraints(void *mydata, int *nbonds, int **fromptr,
+                                  int **toptr, float **bondorderptr,
+                                  int **bondtype, int *nbondtypes,
+                                  char ***bondtypename) {
   Data *data = reinterpret_cast<Data *>(mydata);
   data->read_bonds(nbonds, fromptr, toptr, bondorderptr, bondtype, nbondtypes,
                    bondtypename, true);
@@ -472,20 +475,20 @@ void init_plugin(molfile_plugin_t &plugin) {
 void init_plugins() {
   std::cout << "Init" << std::endl;
   init_plugin(plugin);
-  plugin.name="rmf";
-  plugin.prettyname="RMF";
+  plugin.name = "rmf";
+  plugin.prettyname = "RMF";
   plugin.filename_extension = "rmf";
   init_plugin(plugin3);
-  plugin3.name="rmf3";
-  plugin3.prettyname="RMF3";
+  plugin3.name = "rmf3";
+  plugin3.prettyname = "RMF3";
   plugin3.filename_extension = "rmf3";
   init_plugin(pluginz);
-  pluginz.name="rmfz";
-  pluginz.prettyname="RMFz";
+  pluginz.name = "rmfz";
+  pluginz.prettyname = "RMFz";
   pluginz.filename_extension = "rmfz";
   init_plugin(pluginrestraints);
-  pluginrestraints.name="rmf-with-restraints";
-  pluginrestraints.prettyname="RMF with restraints";
+  pluginrestraints.name = "rmf-with-restraints";
+  pluginrestraints.prettyname = "RMF with restraints";
   pluginrestraints.filename_extension = "rmf-with-restraints";
   pluginrestraints.read_bonds = read_rmf_bonds_and_restraints;
 }

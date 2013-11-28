@@ -52,7 +52,6 @@ class Avro2IOBufferFactory : public backends::IOFactory {
   }
 };
 
-
 std::vector<boost::shared_ptr<backends::IOFactory> > get_factories() {
   std::vector<boost::shared_ptr<backends::IOFactory> > ret;
   ret.push_back(boost::make_shared<Avro2IOFileFactory<false> >());
