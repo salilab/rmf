@@ -1,5 +1,6 @@
-## \example motion.py
-## Do a silly little simulation to show things moving around
+""" \example motion.py
+ Do a silly little simulation to show things moving around
+"""
 
 import RMF
 import random
@@ -30,19 +31,26 @@ particles = []
 
 
 def get_distance(v0, r0, v1, r1):
-    return ((v0[0] - v1[0])**2 + (v0[1] - v1[1])**2 + (v0[1] - v1[1])**2)**.5 - r0 - r1
+    return (
+        ((v0[0] - v1[0]) ** 2 + (v0[1] - v1[1])
+         ** 2 + (v0[1] - v1[1]) ** 2) ** .5 - r0 - r1
+    )
+
 
 def intersects(c, r, cs, rs):
     for oc, orad in zip(cs, rs):
-        if get_distance(c,r,oc, orad) < 0:
-            #print c,r, "intersects", oc, orad
+        if get_distance(c, r, oc, orad) < 0:
+            # print c,r, "intersects", oc, orad
             return True
     return False
+
+
 def too_far(c, r, oc, orad):
     d = get_distance(c, r, oc, orad)
     if d > .5:
         return True
     return False
+
 
 def random_coordinates():
     return RMF.Vector3(random.uniform(0, box_size),
@@ -51,7 +59,7 @@ def random_coordinates():
 
 for p in range(0, number_of_particles):
     cur = fh.get_root_node().add_child(str(p), RMF.REPRESENTATION)
-    tf.get(cur).set_type_name(str(p% 3))
+    tf.get(cur).set_type_name(str(p % 3))
     pd = pf.get(cur)
     pd.set_static_radius(random.uniform(minimum_radius, maximum_radius))
     pd.set_static_mass(pd.get_radius())
@@ -76,8 +84,8 @@ for i in range(10):
     while too_far(coords[bp[0]], radii[bp[0]],
                   coords[bp[1]], radii[bp[1]])\
         or intersects(coords[bp[0]], radii[bp[0]],
-                      coords[:bp[0]] + coords[bp[0]+1:],
-                      radii[:bp[0]] + radii[bp[0]+1:]):
+                      coords[:bp[0]] + coords[bp[0] + 1:],
+                      radii[:bp[0]] + radii[bp[0] + 1:]):
         coords[bp[0]] = random_coordinates()
         tries = tries + 1
         if tries == 100:
@@ -108,6 +116,7 @@ for i in range(4):
     features.append((particles.index(f0), particles.index(f1)))
     feature_nodes.append(f)
 
+
 def get_particle_distance(p0, p1):
     pd0 = pf.get(p0)
     pd1 = pf.get(p1)
@@ -115,24 +124,27 @@ def get_particle_distance(p0, p1):
     v1 = pd1.get_coordinates()
     r0 = pd0.get_radius()
     r1 = pd1.get_radius()
-    return ((v0[0] - v1[0])**2 + (v0[1] - v1[1])**2 + (v0[1] - v1[1])**2)**.5 -r0 -r1
+    return (
+        ((v0[0] - v1[0]) ** 2 + (v0[1] - v1[1])
+         ** 2 + (v0[1] - v1[1]) ** 2) ** .5 - r0 - r1
+    )
 
 bn = fh.get_root_node().add_child("box", RMF.ORGANIZATIONAL)
 # draw box
 bs = box_size
-for e in [(RMF.Vector3(0,0,0), RMF.Vector3(0, 0,bs)),
-          (RMF.Vector3(0,0,0), RMF.Vector3(0, bs, 0)),
-          (RMF.Vector3(0,0,0), RMF.Vector3(bs, 0, 0)),
-          (RMF.Vector3(bs, bs, bs), RMF.Vector3(0, bs,bs)),
-          (RMF.Vector3(bs, bs, bs), RMF.Vector3(bs, 0,bs)),
+for e in [(RMF.Vector3(0, 0, 0), RMF.Vector3(0, 0, bs)),
+          (RMF.Vector3(0, 0, 0), RMF.Vector3(0, bs, 0)),
+          (RMF.Vector3(0, 0, 0), RMF.Vector3(bs, 0, 0)),
+          (RMF.Vector3(bs, bs, bs), RMF.Vector3(0, bs, bs)),
+          (RMF.Vector3(bs, bs, bs), RMF.Vector3(bs, 0, bs)),
           (RMF.Vector3(bs, bs, bs), RMF.Vector3(bs, bs, 0)),
-          (RMF.Vector3(0, 0, bs), RMF.Vector3(0, bs,bs)),
-          (RMF.Vector3(0, 0, bs), RMF.Vector3(bs, 0,bs)),
-          (RMF.Vector3(0, bs, 0), RMF.Vector3(0, bs,bs)),
-          (RMF.Vector3(0, bs, 0), RMF.Vector3(bs, bs ,0)),
-          (RMF.Vector3(bs, 0, 0), RMF.Vector3(bs, bs,0)),
-          (RMF.Vector3(bs, 0, 0), RMF.Vector3(bs, 0 ,bs))
-      ]:
+          (RMF.Vector3(0, 0, bs), RMF.Vector3(0, bs, bs)),
+          (RMF.Vector3(0, 0, bs), RMF.Vector3(bs, 0, bs)),
+          (RMF.Vector3(0, bs, 0), RMF.Vector3(0, bs, bs)),
+          (RMF.Vector3(0, bs, 0), RMF.Vector3(bs, bs, 0)),
+          (RMF.Vector3(bs, 0, 0), RMF.Vector3(bs, bs, 0)),
+          (RMF.Vector3(bs, 0, 0), RMF.Vector3(bs, 0, bs))
+          ]:
     en = bn.add_child("edge", RMF.GEOMETRY)
     sd = sf.get(en)
     sd.set_static_coordinates_list(e)
@@ -143,7 +155,7 @@ def write_frame(name):
     for c, p in zip(coords, particles):
         pd = pf.get(p)
         pd.set_frame_coordinates(c)
-    for f,p in zip(feature_nodes, features):
+    for f, p in zip(feature_nodes, features):
         s = get_particle_distance(particles[p[0]], particles[p[1]])
         sd = scf.get(f)
         sd.set_frame_score(s)
@@ -156,7 +168,14 @@ for i in range(0, number_of_frames):
         cn = RMF.Vector3(c[0] + random.uniform(-.2, .2),
                          c[1] + random.uniform(-.2, .2),
                          c[2] + random.uniform(-.2, .2))
-        if not intersects(cn, radii[i], coords[:i], radii[:i]):
-            coords[i] = cn
+        if intersects(cn, radii[i], coords[:i] + coords[i + 1:], radii[:i] + radii[i + 1:]):
+            continue
+        bad = False
+        for b in [b for b in bonds if b[0] == i or b[1] == i]:
+            if b[1] == i:
+                b = [b[1], b[0]]
+            if too_far(cn, radii[i], coords[b[1]], radii[b[1]]):
+                bad = False
+                break
         coords[i] = cn
     write_frame(str(i))
