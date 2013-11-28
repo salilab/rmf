@@ -37,21 +37,6 @@ void show_key_info(FileConstHandle rh, Category cat, std::string name,
   }
 }
 
-namespace {
-int count(NodeConstHandle nh, std::set<NodeConstHandle>& seen) {
-  int ret = 0;
-  if (seen.find(nh) == seen.end()) {
-    ++ret;
-    seen.insert(nh);
-  } else {
-    return 0;
-  }
-  NodeConstHandles ch = nh.get_children();
-  RMF_FOREACH(NodeConstHandle c, ch) { ret += count(c, seen); }
-  return ret;
-}
-}
-
 #define RMF_SHOW_TYPE_DATA_INFO(Traits, UCName) \
   show_key_info<Traits>(rh, c, Traits::get_name(), out);
 
