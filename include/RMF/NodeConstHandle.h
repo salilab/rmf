@@ -58,13 +58,17 @@ RMF_ENABLE_WARNINGS
   std::string get_name(UCName##Key k) const;                               \
                                                                            \
  public:
-RMF_VECTOR_DECL(NodeConstHandle);
+
 
 namespace RMF {
 
 class FileConstHandle;
 
 class RootConstHandle;
+
+class NodeConstHandle;
+//! Pass a list of them
+typedef std::vector<NodeConstHandle> NodeConstHandles;
 
 //! A handle for a particular node in a read-only hierarchy.
 /** Use these handles to access parts of the

@@ -10,9 +10,9 @@
 #define RMF_INTERNAL_SHARED_DATA_CATEGORY_H
 
 #include <RMF/config.h>
-#include "../ID.h"
+#include "RMF/ID.h"
 #include <boost/unordered_map.hpp>
-#include "../infrastructure_macros.h"
+#include "RMF/infrastructure_macros.h"
 
 RMF_ENABLE_WARNINGS
 

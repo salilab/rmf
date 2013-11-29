@@ -10,12 +10,12 @@
 #define RMF_INTERNAL_SHARED_DATA_LOADED_FRAME_H
 
 #include <RMF/config.h>
-#include "../types.h"
-#include "../names.h"
-#include "../enums.h"
-#include "../ID.h"
-#include "../constants.h"
-#include "../infrastructure_macros.h"
+#include "RMF/types.h"
+#include "RMF/names.h"
+#include "RMF/enums.h"
+#include "RMF/ID.h"
+#include "RMF/constants.h"
+#include "RMF/infrastructure_macros.h"
 
 RMF_ENABLE_WARNINGS
 

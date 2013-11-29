@@ -10,8 +10,8 @@
 #define RMF_INTERNAL_SHARED_DATA_USER_DATA_H
 
 #include <RMF/config.h>
-#include "../ID.h"
-#include "../infrastructure_macros.h"
+#include "RMF/ID.h"
+#include "RMF/infrastructure_macros.h"
 #include <boost/unordered_map.hpp>
 #include <boost/unordered_set.hpp>
 #include <boost/cstdint.hpp>

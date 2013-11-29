@@ -12,15 +12,24 @@
 #include <RMF/config.h>
 #include "internal/SharedData.h"
 #include "types.h"
+#include "enums.h"
+#include "ID.h"
+#include "compiler_macros.h"
 #include "FileConstHandle.h"
 #include "NodeHandle.h"
-#include "BufferHandle.h"
+#include <string>
+#include <boost/shared_ptr.hpp>
 
 RMF_ENABLE_WARNINGS
 
-RMF_VECTOR_DECL(FileHandle);
-
 namespace RMF {
+
+class FileHandle;
+//! Pass a list of them
+typedef std::vector<FileHandle> FileHandles;
+
+class BufferHandle;
+
 
 //! A handle for an RMF file
 /** Use this handle to perform operations relevant to the

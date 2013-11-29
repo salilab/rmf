@@ -10,9 +10,9 @@
 #define RMF_INTERNAL_TRANSFORM_H
 
 #include <RMF/config.h>
-#include "../types.h"
-#include "../Vector.h"
-#include "../infrastructure_macros.h"
+#include "RMF/types.h"
+#include "RMF/Vector.h"
+#include "RMF/infrastructure_macros.h"
 
 RMF_ENABLE_WARNINGS namespace RMF {
   namespace internal {

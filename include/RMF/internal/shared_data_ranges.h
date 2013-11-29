@@ -11,7 +11,7 @@
 
 #include <RMF/config.h>
 #include "irange.h"
-#include "../ID.h"
+#include "RMF/ID.h"
 
 RMF_ENABLE_WARNINGS
 

@@ -10,8 +10,6 @@
 
 RMF_ENABLE_WARNINGS
 
-RMF_VECTOR_DEF(SetCurrentFrame);
-
 namespace RMF {
 SetCurrentFrame::SetCurrentFrame(FileConstHandle file, FrameID current_frame)
     : file_(file), old_frame_(file.get_current_frame()) {

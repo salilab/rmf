@@ -10,8 +10,8 @@
 #define RMF_INTERNAL_SHARED_DATA_DATA_H
 
 #include <RMF/config.h>
-#include "../types.h"
-#include "../infrastructure_macros.h"
+#include "RMF/types.h"
+#include "RMF/infrastructure_macros.h"
 #include "small_set_map.h"
 #include <boost/unordered_map.hpp>
 

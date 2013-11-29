@@ -13,7 +13,7 @@
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <sstream>
 
-RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(FileConstHandle);
+RMF_ENABLE_WARNINGS
 
 namespace RMF {
 

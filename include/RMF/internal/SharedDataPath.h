@@ -10,11 +10,11 @@
 #define RMF_INTERNAL_SHARED_DATA_PATH_H
 
 #include <RMF/config.h>
-#include "../types.h"
-#include "../names.h"
-#include "../enums.h"
-#include "../ID.h"
-#include "../infrastructure_macros.h"
+#include "RMF/types.h"
+#include "RMF/names.h"
+#include "RMF/enums.h"
+#include "RMF/ID.h"
+#include "RMF/infrastructure_macros.h"
 #include "SharedDataUserData.h"
 #include <boost/unordered_map.hpp>
 #include <boost/unordered_set.hpp>

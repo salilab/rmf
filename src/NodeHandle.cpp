@@ -13,8 +13,6 @@
 
 RMF_ENABLE_WARNINGS
 
-RMF_VECTOR_DEF(NodeHandle);
-
 namespace RMF {
 
 NodeHandle::NodeHandle(NodeID node,

@@ -11,7 +11,7 @@
 #include <RMF/FileHandle.h>
 #include <RMF/decorators.h>
 
-RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(NodeConstHandle);
+RMF_ENABLE_WARNINGS
 
 namespace RMF {
 

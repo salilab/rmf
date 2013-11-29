@@ -10,13 +10,13 @@
 #define RMF_INTERNAL_SHARED_DATA_H
 
 #include <RMF/config.h>
-#include "../Key.h"
-#include "../types.h"
-#include "../names.h"
-#include "../enums.h"
-#include "../NodeID.h"
-#include "../FrameID.h"
-#include "../infrastructure_macros.h"
+#include "RMF/Key.h"
+#include "RMF/types.h"
+#include "RMF/names.h"
+#include "RMF/enums.h"
+#include "RMF/NodeID.h"
+#include "RMF/FrameID.h"
+#include "RMF/infrastructure_macros.h"
 #include "SharedDataUserData.h"
 #include "SharedDataPath.h"
 #include <boost/unordered_map.hpp>

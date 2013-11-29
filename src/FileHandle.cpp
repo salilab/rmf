@@ -6,13 +6,15 @@
  *
  */
 
-#include <RMF/FileHandle.h>
-#include <RMF/internal/SharedData.h>
-#include <RMF/internal/shared_data_factories.h>
+#include "RMF/FileHandle.h"
+#include "RMF/BufferHandle.h"
+#include "RMF/NodeHandle.h"
+#include "RMF/config.h"
+#include "RMF/exceptions.h"
+#include "RMF/internal/SharedData.h"
+#include "RMF/internal/shared_data_factories.h"
 
 RMF_ENABLE_WARNINGS
-
-RMF_VECTOR_DEF(FileHandle);
 
 namespace RMF {
 
@@ -31,17 +33,11 @@ void FileHandle::flush() const {
 }
 
 void FileHandle::set_description(std::string descr) const {
-  try {
-    shared_->set_description(descr);
-  }
-  RMF_FILE_CATCH();
+  shared_->set_description(descr);
 }
 
 void FileHandle::set_producer(std::string descr) const {
-  try {
-    shared_->set_producer(descr);
-  }
-  RMF_FILE_CATCH();
+  shared_->set_producer(descr);
 }
 
 FrameID FileHandle::add_frame(std::string name, FrameType t) const {

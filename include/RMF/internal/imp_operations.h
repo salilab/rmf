@@ -10,9 +10,9 @@
 #define RMF_INTERNAL_RMF_OPERATIONS_H
 
 #include <RMF/config.h>
-#include "../NodeHandle.h"
-#include "../FileHandle.h"
-#include "../types.h"
+#include "RMF/NodeHandle.h"
+#include "RMF/FileHandle.h"
+#include "RMF/types.h"
 
 RMF_ENABLE_WARNINGS namespace RMF {
   namespace internal {

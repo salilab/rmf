@@ -34,8 +34,6 @@ class RMFEXPORT SetCurrentFrame {
 
 } /* namespace RMF */
 
-RMF_VECTOR_DECL(SetCurrentFrame);
-
 RMF_DISABLE_WARNINGS
 
 #endif /* RMF_SET_CURRENT_FRAME_H */

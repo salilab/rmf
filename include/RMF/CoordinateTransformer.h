@@ -10,12 +10,10 @@
 #define RMF_COORDINATE_TRANSFORMER_H
 
 #include <RMF/config.h>
-#include "internal/Transform.h"
+#include "RMF/internal/Transform.h"
+#include "RMF/Vector.h"
+#include "RMF/compiler_macros.h"
 #include "infrastructure_macros.h"
-
-RMF_ENABLE_WARNINGS
-
-RMF_VECTOR_DECL(CoordinateTransformer);
 
 RMF_ENABLE_WARNINGS
 namespace RMF {
@@ -49,6 +47,9 @@ class RMFEXPORT CoordinateTransformer {
   /** Return the rotational component of the transformation as a quaternion.*/
   const Vector4& get_rotation() const { return transform_.get_rotation(); }
 };
+
+//! A list of them
+typedef std::vector<CoordinateTransformer> CoordinateTransformers;
 
 } /* namespace RMF */
 

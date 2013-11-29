@@ -42,9 +42,12 @@ RMF_ENABLE_WARNINGS
     shared_->set_static_value(node_, k, v);                                 \
   }
 
-RMF_VECTOR_DECL(NodeHandle);
 
 namespace RMF {
+
+class NodeHandle;
+//! Pass a list of them
+typedef std::vector<NodeHandle> NodeHandles;
 
 class FileHandle;
 

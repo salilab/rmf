@@ -29,8 +29,6 @@ class RMFEXPORT RestoreCurrentFrame {
 
 } /* namespace RMF */
 
-RMF_VECTOR_DECL(RestoreCurrentFrame);
-
 RMF_DISABLE_WARNINGS
 
 #endif /* RMF_RESTORE_CURRENT_FRAME_H */

@@ -46,12 +46,16 @@ RMF_ENABLE_WARNINGS
   UCName##Key##s get_keys(Category category_id, Traits) {                   \
     return get_keys<Traits>(category_id);                                   \
   }
-RMF_VECTOR_DECL(FileConstHandle);
 
 namespace RMF {
 
 class NodeConstHandle;
 class FileHandle;
+
+class FileConstHandle;
+//! Pass a list of them
+typedef std::vector<FileConstHandle> FileConstHandles;
+
 
 //! A handle for a read-only RMF file
 /** Use this handle to perform operations relevant to the

@@ -10,8 +10,6 @@
 
 RMF_ENABLE_WARNINGS
 
-RMF_VECTOR_DEF(RestoreCurrentFrame);
-
 namespace RMF {
 RestoreCurrentFrame::RestoreCurrentFrame(FileConstHandle file)
     : file_(file), old_frame_(file.get_current_frame()) {}

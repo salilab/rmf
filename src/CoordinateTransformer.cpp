@@ -11,8 +11,6 @@
 
 RMF_ENABLE_WARNINGS
 
-RMF_VECTOR_DEF(CoordinateTransformer);
-
 namespace RMF {
 CoordinateTransformer::CoordinateTransformer(CoordinateTransformer base,
                                              decorator::ReferenceFrameConst rb)
