@@ -39,7 +39,7 @@ def rewrite(filename, contents):
 
 def get_string_contents(path):
     data = open(path, "r").read()
-    quoted_data = data.replace("\"", "\\\"").replace("\n", " ")
+    quoted_data = data.replace("\"", "\\\"").split("\n")
     return quoted_data
 
 
@@ -86,8 +86,10 @@ def write_cpp(paths):
     defs = []
     for n in names:
         defs.extend(["namespace %s {" % n[0],
-                     "std::string %s = \"%s\";" % (n[1], n[2]),
-                     "}"])
+                     "std::string %s = std::string()" % n[1], ])
+        for l in n[2]:
+            defs.append("     + \"%s\"" % l)
+        defs.extend([";", "}"])
     cpp = """#include "embed_jsons.h"
 namespace RMF {
 %s
