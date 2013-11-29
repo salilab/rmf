@@ -8,6 +8,7 @@
 #include <RMF/CoordinateTransformer.h>
 #include <RMF/log.h>
 #include <boost/scoped_array.hpp>
+#include <algorithm>
 
 namespace {
 molfile_plugin_t plugin;
