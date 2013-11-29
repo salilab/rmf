@@ -111,8 +111,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
   } while (false)
 
 #define RMF_INDEX_CHECK(value, end)                                      \
-  RMF_USAGE_CHECK(static_cast<boost::int64_t>(value) >= 0,               \
-                  "Negative index passed");                              \
   RMF_USAGE_CHECK(                                                       \
       static_cast<unsigned int>(value) < static_cast<unsigned int>(end), \
       "Out of range index");
