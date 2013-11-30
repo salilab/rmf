@@ -1,4 +1,4 @@
-# \example alias.py
+## \example alias.py
 # Show using aliases to provide two different organization schemes
 # for manipulating a hierarchy.
 import RMF

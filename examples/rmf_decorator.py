@@ -1,6 +1,6 @@
 ## \example rmf_decorator.py
-## The example shows how to use the decorators by printing the
-## coordates and radius of every node that has them.
+# The example shows how to use the decorators by printing the
+# coordates and radius of every node that has them.
 import RMF
 
 

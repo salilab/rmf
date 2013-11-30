@@ -1,4 +1,4 @@
-# \example bonds.py
+## \example bonds.py
 # Show how to extract bonds from a file.
 import RMF
 

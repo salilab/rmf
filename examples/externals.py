@@ -1,4 +1,4 @@
-# \example externals.py
+## \example externals.py
 # Show how to create an RMF file that has references to external files.
 # And how to read it back, sort of.
 import RMF

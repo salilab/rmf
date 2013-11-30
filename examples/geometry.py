@@ -1,4 +1,4 @@
-# \example geometry.py
+## \example geometry.py
 # Show creation of geometry in an RMF
 
 import RMF

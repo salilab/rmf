@@ -1,4 +1,4 @@
-# \example buffers.py
+## \example buffers.py
 # Showing how to read and write from buffers
 
 import RMF

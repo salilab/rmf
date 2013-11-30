@@ -1,4 +1,4 @@
-# \example make_rigid_body.py
+## \example make_rigid_body.py
 # This simple example makes an RMF file with several rigid copies of the
 # same thing
 import RMF
