@@ -7,7 +7,10 @@
  */
 
 #include "RMF/FileConstHandle.h"
+#include "RMF/ID.h"
 #include "RMF/RestoreCurrentFrame.h"
+#include "RMF/compiler_macros.h"
+#include "RMF/infrastructure_macros.h"
 
 RMF_ENABLE_WARNINGS
 

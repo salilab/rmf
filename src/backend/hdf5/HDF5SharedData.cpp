@@ -7,9 +7,6 @@
  */
 
 #include <H5Fpublic.h>
-#include <boost/exception/detail/error_info_impl.hpp>
-#include <boost/mpl/bool.hpp>
-#include <boost/mpl/bool_fwd.hpp>
 #include <algorithm>
 #include <ostream>
 

@@ -15,7 +15,7 @@
 #if BOOST_VERSION > 104400
 #include <boost/range/irange.hpp>  // IWYU pragma: export
 #else
-#include <boost/assert.hpp>                    // IWYU pragma: export
+#include <boost/assert.hpp>
 #include <boost/iterator/iterator_facade.hpp>  // IWYU pragma: export
 #include <boost/range/iterator_range.hpp>      // IWYU pragma: export
 #endif

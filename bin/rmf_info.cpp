@@ -2,8 +2,12 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
-#include "RMF/FileHandle.h"
-#include <sstream>
+#include <exception>
+#include <iostream>
+#include <string>
+
+#include "RMF/FileConstHandle.h"
+#include "RMF/ID.h"
 #include "RMF/info.h"
 #include "common.h"
 

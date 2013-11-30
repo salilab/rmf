@@ -10,10 +10,7 @@
 #define RMF_INTERNAL_SINGLE_AVRO_FILE_READER_H
 
 #include <avrocpp/api/DataFile.hh>
-#include <boost/exception/detail/error_info_impl.hpp>
-#include <boost/exception/info.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/smart_ptr/shared_ptr.hpp>
 #include <string>
 #include <vector>
 

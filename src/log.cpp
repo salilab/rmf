@@ -5,27 +5,20 @@
  *  Copyright 2007-2012 IMP Inventors. All rights reserved.
  *
  */
-#include <boost/exception/detail/error_info_impl.hpp>
-#include <boost/exception/info.hpp>
-#include <log4cxx/appender.h>
-#include <log4cxx/helpers/objectptr.h>
-#include <log4cxx/layout.h>
-#include <log4cxx/logstring.h>
-
 #include "RMF/exceptions.h"
 #include "RMF/log.h"
-
-namespace log4cxx {
-namespace helpers {
-class Exception;
-}  // namespace helpers
-}  // namespace log4cxx
 #if RMF_HAS_LOG4CXX
 #include <log4cxx/basicconfigurator.h>
 #include <log4cxx/consoleappender.h>
 #include <log4cxx/level.h>
 #include <log4cxx/patternlayout.h>
 #endif
+
+namespace log4cxx {
+namespace helpers {
+class Exception;
+}  // namespace helpers
+}  // namespace log4cxx
 
 RMF_ENABLE_WARNINGS
 

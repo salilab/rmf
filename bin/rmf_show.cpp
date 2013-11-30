@@ -2,9 +2,17 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
-#include "RMF/FileHandle.h"
+#include <boost/program_options/options_description.hpp>
+#include <boost/program_options/variables_map.hpp>
+#include <exception>
+#include <iostream>
+#include <string>
+
+#include "RMF/FileConstHandle.h"
+#include "RMF/ID.h"
 #include "RMF/NodeConstHandle.h"
 #include "common.h"
+
 namespace {
 std::string description("Show an rmf file as text.");
 }

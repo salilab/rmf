@@ -5,13 +5,28 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
-#include "RMF/FileHandle.h"
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/iterator/iterator_facade.hpp>
 #include <boost/timer.hpp>
+#include <boost/version.hpp>
+#include <exception>
+#include <iostream>
+#include <string>
+#include <vector>
+
+#include "RMF/BufferHandle.h"
+#include "RMF/FileConstHandle.h"
+#include "RMF/FileHandle.h"
+#include "RMF/ID.h"
+#include "RMF/NodeConstHandle.h"
+#include "RMF/NodeHandle.h"
+#include "RMF/Vector.h"
 #include "RMF/decorator/physics.h"
 #include "RMF/decorator/sequence.h"
+#include "RMF/enums.h"
+#include "RMF/infrastructure_macros.h"
 #include "RMF/log.h"
-#include <boost/filesystem.hpp>
-#include <sstream>
 
 namespace {
 #ifndef NDEBUG

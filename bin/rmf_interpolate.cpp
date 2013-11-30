@@ -2,17 +2,34 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
+#include <boost/random/detail/seed.hpp>
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/normal_distribution.hpp>
+#include <boost/random/variate_generator.hpp>
+#include <math.h>
+#include <ctime>
+#include <exception>
+#include <iostream>
+#include <string>
+#include <vector>
+
+#include "RMF/FileConstHandle.h"
 #include "RMF/FileHandle.h"
+#include "RMF/ID.h"
+#include "RMF/NodeConstHandle.h"
+#include "RMF/NodeHandle.h"
+#include "RMF/Vector.h"
+#include "RMF/decorator/physics.h"
+#include "RMF/decorator/shape.h"
+#include "RMF/enums.h"
+#include "RMF/types.h"
 #include "RMF/utility.h"
-#include "RMF/decorators.h"
-#include <boost/random.hpp>
 /*#if BOOST_VERSION < 104100
 #include <boost/nondet_random.hpp>
 #else
 #include <boost/random/random_device.hpp>
 #endif*/
 #include "common.h"
-#include <ctime>
 
 namespace {
 std::string description("Generate a new file that interpolates an old one.");

@@ -6,6 +6,9 @@
  *
  */
 
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <string>
+
 #include "RMF/BufferHandle.h"
 #include "RMF/FileConstHandle.h"
 #include "RMF/FileHandle.h"

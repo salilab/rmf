@@ -6,8 +6,6 @@
  *
  */
 
-#include <boost/exception/detail/error_info_impl.hpp>
-#include <boost/exception/info.hpp>
 #include <boost/make_shared.hpp>
 
 #include "RMF/BufferConstHandle.h"

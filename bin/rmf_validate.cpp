@@ -2,10 +2,12 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
+#include <exception>
+#include <iostream>
+#include <string>
+
 #include "RMF/FileConstHandle.h"
-#include "RMF/utility.h"
 #include "common.h"
-#include <sstream>
 
 namespace {
 std::string description = "Validate a saved RMF file.";

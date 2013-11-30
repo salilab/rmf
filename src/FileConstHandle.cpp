@@ -6,16 +6,19 @@
  *
  */
 
-#include <boost/ptr_container/detail/reversible_ptr_container.hpp>
 #include <boost/ptr_container/ptr_sequence_adapter.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
+#include <boost/shared_ptr.hpp>
 #include <iostream>
+#include <string>
 
 #include "RMF/BufferConstHandle.h"
 #include "RMF/FileConstHandle.h"
+#include "RMF/ID.h"
 #include "RMF/NodeConstHandle.h"
 #include "RMF/Nullable.h"
 #include "RMF/Validator.h"
+#include "RMF/compiler_macros.h"
 #include "RMF/internal/SharedData.h"
 #include "RMF/internal/shared_data_factories.h"
 #include "RMF/types.h"

@@ -6,10 +6,15 @@
  *
  */
 
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <string>
+
 #include "RMF/FileHandle.h"
 #include "RMF/ID.h"
 #include "RMF/NodeConstHandle.h"
 #include "RMF/NodeHandle.h"
+#include "RMF/compiler_macros.h"
+#include "RMF/enums.h"
 
 RMF_ENABLE_WARNINGS
 

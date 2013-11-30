@@ -10,14 +10,9 @@
 #define RMF_FILE_CONST_HANDLE_H
 
 #include <boost/current_function.hpp>
-#include <boost/exception/detail/error_info_impl.hpp>
-#include <boost/exception/info.hpp>
 #include <boost/functional/hash.hpp>
 #include <boost/functional/hash/hash.hpp>
-#include <boost/range/irange.hpp>
-#include <boost/range/iterator_range_core.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/smart_ptr/shared_ptr.hpp>
 #include <iosfwd>
 #include <limits>
 #include <string>

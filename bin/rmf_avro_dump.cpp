@@ -2,14 +2,27 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
-#include "RMF/FileHandle.h"
-#include "RMF/utility.h"
-#include "common.h"
 #include <avrocpp/api/Compiler.hh>
 #include <avrocpp/api/DataFile.hh>
-#include <generated/embed_jsons.h>
 #include <backend/avro/AllJSON.h>
 #include <backend/avro/FrameJSON.h>
+#include <boost/program_options/options_description.hpp>
+#include <boost/program_options/variables_map.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <generated/embed_jsons.h>
+#include <exception>
+#include <iostream>
+#include <string>
+#include <utility>
+#include <vector>
+
+#include "RMF/FileHandle.h"
+#include "RMF/infrastructure_macros.h"
+#include "avrocpp/api/Encoder.hh"
+#include "avrocpp/api/Specific.hh"
+#include "avrocpp/api/Stream.hh"
+#include "avrocpp/api/ValidSchema.hh"
+#include "common.h"
 
 namespace {
 std::string description("Dump the data from an avro archive with frame data");

@@ -6,9 +6,7 @@
  *
  */
 
-#include <boost/exception/detail/error_info_impl.hpp>
-#include <boost/exception/info.hpp>
-#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 #include <algorithm>
 #include <iostream>
 #include <string>

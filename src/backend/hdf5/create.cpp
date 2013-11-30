@@ -7,13 +7,11 @@
  */
 
 #include <boost/container/vector.hpp>
-#include <boost/iterator/iterator_facade.hpp>
 #include <boost/move/utility.hpp>
 #include <boost/multi_array/subarray.hpp>
 #include <boost/multi_array/view.hpp>
-#include <boost/smart_ptr/make_shared_object.hpp>
-#include <boost/smart_ptr/shared_ptr.hpp>
-#include <boost/unordered/detail/buckets.hpp>
+#include <boost/make_shared.hpp>
+#include <boost/shared_ptr.hpp>
 #include <algorithm>
 #include <string>
 #include <vector>

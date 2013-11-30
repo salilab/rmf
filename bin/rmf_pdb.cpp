@@ -2,16 +2,21 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
-#include "RMF/FileConstHandle.h"
-#include "RMF/NodeConstHandle.h"
-#include "RMF/utility.h"
-#include "RMF/decorators.h"
-#include "common.h"
-#include <boost/format.hpp>
-#include <sstream>
-#include <iostream>
+#include <boost/format.hpp> // IWYU pragma: keep
+#include <exception>
 #include <iomanip>
+#include <iostream>
 #include <fstream>
+#include <string>
+
+#include "RMF/FileConstHandle.h"
+#include "RMF/ID.h"
+#include "RMF/NodeConstHandle.h"
+#include "RMF/Vector.h"
+#include "RMF/compiler_macros.h"
+#include "RMF/decorator/physics.h"
+#include "RMF/decorator/sequence.h"
+#include "common.h"
 
 RMF_ENABLE_WARNINGS namespace {
   std::string description =

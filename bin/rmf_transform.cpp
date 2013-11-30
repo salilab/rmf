@@ -2,10 +2,26 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
+#include <boost/foreach.hpp>
+#include <boost/iterator/iterator_facade.hpp>
+#include <boost/mpl/bool.hpp>
+#include <boost/mpl/bool_fwd.hpp>
+#include <boost/range/iterator_range_core.hpp>
+#include <exception>
+#include <iostream>
+#include <string>
+
+#include "RMF/FileConstHandle.h"
 #include "RMF/FileHandle.h"
+#include "RMF/ID.h"
+#include "RMF/NodeHandle.h"
+#include "RMF/Vector.h"
+#include "RMF/decorator/physics.h"
+#include "RMF/decorator/shape.h"
+#include "RMF/infrastructure_macros.h"
 #include "RMF/log.h"
-#include "RMF/decorators.h"
-#include <sstream>
+#include "RMF/types.h"
+#include "RMF/utility.h"
 #include "common.h"
 
 #define RMF_TRANSFORM(f, Name, attribute)       \

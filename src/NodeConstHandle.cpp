@@ -7,20 +7,25 @@
  */
 
 #include <boost/foreach.hpp>
+#include <boost/shared_ptr.hpp>
 #include <bitset>
 #include <complex>
 #include <iomanip>
 #include <ostream>
+#include <string>
+#include <vector>
 
 #include "RMF/FileConstHandle.h"
 #include "RMF/ID.h"
 #include "RMF/NodeConstHandle.h"
 #include "RMF/Nullable.h"
+#include "RMF/compiler_macros.h"
 #include "RMF/decorator/feature.h"
 #include "RMF/decorator/physics.h"
 #include "RMF/decorator/sequence.h"
 #include "RMF/decorator/shape.h"
 #include "RMF/enums.h"
+#include "RMF/infrastructure_macros.h"
 #include "RMF/types.h"
 
 RMF_ENABLE_WARNINGS

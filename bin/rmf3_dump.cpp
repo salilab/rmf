@@ -2,14 +2,22 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
-#include "backend/avro2/raw_frame.h"
-#include "avrocpp/api/DataFile.hh"
+#include <boost/program_options/variables_map.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <stddef.h>
+#include <exception>
+#include <iostream>
+#include <string>
+
 #include "avrocpp/api/Compiler.hh"
-#include "avrocpp/api/Stream.hh"
+#include "avrocpp/api/DataFile.hh"
 #include "avrocpp/api/Encoder.hh"
-#include "generated/embed_jsons.h"
-#include "RMF/info.h"
+#include "avrocpp/api/Specific.hh"
+#include "avrocpp/api/Stream.hh"
+#include "avrocpp/api/ValidSchema.hh"
+#include "backend/avro2/raw_frame.h"
 #include "common.h"
+#include "generated/embed_jsons.h"
 
 namespace {
 std::string description("Dump frames from an rmf3 file.");

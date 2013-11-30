@@ -12,10 +12,7 @@
 #include <avrocpp/api/DataFile.hh>
 #include <backend/avro/AllJSON.h>
 #include <backend/avro/FrameJSON.h>
-#include <boost/exception/detail/error_info_impl.hpp>
-#include <boost/exception/info.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/smart_ptr/shared_ptr.hpp>
 #include <string>
 #include <vector>
 

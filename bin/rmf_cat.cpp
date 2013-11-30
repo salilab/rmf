@@ -2,7 +2,16 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
+#include <boost/program_options/positional_options.hpp>
+#include <exception>
+#include <iostream>
+#include <string>
+#include <vector>
+
+#include "RMF/FileConstHandle.h"
 #include "RMF/FileHandle.h"
+#include "RMF/ID.h"
+#include "RMF/infrastructure_macros.h"
 #include "RMF/utility.h"
 #include "common.h"
 

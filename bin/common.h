@@ -6,9 +6,19 @@
 #ifndef RMF_COMMON_H
 #define RMF_COMMON_H
 #include <boost/program_options.hpp>
-#include "RMF/utility.h"
+#include <boost/program_options/options_description.hpp>
+#include <boost/program_options/parsers.hpp>
+#include <boost/program_options/positional_options.hpp>
+#include <boost/program_options/value_semantic.hpp>
+#include <boost/program_options/variables_map.hpp>
+#include <stdlib.h>
+#include <iostream>
+#include <string>
+#include <vector>
+
 #include "RMF/HDF5/ConstFile.h"
 #include "RMF/log.h"
+#include "RMF/utility.h"
 
 namespace {
 extern std::string description;

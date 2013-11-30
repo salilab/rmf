@@ -8,15 +8,10 @@
 #ifndef RMF_INTERNAL_AVRO_SCHEMA_IO_H
 #define RMF_INTERNAL_AVRO_SCHEMA_IO_H
 
-#include <boost/exception/detail/error_info_impl.hpp>
-#include <boost/exception/info.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
-#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 #include <boost/version.hpp>
-#include <log4cxx/helpers/messagebuffer.h>
-#include <log4cxx/helpers/objectptr.h>
-#include <log4cxx/logger.h>
 #include <cstdio>
 #include <exception>
 #include <iostream>

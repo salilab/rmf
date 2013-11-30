@@ -1,14 +1,30 @@
-#include "molfile_plugin.h"
+#include <boost/foreach.hpp>
+#include <boost/mpl/bool.hpp>
+#include <boost/mpl/bool_fwd.hpp>
+#include <boost/scoped_array.hpp>
+#include <boost/smart_ptr/scoped_array.hpp>
+#include <stddef.h>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <utility>
+#include <vector>
 
+#include "RMF/CoordinateTransformer.h"
 #include "RMF/FileConstHandle.h"
+#include "RMF/ID.h"
+#include "RMF/NodeConstHandle.h"
+#include "RMF/Vector.h"
+#include "RMF/decorator/feature.h"
 #include "RMF/decorator/physics.h"
 #include "RMF/decorator/sequence.h"
 #include "RMF/decorator/shape.h"
-#include "RMF/decorator/feature.h"
-#include "RMF/CoordinateTransformer.h"
+#include "RMF/enums.h"
+#include "RMF/exceptions.h"
+#include "RMF/infrastructure_macros.h"
 #include "RMF/log.h"
-#include <boost/scoped_array.hpp>
-#include <algorithm>
+#include "RMF/types.h"
+#include "molfile_plugin.h"
 
 namespace {
 molfile_plugin_t plugin;

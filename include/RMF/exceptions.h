@@ -9,11 +9,7 @@
 #ifndef RMF_EXCEPTIONS_H
 #define RMF_EXCEPTIONS_H
 
-#include <boost/exception/detail/error_info_impl.hpp>
 #include <boost/exception/exception.hpp>
-#include <boost/exception/info.hpp>
-#include <boost/exception/info_tuple.hpp>
-#include <boost/smart_ptr/shared_ptr.hpp>
 #include <exception>
 #include <string>
 

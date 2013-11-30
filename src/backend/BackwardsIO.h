@@ -18,9 +18,6 @@
 #include <boost/smart_ptr/scoped_ptr.hpp>
 #include <boost/unordered/unordered_map.hpp>
 #include <internal/clone_shared_data.h>
-#include <log4cxx/helpers/messagebuffer.h>
-#include <log4cxx/helpers/objectptr.h>
-#include <log4cxx/logger.h>
 #include <algorithm>
 #include <ostream>
 #include <string>

@@ -2,12 +2,20 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
-#include "RMF/FileConstHandle.h"
-#include "RMF/NodeConstHandle.h"
-#include "RMF/utility.h"
-#include "common.h"
-#include <sstream>
+#include <algorithm>
+#include <exception>
+#include <iostream>
 #include <fstream>
+#include <string>
+#include <vector>
+
+#include "RMF/FileConstHandle.h"
+#include "RMF/ID.h"
+#include "RMF/NodeConstHandle.h"
+#include "RMF/Nullable.h"
+#include "RMF/enums.h"
+#include "RMF/infrastructure_macros.h"
+#include "common.h"
 
 namespace {
 std::string description =

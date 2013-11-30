@@ -6,9 +6,7 @@
  *
  */
 
-#include <_types/_uint8_t.h>
 #include <avrocpp/api/Compiler.hh>
-#include <boost/exception/info.hpp>
 #include <boost/lexical_cast.hpp>
 #include <exception>
 #include <sstream>
