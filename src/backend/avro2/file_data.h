@@ -9,8 +9,13 @@
 #ifndef RMF_AVRO2_FILE_DATA_H
 #define RMF_AVRO2_FILE_DATA_H
 
-#include "types.h"
+#include "RMF/config.h"
 #include "avrocpp/api/DataFile.hh"
+#include "types.h"
+
+namespace internal_avro {
+template <typename T> class DataFileReader;
+}  // namespace internal_avro
 
 RMF_ENABLE_WARNINGS
 

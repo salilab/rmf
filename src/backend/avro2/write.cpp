@@ -1,9 +1,16 @@
 
+#include "DataFile.hh"
+#include "RMF/compiler_macros.h"
+#include "Specific.hh"
+#include "types_encode_decode.h" // IWYU pragma: keep
 #include "write.h"
-#include "types_encode_decode.h"
-#include <avrocpp/api/Encoder.hh>
-#include <avrocpp/api/Compiler.hh>
-#include <generated/embed_jsons.h>
+
+namespace RMF {
+namespace avro2 {
+struct FileDataChanges;
+struct Frame;
+}  // namespace avro2
+}  // namespace RMF
 
 RMF_ENABLE_WARNINGS
 

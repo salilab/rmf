@@ -6,11 +6,26 @@
  *
  */
 
+#include <boost/container/vector.hpp>
+#include <boost/iterator/iterator_facade.hpp>
+#include <boost/move/utility.hpp>
+#include <boost/make_shared.hpp>
+#include <boost/shared_ptr.hpp>
+#include <string>
+
+#include "RMF/BufferConstHandle.h"
+#include "RMF/BufferHandle.h"
 #include "RMF/config.h"
+#include "backend/IOFactory.h"
+#include "backend/avro2/traits.h"
 #include "factory.h"
 #include "io.h"
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
+
+namespace RMF {
+namespace backends {
+struct IO;
+}  // namespace backends
+}  // namespace RMF
 
 RMF_ENABLE_WARNINGS
 namespace RMF {

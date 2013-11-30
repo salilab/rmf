@@ -9,11 +9,19 @@
 #ifndef RMF_INTERNAL_SINGLE_AVRO_FILE_H
 #define RMF_INTERNAL_SINGLE_AVRO_FILE_H
 
-#include "RMF/config.h"
-#include "RMF/internal/SharedData.h"
-#include "RMF/infrastructure_macros.h"
-#include "AvroKeysAndCategories.h"
 #include <backend/avro/AllJSON.h>
+#include <boost/shared_ptr.hpp>
+#include <string>
+#include <utility>
+#include <vector>
+
+#include "AvroKeysAndCategories.h"
+#include "RMF/ID.h"
+#include "RMF/config.h"
+#include "RMF/constants.h"
+#include "RMF/enums.h"
+#include "RMF/infrastructure_macros.h"
+#include "RMF/internal/SharedData.h"
 
 RMF_ENABLE_WARNINGS
 

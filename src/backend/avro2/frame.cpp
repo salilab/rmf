@@ -6,12 +6,14 @@
  *
  */
 
-#include "frame.h"
-#include "types_encode_decode.h"
-#include "generated/embed_jsons.h"
 #include <avrocpp/api/DataFile.hh>
-#include <avrocpp/api/Compiler.hh>
-#include <boost/scoped_ptr.hpp>
+#include <ostream>
+
+#include "RMF/infrastructure_macros.h"
+#include "RMF/log.h"
+#include "backend/avro2/types.h"
+#include "types_encode_decode.h" // IWYU pragma: keep
+#include "frame.h"
 
 RMF_ENABLE_WARNINGS
 

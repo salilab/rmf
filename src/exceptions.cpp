@@ -6,12 +6,12 @@
  *
  */
 
+#include <boost/exception/get_error_info.hpp>
+#include <sstream>
+
+#include "RMF/ID.h"
 #include "RMF/exceptions.h"
 #include "RMF/internal/errors.h"
-#include "RMF/ID.h"
-#include "RMF/ID.h"
-#include <sstream>
-#include <algorithm>
 
 RMF_ENABLE_WARNINGS
 

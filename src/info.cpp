@@ -6,14 +6,21 @@
  *
  */
 
-#include "RMF/info.h"
-#include "RMF/NodeConstHandle.h"
-#include "RMF/NodeHandle.h"
+#include <boost/foreach.hpp>
+#include <boost/iterator/iterator_facade.hpp>
+#include <boost/mpl/bool.hpp>
+#include <boost/mpl/bool_fwd.hpp>
+#include <boost/range/iterator_range_core.hpp>
+#include <string>
+#include <vector>
+
 #include "RMF/FileConstHandle.h"
-#include "RMF/FileHandle.h"
-#include <boost/unordered_set.hpp>
+#include "RMF/ID.h"
+#include "RMF/NodeConstHandle.h"
+#include "RMF/info.h"
+#include "RMF/infrastructure_macros.h"
 #include "RMF/internal/utility.h"
-#include "RMF/decorators.h"
+#include "RMF/types.h"
 
 RMF_ENABLE_WARNINGS
 

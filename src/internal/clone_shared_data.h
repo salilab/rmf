@@ -12,6 +12,7 @@
 #include "RMF/config.h"
 #include "RMF/log.h"
 #include "RMF/internal/shared_data_ranges.h"
+#include "RMF/internal/SharedData.h"
 #include "shared_data_maps.h"
 #include "shared_data_equality.h"
 

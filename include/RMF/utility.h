@@ -9,9 +9,10 @@
 #ifndef RMF_UTILITY_H
 #define RMF_UTILITY_H
 
-#include "RMF/config.h"
-#include "internal/errors.h"
 #include "NodeConstHandle.h"
+#include "RMF/config.h"
+#include "RMF/internal/errors.h"
+#include "internal/errors.h"
 
 RMF_ENABLE_WARNINGS
 
@@ -22,8 +23,8 @@ class AliasFactory;
 
 class FileConstHandle;
 class FileHandle;
-class NodeHandle;
 class NodeConstHandle;
+class NodeHandle;
 
 /** \name Copy functions
 

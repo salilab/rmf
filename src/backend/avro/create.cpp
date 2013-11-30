@@ -6,15 +6,33 @@
  *
  */
 
-#include "AvroSharedData.h"
-#include "SingleAvroFile.h"
-#include "MultipleAvroFileWriter.h"
-#include "MultipleAvroFileReader.h"
-#include "factory.h"
-#include "../IO.h"
+#include <boost/iterator/iterator_facade.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/move/utility.hpp>
+#include <boost/smart_ptr/make_shared_object.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/unordered/detail/buckets.hpp>
+#include <algorithm>
+#include <sstream>
+#include <string>
+#include <vector>
+
 #include "../BackwardsIO.h"
-#include <boost/make_shared.hpp>
-#include "RMF/log.h"
+#include "AvroSharedData.h"
+#include "MultipleAvroFileReader.h"
+#include "MultipleAvroFileWriter.h"
+#include "RMF/BufferHandle.h"
+#include "RMF/compiler_macros.h"
+#include "RMF/infrastructure_macros.h"
+#include "SingleAvroFile.h"
+#include "backend/IOFactory.h"
+#include "backend/avro/AvroSharedData.impl.h"
+
+namespace RMF {
+namespace backends {
+struct IO;
+}  // namespace backends
+}  // namespace RMF
 
 RMF_ENABLE_WARNINGS
 

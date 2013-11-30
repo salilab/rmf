@@ -4,6 +4,7 @@
 
 #include "RMF/constants.h"
 #include "RMF/log.h"
+#include "types.h"
 #include "encode_decode.h"
 #include "avrocpp/api/Specific.hh"
 #include "avrocpp/api/Encoder.hh"

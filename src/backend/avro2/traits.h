@@ -10,6 +10,7 @@
 #define RMF_AVRO2_TRAITS_H
 
 #include "RMF/compiler_macros.h"
+#include "RMF/log.h"
 #include "write.h"
 #include "file_data.h"
 #include "frame.h"

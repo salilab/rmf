@@ -11,8 +11,8 @@
 
 #include "RMF/config.h"
 #include "RMF/log.h"
-
-#include <boost/unordered_map.hpp>
+#include "RMF/internal/SharedDataData.h"
+#include "RMF/internal/large_set_map.h"
 
 RMF_ENABLE_WARNINGS
 

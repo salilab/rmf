@@ -1,10 +1,27 @@
 
-#include "validate.h"
-#include "types_encode_decode.h"
-#include <avrocpp/api/Encoder.hh>
 #include <avrocpp/api/Compiler.hh>
+#include <avrocpp/api/Encoder.hh>
+#include <boost/container/vector.hpp>
+#include <boost/shared_ptr.hpp>
 #include <generated/embed_jsons.h>
+#include <algorithm>
+#include <string>
+#include <utility>
+#include <vector>
+
+#include "Decoder.hh"
+#include "RMF/ID.h"
+#include "RMF/Vector.h"
+#include "RMF/enums.h"
+#include "RMF/infrastructure_macros.h"
+#include "RMF/types.h"
+#include "types_encode_decode.h" // IWYU pragma: keep
+#include "Specific.hh"
+#include "Stream.hh"
+#include "ValidSchema.hh"
 #include "backend/avro2/raw_frame.h"
+#include "backend/avro2/types.h"
+#include "validate.h"
 
 RMF_ENABLE_WARNINGS
 

@@ -9,8 +9,12 @@
 #ifndef RMF_SET_CURRENT_FRAME_H
 #define RMF_SET_CURRENT_FRAME_H
 
-#include "RMF/config.h"
+#include <string>
+
 #include "FileConstHandle.h"
+#include "RMF/ID.h"
+#include "RMF/config.h"
+#include "RMF/infrastructure_macros.h"
 
 RMF_ENABLE_WARNINGS
 namespace RMF {

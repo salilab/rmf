@@ -6,15 +6,19 @@
  *
  */
 
-#include "RMF/internal/SharedData.h"
-#include "RMF/NodeHandle.h"
-#include <boost/unordered_set.hpp>
-#include "RMF/HDF5/File.h"
-#include <boost/filesystem/path.hpp>
-#include <boost/scoped_ptr.hpp>
-#include <boost/version.hpp>
-#include "RMF/log.h"
+#include <boost/functional/hash/hash.hpp>
+#include <boost/move/utility.hpp>
+#include <algorithm>
+#include <exception>
+#include <functional>
+#include <iostream>
 
+#include "RMF/constants.h"
+#include "RMF/exceptions.h"
+#include "RMF/internal/SharedData.h"
+#include "RMF/internal/large_set_map.h"
+#include "RMF/log.h"
+#include "RMF/types.h"
 #include "backend/IO.h"
 
 RMF_ENABLE_WARNINGS

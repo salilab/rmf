@@ -9,22 +9,33 @@
 #ifndef RMF_INTERNAL_SHARED_DATA_H
 #define RMF_INTERNAL_SHARED_DATA_H
 
+#include <boost/shared_ptr.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <string>
+
+#include "RMF/ID.h"
 #include "RMF/config.h"
-#include "SharedDataUserData.h"
-#include "SharedDataPath.h"
+#include "RMF/constants.h"
+#include "RMF/enums.h"
+#include "RMF/infrastructure_macros.h"
+#include "RMF/internal/SharedDataCategory.h"
+#include "RMF/internal/SharedDataData.h"
+#include "RMF/internal/SharedDataFile.h"
+#include "RMF/internal/SharedDataHierarchy.h"
+#include "RMF/internal/SharedDataKeys.h"
+#include "RMF/internal/SharedDataLoadedFrame.h"
+#include "RMF/internal/SharedDataPath.h"
+#include "RMF/internal/SharedDataUserData.h"
+#include "RMF/names.h"
+#include "RMF/types.h"
+#include "SharedDataCategory.h"
 #include "SharedDataData.h"
 #include "SharedDataFile.h"
-#include "SharedDataCategory.h"
-#include "SharedDataKeys.h"
 #include "SharedDataHierarchy.h"
+#include "SharedDataKeys.h"
 #include "SharedDataLoadedFrame.h"
-#include "RMF/types.h"
-#include "RMF/names.h"
-#include "RMF/enums.h"
-#include "RMF/ID.h"
-#include "RMF/constants.h"
-#include "RMF/infrastructure_macros.h"
-#include <boost/shared_ptr.hpp>
+#include "SharedDataPath.h"
+#include "SharedDataUserData.h"
 
 RMF_ENABLE_WARNINGS
 

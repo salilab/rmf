@@ -9,22 +9,33 @@
 #ifndef RMF_FILE_HANDLE_H
 #define RMF_FILE_HANDLE_H
 
+#include <boost/shared_ptr.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <string>
+#include <vector>
+
+#include "FileConstHandle.h"
+#include "ID.h"
+#include "NodeHandle.h"
 #include "RMF/config.h"
+#include "RMF/internal/SharedData.h"
+#include "compiler_macros.h"
+#include "enums.h"
 #include "internal/SharedData.h"
 #include "types.h"
-#include "enums.h"
-#include "ID.h"
-#include "compiler_macros.h"
-#include "FileConstHandle.h"
-#include "NodeHandle.h"
-#include <string>
-#include <boost/shared_ptr.hpp>
+
+namespace RMF {
+namespace internal {
+class SharedData;
+}  // namespace internal
+}  // namespace RMF
 
 RMF_ENABLE_WARNINGS
 
 namespace RMF {
 
 class FileHandle;
+
 //! Pass a list of them
 typedef std::vector<FileHandle> FileHandles;
 

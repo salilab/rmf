@@ -9,15 +9,29 @@
 #ifndef RMF_INTERNAL_SINGLE_AVRO_FILE_WRITER_H
 #define RMF_INTERNAL_SINGLE_AVRO_FILE_WRITER_H
 
-#include "RMF/config.h"
-#include "RMF/internal/SharedData.h"
-#include "RMF/infrastructure_macros.h"
-#include "MultipleAvroFileBase.h"
-#include "RMF/exceptions.h"
 #include <avrocpp/api/DataFile.hh>
 #include <backend/avro/AllJSON.h>
 #include <backend/avro/FrameJSON.h>
+#include <boost/exception/detail/error_info_impl.hpp>
+#include <boost/exception/info.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <string>
+#include <vector>
+
+#include "MultipleAvroFileBase.h"
+#include "RMF/ID.h"
+#include "RMF/config.h"
+#include "RMF/constants.h"
+#include "RMF/enums.h"
+#include "RMF/exceptions.h"
+#include "RMF/infrastructure_macros.h"
+#include "RMF/internal/SharedData.h"
+#include "backend/avro/AvroKeysAndCategories.h"
+
+namespace internal_avro {
+template <typename T> class DataFileWriter;
+}  // namespace internal_avro
 
 RMF_ENABLE_WARNINGS
 

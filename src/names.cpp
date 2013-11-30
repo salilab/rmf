@@ -6,10 +6,10 @@
  *
  */
 
+#include <boost/algorithm/string/erase.hpp>
+#include <boost/iterator/iterator_traits.hpp>
+
 #include "RMF/names.h"
-#include <boost/algorithm/string.hpp>
-#include <cstdlib>
-#include <fstream>
 
 RMF_ENABLE_WARNINGS
 

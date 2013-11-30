@@ -6,15 +6,22 @@
  *
  */
 
+#include <boost/filesystem/operations.hpp>
+#include <boost/lexical_cast.hpp>
+#include <exception>
+#include <sstream>
+
+#include "DataFile.hh"
 #include "MultipleAvroFileWriter.h"
-#include "generated/embed_jsons.h"
+#include "RMF/internal/paths.h"
+#include "RMF/log.h"
+#include "ValidSchema.hh"
 #include "avro_schema_io.h"
 #include "avrocpp/api/Compiler.hh"
-#include "RMF/internal/paths.h"
-#include "RMF/decorators.h"
-#include "RMF/log.h"
-#include <boost/lexical_cast.hpp>
-#include <boost/filesystem.hpp>
+#include "backend/avro/AllJSON.h"
+#include "backend/avro/FrameJSON.h"
+#include "backend/avro/MultipleAvroFileBase.h"
+#include "generated/embed_jsons.h"
 
 RMF_ENABLE_WARNINGS
 

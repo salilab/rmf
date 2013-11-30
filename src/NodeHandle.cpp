@@ -6,10 +6,10 @@
  *
  */
 
-#include "RMF/NodeHandle.h"
-#include <boost/tuple/tuple.hpp>
 #include "RMF/FileHandle.h"
-#include "RMF/decorators.h"
+#include "RMF/ID.h"
+#include "RMF/NodeConstHandle.h"
+#include "RMF/NodeHandle.h"
 
 RMF_ENABLE_WARNINGS
 

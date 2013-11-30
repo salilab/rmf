@@ -6,10 +6,22 @@
  *
  */
 
+#include <boost/foreach.hpp>
+#include <bitset>
+#include <complex>
+#include <iomanip>
+#include <ostream>
+
+#include "RMF/FileConstHandle.h"
+#include "RMF/ID.h"
 #include "RMF/NodeConstHandle.h"
-#include <boost/tuple/tuple.hpp>
-#include "RMF/FileHandle.h"
-#include "RMF/decorators.h"
+#include "RMF/Nullable.h"
+#include "RMF/decorator/feature.h"
+#include "RMF/decorator/physics.h"
+#include "RMF/decorator/sequence.h"
+#include "RMF/decorator/shape.h"
+#include "RMF/enums.h"
+#include "RMF/types.h"
 
 RMF_ENABLE_WARNINGS
 

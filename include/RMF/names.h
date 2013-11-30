@@ -9,9 +9,11 @@
 #ifndef RMF_NAMES_H
 #define RMF_NAMES_H
 
+#include <sstream>
+#include <string>
+
 #include "RMF/config.h"
 #include "types.h"
-#include <sstream>
 
 RMF_ENABLE_WARNINGS namespace RMF {
 

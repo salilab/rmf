@@ -6,6 +6,7 @@
  *
  */
 
+#include "RMF/FileConstHandle.h"
 #include "RMF/SetCurrentFrame.h"
 
 RMF_ENABLE_WARNINGS

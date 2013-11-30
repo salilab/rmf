@@ -8,17 +8,33 @@
 #ifndef RMF_INTERNAL_AVRO_SCHEMA_IO_H
 #define RMF_INTERNAL_AVRO_SCHEMA_IO_H
 
-#include "RMF/config.h"
-#include "avrocpp/api/ValidSchema.hh"
-#include "avrocpp/api/DataFile.hh"
-#include "avrocpp/api/Stream.hh"
-#include "AllJSON.h"
-#include <boost/filesystem/path.hpp>
+#include <boost/exception/detail/error_info_impl.hpp>
+#include <boost/exception/info.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
 #include <boost/version.hpp>
+#include <log4cxx/helpers/messagebuffer.h>
+#include <log4cxx/helpers/objectptr.h>
+#include <log4cxx/logger.h>
 #include <cstdio>
+#include <exception>
+#include <iostream>
+#include <string>
+
+#include "AllJSON.h"
+#include "Encoder.hh"
+#include "RMF/config.h"
 #include "RMF/exceptions.h"
 #include "RMF/log.h"
+#include "Specific.hh"
+#include "avrocpp/api/DataFile.hh"
+#include "avrocpp/api/Stream.hh"
+#include "avrocpp/api/ValidSchema.hh"
+
+namespace RMF_avro_backend {
+struct Data;
+}  // namespace RMF_avro_backend
 
 RMF_ENABLE_WARNINGS
 

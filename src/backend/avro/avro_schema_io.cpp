@@ -6,14 +6,15 @@
  *
  */
 
-#include "avro_schema_io.h"
-#include "RMF/decorators.h"
-#include <generated/embed_jsons.h>
 #include <avrocpp/api/Compiler.hh>
-#include <stdexcept>
 #include <avrocpp/api/Encoder.hh>
 #include <avrocpp/api/Stream.hh>
-#include <boost/scoped_ptr.hpp>
+#include <generated/embed_jsons.h>
+#include <iosfwd>
+
+#include "ValidSchema.hh"
+#include "avro_schema_io.h"
+#include "backend/avro/AllJSON.h"
 
 RMF_ENABLE_WARNINGS
 

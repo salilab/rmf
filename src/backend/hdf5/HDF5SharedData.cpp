@@ -6,13 +6,23 @@
  *
  */
 
-#include "HDF5SharedData.h"
-#include "RMF/NodeHandle.h"
-#include "RMF/Validator.h"
-#include <boost/unordered_set.hpp>
-#include "RMF/HDF5/Group.h"
-#include "RMF/log.h"
+#include <H5Fpublic.h>
+#include <boost/exception/detail/error_info_impl.hpp>
+#include <boost/mpl/bool.hpp>
+#include <boost/mpl/bool_fwd.hpp>
 #include <algorithm>
+#include <ostream>
+
+#include "HDF5SharedData.h"
+#include "RMF/HDF5/DataSetCreationPropertiesD.h"
+#include "RMF/HDF5/File.h"
+#include "RMF/HDF5/Group.h"
+#include "RMF/HDF5/infrastructure_macros.h"
+#include "RMF/HDF5/types.h"
+#include "RMF/log.h"
+#include "backend/hdf5/HDF5DataSetCache1D.h"
+#include "backend/hdf5/HDF5DataSetCache2D.h"
+#include "backend/hdf5/names.h"
 
 RMF_ENABLE_WARNINGS
 

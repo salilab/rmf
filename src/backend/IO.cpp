@@ -1,12 +1,22 @@
-#include "backend/IO.h"
-#include <boost/ptr_container/ptr_vector.hpp>
-#include "avro2/factory.h"
-#include "avro/factory.h"
-#include "hdf5/factory.h"
-
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
 #include <boost/algorithm/string/predicate.hpp>
+#include <boost/filesystem/operations.hpp>
+#include <boost/foreach.hpp>
+#include <boost/functional/hash/hash.hpp>
+#include <boost/mpl/bool.hpp>
+#include <boost/mpl/bool_fwd.hpp>
+#include <unistd.h>
+#include <algorithm>
+#include <functional>
+#include <vector>
+
+#include "RMF/BufferConstHandle.h"
+#include "RMF/BufferHandle.h"
+#include "RMF/infrastructure_macros.h"
+#include "avro/factory.h"
+#include "avro2/factory.h"
+#include "backend/IO.h"
+#include "backend/IOFactory.h"
+#include "hdf5/factory.h"
 
 RMF_ENABLE_WARNINGS
 

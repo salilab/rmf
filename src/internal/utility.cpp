@@ -6,9 +6,12 @@
  *
  */
 
+#include <string>
+
+#include "RMF/NodeConstHandle.h"
+#include "RMF/decorator/alias.h"
+#include "RMF/enums.h"
 #include "RMF/internal/utility.h"
-#include "RMF/decorators.h"
-#include <stdexcept>
 
 RMF_ENABLE_WARNINGS namespace RMF {
   namespace internal {

@@ -6,11 +6,13 @@
  *
  */
 
-#include "RMF/FileHandle.h"
 #include "RMF/BufferHandle.h"
+#include "RMF/FileConstHandle.h"
+#include "RMF/FileHandle.h"
+#include "RMF/ID.h"
 #include "RMF/NodeHandle.h"
 #include "RMF/config.h"
-#include "RMF/exceptions.h"
+#include "RMF/enums.h"
 #include "RMF/internal/SharedData.h"
 #include "RMF/internal/shared_data_factories.h"
 

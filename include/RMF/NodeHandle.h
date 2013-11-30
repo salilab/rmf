@@ -9,11 +9,24 @@
 #ifndef RMF_NODE_HANDLE_H
 #define RMF_NODE_HANDLE_H
 
-#include "RMF/config.h"
-#include "internal/SharedData.h"
-#include "types.h"
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <string>
+#include <vector>
+
 #include "ID.h"
 #include "NodeConstHandle.h"
+#include "RMF/Nullable.h"
+#include "RMF/config.h"
+#include "RMF/enums.h"
+#include "RMF/exceptions.h"
+#include "RMF/infrastructure_macros.h"
+#include "RMF/internal/SharedData.h"
+#include "internal/SharedData.h"
+#include "types.h"
+
+namespace RMF {
+class NodeHandle;
+}  // namespace RMF
 
 RMF_ENABLE_WARNINGS
 
@@ -46,6 +59,7 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 
 class NodeHandle;
+
 //! Pass a list of them
 typedef std::vector<NodeHandle> NodeHandles;
 

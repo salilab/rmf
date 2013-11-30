@@ -6,15 +6,12 @@
  *
  */
 
-#include "MultipleAvroFileBase.h"
-#include "generated/embed_jsons.h"
-#include "RMF/internal/paths.h"
-#include "RMF/decorators.h"
-#include <avrocpp/api/Compiler.hh>
 #include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
-#include "RMF/log.h"
-#include <stdexcept>
+
+#include "MultipleAvroFileBase.h"
+#include "RMF/internal/paths.h"
+#include "backend/avro/AllJSON.h"
+#include "backend/avro/AvroKeysAndCategories.h"
 
 RMF_ENABLE_WARNINGS
 

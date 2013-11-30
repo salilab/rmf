@@ -9,16 +9,21 @@
 #ifndef RMF_INTERNAL_ERRORS_H
 #define RMF_INTERNAL_ERRORS_H
 
-#include "RMF/config.h"
-#include <boost/exception/all.hpp>
+// IWYU pragma: private
+
+#include <boost/exception/all.hpp> // IWYU pragma: export
+#include <boost/exception/detail/error_info_impl.hpp> // IWYU pragma: export
 #include <sstream>
+#include <string>
+
+#include "RMF/config.h"
 
 RMF_ENABLE_WARNINGS
 namespace RMF {
+struct FrameTag;
+struct NodeTag;
 template <class Tag>
 class ID;
-struct NodeTag;
-struct FrameTag;
 
 namespace internal {
 

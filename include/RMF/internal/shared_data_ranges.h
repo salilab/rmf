@@ -10,7 +10,7 @@
 #define RMF_INTERNAL_SHARED_DATA_RANGES_H
 
 #include "RMF/config.h"
-#include "irange.h"
+#include "irange.h" // IWYU pragma: export
 #include "RMF/ID.h"
 
 RMF_ENABLE_WARNINGS

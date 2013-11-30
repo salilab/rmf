@@ -9,10 +9,17 @@
 #ifndef RMF_VALIDATOR_H
 #define RMF_VALIDATOR_H
 
-#include "RMF/config.h"
-#include "FileHandle.h"
-#include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <iosfwd>
+#include <string>
+#include <vector>
+
+#include "FileHandle.h"
+#include "RMF/FileConstHandle.h"
+#include "RMF/NodeConstHandle.h"
+#include "RMF/config.h"
 
 RMF_ENABLE_WARNINGS namespace RMF {
   /** Validators check invariants of the RMF hierarchy. Use the

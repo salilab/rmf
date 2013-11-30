@@ -9,11 +9,16 @@
 #ifndef RMF_EXCEPTIONS_H
 #define RMF_EXCEPTIONS_H
 
-#include "RMF/config.h"
+#include <boost/exception/detail/error_info_impl.hpp>
 #include <boost/exception/exception.hpp>
-#include "compiler_macros.h"
-#include <string>
+#include <boost/exception/info.hpp>
+#include <boost/exception/info_tuple.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
 #include <exception>
+#include <string>
+
+#include "RMF/config.h"
+#include "compiler_macros.h"
 
 RMF_ENABLE_WARNINGS namespace RMF {
   /** The base class for RMF exceptions. Use the what() method
@@ -149,6 +154,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
 RMF_DISABLE_WARNINGS
 
-#include "RMF/internal/errors.h"
+#include "RMF/internal/errors.h" // IWYU pragma: export
 
 #endif /* RMF_EXCEPTIONS_H */

@@ -9,12 +9,23 @@
 #ifndef RMF_INTERNAL_IO_H
 #define RMF_INTERNAL_IO_H
 
-#include "RMF/config.h"
-#include "RMF/internal/SharedData.h"
-#include "RMF/BufferHandle.h"
-#include "RMF/BufferConstHandle.h"
-#include "RMF/infrastructure_macros.h"
 #include <boost/shared_ptr.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <string>
+
+#include "RMF/BufferConstHandle.h"
+#include "RMF/BufferHandle.h"
+#include "RMF/config.h"
+#include "RMF/infrastructure_macros.h"
+#include "RMF/internal/SharedData.h"
+
+namespace RMF {
+class BufferConstHandle;
+class BufferHandle;
+namespace internal {
+class SharedData;
+}  // namespace internal
+}  // namespace RMF
 
 RMF_ENABLE_WARNINGS
 

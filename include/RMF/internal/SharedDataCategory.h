@@ -11,7 +11,7 @@
 
 #include "RMF/config.h"
 #include "RMF/ID.h"
-#include <boost/unordered_map.hpp>
+#include "small_set_map.h"
 #include "RMF/infrastructure_macros.h"
 
 RMF_ENABLE_WARNINGS

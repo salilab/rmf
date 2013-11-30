@@ -7,6 +7,5 @@
  */
 
 #include "RMF/config.h"
-#include <string>
 
 namespace RMF {}

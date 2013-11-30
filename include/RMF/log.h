@@ -9,11 +9,15 @@
 #ifndef RMF_LOG_H
 #define RMF_LOG_H
 
-#include "RMF/config.h"
 #include <string>
+
+#include "RMF/config.h"
 #if RMF_HAS_LOG4CXX
-#include <log4cxx/logger.h>
-#include <log4cxx/ndc.h>
+#include <log4cxx/logger.h> // IWYU pragma: export
+#include <log4cxx/ndc.h> // IWYU pragma: export
+#include <log4cxx/helpers/messagebuffer.h> // IWYU pragma: export
+#include <log4cxx/helpers/objectptr.h> // IWYU pragma: export
+#include <log4cxx/logger.h> // IWYU pragma: export
 #endif
 
 RMF_ENABLE_WARNINGS

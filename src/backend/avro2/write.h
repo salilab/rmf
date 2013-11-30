@@ -2,8 +2,20 @@
 #ifndef RMF_AVRO2_WRITE_H
 #define RMF_AVRO2_WRITE_H
 
-#include "types.h"
 #include <avrocpp/api/DataFile.hh>
+
+#include "RMF/config.h"
+#include "types.h"
+
+namespace RMF {
+namespace avro2 {
+struct FileDataChanges;
+struct Frame;
+}  // namespace avro2
+}  // namespace RMF
+namespace internal_avro {
+class DataFileWriterBase;
+}  // namespace internal_avro
 
 RMF_ENABLE_WARNINGS
 

@@ -6,15 +6,26 @@
  *
  */
 
-#include "MultipleAvroFileReader.h"
-#include "generated/embed_jsons.h"
-#include "avrocpp/api/Compiler.hh"
-#include "RMF/log.h"
-#include <boost/version.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/functional/hash/hash.hpp>
+#include <boost/iterator/iterator_facade.hpp>
 #include <boost/lexical_cast.hpp>
-#include <stdexcept>
+#include <boost/version.hpp>
+#include <algorithm>
+#include <exception>
+#include <functional>
+#include <sstream>
+
+#include "DataFile.hh"
+#include "MultipleAvroFileReader.h"
+#include "RMF/log.h"
+#include "ValidSchema.hh"
+#include "avrocpp/api/Compiler.hh"
+#include "backend/avro/AllJSON.h"
+#include "backend/avro/FrameJSON.h"
+#include "backend/avro/MultipleAvroFileBase.h"
+#include "generated/embed_jsons.h"
 
 RMF_ENABLE_WARNINGS
 

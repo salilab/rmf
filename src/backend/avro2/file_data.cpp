@@ -6,13 +6,19 @@
  *
  */
 
+#include <avrocpp/api/DataFile.hh>
+#include <boost/cstdint.hpp>
+#include <boost/unordered/unordered_map.hpp>
+#include <sys/_types/_int32_t.h>
+#include <algorithm>
+#include <exception>
+
+#include "RMF/ID.h"
+#include "RMF/compiler_macros.h"
+#include "RMF/infrastructure_macros.h"
 #include "file_data.h"
 #include "types.h"
-#include "types_encode_decode.h"
-#include "generated/embed_jsons.h"
-#include <avrocpp/api/DataFile.hh>
-#include <avrocpp/api/Compiler.hh>
-#include <avrocpp/api/Decoder.hh>
+#include "types_encode_decode.h" // IWYU pragma: keep
 
 RMF_ENABLE_WARNINGS
 

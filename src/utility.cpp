@@ -6,16 +6,24 @@
  *
  */
 
+#include <boost/exception/detail/error_info_impl.hpp>
+#include <boost/exception/info.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <algorithm>
+#include <iostream>
+#include <string>
+
+#include "RMF/FileConstHandle.h"
+#include "RMF/FileHandle.h"
+#include "RMF/NodeConstHandle.h"
+#include "RMF/NodeHandle.h"
+#include "RMF/decorator/alias.h"
+#include "RMF/exceptions.h"
+#include "RMF/infrastructure_macros.h"
+#include "RMF/internal/utility.h"
 #include "RMF/utility.h"
 #include "internal/clone_shared_data.h"
 #include "internal/shared_data_equality.h"
-#include "RMF/NodeConstHandle.h"
-#include "RMF/NodeHandle.h"
-#include "RMF/FileConstHandle.h"
-#include "RMF/FileHandle.h"
-#include <boost/unordered_set.hpp>
-#include "RMF/internal/utility.h"
-#include "RMF/decorators.h"
 
 RMF_ENABLE_WARNINGS
 

@@ -6,16 +6,26 @@
  *
  */
 
-#include "SingleAvroFile.h"
-#include "generated/embed_jsons.h"
-#include "avro_schema_io.h"
-#include "AllJSON.h"
-#include "RMF/internal/paths.h"
-#include "RMF/decorators.h"
+#include <_types/_uint8_t.h>
 #include <avrocpp/api/Compiler.hh>
-#include <boost/make_shared.hpp>
+#include <boost/exception/info.hpp>
 #include <boost/lexical_cast.hpp>
-#include <stdexcept>
+#include <exception>
+#include <sstream>
+
+#include "AllJSON.h"
+#include "DataFile.hh"
+#include "Decoder.hh"
+#include "Encoder.hh"
+#include "RMF/exceptions.h"
+#include "RMF/internal/paths.h"
+#include "SingleAvroFile.h"
+#include "Specific.hh"
+#include "Stream.hh"
+#include "ValidSchema.hh"
+#include "avro_schema_io.h"
+#include "backend/avro/AvroKeysAndCategories.h"
+#include "generated/embed_jsons.h"
 
 RMF_ENABLE_WARNINGS
 

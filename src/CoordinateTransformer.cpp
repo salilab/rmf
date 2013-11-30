@@ -7,7 +7,8 @@
  */
 
 #include "RMF/CoordinateTransformer.h"
-#include "RMF/decorators.h"
+#include "RMF/compiler_macros.h"
+#include "RMF/decorator/physics.h"
 
 RMF_ENABLE_WARNINGS
 

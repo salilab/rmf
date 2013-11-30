@@ -10,6 +10,7 @@
 #define RMF_CONSTANTS_H
 
 #include "RMF/config.h"
+#include "ID.h"
 
 RMF_ENABLE_WARNINGS
 namespace RMF {

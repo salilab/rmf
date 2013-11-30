@@ -12,10 +12,10 @@
 #include "RMF/config.h"
 #include "RMF/log.h"
 #include "shared_data_maps.h"
+#include "RMF/internal/large_set_map.h"
 #include "RMF/internal/shared_data_ranges.h"
 
 #include <boost/range/distance.hpp>
-#include <boost/unordered_set.hpp>
 
 RMF_ENABLE_WARNINGS
 

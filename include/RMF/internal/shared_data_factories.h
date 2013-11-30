@@ -9,11 +9,23 @@
 #ifndef RMF_INTERNAL_SHARED_DATA_FACTORIES_H
 #define RMF_INTERNAL_SHARED_DATA_FACTORIES_H
 
-#include "RMF/config.h"
-#include "SharedData.h"
-#include "RMF/BufferHandle.h"
-#include "RMF/BufferConstHandle.h"
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <string>
 #include <vector>
+
+#include "RMF/BufferConstHandle.h"
+#include "RMF/BufferHandle.h"
+#include "RMF/config.h"
+#include "RMF/internal/SharedData.h"
+#include "SharedData.h"
+
+namespace RMF {
+class BufferConstHandle;
+class BufferHandle;
+namespace internal {
+class SharedData;
+}  // namespace internal
+}  // namespace RMF
 
 RMF_ENABLE_WARNINGS
 

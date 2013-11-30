@@ -8,6 +8,7 @@
 #ifndef RMF_INTERNAL_UTILITY_H
 #define RMF_INTERNAL_UTILITY_H
 
+#include "RMF/NodeHandle.h"
 #include "RMF/config.h"
 
 RMF_ENABLE_WARNINGS
@@ -15,8 +16,8 @@ namespace RMF {
 namespace decorator {
 class AliasFactory;
 }
-class NodeHandle;
 class NodeConstHandle;
+class NodeHandle;
 
 namespace internal {
 template <class VA, class VB>

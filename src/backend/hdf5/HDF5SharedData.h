@@ -9,29 +9,49 @@
 #ifndef RMF_INTERNAL_HDF_5SHARED_DATA_H
 #define RMF_INTERNAL_HDF_5SHARED_DATA_H
 
+#include <H5public.h>
+#include <boost/array.hpp>
+#include <boost/foreach.hpp>
+#include <boost/functional/hash/extensions.hpp>
+#include <boost/functional/hash/hash.hpp>
+#include <boost/iterator/iterator_facade.hpp>
+#include <boost/multi_array/subarray.hpp>
+#include <boost/multi_array/view.hpp>
+#include <boost/ptr_container/ptr_sequence_adapter.hpp>
+#include <boost/ptr_container/ptr_vector.hpp>
+#include <boost/make_shared.hpp>
+#include <boost/utility/swap.hpp>
+#include <hdf5.h>
+#include <stddef.h>
+#include <algorithm>
+#include <functional>
+#include <string>
+#include <vector>
+
+#include "HDF5DataSetCache1D.h"
+#include "HDF5DataSetCache2D.h"
+#include "HDF5DataSetCache3D.h"
+#include "HDF5DataSetCacheD.h"
+#include "RMF/HDF5/DataSetIndexD.h"
+#include "RMF/HDF5/File.h"
+#include "RMF/HDF5/Group.h"
+#include "RMF/ID.h"
+#include "RMF/compiler_macros.h"
 #include "RMF/config.h"
+#include "RMF/constants.h"
+#include "RMF/enums.h"
+#include "RMF/exceptions.h"
+#include "RMF/infrastructure_macros.h"
+#include "RMF/internal/large_set_map.h"
+#include "RMF/log.h"
+#include "RMF/types.h"
 #include "backend/BackwardsIOBase.h"
 #include "backend/backward_types.h"
-#include "RMF/compiler_macros.h"
-#include "RMF/HDF5/Group.h"
-#include "RMF/HDF5/File.h"
-#include "RMF/infrastructure_macros.h"
-#include "RMF/ID.h"
-#include "RMF/types.h"
-#include "RMF/enums.h"
-#include "RMF/constants.h"
-#include "RMF/internal/large_set_map.h"
-
-#include "HDF5DataSetCacheD.h"
-#include "HDF5DataSetCache2D.h"
-#include "HDF5DataSetCache1D.h"
-#include "HDF5DataSetCache3D.h"
 #include "names.h"
-#include <boost/array.hpp>
 
-#include <hdf5.h>
-#include <algorithm>
-#include <boost/ptr_container/ptr_vector.hpp>
+namespace boost {
+template <class T> struct nullable;
+}  // namespace boost
 
 RMF_ENABLE_WARNINGS
 

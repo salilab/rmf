@@ -9,9 +9,13 @@
 #ifndef RMF_INTERNAL_SINGLE_AVRO_FILE_BASE_H
 #define RMF_INTERNAL_SINGLE_AVRO_FILE_BASE_H
 
-#include "RMF/config.h"
-#include "AvroKeysAndCategories.h"
 #include <backend/avro/AllJSON.h>
+#include <string>
+#include <vector>
+
+#include "AvroKeysAndCategories.h"
+#include "RMF/ID.h"
+#include "RMF/config.h"
 
 RMF_ENABLE_WARNINGS
 

@@ -6,13 +6,29 @@
  *
  */
 
-#include "HDF5SharedData.h"
-#include "../IO.h"
-#include "../IOFactory.h"
-#include "factory.h"
+#include <boost/container/vector.hpp>
+#include <boost/iterator/iterator_facade.hpp>
+#include <boost/move/utility.hpp>
+#include <boost/multi_array/subarray.hpp>
+#include <boost/multi_array/view.hpp>
+#include <boost/smart_ptr/make_shared_object.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/unordered/detail/buckets.hpp>
+#include <algorithm>
+#include <string>
+#include <vector>
+
 #include "../BackwardsIO.h"
-#include <boost/make_shared.hpp>
-#include "RMF/log.h"
+#include "../IOFactory.h"
+#include "HDF5SharedData.h"
+#include "RMF/compiler_macros.h"
+#include "RMF/infrastructure_macros.h"
+
+namespace RMF {
+namespace backends {
+struct IO;
+}  // namespace backends
+}  // namespace RMF
 
 RMF_ENABLE_WARNINGS
 

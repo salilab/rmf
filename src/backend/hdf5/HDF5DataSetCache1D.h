@@ -11,6 +11,7 @@
 
 #include "RMF/config.h"
 #include "RMF/HDF5/DataSetD.h"
+#include "RMF/HDF5/Group.h"
 #include "HDF5DataSetCacheD.h"
 #include <boost/multi_array.hpp>
 

@@ -9,12 +9,40 @@
 #ifndef RMF_INTERNAL_BACKWARDS_IO_H
 #define RMF_INTERNAL_BACKWARDS_IO_H
 
-#include "RMF/config.h"
+#include <boost/array.hpp>
+#include <boost/filesystem.hpp>
+#include <boost/foreach.hpp>
+#include <boost/mpl/bool.hpp>
+#include <boost/mpl/bool_fwd.hpp>
+#include <boost/scoped_ptr.hpp>
+#include <boost/smart_ptr/scoped_ptr.hpp>
+#include <boost/unordered/unordered_map.hpp>
+#include <internal/clone_shared_data.h>
+#include <log4cxx/helpers/messagebuffer.h>
+#include <log4cxx/helpers/objectptr.h>
+#include <log4cxx/logger.h>
+#include <algorithm>
+#include <ostream>
+#include <string>
+#include <utility>
+#include <vector>
+
 #include "IO.h"
 #include "KeyFilter.h"
-#include <internal/clone_shared_data.h>
-#include <boost/scoped_ptr.hpp>
-#include <boost/filesystem.hpp>
+#include "RMF/BufferConstHandle.h"
+#include "RMF/BufferHandle.h"
+#include "RMF/ID.h"
+#include "RMF/Vector.h"
+#include "RMF/config.h"
+#include "RMF/enums.h"
+#include "RMF/exceptions.h"
+#include "RMF/infrastructure_macros.h"
+#include "RMF/log.h"
+#include "RMF/types.h"
+#include "backend/IO.h"
+#include "backend/backward_types.h"
+#include "internal/clone_shared_data.h"
+#include "internal/shared_data_maps.h"
 
 RMF_ENABLE_WARNINGS
 

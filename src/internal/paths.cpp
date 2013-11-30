@@ -6,10 +6,9 @@
  *
  */
 
-#include "RMF/internal/paths.h"
 #include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
-#include <stdexcept>
+
+#include "RMF/internal/paths.h"
 
 RMF_ENABLE_WARNINGS namespace RMF {
   namespace internal {

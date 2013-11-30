@@ -6,9 +6,14 @@
  *
  */
 
-#include "RMF/internal/shared_data_factories.h"
-#include <boost/shared_ptr.hpp>
+#include <boost/exception/detail/error_info_impl.hpp>
+#include <boost/exception/info.hpp>
 #include <boost/make_shared.hpp>
+
+#include "RMF/BufferConstHandle.h"
+#include "RMF/BufferHandle.h"
+#include "RMF/exceptions.h"
+#include "RMF/internal/shared_data_factories.h"
 #include "backend/IO.h"
 
 RMF_ENABLE_WARNINGS

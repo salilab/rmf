@@ -9,14 +9,31 @@
 #ifndef RMF_NODE_CONST_HANDLE_H
 #define RMF_NODE_CONST_HANDLE_H
 
+#include <boost/any.hpp>
+#include <boost/current_function.hpp>
+#include <boost/exception/detail/error_info_impl.hpp>
+#include <boost/exception/info.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <iostream>
+#include <string>
+#include <vector>
+
+#include "ID.h"
+#include "Nullable.h"
 #include "RMF/config.h"
+#include "RMF/exceptions.h"
+#include "RMF/infrastructure_macros.h"
+#include "RMF/internal/SharedData.h"
+#include "RMF/internal/errors.h"
+#include "constants.h"
+#include "enums.h"
 #include "internal/SharedData.h"
 #include "types.h"
-#include "ID.h"
-#include "enums.h"
-#include "constants.h"
-#include "Nullable.h"
-#include <boost/shared_ptr.hpp>
+
+namespace RMF {
+class NodeConstHandle;
+}  // namespace RMF
 
 RMF_ENABLE_WARNINGS
 
@@ -63,10 +80,9 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 
 class FileConstHandle;
-
+class NodeConstHandle;
 class RootConstHandle;
 
-class NodeConstHandle;
 //! Pass a list of them
 typedef std::vector<NodeConstHandle> NodeConstHandles;
 

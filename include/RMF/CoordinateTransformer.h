@@ -9,10 +9,12 @@
 #ifndef RMF_COORDINATE_TRANSFORMER_H
 #define RMF_COORDINATE_TRANSFORMER_H
 
-#include "RMF/config.h"
-#include "RMF/internal/Transform.h"
+#include <vector>
+
 #include "RMF/Vector.h"
 #include "RMF/compiler_macros.h"
+#include "RMF/config.h"
+#include "RMF/internal/Transform.h"
 #include "infrastructure_macros.h"
 
 RMF_ENABLE_WARNINGS

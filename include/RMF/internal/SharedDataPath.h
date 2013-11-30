@@ -9,20 +9,22 @@
 #ifndef RMF_INTERNAL_SHARED_DATA_PATH_H
 #define RMF_INTERNAL_SHARED_DATA_PATH_H
 
-#include "RMF/config.h"
-#include "RMF/types.h"
-#include "RMF/names.h"
-#include "RMF/enums.h"
-#include "RMF/ID.h"
-#include "RMF/infrastructure_macros.h"
-#include "SharedDataUserData.h"
+#include <boost/any.hpp>
+#include <boost/cstdint.hpp>
+#include <boost/shared_ptr.hpp>
 #include <boost/unordered_map.hpp>
 #include <boost/unordered_set.hpp>
-#include <boost/cstdint.hpp>
-#include <boost/any.hpp>
 #include <algorithm>
+#include <string>
 
-#include <boost/shared_ptr.hpp>
+#include "RMF/ID.h"
+#include "RMF/config.h"
+#include "RMF/enums.h"
+#include "RMF/infrastructure_macros.h"
+#include "RMF/internal/SharedDataUserData.h"
+#include "RMF/names.h"
+#include "RMF/types.h"
+#include "SharedDataUserData.h"
 
 RMF_ENABLE_WARNINGS
 

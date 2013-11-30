@@ -6,11 +6,36 @@
  *
  */
 
-#include "RMF/HDF5/Group.h"
-#include "RMF/HDF5/File.h"
+#include <H5Dpublic.h>
+#include <H5Epublic.h>
 #include <H5Fpublic.h>
+#include <H5Gpublic.h>
+#include <H5Ipublic.h>
+#include <H5Lpublic.h>
+#include <H5Opublic.h>
+#include <H5Ppublic.h>
+#include <H5Tpublic.h>
 #include <H5public.h>
-#include <boost/scoped_array.hpp>
+#include <boost/exception/detail/error_info_impl.hpp>
+#include <boost/smart_ptr/make_shared_object.hpp>
+#include <boost/smart_ptr/scoped_array.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <stdio.h>
+#include <stdlib.h>
+#include <algorithm>
+#include <ostream>
+#include <string>
+
+#include "RMF/HDF5/ConstFile.h"
+#include "RMF/HDF5/ConstGroup.h"
+#include "RMF/HDF5/File.h"
+#include "RMF/HDF5/Group.h"
+#include "RMF/HDF5/Object.h"
+#include "RMF/HDF5/handle.h"
+#include "RMF/HDF5/infrastructure_macros.h"
+#include "RMF/HDF5/types.h"
+#include "RMF/compiler_macros.h"
+#include "RMF/exceptions.h"
 
 RMF_ENABLE_WARNINGS
 

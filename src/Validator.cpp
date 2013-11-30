@@ -6,8 +6,16 @@
  *
  */
 
+#include <boost/container/vector.hpp>
+#include <boost/smart_ptr/make_shared_object.hpp>
+#include <ostream>
+#include <utility>
+
+#include "RMF/ID.h"
+#include "RMF/Nullable.h"
 #include "RMF/Validator.h"
-#include <algorithm>
+#include "RMF/infrastructure_macros.h"
+#include "RMF/types.h"
 
 RMF_ENABLE_WARNINGS namespace RMF {
 

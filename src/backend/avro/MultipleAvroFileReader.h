@@ -9,14 +9,34 @@
 #ifndef RMF_INTERNAL_SINGLE_AVRO_FILE_READER_H
 #define RMF_INTERNAL_SINGLE_AVRO_FILE_READER_H
 
-#include "RMF/config.h"
-#include "RMF/internal/SharedData.h"
-#include "RMF/infrastructure_macros.h"
-#include "MultipleAvroFileBase.h"
 #include <avrocpp/api/DataFile.hh>
+#include <boost/exception/detail/error_info_impl.hpp>
+#include <boost/exception/info.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <string>
+#include <vector>
+
 #include "AllJSON.h"
 #include "FrameJSON.h"
-#include <boost/shared_ptr.hpp>
+#include "MultipleAvroFileBase.h"
+#include "RMF/ID.h"
+#include "RMF/config.h"
+#include "RMF/constants.h"
+#include "RMF/enums.h"
+#include "RMF/exceptions.h"
+#include "RMF/infrastructure_macros.h"
+#include "RMF/internal/SharedData.h"
+#include "RMF/internal/large_set_map.h"
+#include "RMF/types.h"
+#include "backend/avro/AvroKeysAndCategories.h"
+
+namespace RMF_avro_backend {
+struct Frame;
+}  // namespace RMF_avro_backend
+namespace internal_avro {
+template <typename T> class DataFileReader;
+}  // namespace internal_avro
 
 RMF_ENABLE_WARNINGS
 
