@@ -1,0 +1,16 @@
+#ifndef RMF_INTERNAL_LARGE_SET_MAP_H
+#define RMF_INTERNAL_LARGE_SET_MAP_H
+
+#include <RMF/config.h>
+
+#include <set> // IWYU pragma: export
+#include <map> // IWYU pragma: export
+#include <boost/unordered_set.hpp> // IWYU pragma: export
+#include <boost/unordered_map.hpp> // IWYU pragma: export
+
+#define RMF_LARGE_ORDERED_SET std::set
+#define RMF_LARGE_ORDERED_MAP std::map
+#define RMF_LARGE_UNORDERED_SET boost::unordered_set
+#define RMF_LARGE_UNORDERED_MAP boost::unordered_map
+
+#endif
