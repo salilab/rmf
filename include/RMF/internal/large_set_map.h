@@ -1,7 +1,7 @@
 #ifndef RMF_INTERNAL_LARGE_SET_MAP_H
 #define RMF_INTERNAL_LARGE_SET_MAP_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 
 #include <set> // IWYU pragma: export
 #include <map> // IWYU pragma: export

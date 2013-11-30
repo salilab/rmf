@@ -9,7 +9,7 @@
 #ifndef RMF_NULLABLE_H
 #define RMF_NULLABLE_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "infrastructure_macros.h"
 #include "exceptions.h"
 #include <limits>

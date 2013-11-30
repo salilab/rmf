@@ -9,7 +9,7 @@
 #ifndef RMF_HDF_5CONST_ATTRIBUTES_H
 #define RMF_HDF_5CONST_ATTRIBUTES_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "handle.h"
 #include "types.h"
 #include "infrastructure_macros.h"

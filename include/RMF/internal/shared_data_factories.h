@@ -9,10 +9,10 @@
 #ifndef RMF_INTERNAL_SHARED_DATA_FACTORIES_H
 #define RMF_INTERNAL_SHARED_DATA_FACTORIES_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "SharedData.h"
-#include <RMF/BufferHandle.h>
-#include <RMF/BufferConstHandle.h>
+#include "RMF/BufferHandle.h"
+#include "RMF/BufferConstHandle.h"
 #include <vector>
 
 RMF_ENABLE_WARNINGS

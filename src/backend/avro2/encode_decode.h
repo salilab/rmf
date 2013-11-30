@@ -5,8 +5,8 @@
 #include "avrocpp/api/Specific.hh"
 #include "avrocpp/api/Encoder.hh"
 #include "avrocpp/api/Decoder.hh"
-#include <RMF/Vector.h>
-#include <RMF/ID.h>
+#include "RMF/Vector.h"
+#include "RMF/ID.h"
 #include <boost/unordered_map.hpp>
 #include <boost/unordered_set.hpp>
 #include <set>

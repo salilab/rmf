@@ -9,7 +9,7 @@
 #ifndef RMF_HDF_5OBJECT_H
 #define RMF_HDF_5OBJECT_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "types.h"
 #include "handle.h"
 #include "infrastructure_macros.h"

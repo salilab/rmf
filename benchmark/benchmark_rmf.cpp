@@ -5,11 +5,11 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
-#include <RMF/FileHandle.h>
+#include "RMF/FileHandle.h"
 #include <boost/timer.hpp>
-#include <RMF/decorator/physics.h>
-#include <RMF/decorator/sequence.h>
-#include <RMF/log.h>
+#include "RMF/decorator/physics.h"
+#include "RMF/decorator/sequence.h"
+#include "RMF/log.h"
 #include <boost/filesystem.hpp>
 #include <sstream>
 

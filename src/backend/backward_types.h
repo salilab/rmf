@@ -9,8 +9,8 @@
 #ifndef RMF_BACKWARD_TYPES_H
 #define RMF_BACKWARD_TYPES_H
 
-#include <RMF/config.h>
-#include <RMF/types.h>
+#include "RMF/config.h"
+#include "RMF/types.h"
 
 RMF_ENABLE_WARNINGS
 

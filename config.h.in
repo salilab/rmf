@@ -34,6 +34,6 @@
 #pragma warning(disable: 4003)
 #endif
 
-#include "RMF/compiler_macros.h"
+#include "RMF/compiler_macros.h" // IWYU pragma: export
 
 #endif  /* RMF_CONFIG_H */

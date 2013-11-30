@@ -10,9 +10,9 @@
 #include "generated/embed_jsons.h"
 #include "avro_schema_io.h"
 #include "avrocpp/api/Compiler.hh"
-#include <RMF/internal/paths.h>
-#include <RMF/decorators.h>
-#include <RMF/log.h>
+#include "RMF/internal/paths.h"
+#include "RMF/decorators.h"
+#include "RMF/log.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/filesystem.hpp>
 

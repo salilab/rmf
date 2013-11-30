@@ -9,12 +9,12 @@
 #ifndef RMF_TYPES_H
 #define RMF_TYPES_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "ID.h"
 #include "Vector.h"
 #include "infrastructure_macros.h"
 #include "internal/errors.h"
-#include <RMF/HDF5/types.h>
+#include "RMF/HDF5/types.h"
 
 #include <algorithm>
 #include <boost/array.hpp>

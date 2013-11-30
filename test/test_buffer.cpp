@@ -6,7 +6,7 @@
  *
  */
 #include <boost/shared_ptr.hpp>
-#include <RMF/FileHandle.h>
+#include "RMF/FileHandle.h"
 
 namespace {
 struct MyInt {

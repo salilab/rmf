@@ -9,9 +9,9 @@
 #ifndef RMF_INTERNAL_SINGLE_AVRO_FILE_READER_H
 #define RMF_INTERNAL_SINGLE_AVRO_FILE_READER_H
 
-#include <RMF/config.h>
-#include <RMF/internal/SharedData.h>
-#include <RMF/infrastructure_macros.h>
+#include "RMF/config.h"
+#include "RMF/internal/SharedData.h"
+#include "RMF/infrastructure_macros.h"
 #include "MultipleAvroFileBase.h"
 #include <avrocpp/api/DataFile.hh>
 #include "AllJSON.h"

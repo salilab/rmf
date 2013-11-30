@@ -9,7 +9,7 @@
 #include "MultipleAvroFileReader.h"
 #include "generated/embed_jsons.h"
 #include "avrocpp/api/Compiler.hh"
-#include <RMF/log.h>
+#include "RMF/log.h"
 #include <boost/version.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>

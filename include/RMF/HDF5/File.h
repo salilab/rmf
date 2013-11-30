@@ -9,7 +9,7 @@
 #ifndef RMF_HDF_5FILE_H
 #define RMF_HDF_5FILE_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "Group.h"
 #include "ConstFile.h"
 

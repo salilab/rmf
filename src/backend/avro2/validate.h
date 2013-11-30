@@ -1,7 +1,7 @@
 #ifndef RMF_AVRO2_VALIDATE__H_
 #define RMF_AVRO2_VALIDATE__H_
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "types.h"
 
 RMF_ENABLE_WARNINGS

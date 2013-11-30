@@ -9,7 +9,7 @@
 #ifndef RMF_FACTORY_H
 #define RMF_FACTORY_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "infrastructure_macros.h"
 
 RMF_ENABLE_WARNINGS namespace RMF {

@@ -9,8 +9,8 @@
 #ifndef RMF_HDF_5CONST_DATA_SET_D_H
 #define RMF_HDF_5CONST_DATA_SET_D_H
 
-#include <RMF/config.h>
-#include <RMF/log.h>
+#include "RMF/config.h"
+#include "RMF/log.h"
 #include "types.h"
 #include "ConstAttributes.h"
 #include "Object.h"

@@ -9,7 +9,7 @@
 #ifndef RMF_SET_CURRENT_FRAME_H
 #define RMF_SET_CURRENT_FRAME_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "FileConstHandle.h"
 
 RMF_ENABLE_WARNINGS

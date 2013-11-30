@@ -12,7 +12,7 @@
 #include "factory.h"
 #include "../BackwardsIO.h"
 #include <boost/make_shared.hpp>
-#include <RMF/log.h>
+#include "RMF/log.h"
 
 RMF_ENABLE_WARNINGS
 

@@ -9,7 +9,7 @@
 #ifndef RMF_INTERNAL_PATHS_H
 #define RMF_INTERNAL_PATHS_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include <string>
 
 RMF_ENABLE_WARNINGS namespace RMF {

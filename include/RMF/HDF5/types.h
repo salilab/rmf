@@ -9,10 +9,10 @@
 #ifndef RMF_HDF5_TYPES_H
 #define RMF_HDF5_TYPES_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "handle.h"
 #include "infrastructure_macros.h"
-#include <RMF/internal/errors.h>
+#include "RMF/internal/errors.h"
 #include "internal/types.h"
 #include <hdf5.h>
 #include <algorithm>

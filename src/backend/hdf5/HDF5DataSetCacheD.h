@@ -9,8 +9,8 @@
 #ifndef RMF_INTERNAL_HDF5_DATA_SET_CACHE_D_H
 #define RMF_INTERNAL_HDF5_DATA_SET_CACHE_D_H
 
-#include <RMF/config.h>
-#include <RMF/HDF5/DataSetD.h>
+#include "RMF/config.h"
+#include "RMF/HDF5/DataSetD.h"
 #include <boost/utility.hpp>
 
 RMF_ENABLE_WARNINGS namespace RMF {

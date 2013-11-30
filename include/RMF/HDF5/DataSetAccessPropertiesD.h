@@ -9,7 +9,7 @@
 #ifndef RMF_HDF_5DATA_SET_ACCESS_PROPERTIES_D_H
 #define RMF_HDF_5DATA_SET_ACCESS_PROPERTIES_D_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "DataSetIndexD.h"
 #include <boost/shared_ptr.hpp>
 

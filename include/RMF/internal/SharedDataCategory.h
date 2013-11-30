@@ -9,7 +9,7 @@
 #ifndef RMF_INTERNAL_SHARED_DATA_CATEGORY_H
 #define RMF_INTERNAL_SHARED_DATA_CATEGORY_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "RMF/ID.h"
 #include <boost/unordered_map.hpp>
 #include "RMF/infrastructure_macros.h"

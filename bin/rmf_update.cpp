@@ -1,8 +1,8 @@
 /**
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
-#include <RMF/FileHandle.h>
-#include <RMF/NodeConstHandle.h>
+#include "RMF/FileHandle.h"
+#include "RMF/NodeConstHandle.h"
 #include <boost/algorithm/string/predicate.hpp>
 #include <cstdio>
 #include <boost/filesystem.hpp>

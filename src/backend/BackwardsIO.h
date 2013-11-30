@@ -9,7 +9,7 @@
 #ifndef RMF_INTERNAL_BACKWARDS_IO_H
 #define RMF_INTERNAL_BACKWARDS_IO_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "IO.h"
 #include "KeyFilter.h"
 #include <internal/clone_shared_data.h>

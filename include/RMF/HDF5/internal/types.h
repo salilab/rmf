@@ -9,8 +9,8 @@
 #ifndef RMF_INTERNAL_TYPES_H
 #define RMF_INTERNAL_TYPES_H
 
-#include <RMF/config.h>
-#include <RMF/infrastructure_macros.h>
+#include "RMF/config.h"
+#include "RMF/infrastructure_macros.h"
 #include <hdf5.h>
 
 RMF_ENABLE_WARNINGS

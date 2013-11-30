@@ -6,7 +6,7 @@
  *
  */
 
-#include <RMF/enums.h>
+#include "RMF/enums.h"
 #include <boost/algorithm/string.hpp>
 #include <cstdlib>
 #include <fstream>

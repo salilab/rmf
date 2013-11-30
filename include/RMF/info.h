@@ -9,7 +9,7 @@
 #ifndef RMF_INFO_H
 #define RMF_INFO_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "FileConstHandle.h"
 #include <iostream>
 

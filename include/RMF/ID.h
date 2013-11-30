@@ -9,7 +9,7 @@
 #ifndef RMF_ID_H
 #define RMF_ID_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "infrastructure_macros.h"
 #include "exceptions.h"
 #include <limits>

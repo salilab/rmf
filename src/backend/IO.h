@@ -9,11 +9,11 @@
 #ifndef RMF_INTERNAL_IO_H
 #define RMF_INTERNAL_IO_H
 
-#include <RMF/config.h>
-#include <RMF/internal/SharedData.h>
-#include <RMF/BufferHandle.h>
-#include <RMF/BufferConstHandle.h>
-#include <RMF/infrastructure_macros.h>
+#include "RMF/config.h"
+#include "RMF/internal/SharedData.h"
+#include "RMF/BufferHandle.h"
+#include "RMF/BufferConstHandle.h"
+#include "RMF/infrastructure_macros.h"
 #include <boost/shared_ptr.hpp>
 
 RMF_ENABLE_WARNINGS

@@ -9,8 +9,8 @@
 #ifndef RMF_INTERNAL_AVRO_SHARED_DATA_TYPES_H
 #define RMF_INTERNAL_AVRO_SHARED_DATA_TYPES_H
 
-#include <RMF/config.h>
-#include <RMF/constants.h>
+#include "RMF/config.h"
+#include "RMF/constants.h"
 #include <backend/avro/AllJSON.h>
 #include <boost/tuple/tuple.hpp>
 

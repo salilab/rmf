@@ -6,7 +6,7 @@
  *
  */
 
-#include <RMF/internal/paths.h>
+#include "RMF/internal/paths.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <stdexcept>

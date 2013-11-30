@@ -9,7 +9,7 @@
 #ifndef RMF_HDF_5DATA_SET_INDEX_D_H
 #define RMF_HDF_5DATA_SET_INDEX_D_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "infrastructure_macros.h"
 #include <H5public.h>
 #include "types.h"

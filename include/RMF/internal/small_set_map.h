@@ -1,7 +1,7 @@
 #ifndef RMF_INTERNAL_SMALL_SET_MAP_H
 #define RMF_INTERNAL_SMALL_SET_MAP_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include <boost/version.hpp>
 
 #if BOOST_VERSION >= 104900

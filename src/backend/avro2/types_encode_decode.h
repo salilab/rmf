@@ -2,8 +2,8 @@
 #ifndef RMF_AVRO2_TYPE_ENCODE_DECODE_H
 #define RMF_AVRO2_TYPE_ENCODE_DECODE_H
 
-#include <RMF/constants.h>
-#include <RMF/log.h>
+#include "RMF/constants.h"
+#include "RMF/log.h"
 #include "encode_decode.h"
 #include "avrocpp/api/Specific.hh"
 #include "avrocpp/api/Encoder.hh"

@@ -8,7 +8,7 @@
 #include "avrocpp/api/Stream.hh"
 #include "avrocpp/api/Encoder.hh"
 #include "generated/embed_jsons.h"
-#include <RMF/info.h>
+#include "RMF/info.h"
 #include "common.h"
 
 namespace {

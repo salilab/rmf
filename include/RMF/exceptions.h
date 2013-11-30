@@ -9,7 +9,7 @@
 #ifndef RMF_EXCEPTIONS_H
 #define RMF_EXCEPTIONS_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include <boost/exception/exception.hpp>
 #include "compiler_macros.h"
 #include <string>
@@ -149,6 +149,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
 RMF_DISABLE_WARNINGS
 
-#include "internal/errors.h"
+#include "RMF/internal/errors.h"
 
 #endif /* RMF_EXCEPTIONS_H */

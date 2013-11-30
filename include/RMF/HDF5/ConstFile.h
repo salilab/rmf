@@ -9,7 +9,7 @@
 #ifndef RMF_HDF_5CONST_FILE_H
 #define RMF_HDF_5CONST_FILE_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "ConstGroup.h"
 
 RMF_ENABLE_WARNINGS namespace RMF {

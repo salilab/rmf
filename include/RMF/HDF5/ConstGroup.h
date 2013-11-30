@@ -9,7 +9,7 @@
 #ifndef RMF_HDF_5CONST_GROUP_H
 #define RMF_HDF_5CONST_GROUP_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "Object.h"
 #include "DataSetD.h"
 #include "ConstAttributes.h"

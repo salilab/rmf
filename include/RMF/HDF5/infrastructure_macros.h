@@ -13,7 +13,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <RMF/infrastructure_macros.h>
+#include "RMF/infrastructure_macros.h"
 
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
 namespace RMF {

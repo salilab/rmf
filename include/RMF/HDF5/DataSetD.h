@@ -9,7 +9,7 @@
 #ifndef RMF_HDF_5DATA_SET_D_H
 #define RMF_HDF_5DATA_SET_D_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "types.h"
 #include "Object.h"
 #include "MutableAttributes.h"

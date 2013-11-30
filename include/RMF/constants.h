@@ -9,7 +9,7 @@
 #ifndef RMF_CONSTANTS_H
 #define RMF_CONSTANTS_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 
 RMF_ENABLE_WARNINGS
 namespace RMF {

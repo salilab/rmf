@@ -9,7 +9,7 @@
 #ifndef RMF_VALIDATOR_H
 #define RMF_VALIDATOR_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "FileHandle.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>

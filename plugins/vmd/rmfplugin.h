@@ -1,12 +1,12 @@
 #include "molfile_plugin.h"
 
-#include <RMF/FileConstHandle.h>
-#include <RMF/decorator/physics.h>
-#include <RMF/decorator/sequence.h>
-#include <RMF/decorator/shape.h>
-#include <RMF/decorator/feature.h>
-#include <RMF/CoordinateTransformer.h>
-#include <RMF/log.h>
+#include "RMF/FileConstHandle.h"
+#include "RMF/decorator/physics.h"
+#include "RMF/decorator/sequence.h"
+#include "RMF/decorator/shape.h"
+#include "RMF/decorator/feature.h"
+#include "RMF/CoordinateTransformer.h"
+#include "RMF/log.h"
 #include <boost/scoped_array.hpp>
 #include <algorithm>
 

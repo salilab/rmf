@@ -2,8 +2,8 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
-#include <RMF/FileHandle.h>
-#include <RMF/NodeConstHandle.h>
+#include "RMF/FileHandle.h"
+#include "RMF/NodeConstHandle.h"
 #include "common.h"
 namespace {
 std::string description("Show an rmf file as text.");

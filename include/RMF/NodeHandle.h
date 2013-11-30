@@ -9,7 +9,7 @@
 #ifndef RMF_NODE_HANDLE_H
 #define RMF_NODE_HANDLE_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "internal/SharedData.h"
 #include "types.h"
 #include "ID.h"

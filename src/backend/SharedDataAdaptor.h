@@ -9,9 +9,9 @@
 #ifndef RMF_INTERNAL_SHARED_DATA_ADAPTOR_H
 #define RMF_INTERNAL_SHARED_DATA_ADAPTOR_H
 
-#include <RMF/config.h>
-#include <RMF/internal/SharedData.h>
-#include <RMF/log.h>
+#include "RMF/config.h"
+#include "RMF/internal/SharedData.h"
+#include "RMF/log.h"
 #include <boost/array.hpp>
 
 RMF_ENABLE_WARNINGS

@@ -9,7 +9,7 @@
 #ifndef RMF_FILE_CONST_HANDLE_H
 #define RMF_FILE_CONST_HANDLE_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "internal/SharedData.h"
 #include "internal/shared_data_ranges.h"
 #include "types.h"

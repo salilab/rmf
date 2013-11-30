@@ -9,8 +9,8 @@
 #ifndef RMF_INTERNAL_HDF5_DATA_SET_CACHE_1D_H
 #define RMF_INTERNAL_HDF5_DATA_SET_CACHE_1D_H
 
-#include <RMF/config.h>
-#include <RMF/HDF5/DataSetD.h>
+#include "RMF/config.h"
+#include "RMF/HDF5/DataSetD.h"
 #include "HDF5DataSetCacheD.h"
 #include <boost/multi_array.hpp>
 

@@ -6,7 +6,7 @@
  *
  */
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "factory.h"
 #include "io.h"
 #include <boost/shared_ptr.hpp>

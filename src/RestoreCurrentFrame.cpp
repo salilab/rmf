@@ -6,7 +6,7 @@
  *
  */
 
-#include <RMF/RestoreCurrentFrame.h>
+#include "RMF/RestoreCurrentFrame.h"
 
 RMF_ENABLE_WARNINGS
 

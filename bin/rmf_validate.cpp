@@ -2,8 +2,8 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
-#include <RMF/FileConstHandle.h>
-#include <RMF/utility.h>
+#include "RMF/FileConstHandle.h"
+#include "RMF/utility.h"
 #include "common.h"
 #include <sstream>
 

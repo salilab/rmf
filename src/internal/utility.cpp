@@ -6,8 +6,8 @@
  *
  */
 
-#include <RMF/internal/utility.h>
-#include <RMF/decorators.h>
+#include "RMF/internal/utility.h"
+#include "RMF/decorators.h"
 #include <stdexcept>
 
 RMF_ENABLE_WARNINGS namespace RMF {

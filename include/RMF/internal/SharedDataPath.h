@@ -9,7 +9,7 @@
 #ifndef RMF_INTERNAL_SHARED_DATA_PATH_H
 #define RMF_INTERNAL_SHARED_DATA_PATH_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "RMF/types.h"
 #include "RMF/names.h"
 #include "RMF/enums.h"

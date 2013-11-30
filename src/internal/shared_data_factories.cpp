@@ -6,7 +6,7 @@
  *
  */
 
-#include <RMF/internal/shared_data_factories.h>
+#include "RMF/internal/shared_data_factories.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 #include "backend/IO.h"

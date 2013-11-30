@@ -6,7 +6,7 @@
  *
  */
 
-#include <RMF/names.h>
+#include "RMF/names.h"
 #include <boost/algorithm/string.hpp>
 #include <cstdlib>
 #include <fstream>

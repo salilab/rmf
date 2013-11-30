@@ -12,7 +12,7 @@
 #include <sstream>
 #include <iostream>
 #include <string>
-#include <RMF/compiler_macros.h>
+#include "RMF/compiler_macros.h"
 #include <boost/config.hpp>
 #if defined(BOOST_NO_CXX11_RANGE_BASED_FOR) || BOOST_VERSION <= 104100
 #define RMF_FOREACH(v, r) BOOST_FOREACH(v, r)

@@ -9,7 +9,7 @@
 #ifndef SRC_BACKEND_AVRO2_FRAME_H_1753077812__H_
 #define SRC_BACKEND_AVRO2_FRAME_H_1753077812__H_
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "types.h"
 #include <avrocpp/api/DataFile.hh>
 #include <boost/shared_ptr.hpp>

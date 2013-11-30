@@ -9,7 +9,7 @@
 #ifndef RMF_LOG_H
 #define RMF_LOG_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include <string>
 #if RMF_HAS_LOG4CXX
 #include <log4cxx/logger.h>

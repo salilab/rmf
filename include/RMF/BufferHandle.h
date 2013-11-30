@@ -9,7 +9,7 @@
 #ifndef RMF_BUFFER_HANDLE_H
 #define RMF_BUFFER_HANDLE_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "infrastructure_macros.h"
 #include "exceptions.h"
 #include "BufferConstHandle.h"

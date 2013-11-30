@@ -7,7 +7,7 @@
  */
 
 #include "avro_schema_io.h"
-#include <RMF/decorators.h>
+#include "RMF/decorators.h"
 #include <generated/embed_jsons.h>
 #include <avrocpp/api/Compiler.hh>
 #include <stdexcept>

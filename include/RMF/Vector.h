@@ -9,7 +9,7 @@
 #ifndef RMF_VECTOR_H
 #define RMF_VECTOR_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include <boost/array.hpp>
 #include <algorithm>
 

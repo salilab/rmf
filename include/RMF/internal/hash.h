@@ -8,7 +8,7 @@
 #ifndef RMF_INTERNAL_HASH_H
 #define RMF_INTERNAL_HASH_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 
 RMF_PUSH_WARNINGS RMF_CLANG_PRAGMA(diagnostic ignored "-Wmismatched-tags")
 #include <boost/functional/hash.hpp>

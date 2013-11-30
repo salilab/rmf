@@ -9,7 +9,7 @@
 #ifndef RMF_INTERNAL_SHARED_DATA_RANGES_H
 #define RMF_INTERNAL_SHARED_DATA_RANGES_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "irange.h"
 #include "RMF/ID.h"
 

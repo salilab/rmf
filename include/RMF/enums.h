@@ -9,7 +9,7 @@
 #ifndef RMF_ENUMS_H
 #define RMF_ENUMS_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include <string>
 #include <iostream>
 

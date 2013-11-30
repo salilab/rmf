@@ -9,7 +9,7 @@
 #ifndef RMF_HDF_5GROUP_H
 #define RMF_HDF_5GROUP_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "ConstGroup.h"
 #include "MutableAttributes.h"
 

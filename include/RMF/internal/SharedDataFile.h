@@ -9,7 +9,7 @@
 #ifndef RMF_INTERNAL_SHARED_DATA_FILE_H
 #define RMF_INTERNAL_SHARED_DATA_FILE_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include <string>
 
 RMF_ENABLE_WARNINGS

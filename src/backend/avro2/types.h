@@ -2,12 +2,12 @@
 #ifndef RMF_AVRO2_TYPES_H
 #define RMF_AVRO2_TYPES_H
 
-#include <RMF/config.h>
-#include <RMF/ID.h>
-#include <RMF/types.h>
-#include <RMF/internal/SharedDataHierarchy.h>
-#include <RMF/internal/SharedDataData.h>
-#include <RMF/internal/small_set_map.h>
+#include "RMF/config.h"
+#include "RMF/ID.h"
+#include "RMF/types.h"
+#include "RMF/internal/SharedDataHierarchy.h"
+#include "RMF/internal/SharedDataData.h"
+#include "RMF/internal/small_set_map.h"
 
 #include "avrocpp/api/Specific.hh"
 #include "avrocpp/api/Encoder.hh"

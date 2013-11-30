@@ -9,8 +9,8 @@
 #ifndef RMF_INTERNAL_SHARED_DATA_MAPS_H
 #define RMF_INTERNAL_SHARED_DATA_MAPS_H
 
-#include <RMF/config.h>
-#include <RMF/log.h>
+#include "RMF/config.h"
+#include "RMF/log.h"
 
 #include <boost/unordered_map.hpp>
 

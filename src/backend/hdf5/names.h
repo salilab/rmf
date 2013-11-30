@@ -9,7 +9,7 @@
 #ifndef RMF_HDF5_NAMES_NAMES_H
 #define RMF_HDF5_NAMES_NAMES_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include <sstream>
 
 RMF_ENABLE_WARNINGS namespace RMF {

@@ -5,8 +5,8 @@
  *  Copyright 2007-2012 IMP Inventors. All rights reserved.
  *
  */
-#include <RMF/log.h>
-#include <RMF/exceptions.h>
+#include "RMF/log.h"
+#include "RMF/exceptions.h"
 #if RMF_HAS_LOG4CXX
 #include <log4cxx/basicconfigurator.h>
 #include <log4cxx/consoleappender.h>

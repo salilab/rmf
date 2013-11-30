@@ -9,8 +9,8 @@
 #ifndef RMF_INTERNAL_SHARED_DATA_HIERARCHY_H
 #define RMF_INTERNAL_SHARED_DATA_HIERARCHY_H
 
-#include <RMF/config.h>
-#include <RMF/enums.h>
+#include "RMF/config.h"
+#include "RMF/enums.h"
 #include "small_set_map.h"
 #include <boost/unordered_map.hpp>
 #include <boost/unordered_set.hpp>

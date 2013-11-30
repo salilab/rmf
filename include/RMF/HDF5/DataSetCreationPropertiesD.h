@@ -9,7 +9,7 @@
 #ifndef RMF_HDF_5DATA_SET_CREATION_PROPERTIES_D_H
 #define RMF_HDF_5DATA_SET_CREATION_PROPERTIES_D_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "DataSetAccessPropertiesD.h"
 
 RMF_ENABLE_WARNINGS namespace RMF {

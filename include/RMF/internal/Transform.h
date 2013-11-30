@@ -9,7 +9,7 @@
 #ifndef RMF_INTERNAL_TRANSFORM_H
 #define RMF_INTERNAL_TRANSFORM_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "RMF/types.h"
 #include "RMF/Vector.h"
 #include "RMF/infrastructure_macros.h"

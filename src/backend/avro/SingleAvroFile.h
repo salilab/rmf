@@ -9,9 +9,9 @@
 #ifndef RMF_INTERNAL_SINGLE_AVRO_FILE_H
 #define RMF_INTERNAL_SINGLE_AVRO_FILE_H
 
-#include <RMF/config.h>
-#include <RMF/internal/SharedData.h>
-#include <RMF/infrastructure_macros.h>
+#include "RMF/config.h"
+#include "RMF/internal/SharedData.h"
+#include "RMF/infrastructure_macros.h"
 #include "AvroKeysAndCategories.h"
 #include <backend/avro/AllJSON.h>
 

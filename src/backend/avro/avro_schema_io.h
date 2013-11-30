@@ -8,7 +8,7 @@
 #ifndef RMF_INTERNAL_AVRO_SCHEMA_IO_H
 #define RMF_INTERNAL_AVRO_SCHEMA_IO_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "avrocpp/api/ValidSchema.hh"
 #include "avrocpp/api/DataFile.hh"
 #include "avrocpp/api/Stream.hh"
@@ -17,8 +17,8 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/version.hpp>
 #include <cstdio>
-#include <RMF/exceptions.h>
-#include <RMF/log.h>
+#include "RMF/exceptions.h"
+#include "RMF/log.h"
 
 RMF_ENABLE_WARNINGS
 

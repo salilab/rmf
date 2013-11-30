@@ -6,7 +6,7 @@
  *
  */
 
-#include <RMF/internal/SharedDataPath.h>
+#include "RMF/internal/SharedDataPath.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/version.hpp>
 

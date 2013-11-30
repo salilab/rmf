@@ -9,7 +9,7 @@
 #ifndef RMF_UTILITY_H
 #define RMF_UTILITY_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "internal/errors.h"
 #include "NodeConstHandle.h"
 

@@ -9,9 +9,9 @@
 #ifndef RMF_HDF_5_HANDLE_H
 #define RMF_HDF_5_HANDLE_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "infrastructure_macros.h"
-#include <RMF/exceptions.h>
+#include "RMF/exceptions.h"
 #include <H5Ipublic.h>
 #include <algorithm>
 #include <vector>

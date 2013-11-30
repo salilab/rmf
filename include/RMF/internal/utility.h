@@ -8,7 +8,7 @@
 #ifndef RMF_INTERNAL_UTILITY_H
 #define RMF_INTERNAL_UTILITY_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 
 RMF_ENABLE_WARNINGS
 namespace RMF {

@@ -2,8 +2,8 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
-#include <RMF/FileHandle.h>
-#include <RMF/utility.h>
+#include "RMF/FileHandle.h"
+#include "RMF/utility.h"
 #include "common.h"
 #include <avrocpp/api/Compiler.hh>
 #include <avrocpp/api/DataFile.hh>

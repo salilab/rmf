@@ -10,8 +10,8 @@
 #define RMF_INTERNAL_AVRO_SHARED_DATA_IMPL_H
 
 #include "AvroSharedData.h"
-#include <RMF/NodeHandle.h>
-#include <RMF/Validator.h>
+#include "RMF/NodeHandle.h"
+#include "RMF/Validator.h"
 #include <boost/unordered_set.hpp>
 #include <boost/lexical_cast.hpp>
 #include <avrocpp/api/DataFile.hh>

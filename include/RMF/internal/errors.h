@@ -9,7 +9,7 @@
 #ifndef RMF_INTERNAL_ERRORS_H
 #define RMF_INTERNAL_ERRORS_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include <boost/exception/all.hpp>
 #include <sstream>
 

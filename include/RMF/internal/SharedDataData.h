@@ -9,7 +9,7 @@
 #ifndef RMF_INTERNAL_SHARED_DATA_DATA_H
 #define RMF_INTERNAL_SHARED_DATA_DATA_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "RMF/types.h"
 #include "RMF/infrastructure_macros.h"
 #include "small_set_map.h"

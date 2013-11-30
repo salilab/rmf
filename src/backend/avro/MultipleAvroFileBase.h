@@ -9,7 +9,7 @@
 #ifndef RMF_INTERNAL_SINGLE_AVRO_FILE_BASE_H
 #define RMF_INTERNAL_SINGLE_AVRO_FILE_BASE_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "AvroKeysAndCategories.h"
 #include <backend/avro/AllJSON.h>
 

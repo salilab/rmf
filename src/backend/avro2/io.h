@@ -9,16 +9,16 @@
 #ifndef RMF_AVRO2_IO_H
 #define RMF_AVRO2_IO_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "backend/IO.h"
 #include "file_data.h"
 #include "frame.h"
 #include "internal/shared_data_maps.h"
 #include "traits.h"
 #include "types.h"
-#include <RMF/infrastructure_macros.h>
-#include <RMF/internal/SharedData.h>
-#include <RMF/internal/shared_data_ranges.h>
+#include "RMF/infrastructure_macros.h"
+#include "RMF/internal/SharedData.h"
+#include "RMF/internal/shared_data_ranges.h"
 #include <avrocpp/api/Compiler.hh>
 #include <boost/filesystem.hpp>
 #include <boost/make_shared.hpp>

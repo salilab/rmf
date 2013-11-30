@@ -6,8 +6,8 @@
  *
  */
 
-#include <RMF/HDF5/Group.h>
-#include <RMF/HDF5/File.h>
+#include "RMF/HDF5/Group.h"
+#include "RMF/HDF5/File.h"
 #include <H5Fpublic.h>
 #include <H5public.h>
 #include <boost/scoped_array.hpp>

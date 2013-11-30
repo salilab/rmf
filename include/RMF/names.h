@@ -9,7 +9,7 @@
 #ifndef RMF_NAMES_H
 #define RMF_NAMES_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "types.h"
 #include <sstream>
 

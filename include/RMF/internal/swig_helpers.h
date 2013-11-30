@@ -9,9 +9,9 @@
 #define RMF_INTERNAL_SWIG_HELPERS_H
 
 // Python.h must be included first
-#include <RMF/config.h>
-#include <RMF/infrastructure_macros.h>
-#include <RMF/exceptions.h>
+#include "RMF/config.h"
+#include "RMF/infrastructure_macros.h"
+#include "RMF/exceptions.h"
 #include <boost/utility.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/type_traits/is_base_of.hpp>

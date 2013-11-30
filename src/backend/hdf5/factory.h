@@ -2,7 +2,7 @@
 #ifndef SRC_BACKEND_HDF5_FACTORY__H_
 #define SRC_BACKEND_HDF5_FACTORY__H_
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "backend/IOFactory.h"
 
 RMF_ENABLE_WARNINGS

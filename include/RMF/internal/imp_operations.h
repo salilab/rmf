@@ -9,7 +9,7 @@
 #ifndef RMF_INTERNAL_RMF_OPERATIONS_H
 #define RMF_INTERNAL_RMF_OPERATIONS_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "RMF/NodeHandle.h"
 #include "RMF/FileHandle.h"
 #include "RMF/types.h"
