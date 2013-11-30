@@ -29,7 +29,7 @@ void clear_data(RMF_avro_backend::Data& data, FrameID frame) {
 }
 
 void MultipleAvroFileReader::set_loaded_frame(FrameID frame) {
-  RMF_TRACE(get_avro_logger(), "Loading frame " << frame);
+  RMF_TRACE("Loading frame " << frame);
   null_data_.frame = frame.get_index();
   for (unsigned int i = 0; i < categories_.size(); ++i) {
     if (!categories_[i].reader) {
@@ -40,7 +40,7 @@ void MultipleAvroFileReader::set_loaded_frame(FrameID frame) {
       RMF_INTERNAL_CHECK(categories_[i].reader, "No old reader found");
       std::string name = get_category_dynamic_file_path(Category(i));
       try {
-        RMF_TRACE(get_avro_logger(), "Opening category file for "
+        RMF_TRACE("Opening category file for "
                                          << get_name(Category(i)));
         categories_[i].reader.reset();
         categories_[i].reader.reset(
@@ -60,17 +60,17 @@ void MultipleAvroFileReader::set_loaded_frame(FrameID frame) {
            static_cast<unsigned int>(categories_[i].data.frame)) {
       if (!categories_[i].reader->read(categories_[i].data)) {
         // std::cout << "Out of data looking for " << frame << std::endl;
-        RMF_TRACE(get_avro_logger(), "Out of data for category "
+        RMF_TRACE("Out of data for category "
                                          << get_name(Category(i)));
         clear_data(categories_[i].data, frame);
         break;
       } else {
-        RMF_TRACE(get_avro_logger(), "Loaded category "
+        RMF_TRACE("Loaded category "
                                          << get_name(Category(i)));
       }
       if (frame.get_index() <
           static_cast<unsigned int>(categories_[i].data.frame)) {
-        RMF_TRACE(get_avro_logger(), "Missing frame for category "
+        RMF_TRACE("Missing frame for category "
                                          << get_name(Category(i)));
         clear_data(categories_[i].data, frame);
         break;
@@ -124,7 +124,7 @@ void MultipleAvroFileReader::initialize_categories() {
   {                                                                         \
     bool success;                                                           \
     try {                                                                   \
-      RMF_TRACE(get_avro_logger(), "Opening " #lcname " data");             \
+      RMF_TRACE("Opening " #lcname " data");             \
       internal_avro::DataFileReader<UCName> re(                             \
           get_##lcname##_file_path().c_str(),                               \
           internal_avro::compileJsonSchemaFromString(                       \
@@ -166,7 +166,7 @@ void MultipleAvroFileReader::reload() {
                 IOException);
     }
   } else {
-    RMF_WARN(get_avro_logger(), "Ignoring frames data in old rmf2 file.");
+    RMF_WARN("Ignoring frames data in old rmf2 file.");
   }
 
   initialize_categories();

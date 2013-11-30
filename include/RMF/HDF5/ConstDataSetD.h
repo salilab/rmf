@@ -75,7 +75,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       // pos_.reset(new hsize_t[dim_]);
       // sel_= new SharedHandle(H5Dget_space(h_->get_hid()), &H5Sclose);
       initialize_handles();
-      RMF_TRACE(get_logger(), "Opened data set with size " << get_size());
+      RMF_TRACE("Opened data set with size " << get_size());
     }
     friend class ConstGroup;
 

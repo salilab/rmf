@@ -59,7 +59,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
             parent_.get_child_data_set<typename TypeTraits::HDF5Traits, 1>(
                 name_));
       } else {
-        RMF_TRACE(get_logger(), "No data set " << name);
+        RMF_TRACE("No data set " << name);
         dirty_begin_ = 0;
         dirty_end_ = 0;
       }

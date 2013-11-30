@@ -44,7 +44,7 @@ void SharedData::set_loaded_frame(FrameID frame) {
       frame == FrameID() || frame.get_index() < get_number_of_frames(),
       "Trying to load a frame that isn't there");
   if (frame == get_loaded_frame()) return;
-  RMF_INFO(get_logger(), "Setting loaded frame to " << frame);
+  RMF_INFO("Setting loaded frame to " << frame);
   SharedDataLoadedFrame::set_loaded_frame(frame);
 
   clear_loaded_values();
@@ -62,12 +62,12 @@ FrameID SharedData::add_frame(std::string name, FrameType type) {
   if (cl != FrameID()) {
     add_child_frame(ret);
     if (SharedDataFile::get_is_dirty()) {
-      RMF_INFO(get_logger(), "Flushing file info");
+      RMF_INFO("Flushing file info");
       io_->save_file(this);
       SharedDataFile::set_is_dirty(false);
     }
     if (SharedDataHierarchy::get_is_dirty()) {
-      RMF_INFO(get_logger(), "Flushing node hierarchy");
+      RMF_INFO("Flushing node hierarchy");
       io_->save_hierarchy(this);
       SharedDataHierarchy::set_is_dirty(false);
     }
@@ -88,19 +88,19 @@ FrameID SharedData::add_frame(std::string name, FrameType type) {
 
 void SharedData::flush() {
   if (!write_) return;
-  RMF_INFO(get_logger(), "Flushing file " << get_file_path());
+  RMF_INFO("Flushing file " << get_file_path());
   if (SharedDataFile::get_is_dirty()) {
-    RMF_INFO(get_logger(), "Flushing file info");
+    RMF_INFO("Flushing file info");
     io_->save_file(this);
     SharedDataFile::set_is_dirty(false);
   }
   if (SharedDataHierarchy::get_is_dirty()) {
-    RMF_INFO(get_logger(), "Flushing node hierarchy");
+    RMF_INFO("Flushing node hierarchy");
     io_->save_hierarchy(this);
     SharedDataHierarchy::set_is_dirty(false);
   }
   if (get_static_is_dirty()) {
-    RMF_INFO(get_logger(), "Saving static frame");
+    RMF_INFO("Saving static frame");
     io_->save_static_frame(this);
     set_static_is_dirty(false);
   }
@@ -108,7 +108,7 @@ void SharedData::flush() {
 }
 
 void SharedData::reload() {
-  RMF_INFO(get_logger(), "(Re)loading file " << get_file_path());
+  RMF_INFO("(Re)loading file " << get_file_path());
   SharedDataHierarchy::clear();
   io_->load_file(this);
   SharedDataFile::set_is_dirty(false);
@@ -153,7 +153,7 @@ void SharedData::clear_static_values() { RMF_FOREACH_TYPE(RMF_CLEAR_STATIC); }
 SharedData::~SharedData() {
   if (write_) {
     try {
-      RMF_INFO(get_logger(), "Closing file " << get_file_path());
+      RMF_INFO("Closing file " << get_file_path());
       flush();
       if (get_loaded_frame() != FrameID()) {
         io_->save_loaded_frame(this);

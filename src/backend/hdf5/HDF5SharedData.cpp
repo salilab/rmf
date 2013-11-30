@@ -121,7 +121,7 @@ HDF5SharedData::HDF5SharedData(std::string g, bool create, bool read_only)
   if (create) {
     add_node("root", ROOT);
   } else {
-    RMF_INFO(get_logger(), "Found " << node_names_.get_size() << " nodes");
+    RMF_INFO("Found " << node_names_.get_size() << " nodes");
     RMF_USAGE_CHECK(
         get_name(NodeID(0)) == "root",
         std::string("Root node is not so named ") + get_name(NodeID(0)));
@@ -358,7 +358,7 @@ void HDF5SharedData::reload() {
   per_frame_##lcname##_data_sets_.set_current_frame(frame);
 
 void HDF5SharedData::set_loaded_frame(FrameID frame) {
-  RMF_TRACE(get_logger(), "Loading frame " << frame);
+  RMF_TRACE("Loading frame " << frame);
   BackwardsIOBase::set_loaded_frame(frame);
   RMF_FOREACH_BACKWARDS_TYPE(RMF_HDF5_SET_FRAME);
 }

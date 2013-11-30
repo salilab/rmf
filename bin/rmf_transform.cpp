@@ -88,8 +88,8 @@ int main(int argc, char** argv) {
     } else {
       translation = RMF::Floats(0, 3);
     }
-    RMF_INFO(RMF::get_logger(), "Scaling model by " << scale);
-    RMF_INFO(RMF::get_logger(), "Translating model by " << translation[0] << " "
+    RMF_INFO("Scaling model by " << scale);
+    RMF_INFO("Translating model by " << translation[0] << " "
                                                         << translation[1] << " "
                                                         << translation[2]);
 
@@ -106,7 +106,7 @@ int main(int argc, char** argv) {
     RMF::decorator::SegmentFactory sf(rh);
     RMF_FOREACH(RMF::FrameID frame, rhi.get_frames()) {
       RMF::clone_loaded_frame(rhi, rh);
-      RMF_INFO(RMF::get_logger(), "Processing frame " << frame);
+      RMF_INFO("Processing frame " << frame);
       rh.set_current_frame(frame);
       transform(rh.get_root_node(), ipf, rpf, rff, bf, cf, sf, scale,
                 translation);

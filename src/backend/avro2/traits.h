@@ -35,12 +35,12 @@ struct FileWriterTraitsBase {
   FileWriterTraitsBase(std::string path) : path_(path) {}
   template <class T>
   void write(const T &t) {
-    RMF_INFO(get_logger(), "Writing to file");
+    RMF_INFO("Writing to file");
     avro2::write(writer_.get(), t);
   }
   void flush() {
     if (writer_) {
-      RMF_INFO(get_logger(), "Flushing file");
+      RMF_INFO("Flushing file");
       writer_->flush();
     }
   }
@@ -60,7 +60,7 @@ struct ReaderTraits {
   template <class T>
   void write(const T &) {}
   Frame get_frame(const FileData &file_data, FrameID old_frame, FrameID id) {
-    RMF_INFO(get_logger(), "Loading frame " << id);
+    RMF_INFO("Loading frame " << id);
     if (old_frame == FrameID() || id < old_frame) reader_.reset();
 
     RMF_INTERNAL_CHECK(file_data.frame_block_offsets.find(id) !=
@@ -71,23 +71,23 @@ struct ReaderTraits {
     if (!reader_ || reader_->blockOffsetBytes() > offset) reader_.reset();
 
     if (!reader_) {
-      RMF_INFO(get_logger(), "Creating new reader");
+      RMF_INFO("Creating new reader");
       reader_ = base_frame_.template get_reader<Frame>();
     }
     if (reader_->blockOffsetBytes() != offset) {
-      RMF_INFO(get_logger(), "Seeking to " << offset << " from "
+      RMF_INFO("Seeking to " << offset << " from "
                                            << reader_->blockOffsetBytes());
       try {
         reader_->seekBlockBytes(offset);
       }
       catch (std::exception) {
-        RMF_INFO(get_logger(), "Seeking not supported");
+        RMF_INFO("Seeking not supported");
       }
     }
     return avro2::get_frame(id, *reader_);
   }
   FileData get_file_data() {
-    RMF_INFO(get_logger(), "Loading file data");
+    RMF_INFO("Loading file data");
     boost::shared_ptr<internal_avro::DataFileReader<FileData> > reader =
         base_file_data_.template get_reader<FileData>();
     return avro2::get_file_data(*reader);
@@ -129,11 +129,11 @@ struct BufferWriterTraits {
   }
   template <class T>
   void write(const T &t) {
-    RMF_INFO(get_logger(), "Writing to buffer");
+    RMF_INFO("Writing to buffer");
     avro2::write(writer_.get(), t);
   }
   void flush() {
-    RMF_INFO(get_logger(), "Flushing to buffer");
+    RMF_INFO("Flushing to buffer");
     // avoid rewriting later
     writer_->flush();
     buffer_.access_buffer().clear();

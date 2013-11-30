@@ -18,17 +18,17 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 namespace avro2 {
 Frame get_frame(FrameID id, internal_avro::DataFileReader<Frame>& reader) {
-  RMF_TRACE(get_logger(), "Looking for frame " << id);
+  RMF_TRACE("Looking for frame " << id);
 
   do {
     Frame ret;
     reader.read(ret);
     if (ret.id == id) {
-      RMF_INFO(get_logger(), "Loaded frame " << ret.id << " " << id
+      RMF_INFO("Loaded frame " << ret.id << " " << id
                                              << std::endl);
       return ret;
     } else {
-      RMF_INFO(get_logger(), "Found frame for frame " << ret.id);
+      RMF_INFO("Found frame for frame " << ret.id);
     }
   } while (true);
 }

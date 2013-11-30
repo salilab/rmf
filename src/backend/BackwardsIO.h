@@ -451,7 +451,7 @@ struct BackwardsIO : public IO {
 
   virtual void load_file(internal::SharedData *shared_data) RMF_OVERRIDE {
     sd_->reload();
-    RMF_INFO(get_logger(), "Loading file");
+    RMF_INFO("Loading file");
     RMF::internal::clone_file(sd_.get(), shared_data);
     shared_data->set_file_type(sd_->get_file_type());
     shared_data->set_number_of_frames(sd_->get_number_of_frames());
@@ -461,20 +461,20 @@ struct BackwardsIO : public IO {
   }
 
   virtual void save_file(const internal::SharedData *shared_data) RMF_OVERRIDE {
-    RMF_INFO(get_logger(), "Saving file");
+    RMF_INFO("Saving file");
     RMF::internal::clone_file(shared_data, sd_.get());
     flush();
   }
 
   virtual void save_loaded_frame(const internal::SharedData *shared_data)
       RMF_OVERRIDE {
-    RMF_INFO(get_logger(), "Saving frame " << shared_data->get_loaded_frame());
+    RMF_INFO("Saving frame " << shared_data->get_loaded_frame());
     FrameID cur = shared_data->get_loaded_frame();
     RMF_USAGE_CHECK(cur.get_index() == sd_->get_number_of_frames(),
                     "Saving a frame that is not the next one");
     // ignore nesting relationships for now
     if (cur.get_index() >= sd_->get_number_of_frames()) {
-      RMF_TRACE(get_logger(), "Adding new frame for " << cur);
+      RMF_TRACE("Adding new frame for " << cur);
       FrameID nfid = sd_->add_frame(shared_data->get_loaded_frame_name(),
                                     shared_data->get_loaded_frame_type());
       RMF_UNUSED(nfid);
@@ -488,7 +488,7 @@ struct BackwardsIO : public IO {
 
   virtual void load_loaded_frame(internal::SharedData *shared_data)
       RMF_OVERRIDE {
-    RMF_INFO(get_logger(), "Loading frame " << shared_data->get_loaded_frame());
+    RMF_INFO("Loading frame " << shared_data->get_loaded_frame());
     FrameID cur = shared_data->get_loaded_frame();
     sd_->set_loaded_frame(cur);
     shared_data->set_loaded_frame_name(sd_->get_loaded_frame_name());
@@ -501,13 +501,13 @@ struct BackwardsIO : public IO {
   }
 
   virtual void load_hierarchy(internal::SharedData *shared_data) RMF_OVERRIDE {
-    RMF_INFO(get_logger(), "Loading hierarchy");
+    RMF_INFO("Loading hierarchy");
     RMF::internal::clone_hierarchy(sd_.get(), shared_data);
   }
 
   virtual void save_hierarchy(const internal::SharedData *shared_data)
       RMF_OVERRIDE {
-    RMF_INFO(get_logger(), "Saving hierarchy");
+    RMF_INFO("Saving hierarchy");
     RMF::internal::clone_hierarchy(shared_data, sd_.get());
   }
 

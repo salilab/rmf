@@ -73,7 +73,7 @@ struct codec_traits<RMF::avro2::StringAccumulator> {
 template <class T, class Ty>
 struct codec_traits<RMF::internal::HierarchyNode<T, Ty> > {
   static void encode(Encoder& e, const RMF::internal::HierarchyNode<T, Ty>& v) {
-    RMF_TRACE(RMF::get_logger(), "Encoding node " << v.name << " " << v.type);
+    RMF_TRACE("Encoding node " << v.name << " " << v.type);
     internal_avro::encode(e, v.name);
     internal_avro::encode(e, v.type);
     internal_avro::encode(e, v.parents);
@@ -82,7 +82,7 @@ struct codec_traits<RMF::internal::HierarchyNode<T, Ty> > {
   static void decode(Decoder& d, RMF::internal::HierarchyNode<T, Ty>& v) {
     internal_avro::decode(d, v.name);
     internal_avro::decode(d, v.type);
-    RMF_TRACE(RMF::get_logger(), "Found node " << v.name << " " << v.type);
+    RMF_TRACE("Found node " << v.name << " " << v.type);
     internal_avro::decode(d, v.parents);
     internal_avro::decode(d, v.children);
   }
@@ -91,8 +91,7 @@ struct codec_traits<RMF::internal::HierarchyNode<T, Ty> > {
 template <>
 struct codec_traits<RMF::avro2::HierarchyNode> {
   static void encode(Encoder& e, const RMF::avro2::HierarchyNode& v) {
-    RMF_TRACE(RMF::get_logger(), "Encoding node " << v.id << " " << v.name
-                                                  << " " << v.type);
+    RMF_TRACE("Encoding node " << v.id << " " << v.name << " " << v.type);
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.name);
     internal_avro::encode(e, v.type);
@@ -102,8 +101,7 @@ struct codec_traits<RMF::avro2::HierarchyNode> {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.name);
     internal_avro::decode(d, v.type);
-    RMF_TRACE(RMF::get_logger(), "Found node " << v.id << " " << v.name << " "
-                                               << v.type);
+    RMF_TRACE("Found node " << v.id << " " << v.name << " " << v.type);
     internal_avro::decode(d, v.parents);
   }
 };
@@ -233,14 +231,14 @@ struct codec_traits<RMF::avro2::FileData> {
       internal_avro::decode(d, junk_type);
       RMF::FrameIDs frame_parents;
       internal_avro::decode(d, frame_parents);
-      RMF_INFO(RMF::get_logger(), "Found frame " << v.cur_id);
+      RMF_INFO("Found frame " << v.cur_id);
       RMF_FOREACH(RMF::FrameID p, frame_parents) {
         v.frame_children.resize(
             std::max<std::size_t>(v.frame_children.size(), p.get_index() + 1));
         v.frame_children[p.get_index()].push_back(v.cur_id);
       }
     } else {
-      RMF_INFO(RMF::get_logger(), "Found static frame");
+      RMF_INFO("Found static frame");
       v.cur_id = RMF::FrameID();
       internal_avro::decode(d, v.description);
       internal_avro::decode(d, v.producer);

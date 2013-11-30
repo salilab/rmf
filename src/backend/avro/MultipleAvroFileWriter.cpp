@@ -62,7 +62,7 @@ MultipleAvroFileWriter::~MultipleAvroFileWriter() { commit(); }
   }
 
 void MultipleAvroFileWriter::commit() {
-  RMF_TRACE(get_avro_logger(), "Writing frame " << frame_.index);
+  RMF_TRACE("Writing frame " << frame_.index);
   for (unsigned int i = 0; i < categories_.size(); ++i) {
     if (categories_[i].dirty) {
       if (!categories_[i].writer) {
@@ -123,7 +123,7 @@ void MultipleAvroFileWriter::commit() {
 
 FrameID MultipleAvroFileWriter::add_frame(std::string name, FrameType t) {
   unsigned int index = get_number_of_frames();
-  RMF_TRACE(get_avro_logger(), "Adding frame " << index << " under "
+  RMF_TRACE("Adding frame " << index << " under "
                                                << get_loaded_frame());
   set_loaded_frame(FrameID(index));
   frame_.name = name;

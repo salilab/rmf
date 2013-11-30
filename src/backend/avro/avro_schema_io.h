@@ -34,7 +34,7 @@ void show(const RMF_avro_backend::Data& data, std::ostream& out = std::cout);
   if (success != 0) {                                                      \
     RMF_THROW(Message("Could not rename") << Component(new), IOException); \
   }                                                                        \
-  RMF_TRACE(get_avro_logger(), "Renamed " << old << " to " << new)
+  RMF_TRACE("Renamed " << old << " to " << new)
 #else
 
 #define RMF_RENAME(old, new)                                        \
@@ -46,7 +46,7 @@ void show(const RMF_avro_backend::Data& data, std::ostream& out = std::cout);
                   << Component(new),                                \
               IOException);                                         \
   }                                                                 \
-  RMF_TRACE(get_avro_logger(), "Renamed " << old << " to " << new)
+  RMF_TRACE("Renamed " << old << " to " << new)
 
 #endif
 
@@ -59,7 +59,7 @@ void write(const Data& data, internal_avro::ValidSchema schema,
            std::string path) {
   std::string temppath = path + ".new";
   {
-    RMF_TRACE(get_avro_logger(), "Writing file " << temppath);
+    RMF_TRACE("Writing file " << temppath);
     try {
       internal_avro::DataFileWriter<Data> wr(temppath.c_str(), schema);
       wr.write(data);

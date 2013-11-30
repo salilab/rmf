@@ -70,7 +70,7 @@ void load(internal::SharedData *shared_data, const KeyMaps<Traits> &keys,
                             keys.name.find(kp.first)->second, Traits());
   }
   if (!data.empty()) {
-    RMF_TRACE(get_logger(), "Found data for " << data.size() << " nodes.");
+    RMF_TRACE("Found data for " << data.size() << " nodes.");
   }
   Loader::access_data(shared_data, Traits()) = data;
 }
@@ -268,7 +268,7 @@ void Avro2IO<RW>::load_file(internal::SharedData *shared_data) {
   // for some weird reason, mac os 10.8 clang needs this two step thing
   FileData fd = rw_.get_file_data();
   file_data_ = fd;  // get_file_data(path_);
-  RMF_INFO(get_logger(), "Found " << get_number_of_frames() << " frames");
+  RMF_INFO("Found " << get_number_of_frames() << " frames");
   shared_data->set_description(file_data_.description);
   shared_data->set_producer(file_data_.producer);
   shared_data->set_number_of_frames(get_number_of_frames());
