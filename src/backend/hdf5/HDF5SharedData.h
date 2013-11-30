@@ -9,19 +9,18 @@
 #ifndef RMF_INTERNAL_HDF_5SHARED_DATA_H
 #define RMF_INTERNAL_HDF_5SHARED_DATA_H
 
-#include <RMF/config.h>
-#include "../BackwardsIOBase.h"
-#include <backend/backward_types.h>
-#include <RMF/compiler_macros.h>
-#include <RMF/HDF5/Group.h>
-#include <RMF/HDF5/File.h>
-#include <RMF/infrastructure_macros.h>
-#include <RMF/ID.h>
-#include <RMF/types.h>
-#include <RMF/enums.h>
-#include <RMF/constants.h>
-#include <boost/unordered_map.hpp>
-#include <boost/unordered_set.hpp>
+#include "RMF/config.h"
+#include "backend/BackwardsIOBase.h"
+#include "backend/backward_types.h"
+#include "RMF/compiler_macros.h"
+#include "RMF/HDF5/Group.h"
+#include "RMF/HDF5/File.h"
+#include "RMF/infrastructure_macros.h"
+#include "RMF/ID.h"
+#include "RMF/types.h"
+#include "RMF/enums.h"
+#include "RMF/constants.h"
+#include "RMF/internal/large_set_map.h"
 
 #include "HDF5DataSetCacheD.h"
 #include "HDF5DataSetCache2D.h"
@@ -74,9 +73,9 @@ class HDF5SharedData : public backends::BackwardsIOBase {
     std::string name;
   };
 
-  typedef boost::unordered_map<Category, CategoryData> CategoryDataMap;
+  typedef RMF_LARGE_UNORDERED_MAP<Category, CategoryData> CategoryDataMap;
   CategoryDataMap category_data_map_;
-  typedef boost::unordered_map<std::string, Category> NameCategoryMap;
+  typedef RMF_LARGE_UNORDERED_MAP<std::string, Category> NameCategoryMap;
   NameCategoryMap name_category_map_;
 
   struct KeyData {
@@ -86,10 +85,10 @@ class HDF5SharedData : public backends::BackwardsIOBase {
     int type_index;
   };
 
-  typedef boost::unordered_map<unsigned int, KeyData> KeyDataMap;
+  typedef RMF_LARGE_UNORDERED_MAP<unsigned int, KeyData> KeyDataMap;
   KeyDataMap key_data_map_;
-  typedef boost::unordered_map<std::string, unsigned int> NameKeyInnerMap;
-  typedef boost::unordered_map<Category, NameKeyInnerMap> NameKeyMap;
+  typedef RMF_LARGE_UNORDERED_MAP<std::string, unsigned int> NameKeyInnerMap;
+  typedef RMF_LARGE_UNORDERED_MAP<Category, NameKeyInnerMap> NameKeyMap;
   NameKeyMap name_key_map_;
 
   Category link_category_;
@@ -212,7 +211,7 @@ class HDF5SharedData : public backends::BackwardsIOBase {
     }
   };
   mutable Ints max_cache_;
-  mutable boost::unordered_set<std::string> known_data_sets_;
+  mutable RMF_LARGE_UNORDERED_SET<std::string> known_data_sets_;
   KeyNameDataSetCache key_name_data_sets_;
   RMF_FOREACH_BACKWARDS_TYPE(RMF_HDF5_SHARED_DATA_TYPE);
 

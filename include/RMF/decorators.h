@@ -6,6 +6,8 @@
  *
  */
 
+// IWYU pragma: private
+
 #include <RMF/decorator/physics.h>
 #include <RMF/decorator/sequence.h>
 #include <RMF/decorator/shape.h>

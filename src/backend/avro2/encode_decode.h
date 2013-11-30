@@ -117,13 +117,13 @@ struct codec_traits<std::pair<K, V> > {
 };
 
 template <class K, class V>
-struct codec_traits<boost::unordered_map<K, V> > {
+struct codec_traits<RMF_LARGE_UNORDERED_MAP<K, V> > {
   typedef std::pair<K, V> KP;
-  static void encode(Encoder& e, const boost::unordered_map<K, V>& v) {
+  static void encode(Encoder& e, const RMF_LARGE_UNORDERED_MAP<K, V>& v) {
     std::vector<KP> pairs(v.begin(), v.end());
     internal_avro::encode(e, pairs);
   }
-  static void decode(Decoder& d, boost::unordered_map<K, V>& v) {
+  static void decode(Decoder& d, RMF_LARGE_UNORDERED_MAP<K, V>& v) {
     std::vector<KP> values;
     internal_avro::decode(d, values);
     v.insert(values.begin(), values.end());
@@ -131,12 +131,12 @@ struct codec_traits<boost::unordered_map<K, V> > {
 };
 
 template <class K>
-struct codec_traits<boost::unordered_set<K> > {
-  static void encode(Encoder& e, const boost::unordered_set<K>& v) {
+struct codec_traits<RMF_LARGE_UNORDERED_SET<K> > {
+  static void encode(Encoder& e, const RMF_LARGE_UNORDERED_SET<K>& v) {
     std::vector<K> values(v.begin(), v.end());
     internal_avro::encode(e, values);
   }
-  static void decode(Decoder& d, boost::unordered_set<K>& v) {
+  static void decode(Decoder& d, RMF_LARGE_UNORDERED_SET<K>& v) {
     std::vector<K> values;
     internal_avro::decode(d, values);
     v.insert(values.begin(), values.end());

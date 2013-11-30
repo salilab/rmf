@@ -13,7 +13,7 @@
 #include "RMF/types.h"
 #include "RMF/infrastructure_macros.h"
 #include "small_set_map.h"
-#include <boost/unordered_map.hpp>
+#include "large_set_map.h"
 
 RMF_ENABLE_WARNINGS
 
@@ -21,8 +21,8 @@ namespace RMF {
 namespace internal {
 
 template <class Traits>
-struct KeyData : public boost::unordered_map<NodeID, typename Traits::Type> {
-  typedef boost::unordered_map<NodeID, typename Traits::Type> P;
+struct KeyData : public RMF_LARGE_UNORDERED_MAP<NodeID, typename Traits::Type> {
+  typedef RMF_LARGE_UNORDERED_MAP<NodeID, typename Traits::Type> P;
   KeyData(const P& d) : P(d) {}
   KeyData() {}
 };

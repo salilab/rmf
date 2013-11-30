@@ -9,13 +9,13 @@
 #ifndef RMF_INTERNAL_AVRO_KEYS_AND_CATEGORIES_H
 #define RMF_INTERNAL_AVRO_KEYS_AND_CATEGORIES_H
 
-#include <RMF/config.h>
-#include <backend/BackwardsIOBase.h>
-#include <RMF/types.h>
-#include <RMF/ID.h>
-#include <RMF/infrastructure_macros.h>
-#include <RMF/constants.h>
-#include <boost/unordered_map.hpp>
+#include "RMF/config.h"
+#include "backend/BackwardsIOBase.h"
+#include "RMF/types.h"
+#include "RMF/ID.h"
+#include "RMF/infrastructure_macros.h"
+#include "RMF/constants.h"
+#include "RMF/internal/large_set_map.h"
 #include "AvroSharedData.types.h"
 
 RMF_ENABLE_WARNINGS
@@ -24,18 +24,18 @@ namespace RMF {
 namespace avro_backend {
 
 class AvroKeysAndCategories : public backends::BackwardsIOBase {
-  typedef boost::unordered_map<Category, std::string> CategoryNameMap;
-  typedef boost::unordered_map<std::string, Category> NameCategoryMap;
+  typedef RMF_LARGE_UNORDERED_MAP<Category, std::string> CategoryNameMap;
+  typedef RMF_LARGE_UNORDERED_MAP<std::string, Category> NameCategoryMap;
   CategoryNameMap category_name_map_;
   NameCategoryMap name_category_map_;
   struct KeyData {
     std::string name;
     Category category;
   };
-  typedef boost::unordered_map<unsigned int, KeyData> KeyDataMap;
+  typedef RMF_LARGE_UNORDERED_MAP<unsigned int, KeyData> KeyDataMap;
   KeyDataMap key_data_map_;
-  typedef boost::unordered_map<std::string, unsigned int> NameKeyInnerMap;
-  typedef boost::unordered_map<Category, NameKeyInnerMap> NameKeyMap;
+  typedef RMF_LARGE_UNORDERED_MAP<std::string, unsigned int> NameKeyInnerMap;
+  typedef RMF_LARGE_UNORDERED_MAP<Category, NameKeyInnerMap> NameKeyMap;
   NameKeyMap name_key_map_;
 
   std::vector<std::string> node_keys_;

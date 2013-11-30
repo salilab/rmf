@@ -107,7 +107,7 @@ struct FileData {
   std::vector<FrameIDs> frame_children;
   KeyData keys;
   DataTypes data;
-  boost::unordered_map<FrameID, int32_t> frame_block_offsets;
+  RMF_LARGE_UNORDERED_MAP<FrameID, int32_t> frame_block_offsets;
 };
 
 struct FileDataChanges {

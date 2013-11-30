@@ -29,7 +29,7 @@ void clone_hierarchy(SDA* sda, SDB* sdb) {
                      "No root node found.");
   RMF_INTERNAL_CHECK(boost::distance(get_nodes(sdb)) >= 1,
                      "No root node found.");
-  boost::unordered_map<NodeID, NodeID> parents;
+  RMF_LARGE_UNORDERED_MAP<NodeID, NodeID> parents;
   RMF_FOREACH(NodeID na, get_nodes(sda)) {
     NodeIDs children = sda->get_children(na);
     RMF_FOREACH(NodeID c, children) {
@@ -80,7 +80,7 @@ inline void clone_file(const SharedData* sda, SharedData* sdb) {
 
 template <class TraitsA, class TraitsB, class SDA, class SDB, class H>
 void clone_values_type(SDA* sda, Category cata, SDB* sdb, Category catb, H) {
-  boost::unordered_map<ID<TraitsA>, ID<TraitsB> > keys =
+  RMF_LARGE_UNORDERED_MAP<ID<TraitsA>, ID<TraitsB> > keys =
       get_key_map<TraitsA, TraitsB>(sda, cata, sdb, catb);
   if (keys.empty()) return;
   typedef std::pair<ID<TraitsA>, ID<TraitsB> > KP;

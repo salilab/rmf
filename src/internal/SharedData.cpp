@@ -23,7 +23,7 @@ namespace RMF {
 namespace internal {
 
 namespace {
-boost::unordered_set<std::string> open_for_writing;
+RMF_LARGE_UNORDERED_SET<std::string> open_for_writing;
 }
 SharedData::SharedData(boost::shared_ptr<backends::IO> io, std::string name,
                        bool write, bool created)

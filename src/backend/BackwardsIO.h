@@ -22,10 +22,10 @@ namespace RMF {
 
 namespace backends {
 
-typedef boost::unordered_map<std::string, boost::array<std::string, 3> > V3N;
+typedef RMF_LARGE_UNORDERED_MAP<std::string, boost::array<std::string, 3> > V3N;
 extern V3N vector_3_names_map;
 extern V3N vectors_3_names_map;
-typedef boost::unordered_map<std::string, boost::array<std::string, 4> > V4N;
+typedef RMF_LARGE_UNORDERED_MAP<std::string, boost::array<std::string, 4> > V4N;
 extern V4N vector_4_names_map;
 
 inline V3N &get_vector_names_map(Vector<3>) { return vector_3_names_map; }
@@ -69,7 +69,7 @@ struct BackwardsIO : public IO {
   template <unsigned int D>
   inline boost::array<std::string, D> get_vector_subkey_names(
       std::string key_name, Vector<D>) const {
-    typename boost::unordered_map<
+    typename RMF_LARGE_UNORDERED_MAP<
         std::string, boost::array<std::string, D> >::const_iterator it =
         get_vector_names_map(Vector<D>()).find(key_name);
     if (it == get_vector_names_map(Vector<D>()).end()) {
@@ -88,7 +88,7 @@ struct BackwardsIO : public IO {
   template <unsigned int D>
   inline boost::array<std::string, D> get_vectors_subkey_names(
       std::string key_name, Vector<D>) const {
-    typename boost::unordered_map<
+    typename RMF_LARGE_UNORDERED_MAP<
         std::string, boost::array<std::string, D> >::const_iterator it =
         get_vectors_names_map(Vector<D>()).find(key_name);
     if (it == get_vectors_names_map(Vector<D>()).end()) {
@@ -145,7 +145,7 @@ struct BackwardsIO : public IO {
                    H) {
     typedef ID<VectorTraits<D> > Key;
     typedef std::pair<Key, int> Data;
-    boost::unordered_map<FloatKey, Data> map;
+    RMF_LARGE_UNORDERED_MAP<FloatKey, Data> map;
     RMF_FOREACH(std::string key_name,
                 get_vector_names(category_a, Vector<D>())) {
       boost::array<std::string, D> subkey_names =
@@ -176,7 +176,7 @@ struct BackwardsIO : public IO {
     typedef ID<VectorTraits<D> > VectorKey;
     std::vector<VectorKey> keys = sda->get_keys(category_a, VectorTraits<D>());
     typedef boost::array<ID<FloatTraits>, D> Data;
-    boost::unordered_map<VectorKey, Data> map;
+    RMF_LARGE_UNORDERED_MAP<VectorKey, Data> map;
     Strings key_names;
     RMF_FOREACH(VectorKey k, keys) {
       std::string name = sda->get_name(k);
@@ -213,7 +213,7 @@ struct BackwardsIO : public IO {
                     Category category_b, H) {
     typedef Vector3sKey Key;
     typedef std::pair<Key, int> Data;
-    boost::unordered_map<FloatsKey, Data> map;
+    RMF_LARGE_UNORDERED_MAP<FloatsKey, Data> map;
     RMF_FOREACH(std::string key_name,
                 get_vectors_names(category_a, Vector<3>())) {
       boost::array<std::string, 3> subkey_names =
@@ -248,7 +248,7 @@ struct BackwardsIO : public IO {
     typedef Vector3sKey VectorKey;
     std::vector<VectorKey> keys = sda->get_keys(category_a, Vector3sTraits());
     typedef boost::array<ID<FloatsTraits>, 3> Data;
-    boost::unordered_map<VectorKey, Data> map;
+    RMF_LARGE_UNORDERED_MAP<VectorKey, Data> map;
     Strings key_names;
     RMF_FOREACH(VectorKey k, keys) {
       std::string name = sda->get_name(k);

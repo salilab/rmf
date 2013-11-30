@@ -9,11 +9,10 @@
 #ifndef RMF_INTERNAL_SHARED_DATA_USER_DATA_H
 #define RMF_INTERNAL_SHARED_DATA_USER_DATA_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "RMF/ID.h"
 #include "RMF/infrastructure_macros.h"
-#include <boost/unordered_map.hpp>
-#include <boost/unordered_set.hpp>
+#include "large_set_map.h"
 #include <boost/cstdint.hpp>
 #include <boost/any.hpp>
 #include <algorithm>
@@ -39,8 +38,8 @@ namespace internal {
 class SharedDataUserData {
   std::vector<boost::any> association_;
   std::vector<uintptr_t> back_association_value_;
-  boost::unordered_map<uintptr_t, NodeID> back_association_;
-  boost::unordered_map<int, boost::any> user_data_;
+  RMF_LARGE_UNORDERED_MAP<uintptr_t, NodeID> back_association_;
+  RMF_LARGE_UNORDERED_MAP<int, boost::any> user_data_;
 
  public:
   template <class T>

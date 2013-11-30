@@ -37,8 +37,8 @@ class MultipleAvroFileReader : public MultipleAvroFileBase {
   void add_category_data(Category cat);
   void load_category_frame(Category cat, int frame);
 
-  boost::unordered_map<int, RMF_avro_backend::Frame> frames_;
-  boost::unordered_map<int, Ints> frame_children_;
+  RMF_LARGE_UNORDERED_MAP<int, RMF_avro_backend::Frame> frames_;
+  RMF_LARGE_UNORDERED_MAP<int, Ints> frame_children_;
   unsigned int number_of_frames_;
 
  protected:

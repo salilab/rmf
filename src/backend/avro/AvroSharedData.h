@@ -36,7 +36,7 @@ class AvroSharedData : public Base {
 
   template <class TypeTraits>
   void extract_keys(Category cat, const KeyIndex& index,
-                    boost::unordered_set<ID<TypeTraits> >& ret) const {
+                    RMF_LARGE_UNORDERED_SET<ID<TypeTraits> >& ret) const {
     for (typename KeyIndex::const_iterator iti = index.begin();
          iti != index.end(); ++iti) {
       ret.insert(
@@ -46,7 +46,7 @@ class AvroSharedData : public Base {
 
   template <class TypeTraits>
   void extract_keys(Category cat, const KeyIndex& index,
-                    boost::unordered_set<ID<TypeTraits> >& ret) {
+                    RMF_LARGE_UNORDERED_SET<ID<TypeTraits> >& ret) {
     for (typename KeyIndex::const_iterator iti = index.begin();
          iti != index.end(); ++iti) {
       ret.insert(
@@ -122,7 +122,7 @@ class AvroSharedData : public Base {
  public:
   template <class Traits>
   std::vector<ID<Traits> > get_keys(Category cat, Traits) const {
-    boost::unordered_set<ID<Traits> > ret;
+    RMF_LARGE_UNORDERED_SET<ID<Traits> > ret;
     if (P::get_loaded_frame() != FrameID()) {
       const RMF_avro_backend::Data& data =
           P::get_frame_data(cat, P::get_loaded_frame());
@@ -135,7 +135,7 @@ class AvroSharedData : public Base {
   }
   template <class Traits>
   std::vector<ID<Traits> > get_keys(Category cat, Traits) {
-    boost::unordered_set<ID<Traits> > ret;
+    RMF_LARGE_UNORDERED_SET<ID<Traits> > ret;
     if (P::get_loaded_frame() != FrameID()) {
       const RMF_avro_backend::Data& data =
           P::get_frame_data(cat, P::get_loaded_frame());

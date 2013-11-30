@@ -24,8 +24,8 @@ struct Keys {
   RMF_SMALL_UNORDERED_MAP<ID<Traits>, Category> key_categories;
   RMF_SMALL_UNORDERED_MAP<ID<Traits>, std::string> key_names;
 
-  typedef boost::unordered_map<std::string, ID<Traits> > KeyInfo;
-  typedef boost::unordered_map<Category, KeyInfo> CategoryKeys;
+  typedef RMF_LARGE_UNORDERED_MAP<std::string, ID<Traits> > KeyInfo;
+  typedef RMF_LARGE_UNORDERED_MAP<Category, KeyInfo> CategoryKeys;
   CategoryKeys category_keys;
   // Mac OS 10.8 and earlier clang needs this for some reason
   Keys() {}

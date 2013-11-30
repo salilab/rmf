@@ -25,7 +25,7 @@ namespace internal {
 template <class Traits, class SDA, class SDB, class H>
 bool get_equal_values_type(SDA* sda, Category cata, SDB* sdb, Category catb,
                            H) {
-  boost::unordered_map<ID<Traits>, ID<Traits> > keys =
+  RMF_LARGE_UNORDERED_MAP<ID<Traits>, ID<Traits> > keys =
       get_key_map<Traits, Traits>(sda, cata, sdb, catb);
   bool ret = true;
   RMF_FOREACH(NodeID n, get_nodes(sda)) {
