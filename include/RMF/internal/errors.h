@@ -11,8 +11,8 @@
 
 // IWYU pragma: private
 
-#include <boost/exception/all.hpp> // IWYU pragma: export
-#include <boost/exception/detail/error_info_impl.hpp> // IWYU pragma: export
+#include <boost/exception/all.hpp>                     // IWYU pragma: export
+#include <boost/exception/detail/error_info_impl.hpp>  // IWYU pragma: export
 #include <sstream>
 #include <string>
 

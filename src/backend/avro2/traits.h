@@ -77,7 +77,7 @@ struct ReaderTraits {
     }
     if (reader_->blockOffsetBytes() != offset) {
       RMF_INFO("Seeking to " << offset << " from "
-                                           << reader_->blockOffsetBytes());
+                             << reader_->blockOffsetBytes());
       try {
         reader_->seekBlockBytes(offset);
       }

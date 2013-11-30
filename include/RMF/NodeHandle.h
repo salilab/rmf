@@ -55,7 +55,6 @@ RMF_ENABLE_WARNINGS
     shared_->set_static_value(node_, k, v);                                 \
   }
 
-
 namespace RMF {
 
 class NodeHandle;

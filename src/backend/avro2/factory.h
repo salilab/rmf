@@ -13,7 +13,8 @@ class IOFactory;
 }  // namespace backends
 }  // namespace RMF
 namespace boost {
-template <class Y> class shared_ptr;
+template <class Y>
+class shared_ptr;
 }  // namespace boost
 
 RMF_ENABLE_WARNINGS

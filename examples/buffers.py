@@ -1,5 +1,5 @@
-## \example buffers.py
-## Showing how to read and write from buffers
+# \example buffers.py
+# Showing how to read and write from buffers
 
 import RMF
 

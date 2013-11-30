@@ -21,9 +21,9 @@ namespace internal {
 
 template <class TraitsA, class TraitsB, class SDA, class SDB>
 RMF_LARGE_UNORDERED_MAP<ID<TraitsA>, ID<TraitsB> > get_key_map(SDA* sda,
-                                                            Category cata,
-                                                            SDB* sdb,
-                                                            Category catb) {
+                                                               Category cata,
+                                                               SDB* sdb,
+                                                               Category catb) {
   RMF_LARGE_UNORDERED_MAP<ID<TraitsA>, ID<TraitsB> > ret;
   std::vector<ID<TraitsA> > keysa = sda->get_keys(cata, TraitsA());
   RMF_FOREACH(ID<TraitsA> keya, keysa) {

@@ -15,7 +15,7 @@
 #include "RMF/enums.h"
 #include "RMF/infrastructure_macros.h"
 #include "RMF/types.h"
-#include "types_encode_decode.h" // IWYU pragma: keep
+#include "types_encode_decode.h"  // IWYU pragma: keep
 #include "Specific.hh"
 #include "Stream.hh"
 #include "ValidSchema.hh"

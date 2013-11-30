@@ -12,7 +12,7 @@
 #include "RMF/infrastructure_macros.h"
 #include "RMF/log.h"
 #include "backend/avro2/types.h"
-#include "types_encode_decode.h" // IWYU pragma: keep
+#include "types_encode_decode.h"  // IWYU pragma: keep
 #include "frame.h"
 
 RMF_ENABLE_WARNINGS
@@ -26,8 +26,7 @@ Frame get_frame(FrameID id, internal_avro::DataFileReader<Frame>& reader) {
     Frame ret;
     reader.read(ret);
     if (ret.id == id) {
-      RMF_INFO("Loaded frame " << ret.id << " " << id
-                                             << std::endl);
+      RMF_INFO("Loaded frame " << ret.id << " " << id << std::endl);
       return ret;
     } else {
       RMF_INFO("Found frame for frame " << ret.id);

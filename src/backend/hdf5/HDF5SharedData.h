@@ -50,7 +50,8 @@
 #include "names.h"
 
 namespace boost {
-template <class T> struct nullable;
+template <class T>
+struct nullable;
 }  // namespace boost
 
 RMF_ENABLE_WARNINGS

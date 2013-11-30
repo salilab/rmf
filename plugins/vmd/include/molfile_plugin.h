@@ -279,9 +279,9 @@ typedef struct {
   int num_basis_atoms; /**< number of atoms in basis set */
   int num_shells;      /**< total number of atomic shells */
   int wavef_size;      /**< size of the wavefunction
-                   *   i.e. size of secular eq. or
-                   *   # of cartesian contracted
-                   *   gaussian basis functions */
+    *   i.e. size of secular eq. or
+    *   # of cartesian contracted
+    *   gaussian basis functions */
 
   /* everything else */
   int have_sysinfo;
@@ -299,7 +299,7 @@ typedef struct {
   int runtype; /**< flag indicating the calculation method. */
   int scftype; /**< SCF type: RHF, UHF, ROHF, GVB or MCSCF wfn. */
   int status;  /**< indicates wether SCF and geometry optimization
-               *   have converged properly. */
+            *   have converged properly. */
   int num_electrons; /**< number of electrons.    XXX: can be fractional in some
                         DFT codes */
   int totalcharge; /**< total charge of system. XXX: can be fractional in some
@@ -329,9 +329,8 @@ typedef struct {
                  *   {exp(1), c-coeff(1), exp(2), c-coeff(2), ...};
                  *   array size = 2*num_basis_funcs
                  *   The basis must NOT be normalized. */
-  int *
-      atomic_number; /**< atomic numbers (chem. element) of atoms in basis set
-                        */
+  int *atomic_number; /**< atomic numbers (chem. element) of atoms in basis set
+                         */
   int *angular_momentum; /**< 3 ints per wave function coefficient do describe
                           * the
                           *   cartesian components of the angular momentum.
@@ -477,7 +476,7 @@ typedef struct {
   float *orbital_energies; /**< list of orbital energies for wavefunction */
   float *occupancies;      /**< orbital occupancies */
   int *orbital_ids;        /**< orbital ID numbers; If NULL then VMD will
-                     *   assume 1,2,3,...num_orbs.     */
+*   assume 1,2,3,...num_orbs.     */
 } molfile_qm_wavefunction_t;
 
 /**

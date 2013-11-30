@@ -154,6 +154,6 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
 RMF_DISABLE_WARNINGS
 
-#include "RMF/internal/errors.h" // IWYU pragma: export
+#include "RMF/internal/errors.h"  // IWYU pragma: export
 
 #endif /* RMF_EXCEPTIONS_H */

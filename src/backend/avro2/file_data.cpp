@@ -18,7 +18,7 @@
 #include "RMF/infrastructure_macros.h"
 #include "file_data.h"
 #include "types.h"
-#include "types_encode_decode.h" // IWYU pragma: keep
+#include "types_encode_decode.h"  // IWYU pragma: keep
 
 RMF_ENABLE_WARNINGS
 

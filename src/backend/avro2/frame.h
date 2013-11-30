@@ -17,7 +17,8 @@
 #include "types.h"
 
 namespace internal_avro {
-template <typename T> class DataFileReader;
+template <typename T>
+class DataFileReader;
 }  // namespace internal_avro
 
 RMF_ENABLE_WARNINGS

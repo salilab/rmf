@@ -89,9 +89,8 @@ int main(int argc, char** argv) {
       translation = RMF::Floats(0, 3);
     }
     RMF_INFO("Scaling model by " << scale);
-    RMF_INFO("Translating model by " << translation[0] << " "
-                                                        << translation[1] << " "
-                                                        << translation[2]);
+    RMF_INFO("Translating model by " << translation[0] << " " << translation[1]
+                                     << " " << translation[2]);
 
     RMF::FileConstHandle rhi = RMF::open_rmf_file_read_only(input);
     RMF::FileHandle rh = RMF::create_rmf_file(output);

@@ -2,7 +2,7 @@
 #include "DataFile.hh"
 #include "RMF/compiler_macros.h"
 #include "Specific.hh"
-#include "types_encode_decode.h" // IWYU pragma: keep
+#include "types_encode_decode.h"  // IWYU pragma: keep
 #include "write.h"
 
 namespace RMF {

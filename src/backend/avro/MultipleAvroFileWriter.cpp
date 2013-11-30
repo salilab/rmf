@@ -130,8 +130,7 @@ void MultipleAvroFileWriter::commit() {
 
 FrameID MultipleAvroFileWriter::add_frame(std::string name, FrameType t) {
   unsigned int index = get_number_of_frames();
-  RMF_TRACE("Adding frame " << index << " under "
-                                               << get_loaded_frame());
+  RMF_TRACE("Adding frame " << index << " under " << get_loaded_frame());
   set_loaded_frame(FrameID(index));
   frame_.name = name;
   frame_.type = boost::lexical_cast<std::string>(FrameType(t));

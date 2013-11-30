@@ -75,8 +75,6 @@ RMF_ENABLE_WARNINGS
   std::string get_name(UCName##Key k) const;                               \
                                                                            \
  public:
-
-
 namespace RMF {
 
 class FileConstHandle;

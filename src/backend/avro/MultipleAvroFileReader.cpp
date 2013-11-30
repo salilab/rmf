@@ -51,8 +51,7 @@ void MultipleAvroFileReader::set_loaded_frame(FrameID frame) {
       RMF_INTERNAL_CHECK(categories_[i].reader, "No old reader found");
       std::string name = get_category_dynamic_file_path(Category(i));
       try {
-        RMF_TRACE("Opening category file for "
-                                         << get_name(Category(i)));
+        RMF_TRACE("Opening category file for " << get_name(Category(i)));
         categories_[i].reader.reset();
         categories_[i].reader.reset(
             new internal_avro::DataFileReader<RMF_avro_backend::Data>(
@@ -71,18 +70,15 @@ void MultipleAvroFileReader::set_loaded_frame(FrameID frame) {
            static_cast<unsigned int>(categories_[i].data.frame)) {
       if (!categories_[i].reader->read(categories_[i].data)) {
         // std::cout << "Out of data looking for " << frame << std::endl;
-        RMF_TRACE("Out of data for category "
-                                         << get_name(Category(i)));
+        RMF_TRACE("Out of data for category " << get_name(Category(i)));
         clear_data(categories_[i].data, frame);
         break;
       } else {
-        RMF_TRACE("Loaded category "
-                                         << get_name(Category(i)));
+        RMF_TRACE("Loaded category " << get_name(Category(i)));
       }
       if (frame.get_index() <
           static_cast<unsigned int>(categories_[i].data.frame)) {
-        RMF_TRACE("Missing frame for category "
-                                         << get_name(Category(i)));
+        RMF_TRACE("Missing frame for category " << get_name(Category(i)));
         clear_data(categories_[i].data, frame);
         break;
       }
@@ -135,7 +131,7 @@ void MultipleAvroFileReader::initialize_categories() {
   {                                                                         \
     bool success;                                                           \
     try {                                                                   \
-      RMF_TRACE("Opening " #lcname " data");             \
+      RMF_TRACE("Opening " #lcname " data");                                \
       internal_avro::DataFileReader<UCName> re(                             \
           get_##lcname##_file_path().c_str(),                               \
           internal_avro::compileJsonSchemaFromString(                       \

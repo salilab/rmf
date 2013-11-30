@@ -81,7 +81,6 @@ class NodeConstHandle;
 //! Pass a list of them
 typedef std::vector<FileConstHandle> FileConstHandles;
 
-
 //! A handle for a read-only RMF file
 /** Use this handle to perform operations relevant to the
     whole RMF hierarchy as well as to start traversal of the

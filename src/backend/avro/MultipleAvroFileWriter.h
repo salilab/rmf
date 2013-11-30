@@ -30,7 +30,8 @@
 #include "backend/avro/AvroKeysAndCategories.h"
 
 namespace internal_avro {
-template <typename T> class DataFileWriter;
+template <typename T>
+class DataFileWriter;
 }  // namespace internal_avro
 
 RMF_ENABLE_WARNINGS
