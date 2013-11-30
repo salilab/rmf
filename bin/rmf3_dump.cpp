@@ -2,8 +2,7 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
-#include <boost/program_options/variables_map.hpp>
-#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 #include <stddef.h>
 #include <exception>
 #include <iostream>

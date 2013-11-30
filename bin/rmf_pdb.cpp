@@ -2,9 +2,10 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
-#include <boost/format.hpp> // IWYU pragma: keep
+#include <boost/format.hpp>  // IWYU pragma: keep
+#include <boost/lexical_cast.hpp>
+#include <boost/optional/optional.hpp>
 #include <exception>
-#include <iomanip>
 #include <iostream>
 #include <fstream>
 #include <string>

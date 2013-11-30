@@ -5,8 +5,14 @@
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
-#include <boost/shared_ptr.hpp>
+#include <assert.h>
+
+#include "RMF/BufferHandle.h"
+#include "RMF/FileConstHandle.h"
 #include "RMF/FileHandle.h"
+#include "RMF/NodeConstHandle.h"
+#include "RMF/NodeHandle.h"
+#include "RMF/enums.h"
 
 namespace {
 struct MyInt {

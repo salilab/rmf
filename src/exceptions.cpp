@@ -6,10 +6,11 @@
  *
  */
 
-#include <boost/exception/get_error_info.hpp>
 #include <sstream>
+#include <string>
 
 #include "RMF/ID.h"
+#include "RMF/compiler_macros.h"
 #include "RMF/exceptions.h"
 #include "RMF/internal/errors.h"
 

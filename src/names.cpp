@@ -7,9 +7,9 @@
  */
 
 #include <boost/algorithm/string/erase.hpp>
-#include <boost/iterator/iterator_traits.hpp>
+#include <string>
 
-#include "RMF/names.h"
+#include "RMF/compiler_macros.h"
 
 RMF_ENABLE_WARNINGS
 

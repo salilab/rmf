@@ -12,7 +12,6 @@
 #include "RMF/config.h"
 #include "infrastructure_macros.h"
 #include "exceptions.h"
-#include <boost/array.hpp>
 #include <algorithm>
 
 RMF_ENABLE_WARNINGS

@@ -6,7 +6,7 @@
  *
  */
 
-#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 #include <string>
 
 #include "RMF/FileHandle.h"

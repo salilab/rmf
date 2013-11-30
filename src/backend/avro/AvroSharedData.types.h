@@ -11,7 +11,7 @@
 
 #include "RMF/config.h"
 #include "RMF/constants.h"
-#include <backend/avro/AllJSON.h>
+#include "backend/avro/AllJSON.h"
 #include <boost/tuple/tuple.hpp>
 
 RMF_ENABLE_WARNINGS

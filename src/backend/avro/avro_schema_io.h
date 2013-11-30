@@ -24,6 +24,8 @@
 #include "RMF/log.h"
 #include "Specific.hh"
 #include "avrocpp/api/DataFile.hh"
+#include "avrocpp/api/Encoder.hh"
+#include "avrocpp/api/Specific.hh"
 #include "avrocpp/api/Stream.hh"
 #include "avrocpp/api/ValidSchema.hh"
 

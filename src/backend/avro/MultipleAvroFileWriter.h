@@ -9,9 +9,9 @@
 #ifndef RMF_INTERNAL_SINGLE_AVRO_FILE_WRITER_H
 #define RMF_INTERNAL_SINGLE_AVRO_FILE_WRITER_H
 
-#include <avrocpp/api/DataFile.hh>
-#include <backend/avro/AllJSON.h>
-#include <backend/avro/FrameJSON.h>
+#include "avrocpp/api/DataFile.hh"
+#include "backend/avro/AllJSON.h"
+#include "backend/avro/FrameJSON.h"
 #include <boost/shared_ptr.hpp>
 #include <string>
 #include <vector>

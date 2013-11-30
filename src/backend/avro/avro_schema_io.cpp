@@ -6,11 +6,10 @@
  *
  */
 
-#include <avrocpp/api/Compiler.hh>
-#include <avrocpp/api/Encoder.hh>
-#include <avrocpp/api/Stream.hh>
-#include <generated/embed_jsons.h>
-#include <iosfwd>
+#include "avrocpp/api/Compiler.hh"
+#include "avrocpp/api/Encoder.hh"
+#include "avrocpp/api/Stream.hh"
+#include "generated/embed_jsons.h"
 
 #include "ValidSchema.hh"
 #include "avro_schema_io.h"

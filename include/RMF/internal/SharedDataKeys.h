@@ -12,7 +12,6 @@
 #include "RMF/config.h"
 #include "RMF/types.h"
 #include "small_set_map.h"
-#include <boost/unordered_map.hpp>
 
 RMF_ENABLE_WARNINGS
 

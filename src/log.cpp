@@ -5,6 +5,12 @@
  *  Copyright 2007-2012 IMP Inventors. All rights reserved.
  *
  */
+// IWYU pragma: no_include <log4cxx/appender.h>
+// IWYU pragma: no_include <log4cxx/layout.h>
+// IWYU pragma: no_include <log4cxx/logstring.h>
+#include <string>
+
+#include "RMF/config.h"
 #include "RMF/exceptions.h"
 #include "RMF/log.h"
 #if RMF_HAS_LOG4CXX

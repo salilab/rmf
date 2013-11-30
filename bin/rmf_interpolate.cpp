@@ -2,7 +2,7 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
-#include <boost/random/detail/seed.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/normal_distribution.hpp>
 #include <boost/random/variate_generator.hpp>
@@ -10,6 +10,7 @@
 #include <ctime>
 #include <exception>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -24,11 +25,6 @@
 #include "RMF/enums.h"
 #include "RMF/types.h"
 #include "RMF/utility.h"
-/*#if BOOST_VERSION < 104100
-#include <boost/nondet_random.hpp>
-#else
-#include <boost/random/random_device.hpp>
-#endif*/
 #include "common.h"
 
 namespace {

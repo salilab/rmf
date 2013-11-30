@@ -6,11 +6,14 @@
  *
  */
 
-#include <boost/make_shared.hpp>
+#include <boost/shared_ptr.hpp>
+#include <string>
 
 #include "RMF/BufferConstHandle.h"
 #include "RMF/BufferHandle.h"
+#include "RMF/compiler_macros.h"
 #include "RMF/exceptions.h"
+#include "RMF/internal/SharedData.h"
 #include "RMF/internal/shared_data_factories.h"
 #include "backend/IO.h"
 

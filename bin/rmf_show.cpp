@@ -2,10 +2,9 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
-#include <boost/program_options/options_description.hpp>
-#include <boost/program_options/variables_map.hpp>
 #include <exception>
 #include <iostream>
+#include <sstream>
 #include <string>
 
 #include "RMF/FileConstHandle.h"

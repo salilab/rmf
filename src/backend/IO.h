@@ -10,7 +10,6 @@
 #define RMF_INTERNAL_IO_H
 
 #include <boost/shared_ptr.hpp>
-#include <boost/smart_ptr/shared_ptr.hpp>
 #include <string>
 
 #include "RMF/BufferConstHandle.h"
@@ -22,6 +21,7 @@
 namespace RMF {
 class BufferConstHandle;
 class BufferHandle;
+
 namespace internal {
 class SharedData;
 }  // namespace internal

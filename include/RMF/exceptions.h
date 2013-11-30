@@ -9,7 +9,7 @@
 #ifndef RMF_EXCEPTIONS_H
 #define RMF_EXCEPTIONS_H
 
-#include <boost/exception/exception.hpp>
+#include <boost/exception/exception.hpp>  // IWYU pragma: export
 #include <exception>
 #include <string>
 

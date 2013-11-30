@@ -6,15 +6,11 @@
  *
  */
 
-#include <avrocpp/api/DataFile.hh>
-#include <boost/cstdint.hpp>
-#include <boost/unordered/unordered_map.hpp>
-#include <sys/_types/_int32_t.h>
+#include "avrocpp/api/DataFile.hh"
 #include <algorithm>
 #include <exception>
 
 #include "RMF/ID.h"
-#include "RMF/compiler_macros.h"
 #include "RMF/infrastructure_macros.h"
 #include "file_data.h"
 #include "types.h"

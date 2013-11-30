@@ -14,9 +14,10 @@
 #include <string>
 #include "RMF/compiler_macros.h"
 #include <boost/config.hpp>
+#include <boost/version.hpp>
 #if defined(BOOST_NO_CXX11_RANGE_BASED_FOR) || BOOST_VERSION <= 104100
 #define RMF_FOREACH(v, r) BOOST_FOREACH(v, r)
-#include <boost/foreach.hpp>
+#include <boost/foreach.hpp>  // IWYU pragma: export
 #else
 #define RMF_FOREACH(v, r) for (v : r)
 #endif

@@ -6,10 +6,7 @@
  *
  */
 
-#include <boost/foreach.hpp>
 #include <boost/shared_ptr.hpp>
-#include <bitset>
-#include <complex>
 #include <iomanip>
 #include <ostream>
 #include <string>

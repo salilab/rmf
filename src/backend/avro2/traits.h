@@ -15,7 +15,7 @@
 #include "file_data.h"
 #include "frame.h"
 #include "generated/embed_jsons.h"
-#include <avrocpp/api/Compiler.hh>
+#include "avrocpp/api/Compiler.hh"
 
 RMF_ENABLE_WARNINGS
 

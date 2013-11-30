@@ -22,6 +22,8 @@
 #include "RMF/log.h"
 #include "ValidSchema.hh"
 #include "avrocpp/api/Compiler.hh"
+#include "avrocpp/api/DataFile.hh"
+#include "avrocpp/api/ValidSchema.hh"
 #include "backend/avro/AllJSON.h"
 #include "backend/avro/FrameJSON.h"
 #include "backend/avro/MultipleAvroFileBase.h"

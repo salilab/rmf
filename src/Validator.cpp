@@ -6,14 +6,17 @@
  *
  */
 
-#include <boost/container/vector.hpp>
-#include <boost/smart_ptr/make_shared_object.hpp>
 #include <ostream>
+#include <string>
 #include <utility>
+#include <vector>
 
+#include "RMF/FileConstHandle.h"
 #include "RMF/ID.h"
+#include "RMF/NodeConstHandle.h"
 #include "RMF/Nullable.h"
 #include "RMF/Validator.h"
+#include "RMF/compiler_macros.h"
 #include "RMF/infrastructure_macros.h"
 #include "RMF/types.h"
 

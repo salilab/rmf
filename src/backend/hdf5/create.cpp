@@ -6,13 +6,10 @@
  *
  */
 
-#include <boost/container/vector.hpp>
-#include <boost/move/utility.hpp>
 #include <boost/multi_array/subarray.hpp>
 #include <boost/multi_array/view.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
-#include <algorithm>
 #include <string>
 #include <vector>
 
@@ -20,7 +17,6 @@
 #include "../IOFactory.h"
 #include "HDF5SharedData.h"
 #include "RMF/compiler_macros.h"
-#include "RMF/infrastructure_macros.h"
 
 namespace RMF {
 namespace backends {

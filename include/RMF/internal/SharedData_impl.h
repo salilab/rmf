@@ -19,10 +19,6 @@
 #include "RMF/infrastructure_macros.h"
 #include "SharedDataUserData.h"
 #include "SharedDataPath.h"
-#include <boost/unordered_map.hpp>
-#include <boost/unordered_set.hpp>
-#include <boost/cstdint.hpp>
-#include <boost/any.hpp>
 #include <algorithm>
 
 #include <boost/shared_ptr.hpp>

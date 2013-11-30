@@ -6,7 +6,7 @@
  *
  */
 
-#include <avrocpp/api/Compiler.hh>
+#include "avrocpp/api/Compiler.hh"
 #include <boost/lexical_cast.hpp>
 #include <exception>
 #include <sstream>
@@ -22,6 +22,12 @@
 #include "Stream.hh"
 #include "ValidSchema.hh"
 #include "avro_schema_io.h"
+#include "avrocpp/api/DataFile.hh"
+#include "avrocpp/api/Decoder.hh"
+#include "avrocpp/api/Encoder.hh"
+#include "avrocpp/api/Specific.hh"
+#include "avrocpp/api/Stream.hh"
+#include "avrocpp/api/ValidSchema.hh"
 #include "backend/avro/AvroKeysAndCategories.h"
 #include "generated/embed_jsons.h"
 

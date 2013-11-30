@@ -12,8 +12,6 @@
 #include "RMF/config.h"
 #include "RMF/enums.h"
 #include "small_set_map.h"
-#include <boost/unordered_map.hpp>
-#include <boost/unordered_set.hpp>
 #include <string>
 
 RMF_ENABLE_WARNINGS

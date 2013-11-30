@@ -2,9 +2,6 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
-#include <boost/foreach.hpp>
-#include <boost/iterator/iterator_facade.hpp>
-#include <boost/range/iterator_range_core.hpp>
 #include <exception>
 #include <iostream>
 #include <string>

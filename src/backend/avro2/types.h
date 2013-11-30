@@ -13,9 +13,6 @@
 #include "avrocpp/api/Encoder.hh"
 #include "avrocpp/api/Decoder.hh"
 
-#include <boost/unordered_set.hpp>
-#include <boost/unordered_map.hpp>
-
 RMF_ENABLE_WARNINGS
 
 namespace RMF {

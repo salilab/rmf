@@ -12,9 +12,8 @@
 #include "AvroSharedData.h"
 #include "RMF/NodeHandle.h"
 #include "RMF/Validator.h"
-#include <boost/unordered_set.hpp>
 #include <boost/lexical_cast.hpp>
-#include <avrocpp/api/DataFile.hh>
+#include "avrocpp/api/DataFile.hh"
 #include <algorithm>
 
 RMF_ENABLE_WARNINGS

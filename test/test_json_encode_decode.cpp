@@ -1,9 +1,16 @@
+#include <assert.h>
 #include <avrocpp/api/Compiler.hh>
-#include <avrocpp/api/Stream.hh>
-#include <avrocpp/api/Encoder.hh>
 #include <avrocpp/api/Decoder.hh>
+#include <avrocpp/api/Encoder.hh>
 #include <avrocpp/api/Specific.hh>
+#include <avrocpp/api/Stream.hh>
+#include <boost/shared_ptr.hpp>
+#include <iostream>
+#include <string>
 #include <sstream>
+#include <vector>
+
+#include "avrocpp/api/ValidSchema.hh"
 
 namespace {
 const char* schema = "{\"type\" : \"array\", \"items\" : \"double\"}";

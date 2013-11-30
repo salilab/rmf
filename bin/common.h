@@ -5,20 +5,20 @@
 
 #ifndef RMF_COMMON_H
 #define RMF_COMMON_H
-#include <boost/program_options.hpp>
-#include <boost/program_options/options_description.hpp>
-#include <boost/program_options/parsers.hpp>
-#include <boost/program_options/positional_options.hpp>
-#include <boost/program_options/value_semantic.hpp>
-#include <boost/program_options/variables_map.hpp>
+#include <boost/program_options.hpp>                      // IWYU pragma: export
+#include <boost/program_options/options_description.hpp>  // IWYU pragma: export
+#include <boost/program_options/parsers.hpp>              // IWYU pragma: export
+#include <boost/program_options/positional_options.hpp>   // IWYU pragma: export
+#include <boost/program_options/value_semantic.hpp>       // IWYU pragma: export
+#include <boost/program_options/variables_map.hpp>        // IWYU pragma: export
 #include <stdlib.h>
 #include <iostream>
 #include <string>
 #include <vector>
 
-#include "RMF/HDF5/ConstFile.h"
-#include "RMF/log.h"
-#include "RMF/utility.h"
+#include "RMF/HDF5/ConstFile.h"  // IWYU pragma: export
+#include "RMF/log.h"             // IWYU pragma: export
+#include "RMF/utility.h"         // IWYU pragma: export
 
 namespace {
 extern std::string description;

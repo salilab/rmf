@@ -4,6 +4,7 @@
 
 #include <exception>
 #include <iostream>
+#include <sstream>
 #include <string>
 
 #include "RMF/FileConstHandle.h"

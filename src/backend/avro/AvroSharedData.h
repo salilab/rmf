@@ -13,12 +13,10 @@
 #include "RMF/internal/SharedData.h"
 #include "RMF/infrastructure_macros.h"
 #include "RMF/constants.h"
-#include <backend/BackwardsIOBase.h>
-#include <backend/backward_types.h>
+#include "backend/BackwardsIOBase.h"
+#include "backend/backward_types.h"
 #include "RMF/BufferHandle.h"
 #include "RMF/BufferConstHandle.h"
-#include <boost/unordered_map.hpp>
-#include <boost/unordered_set.hpp>
 #include "AvroSharedData.types.h"
 #include <utility>
 

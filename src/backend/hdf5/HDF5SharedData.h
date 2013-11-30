@@ -11,12 +11,10 @@
 
 #include <H5public.h>
 #include <boost/array.hpp>
-#include <boost/foreach.hpp>
-#include <boost/functional/hash/extensions.hpp>
-#include <boost/functional/hash/hash.hpp>
-#include <boost/iterator/iterator_facade.hpp>
+#include <boost/make_shared.hpp>
 #include <boost/multi_array/subarray.hpp>
 #include <boost/multi_array/view.hpp>
+#include <boost/ptr_container/detail/reversible_ptr_container.hpp>
 #include <boost/ptr_container/ptr_sequence_adapter.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <boost/make_shared.hpp>
@@ -119,16 +117,6 @@ class HDF5SharedData : public backends::BackwardsIOBase {
   typedef std::vector<std::vector<int> > IndexCache;
   mutable IndexCache index_cache_;
 
-  /*                 HDF5DataSetCreationPropertiesD<TypeTraits, D> props;
-            if (D==3) {
-              props.set_chunk_size(HDF5DataSetIndexD<D>(256, 4, 100));
-            } else if (D==2) {
-              props.set_chunk_size(HDF5DataSetIndexD<D>(256, 4));
-
-            props.set_compression(GZIP_COMPRESSION);
-
-
-   */
   template <class TypeTraits>
   class DataDataSetCache3D {
     typedef HDF5DataSetCacheD<TypeTraits, 3> DS;

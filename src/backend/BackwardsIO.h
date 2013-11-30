@@ -11,13 +11,8 @@
 
 #include <boost/array.hpp>
 #include <boost/filesystem.hpp>
-#include <boost/foreach.hpp>
-#include <boost/mpl/bool.hpp>
-#include <boost/mpl/bool_fwd.hpp>
 #include <boost/scoped_ptr.hpp>
-#include <boost/smart_ptr/scoped_ptr.hpp>
-#include <boost/unordered/unordered_map.hpp>
-#include <internal/clone_shared_data.h>
+#include "internal/clone_shared_data.h"
 #include <algorithm>
 #include <ostream>
 #include <string>

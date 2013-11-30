@@ -5,8 +5,18 @@
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
+#include <assert.h>
 #include <boost/shared_ptr.hpp>
+#include <stdio.h>
+#include <exception>
+#include <iostream>
+#include <string>
+
 #include "RMF/FileHandle.h"
+#include "RMF/NodeConstHandle.h"
+#include "RMF/NodeHandle.h"
+#include "RMF/enums.h"
+#include "RMF/infrastructure_macros.h"
 
 namespace {
 struct MyInt {

@@ -15,12 +15,16 @@
 #include "RMF/enums.h"
 #include "RMF/infrastructure_macros.h"
 #include "RMF/types.h"
-#include "types_encode_decode.h"  // IWYU pragma: keep
 #include "Specific.hh"
 #include "Stream.hh"
 #include "ValidSchema.hh"
+#include "avrocpp/api/Decoder.hh"
+#include "avrocpp/api/Specific.hh"
+#include "avrocpp/api/Stream.hh"
+#include "avrocpp/api/ValidSchema.hh"
 #include "backend/avro2/raw_frame.h"
 #include "backend/avro2/types.h"
+#include "types_encode_decode.h"  // IWYU pragma: keep
 #include "validate.h"
 
 RMF_ENABLE_WARNINGS

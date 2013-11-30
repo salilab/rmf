@@ -6,10 +6,15 @@
  *
  */
 
-#include <hdf5.h>
+#include <H5Dpublic.h>
+#include <H5Fpublic.h>
+#include <H5Ipublic.h>
+#include <H5Ppublic.h>
+#include <H5Spublic.h>
+#include <H5Tpublic.h>
+#include <H5public.h>
+#include <stddef.h>
 #include <iostream>
-
-//#include "RMF/hdf5_handle.h"
 
 #define HDF5_CALL(x)                                             \
   {                                                              \
@@ -20,7 +25,6 @@
   }
 
 #define HDF5_HANDLE(name, cmd, cleanup) hid_t name = cmd
-//#define HDF5_HANDLE(name, cmd, cleanup) RMF_HDF5_HANDLE(name, cmd, cleanup)
 
 namespace {
 const int D = 2;

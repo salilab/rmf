@@ -6,10 +6,8 @@
 #include <avrocpp/api/DataFile.hh>
 #include <backend/avro/AllJSON.h>
 #include <backend/avro/FrameJSON.h>
-#include <boost/program_options/options_description.hpp>
-#include <boost/program_options/variables_map.hpp>
-#include <boost/smart_ptr/shared_ptr.hpp>
-#include <generated/embed_jsons.h>
+#include <boost/shared_ptr.hpp>
+#include "generated/embed_jsons.h"
 #include <exception>
 #include <iostream>
 #include <string>

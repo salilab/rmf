@@ -5,11 +5,9 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/iterator/iterator_facade.hpp>
+#include <boost/filesystem/operations.hpp>
 #include <boost/timer.hpp>
-#include <boost/version.hpp>
 #include <exception>
 #include <iostream>
 #include <string>
@@ -180,12 +178,7 @@ void benchmark_load(RMF::FileConstHandle file, std::string type) {
 int main(int, char**) {
   try {
     RMF::set_log_level("Off");
-#if BOOST_VERSION > 104100
-    boost::filesystem::path temp = boost::filesystem::unique_path();
-    const std::string name_base = temp.native();
-#else
-    std::string name_base = tmpnam(NULL);
-#endif
+    std::string name_base = RMF::internal::get_unique_path();
 
     {
       const std::string name = name_base + ".rmf3";

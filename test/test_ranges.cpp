@@ -1,7 +1,13 @@
-#include "RMF/FileHandle.h"
-#include <boost/range.hpp>
+#include <assert.h>
+#include <boost/iterator/iterator_facade.hpp>
+#include <boost/range/distance.hpp>
+#include <boost/range/iterator_range_core.hpp>
+#include <string>
 
-#include <sstream>
+#include "RMF/FileHandle.h"
+#include "RMF/ID.h"
+#include "RMF/enums.h"
+#include "RMF/infrastructure_macros.h"
 
 int main(int, char * []) {
   std::string fname = "ranges.rmf";

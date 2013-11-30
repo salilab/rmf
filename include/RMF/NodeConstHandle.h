@@ -16,17 +16,17 @@
 #include <string>
 #include <vector>
 
-#include "ID.h"
-#include "Nullable.h"
+#include "RMF/ID.h"
+#include "RMF/Nullable.h"
 #include "RMF/config.h"
 #include "RMF/exceptions.h"
 #include "RMF/infrastructure_macros.h"
 #include "RMF/internal/SharedData.h"
 #include "RMF/internal/errors.h"
-#include "constants.h"
-#include "enums.h"
-#include "internal/SharedData.h"
-#include "types.h"
+#include "RMF/constants.h"
+#include "RMF/enums.h"
+#include "RMF/internal/SharedData.h"
+#include "RMF/types.h"
 
 namespace RMF {
 class NodeConstHandle;

@@ -9,6 +9,8 @@
 #include <string>
 
 #include "RMF/NodeConstHandle.h"
+#include "RMF/NodeHandle.h"
+#include "RMF/compiler_macros.h"
 #include "RMF/decorator/alias.h"
 #include "RMF/enums.h"
 #include "RMF/internal/utility.h"

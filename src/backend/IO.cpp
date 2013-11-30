@@ -1,9 +1,5 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem/operations.hpp>
-#include <boost/foreach.hpp>
-#include <boost/functional/hash/hash.hpp>
-#include <boost/mpl/bool.hpp>
-#include <boost/mpl/bool_fwd.hpp>
 #include <unistd.h>
 #include <algorithm>
 #include <functional>

@@ -2,7 +2,6 @@
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
 
-#include <boost/program_options/positional_options.hpp>
 #include <exception>
 #include <iostream>
 #include <string>

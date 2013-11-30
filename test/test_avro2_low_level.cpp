@@ -1,11 +1,22 @@
+#include <assert.h>
+#include <avrocpp/api/Compiler.hh>
+#include <avrocpp/api/DataFile.hh>
+#include <backend/avro2/raw_frame.h>
+#include <boost/shared_ptr.hpp>
+#include <generated/embed_jsons.h>
+#include <iostream>
+#include <string>
+
+#include "RMF/ID.h"
+#include "RMF/internal/paths.h"
+#include "avrocpp/api/Encoder.hh"
+#include "avrocpp/api/Specific.hh"
+#include "avrocpp/api/Stream.hh"
+#include "avrocpp/api/ValidSchema.hh"
 #include "backend/avro2/file_data.h"
 #include "backend/avro2/frame.h"
+#include "backend/avro2/types.h"
 #include "backend/avro2/write.h"
-#include <boost/filesystem.hpp>
-#include <avrocpp/api/DataFile.hh>
-#include <avrocpp/api/Compiler.hh>
-#include <generated/embed_jsons.h>
-#include <backend/avro2/raw_frame.h>
 
 namespace {
 void write(std::string name) {
@@ -62,12 +73,7 @@ void read_raw(std::string name) {
 }
 
 int main(int, char * []) {
-#if BOOST_VERSION > 104100
-  boost::filesystem::path temp = boost::filesystem::unique_path();
-  const std::string name = temp.native();
-#else
-  std::string name = tmpnam(NULL);
-#endif
+  std::string name = RMF::internal::get_unique_path();
   std::cout << "File is " << name << std::endl;
   write(name);
   read(name);

@@ -7,10 +7,8 @@
  */
 
 #include <boost/lexical_cast.hpp>
-#include <boost/move/utility.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
-#include <algorithm>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -21,7 +19,6 @@
 #include "MultipleAvroFileWriter.h"
 #include "RMF/BufferHandle.h"
 #include "RMF/compiler_macros.h"
-#include "RMF/infrastructure_macros.h"
 #include "SingleAvroFile.h"
 #include "backend/IOFactory.h"
 #include "backend/avro/AvroSharedData.impl.h"

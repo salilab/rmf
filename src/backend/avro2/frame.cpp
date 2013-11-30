@@ -6,7 +6,7 @@
  *
  */
 
-#include <avrocpp/api/DataFile.hh>
+#include "avrocpp/api/DataFile.hh"
 #include <ostream>
 
 #include "RMF/infrastructure_macros.h"

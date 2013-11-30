@@ -1,8 +1,4 @@
-#include <boost/foreach.hpp>
-#include <boost/mpl/bool.hpp>
-#include <boost/mpl/bool_fwd.hpp>
 #include <boost/scoped_array.hpp>
-#include <boost/smart_ptr/scoped_array.hpp>
 #include <stddef.h>
 #include <algorithm>
 #include <iostream>

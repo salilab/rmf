@@ -16,7 +16,6 @@
 #include <H5Ppublic.h>
 #include <H5Tpublic.h>
 #include <H5public.h>
-#include <boost/exception/detail/error_info_impl.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/scoped_array.hpp>
 #include <boost/shared_ptr.hpp>

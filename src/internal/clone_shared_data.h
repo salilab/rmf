@@ -17,7 +17,6 @@
 #include "shared_data_equality.h"
 
 #include <boost/range/distance.hpp>
-#include <boost/unordered_map.hpp>
 
 RMF_ENABLE_WARNINGS
 

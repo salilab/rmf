@@ -11,7 +11,6 @@
 
 #include <boost/current_function.hpp>
 #include <boost/functional/hash.hpp>
-#include <boost/functional/hash/hash.hpp>
 #include <boost/shared_ptr.hpp>
 #include <iosfwd>
 #include <limits>

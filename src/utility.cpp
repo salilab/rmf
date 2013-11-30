@@ -15,11 +15,11 @@
 #include "RMF/FileHandle.h"
 #include "RMF/NodeConstHandle.h"
 #include "RMF/NodeHandle.h"
+#include "RMF/compiler_macros.h"
 #include "RMF/decorator/alias.h"
 #include "RMF/exceptions.h"
 #include "RMF/infrastructure_macros.h"
 #include "RMF/internal/utility.h"
-#include "RMF/utility.h"
 #include "internal/clone_shared_data.h"
 #include "internal/shared_data_equality.h"
 

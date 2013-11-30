@@ -6,16 +6,24 @@
  *
  */
 
-#include <boost/functional/hash/hash.hpp>
-#include <boost/move/utility.hpp>
 #include <algorithm>
 #include <exception>
 #include <functional>
 #include <iostream>
+#include <string>
 
+#include "RMF/ID.h"
+#include "RMF/compiler_macros.h"
 #include "RMF/constants.h"
+#include "RMF/enums.h"
 #include "RMF/exceptions.h"
+#include "RMF/infrastructure_macros.h"
 #include "RMF/internal/SharedData.h"
+#include "RMF/internal/SharedDataData.h"
+#include "RMF/internal/SharedDataFile.h"
+#include "RMF/internal/SharedDataHierarchy.h"
+#include "RMF/internal/SharedDataLoadedFrame.h"
+#include "RMF/internal/SharedDataPath.h"
 #include "RMF/internal/large_set_map.h"
 #include "RMF/log.h"
 #include "RMF/types.h"

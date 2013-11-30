@@ -279,9 +279,9 @@ typedef struct {
   int num_basis_atoms; /**< number of atoms in basis set */
   int num_shells;      /**< total number of atomic shells */
   int wavef_size;      /**< size of the wavefunction
-    *   i.e. size of secular eq. or
-    *   # of cartesian contracted
-    *   gaussian basis functions */
+*   i.e. size of secular eq. or
+*   # of cartesian contracted
+*   gaussian basis functions */
 
   /* everything else */
   int have_sysinfo;
@@ -299,7 +299,7 @@ typedef struct {
   int runtype; /**< flag indicating the calculation method. */
   int scftype; /**< SCF type: RHF, UHF, ROHF, GVB or MCSCF wfn. */
   int status;  /**< indicates wether SCF and geometry optimization
-            *   have converged properly. */
+           *   have converged properly. */
   int num_electrons; /**< number of electrons.    XXX: can be fractional in some
                         DFT codes */
   int totalcharge; /**< total charge of system. XXX: can be fractional in some
