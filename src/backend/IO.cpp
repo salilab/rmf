@@ -1,6 +1,5 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem/operations.hpp>
-#include <unistd.h>
 #include <algorithm>
 #include <functional>
 #include <vector>
