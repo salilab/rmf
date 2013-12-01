@@ -1,7 +1,6 @@
 
 #include <avrocpp/api/Compiler.hh>
 #include <avrocpp/api/Encoder.hh>
-#include <boost/container/vector.hpp>
 #include <boost/shared_ptr.hpp>
 #include <generated/embed_jsons.h>
 #include <algorithm>

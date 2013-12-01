@@ -12,6 +12,7 @@
 #include "RMF/config.h"
 #include "RMF/HDF5/DataSetD.h"
 #include "HDF5DataSetCacheD.h"
+#include <boost/multi_array/collection_concept.hpp>
 #include <boost/multi_array.hpp>
 
 RMF_ENABLE_WARNINGS

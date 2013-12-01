@@ -1,7 +1,6 @@
 #include <assert.h>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/range/distance.hpp>
-#include <boost/range/iterator_range_core.hpp>
 #include <string>
 
 #include "RMF/FileHandle.h"

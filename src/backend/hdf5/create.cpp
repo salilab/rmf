@@ -6,8 +6,6 @@
  *
  */
 
-#include <boost/multi_array/subarray.hpp>
-#include <boost/multi_array/view.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
 #include <string>

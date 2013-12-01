@@ -12,13 +12,7 @@
 #include <H5public.h>
 #include <boost/array.hpp>
 #include <boost/make_shared.hpp>
-#include <boost/multi_array/subarray.hpp>
-#include <boost/multi_array/view.hpp>
-#include <boost/ptr_container/detail/reversible_ptr_container.hpp>
-#include <boost/ptr_container/ptr_sequence_adapter.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
-#include <boost/make_shared.hpp>
-#include <boost/utility/swap.hpp>
 #include <hdf5.h>
 #include <stddef.h>
 #include <algorithm>
