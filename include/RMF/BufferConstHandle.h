@@ -15,6 +15,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 #include <limits>
+#include <stdint.h>
 
 RMF_ENABLE_WARNINGS
 
