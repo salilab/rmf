@@ -152,7 +152,8 @@ std::pair<int, int> Data::get_structure(RMF::NodeConstHandle cur,
         at = tf_.get(cur).get_type_name();
       }
       if (nm.size() >= 16) {
-        std::copy_n(nm.begin(), 15, atoms->name);
+        std::copy(nm.begin(), nm.begin() + std::min(nm.size(), 15),
+                  atoms->name);
         nm[15] = '\0';
       } else {
         std::copy(nm.begin(), nm.end(), atoms->name);
