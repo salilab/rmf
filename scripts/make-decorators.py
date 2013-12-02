@@ -86,7 +86,7 @@ colored = Decorator(
     "shape",
     "Colored", "These particles have associated color information.",
     [Attribute("rgb color", "Vector3", "The RGB color. Each component has a value in [0...1].")])
-geometry_coordinates = Attribute("coordinates_list", "Vector3s",
+geometry_coordinates = Attribute("coordinates list", "Vector3s",
                                  "Coordinates of the center in angstroms.")
 
 geometry_index = Attribute(
