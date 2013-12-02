@@ -45,7 +45,7 @@ std::string get_absolute_path(std::string base, std::string file) {
 std::string get_unique_path() {
 #if BOOST_VERSION > 104100
   boost::filesystem::path temp = boost::filesystem::unique_path();
-  return temp.native();
+  return temp.string();
 #else
   return tmpnam(NULL);
 #endif
