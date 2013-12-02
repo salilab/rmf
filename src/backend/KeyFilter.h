@@ -80,6 +80,14 @@ class KeyFilter : public SharedDataAdaptor<SD> {
                         float_keys_.end(), std::back_inserter(ret));
     return ret;
   }
+  FloatsKeys get_keys(Category cat, FloatsTraits) {
+    FloatsKeys all = P::sync_->get_keys(cat, FloatsTraits());
+    std::sort(all.begin(), all.end());
+    FloatsKeys ret;
+    std::set_difference(all.begin(), all.end(), floats_keys_.begin(),
+                        floats_keys_.end(), std::back_inserter(ret));
+    return ret;
+  }
 };
 
 }  // namespace internal
