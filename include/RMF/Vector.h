@@ -63,7 +63,7 @@ class Vector {
     data_[2] = z;
     data_[3] = q;
   }
-  RMF_SHOWABLE(Vector, std::vector<float>(data_, data_ + 3));
+  RMF_SHOWABLE(Vector, std::vector<float>(data_, data_ + D));
 #ifndef SWIG
   float operator[](unsigned int i) const {
     RMF_USAGE_CHECK(i < D, "Out of range");
