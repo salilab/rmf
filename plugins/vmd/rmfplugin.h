@@ -218,7 +218,7 @@ bool Data::read_next_frame(molfile_timestep_t *frame) {
     }
     for (unsigned int j = 0; j < bodies_[i].balls.size(); ++j) {
       RMF::Vector3 cc;
-      cc = bf_.get(bodies_[i].atoms[j]).get_coordinates();
+      cc = bf_.get(bodies_[i].balls[j]).get_coordinates();
       cc = tr.get_global_coordinates(cc);
       std::copy(cc.begin(), cc.end(), coords);
       coords += 3;
