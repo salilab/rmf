@@ -197,8 +197,7 @@ std::pair<int, int> Data::get_structure(RMF::NodeConstHandle cur,
 }
 
 void Data::read_structure(molfile_atom_t *atoms) {
-  std::pair<int, int>  =
-      get_structure(file_.get_root_node(), atoms, 0, " ", -1, "NONE");
+  get_structure(file_.get_root_node(), atoms, 0, " ", -1, "NONE");
 }
 
 bool Data::read_next_frame(molfile_timestep_t *frame) {
