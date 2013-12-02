@@ -6,6 +6,8 @@
  *
  */
 
+#include "RMF/utility.h"
+
 #include <boost/shared_ptr.hpp>
 #include <algorithm>
 #include <iostream>

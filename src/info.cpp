@@ -6,6 +6,8 @@
  *
  */
 
+#include "RMF/info.h"
+
 #include <ostream>
 #include <string>
 #include <vector>

@@ -6,6 +6,8 @@
  *
  */
 
+#include "RMF/names.h"
+
 #include <boost/algorithm/string/erase.hpp>
 #include <string>
 

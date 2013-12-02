@@ -197,10 +197,8 @@ std::pair<int, int> Data::get_structure(RMF::NodeConstHandle cur,
 }
 
 void Data::read_structure(molfile_atom_t *atoms) {
-  std::pair<int, int> found =
+  std::pair<int, int>  =
       get_structure(file_.get_root_node(), atoms, 0, " ", -1, "NONE");
-  std::cout << "found " << found.first + found.second << " structural particles"
-            << std::endl;
 }
 
 bool Data::read_next_frame(molfile_timestep_t *frame) {
@@ -238,7 +236,6 @@ bool Data::read_next_frame(molfile_timestep_t *frame) {
 }
 
 void Data::read_graphics(int *nelem, const molfile_graphics_t **gdata) {
-  std::cout << "read graphics" << std::endl;
   *nelem =
       get_graphics(file_.get_root_node(), RMF::CoordinateTransformer(), NULL);
   graphics_.reset(new molfile_graphics_t[*nelem]);
@@ -290,7 +287,6 @@ int Data::get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
     RMF::decorator::SegmentConst s = sf_.get(cur);
     RMF::Vector3s coords = s.get_coordinates_list();
     RMF_INTERNAL_CHECK(coords.size() > 0, "Empty coordinates");
-    std::cout << coords << " read" << std::endl;
     int type = MOLFILE_LINE;
     double size = 0;
     if (cf_.get_is(cur)) {
@@ -321,7 +317,6 @@ int Data::get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
     if (graphics) graphics += cur;
     ret += cur;
   }
-  std::cout << "Ret for " << cur.get_name() << " is " << ret << std::endl;
   return ret;
 }
 int Data::get_bonds(RMF::NodeConstHandle cur,
@@ -407,12 +402,10 @@ void *open_rmf_read(const char *filename, const char *, int *natoms) {
   if (*natoms == 0) {
     *natoms = MOLFILE_NUMATOMS_NONE;
   }
-  std::cout << "open_rmf_read " << filename << ": " << *natoms << std::endl;
   return data;
 }
 
 int read_rmf_structure(void *mydata, int *optflags, molfile_atom_t *atoms) {
-  std::cout << "read structure" << std::endl;
   Data *data = reinterpret_cast<Data *>(mydata);
   *optflags = MOLFILE_RADIUS | MOLFILE_MASS;
   // copy from atoms
@@ -454,14 +447,12 @@ int read_rmf_bonds_and_restraints(void *mydata, int *nbonds, int **fromptr,
 
 int read_rmf_graphics(void *mydata, int *nelem,
                       const molfile_graphics_t **gdata) {
-  std::cout << "read graphics" << std::endl;
   Data *data = reinterpret_cast<Data *>(mydata);
   data->read_graphics(nelem, gdata);
   return VMDPLUGIN_SUCCESS;
 }
 int read_rmf_timestep_metadata(void *mydata,
                                molfile_timestep_metadata_t *tdata) {
-  std::cout << "read metdata" << std::endl;
   Data *data = reinterpret_cast<Data *>(mydata);
   data->read_timestep_data(tdata);
   return VMDPLUGIN_SUCCESS;
@@ -487,7 +478,6 @@ void init_plugin(molfile_plugin_t &plugin) {
 }
 
 void init_plugins() {
-  std::cout << "Init" << std::endl;
   init_plugin(plugin);
   plugin.name = "rmf";
   plugin.prettyname = "RMF";
