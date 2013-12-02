@@ -48,12 +48,14 @@ struct IO;
   using SharedDataData<Traits>::get_static_data;     \
   using SharedDataData<Traits>::get_static_value;    \
   using SharedDataData<Traits>::set_static_value;    \
+  using SharedDataData<Traits>::unset_static_value;  \
   using SharedDataData<Traits>::access_static_value; \
   using SharedDataData<Traits>::access_static_data;  \
   using SharedDataData<Traits>::clear_static_values; \
   using SharedDataData<Traits>::get_loaded_data;     \
   using SharedDataData<Traits>::get_loaded_value;    \
   using SharedDataData<Traits>::set_loaded_value;    \
+  using SharedDataData<Traits>::unset_loaded_value;  \
   using SharedDataData<Traits>::access_loaded_value; \
   using SharedDataData<Traits>::access_loaded_data;  \
   using SharedDataData<Traits>::clear_loaded_values; \

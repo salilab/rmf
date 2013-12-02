@@ -56,6 +56,9 @@ class SharedDataData {
                  typename Traits::ArgumentType v) {
     data[k][node] = v;
   }
+  void unset_value(TypeData<Traits>& data, NodeID node, ID<Traits> k) {
+    data[k].erase(node);
+  }
   typename Traits::Type& access_value(TypeData<Traits>& data, NodeID node,
                                       ID<Traits> k) {
     return data[k][node];
@@ -88,6 +91,13 @@ class SharedDataData {
   void set_loaded_value(NodeID node, ID<Traits> k,
                         typename Traits::ArgumentType v) {
     set_value(pl_, node, k, v);
+  }
+  void unset_static_value(NodeID node, ID<Traits> k) {
+    unset_value(ps_, node, k);
+    static_dirty_ = true;
+  }
+  void unset_loaded_value(NodeID node, ID<Traits> k) {
+    unset_value(pl_, node, k);
   }
   typename Traits::Type& access_static_value(NodeID node, ID<Traits> k) {
     return access_value(ps_, node, k);

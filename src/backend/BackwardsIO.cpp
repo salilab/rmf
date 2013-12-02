@@ -29,8 +29,11 @@ boost::array<std::string, 4> make_array(std::string a, std::string b,
 typedef std::pair<std::string, boost::array<std::string, 3> > P3;
 const P3 vector_3_names[] = {
     P3("coordinates", make_array("cartesian x", "cartesian y", "cartesian z")),
+    P3("translation",
+       make_array("reference frame cartesian x", "reference frame cartesian y",
+                  "reference frame cartesian z")),
     P3("rgb color",
-       make_array("rgb color red", "rgb color green", "rbg color blue")),
+       make_array("rgb color red", "rgb color green", "rgb color blue")),
     P3("force", make_array("force cartesian x", "force cartesian y",
                            "force cartesian z")),
     P3("torque", make_array("torque cartesian x", "torque cartesian y",

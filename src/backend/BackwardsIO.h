@@ -12,6 +12,7 @@
 #include <boost/array.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/scoped_ptr.hpp>
+#include <boost/tuple/tuple.hpp>
 #include "internal/clone_shared_data.h"
 #include <algorithm>
 #include <ostream>
@@ -72,6 +73,7 @@ struct BackwardsIO : public IO {
       RMF_FOREACH(std::string subkey_name,
                   get_vector_subkey_names(key_name, Vector<D>())) {
         filter.add_float_key(cat, subkey_name);
+        RMF_TRACE("Filtering " << subkey_name);
       }
     }
   }
@@ -82,6 +84,7 @@ struct BackwardsIO : public IO {
       RMF_FOREACH(std::string subkey_name,
                   get_vectors_subkey_names(key_name, Vector<D>())) {
         filter.add_floats_key(cat, subkey_name);
+        RMF_TRACE("Filtering " << subkey_name);
       }
     }
   }
@@ -164,7 +167,7 @@ struct BackwardsIO : public IO {
   void load_vector(SDA *sda, Category category_a, SDB *sdb, Category category_b,
                    H) {
     typedef ID<VectorTraits<D> > Key;
-    typedef std::pair<Key, int> Data;
+    typedef boost::tuple<Key, int > Data;
     RMF_LARGE_UNORDERED_MAP<FloatKey, Data> map;
     RMF_FOREACH(std::string key_name,
                 get_vector_names(category_a, Vector<D>())) {
@@ -173,9 +176,9 @@ struct BackwardsIO : public IO {
       for (unsigned int i = 0; i < D; ++i) {
         FloatKey cur_key =
             sda->get_key(category_a, subkey_names[i], FloatTraits());
-        map[cur_key].first =
+        map[cur_key].template get<0>() =
             sdb->get_key(category_b, key_name, VectorTraits<D>());
-        map[cur_key].second = i;
+        map[cur_key].template get<1>() = i;
       }
     }
     if (map.empty()) return;
@@ -184,8 +187,8 @@ struct BackwardsIO : public IO {
       RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
         double v = H::get(sda, n, kp.first);
         if (!FloatTraits::get_is_null_value(v)) {
-          Vector<D> &old = H::access(sdb, n, kp.second.first);
-          old[kp.second.second] = v;
+          Vector<D> &old = H::access(sdb, n, kp.second.template get<0>());
+          old[kp.second.template get<1>()] = v;
         }
       }
     }
@@ -232,7 +235,7 @@ struct BackwardsIO : public IO {
   void load_vectors(SDA *sda, Category category_a, SDB *sdb,
                     Category category_b, H) {
     typedef Vector3sKey Key;
-    typedef std::pair<Key, int> Data;
+    typedef boost::tuple<Key, int > Data;
     RMF_LARGE_UNORDERED_MAP<FloatsKey, Data> map;
     RMF_FOREACH(std::string key_name,
                 get_vectors_names(category_a, Vector<3>())) {
@@ -241,9 +244,9 @@ struct BackwardsIO : public IO {
       for (unsigned int i = 0; i < 3; ++i) {
         FloatsKey cur_key =
             sda->get_key(category_a, subkey_names[i], FloatsTraits());
-        map[cur_key].first =
+        map[cur_key].template get<0>() =
             sdb->get_key(category_b, key_name, Vector3sTraits());
-        map[cur_key].second = i;
+        map[cur_key].template get<1>() = i;
       }
     }
     if (map.empty()) return;
@@ -252,10 +255,11 @@ struct BackwardsIO : public IO {
       RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
         Floats v = H::get(sda, n, kp.first);
         if (!v.empty()) {
-          std::vector<Vector<3> > &old = H::access(sdb, n, kp.second.first);
+          std::vector<Vector<3> > &old =
+              H::access(sdb, n, kp.second.template get<0>());
           old.resize(v.size());
           for (unsigned int i = 0; i < v.size(); ++i) {
-            old[i][kp.second.second] = v[i];
+            old[i][kp.second.get<1>()] = v[i];
           }
         }
       }
@@ -317,7 +321,7 @@ struct BackwardsIO : public IO {
     ID<backward_types::NodeIDTraits> alias_key;
     RMF_FOREACH(ID<backward_types::NodeIDTraits> nik_cur,
                 a->get_keys(alias_cat, backward_types::NodeIDTraits())) {
-      if (a->get_name(nik_cur) == "alias") {
+      if (a->get_name(nik_cur) == "aliased") {
         alias_key = nik_cur;
       }
     }
@@ -327,19 +331,26 @@ struct BackwardsIO : public IO {
   template <class SDA, class SDB>
   void load_restraints(const SDA *a, SDB *b) {
     ID<backward_types::NodeIDTraits> alias_key = get_alias_key(a);
-    if (alias_key == ID<backward_types::NodeIDTraits>()) return;
+    if (alias_key == ID<backward_types::NodeIDTraits>()) {
+      RMF_INFO("No alias key found, skipping restraint processing");
+      return;
+    }
 
     Category feature_category = b->get_category("feature");
     IntsKey rep_key =
         b->get_key(feature_category, "representation", IntsTraits());
 
-    RMF_FOREACH(NodeID n, internal::get_nodes(a)) {
-      if (a->get_type(n) == FEATURE) {
-        NodeIDs chs = a->get_children(n);
+    RMF_FOREACH(NodeID n, internal::get_nodes(b)) {
+      if (b->get_type(n) == FEATURE) {
+        RMF_TRACE("Processing restraint node " << b->get_name(n));
+        // make a copy as it can change
+        NodeIDs chs = b->get_children(n);
         Ints val;
         RMF_FOREACH(NodeID ch, chs) {
-          if (a->get_type(ch) == ALIAS) {
-            val.push_back(a->get_static_value(ch, alias_key));
+          if (b->get_type(ch) == ALIAS) {
+            RMF_TRACE("Found alias child " << b->get_name(ch));
+            val.push_back(a->get_static_value(ch, alias_key).get_index());
+            b->remove_child(n, ch);
           }
         }
         if (!val.empty()) {
@@ -367,6 +378,8 @@ struct BackwardsIO : public IO {
               n, k0, a->get_static_value(ch[0], alias_key).get_index());
           b->set_static_value(
               n, k1, a->get_static_value(ch[1], alias_key).get_index());
+          b->remove_child(n, ch[0]);
+          b->remove_child(n, ch[1]);
         }
       }
     }
@@ -460,6 +473,7 @@ struct BackwardsIO : public IO {
     }
 
     load_bonds(sd_.get(), shared_data);
+    load_restraints(sd_.get(), shared_data);
   }
 
   virtual void save_static_frame(const internal::SharedData *shared_data)

@@ -33,6 +33,16 @@ class SharedDataHierarchy {
   Data hierarchy_;
   bool dirty_;
 
+  void remove(std::vector<NodeID> &list, NodeID to_remove) {
+    RMF_INTERNAL_CHECK(
+        std::find(list.begin(), list.end(), to_remove) != list.end(),
+        "Note in list");
+    list.erase(std::remove(list.begin(), list.end(), to_remove), list.end());
+    RMF_INTERNAL_CHECK(
+        std::find(list.begin(), list.end(), to_remove) == list.end(),
+        "Still in list");
+  }
+
  public:
   SharedDataHierarchy() { clear(); }
 
@@ -70,6 +80,12 @@ class SharedDataHierarchy {
         std::max<std::size_t>(hierarchy_.size(), child.get_index()));
     hierarchy_[parent.get_index()].children.push_back(child);
     hierarchy_[child.get_index()].parents.push_back(parent);
+    dirty_ = true;
+  }
+
+  void remove_child(NodeID parent, NodeID child) {
+    remove(hierarchy_[parent.get_index()].children, child);
+    remove(hierarchy_[child.get_index()].parents, parent);
     dirty_ = true;
   }
 
