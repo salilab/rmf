@@ -22,6 +22,7 @@
 #include "RMF/exceptions.h"
 #include "RMF/infrastructure_macros.h"
 #include "RMF/internal/utility.h"
+#include "RMF/utility.h"
 #include "internal/clone_shared_data.h"
 #include "internal/shared_data_equality.h"
 
