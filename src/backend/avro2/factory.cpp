@@ -55,8 +55,12 @@ class Avro2IOBufferFactory : public backends::IOFactory {
   }
   virtual boost::shared_ptr<backends::IO> read_buffer(BufferConstHandle buffer)
       const RMF_OVERRIDE {
-    return boost::make_shared<Avro2IO<ReaderTraits<BufferReaderBase> > >(
-        buffer);
+    try {
+      return boost::make_shared<Avro2IO<ReaderTraits<BufferReaderBase> > >(
+          buffer);
+    } catch (std::exception e) {
+      RMF_INFO("Avro2 reader can't read buffer: " << e.what());
+    }
   }
   virtual boost::shared_ptr<backends::IO> create_buffer(BufferHandle buffer)
       const RMF_OVERRIDE {
