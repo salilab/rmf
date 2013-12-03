@@ -56,17 +56,9 @@ diffuser = Decorator(["REPRESENTATION"], "physics",
                      "Diffuser", "Information regarding diffusion coefficients.",
                      [Attribute("diffusion coefficient", "Float", "The diffusion coefficient in A^2/fs.")])
 
-force = Decorator(["REPRESENTATION"], "physics",
-                  "Force", "Forces acting on particles in kCal/mol/A.",
-                  [Attribute("force", "Vector3", "The force.")])
-
-torque = Decorator(["REPRESENTATION"], "physics",
-                   "Torque", "Torque acting on particles in kCal/mol/radian.",
-                   [Attribute("torque", "Vector3", "The torque.")])
-
 make_header(
     "physics", [particle, iparticle, pparticle, diffuser,
-                atom, bond, refframe, torque],
+                atom, bond, refframe],
     ["alias"])
 
 
