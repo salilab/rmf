@@ -154,7 +154,10 @@ struct BufferWriterTraits {
 
 struct BufferReaderBase {
   BufferConstHandle buffer_;
-  BufferReaderBase(BufferConstHandle buffer) : buffer_(buffer) {}
+  BufferReaderBase(BufferConstHandle buffer) : buffer_(buffer) {
+    // to validate
+    get_reader<Frame>();
+  }
   template <class T>
   boost::shared_ptr<internal_avro::DataFileReader<T> > get_reader() {
     boost::shared_ptr<internal_avro::InputStream> stream =
