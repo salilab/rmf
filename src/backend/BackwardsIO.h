@@ -367,8 +367,8 @@ struct BackwardsIO : public IO {
     if (alias_key == ID<backward_types::NodeIDTraits>()) return;
 
     Category bond_cat = b->get_category("bond");
-    IntKey k0 = b->get_key(bond_cat, "bonded_0", IntTraits());
-    IntKey k1 = b->get_key(bond_cat, "bonded_1", IntTraits());
+    IntKey k0 = b->get_key(bond_cat, "bonded 0", IntTraits());
+    IntKey k1 = b->get_key(bond_cat, "bonded 1", IntTraits());
     RMF_FOREACH(NodeID n, internal::get_nodes(a)) {
       if (a->get_type(n) == BOND) {
         NodeIDs ch = a->get_children(n);
