@@ -60,6 +60,7 @@ class Avro2IOBufferFactory : public backends::IOFactory {
           buffer);
     } catch (std::exception e) {
       RMF_INFO("Avro2 reader can't read buffer: " << e.what());
+      return boost::shared_ptr<backends::IO>();
     }
   }
   virtual boost::shared_ptr<backends::IO> create_buffer(BufferHandle buffer)
