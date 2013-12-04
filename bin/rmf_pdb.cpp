@@ -131,8 +131,8 @@ RMF_ENABLE_WARNINGS namespace {
     }
     if (rf.get_is(nh)) {
       RMF::decorator::ResidueConst r = rf.get(nh);
-      residue_index = r.get_index();
-      residue_type = r.get_type();
+      residue_index = r.get_residue_index();
+      residue_type = r.get_residue_type();
     }
     if (af.get_is(nh)) {
       RMF::decorator::AtomConst a = af.get(nh);

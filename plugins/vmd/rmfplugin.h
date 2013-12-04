@@ -125,8 +125,8 @@ std::pair<int, int> Data::get_structure(RMF::NodeConstHandle cur, int first_inde
     chain = chf_.get(cur).get_chain_id();
   }
   if (rf_.get_is(cur)) {
-    resid = rf_.get(cur).get_index();
-    resname = rf_.get(cur).get_type();
+    resid = rf_.get(cur).get_residue_index();
+    resname = rf_.get(cur).get_residue_type();
   }
   RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
     std::pair<int, int> count =

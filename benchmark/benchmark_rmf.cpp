@@ -63,8 +63,8 @@ void create_chain(RMF::NodeHandle nh, RMF::decorator::ResidueFactory rf,
     std::ostringstream oss;
     oss << i;
     RMF::NodeHandle child = nh.add_child(oss.str(), RMF::REPRESENTATION);
-    rf.get(child).set_static_type("cys");
-    rf.get(child).set_static_index(i);
+    rf.get(child).set_static_residue_type("cys");
+    rf.get(child).set_static_residue_index(i);
     create_residue(child, af, pf);
   }
 }

@@ -430,6 +430,27 @@ struct BackwardsIO : public IO {
           }
         }
       }
+      StringKey rtk =
+          get_key_const(file_cat, "residue type", StringTraits(), shared_data);
+      IntKey bk = get_key_const(file_cat, "first residue index", IntTraits(),
+                                shared_data);
+      IntKey ek = get_key_const(file_cat, "second residue index", IntTraits(),
+                                shared_data);
+      if (rtk != StringKey() && bk != IntKey() && ek != IntKey()) {
+        IntKey rik =
+            shared_data->get_key(file_cat, "residue index", IntTraits());
+        RMF_FOREACH(NodeID ni, internal::get_nodes(shared_data)) {
+          std::string rt = H::get(shared_data, ni, rtk);
+          if (!rt.empty()) {
+            int b = H::get(shared_data, ni, bk);
+            if (!IntTraits::get_is_null_value(b)) {
+              H::set(shared_data, ni, rik, b);
+              H::unset(shared_data, ni, bk);
+              H::unset(shared_data, ni, bk);
+            }
+          }
+        }
+      }
     }
     load_vector<3>(sd_.get(), file_cat, shared_data, category, H());
     load_vector<4>(sd_.get(), file_cat, shared_data, category, H());
