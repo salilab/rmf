@@ -55,8 +55,10 @@ void test(const char* fname) {
   MyInt sint = {6};
   c3.set_association(sint);
   RMF::NodeHandle c3b = fh.get_node_from_association(sint);
+  RMF_UNUSED(c3b);
   assert(c3 == c3b);
   MyInt sintb = c3.get_association<MyInt>();
+  RMF_UNUSED(sintb);
   assert(sintb.i == sint.i);
 }
 }
