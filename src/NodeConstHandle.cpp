@@ -151,7 +151,8 @@ void show_node(NodeConstHandle n, std::ostream& out, FloatKeys fks,
 }
 
 void show_node_decorators(
-    NodeConstHandle n, std::ostream& out, decorator::ColoredConstFactory ccf,
+    NodeConstHandle n, std::ostream& out, decorator::BondConstFactory bdcf,
+    decorator::ColoredConstFactory ccf,
     decorator::ParticleConstFactory pcf,
     decorator::IntermediateParticleConstFactory ipcf,
     decorator::RigidParticleConstFactory rpcf, decorator::ScoreConstFactory scf,
@@ -163,6 +164,7 @@ void show_node_decorators(
     decorator::TypedConstFactory typedcf, std::string) {
   using std::operator<<;
   out << "\"" << n.get_name() << "\" [" << get_type_name(n.get_type()) << ": ";
+  if (bdcf.get_is(n)) out << " bond";
   if (ccf.get_is(n)) out << " color";
   if (pcf.get_is(n)) out << " particle";
   if (ipcf.get_is(n)) out << " iparticle";
@@ -254,6 +256,7 @@ void show_hierarchy_with_values(NodeConstHandle root, std::ostream& out) {
 
 void show_hierarchy_with_decorators(NodeConstHandle root, bool,
                                     std::ostream& out) {
+  decorator::BondConstFactory bdf(root.get_file());
   decorator::ColoredConstFactory ccf(root.get_file());
   decorator::ParticleConstFactory pcf(root.get_file());
   decorator::IntermediateParticleConstFactory ipcf(root.get_file());
@@ -272,7 +275,7 @@ void show_hierarchy_with_decorators(NodeConstHandle root, bool,
   using std::operator<<;
   RMF_PRINT_TREE(
       out, NodeConstHandle, root, n.get_children().size(), n.get_children(),
-      show_node_decorators(n, out, ccf, pcf, ipcf, rpcf, scf, bcf, cycf, segcf,
+      show_node_decorators(n, out, bdf, ccf, pcf, ipcf, rpcf, scf, bcf, cycf, segcf,
                            rcf, acf, chaincf, fragcf, copycf, diffusercf,
                            typedcf, prefix0 + "   "));
 }
