@@ -13,6 +13,7 @@
 #include <iostream>
 #include <string>
 #include "RMF/compiler_macros.h"
+#include "internal/use.h"
 #include <boost/config.hpp>
 #include <boost/version.hpp>
 #if defined(BOOST_NO_CXX11_RANGE_BASED_FOR) || BOOST_VERSION <= 104100
@@ -105,7 +106,7 @@ RMF_ENABLE_WARNINGS
 #endif
 
 #define RMF_UNUSED(variable) \
-  if (0) std::cout << variable;
+  RMF::internal::use(variable);
 
 #define RMF_NO_RETURN(type) return type()
 
