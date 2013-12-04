@@ -1,4 +1,7 @@
 # Change Log #
+- RMF::decorator::Residue::get_residue_index() and
+	RMF::decorator::Residue::get_residue_type() replace the versions
+	without `residue` in the name
 - Decorators and factories have been moved into the RMF::decorator namespace in C++.
 - Two new formats have been added: `.rmf3` and its compressed version
 	`.rmfz`. You should use those in preference to the prior formats
