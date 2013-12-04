@@ -79,24 +79,15 @@ geometry_index = Attribute(
 
 ball = Decorator(["GEOMETRY"], "shape",
                  "Ball",
-                 [coordinates, radius],
-                 internal_attributes=[geometry_index],
-                 init_function="nh.set_value(type_, 0);",
-                 check_function="nh.get_value(type_) == 0")
+                 [coordinates, radius])
 
 cylinder = Decorator(["GEOMETRY"], "shape",
                      "Cylinder",
-                     [geometry_coordinates, radius],
-                     internal_attributes=[geometry_index],
-                     init_function="nh.set_value(type_, 1);",
-                     check_function="nh.get_value(type_) == 1")
+                     [geometry_coordinates, radius])
 
 segment = Decorator(["GEOMETRY"], "shape",
                     "Segment",
-                    [geometry_coordinates],
-                    internal_attributes=[geometry_index],
-                    init_function="nh.set_value(type_, 1);",
-                    check_function="nh.get_value(type_) == 1")
+                    [geometry_coordinates])
 
 
 make_header("shape", [colored, ball, cylinder, segment], [])
@@ -117,7 +108,7 @@ make_header("publication", [journal], [])
 residue = Decorator(["REPRESENTATION"], "sequence",
                     "Residue",
                     [Attribute("residue index", "Int"),
-                     Attribute("residue type", "String", function_name="type")])
+                     Attribute("residue type", "String")])
 
 chain = Decorator(["REPRESENTATION"], "sequence",
                   "Chain",
