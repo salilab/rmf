@@ -285,6 +285,7 @@ RMF_DECORATOR(RMF::decorator, Torque);
 %include "RMF/decorator/alias.h"
 %include "RMF/decorator/publication.h"
 %include "RMF/utility.h"
+%include "RMF/signature.h"
 %include "RMF/info.h"
 %include "RMF/SetCurrentFrame.h"
 %include "RMF/RestoreCurrentFrame.h"
