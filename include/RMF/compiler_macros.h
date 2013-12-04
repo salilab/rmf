@@ -1,5 +1,5 @@
 /**
- *  \file RMF/base/compiler_macros.h
+ *  \file RMF/compiler_macros.h
  *  \brief Various compiler workarounds
  *
  *  Copyright 2007-2013 RMF Inventors. All rights reserved.

@@ -19,9 +19,9 @@ See RMF::ROOT, RMF::REPRESENTATION, RMF::BOND, RMF::ORGANIZATIONAL, RMF::FEATURE
 \section pdb PDB files
 
 PDB files are most naturally mapped as follows:
-- each PDB chain is a node that is a child of the root and stores data using the RMF::Chain decorator
-- for a protein, each residue is a node that is the child of the respective chain and stores data using the RMF::Residue decorator
-- each atom is a node that is the child of its residue or molecule. It stores data using the RMF::Atom and RMF::Particle decorators
+- each PDB chain is a node that is a child of the root and stores data using the RMF::decorator::Chain decorator
+- for a protein, each residue is a node that is the child of the respective chain and stores data using the RMF::decorator::Residue decorator
+- each atom is a node that is the child of its residue or molecule. It stores data using the RMF::decorator::Atom and RMF::decorator::Particle decorators
 
 All bonds are stored as RMF::BOND nodes with two children for the endpoints of the bond. The bonds are stored as children of the first common ancestor of the endpoints.
 
@@ -29,17 +29,17 @@ All bonds are stored as RMF::BOND nodes with two children for the endpoints of t
  digraph pdb {
       root [label="root" shape=circle];
       chain [label="Chain A" shape=folder];
-      r0 [label="Residue 0 (RMF::Residue)" shape=folder URL="\ref RMF::Residue"];
-      r1 [label="Residue 1 (RMF::Residue)" shape=folder URL="\ref RMF::Residue"];
+      r0 [label="Residue 0 (RMF::decorator::Residue)" shape=folder URL="\ref RMF::decorator::Residue"];
+      r1 [label="Residue 1 (RMF::decorator::Residue)" shape=folder URL="\ref RMF::decorator::Residue"];
       br [label="bond" shape=invhouse];
       br0 [label="bonded" shape=point];
       br1 [label="bonded" shape=point];
-      rdot [label="Residue ... (RMF::Residue)" shape=folder URL="\ref RMF::Residue"];
-      a0 [label="N (RMF::Atom, RMF::Particle)" shape=oval URL="\ref RMF::Atom"];
-      a1 [label="CA (RMF::Atom, RMF::Particle)" shape=oval URL="\ref RMF::Atom"];
-      a2 [label="C (RMF::Atom, RMF::Particle)" shape=oval URL="\ref RMF::Atom"];
-      ap0 [label="N (RMF::Atom, RMF::Particle)" shape=oval URL="\ref RMF::Atom"];
-      apdot [label="... (RMF::Atom, RMF::Particle)" shape=oval URL="\ref RMF::Atom"];
+      rdot [label="Residue ... (RMF::decorator::Residue)" shape=folder URL="\ref RMF::decorator::Residue"];
+      a0 [label="N (RMF::decorator::Atom, RMF::decorator::Particle)" shape=oval URL="\ref RMF::decorator::Atom"];
+      a1 [label="CA (RMF::decorator::Atom, RMF::decorator::Particle)" shape=oval URL="\ref RMF::decorator::Atom"];
+      a2 [label="C (RMF::decorator::Atom, RMF::decorator::Particle)" shape=oval URL="\ref RMF::decorator::Atom"];
+      ap0 [label="N (RMF::decorator::Atom, RMF::decorator::Particle)" shape=oval URL="\ref RMF::decorator::Atom"];
+      apdot [label="... (RMF::decorator::Atom, RMF::decorator::Particle)" shape=oval URL="\ref RMF::decorator::Atom"];
       b0 [label="bond" shape=invhouse];
       b00 [label="bonded" shape=point];
       b01 [label="bonded" shape=point];
@@ -78,22 +78,22 @@ If the PDB file has more than one model, all with the same structure, the models
 \section rigid_fits Rigid fits of proteins into EM maps or other data
 
 When you have a number of structures that are formed by applying a rigid transform to a set of base structures (eg fitting pdb structures into an EM map), they can be stored as follows:
-- RMF::ReferenceFrame nodes can be used to store the rigid transforms
-- under each RMF::ReferenceFrame node, you can store one of
-     - a RMF::External referencing an external structure
+- RMF::decorator::ReferenceFrame nodes can be used to store the rigid transforms
+- under each RMF::decorator::ReferenceFrame node, you can store one of
+     - a RMF::decorator::External referencing an external structure
      - an RMF hierarchy detailing the structure being transformed
-Multiple RMF::External or the child hierarchies can refer to the same structure. Hopefully software loading the RMF file will take advantage of that.
+Multiple RMF::decorator::External or the child hierarchies can refer to the same structure. Hopefully software loading the RMF file will take advantage of that.
 
 Multiple structures can be stored as separate frames.
 
 \dot
  digraph rigid {
       root [label="root" shape=circle];
-      copy_0 [label="Copy 0 (RMF::ReferenceFrame)" shape=folder URL="\ref RMF::ReferenceFrame"];
-      copy_1 [label="Copy 1 (RMF::ReferenceFrame)" shape=folder URL="\ref RMF::ReferenceFrame"];
-      copy_2 [label="Copy 2 (RMF::ReferenceFrame)" shape=folder URL="\ref RMF::ReferenceFrame"];
-      pdb [label="External PDB (RMF::External)" shape=oval URL="\ref RMF::External"];
-      em [label="External MRC (RMF::External)" shape=oval URL="\ref RMF::External"];
+      copy_0 [label="Copy 0 (RMF::decorator::ReferenceFrame)" shape=folder URL="\ref RMF::decorator::ReferenceFrame"];
+      copy_1 [label="Copy 1 (RMF::decorator::ReferenceFrame)" shape=folder URL="\ref RMF::decorator::ReferenceFrame"];
+      copy_2 [label="Copy 2 (RMF::decorator::ReferenceFrame)" shape=folder URL="\ref RMF::decorator::ReferenceFrame"];
+      pdb [label="External PDB (RMF::decorator::External)" shape=oval URL="\ref RMF::decorator::External"];
+      em [label="External MRC (RMF::decorator::External)" shape=oval URL="\ref RMF::decorator::External"];
       root -> copy_0;
       root -> copy_1;
       root -> copy_2;
@@ -144,16 +144,16 @@ If the file contains data that has multiple organization schemes, for example, g
 
 \section symmetries Symmetries
 
-When there is symmetry, or other repeated unit, define the unit cell in one sub hierarchy and then add RMF::ReferenceFrame nodes that have that unit cell as a child to define the symmetric parts.
+When there is symmetry, or other repeated unit, define the unit cell in one sub hierarchy and then add RMF::decorator::ReferenceFrame nodes that have that unit cell as a child to define the symmetric parts.
 
 \dot
  digraph symmetry {
       root [label="root" shape=circle];
       unit_cell [label="unit cell" shape=folder];
       structure [label="structural nodes" shape=triangle];
-      copy_0 [label="Copy 0 (RMF::ReferenceFrame)" shape=folder URL="\ref RMF::ReferenceFrame"];
-      copy_1 [label="Copy 1 (RMF::ReferenceFrame)" shape=folder URL="\ref RMF::ReferenceFrame"];
-      copy_2 [label="Copy 2 (RMF::ReferenceFrame)" shape=folder URL="\ref RMF::ReferenceFrame"];
+      copy_0 [label="Copy 0 (RMF::decorator::ReferenceFrame)" shape=folder URL="\ref RMF::decorator::ReferenceFrame"];
+      copy_1 [label="Copy 1 (RMF::decorator::ReferenceFrame)" shape=folder URL="\ref RMF::decorator::ReferenceFrame"];
+      copy_2 [label="Copy 2 (RMF::decorator::ReferenceFrame)" shape=folder URL="\ref RMF::decorator::ReferenceFrame"];
       root -> unit_cell;
       unit_cell -> structure
       root -> copy_0;

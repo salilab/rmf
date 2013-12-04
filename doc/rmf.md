@@ -82,7 +82,7 @@ RMF::FileHandle using RMF::FileHandle::get_root_node().
 Each attribute is identified by a key (eg RMF::IntKey) and is defined by a
 unique combination of
 
-- a \ref categories "category" such as \ref catphysics "physics",
+- a \ref decoratorsattributes "category" such as \ref physics "physics",
 identified by an RMF::Category.
 
 - a name string
@@ -94,7 +94,7 @@ to get and set the attributes take an optional frame number.
 
 The library provides decorators to group together and provide easier
 manipulation of standard attributes. Examples include RMF::Particle,
-RMF::Colored, RMF::Ball etc. See [Decorators](\ref #rmfdecorators) for
+RMF::decorator::Colored, RMF::decorator::Ball etc. See [Decorators](\ref decoratorsattributes) for
 more information.
 
 The data types that can currently be stored in an \ref rmf "RMF File" are

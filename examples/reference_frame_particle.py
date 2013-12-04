@@ -20,31 +20,30 @@ origin = rh.add_child("origin", RMF.REPRESENTATION)
 pd = particle_factory.get(origin)
 pd.set_radius(1)
 pd.set_mass(2)
-pd.set_coordinates(RMF.Vector3(0,0,0))
+pd.set_coordinates(RMF.Vector3(0, 0, 0))
 
-for i in range(0,3):
+for i in range(0, 3):
     c = rh.add_child(str(i), RMF.REPRESENTATION)
     pd = particle_factory.get(c)
     pd.set_radius(1)
     pd.set_mass(2)
-    coords = [0,0,0]
+    coords = [0, 0, 0]
     coords[i] = 2
     pd.set_coordinates(RMF.Vector3(*coords))
 
 
-
 frame = rh.add_child("frame", RMF.REPRESENTATION)
 rbo = reference_frame_factory.get(frame)
-rbo.set_translation([5,0,0])
-rbo.set_rotation([1,0,0,0])
+rbo.set_translation([5, 0, 0])
+rbo.set_rotation([1, 0, 0, 0])
 pd = particle_factory.get(frame)
 pd.set_radius(5)
 pd.set_mass(2)
-pd.set_coordinates(RMF.Vector3(0,0,0))
+pd.set_coordinates(RMF.Vector3(0, 0, 0))
 
 for i in range(0, 3):
     ch = frame.add_child("site", RMF.GEOMETRY)
-    coords = [0,0,0]
+    coords = [0, 0, 0]
     coords[i] = 5
     v = RMF.Vector3(*coords)
     ball_factory.get(ch).set_coordinates(v)

@@ -1,8 +1,7 @@
 ## \example rmf_xml.py
 # This example converts an RMF file to xml, in order to display it in
 # an XML viewer such as firefox. Its functionality is largely
-# identical to the \c rmf_xml program included in \ref
-# application_rmf_tools "RMF Tools". The secondary purpose it to
+# identical to the \c rmf_xml program. The secondary purpose it to
 # provide an example of extracting all data from an RMF file and
 # converting it to some other source. The data extracted here is
 # completely uninterpreted (eg, cartesian coordinates are treated just

@@ -479,7 +479,7 @@ def make_header(name, infos, deps):
 
     fl = open(os.path.join("include", "RMF", "decorator", name + ".h"), "w")
     print >> fl, """/**
- *  \\file RMF/%(name)s_decorators.h
+ *  \\file RMF/decorator/%(name)s.h
  *  \\brief Helper functions for manipulating RMF files.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.

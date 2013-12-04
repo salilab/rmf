@@ -152,8 +152,7 @@ void show_node(NodeConstHandle n, std::ostream& out, FloatKeys fks,
 
 void show_node_decorators(
     NodeConstHandle n, std::ostream& out, decorator::BondConstFactory bdcf,
-    decorator::ColoredConstFactory ccf,
-    decorator::ParticleConstFactory pcf,
+    decorator::ColoredConstFactory ccf, decorator::ParticleConstFactory pcf,
     decorator::IntermediateParticleConstFactory ipcf,
     decorator::RigidParticleConstFactory rpcf, decorator::ScoreConstFactory scf,
     decorator::BallConstFactory bcf, decorator::CylinderConstFactory cycf,
@@ -275,8 +274,8 @@ void show_hierarchy_with_decorators(NodeConstHandle root, bool,
   using std::operator<<;
   RMF_PRINT_TREE(
       out, NodeConstHandle, root, n.get_children().size(), n.get_children(),
-      show_node_decorators(n, out, bdf, ccf, pcf, ipcf, rpcf, scf, bcf, cycf, segcf,
-                           rcf, acf, chaincf, fragcf, copycf, diffusercf,
+      show_node_decorators(n, out, bdf, ccf, pcf, ipcf, rpcf, scf, bcf, cycf,
+                           segcf, rcf, acf, chaincf, fragcf, copycf, diffusercf,
                            typedcf, prefix0 + "   "));
 }
 

@@ -1,4 +1,4 @@
-## \example rigid_bodies.py
+## \example reference_frames.py
 # Show how to properly extract coordinates in the presence of rigid bodies.
 import RMF
 

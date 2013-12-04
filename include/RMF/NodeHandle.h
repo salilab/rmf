@@ -101,8 +101,6 @@ class RMFEXPORT NodeHandle : public NodeConstHandle {
 
   /** \name Functions to access attributes
 
-      Type is one of the \ref rmf_types "standard types".
-
       @{
    */
   RMF_FOREACH_TYPE(RMF_HDF5_NODE_KEY_TYPE_METHODS);

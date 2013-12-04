@@ -85,13 +85,15 @@ class RMFEXPORT FileConstHandle {
   void gather_ids(NodeConstHandle n, Ints& ids, std::vector<std::string>& paths,
                   std::string path) const;
 #ifndef SWIG
-  friend class NodeConstHandle;
-  friend void clone_file_info(FileConstHandle, FileHandle);
-  friend void clone_hierarchy(FileConstHandle, FileHandle);
-  friend void clone_static_frame(FileConstHandle, FileHandle);
-  friend void clone_loaded_frame(FileConstHandle, FileHandle);
-  friend bool get_equal_current_values(FileConstHandle, FileConstHandle);
-  friend bool get_equal_static_values(FileConstHandle, FileConstHandle);
+  friend class RMFEXPORT NodeConstHandle;
+  friend RMFEXPORT void clone_file_info(FileConstHandle, FileHandle);
+  friend RMFEXPORT void clone_hierarchy(FileConstHandle, FileHandle);
+  friend RMFEXPORT void clone_static_frame(FileConstHandle, FileHandle);
+  friend RMFEXPORT void clone_loaded_frame(FileConstHandle, FileHandle);
+  friend RMFEXPORT bool get_equal_current_values(FileConstHandle,
+                                                 FileConstHandle);
+  friend RMFEXPORT bool get_equal_static_values(FileConstHandle,
+                                                FileConstHandle);
 #endif
   int compare(const FileConstHandle& o) const {
     if (get_name() < o.get_name())
@@ -226,7 +228,6 @@ class RMFEXPORT FileConstHandle {
 
   /** \name Non-template versions for python
 
-      Type is one of the \ref rmf_types "standard types".
       @{
    */
 

@@ -1,4 +1,4 @@
-/** \example benchmark_rmf.cpp
+/** \example benchmark/benchmark_rmf.cpp
  * \brief Benchmark typical creation, traversal and loading with different RMF
  *        backends.
  *

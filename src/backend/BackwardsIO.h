@@ -167,7 +167,7 @@ struct BackwardsIO : public IO {
   void load_vector(SDA *sda, Category category_a, SDB *sdb, Category category_b,
                    H) {
     typedef ID<VectorTraits<D> > Key;
-    typedef boost::tuple<Key, int > Data;
+    typedef boost::tuple<Key, int> Data;
     RMF_LARGE_UNORDERED_MAP<FloatKey, Data> map;
     RMF_FOREACH(std::string key_name,
                 get_vector_names(category_a, Vector<D>())) {
@@ -235,7 +235,7 @@ struct BackwardsIO : public IO {
   void load_vectors(SDA *sda, Category category_a, SDB *sdb,
                     Category category_b, H) {
     typedef Vector3sKey Key;
-    typedef boost::tuple<Key, int > Data;
+    typedef boost::tuple<Key, int> Data;
     RMF_LARGE_UNORDERED_MAP<FloatsKey, Data> map;
     RMF_FOREACH(std::string key_name,
                 get_vectors_names(category_a, Vector<3>())) {

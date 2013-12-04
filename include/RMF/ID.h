@@ -63,8 +63,8 @@ class ID {
     return i_;
   }
 #endif
-  // filling a std::vector of IDs with ints doesn't work in some VC++ versions
-  // making this implicit fixes it, but I don't want it to be so in general.
+// filling a std::vector of IDs with ints doesn't work in some VC++ versions
+// making this implicit fixes it, but I don't want it to be so in general.
 #ifndef _MSC_VER
   explicit
 #endif

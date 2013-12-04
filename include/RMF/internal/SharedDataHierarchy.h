@@ -33,7 +33,7 @@ class SharedDataHierarchy {
   Data hierarchy_;
   bool dirty_;
 
-  void remove(std::vector<NodeID> &list, NodeID to_remove) {
+  void remove(std::vector<NodeID>& list, NodeID to_remove) {
     RMF_INTERNAL_CHECK(
         std::find(list.begin(), list.end(), to_remove) != list.end(),
         "Note in list");

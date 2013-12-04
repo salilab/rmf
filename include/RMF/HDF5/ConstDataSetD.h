@@ -1,5 +1,5 @@
 /**
- *  \file RMF/ConstDataSetD.h
+ *  \file RMF/HDF5/ConstDataSetD.h
  *  \brief Handle read/write of Model data from/to files.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
@@ -32,8 +32,8 @@ typedef std::vector<ConstDataSetAttributes> ConstDataSetAttributesList;
 #endif
 
 /** Wrap an HDF5 data set. Typedefs and python types are provided for
-    data sets in 1,2, and 3 dimensions with all the
-    \ref rmf_types "supported types". They are named as
+    data sets in 1,2, and 3 dimensions with all the supported types. They are
+   named as
     RMF::HDF5IndexDataSet2D (or RMF.HDF5IndexDataSet2).
    See
    \external{http://www.hdfgroup.org/HDF5/doc/UG/UG_frame10Datasets.html,
