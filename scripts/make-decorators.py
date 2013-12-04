@@ -43,8 +43,8 @@ refframe = Decorator(["REPRESENTATION", "ORGANIZATIONAL"], "physics",
 bond = Decorator(["BOND"], "physics",
                  "Bond", "A bond between particles.",
                  [Attribute(
-                     "bonded_0", "Int", "The first endpoint of the bond"),
-                  Attribute("bonded_1", "Int", "The second endpoint of the bond")])
+                     "bonded 0", "Int", "The first endpoint of the bond"),
+                  Attribute("bonded 1", "Int", "The second endpoint of the bond")])
 
 
 atom = Decorator(["REPRESENTATION"], "physics",
