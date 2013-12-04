@@ -40,6 +40,8 @@ class BufferConstHandle {
       : data_(boost::make_shared<std::vector<char> >(r.begin(), r.end())) {}
   explicit BufferConstHandle(const std::vector<uint8_t> &r)
       : data_(boost::make_shared<std::vector<char> >(r.begin(), r.end())) {}
+  explicit BufferConstHandle(boost::shared_ptr<std::vector<char> > r)
+      : data_(r) {}
   const std::vector<char> &get_buffer() const { return *data_; }
   //! get the buffer encoded in a string
   std::string get_string() const {
@@ -56,6 +58,10 @@ class BufferConstHandle {
   boost::shared_ptr<std::vector<char> > get() const { return data_; }
 #endif
 };
+
+RMFEXPORT BufferConstHandle read_buffer(std::string file_name);
+
+RMFEXPORT void write_buffer(BufferConstHandle buffer, std::string file_name);
 
 } /* namespace RMF */
 
