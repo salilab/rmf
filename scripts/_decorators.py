@@ -17,9 +17,8 @@ def replace(msg, to_replace, const):
 
 class Base:
 
-    def __init__(self, name, data_type, return_type, doc):
+    def __init__(self, name, data_type, return_type):
         self.names = [("NAME", name.replace(" ", "_")),
-                      ("DOC", doc),
                       ("DATA", data_type)]
         self.names.extend([("GET_BOTH", "get_value"),
                            ("SET_BOTH", "set_value"),
@@ -77,58 +76,18 @@ class Base:
         return replace(self.check, self.names, const)
 
 
-class Children(Base):
-
-    def __init__(self, name, doc):
-        Base.__init__(self, name, "AliasCONSTFactory",
-                      "NodeCONSTHandles", doc)
-        self.names
-        self.get_methods = """  /** DOC */
-  TYPE get_NAME() const {
-    try {
-       NodeCONSTHandles typed = get_node().get_children();
-       TYPE ret;
-       for (unsigned int i = 0; i < typed.size(); ++i) {
-         if (NAME_.get_is(typed[i])) {
-           ret.push_back(NAME_.get(typed[i]).get_aliased());
-         }
-       }
-       return ret;
-    } RMF_DECORATOR_CATCH( );
-  }
-"""
-        self.set_methods = """  /** DOC */
-  void set_NAME(const NodeConstHandles &v) {
-    try {
-       for (unsigned int i = 0; i < v.size(); ++i) {
-         internal::add_child_alias(NAME_, get_node(), v[i]);
-       }
-    } RMF_DECORATOR_CATCH( );
-  }
-  void set_NAME(const NodeHandles &v) {
-    try {
-       for (unsigned int i = 0; i < v.size(); ++i) {
-         internal::add_child_alias(NAME_, get_node(), v[i]);
-       }
-    } RMF_DECORATOR_CATCH( );
-  }
-"""
-        self.data_initialize = "fh"
-
-
 class Attribute(Base):
 
     def __init__(
         self,
         name,
         attribute_type,
-        doc,
             function_name=None):
         if not function_name:
             function_name = name.replace(" ", "_")
         Base.__init__(self, name, attribute_type +
-                      "Key", attribute_type, doc)
-        self.get_methods = """  /** DOC */
+                      "Key", attribute_type)
+        self.get_methods = """
   TYPE get_%s() const {
     try {
       return P::GET_BOTH(NAME_);
@@ -145,7 +104,7 @@ class Attribute(Base):
     } RMF_DECORATOR_CATCH( );
   }
 """ % (function_name, function_name, function_name)
-        self.set_methods = """  /** DOC */
+        self.set_methods = """
   void set_%s(TYPE v) {
     try {
       P::SET_BOTH(NAME_, v);
@@ -168,9 +127,9 @@ class Attribute(Base):
 
 class NodeAttribute(Attribute):
 
-    def __init__(self, name, doc):
-        Attribute.__init__(self, name, "Int", doc, True)
-        self.get_methods = """  /** DOC */
+    def __init__(self, name):
+        Attribute.__init__(self, name, "Int", True)
+        self.get_methods = """
   NodeCONSTHandle get_NAME() const {
     try {
       int id = get_node().GET_BOTH(NAME_);
@@ -178,7 +137,7 @@ class NodeAttribute(Attribute):
     } RMF_DECORATOR_CATCH( );
   }
 """
-        self.set_methods = """  /** DOC */
+        self.set_methods = """
   void set_NAME(NodeConstHandle v) {
     try {
       get_node().SET_BOTH(NAME_, v.get_index().get_index());
@@ -189,9 +148,9 @@ class NodeAttribute(Attribute):
 
 class PathAttribute(Attribute):
 
-    def __init__(self, name, doc):
-        Attribute.__init__(self, name, "String", doc)
-        self.get_methods = """  /** DOC */
+    def __init__(self, name):
+        Attribute.__init__(self, name, "String")
+        self.get_methods = """
   String get_NAME() const {
     try {
       String relpath = get_node().GET_BOTH(NAME_);
@@ -200,7 +159,7 @@ class PathAttribute(Attribute):
     } RMF_DECORATOR_CATCH( );
   }
 """
-        self.set_methods = """ /** DOC */
+        self.set_methods = """
   void set_NAME(String path) {
    try {
      String filename = get_node().get_file().get_path();
@@ -219,10 +178,9 @@ class AttributePair(Base):
         data_type,
         return_type,
         begin,
-        end,
-            doc):
+            end):
         Base.__init__(self, name, "boost::array<%sKey, 2>" %
-                      data_type, return_type, doc)
+                      data_type, return_type)
         self.helpers = """  DATA get_NAME_keys(FileCONSTHandle fh) {
      DATA ret;
      ret[0] = fh.get_key<%sTraits>(cat_, "%s");
@@ -236,10 +194,10 @@ class AttributePair(Base):
 
 class SingletonRangeAttribute(AttributePair):
 
-    def __init__(self, name, data_type, begin, end, doc):
+    def __init__(self, name, data_type, begin, end):
         AttributePair.__init__(
-            self, name, data_type, data_type, begin, end, doc)
-        self.get_methods = """  /** DOC */
+            self, name, data_type, data_type, begin, end)
+        self.get_methods = """
   TYPE get_NAME() const {
     try {
       return get_node().GET_BOTH(NAME_[0]);
@@ -256,7 +214,7 @@ class SingletonRangeAttribute(AttributePair):
     } RMF_DECORATOR_CATCH( );
   }
 """
-        self.set_methods = """ /** DOC */
+        self.set_methods = """
   void set_NAME(TYPE v) {
     try {
       get_node().SET_BOTH(NAME_[0], v);
@@ -281,9 +239,9 @@ class SingletonRangeAttribute(AttributePair):
 
 class RangeAttribute(AttributePair):
 
-    def __init__(self, name, data_type, begin, end, doc):
+    def __init__(self, name, data_type, begin, end):
         AttributePair.__init__(
-            self, name, data_type, data_type + "Range", begin, end, doc)
+            self, name, data_type, data_type + "Range", begin, end)
         self.get_methods = """  /** DOC */
   TYPE get_NAME() const {
     try {
@@ -301,7 +259,7 @@ class RangeAttribute(AttributePair):
     } RMF_DECORATOR_CATCH( );
   }
 """
-        self.set_methods = """ /** DOC */
+        self.set_methods = """
   void set_NAME(TYPE v) {
     try {
       get_node().SET_BOTH(NAME_[0], v.first);
@@ -390,14 +348,13 @@ HELPERS
 
 class Decorator:
 
-    def __init__(self, allowed_types, category, name, description,
+    def __init__(self, allowed_types, category, name,
                  attributes, internal_attributes=[],
                  init_function="",
                  check_function=""):
         self.name = name
         self.category = category
         self.allowed_types = allowed_types
-        self.description = description
         self.init_function = init_function
         self.attributes = attributes
         self.internal_attributes = internal_attributes
@@ -506,8 +463,7 @@ class Decorator:
 
     def get(self):
         ret = ""
-        common = [("DESCRIPTION", self.description),
-                  ("NAME", self.name),
+        common = [("NAME", self.name),
                   ("CATEGORY", self.category)]
         ret += replace(decorator, common + self._get_list(True), True)
         ret += replace(decorator, common + self._get_list(False), False)
