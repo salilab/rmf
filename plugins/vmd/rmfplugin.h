@@ -52,6 +52,7 @@ class Data {
   };
   std::vector<Body> bodies_;
   unsigned int num_atoms_;
+  std::map<RMF::NodeID, int> index_;
 
   boost::scoped_array<molfile_graphics_t> graphics_;
   boost::scoped_array<int> bonds_to_, bonds_from_, bond_types_;
@@ -61,13 +62,13 @@ class Data {
 
   // find nodes to push to vmd
   std::pair<int, int> get_structure(RMF::NodeConstHandle cur,
+                                    int first_index,
                                     molfile_atom_t *atoms, int body,
                                     std::string chain, int resid,
                                     std::string resname);
   int get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
                    molfile_graphics_t *graphics);
-  int get_bonds(RMF::NodeConstHandle cur,
-                const std::map<RMF::NodeConstHandle, int> &index, int *from,
+  int get_bonds(RMF::NodeConstHandle cur, int *from,
                 int *to, int *type, bool restraints);
 
  public:
@@ -103,12 +104,12 @@ Data::Data(std::string name)
   file_.set_current_frame(RMF::FrameID(0));
   bodies_.push_back(Body());
   std::pair<int, int> na =
-      get_structure(file_.get_root_node(), NULL, 0, " ", -1, std::string());
+    get_structure(file_.get_root_node(), 0, NULL, 0, " ", -1, std::string());
   num_atoms_ = na.first + na.second;
 }
 
 //
-std::pair<int, int> Data::get_structure(RMF::NodeConstHandle cur,
+std::pair<int, int> Data::get_structure(RMF::NodeConstHandle cur, int first_index,
                                         molfile_atom_t *atoms, int body,
                                         std::string chain, int resid,
                                         std::string resname) {
@@ -129,9 +130,10 @@ std::pair<int, int> Data::get_structure(RMF::NodeConstHandle cur,
   }
   RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
     std::pair<int, int> count =
-        get_structure(c, atoms, body, chain, resid, resname);
+      get_structure(c, first_index, atoms, body, chain, resid, resname);
     ret.first += count.first;
     ret.second += count.second;
+    first_index += count.first + count.second;
     if (atoms) {
       atoms += count.first;
       atoms += count.second;
@@ -172,6 +174,7 @@ std::pair<int, int> Data::get_structure(RMF::NodeConstHandle cur,
       atoms->radius = pf_.get(cur).get_radius();
     } else {
       bodies_[body].atoms.push_back(cur);
+      index_[cur.get_id()] = first_index;
     }
     ++ret.first;
   }
@@ -190,6 +193,7 @@ std::pair<int, int> Data::get_structure(RMF::NodeConstHandle cur,
       atoms->radius = bf_.get(cur).get_radius();
     } else {
       bodies_[body].balls.push_back(cur);
+      index_[cur.get_id()] = first_index;
     }
     ++ret.second;
   }
@@ -197,7 +201,7 @@ std::pair<int, int> Data::get_structure(RMF::NodeConstHandle cur,
 }
 
 void Data::read_structure(molfile_atom_t *atoms) {
-  get_structure(file_.get_root_node(), atoms, 0, " ", -1, "NONE");
+  get_structure(file_.get_root_node(), 0, atoms, 0, " ", -1, "NONE");
 }
 
 bool Data::read_next_frame(molfile_timestep_t *frame) {
@@ -246,15 +250,9 @@ void Data::read_graphics(int *nelem, const molfile_graphics_t **gdata) {
 void Data::read_bonds(int *nbonds, int **fromptr, int **toptr,
                       float **bondorderptr, int **bondtype, int *nbondtypes,
                       char ***bondtypename, bool restraints) {
-  std::map<RMF::NodeConstHandle, int> index;
-  for (unsigned int i = 0; i < bodies_.size(); ++i) {
-    for (unsigned int j = 0; j < bodies_[i].atoms.size(); ++j) {
-      int c = index.size();
-      index[bodies_[i].atoms[j]] = c;
-    }
-  }
+
   *nbonds =
-      get_bonds(file_.get_root_node(), index, NULL, NULL, NULL, restraints);
+      get_bonds(file_.get_root_node(), NULL, NULL, NULL, restraints);
   bonds_from_.reset(new int[*nbonds]);
   *fromptr = bonds_from_.get();
   bonds_to_.reset(new int[*nbonds]);
@@ -272,7 +270,7 @@ void Data::read_bonds(int *nbonds, int **fromptr, int **toptr,
   bt_char_ = bond_type_.get();
   rbt_char_ = restraint_bond_type_.get();
   bondtypename[0] = &bt_char_;
-  get_bonds(file_.get_root_node(), index, *fromptr, *toptr, *bondtype,
+  get_bonds(file_.get_root_node(), *fromptr, *toptr, *bondtype,
             restraints);
 }
 
@@ -318,27 +316,28 @@ int Data::get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
   }
   return ret;
 }
-int Data::get_bonds(RMF::NodeConstHandle cur,
-                    const std::map<RMF::NodeConstHandle, int> &index, int *from,
+int Data::get_bonds(RMF::NodeConstHandle cur, int *from,
                     int *to, int *type, bool restraints) {
   int ret = 0;
   if (bdf_.get_is(cur)) {
-    RMF::NodeConstHandle bonded0(
-        cur.get_file().get_node(RMF::NodeID(bdf_.get(cur).get_bonded_0())));
-    RMF::NodeConstHandle bonded1(
-        cur.get_file().get_node(RMF::NodeID(bdf_.get(cur).get_bonded_1())));
+    RMF::NodeID bonded0(bdf_.get(cur).get_bonded_0());
+    RMF::NodeID bonded1(bdf_.get(cur).get_bonded_1());
 
-    if (index.find(bonded0) != index.end() &&
-        index.find(bonded1) != index.end()) {
+    if (index_.find(bonded0) != index_.end() &&
+        index_.find(bonded1) != index_.end()) {
       if (from) {
-        *from = index.find(bonded0)->second + 1;
-        *to = index.find(bonded1)->second + 1;
+        std::cout << "Adding bond " << index_.find(bonded0)->second + 1 << " " << index_.find(bonded1)->second + 1
+                  << " " << bonded0 << " " << bonded1 << std::endl;
+        *from = index_.find(bonded0)->second + 1;
+        *to = index_.find(bonded1)->second + 1;
         *type = 0;
         ++from;
         ++to;
         ++type;
       }
       ++ret;
+    } else {
+      std::cout << "Skipping bond " << bonded0 << " to " << bonded1 << std::endl;
     }
   }
   if (restraints && cur.get_type() == RMF::FEATURE) {
@@ -352,16 +351,16 @@ int Data::get_bonds(RMF::NodeConstHandle cur,
     if (!child_feature && rcf_.get_is(cur)) {
       RMF::Ints reps = rcf_.get(cur).get_representation();
       for (unsigned int i = 0; i < reps.size(); ++i) {
-        RMF::NodeConstHandle bonded0(
-            cur.get_file().get_node(RMF::NodeID(reps[i])));
+        RMF::NodeID bonded0(reps[i]);
         for (unsigned int j = 0; j < i; ++j) {
-          RMF::NodeConstHandle bonded1(
-              cur.get_file().get_node(RMF::NodeID(reps[j])));
-          if (index.find(bonded0) != index.end() &&
-              index.find(bonded1) != index.end()) {
+          RMF::NodeID bonded1(reps[j]);
+          if (index_.find(bonded0) != index_.end() &&
+              index_.find(bonded1) != index_.end()) {
             if (from) {
-              *from = index.find(bonded0)->second + 1;
-              *to = index.find(bonded1)->second + 1;
+              std::cout << "Adding bond " << index_.find(bonded0)->second + 1 << " " << index_.find(bonded1)->second + 1
+                        << std::endl;
+              *from = index_.find(bonded0)->second + 1;
+              *to = index_.find(bonded1)->second + 1;
               *type = 1;
               ++from;
               ++to;
@@ -374,7 +373,7 @@ int Data::get_bonds(RMF::NodeConstHandle cur,
     }
   }
   RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
-    int ci = get_bonds(c, index, from, to, type, restraints);
+    int ci = get_bonds(c, from, to, type, restraints);
     if (from) {
       from += ci;
       to += ci;
