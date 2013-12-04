@@ -48,7 +48,7 @@ boost::shared_ptr<SharedData> read_file(const std::string& name) {
 boost::shared_ptr<SharedData> read_buffer(BufferConstHandle buffer) {
   boost::shared_ptr<backends::IO> io = backends::read_buffer(buffer);
   if (!io) {
-    RMF_THROW(Message("Can't create buffer"), IOException);
+    RMF_THROW(Message("Can't read buffer"), IOException);
   }
   boost::shared_ptr<SharedData> ret =
       boost::make_shared<SharedData>(io, "buffer", false, false);
