@@ -30,6 +30,7 @@ RMF_VC_PRAGMA( warning( disable: 4503 ) )
 
 #include "RMF/internal/swig_helpers.h"
 #include "RMF.h"
+#include RMF_TYPES_HEADER
 
 %}
 %include "std_vector.i"
@@ -220,7 +221,7 @@ namespace RMF {
 %template(Vector3) RMF::Vector<3>;
 %template(Vector4) RMF::Vector<4>;
 
-%include "RMF/types.h"
+%include RMF_TYPES_HEADER
 %include "RMF/traits.h"
 %include "RMF/keys.h"
 

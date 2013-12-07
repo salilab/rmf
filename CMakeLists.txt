@@ -31,6 +31,12 @@ include(FindLog4CXX)
 include(FindC++11)
 include(FindCompilerFlags)
 
+if (DEFINED RMF_TYPES_HEADER)
+message(STATUS "Using types header at ${RMF_TYPES_HEADER}")
+else()
+set(RMF_TYPES_HEADER "\"RMF/default_types.h\"" CACHE STRING "Which header to use to define RMF types")
+endif()
+
 if (${Log4CXX_LIBRARY} MATCHES "Log4CXX_LIBRARY-NOTFOUND")
   set(RMF_HAS_LOG4CXX "0" CACHE BOOL "Whether to use Log4CXX" FORCE)
   message(STATUS "Logging disabled")

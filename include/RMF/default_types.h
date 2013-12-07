@@ -1,0 +1,73 @@
+/**
+ *  \file RMF/types.h
+ *  \brief Default implementation for types.h
+
+ *  Use RMF_TYPES_HEADER to replace it with another header.
+ *
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *
+ */
+
+#ifndef RMF_DEFAULT_TYPES_H
+#define RMF_DEFAULT_TYPES_H
+
+#include "RMF/config.h"
+#include "ID.h"
+#include "Vector.h"
+#include "infrastructure_macros.h"
+#include "internal/errors.h"
+#include "RMF/HDF5/types.h"
+
+#include <algorithm>
+#include <boost/array.hpp>
+#include <boost/cstdint.hpp>
+#include <cmath>
+#include <cstdlib>
+#include <limits>
+
+RMF_ENABLE_WARNINGS
+
+namespace RMF {
+
+
+//! For classes that are templated on the dimension
+#define RMF_VECTOR RMF::Vector
+
+//! For template classes that want to deal with lists of values
+#define RMF_TYPES std::vector
+
+/** The type used to store integral values.*/
+typedef int Int;
+/** The type used to store lists of integral values.*/
+typedef RMF_TYPES<Int> Ints;
+/** The type used to store lists of floating point values.*/
+typedef float Float;
+/** The type used to store lists of floating point values.*/
+typedef RMF_TYPES<Float> Floats;
+/** The type used to store lists of floating point values.*/
+typedef RMF_TYPES<Floats> FloatsList;
+/** The type used to store lists of string values.*/
+typedef std::string String;
+/** The type used to store lists of string values.*/
+typedef RMF_TYPES<String> Strings;
+/** The type used to store lists of strings values.*/
+typedef RMF_TYPES<Strings> StringsList;
+/** The type used to store lists of lists of integers values.*/
+typedef RMF_TYPES<Ints> IntsList;
+
+/** A Vector3 */
+typedef Vector<3> Vector3;
+/** A Vector3 */
+typedef Vector<4> Vector4;
+/** Many Vector3s */
+typedef RMF_TYPES<Vector3> Vector3s;
+/** Many Vector4s */
+typedef RMF_TYPES<Vector4> Vector4s;
+
+typedef std::pair<int, int> IntRange;
+
+} /* namespace RMF */
+
+RMF_DISABLE_WARNINGS
+
+#endif /* RMF_DEFAULT_TYPES_H */

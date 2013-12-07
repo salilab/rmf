@@ -30,6 +30,8 @@
 
 #define RMF_HAS_LOG4CXX @RMF_HAS_LOG4CXX@
 
+#define RMF_TYPES_HEADER @RMF_TYPES_HEADER@
+
 #ifdef _MSC_VER
 #pragma warning(disable: 4003)
 #endif
