@@ -11,6 +11,7 @@
 
 #include "RMF/config.h"
 #include "RMF/types.h"
+#include "RMF/HDF5/types.h"
 #include <boost/array.hpp>
 #include <boost/cstdint.hpp>
 #include <cmath>

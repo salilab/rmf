@@ -1,5 +1,5 @@
 /**
- *  \file RMF/types.h
+ *  \file RMF/default_types.h
  *  \brief Default implementation for types.h
 
  *  Use RMF_TYPES_HEADER to replace it with another header.
@@ -12,20 +12,7 @@
 #define RMF_DEFAULT_TYPES_H
 
 #include "RMF/config.h"
-#include "ID.h"
 #include "Vector.h"
-#include "infrastructure_macros.h"
-#include "internal/errors.h"
-#include "RMF/HDF5/types.h"
-
-#include <algorithm>
-#include <boost/array.hpp>
-#include <boost/cstdint.hpp>
-#include <cmath>
-#include <cstdlib>
-#include <limits>
-
-RMF_ENABLE_WARNINGS
 
 namespace RMF {
 
@@ -67,7 +54,5 @@ typedef RMF_TYPES<Vector4> Vector4s;
 typedef std::pair<int, int> IntRange;
 
 } /* namespace RMF */
-
-RMF_DISABLE_WARNINGS
 
 #endif /* RMF_DEFAULT_TYPES_H */
