@@ -123,45 +123,6 @@
                             }
                         ]}}
                     },
-                    { "name": "ints_data", "type": { "type": "array", "items": {
-                        "type": "record", "name": "IntsNodeData", "fields": [
-                            {"name": "key", "type": "int"},
-                            { "name": "values", "type": {
-                                "type": "array", "items": {
-                                    "type": "record", "name": "IntsValue", "fields": [
-                                        {"name": "key", "type": "int"},
-                                        {"name": "value", "type": {"type": "array", "items": "int"} }
-                                    ]
-                                }}
-                            }
-                        ]}}
-                    },
-                    { "name": "floats_data", "type": { "type": "array", "items": {
-                        "type": "record", "name": "FloatsNodeData", "fields": [
-                            {"name": "id", "type": "int"},
-                            { "name": "values", "type": {
-                                "type": "array", "items": {
-                                    "type": "record", "name": "FloatsValue", "fields": [
-                                        {"name": "id", "type": "int"},
-                                        {"name": "value", "type": {"type": "array", "items": "float"} }
-                                    ]
-                                }}
-                            }
-                        ]}}
-                    },
-                    { "name": "strings_data", "type": { "type": "array", "items": {
-                        "type": "record", "name": "StringsNodeData", "fields": [
-                            {"name": "id", "type": "int"},
-                            { "name": "values", "type": {
-                                "type": "array", "items": {
-                                    "type": "record", "name": "StringsValue", "fields": [
-                                        {"name": "id", "type": "int"},
-                                        {"name": "value", "type": {"type": "array", "items": "string"} }
-                                    ]
-                                }}
-                            }
-                        ]}}
-                    },
                     { "name": "vector3_data", "type": { "type": "array", "items": {
                         "type": "record", "name": "Vector3NodeData", "fields": [
                             {"name": "key", "type": "int"},
@@ -201,7 +162,46 @@
                             }
                         ]}}
                     },
-                    { "name": "vector3s_data", "type": { "type": "array", "items": {
+                    { "name": "ints_data", "type": { "type": "array", "items": {
+                        "type": "record", "name": "IntsNodeData", "fields": [
+                            {"name": "key", "type": "int"},
+                            { "name": "values", "type": {
+                                "type": "array", "items": {
+                                    "type": "record", "name": "IntsValue", "fields": [
+                                        {"name": "key", "type": "int"},
+                                        {"name": "value", "type": {"type": "array", "items": "int"} }
+                                    ]
+                                }}
+                            }
+                        ]}}
+                    },
+                    { "name": "floats_data", "type": { "type": "array", "items": {
+                        "type": "record", "name": "FloatsNodeData", "fields": [
+                            {"name": "id", "type": "int"},
+                            { "name": "values", "type": {
+                                "type": "array", "items": {
+                                    "type": "record", "name": "FloatsValue", "fields": [
+                                        {"name": "id", "type": "int"},
+                                        {"name": "value", "type": {"type": "array", "items": "float"} }
+                                    ]
+                                }}
+                            }
+                        ]}}
+                    },
+                    { "name": "strings_data", "type": { "type": "array", "items": {
+                        "type": "record", "name": "StringsNodeData", "fields": [
+                            {"name": "id", "type": "int"},
+                            { "name": "values", "type": {
+                                "type": "array", "items": {
+                                    "type": "record", "name": "StringsValue", "fields": [
+                                        {"name": "id", "type": "int"},
+                                        {"name": "value", "type": {"type": "array", "items": "string"} }
+                                    ]
+                                }}
+                            }
+                        ]}}
+                    },
+                   { "name": "vector3s_data", "type": { "type": "array", "items": {
                         "type": "record", "name": "Vector3sNodeData", "fields": [
                             {"name": "key", "type": "int"},
                             { "name": "values", "type": {
