@@ -361,7 +361,7 @@ RMFEXPORT FileConstHandle open_rmf_buffer_read_only(BufferConstHandle buffer);
  */
 RMFEXPORT Floats
     get_values(const NodeConstHandles& nodes, FloatKey k,
-               Float missing_value = std::numeric_limits<double>::max());
+               Float missing_value = std::numeric_limits<float>::max());
 /** @} */
 
 } /* namespace RMF */
