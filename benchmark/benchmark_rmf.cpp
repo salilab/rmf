@@ -47,46 +47,56 @@ void benchmark_size(std::string path, std::string type) {
             << std::endl;
 }
 
-void create_residue(RMF::NodeHandle nh, RMF::decorator::AtomFactory af,
-                    RMF::decorator::ParticleFactory pf) {
+std::size_t create_residue(RMF::NodeHandle nh, RMF::decorator::AtomFactory af,
+                           RMF::decorator::ParticleFactory pf) {
+  std::size_t total_size = 0;
   for (unsigned int i = 0; i < 2 * scale; ++i) {
     RMF::NodeHandle child = nh.add_child("CA", RMF::REPRESENTATION);
     pf.get(child).set_static_mass(1);
     pf.get(child).set_static_radius(1.0 + i / 18.77);
     af.get(child).set_static_element(7);
+    total_size += sizeof(int) * 1 + sizeof(float) * 2;
   }
+  return total_size;
 }
-void create_chain(RMF::NodeHandle nh, RMF::decorator::ResidueFactory rf,
-                  RMF::decorator::AtomFactory af,
-                  RMF::decorator::ParticleFactory pf) {
+std::size_t create_chain(RMF::NodeHandle nh, RMF::decorator::ResidueFactory rf,
+                         RMF::decorator::AtomFactory af,
+                         RMF::decorator::ParticleFactory pf) {
+  std::size_t total_size = 0;
   for (unsigned int i = 0; i < 60 * scale; ++i) {
     std::ostringstream oss;
     oss << i;
     RMF::NodeHandle child = nh.add_child(oss.str(), RMF::REPRESENTATION);
     rf.get(child).set_static_residue_type("cys");
     rf.get(child).set_static_residue_index(i);
-    create_residue(child, af, pf);
+    total_size += sizeof(int) + 4;
+    total_size += create_residue(child, af, pf);
   }
+  return total_size;
 }
-void create_hierarchy(RMF::FileHandle file) {
+std::size_t create_hierarchy(RMF::FileHandle file) {
   RMF::decorator::ChainFactory cf(file);
   RMF::decorator::AtomFactory af(file);
   RMF::decorator::ResidueFactory rf(file);
   RMF::decorator::ParticleFactory pf(file);
   RMF::NodeHandle n = file.get_root_node();
+  std::size_t total_size = 0;
   for (unsigned int i = 0; i < 3 * scale; ++i) {
     std::ostringstream oss;
     oss << i;
     RMF::NodeHandle child = n.add_child(oss.str(), RMF::REPRESENTATION);
     cf.get(child).set_static_chain_id(oss.str());
-    create_chain(child, rf, af, pf);
+    total_size += oss.str().size();
+    total_size += create_chain(child, rf, af, pf);
   }
+  return total_size;
 }
 
-double create_frame(RMF::FileHandle fh,
-                    RMF::decorator::IntermediateParticleFactory ipf,
-                    const RMF::NodeIDs& atoms, int frame) {
+std::pair<double, std::size_t> create_frame(
+    RMF::FileHandle fh, RMF::decorator::IntermediateParticleFactory ipf,
+    const RMF::NodeIDs& atoms, int frame) {
   RMF::Vector3 ret(0, 0, 0);
+  std::size_t total_size = 0;
   RMF_FOREACH(RMF::NodeID n, atoms) {
     RMF::Vector3 v((n.get_index() + 0 + frame) / 17.0,
                    (n.get_index() + 1 + frame) / 19.0,
@@ -95,12 +105,13 @@ double create_frame(RMF::FileHandle fh,
     ret[1] += v[1];
     ret[2] += v[2];
     ipf.get(fh.get_node(n)).set_frame_coordinates(v);
+    total_size += sizeof(float) * 3;
   }
-  return ret[0] + ret[1] + ret[2];
+  return std::make_pair(ret[0] + ret[1] + ret[2], total_size);
 }
 
-double create(RMF::FileHandle file) {
-  create_hierarchy(file);
+boost::tuple<double, std::size_t, std::size_t> create(RMF::FileHandle file) {
+  std::size_t hierarchy_size = create_hierarchy(file);
   RMF::NodeIDs atoms;
   RMF_FOREACH(RMF::NodeID n, file.get_node_ids()) {
     if (file.get_node(n).get_children().empty()) {
@@ -108,12 +119,15 @@ double create(RMF::FileHandle file) {
     }
   }
   RMF::decorator::IntermediateParticleFactory ipf(file);
-  double ret = 0;
+  double check_value = 0;
+  std::size_t frame_size = 0;
   for (unsigned int i = 0; i < 20; ++i) {
     file.add_frame("frame", RMF::FRAME);
-    ret += create_frame(file, ipf, atoms, i);
+    std::pair<double, std::size_t> cur = create_frame(file, ipf, atoms, i);
+    check_value += cur.first;
+    frame_size += cur.second;
   }
-  return ret;
+  return boost::make_tuple(check_value, hierarchy_size, frame_size);
 }
 
 double traverse(RMF::FileConstHandle file) {
@@ -147,11 +161,13 @@ double load(RMF::FileConstHandle file, const RMF::NodeIDs& nodes) {
   return v[0] + v[1] + v[2];
 }
 
-void benchmark_create(RMF::FileHandle file, std::string type) {
+std::pair<std::size_t, std::size_t> benchmark_create(RMF::FileHandle file,
+                                                     std::string type) {
   boost::timer timer;
-  double dist = create(file);
-  std::cout << type << ", create, " << timer.elapsed() << ", " << dist
+  boost::tuple<double, std::size_t, std::size_t> cur = create(file);
+  std::cout << type << ", create, " << timer.elapsed() << ", " << cur.get<0>()
             << std::endl;
+  return std::make_pair(cur.get<1>(), cur.get<2>());
 }
 
 void benchmark_traverse(RMF::FileConstHandle file, std::string type) {
@@ -184,7 +200,12 @@ int main(int, char**) {
       const std::string name = name_base + ".rmf3";
       {
         RMF::FileHandle fh = RMF::create_rmf_file(name);
-        benchmark_create(fh, "rmf3");
+        std::pair<std::size_t, std::size_t> sizes =
+            benchmark_create(fh, "rmf3");
+        std::cout << "raw, total, " << (sizes.first + sizes.second) / 1000000
+                  << "M, " << (sizes.first + sizes.second) << std::endl;
+        std::cout << "raw, frame, " << sizes.second / 1000000 << "M, "
+                  << sizes.second << std::endl;
       }
       {
         RMF::FileConstHandle fh = RMF::open_rmf_file_read_only(name);
