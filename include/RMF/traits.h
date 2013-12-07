@@ -154,15 +154,15 @@ class VectorTraits {
   }
 
  public:
-  typedef Vector<D> Type;
-  typedef std::vector<Vector<D> > Types;
+  typedef RMF_VECTOR<D> Type;
+  typedef std::vector<RMF_VECTOR<D> > Types;
   typedef const Type& ReturnType;
   typedef const Type& ArgumentType;
   static bool get_is_null_value(const Type& t) {
     return t[0] > std::numeric_limits<double>::max();
   }
   static ReturnType get_null_value() {
-    static const Vector<D> null(
+    static const RMF_VECTOR<D> null(
         Floats(D, std::numeric_limits<typename FloatTraits::Type>::infinity()));
     return null;
   }
@@ -214,7 +214,7 @@ struct Vector4Traits {
 // template <unsigned int D>
 struct Vector3sTraits {
   typedef Vector3s Type;
-  typedef std::vector<std::vector<Vector<3> > > Types;
+  typedef std::vector<std::vector<RMF_VECTOR<3> > > Types;
   typedef const Type& ReturnType;
   typedef const Type& ArgumentType;
   static bool get_is_null_value(const Type& t) { return t.empty(); }
@@ -241,7 +241,7 @@ struct Vector3sTraits {
 // template <unsigned int D>
 struct Vector4sTraits {
   typedef Vector4s Type;
-  typedef std::vector<std::vector<Vector<4> > > Types;
+  typedef std::vector<std::vector<RMF_VECTOR<4> > > Types;
   typedef const Type& ReturnType;
   typedef const Type& ArgumentType;
   static bool get_is_null_value(const Type& t) { return t.empty(); }

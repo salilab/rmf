@@ -49,9 +49,9 @@ extern V3N vectors_3_names_map;
 typedef RMF_LARGE_UNORDERED_MAP<std::string, boost::array<std::string, 4> > V4N;
 extern V4N vector_4_names_map;
 
-inline V3N &get_vector_names_map(Vector<3>) { return vector_3_names_map; }
-inline V4N &get_vector_names_map(Vector<4>) { return vector_4_names_map; }
-inline V3N &get_vectors_names_map(Vector<3>) { return vectors_3_names_map; }
+inline V3N &get_vector_names_map(RMF_VECTOR<3>) { return vector_3_names_map; }
+inline V4N &get_vector_names_map(RMF_VECTOR<4>) { return vector_4_names_map; }
+inline V3N &get_vectors_names_map(RMF_VECTOR<3>) { return vectors_3_names_map; }
 
 template <class SD>
 struct BackwardsIO : public IO {
@@ -69,9 +69,9 @@ struct BackwardsIO : public IO {
 
   template <unsigned int D, class Filter>
   void filter_vector(Filter &filter, Category cat) const {
-    RMF_FOREACH(std::string key_name, get_vector_names(cat, Vector<D>())) {
+    RMF_FOREACH(std::string key_name, get_vector_names(cat, RMF_VECTOR<D>())) {
       RMF_FOREACH(std::string subkey_name,
-                  get_vector_subkey_names(key_name, Vector<D>())) {
+                  get_vector_subkey_names(key_name, RMF_VECTOR<D>())) {
         filter.add_float_key(cat, subkey_name);
         RMF_TRACE("Filtering " << subkey_name);
       }
@@ -80,9 +80,9 @@ struct BackwardsIO : public IO {
 
   template <unsigned int D, class Filter>
   void filter_vectors(Filter &filter, Category cat) const {
-    RMF_FOREACH(std::string key_name, get_vectors_names(cat, Vector<D>())) {
+    RMF_FOREACH(std::string key_name, get_vectors_names(cat, RMF_VECTOR<D>())) {
       RMF_FOREACH(std::string subkey_name,
-                  get_vectors_subkey_names(key_name, Vector<D>())) {
+                  get_vectors_subkey_names(key_name, RMF_VECTOR<D>())) {
         filter.add_floats_key(cat, subkey_name);
         RMF_TRACE("Filtering " << subkey_name);
       }
@@ -91,11 +91,11 @@ struct BackwardsIO : public IO {
 
   template <unsigned int D>
   inline boost::array<std::string, D> get_vector_subkey_names(
-      std::string key_name, Vector<D>) const {
+      std::string key_name, RMF_VECTOR<D>) const {
     typename RMF_LARGE_UNORDERED_MAP<
         std::string, boost::array<std::string, D> >::const_iterator it =
-        get_vector_names_map(Vector<D>()).find(key_name);
-    if (it == get_vector_names_map(Vector<D>()).end()) {
+        get_vector_names_map(RMF_VECTOR<D>()).find(key_name);
+    if (it == get_vector_names_map(RMF_VECTOR<D>()).end()) {
       boost::array<std::string, D> ret;
       for (unsigned int i = 0; i < D; ++i) {
         std::ostringstream ossk;
@@ -110,11 +110,11 @@ struct BackwardsIO : public IO {
 
   template <unsigned int D>
   inline boost::array<std::string, D> get_vectors_subkey_names(
-      std::string key_name, Vector<D>) const {
+      std::string key_name, RMF_VECTOR<D>) const {
     typename RMF_LARGE_UNORDERED_MAP<
         std::string, boost::array<std::string, D> >::const_iterator it =
-        get_vectors_names_map(Vector<D>()).find(key_name);
-    if (it == get_vectors_names_map(Vector<D>()).end()) {
+        get_vectors_names_map(RMF_VECTOR<D>()).find(key_name);
+    if (it == get_vectors_names_map(RMF_VECTOR<D>()).end()) {
       boost::array<std::string, D> ret;
       for (unsigned int i = 0; i < D; ++i) {
         std::ostringstream ossk;
@@ -128,7 +128,7 @@ struct BackwardsIO : public IO {
   }
 
   template <unsigned int D>
-  inline Strings get_vector_names(Category cat, Vector<D>) const {
+  inline Strings get_vector_names(Category cat, RMF_VECTOR<D>) const {
     std::ostringstream oss;
     oss << "_vector" << D;
     Strings ret;
@@ -137,7 +137,7 @@ struct BackwardsIO : public IO {
       ret = sd_->get_static_value(NodeID(0), key);
     }
     typedef std::pair<std::string, boost::array<std::string, D> > KP;
-    RMF_FOREACH(KP kp, get_vector_names_map(Vector<D>())) {
+    RMF_FOREACH(KP kp, get_vector_names_map(RMF_VECTOR<D>())) {
       ret.push_back(kp.first);
     }
     std::sort(ret.begin(), ret.end());
@@ -146,7 +146,7 @@ struct BackwardsIO : public IO {
   }
 
   template <unsigned int D>
-  inline Strings get_vectors_names(Category cat, Vector<D>) const {
+  inline Strings get_vectors_names(Category cat, RMF_VECTOR<D>) const {
     std::ostringstream oss;
     oss << "_vectors" << D;
     Strings ret;
@@ -155,7 +155,7 @@ struct BackwardsIO : public IO {
       ret = sd_->get_static_value(NodeID(0), key);
     }
     typedef std::pair<std::string, boost::array<std::string, D> > KP;
-    RMF_FOREACH(KP kp, get_vectors_names_map(Vector<D>())) {
+    RMF_FOREACH(KP kp, get_vectors_names_map(RMF_VECTOR<D>())) {
       ret.push_back(kp.first);
     }
     std::sort(ret.begin(), ret.end());
@@ -170,9 +170,9 @@ struct BackwardsIO : public IO {
     typedef boost::tuple<Key, int> Data;
     RMF_LARGE_UNORDERED_MAP<FloatKey, Data> map;
     RMF_FOREACH(std::string key_name,
-                get_vector_names(category_a, Vector<D>())) {
+                get_vector_names(category_a, RMF_VECTOR<D>())) {
       boost::array<std::string, D> subkey_names =
-          get_vector_subkey_names(key_name, Vector<D>());
+          get_vector_subkey_names(key_name, RMF_VECTOR<D>());
       for (unsigned int i = 0; i < D; ++i) {
         FloatKey cur_key =
             sda->get_key(category_a, subkey_names[i], FloatTraits());
@@ -187,7 +187,7 @@ struct BackwardsIO : public IO {
       RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
         double v = H::get(sda, n, kp.first);
         if (!FloatTraits::get_is_null_value(v)) {
-          Vector<D> &old = H::access(sdb, n, kp.second.template get<0>());
+          RMF_VECTOR<D> &old = H::access(sdb, n, kp.second.template get<0>());
           old[kp.second.template get<1>()] = v;
         }
       }
@@ -205,7 +205,7 @@ struct BackwardsIO : public IO {
       std::string name = sda->get_name(k);
       key_names.push_back(name);
       boost::array<std::string, D> subkey_names =
-          get_vector_subkey_names(name, Vector<D>());
+          get_vector_subkey_names(name, RMF_VECTOR<D>());
       for (unsigned int i = 0; i < D; ++i) {
         map[k][i] = sdb->get_key(category_b, subkey_names[i], FloatTraits());
       }
@@ -221,7 +221,7 @@ struct BackwardsIO : public IO {
     typedef std::pair<VectorKey, Data> KP;
     RMF_FOREACH(KP kp, map) {
       RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
-        Vector<D> v = H::get(sda, n, kp.first);
+        RMF_VECTOR<D> v = H::get(sda, n, kp.first);
         if (!VectorTraits<D>::get_is_null_value(v)) {
           for (unsigned int i = 0; i < D; ++i) {
             H::set(sdb, n, kp.second[i], v[i]);
@@ -238,9 +238,9 @@ struct BackwardsIO : public IO {
     typedef boost::tuple<Key, int> Data;
     RMF_LARGE_UNORDERED_MAP<FloatsKey, Data> map;
     RMF_FOREACH(std::string key_name,
-                get_vectors_names(category_a, Vector<3>())) {
+                get_vectors_names(category_a, RMF_VECTOR<3>())) {
       boost::array<std::string, 3> subkey_names =
-          get_vectors_subkey_names(key_name, Vector<3>());
+          get_vectors_subkey_names(key_name, RMF_VECTOR<3>());
       for (unsigned int i = 0; i < 3; ++i) {
         FloatsKey cur_key =
             sda->get_key(category_a, subkey_names[i], FloatsTraits());
@@ -255,7 +255,7 @@ struct BackwardsIO : public IO {
       RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
         Floats v = H::get(sda, n, kp.first);
         if (!v.empty()) {
-          std::vector<Vector<3> > &old =
+          std::vector<RMF_VECTOR<3> > &old =
               H::access(sdb, n, kp.second.template get<0>());
           old.resize(v.size());
           for (unsigned int i = 0; i < v.size(); ++i) {
@@ -278,7 +278,7 @@ struct BackwardsIO : public IO {
       std::string name = sda->get_name(k);
       key_names.push_back(name);
       boost::array<std::string, 3> subkey_names =
-          get_vectors_subkey_names(name, Vector<3>());
+          get_vectors_subkey_names(name, RMF_VECTOR<3>());
       for (unsigned int i = 0; i < 3; ++i) {
         map[k][i] = sdb->get_key(category_b, subkey_names[i], FloatsTraits());
       }
@@ -294,7 +294,7 @@ struct BackwardsIO : public IO {
     typedef std::pair<VectorKey, Data> KP;
     RMF_FOREACH(KP kp, map) {
       RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
-        std::vector<Vector<3> > v = H::get(sda, n, kp.first);
+        std::vector<RMF_VECTOR<3> > v = H::get(sda, n, kp.first);
         if (!v.empty()) {
           for (unsigned int i = 0; i < 3; ++i) {
             Floats cur(v.size());

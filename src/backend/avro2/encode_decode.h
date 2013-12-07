@@ -50,13 +50,13 @@ struct codec_traits<RMF::avro2::Skip<B> > {
 };
 
 template <unsigned int V>
-struct codec_traits<RMF::Vector<V> > {
-  static void encode(Encoder& e, const RMF::Vector<V>& v) {
+struct codec_traits<RMF_VECTOR<V> > {
+  static void encode(Encoder& e, const RMF_VECTOR<V>& v) {
     for (unsigned int i = 0; i < V; ++i) {
       internal_avro::encode<float>(e, v[i]);
     }
   }
-  static void decode(Decoder& d, RMF::Vector<V>& v) {
+  static void decode(Decoder& d, RMF_VECTOR<V>& v) {
     for (unsigned int i = 0; i < V; ++i) {
       internal_avro::decode<float>(d, v[i]);
     }
