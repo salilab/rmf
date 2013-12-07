@@ -46,6 +46,21 @@ typedef std::vector<Strings> StringsList;
 /** The type used to store lists of lists of integers values.*/
 typedef std::vector<Ints> IntsList;
 
+/** A Vector3 */
+typedef Vector<3> Vector3;
+/** A Vector3 */
+typedef Vector<4> Vector4;
+/** Many Vector3s */
+typedef std::vector<Vector3> Vector3s;
+/** Many Vector4s */
+typedef std::vector<Vector4> Vector4s;
+
+//! For classes that are templated on the dimension
+#define RMF_VECTOR RMF::Vector
+
+//! For template classes that want to deal with lists of values
+#define RMF_STD_VECTOR std::vector
+
 typedef std::pair<int, int> IntRange;
 
 } /* namespace RMF */
