@@ -163,7 +163,7 @@ struct codec_traits<RMF::avro2::DataTypes> {
     internal_avro::encode(e, v.floats_data);
     internal_avro::encode(e, v.strings_data);
     internal_avro::encode(e, v.vector3s_data);
-    std::vector<int> empty;
+    RMF::internal::TypeData<RMF::Vector4sTraits> empty;
     internal_avro::encode(e, empty);
   }
   static void decode(Decoder& d, RMF::avro2::DataTypes& v) {
@@ -176,7 +176,7 @@ struct codec_traits<RMF::avro2::DataTypes> {
     internal_avro::decode(d, v.floats_data);
     internal_avro::decode(d, v.strings_data);
     internal_avro::decode(d, v.vector3s_data);
-    std::vector<int> empty;
+    RMF::internal::TypeData<RMF::Vector4sTraits> empty;
     internal_avro::decode(d, empty);
   }
 };

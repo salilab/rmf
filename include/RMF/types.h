@@ -278,6 +278,33 @@ struct Vector3sTraits {
   static std::string get_name() { return "vector3s"; }
 };
 
+// template <unsigned int D>
+struct Vector4sTraits {
+  typedef Vector4s Type;
+  typedef std::vector<std::vector<Vector<4> > > Types;
+  typedef const Type& ReturnType;
+  typedef const Type& ArgumentType;
+  static bool get_is_null_value(const Type& t) { return t.empty(); }
+  static ReturnType get_null_value() {
+    static const Type null;
+    return null;
+  }
+  typedef boost::int32_t AvroType;
+  static bool get_are_equal(ArgumentType a, ArgumentType b) {
+    if (a.size() != b.size()) return false;
+    for (unsigned int i = 0; i < a.size(); ++i) {
+      if (!VectorTraits<4>::get_are_equal(a[i], b[i])) return false;
+    }
+    return true;
+  }
+  static std::string get_tag() {
+    std::ostringstream oss;
+    oss << "vs" << 4;
+    return oss.str();
+  }
+  static std::string get_name() { return "vector4s"; }
+};
+
 // typedef VectorsTraits<3> Vector3sTraits;
 // typedef VectorsTraits<4> Vector4sTraits;
 

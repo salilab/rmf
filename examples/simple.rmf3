@@ -1,4 +1,4 @@
-Objavro.codecnullavro.schema¯ò{
+Objavro.codecnullavro.schemaÇ∏{
     "type": "record",
     "name": "Frame",
     "fields": [
@@ -555,23 +555,60 @@ Objavro.codecnullavro.schema¯ò{
                                 ]
                             }
                         }
+                    },
+                    {
+                        "name": "vector4s_data",
+                        "type": {
+                            "type": "array",
+                            "items": {
+                                "type": "record",
+                                "name": "Vector4sNodeData",
+                                "fields": [
+                                    {
+                                        "name": "key",
+                                        "type": "int"
+                                    },
+                                    {
+                                        "name": "values",
+                                        "type": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "record",
+                                                "name": "Vector4sValue",
+                                                "fields": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "int"
+                                                    },
+                                                    {
+                                                        "name": "value",
+                                                        "type": {
+                                                            "type": "array",
+                                                            "items": "Vector4"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
                     }
                 ]
             }
         }
     ]
 }
- $âpÃËÍ*[FızˇÏ  
+ /u≥∞‹[ z!V∑úgQè8»  
 IMP 
 aliasphysicssequence
-shape    h root  l/flute1/home/drussel/src/rmf/rmf/examples/simple.pdb:   A 0 N 
+shape    h root  *examples/simple.pdb:   A 0 N 
 CA C O CB CG SD CE 1 N CA C  O "CB $CG1 &CG2 (2 *N( ,CA( .C( 0O( 2CB( 4CG( 6CD1( 8CD2( :
-bonds <bond: >bond: @bond: Bbond: Dbond: Fbond: Hbond: Jbond: Lbond: Nbond: Pbond: Rbond: Tbond: Vbond: Xbond: Zbond: \bond: ^bond: `bond: bbond: dbond: fbond:  ( massradius*diffusion coefficient aliased  element &first residue index $last residue index copy index 
-bonded_0 bonded_1 rigid body non rigid  residue typechain idtype name indexes coordinatesrgb colortranslation rotation 
-.820.,&$"6 4* 
- (  (  
-,`2d6b4^0\.Z*T PL"JHX&RFV$Bf8N@D>< ,`,d4b2^.\,Z,TPLJHX"R*FV"B
-f4N@D>
+bonds <bond: >bond: @bond: Bbond: Dbond: Fbond: Hbond: Jbond: Lbond: Nbond: Pbond: Rbond: Tbond: Vbond: Xbond: Zbond: \bond: ^bond: `bond: bbond: dbond: fbond:  * massradius*diffusion coefficient aliased  element residue index copy index &first residue index 
+$last residue index bonded 0 bonded 1 rigid body non rigid  residue typechain idtype name indexes coordinatesrgb colortranslation rotation .820.,&$"6 4* 
+ (  ,`0d6b4^.\*Z2T$P LJHXR"FV&Bf8N@D>< ,`.d4b2^,\,Z,T"PLJHX*RFV"Bf4N@
+D>
 <
    .8‘+@A2‘+@A0ã˝A.‘+@A,‘+@A&‘+@A$‘+@A"‘+@A‘+@A6‘+@AèB B4‘+@A‘+@A‘+@A‘+@A*q`Aã˝A ã˝A‘+@A‘+@A
 ‘+@Aq`Aq`A .8
@@ -580,9 +617,10 @@ f4N@D>
 ◊@"öô@
 ◊@6
 ◊@   @4öô@33@öô@33@*ÕÃÏ?öôŸ? öôŸ?   @   @
-öô@ÕÃÏ?ÕÃÏ?   (LEUVALMET A                     .8ÆAbÄA˛‘ÿ¿2ÅÌAÖwAòn¡0  ÚA
+öô@ÕÃÏ?ÕÃÏ?   (LEUVALMET A           
+frame       .8ÆAbÄA˛‘ÿ¿2ÅÌAÖwAòn¡0  ÚA
 ◊sA`ÂD¡.ûÔÎA∞r~A)\9¡,B`ÊA”MtAq=&¡&ºt€Aì"Aq=R¡$JÊAXCA¨V¡"◊£€Aì:AJN¡uì∆AâADA™Òæ¿6
 ◊ÂAŸŒ_A·zÏ¿ì¬AH·(AûÔª¿4¨ËAßvA1¯¿=
 «A%A›$Ó¿†⁄A¥»>Awæ5¡\è¿AÖÎ'A7â	¡*§p‰AÆ]A-*¡Á˚’AÅAÈ&#¡ Dã”A™ÒbAd;5¡ÉŒAÁ˚#Awæ%¡—"€AŸVA
 ◊1¡
-d;√AwæA%¡L7¬AÁ˚A¸©¡F∂œA}?7A∞r.¡    $âpÃËÍ*[Fızˇ  $âpÃËÍ*[Fızˇ
+d;√AwæA%¡L7¬AÁ˚A¸©¡F∂œA}?7A∞r.¡        /u≥∞‹[ z!V∑úgQè8  /u≥∞‹[ z!V∑úgQè8
