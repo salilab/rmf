@@ -47,15 +47,15 @@ class HDF5DataSetCacheD<TypeTraits, 3> /*: public boost::noncopyable*/ {
       HDF5::DataSetIndexD<3> sz = extents_;
       sz[2] = 1;
       typename TypeTraits::Types all =
-          get_as<typename TypeTraits::Types>(ds_.get_block(lb, sz));
+          HDF5::get_as<typename TypeTraits::Types>(ds_.get_block(lb, sz));
       for (unsigned int i = 0; i < extents_[0]; ++i) {
         for (unsigned int j = 0; j < extents_[1]; ++j) {
           cache_[i][j] = all[i * extents_[1] + j];
 #ifndef RMF_NDEBUG
-          typename TypeTraits::Type read = cache_[i][j],
-                                    fresh = get_as<typename TypeTraits::Type>(
-                                        ds_.get_value(HDF5::DataSetIndexD<3>(
-                                            i, j, get_current_frame())));
+          typename TypeTraits::Type
+              read = cache_[i][j],
+              fresh = HDF5::get_as<typename TypeTraits::Type>(ds_.get_value(
+                  HDF5::DataSetIndexD<3>(i, j, get_current_frame())));
           RMF_INTERNAL_CHECK(read == fresh, "Values don't match");
 #endif
         }
@@ -63,7 +63,7 @@ class HDF5DataSetCacheD<TypeTraits, 3> /*: public boost::noncopyable*/ {
     } else {
       for (unsigned int i = 0; i < get_size()[0]; ++i) {
         for (unsigned int j = 0; j < get_size()[1]; ++j) {
-          cache_[i][j] = get_as<typename TypeTraits::Type>(
+          cache_[i][j] = HDF5::get_as<typename TypeTraits::Type>(
               ds_.get_value(HDF5::DataSetIndexD<3>(i, j, get_current_frame())));
         }
       }
@@ -111,13 +111,13 @@ class HDF5DataSetCacheD<TypeTraits, 3> /*: public boost::noncopyable*/ {
         }
       }
       ds_.set_block(lb, sz,
-                    get_as<typename TypeTraits::HDF5Traits::Types>(data));
+                    HDF5::get_as<typename TypeTraits::HDF5Traits::Types>(data));
     } else {
       for (unsigned int i = 0; i < get_size()[0]; ++i) {
         for (unsigned int j = 0; j < get_size()[1]; ++j) {
-          ds_.set_value(
-              HDF5::DataSetIndexD<3>(i, j, get_current_frame()),
-              get_as<typename TypeTraits::HDF5Traits::Type>(cache_[i][j]));
+          ds_.set_value(HDF5::DataSetIndexD<3>(i, j, get_current_frame()),
+                        HDF5::get_as<typename TypeTraits::HDF5Traits::Type>(
+                            cache_[i][j]));
         }
       }
     }
@@ -158,7 +158,7 @@ class HDF5DataSetCacheD<TypeTraits, 3> /*: public boost::noncopyable*/ {
   }
   typename TypeTraits::Types get_row(const HDF5::DataSetIndexD<2>& ij) {
     flush();
-    return get_as<typename TypeTraits::Types>(ds_.get_row(ij));
+    return HDF5::get_as<typename TypeTraits::Types>(ds_.get_row(ij));
   }
   typename TypeTraits::Type get_value(const HDF5::DataSetIndexD<3>& ijk) const {
     RMF_INTERNAL_CHECK(ijk[2] == get_current_frame(), "Frames don't match");

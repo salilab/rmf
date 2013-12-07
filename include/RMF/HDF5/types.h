@@ -13,6 +13,7 @@
 #include "handle.h"
 #include "infrastructure_macros.h"
 #include "RMF/internal/errors.h"
+#include "RMF/ID.h"
 #include "internal/types.h"
 #include <hdf5.h>
 #include <algorithm>
@@ -309,6 +310,29 @@ struct FloatsTraits : public SimplePluralTraits<FloatTraits> {};
 struct IndexTraits : public SimpleTraits<IndexTraitsBase> {};
 struct IndexesTraits : public SimplePluralTraits<IndexTraits> {};
 #endif
+
+
+/** Get one type as another, handling vectors or scalars.*/
+template <class OutType, class InType>
+inline OutType get_as(InType in) {
+  return OutType(in);
+}
+
+template <class OT, class Tr>
+inline OT get_as(RMF::ID<Tr> id) {
+  return id.get_index();
+}
+
+/** Get one type as another, handling vectors or scalars.*/
+template <class OutType, class InType>
+inline OutType get_as(const std::vector<InType> in) {
+  OutType ret(in.size());
+  for (unsigned int i = 0; i < ret.size(); ++i) {
+    ret[i] = get_as<typename OutType::value_type>(in[i]);
+  }
+  return ret;
+}
+
 } /* namespace HDF5 */
 } /* namespace RMF */
 

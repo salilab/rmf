@@ -221,6 +221,8 @@ namespace RMF {
 %template(Vector4) RMF::Vector<4>;
 
 %include "RMF/types.h"
+%include "RMF/traits.h"
+%include "RMF/keys.h"
 
 RMF_SWIG_FOREACH_TYPE(RMF_SWIG_TYPE_LIST)
 

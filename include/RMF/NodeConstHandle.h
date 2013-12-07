@@ -26,6 +26,8 @@
 #include "RMF/constants.h"
 #include "RMF/enums.h"
 #include "RMF/internal/SharedData.h"
+#include "RMF/keys.h"
+#include "RMF/traits.h"
 #include "RMF/types.h"
 
 namespace RMF {

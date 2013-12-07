@@ -26,6 +26,7 @@
 #include "RMF/internal/SharedDataPath.h"
 #include "RMF/internal/SharedDataUserData.h"
 #include "RMF/names.h"
+#include "RMF/traits.h"
 #include "RMF/types.h"
 #include "SharedDataCategory.h"
 #include "SharedDataData.h"

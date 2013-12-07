@@ -10,6 +10,7 @@
 #define RMF_INTERNAL_SHARED_DATA_KEYS_H
 
 #include "RMF/config.h"
+#include "RMF/keys.h"
 #include "RMF/types.h"
 #include "small_set_map.h"
 

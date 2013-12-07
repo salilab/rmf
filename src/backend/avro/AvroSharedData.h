@@ -24,6 +24,38 @@ RMF_ENABLE_WARNINGS
 
 namespace RMF {
 namespace avro_backend {
+
+
+template <class OutType, class InType>
+inline OutType get_as(InType in) {
+  return OutType(in);
+}
+template <class Out>
+inline Out get_as(NodeID ni) {
+  if (ni == NodeID())
+    return Out(-1);
+  else
+    return Out(ni.get_index());
+}
+
+template <>
+inline NodeID get_as(int i) {
+  if (i == -1)
+    return NodeID();
+  else
+    return NodeID(i);
+}
+
+template <class OutType, class InType>
+inline OutType get_as(const std::vector<InType> in) {
+  OutType ret(in.size());
+  for (unsigned int i = 0; i < ret.size(); ++i) {
+    ret[i] = get_as<typename OutType::value_type>(in[i]);
+  }
+  return ret;
+}
+
+
 using namespace RMF::backward_types;
 
 template <class Base>

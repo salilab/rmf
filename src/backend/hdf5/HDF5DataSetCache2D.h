@@ -43,7 +43,8 @@ class HDF5DataSetCacheD<TypeTraits, 2> /*: public boost::noncopyable*/ {
     if (extents_ != lb) {
       if (TypeTraits::HDF5Traits::BatchOperations) {
         typename TypeTraits::Types all =
-            get_as<typename TypeTraits::Types>(ds_.get_block(lb, extents_));
+            HDF5::get_as<typename TypeTraits::Types>(
+                ds_.get_block(lb, extents_));
         for (unsigned int i = 0; i < extents_[0]; ++i) {
           for (unsigned int j = 0; j < extents_[1]; ++j) {
             cache_[i][j] = all[i * extents_[1] + j];
@@ -52,7 +53,7 @@ class HDF5DataSetCacheD<TypeTraits, 2> /*: public boost::noncopyable*/ {
       } else {
         for (unsigned int i = 0; i < extents_[0]; ++i) {
           for (unsigned int j = 0; j < extents_[1]; ++j) {
-            cache_[i][j] = get_as<typename TypeTraits::Type>(
+            cache_[i][j] = HDF5::get_as<typename TypeTraits::Type>(
                 ds_.get_value(HDF5::DataSetIndexD<2>(i, j)));
           }
         }
@@ -92,13 +93,13 @@ class HDF5DataSetCacheD<TypeTraits, 2> /*: public boost::noncopyable*/ {
         }
       }
       ds_.set_block(lb, extents_,
-                    get_as<typename TypeTraits::HDF5Traits::Types>(data));
+                    HDF5::get_as<typename TypeTraits::HDF5Traits::Types>(data));
     } else {
       for (unsigned int i = 0; i < extents_[0]; ++i) {
         for (unsigned int j = 0; j < extents_[1]; ++j) {
           ds_.set_value(
               HDF5::DataSetIndexD<2>(i, j),
-              get_as<typename TypeTraits::HDF5Traits::Type>(cache_[i][j]));
+              HDF5::get_as<typename TypeTraits::HDF5Traits::Type>(cache_[i][j]));
         }
       }
     }

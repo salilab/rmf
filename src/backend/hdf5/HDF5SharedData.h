@@ -36,6 +36,7 @@
 #include "RMF/infrastructure_macros.h"
 #include "RMF/internal/large_set_map.h"
 #include "RMF/log.h"
+#include "RMF/traits.h"
 #include "RMF/types.h"
 #include "backend/BackwardsIOBase.h"
 #include "backend/backward_types.h"
