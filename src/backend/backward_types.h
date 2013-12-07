@@ -36,8 +36,8 @@ namespace backward_types {
             const RMF::IndexesList&, RMF::IndexesList);
 
 struct IndexTraits {
-  typedef Index Type;
-  typedef Indexes Types;
+  typedef int Type;
+  typedef std::vector<int> Types;
   typedef Type ReturnType;
   typedef Type ArgumentType;
   static bool get_is_null_value(const Type& t) { return t == -1; }
@@ -49,8 +49,8 @@ struct IndexTraits {
 };
 
 struct IndexesTraits {
-  typedef Indexes Type;
-  typedef IndexesList Types;
+  typedef IndexTraits::Types Type;
+  typedef std::vector<Type> Types;
   typedef Type ReturnType;
   typedef const Type& ArgumentType;
   static bool get_is_null_value(const Type& t) { return t.empty(); }
@@ -90,7 +90,7 @@ struct NodeIDTraits {
 
 struct NodeIDsTraits {
   typedef NodeIDs Type;
-  typedef NodeIDsList Types;
+  typedef std::vector<NodeIDs> Types;
   typedef Type ReturnType;
   typedef const Type& ArgumentType;
   static bool get_is_null_value(const Type& t) { return t.empty(); }
