@@ -215,6 +215,20 @@
                             }
                         ]}}
                     }
+                    { "name": "vector4s_data", "type": { "type": "array", "items": {
+                        "type": "record", "name": "Vector4sNodeData", "fields": [
+                            {"name": "key", "type": "int"},
+                            { "name": "values", "type": {
+                                "type": "array", "items": {
+                                    "type": "record", "name": "Vector4sValue", "fields": [
+                                        {"name": "id", "type": "int"},
+                                        {"name": "value", "type": {
+                                            "type" : "array", "items" : "Vector4"}}
+                                    ]
+                                }}
+                            }
+                        ]}}
+                    }
                 ]
             }
         }

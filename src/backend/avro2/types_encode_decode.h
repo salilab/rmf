@@ -157,23 +157,27 @@ struct codec_traits<RMF::avro2::DataTypes> {
     internal_avro::encode(e, v.int_data);
     internal_avro::encode(e, v.float_data);
     internal_avro::encode(e, v.string_data);
+    internal_avro::encode(e, v.vector3_data);
+    internal_avro::encode(e, v.vector4_data);
     internal_avro::encode(e, v.ints_data);
     internal_avro::encode(e, v.floats_data);
     internal_avro::encode(e, v.strings_data);
-    internal_avro::encode(e, v.vector3_data);
-    internal_avro::encode(e, v.vector4_data);
     internal_avro::encode(e, v.vector3s_data);
+    std::vector<int> empty;
+    internal_avro::encode(e, empty);
   }
   static void decode(Decoder& d, RMF::avro2::DataTypes& v) {
     internal_avro::decode(d, v.int_data);
     internal_avro::decode(d, v.float_data);
     internal_avro::decode(d, v.string_data);
+    internal_avro::decode(d, v.vector3_data);
+    internal_avro::decode(d, v.vector4_data);
     internal_avro::decode(d, v.ints_data);
     internal_avro::decode(d, v.floats_data);
     internal_avro::decode(d, v.strings_data);
-    internal_avro::decode(d, v.vector3_data);
-    internal_avro::decode(d, v.vector4_data);
     internal_avro::decode(d, v.vector3s_data);
+    std::vector<int> empty;
+    internal_avro::decode(d, empty);
   }
 };
 
