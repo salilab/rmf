@@ -67,7 +67,7 @@ struct BackwardsIO : public IO {
     return ID<Traits>();
   }
 
-  template <unsigned int D, class Filter>
+  template <VectorDimension D, class Filter>
   void filter_vector(Filter &filter, Category cat) const {
     RMF_FOREACH(std::string key_name, get_vector_names(cat, RMF_VECTOR<D>())) {
       RMF_FOREACH(std::string subkey_name,
@@ -78,7 +78,7 @@ struct BackwardsIO : public IO {
     }
   }
 
-  template <unsigned int D, class Filter>
+  template <VectorDimension D, class Filter>
   void filter_vectors(Filter &filter, Category cat) const {
     RMF_FOREACH(std::string key_name, get_vectors_names(cat, RMF_VECTOR<D>())) {
       RMF_FOREACH(std::string subkey_name,
@@ -89,7 +89,7 @@ struct BackwardsIO : public IO {
     }
   }
 
-  template <unsigned int D>
+  template <VectorDimension D>
   inline boost::array<std::string, D> get_vector_subkey_names(
       std::string key_name, RMF_VECTOR<D>) const {
     typename RMF_LARGE_UNORDERED_MAP<
@@ -108,7 +108,7 @@ struct BackwardsIO : public IO {
     }
   }
 
-  template <unsigned int D>
+  template <VectorDimension D>
   inline boost::array<std::string, D> get_vectors_subkey_names(
       std::string key_name, RMF_VECTOR<D>) const {
     typename RMF_LARGE_UNORDERED_MAP<
@@ -127,7 +127,7 @@ struct BackwardsIO : public IO {
     }
   }
 
-  template <unsigned int D>
+  template <VectorDimension D>
   inline Strings get_vector_names(Category cat, RMF_VECTOR<D>) const {
     std::ostringstream oss;
     oss << "_vector" << D;
@@ -145,7 +145,7 @@ struct BackwardsIO : public IO {
     return ret;
   }
 
-  template <unsigned int D>
+  template <VectorDimension D>
   inline Strings get_vectors_names(Category cat, RMF_VECTOR<D>) const {
     std::ostringstream oss;
     oss << "_vectors" << D;
@@ -163,7 +163,7 @@ struct BackwardsIO : public IO {
     return ret;
   }
 
-  template <unsigned int D, class SDA, class SDB, class H>
+  template <VectorDimension D, class SDA, class SDB, class H>
   void load_vector(SDA *sda, Category category_a, SDB *sdb, Category category_b,
                    H) {
     typedef ID<VectorTraits<D> > Key;
@@ -193,7 +193,7 @@ struct BackwardsIO : public IO {
       }
     }
   }
-  template <unsigned int D, class SDA, class SDB, class H>
+  template <VectorDimension D, class SDA, class SDB, class H>
   void save_vector(SDA *sda, Category category_a, SDB *sdb, Category category_b,
                    H) {
     typedef ID<VectorTraits<D> > VectorKey;

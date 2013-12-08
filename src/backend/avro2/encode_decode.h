@@ -5,7 +5,6 @@
 #include "avrocpp/api/Specific.hh"
 #include "avrocpp/api/Encoder.hh"
 #include "avrocpp/api/Decoder.hh"
-#include "RMF/Vector.h"
 #include "RMF/ID.h"
 #include <boost/unordered_map.hpp>
 #include <boost/unordered_set.hpp>
@@ -49,7 +48,7 @@ struct codec_traits<RMF::avro2::Skip<B> > {
   }
 };
 
-template <unsigned int V>
+template <RMF::VectorDimension V>
 struct codec_traits<RMF_VECTOR<V> > {
   static void encode(Encoder& e, const RMF_VECTOR<V>& v) {
     for (unsigned int i = 0; i < V; ++i) {
@@ -58,7 +57,9 @@ struct codec_traits<RMF_VECTOR<V> > {
   }
   static void decode(Decoder& d, RMF_VECTOR<V>& v) {
     for (unsigned int i = 0; i < V; ++i) {
-      internal_avro::decode<float>(d, v[i]);
+      float f;
+      internal_avro::decode<float>(d, f);
+      v[i] = f;
     }
   }
 };
