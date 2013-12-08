@@ -29,7 +29,7 @@ endif(POLICY CMP0017)
 
 include(FindLog4CXX)
 include(FindC++11)
-include(FindCompilerFlags)
+include(CMakeModules/FindCompilerFlags.cmake)
 
 if(DEFINED RMF_TYPES_HEADER)
 message(STATUS "Using types header at ${RMF_TYPES_HEADER}")

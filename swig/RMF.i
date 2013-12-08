@@ -221,7 +221,7 @@ namespace RMF {
 %template(Vector4) RMF::Vector<4>;
 
 // old swig doesn't handle expanding the macro properly
-%include "RMF/default_traits.h"
+%include "RMF/default_types.h"
 %include "RMF/traits.h"
 %include "RMF/keys.h"
 
