@@ -70,8 +70,9 @@ struct SingleAvroFactory : public SingleTextAvroFactory {
   virtual boost::shared_ptr<RMF::backends::IO> read_buffer(
       BufferConstHandle buffer) const RMF_OVERRIDE {
     try {
-    return boost::make_shared<SingleAvroShareData>(buffer);
-    } catch (std::exception e) {
+      return boost::make_shared<SingleAvroShareData>(buffer);
+    }
+    catch (std::exception e) {
       RMF_INFO("Can't read buffer with old reader: " << e.what());
       return boost::shared_ptr<RMF::backends::IO>();
     }

@@ -105,8 +105,7 @@ RMF_ENABLE_WARNINGS
 #define RMF_SHOWABLE(Name, streamed)
 #endif
 
-#define RMF_UNUSED(variable) \
-  RMF::internal::use(variable);
+#define RMF_UNUSED(variable) RMF::internal::use(variable);
 
 #define RMF_NO_RETURN(type) return type()
 

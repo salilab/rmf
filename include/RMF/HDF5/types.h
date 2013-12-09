@@ -311,7 +311,6 @@ struct IndexTraits : public SimpleTraits<IndexTraitsBase> {};
 struct IndexesTraits : public SimplePluralTraits<IndexTraits> {};
 #endif
 
-
 /** Get one type as another, handling vectors or scalars.*/
 template <class OutType, class InType>
 inline OutType get_as(InType in) {

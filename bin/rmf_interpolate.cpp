@@ -30,22 +30,22 @@
 namespace {
 std::string description("Generate a new file that interpolates an old one.");
 
-#define RMF_INTERPOLATE(factory, attribute, noise, normalize, D)    \
-  {                                                                 \
+#define RMF_INTERPOLATE(factory, attribute, noise, normalize, D)   \
+  {                                                                \
     RMF_VECTOR<D> c0 = factory##cf0.get(input0).get_##attribute(); \
     RMF_VECTOR<D> c1 = factory##cf1.get(input1).get_##attribute(); \
     RMF_VECTOR<D> result;                                          \
-    double mag2 = 0.0;                                              \
-    for (unsigned int i = 0; i < D; ++i) {                          \
-      result[i] = (1.0 - frac) * c0[i] + frac * c1[i] + noise();    \
-      mag2 += result[i] * result[i];                                \
-    }                                                               \
-    if (normalize) {                                                \
-      for (unsigned int i = 0; i < D; ++i) {                        \
-        result[i] /= std::sqrt(mag2);                               \
-      }                                                             \
-    }                                                               \
-    factory##f.get(output).set_##attribute(result);                 \
+    double mag2 = 0.0;                                             \
+    for (unsigned int i = 0; i < D; ++i) {                         \
+      result[i] = (1.0 - frac) * c0[i] + frac * c1[i] + noise();   \
+      mag2 += result[i] * result[i];                               \
+    }                                                              \
+    if (normalize) {                                               \
+      for (unsigned int i = 0; i < D; ++i) {                       \
+        result[i] /= std::sqrt(mag2);                              \
+      }                                                            \
+    }                                                              \
+    factory##f.get(output).set_##attribute(result);                \
   }
 
 #define RMF_INTERPOLATE_LIST(factory, attribute, noise)                     \

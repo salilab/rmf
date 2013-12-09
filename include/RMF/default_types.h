@@ -19,7 +19,6 @@ namespace RMF {
 //! Work around clang issue
 typedef unsigned int VectorDimension;
 
-
 //! For classes that are templated on the dimension
 #define RMF_VECTOR RMF::Vector
 

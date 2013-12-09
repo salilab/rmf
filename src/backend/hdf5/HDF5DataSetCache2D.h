@@ -97,9 +97,9 @@ class HDF5DataSetCacheD<TypeTraits, 2> /*: public boost::noncopyable*/ {
     } else {
       for (unsigned int i = 0; i < extents_[0]; ++i) {
         for (unsigned int j = 0; j < extents_[1]; ++j) {
-          ds_.set_value(
-              HDF5::DataSetIndexD<2>(i, j),
-              HDF5::get_as<typename TypeTraits::HDF5Traits::Type>(cache_[i][j]));
+          ds_.set_value(HDF5::DataSetIndexD<2>(i, j),
+                        HDF5::get_as<typename TypeTraits::HDF5Traits::Type>(
+                            cache_[i][j]));
         }
       }
     }

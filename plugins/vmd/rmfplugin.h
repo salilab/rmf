@@ -63,9 +63,9 @@ class Data {
 
   // find nodes to push to vmd
   boost::array<int, 3> get_structure(RMF::NodeConstHandle cur, int first_index,
-                                    molfile_atom_t *atoms, int body,
-                                    std::string chain, int resid,
-                                    std::string resname);
+                                     molfile_atom_t *atoms, int body,
+                                     std::string chain, int resid,
+                                     std::string resname);
   int get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
                    molfile_graphics_t *graphics);
   int get_bonds(RMF::NodeConstHandle cur, int *from, int *to, int *type);
@@ -129,7 +129,7 @@ boost::array<int, 3> Data::get_structure(RMF::NodeConstHandle cur,
   RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
     boost::array<int, 3> count =
         get_structure(c, next_index, atoms, body, chain, resid, resname);
-    for (unsigned int i = 0; i< 3; ++i) {
+    for (unsigned int i = 0; i < 3; ++i) {
       ret[i] += count[i];
       next_index += count[i];
       if (atoms) atoms += count[i];

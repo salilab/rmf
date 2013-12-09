@@ -23,7 +23,6 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 namespace internal {
 
-
 template <class OutType, class InType>
 inline OutType get_as(InType in) {
   return OutType(in);
@@ -51,7 +50,6 @@ inline OutType get_as(const std::vector<InType> in) {
   }
   return ret;
 }
-
 
 template <class SDA, class SDB>
 void clone_hierarchy(SDA* sda, SDB* sdb) {
