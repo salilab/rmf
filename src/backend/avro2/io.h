@@ -62,7 +62,7 @@ namespace {
 
 template <class Traits, class Loader>
 void load(internal::SharedData *shared_data, const KeyMaps<Traits> &keys,
-          const internal::TypeData<Traits> &data, Loader) {
+          internal::TypeData<Traits> &data, Loader) {
   typedef std::pair<ID<Traits>, Category> KKP;
   RMF_FOREACH(KKP kp, keys.category) {
     shared_data->ensure_key(kp.second, kp.first,
@@ -71,7 +71,7 @@ void load(internal::SharedData *shared_data, const KeyMaps<Traits> &keys,
   if (!data.empty()) {
     RMF_TRACE("Found data for " << data.size() << " nodes.");
   }
-  Loader::access_data(shared_data, Traits()) = data;
+  Loader::access_data(shared_data, Traits()).swap(data);
 }
 
 template <class Traits, class Loader>
@@ -124,7 +124,7 @@ bool save(KeyType key_type, const internal::SharedData *shared_data,
 template <class Loader>
 void load_all(const std::vector<std::pair<Category, std::string> > &categories,
               internal::SharedData *shared_data, const KeyData &keys,
-              const DataTypes &data, Loader) {
+              DataTypes &data, Loader) {
   typedef std::pair<Category, std::string> CP;
   RMF_FOREACH(CP cp, categories) {
     shared_data->ensure_category(cp.first, cp.second);
@@ -265,8 +265,7 @@ template <class RW>
 void Avro2IO<RW>::load_file(internal::SharedData *shared_data) {
   // set producer and description
   // for some weird reason, mac os 10.8 clang needs this two step thing
-  FileData fd = rw_.get_file_data();
-  file_data_ = fd;  // get_file_data(path_);
+  file_data_ = rw_.get_file_data();
   RMF_INFO("Found " << get_number_of_frames() << " frames");
   shared_data->set_description(file_data_.description);
   shared_data->set_producer(file_data_.producer);
@@ -295,8 +294,8 @@ void Avro2IO<RW>::save_file(const internal::SharedData *shared_data) {
 
 template <class RW>
 void Avro2IO<RW>::load_hierarchy(internal::SharedData *shared_data) {
-  // can swap later
-  shared_data->access_node_hierarchy() = file_data_.nodes;
+  using namespace std;
+  swap(shared_data->access_node_hierarchy(), file_data_.nodes);
 }
 
 template <class RW>

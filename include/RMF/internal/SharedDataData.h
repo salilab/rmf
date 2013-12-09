@@ -40,6 +40,7 @@ struct TypeData : RMF_SMALL_UNORDERED_MAP<ID<Traits>, KeyData<Traits> > {
   }
 };
 
+
 template <class Traits>
 class SharedDataData {
   TypeData<Traits> ps_, pl_;
