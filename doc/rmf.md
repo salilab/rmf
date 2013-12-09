@@ -184,6 +184,9 @@ A quick comparison of the various options (taken from benchmark/benchmark_rmf.cp
 |rmfz  | 1.9    | 0.08     | 1.3  | 10M  |
 |rmf   | 6.2    | 0.17     | 3.3  |  9M  |
 |buffer| 1.1    | 0.07     | 1.2  | 14M  |
+|data  |        |          |      | 12M  |
+
+`data` is the size of the raw data saved to disk.
 
 ### RMF3 ### {#rmf_and_avro}
 
