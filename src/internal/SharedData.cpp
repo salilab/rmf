@@ -138,30 +138,6 @@ void SharedData::reload() {
   }
 }
 
-#define RMF_GET_STATIC_DIRTY(Traits, UCName) \
-  SharedDataData<Traits>::get_static_is_dirty() ||
-
-bool SharedData::get_static_is_dirty() const {
-  return RMF_FOREACH_TYPE(RMF_GET_STATIC_DIRTY) false;
-}
-
-#define RMF_SET_STATIC_DIRTY(Traits, UCName) \
-  SharedDataData<Traits>::set_static_is_dirty(tf);
-
-void SharedData::set_static_is_dirty(bool tf) {
-  RMF_FOREACH_TYPE(RMF_SET_STATIC_DIRTY);
-}
-
-#define RMF_CLEAR_LOADED(Traits, UCName) \
-  SharedDataData<Traits>::clear_loaded_values();
-
-void SharedData::clear_loaded_values() { RMF_FOREACH_TYPE(RMF_CLEAR_LOADED); }
-
-#define RMF_CLEAR_STATIC(Traits, UCName) \
-  SharedDataData<Traits>::clear_static_values();
-
-void SharedData::clear_static_values() { RMF_FOREACH_TYPE(RMF_CLEAR_STATIC); }
-
 SharedData::~SharedData() {
   if (write_) {
     try {

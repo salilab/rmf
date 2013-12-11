@@ -38,77 +38,107 @@ struct TypeData : RMF_SMALL_UNORDERED_MAP<ID<Traits>, KeyData<Traits> > {
     P::operator=(o);
     return *this;
   }
-  void swap(TypeData<Traits> &o) {
-    std::swap<P>(*this, o);
-  }
+  void swap(TypeData<Traits>& o) { std::swap<P>(*this, o); }
 };
 
+#define RMF_SHARED_DATA_TYPE_PARENT(Traits, UCName) , public TypeData<Traits>
 
-template <class Traits>
+#define RMF_SHARED_DATA_TYPE_CLEAR(Traits, UCName) TypeData<Traits>::clear();
+
+#define RMF_SHARED_DATA_TYPE_LIFT(Traits, UCName) \
+  using TypeData<Traits>::operator[];             \
+  using TypeData<Traits>::erase;                  \
+  using TypeData<Traits>::find;                   \
+  using TypeData<Traits>::end;
+
+struct Nothing {};
+class SharedDataDataTypes : public Nothing RMF_FOREACH_TYPE(
+                                RMF_SHARED_DATA_TYPE_PARENT) {
+ public:
+  void clear() { RMF_FOREACH_TYPE(RMF_SHARED_DATA_TYPE_CLEAR); }
+  RMF_FOREACH_TYPE(RMF_SHARED_DATA_TYPE_LIFT);
+};
+
 class SharedDataData {
-  TypeData<Traits> ps_, pl_;
+  SharedDataDataTypes static_, frame_;
   bool static_dirty_;
-
-  typename Traits::ReturnType get_value(const TypeData<Traits>& data,
+  template <class Traits>
+  typename Traits::ReturnType get_value(const SharedDataDataTypes& data,
                                         NodeID node, ID<Traits> k) const {
     typename TypeData<Traits>::const_iterator it0 = data.find(k);
-    if (it0 == data.end()) return Traits::get_null_value();
+    if (it0 == static_cast<const TypeData<Traits>& >(data).end())
+      return Traits::get_null_value();
     typename KeyData<Traits>::const_iterator it1 = it0->second.find(node);
     if (it1 == it0->second.end()) return Traits::get_null_value();
     return it1->second;
   }
-  void set_value(TypeData<Traits>& data, NodeID node, ID<Traits> k,
-                 typename Traits::ArgumentType v) {
-    data[k][node] = v;
-  }
-  void unset_value(TypeData<Traits>& data, NodeID node, ID<Traits> k) {
+
+  template <class Traits>
+  void unset_value(SharedDataDataTypes& data, NodeID node, ID<Traits> k) {
     data[k].erase(node);
-  }
-  typename Traits::Type& access_value(TypeData<Traits>& data, NodeID node,
-                                      ID<Traits> k) {
-    return data[k][node];
+    if (data[k].empty()) data.erase(k);
   }
 
  public:
   SharedDataData() : static_dirty_(false) {}
-  void clear_static_values() { ps_.clear(); }
-  void clear_loaded_values() { pl_.clear(); }
+  void clear_static_values() { static_.clear(); }
+  void clear_loaded_values() { frame_.clear(); }
   bool get_static_is_dirty() const { return static_dirty_; }
   void set_static_is_dirty(bool tf) { static_dirty_ = tf; }
-  const TypeData<Traits>& get_loaded_data(Traits) const { return pl_; }
-  const TypeData<Traits>& get_static_data(Traits) const { return ps_; }
-  TypeData<Traits>& access_loaded_data(Traits) { return pl_; }
-  TypeData<Traits>& access_static_data(Traits) { return ps_; }
+  template <class Traits>
+  const TypeData<Traits>& get_loaded_data(Traits) const {
+    return static_cast<const TypeData<Traits>&>(frame_);
+  }
+  template <class Traits>
+  const TypeData<Traits>& get_static_data(Traits) const {
+    return static_cast<const TypeData<Traits>&>(static_);
+  }
+  template <class Traits>
+  TypeData<Traits>& access_loaded_data(Traits) {
+    return static_cast<TypeData<Traits>&>(frame_);
+  }
+  template <class Traits>
+  TypeData<Traits>& access_static_data(Traits) {
+    return static_cast<TypeData<Traits>&>(static_);
+  }
 
+  template <class Traits>
   typename Traits::ReturnType get_static_value(NodeID node,
                                                ID<Traits> k) const {
-    return get_value(ps_, node, k);
+    return get_value(static_, node, k);
   }
+  template <class Traits>
   typename Traits::ReturnType get_loaded_value(NodeID node,
                                                ID<Traits> k) const {
-    return get_value(pl_, node, k);
+    return get_value(frame_, node, k);
   }
+  template <class Traits>
   void set_static_value(NodeID node, ID<Traits> k,
                         typename Traits::ArgumentType v) {
-    set_value(ps_, node, k, v);
+    static_[k][node] = v;
     static_dirty_ = true;
   }
+  template <class Traits>
   void set_loaded_value(NodeID node, ID<Traits> k,
                         typename Traits::ArgumentType v) {
-    set_value(pl_, node, k, v);
+    frame_[k][node] = v;
   }
+  template <class Traits>
   void unset_static_value(NodeID node, ID<Traits> k) {
-    unset_value(ps_, node, k);
+    unset_value(static_, node, k);
     static_dirty_ = true;
   }
+  template <class Traits>
   void unset_loaded_value(NodeID node, ID<Traits> k) {
-    unset_value(pl_, node, k);
+    unset_value(frame_, node, k);
   }
+  template <class Traits>
   typename Traits::Type& access_static_value(NodeID node, ID<Traits> k) {
-    return access_value(ps_, node, k);
+    return static_[k][node];
   }
+  template <class Traits>
   typename Traits::Type& access_loaded_value(NodeID node, ID<Traits> k) {
-    return access_value(pl_, node, k);
+    return frame_[k][node];
   }
 };
 

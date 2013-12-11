@@ -46,20 +46,6 @@ struct IO;
 }
 
 #define RMF_HOIST(Traits, UCName)                    \
-  using SharedDataData<Traits>::get_static_data;     \
-  using SharedDataData<Traits>::get_static_value;    \
-  using SharedDataData<Traits>::set_static_value;    \
-  using SharedDataData<Traits>::unset_static_value;  \
-  using SharedDataData<Traits>::access_static_value; \
-  using SharedDataData<Traits>::access_static_data;  \
-  using SharedDataData<Traits>::clear_static_values; \
-  using SharedDataData<Traits>::get_loaded_data;     \
-  using SharedDataData<Traits>::get_loaded_value;    \
-  using SharedDataData<Traits>::set_loaded_value;    \
-  using SharedDataData<Traits>::unset_loaded_value;  \
-  using SharedDataData<Traits>::access_loaded_value; \
-  using SharedDataData<Traits>::access_loaded_data;  \
-  using SharedDataData<Traits>::clear_loaded_values; \
   using SharedDataKeys<Traits>::get_key;             \
   using SharedDataKeys<Traits>::get_name;            \
   using SharedDataKeys<Traits>::get_keys;            \
@@ -70,7 +56,7 @@ struct IO;
 
 #define RMF_SHARED_DATA_PARENT(Traits, UCName) \
  public                                        \
-  SharedDataKeys<Traits>, public SharedDataData<Traits>,
+ SharedDataKeys<Traits>,
 
 namespace internal {
 
@@ -80,17 +66,13 @@ class RMFEXPORT SharedData
       public SharedDataFile,
       public SharedDataHierarchy,
       public SharedDataCategory,
+      public SharedDataData,
       RMF_FOREACH_TYPE(RMF_SHARED_DATA_PARENT) public SharedDataLoadedFrame {
   unsigned int number_of_frames_;
   bool write_;
   boost::shared_ptr<backends::IO> io_;
 
-  bool get_static_is_dirty() const;
-  void clear_loaded_values();
-  void clear_static_values();
-
  public:
-  void set_static_is_dirty(bool tf);
 
   using SharedDataHierarchy::get_name;
   using SharedDataCategory::get_name;
