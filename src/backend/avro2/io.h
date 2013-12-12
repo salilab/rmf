@@ -265,7 +265,8 @@ template <class RW>
 void Avro2IO<RW>::load_file(internal::SharedData *shared_data) {
   // set producer and description
   // for some weird reason, mac os 10.8 clang needs this two step thing
-  file_data_ = rw_.get_file_data();
+  FileData fd = rw_.get_file_data();
+  file_data_ = fd;
   RMF_INFO("Found " << get_number_of_frames() << " frames");
   shared_data->set_description(file_data_.description);
   shared_data->set_producer(file_data_.producer);
