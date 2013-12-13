@@ -48,8 +48,7 @@ struct TypeData : RMF_SMALL_UNORDERED_MAP<ID<Traits>, KeyData<Traits> > {
 #define RMF_SHARED_DATA_TYPE_LIFT(Traits, UCName) \
   using TypeData<Traits>::operator[];             \
   using TypeData<Traits>::erase;                  \
-  using TypeData<Traits>::find;                   \
-  using TypeData<Traits>::end;
+  using TypeData<Traits>::find;
 
 struct Nothing {};
 class SharedDataDataTypes : public Nothing RMF_FOREACH_TYPE(
