@@ -166,7 +166,8 @@ void show_node_decorators(
   if (bdcf.get_is(n)) out << " bond";
   if (ccf.get_is(n)) out << " color";
   if (pcf.get_is(n)) out << " particle";
-  if (ipcf.get_is(n)) out << " iparticle";
+  else if (ipcf.get_is(n))
+    out << " iparticle";
   if (rpcf.get_is(n)) out << " rigid";
   if (scf.get_is(n)) out << " score";
   if (bcf.get_is(n)) out << " ball";
