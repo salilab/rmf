@@ -41,10 +41,21 @@ namespace internal_avro {
 
 template <class B>
 struct codec_traits<RMF::avro2::Skip<B> > {
-  static void encode(Encoder&, RMF::avro2::Skip<B>) {}
   static void decode(Decoder& d, RMF::avro2::Skip<B>&) {
     B b;
     internal_avro::decode(d, b);
+  }
+};
+
+template <class B>
+struct codec_traits<RMF::avro2::Skip<std::vector<B> > > {
+  static void decode(Decoder& d, RMF::avro2::Skip<std::vector<B> >&) {
+    RMF::avro2::Skip<B> t;
+    for (size_t n = d.arrayStart(); n != 0; n = d.arrayNext()) {
+      for (size_t i = 0; i < n; ++i) {
+        internal_avro::decode(d, t);
+      }
+    }
   }
 };
 
@@ -118,6 +129,17 @@ struct codec_traits<std::pair<K, V> > {
 };
 
 template <class K, class V>
+struct codec_traits<RMF::avro2::Skip<std::pair<K, V> > > {
+  static void decode(Decoder& d, RMF::avro2::Skip<std::pair<K, V> >& v) {
+    RMF::avro2::Skip<K> first;
+    internal_avro::decode(d, first);
+    RMF::avro2::Skip<V> second;
+    internal_avro::decode(d, second);
+  }
+};
+
+
+template <class K, class V>
 struct codec_traits<boost::unordered_map<K, V> > {
   typedef std::pair<K, V> KP;
   static void encode(Encoder& e, const boost::unordered_map<K, V>& v) {
@@ -131,6 +153,15 @@ struct codec_traits<boost::unordered_map<K, V> > {
   }
 };
 
+template <class K, class V>
+struct codec_traits<RMF::avro2::Skip<boost::unordered_map<K, V> > > {
+  static void decode(Decoder& d,
+                     RMF::avro2::Skip<boost::unordered_map<K, V> >&) {
+    RMF::avro2::Skip<std::vector<std::pair<K, V> > > v;
+    internal_avro::decode(d, v);
+  }
+};
+
 template <class K>
 struct codec_traits<boost::unordered_set<K> > {
   static void encode(Encoder& e, const boost::unordered_set<K>& v) {
@@ -141,6 +172,15 @@ struct codec_traits<boost::unordered_set<K> > {
     std::vector<K> values;
     internal_avro::decode(d, values);
     v.insert(values.begin(), values.end());
+  }
+};
+
+template <class K>
+struct codec_traits<RMF::avro2::Skip<boost::unordered_set<K> > > {
+  static void decode(Decoder& d,
+                     RMF::avro2::Skip<boost::unordered_set<K> >&) {
+    RMF::avro2::Skip<std::vector<K> > values;
+    internal_avro::decode(d, values);
   }
 };
 
@@ -159,6 +199,15 @@ struct codec_traits<boost::container::flat_map<K, V> > {
   }
 };
 
+template <class K, class V>
+struct codec_traits<RMF::avro2::Skip<boost::container::flat_map<K, V> > > {
+  static void decode(Decoder& d,
+                     RMF::avro2::Skip<boost::container::flat_map<K, V> >&) {
+    RMF::avro2::Skip<std::vector<std::pair<K, V> > > values;
+    internal_avro::decode(d, values);
+  }
+};
+
 template <class K>
 struct codec_traits<boost::container::flat_set<K> > {
   static void encode(Encoder& e, const boost::container::flat_set<K>& v) {
@@ -169,6 +218,15 @@ struct codec_traits<boost::container::flat_set<K> > {
     std::vector<K> values;
     internal_avro::decode(d, values);
     v.insert(values.begin(), values.end());
+  }
+};
+
+template <class K>
+struct codec_traits<RMF::avro2::Skip<boost::container::flat_set<K> > > {
+  static void decode(Decoder& d,
+                     RMF::avro2::Skip<boost::container::flat_set<K> >&) {
+    RMF::avro2::Skip<std::vector<K> > values;
+    internal_avro::decode(d, values);
   }
 };
 #endif

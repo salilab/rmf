@@ -151,6 +151,15 @@ struct codec_traits<RMF::internal::TypeData<Traits> > {
   }
 };
 
+template <class Traits>
+struct codec_traits<RMF::avro2::Skip<RMF::internal::TypeData<Traits> > > {
+  static void decode(Decoder& d,
+                     RMF::avro2::Skip<RMF::internal::TypeData<Traits> >& ) {
+    typename RMF::avro2::Skip<typename RMF::internal::TypeData<Traits>::P> v;
+    internal_avro::decode(d, v);
+  }
+};
+
 template <>
 struct codec_traits<RMF::avro2::DataTypes> {
   static void encode(Encoder& e, const RMF::avro2::DataTypes& v) {
@@ -178,6 +187,34 @@ struct codec_traits<RMF::avro2::DataTypes> {
     internal_avro::decode(d, v.vector3s_data);
     RMF::internal::TypeData<RMF::Vector4sTraits> empty;
     internal_avro::decode(d, empty);
+  }
+};
+
+template <>
+struct codec_traits<RMF::avro2::Skip<RMF::avro2::DataTypes> > {
+  static void decode(Decoder& d, RMF::avro2::Skip<RMF::avro2::DataTypes>&) {
+    RMF::avro2::Skip<RMF::internal::TypeData<RMF::IntTraits> > int_data;
+    internal_avro::decode(d, int_data);
+    RMF::avro2::Skip<RMF::internal::TypeData<RMF::FloatTraits> > float_data;
+    internal_avro::decode(d, float_data);
+    RMF::avro2::Skip<RMF::internal::TypeData<RMF::StringTraits> > string_data;
+    internal_avro::decode(d, string_data);
+    RMF::avro2::Skip<RMF::internal::TypeData<RMF::Vector3Traits> > vector3_data;
+    internal_avro::decode(d, vector3_data);
+    RMF::avro2::Skip<RMF::internal::TypeData<RMF::Vector4Traits> > vector4_data;
+    internal_avro::decode(d, vector4_data);
+    RMF::avro2::Skip<RMF::internal::TypeData<RMF::IntsTraits> > ints_data;
+    internal_avro::decode(d, ints_data);
+    RMF::avro2::Skip<RMF::internal::TypeData<RMF::FloatsTraits> > floats_data;
+    internal_avro::decode(d, floats_data);
+    RMF::avro2::Skip<RMF::internal::TypeData<RMF::StringsTraits> > strings_data;
+    internal_avro::decode(d, strings_data);
+    RMF::avro2::Skip<RMF::internal::TypeData<RMF::Vector3sTraits> >
+        vector3s_data;
+    internal_avro::decode(d, vector3s_data);
+    RMF::avro2::Skip<RMF::internal::TypeData<RMF::Vector4sTraits> >
+        vector4s_data;
+    internal_avro::decode(d, vector4s_data);
   }
 };
 
