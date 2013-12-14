@@ -515,7 +515,7 @@ struct BackwardsIO : public IO {
     load_restraints(sd_.get(), shared_data);
   }
 
-  virtual void save_static_frame(const internal::SharedData *shared_data)
+  virtual void save_static_frame(internal::SharedData *shared_data)
       RMF_OVERRIDE {
     RMF_FOREACH(Category category, shared_data->get_categories()) {
       save_frame_category(category, shared_data, internal::StaticValues());
@@ -539,7 +539,7 @@ struct BackwardsIO : public IO {
     flush();
   }
 
-  virtual void save_loaded_frame(const internal::SharedData *shared_data)
+  virtual void save_loaded_frame(internal::SharedData *shared_data)
       RMF_OVERRIDE {
     RMF_INFO("Saving frame " << shared_data->get_loaded_frame());
     FrameID cur = shared_data->get_loaded_frame();

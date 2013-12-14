@@ -41,11 +41,11 @@ struct Avro2IO : public backends::IO {
  public:
   template <class T>
   Avro2IO(T t);
-  virtual void save_loaded_frame(const internal::SharedData *shared_data)
+  virtual void save_loaded_frame(internal::SharedData *shared_data)
       RMF_OVERRIDE;
   virtual void load_loaded_frame(internal::SharedData *shared_data)
       RMF_OVERRIDE;
-  virtual void save_static_frame(const internal::SharedData *shared_data)
+  virtual void save_static_frame(internal::SharedData *shared_data)
       RMF_OVERRIDE;
   virtual void load_static_frame(internal::SharedData *shared_data)
       RMF_OVERRIDE;
@@ -75,7 +75,7 @@ void load(internal::SharedData *shared_data, const KeyMaps<Traits> &keys,
 }
 
 template <class Traits, class Loader>
-bool save(KeyType key_type, const internal::SharedData *shared_data,
+bool save(KeyType key_type, internal::SharedData *shared_data,
           KeyMaps<Traits> &keys, std::vector<KeyInfo> *keys_changed,
           internal::TypeData<Traits> &data,
           internal::TypeData<Traits> *change_data, Loader) {
@@ -106,18 +106,22 @@ bool save(KeyType key_type, const internal::SharedData *shared_data,
       if (data.find(kpd.first) == data.end() && !kpd.second.empty()) {
         ret = true;
         change_data->operator[](kpd.first) = kpd.second;
+        data[kpd.first] = kpd.second;
       } else {
         RMF_FOREACH(typename internal::KeyData<Traits>::const_reference npd,
                     kpd.second) {
           if (data[kpd.first].find(npd.first) == data[kpd.first].end()) {
             ret = true;
             change_data->operator[](kpd.first)[npd.first] = npd.second;
+            data[kpd.first][npd.first] = npd.second;
           }
         }
       }
     }
+  } else {
+    std::swap(data, Loader::access_data(shared_data, Traits()));
   }
-  data = Loader::get_data(shared_data, Traits());
+
   return ret;
 }
 
@@ -143,7 +147,7 @@ void load_all(const std::vector<std::pair<Category, std::string> > &categories,
 
 template <class Loader>
 bool save_all(FileData &file_data, FileDataChanges &file_data_changes,
-              const internal::SharedData *shared_data, DataTypes &data,
+              internal::SharedData *shared_data, DataTypes &data,
               DataTypes *data_changes, Loader) {
   bool ret = false;
   Categories categories = shared_data->get_categories();
@@ -216,7 +220,7 @@ Avro2IO<RW>::Avro2IO(T t)
     : rw_(t), file_data_dirty_(false) {}
 
 template <class RW>
-void Avro2IO<RW>::save_loaded_frame(const internal::SharedData *shared_data) {
+void Avro2IO<RW>::save_loaded_frame(internal::SharedData *shared_data) {
   if (frame_.id != FrameID()) {
     rw_.write(frame_);
   }
@@ -254,7 +258,7 @@ void Avro2IO<RW>::load_static_frame(internal::SharedData *shared_data) {
 }
 
 template <class RW>
-void Avro2IO<RW>::save_static_frame(const internal::SharedData *shared_data) {
+void Avro2IO<RW>::save_static_frame(internal::SharedData *shared_data) {
   bool changed =
       save_all(file_data_, file_data_changes_, shared_data, file_data_.data,
                &file_data_changes_.data, internal::StaticValues());

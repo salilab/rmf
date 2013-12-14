@@ -34,10 +34,10 @@ namespace RMF {
 namespace backends {
 
 struct IO {
-  virtual void save_loaded_frame(const internal::SharedData *shared_data) = 0;
+  virtual void save_loaded_frame(internal::SharedData *shared_data) = 0;
   virtual void load_loaded_frame(internal::SharedData *shared_data) = 0;
 
-  virtual void save_static_frame(const internal::SharedData *shared_data) = 0;
+  virtual void save_static_frame(internal::SharedData *shared_data) = 0;
   virtual void load_static_frame(internal::SharedData *shared_data) = 0;
 
   /** @} */
