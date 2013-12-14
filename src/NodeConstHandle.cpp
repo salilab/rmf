@@ -155,14 +155,15 @@ void show_node_decorators(
     decorator::ColoredConstFactory ccf, decorator::ParticleConstFactory pcf,
     decorator::IntermediateParticleConstFactory ipcf,
     decorator::RigidParticleConstFactory rpcf, decorator::ScoreConstFactory scf,
-    decorator::BallConstFactory bcf, decorator::CylinderConstFactory cycf,
-    decorator::SegmentConstFactory segcf, decorator::ResidueConstFactory rcf,
-    decorator::AtomConstFactory acf, decorator::ChainConstFactory chaincf,
-    decorator::DomainConstFactory fragcf, decorator::CopyConstFactory copycf,
+    decorator::RepresentationConstFactory repcf, decorator::BallConstFactory bcf,
+    decorator::CylinderConstFactory cycf, decorator::SegmentConstFactory segcf,
+    decorator::ResidueConstFactory rcf, decorator::AtomConstFactory acf,
+    decorator::ChainConstFactory chaincf, decorator::DomainConstFactory fragcf,
+    decorator::CopyConstFactory copycf,
     decorator::DiffuserConstFactory diffusercf,
     decorator::TypedConstFactory typedcf, std::string) {
   using std::operator<<;
-  out << "\"" << n.get_name() << "\" [" << get_type_name(n.get_type()) << ": ";
+  out << "\"" << n.get_name() << "\" [" << get_type_name(n.get_type()) << ":";
   if (bdcf.get_is(n)) out << " bond";
   if (ccf.get_is(n)) out << " color";
   if (pcf.get_is(n)) out << " particle";
@@ -170,6 +171,7 @@ void show_node_decorators(
     out << " iparticle";
   if (rpcf.get_is(n)) out << " rigid";
   if (scf.get_is(n)) out << " score";
+  if (repcf.get_is(n)) out << " representation";
   if (bcf.get_is(n)) out << " ball";
   if (cycf.get_is(n)) out << " cylinder";
   if (segcf.get_is(n)) out << " segment";
@@ -282,6 +284,7 @@ void show_hierarchy_with_decorators(NodeConstHandle root, bool,
   decorator::IntermediateParticleConstFactory ipcf(root.get_file());
   decorator::RigidParticleConstFactory rpcf(root.get_file());
   decorator::ScoreConstFactory scf(root.get_file());
+  decorator::RepresentationConstFactory repcf(root.get_file());
   decorator::BallConstFactory bcf(root.get_file());
   decorator::CylinderConstFactory cycf(root.get_file());
   decorator::SegmentConstFactory segcf(root.get_file());
@@ -295,9 +298,9 @@ void show_hierarchy_with_decorators(NodeConstHandle root, bool,
   using std::operator<<;
   RMF_PRINT_TREE(
       out, NodeConstHandle, root, n.get_children().size(), n.get_children(),
-      show_node_decorators(n, out, bdf, ccf, pcf, ipcf, rpcf, scf, bcf, cycf,
-                           segcf, rcf, acf, chaincf, fragcf, copycf, diffusercf,
-                           typedcf, prefix0 + "   "));
+      show_node_decorators(n, out, bdf, ccf, pcf, ipcf, rpcf, scf, repcf, bcf,
+                           cycf, segcf, rcf, acf, chaincf, fragcf, copycf,
+                           diffusercf, typedcf, prefix0 + "   "));
 }
 
 } /* namespace RMF */
