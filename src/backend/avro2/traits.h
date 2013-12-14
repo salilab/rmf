@@ -11,9 +11,7 @@
 
 #include "RMF/compiler_macros.h"
 #include "RMF/log.h"
-#include "write.h"
-#include "file_data.h"
-#include "frame.h"
+#include "data_file.h"
 #include "generated/embed_jsons.h"
 #include "avrocpp/api/Compiler.hh"
 

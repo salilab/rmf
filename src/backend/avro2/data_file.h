@@ -15,6 +15,8 @@ struct Frame;
 }  // namespace RMF
 namespace internal_avro {
 class DataFileWriterBase;
+template <typename T>
+class DataFileReader;
 }  // namespace internal_avro
 
 RMF_ENABLE_WARNINGS
@@ -25,6 +27,13 @@ RMFEXPORT void write(internal_avro::DataFileWriterBase *writer,
                      const Frame &fr);
 RMFEXPORT void write(internal_avro::DataFileWriterBase *writer,
                      const FileDataChanges &fr);
+// workarounds for the Mac os 10.8 compiler make returning it inefficient
+RMFEXPORT void load_file_data(internal_avro::DataFileReader<FileData> &reader,
+                              FileData &fd);
+RMFEXPORT void load_frame(FrameID id,
+                          internal_avro::DataFileReader<Frame> &reader,
+                          Frame &frame);
+
 }
 }
 

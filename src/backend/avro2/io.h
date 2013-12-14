@@ -11,8 +11,7 @@
 
 #include "RMF/config.h"
 #include "backend/IO.h"
-#include "file_data.h"
-#include "frame.h"
+#include "data_file.h"
 #include "internal/shared_data_maps.h"
 #include "traits.h"
 #include "types.h"

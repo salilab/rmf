@@ -13,10 +13,8 @@
 #include "avrocpp/api/Specific.hh"
 #include "avrocpp/api/Stream.hh"
 #include "avrocpp/api/ValidSchema.hh"
-#include "backend/avro2/file_data.h"
-#include "backend/avro2/frame.h"
+#include "backend/avro2/data_file.h"
 #include "backend/avro2/types.h"
-#include "backend/avro2/write.h"
 
 namespace {
 void write(std::string name) {
