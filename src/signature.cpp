@@ -54,7 +54,7 @@ std::string get_static_signature(
     if (bdcf.get_is_static(nh)) ret << " bond";
     if (ccf.get_is_static(nh)) ret << " color";
     if (pcf.get_is_static(nh)) ret << " particle";
-    if (ipcf.get_is_static(nh)) ret << " iparticle";
+    else if (ipcf.get_is_static(nh)) ret << " iparticle";
     if (rpcf.get_is_static(nh)) ret << " rigid";
     if (scf.get_is_static(nh)) ret << " score";
     if (bcf.get_is_static(nh)) ret << " ball";
@@ -92,7 +92,7 @@ std::string get_frame_signature(
     if (bdcf.get_is(nh)) ret << " bond";
     if (ccf.get_is(nh)) ret << " color";
     if (pcf.get_is(nh)) ret << " particle";
-    if (ipcf.get_is(nh)) ret << " iparticle";
+    else if (ipcf.get_is(nh)) ret << " iparticle";
     if (rpcf.get_is(nh)) ret << " rigid";
     if (scf.get_is(nh)) ret << " score";
     if (bcf.get_is(nh)) ret << " ball";
