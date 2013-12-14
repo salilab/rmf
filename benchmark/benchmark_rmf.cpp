@@ -93,7 +93,7 @@ std::size_t create_hierarchy(RMF::FileHandle file) {
 }
 
 std::pair<double, std::size_t> create_frame(
-    RMF::FileHandle fh, RMF::decorator::IntermediateParticleFactory ipf,
+    RMF::FileHandle fh, RMF::decorator::ParticleFactory ipf,
     const RMF::NodeIDs& atoms, int frame) {
   RMF::Vector3 ret(0, 0, 0);
   std::size_t total_size = 0;
@@ -118,7 +118,7 @@ boost::tuple<double, std::size_t, std::size_t> create(RMF::FileHandle file) {
       atoms.push_back(n);
     }
   }
-  RMF::decorator::IntermediateParticleFactory ipf(file);
+  RMF::decorator::ParticleFactory ipf(file);
   double check_value = 0;
   std::size_t frame_size = 0;
   for (unsigned int i = 0; i < 20; ++i) {
@@ -133,7 +133,7 @@ boost::tuple<double, std::size_t, std::size_t> create(RMF::FileHandle file) {
 double traverse(RMF::FileConstHandle file) {
   double ret = 0;
   RMF::NodeConstHandles queue(1, file.get_root_node());
-  RMF::decorator::IntermediateParticleConstFactory ipcf(file);
+  RMF::decorator::ParticleConstFactory ipcf(file);
   do {
     RMF::NodeConstHandle cur = queue.back();
     queue.pop_back();
@@ -185,7 +185,7 @@ void benchmark_traverse(RMF::FileConstHandle file, std::string type) {
 
 void benchmark_load(RMF::FileConstHandle file, std::string type) {
   RMF::NodeIDs nodes;
-  RMF::decorator::IntermediateParticleConstFactory ipcf(file);
+  RMF::decorator::ParticleConstFactory ipcf(file);
   RMF_FOREACH(RMF::NodeID n, file.get_node_ids()) {
     if (ipcf.get_is(file.get_node(n))) nodes.push_back(n);
   }

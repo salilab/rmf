@@ -20,10 +20,10 @@ radius = Attribute("radius", "Float")
 
 particle = Decorator(["REPRESENTATION"], "physics",
                      "Particle",
-                     [coordinates, mass, radius])
+                     [mass, coordinates, radius])
 iparticle = Decorator(["REPRESENTATION"], "physics",
                       "IntermediateParticle",
-                      [coordinates, radius])
+                      [radius, coordinates])
 pparticle = Decorator(["REPRESENTATION"], "physics",
                       "RigidParticle",
                       [orientation, coordinates])
@@ -58,7 +58,8 @@ make_header(
 
 score = Decorator(["FEATURE"], "feature",
                   "Score",
-                  [Attribute("score", "Float")])
+                  [Attribute("score", "Float"),
+                   Attribute("representation", "Ints")])
 representation = Decorator(["FEATURE"], "feature",
                            "Representation",
                            [Attribute(
@@ -83,7 +84,7 @@ ball = Decorator(["GEOMETRY"], "shape",
 
 cylinder = Decorator(["GEOMETRY"], "shape",
                      "Cylinder",
-                     [geometry_coordinates, radius])
+                     [radius, geometry_coordinates])
 
 segment = Decorator(["GEOMETRY"], "shape",
                     "Segment",
