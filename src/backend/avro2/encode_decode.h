@@ -48,6 +48,31 @@ struct codec_traits<RMF::avro2::Skip<B> > {
 };
 
 template <class B>
+struct codec_traits<RMF::avro2::Skip<std::vector<B> > >;
+
+template <class K, class V>
+struct codec_traits<std::pair<K, V> > {
+  static void encode(Encoder& e, const std::pair<K, V>& v) {
+    internal_avro::encode(e, v.first);
+    internal_avro::encode(e, v.second);
+  }
+  static void decode(Decoder& d, std::pair<K, V>& v) {
+    internal_avro::decode(d, v.first);
+    internal_avro::decode(d, v.second);
+  }
+};
+
+template <class K, class V>
+struct codec_traits<RMF::avro2::Skip<std::pair<K, V> > > {
+  static void decode(Decoder& d, RMF::avro2::Skip<std::pair<K, V> >&) {
+    RMF::avro2::Skip<K> first;
+    internal_avro::decode(d, first);
+    RMF::avro2::Skip<V> second;
+    internal_avro::decode(d, second);
+  }
+};
+
+template <class B>
 struct codec_traits<RMF::avro2::Skip<std::vector<B> > > {
   static void decode(Decoder& d, RMF::avro2::Skip<std::vector<B> >&) {
     RMF::avro2::Skip<B> t;
@@ -113,28 +138,6 @@ struct codec_traits<RMF::ID<V> > {
     } else {
       v = RMF::ID<V>(index, typename RMF::ID<V>::SpecialTag());
     }
-  }
-};
-
-template <class K, class V>
-struct codec_traits<std::pair<K, V> > {
-  static void encode(Encoder& e, const std::pair<K, V>& v) {
-    internal_avro::encode(e, v.first);
-    internal_avro::encode(e, v.second);
-  }
-  static void decode(Decoder& d, std::pair<K, V>& v) {
-    internal_avro::decode(d, v.first);
-    internal_avro::decode(d, v.second);
-  }
-};
-
-template <class K, class V>
-struct codec_traits<RMF::avro2::Skip<std::pair<K, V> > > {
-  static void decode(Decoder& d, RMF::avro2::Skip<std::pair<K, V> >& v) {
-    RMF::avro2::Skip<K> first;
-    internal_avro::decode(d, first);
-    RMF::avro2::Skip<V> second;
-    internal_avro::decode(d, second);
   }
 };
 

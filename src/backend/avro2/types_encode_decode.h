@@ -142,6 +142,16 @@ struct codec_traits<RMF::internal::KeyData<Traits> > {
 };
 
 template <class Traits>
+struct codec_traits<RMF::avro2::Skip<RMF::internal::KeyData<Traits> > > {
+  static void decode(Decoder& d,
+                     RMF::avro2::Skip<RMF::internal::KeyData<Traits> >&) {
+    RMF::avro2::Skip<typename RMF::internal::KeyData<Traits>::P> v;
+    internal_avro::decode(d, v);
+  }
+};
+
+
+template <class Traits>
 struct codec_traits<RMF::internal::TypeData<Traits> > {
   static void encode(Encoder& e, const RMF::internal::TypeData<Traits>& v) {
     internal_avro::encode<typename RMF::internal::TypeData<Traits>::P>(e, v);
