@@ -25,9 +25,9 @@ RMF_ENABLE_WARNINGS
 
 namespace RMF {
 namespace avro2 {
-// reuse reader later
-RMFEXPORT Frame
-    get_frame(FrameID id, internal_avro::DataFileReader<Frame> &reader);
+RMFEXPORT void load_frame(FrameID id,
+                          internal_avro::DataFileReader<Frame> &reader,
+                          Frame &frame);
 }
 }
 

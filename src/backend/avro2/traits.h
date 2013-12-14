@@ -45,8 +45,10 @@ struct FileWriterTraitsBase {
       writer_->flush();
     }
   }
-  Frame get_frame(const FileData &, FrameID, FrameID) { return Frame(); }
-  FileData get_file_data() { return FileData(); }
+  void load_frame(const FileData &, FrameID, FrameID, Frame &frame) {
+    frame = Frame();
+  }
+  void load_file_data(FileData &fd) { fd = FileData(); }
   ~FileWriterTraitsBase() { flush(); }
 };
 
@@ -60,7 +62,8 @@ struct ReaderTraits {
       : base_file_data_(path), base_frame_(path) {}
   template <class T>
   void write(const T &) {}
-  Frame get_frame(const FileData &file_data, FrameID old_frame, FrameID id) {
+  void load_frame(const FileData &file_data, FrameID old_frame, FrameID id,
+                  Frame &frame) {
     RMF_INFO("Loading frame " << id);
     if (old_frame == FrameID() || id < old_frame) reader_.reset();
 
@@ -85,13 +88,13 @@ struct ReaderTraits {
         RMF_INFO("Seeking not supported");
       }
     }
-    return avro2::get_frame(id, *reader_);
+    avro2::load_frame(id, *reader_, frame);
   }
-  FileData get_file_data() {
+  void load_file_data(FileData &fd) {
     RMF_INFO("Loading file data");
     boost::shared_ptr<internal_avro::DataFileReader<FileData> > reader =
         base_file_data_.template get_reader<FileData>();
-    return avro2::get_file_data(*reader);
+    avro2::load_file_data(*reader, fd);
   }
   void flush() {}
 };
@@ -147,8 +150,10 @@ struct BufferWriterTraits {
                                      data + len);
     }
   }
-  Frame get_frame(const FileData &, FrameID, FrameID) { return Frame(); }
-  FileData get_file_data() { return FileData(); }
+  void load_frame(const FileData &, FrameID, FrameID, Frame &fr) {
+    fr = Frame();
+  }
+  void load_file_data(FileData &fd) { fd = FileData(); }
   ~BufferWriterTraits() { flush(); }
 };
 

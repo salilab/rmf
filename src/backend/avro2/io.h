@@ -237,7 +237,7 @@ void Avro2IO<RW>::save_loaded_frame(internal::SharedData *shared_data) {
 template <class RW>
 void Avro2IO<RW>::load_loaded_frame(internal::SharedData *shared_data) {
   FrameID id = shared_data->get_loaded_frame();
-  frame_ = rw_.get_frame(file_data_, frame_.id, id);
+  rw_.load_frame(file_data_, frame_.id, id, frame_);
   shared_data->set_loaded_frame_name(frame_.name);
   shared_data->set_loaded_frame_type(FrameType(frame_.type));
   if (file_data_.frame_children.size() > id.get_index()) {
@@ -269,8 +269,7 @@ template <class RW>
 void Avro2IO<RW>::load_file(internal::SharedData *shared_data) {
   // set producer and description
   // for some weird reason, mac os 10.8 clang needs this two step thing
-  FileData fd = rw_.get_file_data();
-  file_data_ = fd;
+  rw_.load_file_data(file_data_);
   RMF_INFO("Found " << get_number_of_frames() << " frames");
   shared_data->set_description(file_data_.description);
   shared_data->set_producer(file_data_.producer);

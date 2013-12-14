@@ -22,8 +22,9 @@ RMF_ENABLE_WARNINGS
 
 namespace RMF {
 namespace avro2 {
-RMFEXPORT FileData
-    get_file_data(internal_avro::DataFileReader<FileData> &reader);
+// workarounds for the Mac os 10.8 compiler make returning it inefficient
+RMFEXPORT void load_file_data(internal_avro::DataFileReader<FileData> &reader,
+                              FileData &fd);
 }
 }
 

@@ -41,14 +41,16 @@ void read(std::string name) {
   internal_avro::DataFileReader<RMF::avro2::FileData> reader(
       name.c_str(),
       internal_avro::compileJsonSchemaFromString(RMF::data_avro2::frame_json));
-  RMF::avro2::FileData file_data = RMF::avro2::get_file_data(reader);
+  RMF::avro2::FileData file_data;
+  RMF::avro2::load_file_data(reader, file_data);
   assert(file_data.description == "description1");
   assert(file_data.max_id.get_index() == 2);
   internal_avro::DataFileReader<RMF::avro2::Frame> frame_reader(
       name.c_str(),
       internal_avro::compileJsonSchemaFromString(RMF::data_avro2::frame_json));
   for (unsigned int i = 0; i <= file_data.max_id.get_index(); ++i) {
-    RMF::avro2::Frame frame = get_frame(RMF::FrameID(i), frame_reader);
+    RMF::avro2::Frame frame;
+    load_frame(RMF::FrameID(i), frame_reader, frame);
   }
 }
 void read_raw(std::string name) {

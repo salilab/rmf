@@ -20,18 +20,19 @@ RMF_ENABLE_WARNINGS
 
 namespace RMF {
 namespace avro2 {
-FileData get_file_data(internal_avro::DataFileReader<FileData> &reader) {
-  FileData ret;
+void load_file_data(internal_avro::DataFileReader<FileData> &reader,
+                    FileData &fd) {
+  // clear it
+  fd = FileData();
   try {
-    while (reader.read(ret)) {
-      if (ret.cur_id != FrameID()) {
-        ret.frame_block_offsets[ret.cur_id] = reader.blockOffsetBytes();
+    while (reader.read(fd)) {
+      if (fd.cur_id != FrameID()) {
+        fd.frame_block_offsets[fd.cur_id] = reader.blockOffsetBytes();
       }
     }
   }
   catch (const std::exception &e) {
   }
-  return ret;
 }
 }
 }
