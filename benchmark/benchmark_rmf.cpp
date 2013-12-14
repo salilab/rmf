@@ -171,10 +171,15 @@ std::pair<std::size_t, std::size_t> benchmark_create(RMF::FileHandle file,
 }
 
 void benchmark_traverse(RMF::FileConstHandle file, std::string type) {
-  boost::timer timer;
   file.set_current_frame(RMF::FrameID(0));
-  double t = traverse(file);
-  std::cout << type << ", traverse, " << timer.elapsed() << ", " << t
+  boost::timer timer;
+  double count = 0;
+  double t;
+  while (timer.elapsed() < 1) {
+    t = traverse(file);
+    ++count;
+  }
+  std::cout << type << ", traverse, " << timer.elapsed() / count << ", " << t
             << std::endl;
 }
 
@@ -189,7 +194,20 @@ void benchmark_load(RMF::FileConstHandle file, std::string type) {
   std::cout << type << ", load, " << timer.elapsed() << ", " << dist
             << std::endl;
 }
+
+RMF::FileConstHandle benchmark_open(std::string path, std::string type) {
+  boost::timer timer;
+  RMF::FileConstHandle ret;
+  double count = 0;
+  while (timer.elapsed() < 1) {
+    ret = RMF::open_rmf_file_read_only(path);
+    ++count;
+  }
+  std::cout << type << ", open, " << timer.elapsed() / count << ", 0"
+            << std::endl;
+  return ret;
 }
+} // namespace
 
 int main(int, char**) {
   try {
@@ -208,7 +226,7 @@ int main(int, char**) {
                   << sizes.second << std::endl;
       }
       {
-        RMF::FileConstHandle fh = RMF::open_rmf_file_read_only(name);
+        RMF::FileConstHandle fh = benchmark_open(name, "rmf3");
         benchmark_traverse(fh, "rmf3");
         benchmark_load(fh, "rmf3");
       }
@@ -221,7 +239,7 @@ int main(int, char**) {
         benchmark_create(fh, "rmfz");
       }
       {
-        RMF::FileConstHandle fh = RMF::open_rmf_file_read_only(name);
+        RMF::FileConstHandle fh = benchmark_open(name, "rmfz");
         benchmark_traverse(fh, "rmfz");
         benchmark_load(fh, "rmfz");
       }
@@ -234,7 +252,7 @@ int main(int, char**) {
         benchmark_create(fh, "rmf");
       }
       {
-        RMF::FileConstHandle fh = RMF::open_rmf_file_read_only(name);
+        RMF::FileConstHandle fh = benchmark_open(name, "rmf");
         benchmark_traverse(fh, "rmf");
         benchmark_load(fh, "rmf");
       }
