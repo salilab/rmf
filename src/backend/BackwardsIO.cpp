@@ -33,7 +33,7 @@ const P3 vector_3_names[] = {
        make_array("reference frame cartesian x", "reference frame cartesian y",
                   "reference frame cartesian z")),
     P3("rgb color",
-       make_array("rgb color red", "rgb color green", "rbg color blue")),
+       make_array("rgb color red", "rgb color green", "rgb color blue")),
     P3("force", make_array("force cartesian x", "force cartesian y",
                            "force cartesian z")),
     P3("torque", make_array("torque cartesian x", "torque cartesian y",

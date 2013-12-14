@@ -163,19 +163,18 @@ struct BackwardsIO : public IO {
     return ret;
   }
 
-  template <VectorDimension D, class SDA, class SDB, class H>
-  void load_vector(SDA *sda, Category category_a, SDB *sdb, Category category_b,
-                   H) {
+  template <VectorDimension D, class SDB, class H>
+  void load_vector(SDB *sdb, Category category_b, H) {
     typedef ID<VectorTraits<D> > Key;
     typedef boost::tuple<Key, int> Data;
     RMF_LARGE_UNORDERED_MAP<FloatKey, Data> map;
     RMF_FOREACH(std::string key_name,
-                get_vector_names(category_a, RMF_VECTOR<D>())) {
+                get_vector_names(category_b, RMF_VECTOR<D>())) {
       boost::array<std::string, D> subkey_names =
           get_vector_subkey_names(key_name, RMF_VECTOR<D>());
       for (unsigned int i = 0; i < D; ++i) {
         FloatKey cur_key =
-            sda->get_key(category_a, subkey_names[i], FloatTraits());
+            sdb->get_key(category_b, subkey_names[i], FloatTraits());
         map[cur_key].template get<0>() =
             sdb->get_key(category_b, key_name, VectorTraits<D>());
         map[cur_key].template get<1>() = i;
@@ -184,11 +183,12 @@ struct BackwardsIO : public IO {
     if (map.empty()) return;
     typedef std::pair<FloatKey, Data> KP;
     RMF_FOREACH(KP kp, map) {
-      RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
-        double v = H::get(sda, n, kp.first);
+      RMF_FOREACH(NodeID n, internal::get_nodes(sdb)) {
+        double v = H::get(sdb, n, kp.first);
         if (!FloatTraits::get_is_null_value(v)) {
           RMF_VECTOR<D> &old = H::access(sdb, n, kp.second.template get<0>());
           old[kp.second.template get<1>()] = v;
+          H::unset(sdb, n, kp.first);
         }
       }
     }
@@ -231,19 +231,18 @@ struct BackwardsIO : public IO {
     }
   }
 
-  template <class SDA, class SDB, class H>
-  void load_vectors(SDA *sda, Category category_a, SDB *sdb,
-                    Category category_b, H) {
+  template <class SDB, class H>
+  void load_vectors(SDB *sdb, Category category_b, H) {
     typedef Vector3sKey Key;
     typedef boost::tuple<Key, int> Data;
     RMF_LARGE_UNORDERED_MAP<FloatsKey, Data> map;
     RMF_FOREACH(std::string key_name,
-                get_vectors_names(category_a, RMF_VECTOR<3>())) {
+                get_vectors_names(category_b, RMF_VECTOR<3>())) {
       boost::array<std::string, 3> subkey_names =
           get_vectors_subkey_names(key_name, RMF_VECTOR<3>());
       for (unsigned int i = 0; i < 3; ++i) {
         FloatsKey cur_key =
-            sda->get_key(category_a, subkey_names[i], FloatsTraits());
+            sdb->get_key(category_b, subkey_names[i], FloatsTraits());
         map[cur_key].template get<0>() =
             sdb->get_key(category_b, key_name, Vector3sTraits());
         map[cur_key].template get<1>() = i;
@@ -252,8 +251,8 @@ struct BackwardsIO : public IO {
     if (map.empty()) return;
     typedef std::pair<FloatsKey, Data> KP;
     RMF_FOREACH(KP kp, map) {
-      RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
-        Floats v = H::get(sda, n, kp.first);
+      RMF_FOREACH(NodeID n, internal::get_nodes(sdb)) {
+        Floats v = H::get(sdb, n, kp.first);
         if (!v.empty()) {
           std::vector<RMF_VECTOR<3> > &old =
               H::access(sdb, n, kp.second.template get<0>());
@@ -261,6 +260,7 @@ struct BackwardsIO : public IO {
           for (unsigned int i = 0; i < v.size(); ++i) {
             old[i][kp.second.get<1>()] = v[i];
           }
+          H::unset(sdb, n, kp.first);
         }
       }
     }
@@ -393,9 +393,12 @@ struct BackwardsIO : public IO {
     if (shared_data->get_name(category) == "sequence") {
       filter.add_index_key(file_cat, "chain id");
     }
+    /*if (shared_data->get_name(category) == "shape") {
+      filter.add_float_key(file_cat, "rbg color blue");
+    }
     filter_vector<3>(filter, file_cat);
     filter_vector<4>(filter, file_cat);
-    filter_vectors<3>(filter, file_cat);
+    filter_vectors<3>(filter, file_cat);*/
     internal::clone_values_type<IntTraits, IntTraits>(
         &filter, file_cat, shared_data, category, H());
     internal::clone_values_type<backward_types::IndexTraits, IntTraits>(
@@ -431,30 +434,45 @@ struct BackwardsIO : public IO {
         }
       }
       StringKey rtk =
-          get_key_const(file_cat, "residue type", StringTraits(), shared_data);
-      IntKey bk = get_key_const(file_cat, "first residue index", IntTraits(),
+          get_key_const(category, "residue type", StringTraits(), shared_data);
+      IntKey bk = get_key_const(category, "first residue index", IntTraits(),
                                 shared_data);
-      IntKey ek = get_key_const(file_cat, "second residue index", IntTraits(),
+      IntKey ek = get_key_const(category, "last residue index", IntTraits(),
                                 shared_data);
       if (rtk != StringKey() && bk != IntKey() && ek != IntKey()) {
         IntKey rik =
-            shared_data->get_key(file_cat, "residue index", IntTraits());
+            shared_data->get_key(category, "residue index", IntTraits());
         RMF_FOREACH(NodeID ni, internal::get_nodes(shared_data)) {
           std::string rt = H::get(shared_data, ni, rtk);
           if (!rt.empty()) {
             int b = H::get(shared_data, ni, bk);
-            if (!IntTraits::get_is_null_value(b)) {
+            if (!backward_types::IndexTraits::get_is_null_value(b)) {
               H::set(shared_data, ni, rik, b);
               H::unset(shared_data, ni, bk);
-              H::unset(shared_data, ni, bk);
+              H::unset(shared_data, ni, ek);
             }
           }
         }
       }
     }
-    load_vector<3>(sd_.get(), file_cat, shared_data, category, H());
-    load_vector<4>(sd_.get(), file_cat, shared_data, category, H());
-    load_vectors(sd_.get(), file_cat, shared_data, category, H());
+    if (shared_data->get_name(category) == "shape") {
+      FloatKey bk =
+          get_key_const(category, "rbg color blue", FloatTraits(), shared_data);
+      FloatKey nbk =
+          shared_data->get_key(category, "rgb color blue", FloatTraits());
+      if (bk != FloatKey()) {
+        RMF_FOREACH(NodeID ni, internal::get_nodes(shared_data)) {
+          float v = H::get(shared_data, ni, bk);
+          if (!FloatTraits::get_is_null_value(v)) {
+            H::set(shared_data, ni, nbk, v);
+            H::unset(shared_data, ni, bk);
+          }
+        }
+      }
+    }
+    load_vector<3>(shared_data, category, H());
+    load_vector<4>(shared_data, category, H());
+    load_vectors(shared_data, category, H());
   }
   template <class H>
   void save_frame_category(Category category,
