@@ -100,6 +100,16 @@ struct codec_traits<RMF_VECTOR<V> > {
   }
 };
 
+template <RMF::VectorDimension V>
+struct codec_traits<RMF::avro2::Skip<RMF_VECTOR<V> > > {
+  static void decode(Decoder& d, RMF::avro2::Skip<RMF_VECTOR<V> >& ) {
+    for (unsigned int i = 0; i < V; ++i) {
+      float f;
+      internal_avro::decode<float>(d, f);
+    }
+  }
+};
+
 template <>
 struct codec_traits<RMF::NodeType> {
   static void encode(Encoder& e, const RMF::NodeType& v) {
