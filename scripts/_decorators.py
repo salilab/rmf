@@ -90,34 +90,34 @@ class Attribute(Base):
         self.get_methods = """
   TYPE get_%s() const {
     try {
-      return P::GET_BOTH(NAME_);
+      return node_.GET_BOTH(NAME_);
     } RMF_DECORATOR_CATCH( );
   }
   TYPE get_frame_%s() const {
     try {
-      return P::GET_FRAME(NAME_);
+      return node_.GET_FRAME(NAME_);
     } RMF_DECORATOR_CATCH( );
   }
   TYPE get_static_%s() const {
     try {
-      return P::GET_STATIC(NAME_);
+      return node_.GET_STATIC(NAME_);
     } RMF_DECORATOR_CATCH( );
   }
 """ % (function_name, function_name, function_name)
         self.set_methods = """
   void set_%s(TYPE v) {
     try {
-      P::SET_BOTH(NAME_, v);
+      node_.SET_BOTH(NAME_, v);
     } RMF_DECORATOR_CATCH( );
   }
   void set_frame_%s(TYPE v) {
     try {
-      P::SET_FRAME(NAME_, v);
+      node_.SET_FRAME(NAME_, v);
     } RMF_DECORATOR_CATCH( );
   }
   void set_static_%s(TYPE v) {
     try {
-      P::SET_STATIC(NAME_, v);
+      node_.SET_STATIC(NAME_, v);
     } RMF_DECORATOR_CATCH( );
   }
 """ % (function_name, function_name, function_name)
@@ -132,15 +132,15 @@ class NodeAttribute(Attribute):
         self.get_methods = """
   NodeCONSTHandle get_NAME() const {
     try {
-      int id = get_node().GET_BOTH(NAME_);
-      return get_node().get_file().get_node(NodeID(id));
+      int id = node_.GET_BOTH(NAME_);
+      return node_.get_file().get_node(NodeID(id));
     } RMF_DECORATOR_CATCH( );
   }
 """
         self.set_methods = """
   void set_NAME(NodeConstHandle v) {
     try {
-      get_node().SET_BOTH(NAME_, v.get_index().get_index());
+      node_.SET_BOTH(NAME_, v.get_index().get_index());
     } RMF_DECORATOR_CATCH( );
   }
 """
@@ -153,8 +153,8 @@ class PathAttribute(Attribute):
         self.get_methods = """
   String get_NAME() const {
     try {
-      String relpath = get_node().GET_BOTH(NAME_);
-      String filename = get_node().get_file().get_path();
+      String relpath = node_.GET_BOTH(NAME_);
+      String filename = node_.get_file().get_path();
       return internal::get_absolute_path(filename, relpath);
     } RMF_DECORATOR_CATCH( );
   }
@@ -162,9 +162,9 @@ class PathAttribute(Attribute):
         self.set_methods = """
   void set_NAME(String path) {
    try {
-     String filename = get_node().get_file().get_path();
+     String filename = node_.get_file().get_path();
      String relpath = internal::get_relative_path(filename, path);
-     get_node().SET_BOTH(NAME_, relpath);
+     node_.SET_BOTH(NAME_, relpath);
    } RMF_DECORATOR_CATCH( );
   }
 """
@@ -200,37 +200,37 @@ class SingletonRangeAttribute(AttributePair):
         self.get_methods = """
   TYPE get_NAME() const {
     try {
-      return get_node().GET_BOTH(NAME_[0]);
+      return node_.GET_BOTH(NAME_[0]);
     } RMF_DECORATOR_CATCH( );
   }
   TYPE get_frame_NAME() const {
     try {
-      return get_node().GET_FRAME(NAME_[0]);
+      return node_.GET_FRAME(NAME_[0]);
     } RMF_DECORATOR_CATCH( );
   }
   TYPE get_static_NAME() const {
     try {
-      return get_node().GET_STATIC(NAME_[0]);
+      return node_.GET_STATIC(NAME_[0]);
     } RMF_DECORATOR_CATCH( );
   }
 """
         self.set_methods = """
   void set_NAME(TYPE v) {
     try {
-      get_node().SET_BOTH(NAME_[0], v);
-      get_node().SET_BOTH(NAME_[1], v);
+      node_.SET_BOTH(NAME_[0], v);
+      node_.SET_BOTH(NAME_[1], v);
     } RMF_DECORATOR_CATCH( );
   }
   void set_frame_NAME(TYPE v) {
     try {
-      get_node().SET_FRAME(NAME_[0], v);
-      get_node().SET_FRAME(NAME_[1], v);
+      node_.SET_FRAME(NAME_[0], v);
+      node_.SET_FRAME(NAME_[1], v);
     } RMF_DECORATOR_CATCH( );
   }
   void set_static_NAME(TYPE v) {
     try {
-      get_node().SET_STATIC(NAME_[0], v);
-      get_node().SET_STATIC(NAME_[1], v);
+      node_.SET_STATIC(NAME_[0], v);
+      node_.SET_STATIC(NAME_[1], v);
     } RMF_DECORATOR_CATCH( );
   }
 """
@@ -245,37 +245,37 @@ class RangeAttribute(AttributePair):
         self.get_methods = """  /** DOC */
   TYPE get_NAME() const {
     try {
-      return std::make_pair(get_node().GET_BOTH(NAME_[0]), get_node().GET_BOTH(NAME_[1]));
+      return std::make_pair(node_.GET_BOTH(NAME_[0]), node_.GET_BOTH(NAME_[1]));
     } RMF_DECORATOR_CATCH( );
   }
   TYPE get_static_NAME() const {
     try {
-      return std::make_pair(get_node().GET_STATIC(NAME_[0]), get_node().GET_STATIC(NAME_[1]));
+      return std::make_pair(node_.GET_STATIC(NAME_[0]), node_.GET_STATIC(NAME_[1]));
     } RMF_DECORATOR_CATCH( );
   }
   TYPE get_frame_NAME() const {
     try {
-      return std::make_pair(get_node().GET_FRAME(NAME_[0]), get_node().GET_FRAME(NAME_[1]));
+      return std::make_pair(node_.GET_FRAME(NAME_[0]), node_.GET_FRAME(NAME_[1]));
     } RMF_DECORATOR_CATCH( );
   }
 """
         self.set_methods = """
   void set_NAME(TYPE v) {
     try {
-      get_node().SET_BOTH(NAME_[0], v.first);
-      get_node().SET_BOTH(NAME_[1], v.second);
+      node_.SET_BOTH(NAME_[0], v.first);
+      node_.SET_BOTH(NAME_[1], v.second);
     } RMF_DECORATOR_CATCH( );
   }
   void set_frame_NAME(TYPE v) {
     try {
-      get_node().SET_FRAME(NAME_[0], v.first);
-      get_node().SET_FRAME(NAME_[1], v.second);
+      node_.SET_FRAME(NAME_[0], v.first);
+      node_.SET_FRAME(NAME_[1], v.second);
     } RMF_DECORATOR_CATCH( );
   }
     void set_static_NAME(TYPE v) {
     try {
-      get_node().SET_STATIC(NAME_[0], v.first);
-      get_node().SET_STATIC(NAME_[1], v.second);
+      node_.SET_STATIC(NAME_[0], v.first);
+      node_.SET_STATIC(NAME_[1], v.second);
     } RMF_DECORATOR_CATCH( );
   }
 """
@@ -315,14 +315,12 @@ factory = """
 
        See also NAMECONST and NAMENONCONSTFactory.
     */
-  class NAMECONSTFactory: public Factory<FileCONSTHandle> {
-    typedef Factory<FileCONSTHandle> P;
+  class NAMECONSTFactory {
     Category cat_;
 DATA_MEMBERS
 HELPERS
   public:
     NAMECONSTFactory(FileCONSTHandle fh):
-    P(),
     cat_(fh.get_category("CATEGORY")),
     DATA_INITIALIZE {
     }
@@ -490,7 +488,6 @@ def make_header(name, infos, deps):
 #include <RMF/NodeHandle.h>
 #include <RMF/FileHandle.h>
 #include <RMF/Decorator.h>
-#include <RMF/Factory.h>
 #include <RMF/constants.h>
 #include <RMF/Vector.h>
 #include <RMF/internal/utility.h>

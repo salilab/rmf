@@ -243,13 +243,6 @@ namespace RMF {
   %template(_ConstDecorator) Decorator<NodeConstHandle>;
 }
 
-%include "RMF/Factory.h"
-namespace RMF {
-  %template(_Factory) Factory<FileHandle>;
-  %template(_ConstFactory) Factory<FileConstHandle>;
-}
-
-
 RMF_DECORATOR(RMF::decorator, Particle);
 RMF_DECORATOR(RMF::decorator, IntermediateParticle);
 RMF_DECORATOR(RMF::decorator, StaticParticle);
