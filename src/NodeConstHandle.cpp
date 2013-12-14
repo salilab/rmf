@@ -227,6 +227,17 @@ void show_hierarchy(NodeConstHandle root, std::ostream& out) {
                  n.get_children(), show_node(n, out));
 }
 
+namespace {
+struct LessName {
+  FileConstHandle fh_;
+  LessName(FileConstHandle fh) : fh_(fh) {}
+  template <class Traits>
+  bool operator()(ID<Traits> a, ID<Traits> b) const {
+    return fh_.get_name(a) < fh_.get_name(b);
+  }
+};
+}
+
 void show_hierarchy_with_values(NodeConstHandle root, std::ostream& out) {
   FloatKeys fks;
   IntKeys iks;
@@ -238,14 +249,23 @@ void show_hierarchy_with_values(NodeConstHandle root, std::ostream& out) {
   Vector4Keys v4ks;
   Vector3sKeys v3sks;
   fks = get_keys<FloatTraits>(root.get_file());
+  std::sort(fks.begin(), fks.end(), LessName(root.get_file()));
   iks = get_keys<IntTraits>(root.get_file());
+  std::sort(iks.begin(), iks.end(), LessName(root.get_file()));
   sks = get_keys<StringTraits>(root.get_file());
+  std::sort(sks.begin(), sks.end(), LessName(root.get_file()));
   fsks = get_keys<FloatsTraits>(root.get_file());
+  std::sort(fsks.begin(), fsks.end(), LessName(root.get_file()));
   isks = get_keys<IntsTraits>(root.get_file());
+  std::sort(isks.begin(), isks.end(), LessName(root.get_file()));
   ssks = get_keys<StringsTraits>(root.get_file());
+  std::sort(ssks.begin(), ssks.end(), LessName(root.get_file()));
   v3ks = get_keys<Vector3Traits>(root.get_file());
+  std::sort(v3ks.begin(), v3ks.end(), LessName(root.get_file()));
   v4ks = get_keys<Vector4Traits>(root.get_file());
+  std::sort(v4ks.begin(), v4ks.end(), LessName(root.get_file()));
   v3sks = get_keys<Vector3sTraits>(root.get_file());
+  std::sort(v3sks.begin(), v3sks.end(), LessName(root.get_file()));
   using std::operator<<;
   RMF_PRINT_TREE(out, NodeConstHandle, root, n.get_children().size(),
                  n.get_children(),
