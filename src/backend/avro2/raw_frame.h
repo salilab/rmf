@@ -255,12 +255,14 @@ inline _Frame_json_Union__0__::_Frame_json_Union__0__()
 namespace internal_avro {
 template <>
 struct codec_traits<rmf_raw_avro2::FrameInfo> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::FrameInfo& v) {
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.name);
     internal_avro::encode(e, v.type);
     internal_avro::encode(e, v.parents);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::FrameInfo& v) {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.name);
@@ -271,10 +273,12 @@ struct codec_traits<rmf_raw_avro2::FrameInfo> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::Label> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::Label& v) {
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.name);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::Label& v) {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.name);
@@ -283,10 +287,12 @@ struct codec_traits<rmf_raw_avro2::Label> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::NodeSet> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::NodeSet& v) {
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.nodes);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::NodeSet& v) {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.nodes);
@@ -295,6 +301,7 @@ struct codec_traits<rmf_raw_avro2::NodeSet> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::FileInfo> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::FileInfo& v) {
     internal_avro::encode(e, v.description);
     internal_avro::encode(e, v.producer);
@@ -303,6 +310,7 @@ struct codec_traits<rmf_raw_avro2::FileInfo> {
     internal_avro::encode(e, v.frame_types);
     internal_avro::encode(e, v.node_sets);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::FileInfo& v) {
     internal_avro::decode(d, v.description);
     internal_avro::decode(d, v.producer);
@@ -315,6 +323,7 @@ struct codec_traits<rmf_raw_avro2::FileInfo> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::_Frame_json_Union__0__> {
+  template <class Encoder>
   static void encode(Encoder& e, rmf_raw_avro2::_Frame_json_Union__0__ v) {
     e.encodeUnionIndex(v.idx());
     switch (v.idx()) {
@@ -326,6 +335,7 @@ struct codec_traits<rmf_raw_avro2::_Frame_json_Union__0__> {
         break;
     }
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::_Frame_json_Union__0__& v) {
     size_t n = d.decodeUnionIndex();
     if (n >= 2) {
@@ -348,12 +358,14 @@ struct codec_traits<rmf_raw_avro2::_Frame_json_Union__0__> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::Node> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::Node& v) {
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.name);
     internal_avro::encode(e, v.type);
     internal_avro::encode(e, v.parents);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::Node& v) {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.name);
@@ -364,7 +376,9 @@ struct codec_traits<rmf_raw_avro2::Node> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::Type> {
+  template <class Encoder>
   static void encode(Encoder& e, rmf_raw_avro2::Type v) { e.encodeEnum(v); }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::Type& v) {
     v = static_cast<rmf_raw_avro2::Type>(d.decodeEnum());
   }
@@ -372,12 +386,14 @@ struct codec_traits<rmf_raw_avro2::Type> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::KeyInfo> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::KeyInfo& v) {
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.name);
     internal_avro::encode(e, v.category);
     internal_avro::encode(e, v.type);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::KeyInfo& v) {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.name);
@@ -388,10 +404,12 @@ struct codec_traits<rmf_raw_avro2::KeyInfo> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::IntValue> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::IntValue& v) {
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.value);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::IntValue& v) {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.value);
@@ -400,10 +418,12 @@ struct codec_traits<rmf_raw_avro2::IntValue> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::IntNodeData> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::IntNodeData& v) {
     internal_avro::encode(e, v.key);
     internal_avro::encode(e, v.values);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::IntNodeData& v) {
     internal_avro::decode(d, v.key);
     internal_avro::decode(d, v.values);
@@ -412,10 +432,12 @@ struct codec_traits<rmf_raw_avro2::IntNodeData> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::FloatValue> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::FloatValue& v) {
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.value);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::FloatValue& v) {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.value);
@@ -424,10 +446,12 @@ struct codec_traits<rmf_raw_avro2::FloatValue> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::FloatNodeData> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::FloatNodeData& v) {
     internal_avro::encode(e, v.key);
     internal_avro::encode(e, v.values);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::FloatNodeData& v) {
     internal_avro::decode(d, v.key);
     internal_avro::decode(d, v.values);
@@ -436,10 +460,12 @@ struct codec_traits<rmf_raw_avro2::FloatNodeData> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::StringValue> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::StringValue& v) {
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.value);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::StringValue& v) {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.value);
@@ -448,10 +474,12 @@ struct codec_traits<rmf_raw_avro2::StringValue> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::StringNodeData> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::StringNodeData& v) {
     internal_avro::encode(e, v.key);
     internal_avro::encode(e, v.values);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::StringNodeData& v) {
     internal_avro::decode(d, v.key);
     internal_avro::decode(d, v.values);
@@ -460,11 +488,13 @@ struct codec_traits<rmf_raw_avro2::StringNodeData> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::Vector3> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::Vector3& v) {
     internal_avro::encode(e, v.x);
     internal_avro::encode(e, v.y);
     internal_avro::encode(e, v.z);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::Vector3& v) {
     internal_avro::decode(d, v.x);
     internal_avro::decode(d, v.y);
@@ -474,10 +504,12 @@ struct codec_traits<rmf_raw_avro2::Vector3> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::Vector3Value> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::Vector3Value& v) {
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.value);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::Vector3Value& v) {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.value);
@@ -486,10 +518,12 @@ struct codec_traits<rmf_raw_avro2::Vector3Value> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::Vector3NodeData> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::Vector3NodeData& v) {
     internal_avro::encode(e, v.key);
     internal_avro::encode(e, v.values);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::Vector3NodeData& v) {
     internal_avro::decode(d, v.key);
     internal_avro::decode(d, v.values);
@@ -498,12 +532,14 @@ struct codec_traits<rmf_raw_avro2::Vector3NodeData> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::Vector4> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::Vector4& v) {
     internal_avro::encode(e, v.w);
     internal_avro::encode(e, v.x);
     internal_avro::encode(e, v.y);
     internal_avro::encode(e, v.z);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::Vector4& v) {
     internal_avro::decode(d, v.w);
     internal_avro::decode(d, v.x);
@@ -514,10 +550,12 @@ struct codec_traits<rmf_raw_avro2::Vector4> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::Vector4Value> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::Vector4Value& v) {
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.value);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::Vector4Value& v) {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.value);
@@ -526,10 +564,12 @@ struct codec_traits<rmf_raw_avro2::Vector4Value> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::Vector4NodeData> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::Vector4NodeData& v) {
     internal_avro::encode(e, v.key);
     internal_avro::encode(e, v.values);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::Vector4NodeData& v) {
     internal_avro::decode(d, v.key);
     internal_avro::decode(d, v.values);
@@ -538,10 +578,12 @@ struct codec_traits<rmf_raw_avro2::Vector4NodeData> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::IntsValue> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::IntsValue& v) {
     internal_avro::encode(e, v.key);
     internal_avro::encode(e, v.value);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::IntsValue& v) {
     internal_avro::decode(d, v.key);
     internal_avro::decode(d, v.value);
@@ -550,10 +592,12 @@ struct codec_traits<rmf_raw_avro2::IntsValue> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::IntsNodeData> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::IntsNodeData& v) {
     internal_avro::encode(e, v.key);
     internal_avro::encode(e, v.values);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::IntsNodeData& v) {
     internal_avro::decode(d, v.key);
     internal_avro::decode(d, v.values);
@@ -562,10 +606,12 @@ struct codec_traits<rmf_raw_avro2::IntsNodeData> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::FloatsValue> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::FloatsValue& v) {
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.value);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::FloatsValue& v) {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.value);
@@ -574,10 +620,12 @@ struct codec_traits<rmf_raw_avro2::FloatsValue> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::FloatsNodeData> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::FloatsNodeData& v) {
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.values);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::FloatsNodeData& v) {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.values);
@@ -586,10 +634,12 @@ struct codec_traits<rmf_raw_avro2::FloatsNodeData> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::StringsValue> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::StringsValue& v) {
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.value);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::StringsValue& v) {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.value);
@@ -598,10 +648,12 @@ struct codec_traits<rmf_raw_avro2::StringsValue> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::StringsNodeData> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::StringsNodeData& v) {
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.values);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::StringsNodeData& v) {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.values);
@@ -610,10 +662,12 @@ struct codec_traits<rmf_raw_avro2::StringsNodeData> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::Vector3sValue> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::Vector3sValue& v) {
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.value);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::Vector3sValue& v) {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.value);
@@ -622,10 +676,12 @@ struct codec_traits<rmf_raw_avro2::Vector3sValue> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::Vector3sNodeData> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::Vector3sNodeData& v) {
     internal_avro::encode(e, v.key);
     internal_avro::encode(e, v.values);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::Vector3sNodeData& v) {
     internal_avro::decode(d, v.key);
     internal_avro::decode(d, v.values);
@@ -634,10 +690,12 @@ struct codec_traits<rmf_raw_avro2::Vector3sNodeData> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::Vector4sValue> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::Vector4sValue& v) {
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.value);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::Vector4sValue& v) {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.value);
@@ -646,10 +704,12 @@ struct codec_traits<rmf_raw_avro2::Vector4sValue> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::Vector4sNodeData> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::Vector4sNodeData& v) {
     internal_avro::encode(e, v.key);
     internal_avro::encode(e, v.values);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::Vector4sNodeData& v) {
     internal_avro::decode(d, v.key);
     internal_avro::decode(d, v.values);
@@ -658,6 +718,7 @@ struct codec_traits<rmf_raw_avro2::Vector4sNodeData> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::TypeDatas> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::TypeDatas& v) {
     internal_avro::encode(e, v.int_data);
     internal_avro::encode(e, v.float_data);
@@ -670,6 +731,7 @@ struct codec_traits<rmf_raw_avro2::TypeDatas> {
     internal_avro::encode(e, v.vector3s_data);
     internal_avro::encode(e, v.vector4s_data);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::TypeDatas& v) {
     internal_avro::decode(d, v.int_data);
     internal_avro::decode(d, v.float_data);
@@ -686,12 +748,14 @@ struct codec_traits<rmf_raw_avro2::TypeDatas> {
 
 template <>
 struct codec_traits<rmf_raw_avro2::Frame> {
+  template <class Encoder>
   static void encode(Encoder& e, const rmf_raw_avro2::Frame& v) {
     internal_avro::encode(e, v.info);
     internal_avro::encode(e, v.nodes);
     internal_avro::encode(e, v.keys);
     internal_avro::encode(e, v.data);
   }
+  template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::Frame& v) {
     internal_avro::decode(d, v.info);
     internal_avro::decode(d, v.nodes);

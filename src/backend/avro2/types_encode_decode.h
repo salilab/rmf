@@ -61,9 +61,11 @@ namespace internal_avro {
 
 template <>
 struct codec_traits<RMF::avro2::StringAccumulator> {
+  template <class Encoder>
   static void encode(Encoder& e, const RMF::avro2::StringAccumulator& v) {
-    internal_avro::encode<std::string>(e, v);
+    internal_avro::encode(e, static_cast<const std::string&>(v));
   }
+  template <class Decoder>
   static void decode(Decoder& d, RMF::avro2::StringAccumulator& v) {
     std::string cur;
     internal_avro::decode(d, cur);
@@ -73,6 +75,7 @@ struct codec_traits<RMF::avro2::StringAccumulator> {
 
 template <class T, class Ty>
 struct codec_traits<RMF::internal::HierarchyNode<T, Ty> > {
+  template <class Encoder>
   static void encode(Encoder& e, const RMF::internal::HierarchyNode<T, Ty>& v) {
     RMF_TRACE("Encoding node " << v.name << " " << v.type);
     internal_avro::encode(e, v.name);
@@ -80,6 +83,7 @@ struct codec_traits<RMF::internal::HierarchyNode<T, Ty> > {
     internal_avro::encode(e, v.parents);
     internal_avro::encode(e, v.children);
   }
+  template <class Decoder>
   static void decode(Decoder& d, RMF::internal::HierarchyNode<T, Ty>& v) {
     internal_avro::decode(d, v.name);
     internal_avro::decode(d, v.type);
@@ -91,6 +95,7 @@ struct codec_traits<RMF::internal::HierarchyNode<T, Ty> > {
 
 template <>
 struct codec_traits<RMF::avro2::HierarchyNode> {
+  template <class Encoder>
   static void encode(Encoder& e, const RMF::avro2::HierarchyNode& v) {
     RMF_TRACE("Encoding node " << v.id << " " << v.name << " " << v.type);
     internal_avro::encode(e, v.id);
@@ -98,6 +103,7 @@ struct codec_traits<RMF::avro2::HierarchyNode> {
     internal_avro::encode(e, v.type);
     internal_avro::encode(e, v.parents);
   }
+  template <class Decoder>
   static void decode(Decoder& d, RMF::avro2::HierarchyNode& v) {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.name);
@@ -109,7 +115,9 @@ struct codec_traits<RMF::avro2::HierarchyNode> {
 
 template <>
 struct codec_traits<RMF::avro2::KeyType> {
+  template <class Encoder>
   static void encode(Encoder& e, RMF::avro2::KeyType v) { e.encodeEnum(v); }
+  template <class Decoder>
   static void decode(Decoder& d, RMF::avro2::KeyType& v) {
     v = static_cast<RMF::avro2::KeyType>(d.decodeEnum());
   }
@@ -117,12 +125,14 @@ struct codec_traits<RMF::avro2::KeyType> {
 
 template <>
 struct codec_traits<RMF::avro2::KeyInfo> {
+  template <class Encoder>
   static void encode(Encoder& e, const RMF::avro2::KeyInfo& v) {
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.name);
     internal_avro::encode(e, v.category);
     internal_avro::encode(e, v.type);
   }
+  template <class Decoder>
   static void decode(Decoder& d, RMF::avro2::KeyInfo& v) {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.name);
@@ -133,16 +143,21 @@ struct codec_traits<RMF::avro2::KeyInfo> {
 
 template <class Traits>
 struct codec_traits<RMF::internal::KeyData<Traits> > {
+  template <class Encoder>
   static void encode(Encoder& e, const RMF::internal::KeyData<Traits>& v) {
-    internal_avro::encode<typename RMF::internal::KeyData<Traits>::P>(e, v);
+    internal_avro::encode(
+        e, static_cast<const typename RMF::internal::KeyData<Traits>::P&>(v));
   }
+  template <class Decoder>
   static void decode(Decoder& d, RMF::internal::KeyData<Traits>& v) {
-    internal_avro::decode<typename RMF::internal::KeyData<Traits>::P>(d, v);
+    internal_avro::decode(
+        d, static_cast<typename RMF::internal::KeyData<Traits>::P&>(v));
   }
 };
 
 template <class Traits>
 struct codec_traits<RMF::avro2::Skip<RMF::internal::KeyData<Traits> > > {
+  template <class Decoder>
   static void decode(Decoder& d,
                      RMF::avro2::Skip<RMF::internal::KeyData<Traits> >&) {
     RMF::avro2::Skip<typename RMF::internal::KeyData<Traits>::P> v;
@@ -153,16 +168,21 @@ struct codec_traits<RMF::avro2::Skip<RMF::internal::KeyData<Traits> > > {
 
 template <class Traits>
 struct codec_traits<RMF::internal::TypeData<Traits> > {
+  template <class Encoder>
   static void encode(Encoder& e, const RMF::internal::TypeData<Traits>& v) {
-    internal_avro::encode<typename RMF::internal::TypeData<Traits>::P>(e, v);
+    internal_avro::encode(
+        e, static_cast<const typename RMF::internal::TypeData<Traits>::P&>(v));
   }
+  template <class Decoder>
   static void decode(Decoder& d, RMF::internal::TypeData<Traits>& v) {
-    internal_avro::decode<typename RMF::internal::TypeData<Traits>::P>(d, v);
+    internal_avro::decode(
+        d, static_cast<typename RMF::internal::TypeData<Traits>::P&>(v));
   }
 };
 
 template <class Traits>
 struct codec_traits<RMF::avro2::Skip<RMF::internal::TypeData<Traits> > > {
+  template <class Decoder>
   static void decode(Decoder& d,
                      RMF::avro2::Skip<RMF::internal::TypeData<Traits> >& ) {
     typename RMF::avro2::Skip<typename RMF::internal::TypeData<Traits>::P> v;
@@ -172,6 +192,7 @@ struct codec_traits<RMF::avro2::Skip<RMF::internal::TypeData<Traits> > > {
 
 template <>
 struct codec_traits<RMF::avro2::DataTypes> {
+  template <class Encoder>
   static void encode(Encoder& e, const RMF::avro2::DataTypes& v) {
     internal_avro::encode(e, v.int_data);
     internal_avro::encode(e, v.float_data);
@@ -185,6 +206,7 @@ struct codec_traits<RMF::avro2::DataTypes> {
     RMF::internal::TypeData<RMF::Vector4sTraits> empty;
     internal_avro::encode(e, empty);
   }
+  template <class Decoder>
   static void decode(Decoder& d, RMF::avro2::DataTypes& v) {
     internal_avro::decode(d, v.int_data);
     internal_avro::decode(d, v.float_data);
@@ -202,6 +224,7 @@ struct codec_traits<RMF::avro2::DataTypes> {
 
 template <>
 struct codec_traits<RMF::avro2::Skip<RMF::avro2::DataTypes> > {
+  template <class Decoder>
   static void decode(Decoder& d, RMF::avro2::Skip<RMF::avro2::DataTypes>&) {
     RMF::avro2::Skip<RMF::internal::TypeData<RMF::IntTraits> > int_data;
     internal_avro::decode(d, int_data);
@@ -230,6 +253,7 @@ struct codec_traits<RMF::avro2::Skip<RMF::avro2::DataTypes> > {
 
 template <>
 struct codec_traits<RMF::avro2::Frame> {
+  template <class Encoder>
   static void encode(Encoder& e, const RMF::avro2::Frame& v) {
     e.encodeUnionIndex(0);
     internal_avro::encode(e, v.id);
@@ -241,6 +265,7 @@ struct codec_traits<RMF::avro2::Frame> {
     internal_avro::encode(e, v.keys);
     internal_avro::encode(e, v.data);
   }
+  template <class Decoder>
   static void decode(Decoder& d, RMF::avro2::Frame& v) {
     size_t n = d.decodeUnionIndex();
     if (n == 0) {
@@ -272,6 +297,7 @@ struct codec_traits<RMF::avro2::Frame> {
 
 template <>
 struct codec_traits<RMF::avro2::FileData> {
+  template <class Decoder>
   static void decode(Decoder& d, RMF::avro2::FileData& v) {
     size_t n = d.decodeUnionIndex();
     if (n == 0) {
@@ -335,6 +361,7 @@ struct codec_traits<RMF::avro2::FileData> {
 
 template <>
 struct codec_traits<RMF::avro2::FileDataChanges> {
+  template <class Encoder>
   static void encode(Encoder& e, const RMF::avro2::FileDataChanges& v) {
     e.encodeUnionIndex(1);
     internal_avro::encode(e, v.description);

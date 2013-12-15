@@ -35,12 +35,14 @@ struct Frame {
 namespace internal_avro {
 template <>
 struct codec_traits<RMF_avro_backend::Frame> {
+  template <class Encoder>
   static void encode(Encoder& e, const RMF_avro_backend::Frame& v) {
     internal_avro::encode(e, v.index);
     internal_avro::encode(e, v.name);
     internal_avro::encode(e, v.type);
     internal_avro::encode(e, v.parents);
   }
+  template <class Decoder>
   static void decode(Decoder& d, RMF_avro_backend::Frame& v) {
     internal_avro::decode(d, v.index);
     internal_avro::decode(d, v.name);
