@@ -105,15 +105,13 @@ struct codec_traits<RMF_VECTOR<V> > {
   template <class Encoder>
   static void encode(Encoder& e, const RMF_VECTOR<V>& v) {
     for (unsigned int i = 0; i < V; ++i) {
-      internal_avro::encode(e, static_cast<float>(v[i]));
+      e.encodeFloat(v[i]);
     }
   }
   template <class Decoder>
   static void decode(Decoder& d, RMF_VECTOR<V>& v) {
     for (unsigned int i = 0; i < V; ++i) {
-      float f;
-      internal_avro::decode(d, f);
-      v[i] = f;
+      v[i] = d.decodeFloat();
     }
   }
 };
