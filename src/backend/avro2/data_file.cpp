@@ -58,6 +58,11 @@ void load_file_data(internal_avro::DataFileReader<FileData> &reader,
     }
   }
   catch (const std::exception &e) {
+    // ick, ick, ewe
+    if (std::string(e.what()) != "EOF reached") {
+      RMF_THROW(Message(e.what()) << Operation("loading file data"),
+                IOException);
+    }
   }
 }
 
