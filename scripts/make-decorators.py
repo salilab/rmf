@@ -43,8 +43,8 @@ bond = Decorator(["BOND"], "physics",
 
 atom = Decorator(["REPRESENTATION"], "physics",
                  "Atom",
-                 [coordinates, mass, radius,
-                  Attribute("element", "Int")])
+                 [Attribute("element", "Int"), coordinates, mass, radius
+                  ])
 
 diffuser = Decorator(["REPRESENTATION"], "physics",
                      "Diffuser",
