@@ -34,3 +34,7 @@ if("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang" AND "${CMAKE_BUILD_TYPE}" MATCHES 
     message(STATUS "Old clang")
   endif()
 endif()
+
+if (DEFINED MSVC)
+add_definitions("/ignore:4503")
+endif()
