@@ -24,6 +24,12 @@ struct KeyMaps {
   RMF_SMALL_UNORDERED_MAP<ID<Traits>, std::string> name;
 };
 
+template <class Traits>
+inline void clear(KeyMaps<Traits>& km) {
+  km.category.clear();
+  km.name.clear();
+}
+
 struct KeyData {
   KeyMaps<FloatTraits> float_keys;
   KeyMaps<IntTraits> int_keys;
@@ -35,6 +41,19 @@ struct KeyData {
   KeyMaps<Vector4Traits> vector4_keys;
   KeyMaps<Vector3sTraits> vector3s_keys;
 };
+
+// mac os < 10.9 workaround
+inline void clear(KeyData& kd) {
+  clear(kd.float_keys);
+  clear(kd.int_keys);
+  clear(kd.string_keys);
+  clear(kd.floats_keys);
+  clear(kd.ints_keys);
+  clear(kd.strings_keys);
+  clear(kd.vector3_keys);
+  clear(kd.vector4_keys);
+  clear(kd.vector3s_keys);
+}
 
 typedef internal::TypeData<FloatTraits> FloatData;
 typedef internal::TypeData<StringTraits> StringData;
@@ -64,6 +83,18 @@ struct DataTypes {
   Vector4Data vector4_data;
   Vector3sData vector3s_data;
 };
+
+inline void clear(DataTypes& dt) {
+  dt.float_data.clear();
+  dt.string_data.clear();
+  dt.int_data.clear();
+  dt.strings_data.clear();
+  dt.floats_data.clear();
+  dt.ints_data.clear();
+  dt.vector3_data.clear();
+  dt.vector4_data.clear();
+  dt.vector3s_data.clear();
+}
 
 enum KeyType {
   INT,
@@ -106,6 +137,21 @@ struct FileData {
   DataTypes data;
   RMF_LARGE_UNORDERED_MAP<FrameID, int32_t> frame_block_offsets;
 };
+
+// awkward workaround for Mac OS < 10.9
+inline void clear(FileData& fd) {
+  fd.description.clear();
+  fd.producer.clear();
+  fd.categories.clear();
+  fd.extra_node_types.clear();
+  fd.extra_frame_types.clear();
+  fd.node_sets.clear();
+  fd.nodes.clear();
+  fd.frame_children.clear();
+  clear(fd.keys);
+  clear(fd.data);
+  fd.frame_block_offsets.clear();
+}
 
 struct FileDataChanges {
   std::string description;

@@ -49,7 +49,7 @@ void load_frame(FrameID id, internal_avro::DataFileReader<Frame>& reader,
 void load_file_data(internal_avro::DataFileReader<FileData> &reader,
                     FileData &fd) {
   // clear it
-  fd = FileData();
+  clear(fd);
   try {
     while (reader.read(fd)) {
       if (fd.cur_id != FrameID()) {
