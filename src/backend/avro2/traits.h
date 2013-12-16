@@ -103,7 +103,7 @@ struct FileWriterTraits : public FileWriterTraitsBase {
     writer_.reset(new internal_avro::DataFileWriterBase(
         path_.c_str(),
         internal_avro::compileJsonSchemaFromString(RMF::data_avro2::frame_json),
-        16 * 1024, GZIP));
+        16 * 1024, GZIP ? internal_avro::GZIP : internal_avro::NONE));
   }
 };
 
@@ -127,7 +127,7 @@ struct BufferWriterTraits {
     writer_.reset(new internal_avro::DataFileWriterBase(
         stream_,
         internal_avro::compileJsonSchemaFromString(RMF::data_avro2::frame_json),
-        16 * 1024));
+        16 * 1024, internal_avro::GZIP));
   }
   template <class T>
   void write(const T &t) {
