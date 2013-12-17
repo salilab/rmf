@@ -18,7 +18,7 @@ class Tests(unittest.TestCase):
             RMF._get_test_input_file_path(
                 "conformations.imp.old.0fd20c095e58.signature"),
             "r").read()
-        self.assertEqual(sig, old_sig)
+        RMF._assert_signatures_equal(sig, old_sig)
 
 if __name__ == '__main__':
     unittest.main()

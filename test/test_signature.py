@@ -17,7 +17,7 @@ class Tests(unittest.TestCase):
                 "rep_and_geom.signature"),
             "r").read(
         )
-        self.assertEqual(sig, old_sig)
+        RMF._assert_signatures_equal(sig, old_sig)
 
 if __name__ == '__main__':
     unittest.main()

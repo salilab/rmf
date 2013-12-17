@@ -337,3 +337,16 @@ HDF5=RMF_HDF5
 %{
 RMF_POP_WARNINGS
 %}
+
+%pythoncode %{
+def _assert_signatures_equal(sa, sb):
+  if sa == sb:
+     return
+  else:
+     import difflib
+     for l in difflib.unified_diff(sa.split("\n"), sb.split("\n")):
+        stl = str(l)
+        print stl
+     raise RuntimeError("not equal")
+
+%}
