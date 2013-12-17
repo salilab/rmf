@@ -46,7 +46,7 @@ struct FileWriterTraitsBase {
   void load_frame(const FileData &, FrameID, FrameID, Frame &frame) {
     frame = Frame();
   }
-  void load_file_data(FileData &fd) { fd = FileData(); }
+  void load_file_data(FileData &fd) { fd.clear(); }
   ~FileWriterTraitsBase() { flush(); }
 };
 
@@ -151,7 +151,7 @@ struct BufferWriterTraits {
   void load_frame(const FileData &, FrameID, FrameID, Frame &fr) {
     fr = Frame();
   }
-  void load_file_data(FileData &fd) { fd = FileData(); }
+  void load_file_data(FileData &fd) { fd.clear(); }
   ~BufferWriterTraits() { flush(); }
 };
 
