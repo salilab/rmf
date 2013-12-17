@@ -318,15 +318,6 @@ class RMFEXPORT FileConstHandle {
   }
   /** @} */
 
-  /** Run the various validators that attempt to check that the RMF file
-      is correct. Print messages to the provided stream if errors are
-      encounted.*/
-  void validate(std::ostream& out);
-
-  /** Like validate(std::ostream&) except it returns a sting describing
-      the errors.*/
-  std::string validate();
-
   /** Reread the file.
       \note This may invalidate various thing (eg the number of nodes may
       vary). Be careful.

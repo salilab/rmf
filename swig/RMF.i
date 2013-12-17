@@ -236,7 +236,7 @@ RMF_SWIG_FOREACH_TYPE(RMF_SWIG_WRAP_NULLABLE);
 %include "RMF/NodeHandle.h"
 %include "RMF/FileConstHandle.h"
 %include "RMF/FileHandle.h"
-%include "RMF/Validator.h"
+%include "RMF/validate.h"
 %include "RMF/Decorator.h"
 namespace RMF {
   %template(_Decorator) Decorator<NodeHandle>;

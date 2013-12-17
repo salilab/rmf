@@ -7,6 +7,7 @@
 #include <string>
 
 #include "RMF/FileConstHandle.h"
+#include "RMF/validate.h"
 #include "common.h"
 
 namespace {
@@ -18,7 +19,7 @@ int main(int argc, char** argv) {
     RMF_ADD_INPUT_FILE("rmf");
     process_options(argc, argv);
     RMF::FileConstHandle rh = RMF::open_rmf_file_read_only(input);
-    rh.validate(std::cerr);
+    RMF::validate(rh);
     return 0;
   }
   catch (const std::exception& e) {

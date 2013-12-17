@@ -11,7 +11,6 @@
 
 #include "AvroSharedData.h"
 #include "RMF/NodeHandle.h"
-#include "RMF/Validator.h"
 #include <boost/lexical_cast.hpp>
 #include "avrocpp/api/DataFile.hh"
 #include <algorithm>

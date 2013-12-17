@@ -16,7 +16,6 @@
 #include "RMF/ID.h"
 #include "RMF/NodeConstHandle.h"
 #include "RMF/Nullable.h"
-#include "RMF/Validator.h"
 #include "RMF/compiler_macros.h"
 #include "RMF/internal/SharedData.h"
 #include "RMF/internal/shared_data_factories.h"
@@ -64,30 +63,6 @@ FileConstHandle open_rmf_file_read_only(std::string path) {
 
 FileConstHandle open_rmf_buffer_read_only(BufferConstHandle buffer) {
   return FileConstHandle(internal::read_buffer(buffer));
-}
-
-void FileConstHandle::validate(std::ostream& out = std::cerr) {
-  try {
-    Creators cs = get_validators();
-    boost::ptr_vector<Validator> validators;
-    for (unsigned int i = 0; i < cs.size(); ++i) {
-      validators.push_back(cs[i]->create(*this));
-    }
-    for (int frame = -1; frame < static_cast<int>(get_number_of_frames());
-         ++frame) {
-      set_current_frame(FrameID(frame));
-      for (unsigned int i = 0; i < cs.size(); ++i) {
-        validators[i].write_errors(out);
-      }
-    }
-  }
-  RMF_FILE_CATCH();
-}
-
-std::string FileConstHandle::validate() {
-  std::ostringstream oss;
-  validate(oss);
-  return oss.str();
 }
 
 void FileConstHandle::reload() {
