@@ -111,6 +111,7 @@ template <class Traits>
 void show_data(NodeConstHandle n, std::ostream& out,
                const std::vector<ID<Traits> >& ks, std::string prefix) {
   using std::operator<<;
+  FileConstHandle f = n.get_file();
   RMF_FOREACH(ID<Traits> k, ks) {
     if (n.get_file().get_current_frame() != FrameID() &&
         !n.get_frame_value(k).get_is_null()) {
@@ -119,8 +120,9 @@ void show_data(NodeConstHandle n, std::ostream& out,
     } else {
       Nullable<Traits> ts = n.get_static_value(k);
       if (!ts.get_is_null()) {
-        out << std::endl << prefix << n.get_file().get_name(k) << ": "
-            << Showable(ts.get()) << "(s)";
+        out << std::endl << prefix << f.get_name(k) << " ("
+            << f.get_name(f.get_category(k)) << ")"
+            << ": " << Showable(ts.get()) << "(s)";
       }
     }
   }
