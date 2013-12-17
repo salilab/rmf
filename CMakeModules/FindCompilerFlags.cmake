@@ -36,5 +36,5 @@ if("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang" AND "${CMAKE_BUILD_TYPE}" MATCHES 
 endif()
 
 if (DEFINED MSVC)
-add_definitions("/ignore:4503")
+add_definitions("/wd4503")
 endif()
