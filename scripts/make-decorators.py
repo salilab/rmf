@@ -58,8 +58,7 @@ make_header(
 
 score = Decorator(["FEATURE"], "feature",
                   "Score",
-                  [Attribute("score", "Float"),
-                   Attribute("representation", "Ints")])
+                  [Attribute("score", "Float")])
 representation = Decorator(["FEATURE"], "feature",
                            "Representation",
                            [Attribute(
