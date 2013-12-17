@@ -5,18 +5,19 @@ import RMF
 
 class Tests(unittest.TestCase):
 
-    def test_data_types(self):
-        """Test that signatures make sense and are stable"""
+    def test_1(self):
+        """Test signature of older file"""
         RMF.set_log_level("Off")
-        path = RMF._get_test_input_file_path("rep_and_geom.rmf")
+        path = RMF._get_test_input_file_path(
+            "conformations.imp.old.0fd20c095e58.rmf")
         f = RMF.open_rmf_file_read_only(path)
         sig = RMF.get_signature_string(f)
-        # print sig
+        print sig
+        open("conformations.imp.old.0fd20c095e58.signature", "w").write(sig)
         old_sig = open(
             RMF._get_test_input_file_path(
-                "rep_and_geom.signature"),
-            "r").read(
-        )
+                "conformations.imp.old.0fd20c095e58.signature"),
+            "r").read()
         self.assertEqual(sig, old_sig)
 
 if __name__ == '__main__':
