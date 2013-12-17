@@ -82,6 +82,11 @@ ball = Decorator(["GEOMETRY"], "shape",
                  "Ball",
                  [coordinates, radius])
 
+ellipsoid = Decorator(["GEOMETRY"], "shape",
+                      "Ellipsoid",
+                      [Attribute("axis lengths", "Vector3"), orientation, coordinates])
+
+
 cylinder = Decorator(["GEOMETRY"], "shape",
                      "Cylinder",
                      [radius, geometry_coordinates])
@@ -91,7 +96,7 @@ segment = Decorator(["GEOMETRY"], "shape",
                     [geometry_coordinates])
 
 
-make_header("shape", [colored, ball, cylinder, segment], [])
+make_header("shape", [colored, ball, ellipsoid, cylinder, segment], [])
 
 
 journal = Decorator(["ORGANIZATIONAL"], "publication",

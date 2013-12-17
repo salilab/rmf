@@ -90,12 +90,14 @@ The category name is `shape` and the information relates to geometric markup of 
 
 ### Attributes ### {#shapeattributes}
 
-| Name             | Type      | Description                                      |
-|-----------------:|----------:|:-------------------------------------------------|
-| `rgb color`      | RMF::Vector3 |  The red, green, and blue color components, each component is in the range from 0 to 1. |
-| `coordinates list` | RMF::Vector3s |  A list of coordinates.                    |
-| `coordinates`    | RMF::Vector3 |  The coordinates in angstrom.                 |
-| `radius`         | float      |  The radius in angstroms                        |
+| Name             | Type             | Description                                      |
+|-----------------:|-----------------:|:-------------------------------------------------|
+| `rgb color`      | RMF::Vector3     |  The red, green, and blue color components, each component is in the range from 0 to 1. |
+| `coordinates list` | RMF::Vector3s  |  A list of coordinates.                          |
+| `coordinates`    | RMF::Vector3     |  The coordinates in angstrom.                    |
+| `radius`         | float            |  The radius in angstroms                         |
+| `axis lengths`   | RMF::Vector3     |  The length along each coordinate axis.          |
+| `orientation`    | RMF::Vector4     |  The ordientation quaternion.                    |
 
 ### Decorators ### {#shapedecorators}
 
@@ -105,6 +107,7 @@ The category name is `shape` and the information relates to geometric markup of 
 | RMF::decorator::Ball            | RMF::GEOMETRY           |  coordinates, radius               |
 | RMF::decorator::Segment         | RMF::GEOMETRY           |  coordinates list                  |
 | RMF::decorator::Cylinder        | RMF::GEOMETRY           |  coordinates list, radius          |
+| RMF::decorator::Ellipsoid       | RMF::GEOMETRY           |  coordinates, axis lengths, orientation |
 
 ## Alias ## {#alias}
 
