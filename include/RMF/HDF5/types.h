@@ -309,17 +309,35 @@ struct FloatTraits : public SimpleTraits<FloatTraitsBase> {};
 struct FloatsTraits : public SimplePluralTraits<FloatTraits> {};
 struct IndexTraits : public SimpleTraits<IndexTraitsBase> {};
 struct IndexesTraits : public SimplePluralTraits<IndexTraits> {};
+
+#ifndef IMP_DOXYGEN
+namespace {
+template <class OutType, class InType>
+inline void get_as_impl(InType in, OutType& out) {
+  out = OutType(in);
+}
+template <class Traits, class InType>
+inline void get_as_impl(InType in, ID<Traits>& out) {
+  if (in == -1) out = ID<Traits>();
+  else out = ID<Traits>(in);
+}
+template <class OutType, class Traits>
+inline void get_as_impl(ID<Traits> in, OutType& out) {
+  if (in == ID<Traits>())
+    out = -1;
+  else
+    out = in.get_index();
+}
+}
+#endif
 #endif
 
 /** Get one type as another, handling vectors or scalars.*/
 template <class OutType, class InType>
 inline OutType get_as(InType in) {
-  return OutType(in);
-}
-
-template <class OT, class Tr>
-inline OT get_as(RMF::ID<Tr> id) {
-  return id.get_index();
+  OutType ret;
+  get_as_impl(in, ret);
+  return ret;
 }
 
 /** Get one type as another, handling vectors or scalars.*/
