@@ -333,8 +333,6 @@ std::string HDF5SharedData::get_producer() const {
     return get_group().get_char_attribute("producer");
 }
 void HDF5SharedData::set_producer(std::string str) {
-  RMF_USAGE_CHECK(str.empty() || str[str.size() - 1] == '\n',
-                  "Producer should end in a newline.");
   get_group().set_char_attribute("producer", str);
 }
 
