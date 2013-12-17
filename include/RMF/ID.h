@@ -71,7 +71,7 @@ class ID {
       ID(unsigned int i)
       : i_(i) {
     RMF_USAGE_CHECK(static_cast<int>(i_) >= 0,
-                    "Bad index passed on initialize");
+                    Tag::get_tag() + ": Bad index passed on initialize");
   }
   ID() : i_(std::numeric_limits<int>::min()) {}
   unsigned int get_index() const {
