@@ -19,7 +19,7 @@ endif()
 include_directories("${PROJECT_BINARY_DIR}/src"
   "${PROJECT_SOURCE_DIR}/src")
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake_modules)
 
 set(RMF_INCLUDE_PATH "" CACHE INTERNAL "" FORCE)
 
@@ -27,9 +27,9 @@ if(POLICY CMP0017)
 cmake_policy(SET CMP0017 NEW)
 endif(POLICY CMP0017)
 
-include(FindLog4CXX)
-include(FindC++11)
-include(CMakeModules/FindCompilerFlags.cmake)
+include(cmake_modules/FindLog4CXX.cmake)
+include(cmake_modules/FindC++11.cmake)
+include(cmake_modules/FindCompilerFlags.cmake)
 
 if(DEFINED RMF_TYPES_HEADER)
 message(STATUS "Using types header at ${RMF_TYPES_HEADER}")
