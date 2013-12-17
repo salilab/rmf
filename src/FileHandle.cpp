@@ -50,6 +50,11 @@ FrameID FileHandle::add_frame(std::string name, FrameType t) const {
   return ret;
 }
 
+NodeHandle FileHandle::add_node(std::string name, NodeType t) const {
+  NodeID n = shared_->add_node(name, t);
+  return get_node(n);
+}
+
 FileHandle create_rmf_file(std::string path) {
   return FileHandle(internal::create_file(path));
 }

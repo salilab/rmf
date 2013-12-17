@@ -69,9 +69,14 @@ void clone_hierarchy(SDA* sda, SDB* sdb) {
   }
   if (parents.empty()) return;
   RMF_FOREACH(NodeID na, get_nodes(sda)) {
+    if (na == NodeID(0)) continue; // a bit icky
     if (parents.find(na) != parents.end()) {
       NodeID nid = sdb->add_child(parents.find(na)->second, sda->get_name(na),
                                   sda->get_type(na));
+      RMF_UNUSED(nid);
+      RMF_INTERNAL_CHECK(nid == na, "Don't match");
+    } else {
+      NodeID nid = sdb->add_node(sda->get_name(na), sda->get_type(na));
       RMF_UNUSED(nid);
       RMF_INTERNAL_CHECK(nid == na, "Don't match");
     }

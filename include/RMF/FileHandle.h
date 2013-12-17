@@ -90,6 +90,10 @@ class RMFEXPORT FileHandle : public FileConstHandle {
       to a valid NodeHandle.*/
   NodeHandle get_node(NodeID id) const;
 
+  /** Add a node with no parents. This node will not be accessible in the
+      hierarchy unless you add it as a child of something. */
+  NodeHandle add_node(std::string name, NodeType t) const;
+
   /** Each RMF structure has an associated description. This should
       consist of unstructured text describing the contents of the RMF
       data. Conventionally. this description can consist of multiple

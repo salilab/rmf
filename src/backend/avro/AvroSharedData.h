@@ -206,6 +206,9 @@ class AvroSharedData : public Base {
   NodeType get_type(NodeID node) const;
   NodeID add_child(NodeID node, std::string name, NodeType t);
   void add_child(NodeID node, NodeID child_node);
+  NodeID add_node(std::string name, NodeType t) {
+    RMF_USAGE_CHECK(0, "Backend doesn't support orphan nodes");
+  }
   NodeIDs get_children(NodeID node) const;
   std::string get_description() const;
   void set_description(std::string str);

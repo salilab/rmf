@@ -61,11 +61,16 @@ class SharedDataHierarchy {
     hierarchy_[node.get_index()].type = t;
   }
 
-  NodeID add_child(NodeID id, std::string name, NodeType t) {
+  NodeID add_node(std::string name, NodeType t) {
     NodeID ret(hierarchy_.size());
     hierarchy_.resize(hierarchy_.size() + 1);
     hierarchy_.back().name = name;
     hierarchy_.back().type = t;
+    return ret;
+  }
+
+  NodeID add_child(NodeID id, std::string name, NodeType t) {
+    NodeID ret = add_node(name, t);
     add_child(id, ret);
     return ret;
   }

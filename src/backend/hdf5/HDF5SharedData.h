@@ -495,7 +495,6 @@ class HDF5SharedData : public backends::BackwardsIOBase {
   NodeID get_sibling(NodeID node) const;
   void set_first_child(NodeID node, NodeID child);
   void set_sibling(NodeID node, NodeID sibling);
-  NodeID add_node(std::string name, NodeType type);
   void close_things();
 
   // opens the file in file_name_
@@ -561,6 +560,8 @@ class HDF5SharedData : public backends::BackwardsIOBase {
   }
 
  public:
+  NodeID add_node(std::string name, NodeType type);
+
   template <class TypeTraits>
   typename TypeTraits::Type get_loaded_value(NodeID node,
                                              ID<TypeTraits> k) const {
