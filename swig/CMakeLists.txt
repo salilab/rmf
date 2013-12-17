@@ -26,7 +26,7 @@ set(CMAKE_SWIG_OUTDIR "${PROJECT_BINARY_DIR}")
 include_directories("${PROJECT_BINARY_DIR}/include"
   "${PROJECT_SOURCE_DIR}/include" "${PROJECT_SOURCE_DIR}/swig" ${HDF5_INCLUDE_DIRS})
 
-FILE(GLOB rmf_headers "${PROJECT_SOURCE_DIR}/include/RMF/*.h" "${PROJECT_BINARY_DIR}/include/RMF/*.h")
+FILE(GLOB rmf_headers "${PROJECT_SOURCE_DIR}/include/RMF/*.h" "${PROJECT_BINARY_DIR}/include/RMF/*.h" "${PROJECT_BINARY_DIR}/include/RMF/decorator/*.h")
 FILE(GLOB headers "${PROJECT_SOURCE_DIR}/include/RMF/HDF5/*.h" "${PROJECT_BINARY_DIR}/include/RMF/HDF5/*.h")
 FILE(GLOB SWIG_INCLUDES "${PROJECT_SOURCE_DIR}/swig/RMF.*.i")
 
