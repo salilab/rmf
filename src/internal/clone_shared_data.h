@@ -68,8 +68,16 @@ void clone_hierarchy(SDA* sda, SDB* sdb) {
     }
   }
   if (parents.empty()) return;
+  RMF_LARGE_UNORDERED_SET<NodeID> existing;
+  RMF_LARGE_UNORDERED_MAP<NodeID, RMF_SMALL_UNORDERED_SET<NodeID> > existing_parents;
+  RMF_FOREACH(NodeID nb, get_nodes(sdb)) {
+    existing.insert(nb);
+    RMF_FOREACH(NodeID ch, sdb->get_children(nb)) {
+      existing_parents[ch].insert(nb);
+    }
+  }
   RMF_FOREACH(NodeID na, get_nodes(sda)) {
-    if (na == NodeID(0)) continue; // a bit icky
+    if (existing.find(na) != existing.end()) continue;
     if (parents.find(na) != parents.end()) {
       NodeID nid = sdb->add_child(parents.find(na)->second, sda->get_name(na),
                                   sda->get_type(na));
@@ -84,7 +92,8 @@ void clone_hierarchy(SDA* sda, SDB* sdb) {
   RMF_FOREACH(NodeID na, get_nodes(sda)) {
     NodeIDs children = sda->get_children(na);
     RMF_FOREACH(NodeID c, children) {
-      if (parents.find(c) != parents.end() && parents.find(c)->second != na) {
+      if (parents.find(c) != parents.end() && parents.find(c)->second != na &&
+          existing_parents[c].find(na) == existing_parents[c].end()) {
         sdb->add_child(na, c);
       }
     }
