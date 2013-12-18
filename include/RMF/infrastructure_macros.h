@@ -137,9 +137,9 @@ RMF_ENABLE_WARNINGS
       macroname(RMF::Vector4Traits, Vector4)                                \
       macroname(RMF::Vector3sTraits, Vector3s)
 
-#define RMF_DECORATOR_CATCH(extra_info)               \
-  catch (Exception& e) {                              \
-    RMF_RETHROW(Decorator(get_name()) extra_info, e); \
+#define RMF_DECORATOR_CATCH(extra_info)                              \
+  catch (Exception& e) {                                             \
+    RMF_RETHROW(Decorator(get_decorator_type_name()) extra_info, e); \
   }
 
 /** Register a validator function. See Validator for more

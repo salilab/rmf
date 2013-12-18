@@ -287,10 +287,9 @@ class RangeAttribute(AttributePair):
 decorator = """
   /** See also NAMENONCONST and NAMECONSTFactory.
     */
-  class NAMECONST: public Decorator<NodeCONSTHandle> {
+    class NAMECONST: public Decorator<NodeCONSTHandle> {
     friend class NAMECONSTFactory;
-    std::string get_name() const {return \"NAME\";}
-  private:
+
     typedef Decorator<NodeCONSTHandle> P;
 DATA_MEMBERS
     NAMECONST(NodeCONSTHandle nh,
@@ -304,7 +303,6 @@ METHODS
     }
   };
 
-    typedef std::vector<NAMECONST> NAMECONSTs;
 """
 
 
@@ -338,7 +336,6 @@ HELPERS
     BULK_METHODS
   };
 
-  typedef std::vector<NAMECONSTFactory> NAMECONSTFactories;
 """
 
 

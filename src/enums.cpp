@@ -64,8 +64,8 @@ std::string get_type_name(NodeType t) {
       return "custom";
     case ORGANIZATIONAL:
       return "organizational";
-  case ALT:
-    return "alt";
+    case ALTERNATIVES:
+      return "alt";
     default:
       return "unknown";
   }
@@ -87,7 +87,6 @@ std::istream& operator>>(std::istream& in, NodeType& t) {
   t = CUSTOM;
   return in;
 }
-
 
 } /* namespace RMF */
 
