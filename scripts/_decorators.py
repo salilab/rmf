@@ -285,9 +285,7 @@ class RangeAttribute(AttributePair):
 
 
 decorator = """
-  /** DESCRIPTION
-
-       See also NAMENONCONST and NAMECONSTFactory.
+  /** See also NAMENONCONST and NAMECONSTFactory.
     */
   class NAMECONST: public Decorator<NodeCONSTHandle> {
     friend class NAMECONSTFactory;
