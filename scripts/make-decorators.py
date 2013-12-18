@@ -88,7 +88,7 @@ ellipsoid = Decorator(["GEOMETRY"], "shape",
 
 cylinder = Decorator(["GEOMETRY"], "shape",
                      "Cylinder",
-                     [radius, geometry_coordinates])
+                     [radius, geometry_coordinates], check_all_attributes=True)
 
 segment = Decorator(["GEOMETRY"], "shape",
                     "Segment",
