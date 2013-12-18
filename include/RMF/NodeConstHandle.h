@@ -131,6 +131,11 @@ class RMFEXPORT NodeConstHandle {
 #endif
 
  public:
+#if !defined(RMF_DOXYGEN) && !defined(SWIG)
+  boost::shared_ptr<internal::SharedData> get_shared_data() const {
+    return shared_;
+  }
+#endif
   NodeID get_id() const { return node_; }
   RMF_COMPARISONS(NodeConstHandle);
   RMF_HASHABLE(NodeConstHandle, return node_.get_index());

@@ -46,6 +46,7 @@ def make_files(d):
 
 src = ["src",
        os.path.join("src", "internal"),
+       os.path.join("src", "decorator"),
        os.path.join("src", "backend"),
        os.path.join("src", "backend", "hdf5"),
        os.path.join("src", "backend", "avro"),
