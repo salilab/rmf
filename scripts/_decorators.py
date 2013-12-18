@@ -348,12 +348,13 @@ class Decorator:
 
     def __init__(self, allowed_types, category, name,
                  attributes,
-                 init_function=""):
+                 init_function="", check_all_attributes=False):
         self.name = name
         self.category = category
         self.allowed_types = allowed_types
         self.init_function = init_function
         self.attributes = attributes
+        self.check_all_attributes = check_all_attributes
 
     def _get_data_members(self, const):
         ret = []
@@ -403,10 +404,14 @@ class Decorator:
             cret.append("nh.get_type() == RMF::%s" % t)
         return "(" + "||".join(cret) + ")"
 
-    def _get_checks(self, const):
+    def _get_checks(self, const, use_all=False):
         ret = [self._get_type_check()]
+        if self.check_all_attributes or use_all:
+            for a in self.attributes:
+                ret.append(a.get_check(const))
+        else:
         # for a in self.attributes:
-        ret.append(self.attributes[0].get_check(const))
+            ret.append(self.attributes[0].get_check(const))
         return "\n    && ".join(x for x in ret if x != "")
 
     def _get_construct(self, const):
@@ -451,7 +456,7 @@ class Decorator:
             ("FRAME_CHECKS", self._get_checks(const)
              .replace("GET", "get_value")))
         ret.append(
-            ("STATIC_CHECKS", self._get_checks(const)
+            ("STATIC_CHECKS", self._get_checks(const, use_all=True)
              .replace("GET", "get_static_value")))
         return ret
 
