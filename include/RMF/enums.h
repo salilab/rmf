@@ -50,6 +50,8 @@ enum NodeType {
   /** This includes nodes that are just RMF::ReferenceFrame nodes.
    */
   ORGANIZATIONAL,
+  //! A node that contains representations of the structure
+  ALTERNATIVES,
 #ifndef RMF_DOXYGEN
   //! An internal link to another node
   LINK

@@ -287,6 +287,7 @@ RMF_DECORATOR(RMF::decorator, Torque);
 %include "RMF/RestoreCurrentFrame.h"
 %include "RMF/CoordinateTransformer.h"
 %include "RMF/log.h"
+%include "RMF/show_hierarchy.h"
 
 %pythoncode %{
 _tmpdir=None

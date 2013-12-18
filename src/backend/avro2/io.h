@@ -195,6 +195,7 @@ bool save_all(FileData &file_data, FileDataChanges &file_data_changes,
              &file_data_changes.keys, data.vector3s_data,
              data_changes ? &data_changes->vector3s_data : NULL, Loader()) ||
         ret;
+
   return ret;
 }
 }

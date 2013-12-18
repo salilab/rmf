@@ -46,6 +46,49 @@ std::istream& operator>>(std::istream& in, FrameType& t) {
   return in;
 }
 
+std::string get_type_name(NodeType t) {
+  switch (t) {
+    case ROOT:
+      return "root";
+    case REPRESENTATION:
+      return "rep";
+    case GEOMETRY:
+      return "geom";
+    case FEATURE:
+      return "feat";
+    case ALIAS:
+      return "alias";
+    case BOND:
+      return "bond";
+    case CUSTOM:
+      return "custom";
+    case ORGANIZATIONAL:
+      return "organizational";
+  case ALT:
+    return "alt";
+    default:
+      return "unknown";
+  }
+}
+
+std::ostream& operator<<(std::ostream& out, NodeType t) {
+  out << get_type_name(t);
+  return out;
+}
+std::istream& operator>>(std::istream& in, NodeType& t) {
+  std::string token;
+  in >> token;
+  for (NodeType i = ROOT; i < LINK; i = NodeType(i + 1)) {
+    if (token == get_type_name(i)) {
+      t = i;
+      return in;
+    }
+  }
+  t = CUSTOM;
+  return in;
+}
+
+
 } /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

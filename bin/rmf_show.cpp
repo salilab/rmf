@@ -10,6 +10,7 @@
 #include "RMF/FileConstHandle.h"
 #include "RMF/ID.h"
 #include "RMF/NodeConstHandle.h"
+#include "RMF/show_hierarchy.h"
 #include "common.h"
 
 namespace {

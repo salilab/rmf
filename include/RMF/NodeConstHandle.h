@@ -191,25 +191,6 @@ class RMFEXPORT NodeConstHandle {
   FileConstHandle get_file() const;
 };
 
-/** Print out the hierarchy as an ascii tree.
- */
-RMFEXPORT void show_hierarchy(NodeConstHandle root,
-                              std::ostream& out = std::cout);
-
-/** Print out the hierarchy as an ascii tree along with values
-    as described by the frame parameters. If end_frame is -1,
-    the only one frame is shown.
- */
-RMFEXPORT void show_hierarchy_with_values(NodeConstHandle root,
-                                          std::ostream& out = std::cout);
-
-/** Print out the hierarchy as an ascii tree marking what decorators
-    apply where.
- */
-RMFEXPORT void show_hierarchy_with_decorators(NodeConstHandle root,
-                                              bool verbose = false,
-                                              std::ostream& out = std::cout);
-
 } /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
