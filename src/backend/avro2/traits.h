@@ -97,13 +97,13 @@ struct ReaderTraits {
   void flush() {}
 };
 
-template <bool GZIP>
+template <bool ZIP>
 struct FileWriterTraits : public FileWriterTraitsBase {
   FileWriterTraits(std::string path) : FileWriterTraitsBase(path) {
     writer_.reset(new internal_avro::DataFileWriterBase(
         path_.c_str(),
         internal_avro::compileJsonSchemaFromString(RMF::data_avro2::frame_json),
-        16 * 1024, GZIP ? internal_avro::GZIP : internal_avro::NONE));
+        16 * 1024, ZIP ? internal_avro::ZIP : internal_avro::NONE));
   }
 };
 
@@ -127,7 +127,7 @@ struct BufferWriterTraits {
     writer_.reset(new internal_avro::DataFileWriterBase(
         stream_,
         internal_avro::compileJsonSchemaFromString(RMF::data_avro2::frame_json),
-        16 * 1024, internal_avro::GZIP));
+        16 * 1024, internal_avro::ZIP));
   }
   template <class T>
   void write(const T &t) {
