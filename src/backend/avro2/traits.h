@@ -11,9 +11,14 @@
 
 #include "RMF/compiler_macros.h"
 #include "RMF/log.h"
+#include "RMF/BufferConstHandle.h"
+#include "RMF/BufferHandle.h"
 #include "data_file.h"
 #include "generated/embed_jsons.h"
 #include "avrocpp/api/Compiler.hh"
+
+#include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 
 RMF_ENABLE_WARNINGS
 
@@ -119,6 +124,10 @@ struct FileReaderBase {
   }
 };
 
+RMFEXPORT void flush_buffer(
+    boost::shared_ptr<internal_avro::DataFileWriterBase> writer,
+    boost::shared_ptr<internal_avro::OutputStream> stream, BufferHandle buffer);
+
 struct BufferWriterTraits {
   boost::shared_ptr<internal_avro::DataFileWriterBase> writer_;
   BufferHandle buffer_;
@@ -136,18 +145,7 @@ struct BufferWriterTraits {
     avro2::write(writer_.get(), t);
   }
   void flush() {
-    RMF_INFO("Flushing to buffer");
-    // avoid rewriting later
-    writer_->flush();
-    buffer_.access_buffer().clear();
-    boost::shared_ptr<internal_avro::InputStream> input_stream =
-        internal_avro::memoryInputStream(*stream_);
-    const uint8_t *data;
-    size_t len;
-    while (input_stream->next(&data, &len)) {
-      buffer_.access_buffer().insert(buffer_.access_buffer().end(), data,
-                                     data + len);
-    }
+    flush_buffer(writer_, stream_, buffer_);
   }
   void load_frame(const FileData &, FrameID, FrameID, Frame &fr) {
     fr = Frame();
@@ -156,11 +154,17 @@ struct BufferWriterTraits {
   ~BufferWriterTraits() { flush(); }
 };
 
+RMFEXPORT BufferConstHandle
+    try_convert(BufferConstHandle in, std::string message);
+
 struct BufferReaderBase {
   BufferConstHandle buffer_;
   BufferReaderBase(BufferConstHandle buffer) : buffer_(buffer) {
-    // to validate
-    get_reader<Frame>();
+    try {
+      get_reader<Frame>();
+    } catch (const std::exception &e) {
+      buffer_ = try_convert(buffer_, e.what());
+    }
   }
   template <class T>
   boost::shared_ptr<internal_avro::DataFileReader<T> > get_reader() {
