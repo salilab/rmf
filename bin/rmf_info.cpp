@@ -28,7 +28,10 @@ int main(int argc, char** argv) {
 
     RMF::FileConstHandle rh = RMF::open_rmf_file_read_only(input);
     if (!rh.get_description().empty()) {
-      std::cout << "description: " << rh.get_description();
+      std::cout << "description: " << rh.get_description() << std::endl;
+    }
+    if (!rh.get_producer().empty()) {
+      std::cout << "producer: " << rh.get_producer() << std::endl;
     }
     rh.set_current_frame(RMF::FrameID(frame));
     std::cout << "frames: " << rh.get_number_of_frames() << std::endl;
