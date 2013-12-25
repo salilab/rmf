@@ -68,7 +68,7 @@ class RMFEXPORT FileHandle : public FileConstHandle {
   NodeHandle get_root_node() const { return NodeHandle(NodeID(0), shared_); }
   /** Add a frame and make it the current frame. It is a child of the
       current frame. */
-  FrameID add_frame(std::string name, FrameType t) const;
+  FrameID add_frame(std::string name, FrameType t = FRAME) const;
 #ifndef SWIG
   /** Each node in the hierarchy can be associated with some arbitrary bit
       of external data. Nodes can be extracted using these bits of data.
