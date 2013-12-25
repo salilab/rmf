@@ -104,6 +104,15 @@ _traits_list.append(lcname##_traits)
         v = $action(self, *args)
         if v.get_is_null(): return None
         else: return v.get()
+    def get_static_value(self, *args):
+        v = $action(self, *args)
+        if v.get_is_null(): return None
+        else: return v.get()
+    def get_frame_value(self, *args):
+        v = $action(self, *args)
+        if v.get_is_null(): return None
+        else: return v.get()
+
 %}
 
 
