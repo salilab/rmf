@@ -29,45 +29,45 @@ configure_file (
 
 # Data includes
 add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/backend/avro/File.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/File.json.cpp"
-   COMMAND python "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+   COMMAND python "${PROJECT_SOURCE_DIR}/tools/build/make-embed.py"
               "${PROJECT_BINARY_DIR}/src/backend/avro/"
               "${PROJECT_SOURCE_DIR}/src/backend/avro/File.json" "avro_backend"
-   DEPENDS "${PROJECT_SOURCE_DIR}/src/backend/avro/File.json" "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+   DEPENDS "${PROJECT_SOURCE_DIR}/src/backend/avro/File.json" "${PROJECT_SOURCE_DIR}/tools/build/make-embed.py"
    COMMENT "Data wrapper for File.json"  )
 
 add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/backend/avro/Data.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/Data.json.cpp"
-   COMMAND python "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+   COMMAND python "${PROJECT_SOURCE_DIR}/tools/build/make-embed.py"
               "${PROJECT_BINARY_DIR}/src/backend/avro/"
               "${PROJECT_SOURCE_DIR}/src/backend/avro/Data.json" "avro_backend"
-   DEPENDS "${PROJECT_SOURCE_DIR}/src/backend/avro/Data.json" "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+   DEPENDS "${PROJECT_SOURCE_DIR}/src/backend/avro/Data.json" "${PROJECT_SOURCE_DIR}/tools/build/make-embed.py"
    COMMENT "Data wrapper for Data.json"  )
 
 add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/backend/avro/Nodes.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/Nodes.json.cpp"
-   COMMAND python "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+   COMMAND python "${PROJECT_SOURCE_DIR}/tools/build/make-embed.py"
               "${PROJECT_BINARY_DIR}/src/backend/avro/"
               "${PROJECT_SOURCE_DIR}/src/backend/avro/Nodes.json" "avro_backend"
-   DEPENDS "${PROJECT_SOURCE_DIR}/src/backend/avro/Nodes.json" "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+   DEPENDS "${PROJECT_SOURCE_DIR}/src/backend/avro/Nodes.json" "${PROJECT_SOURCE_DIR}/tools/build/make-embed.py"
    COMMENT "Nodes wrapper for Nodes.json"  )
 
 add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/backend/avro/Frame.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/Frame.json.cpp"
-   COMMAND python "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+   COMMAND python "${PROJECT_SOURCE_DIR}/tools/build/make-embed.py"
               "${PROJECT_BINARY_DIR}/src/backend/avro/"
               "${PROJECT_SOURCE_DIR}/src/backend/avro/Frame.json" "avro_backend"
-   DEPENDS "${PROJECT_SOURCE_DIR}/src/backend/avro/Frame.json" "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+   DEPENDS "${PROJECT_SOURCE_DIR}/src/backend/avro/Frame.json" "${PROJECT_SOURCE_DIR}/tools/build/make-embed.py"
    COMMENT "Frame wrapper for Frame.json"  )
 
 add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/backend/avro/All.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/All.json.cpp"
-   COMMAND python "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+   COMMAND python "${PROJECT_SOURCE_DIR}/tools/build/make-embed.py"
               "${PROJECT_BINARY_DIR}/src/backend/avro/"
               "${PROJECT_BINARY_DIR}/src/backend/avro/All.json" "avro_backend"
-   DEPENDS "${PROJECT_BINARY_DIR}/src/backend/avro/All.json" "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+   DEPENDS "${PROJECT_BINARY_DIR}/src/backend/avro/All.json" "${PROJECT_SOURCE_DIR}/tools/build/make-embed.py"
    COMMENT "All wrapper for All.json"  )
 
 set(datas "${PROJECT_BINARY_DIR}/src/backend/avro/All.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/All.json.cpp"
     "${PROJECT_BINARY_DIR}/src/backend/avro/Frame.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/Frame.json.cpp"
     "${PROJECT_BINARY_DIR}/src/backend/avro/Nodes.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/Nodes.json.cpp"
     "${PROJECT_BINARY_DIR}/src/backend/avro/Data.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/Data.json.cpp"
-    "${PROJECT_BINARY_DIR}/src/backend/avro/File.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/File.json.cpp" "${PROJECT_SOURCE_DIR}/scripts/make-embed.py")
+    "${PROJECT_BINARY_DIR}/src/backend/avro/File.json.h" "${PROJECT_BINARY_DIR}/src/backend/avro/File.json.cpp" "${PROJECT_SOURCE_DIR}/tools/build/make-embed.py")
 
 list(APPEND cppfiles ${avro_sources}
 "${PROJECT_BINARY_DIR}/src/backend/avro/All.json.cpp"

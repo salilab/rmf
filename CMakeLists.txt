@@ -5,7 +5,7 @@ project(RMF)
 enable_testing()
 
 message(STATUS "Running setup_cmake.py")
-execute_process(COMMAND python ${PROJECT_SOURCE_DIR}/scripts/setup-cmake.py
+execute_process(COMMAND python ${PROJECT_SOURCE_DIR}/tools/build/setup-cmake.py
                   RESULT_VARIABLE setup
                   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 if(NOT ${setup} EQUAL 0)

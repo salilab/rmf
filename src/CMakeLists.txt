@@ -12,9 +12,9 @@ set(jsonfiles_expanded ${jsonfiles_expanded} ${PROJECT_SOURCE_DIR}/src/${jf})
 endforeach()
 
 add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/generated/embed_json.h" "${PROJECT_BINARY_DIR}/src/generated/embed_json.cpp"
-   COMMAND python "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+   COMMAND python "${PROJECT_SOURCE_DIR}/tools/build/make-embed.py"
               "${PROJECT_BINARY_DIR}/src/generated/" ${jsonfiles_expanded}
-   DEPENDS ${jsonfiles} "${PROJECT_SOURCE_DIR}/scripts/make-embed.py"
+   DEPENDS ${jsonfiles} "${PROJECT_SOURCE_DIR}/tools/build/make-embed.py"
    COMMENT "Embedding json files" VERBATIM  )
 
 add_custom_target(RMF-embed DEPENDS "${PROJECT_BINARY_DIR}/src/generated/embed_json.cpp")
