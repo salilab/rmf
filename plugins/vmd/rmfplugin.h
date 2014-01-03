@@ -111,7 +111,7 @@ boost::array<int, 3> Data::get_structure(RMF::NodeConstHandle cur,
                                          int next_index, molfile_atom_t *atoms,
                                          int body, std::string chain, int resid,
                                          std::string resname) {
-  boost::array<int, 3> ret = {0};
+  boost::array<int, 3> ret = {{0}};
   if (cur.get_type() == RMF::ALIAS) return ret;
   if (rff_.get_is(cur)) {
     bodies_.push_back(Body());
