@@ -1,5 +1,5 @@
 # add a target to generate API documentation with Doxygen
-find_package(CurrentDoxygen)
+include(${PROJECT_SOURCE_DIR}/cmake_modules/FindCurrentDoxygen.cmake)
 if(IMP_DOXYGEN_FOUND)
   configure_file(${PROJECT_SOURCE_DIR}/doc/Doxyfile.in ${PROJECT_BINARY_DIR}/doc/Doxyfile @ONLY)
 add_custom_target(RMF-doc
@@ -17,4 +17,6 @@ add_custom_target(RMF-doc
         COMMENT "Generating API documentation with Doxygen" VERBATIM
         )
   set_property(TARGET "RMF-doc" PROPERTY FOLDER "RMF")
+else(IMP_DOXYGEN_FOUND)
+message(STATUS "RMF doc disabled")
 endif(IMP_DOXYGEN_FOUND)
