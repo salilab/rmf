@@ -24,6 +24,8 @@ std::string get_frame_type_name(FrameType t) {
       return "center";
     case FRAME_ALIAS:
       return "alias";
+    case ALTERNATE:
+      return "alt";
     default:
       return "unknown";
   }

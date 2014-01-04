@@ -78,7 +78,9 @@ enum FrameType {
   //! A cluster center
   CENTER,
   //! An alias for another frame
-  FRAME_ALIAS
+  FRAME_ALIAS,
+  //! An alternate state for a frame or model
+  ALTERNATE
 };
 
 /** Return a string version of the type name.*/
