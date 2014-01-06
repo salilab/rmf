@@ -175,6 +175,12 @@ class RMFEXPORT FileConstHandle {
       @{
    */
   FrameID get_current_frame() const { return shared_->get_loaded_frame(); }
+  FrameIDs get_current_frame_children() const {
+    return shared_->get_loaded_frame_children();
+  }
+  FrameIDs get_current_frame_parents() const {
+    return shared_->get_loaded_frame_parents();
+  }
   FrameType get_current_frame_type() const {
     return shared_->get_loaded_frame_type();
   }

@@ -31,7 +31,8 @@ void show_key_info(FileConstHandle rh, Category cat, std::string name,
     int static_count = 0, frame_count = 0;
     RMF_FOREACH(NodeID n, rh.get_node_ids()) {
       NodeConstHandle nh = rh.get_node(n);
-      if (!nh.get_frame_value(k).get_is_null()) {
+      if (rh.get_current_frame() != FrameID() &&
+          !nh.get_frame_value(k).get_is_null()) {
         ++frame_count;
       } else if (!nh.get_static_value(k).get_is_null()) {
         ++static_count;

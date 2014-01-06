@@ -86,6 +86,7 @@ class RMFEXPORT SharedData
              bool created);
   void set_loaded_frame(FrameID frame);
   FrameID add_frame(std::string name, FrameType type);
+  FrameID add_frame(std::string name, FrameID parent, FrameType type);
   void flush();
   void reload();
   unsigned int get_number_of_frames() const { return number_of_frames_; }

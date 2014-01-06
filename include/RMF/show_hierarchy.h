@@ -13,7 +13,8 @@
 #include <iostream>
 
 namespace RMF {
-  class NodeConstHandle;
+class NodeConstHandle;
+class FileConstHandle;
 
 /** Print out the hierarchy as an ascii tree.
  */
@@ -33,6 +34,9 @@ RMFEXPORT void show_hierarchy_with_values(NodeConstHandle root,
 RMFEXPORT void show_hierarchy_with_decorators(NodeConstHandle root,
                                               bool verbose = false,
                                               std::ostream& out = std::cout);
+
+/** Show the frames hierarchy. */
+RMFEXPORT void show_frames(FileConstHandle fh, std::ostream& out = std::cout);
 
 } /* namespace RMF */
 

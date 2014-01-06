@@ -242,6 +242,32 @@ void show_hierarchy_with_decorators(NodeConstHandle root, bool,
                            copycf, diffusercf, typedcf, prefix0 + "   "));
 }
 
+namespace {
+void show_frames_impl(FileConstHandle fh, FrameID root, std::string prefix,
+                      std::ostream& out) {
+  fh.set_current_frame(root);
+  FrameIDs ch = fh.get_current_frame_children();
+  out << prefix;
+  if (ch.empty()) {
+    out << " - ";
+  } else {
+    out << " + ";
+  }
+  out << fh.get_current_frame_name() << " ["
+      << get_frame_type_name(fh.get_current_frame_type()) << "]" << std::endl;
+  RMF_FOREACH(FrameID id, ch) { show_frames_impl(fh, id, prefix + "   ", out); }
+}
+}
+
+void show_frames(FileConstHandle fh, std::ostream& out) {
+  RMF_FOREACH(FrameID fr, fh.get_frames()) {
+    fh.set_current_frame(fr);
+    if (fh.get_current_frame_parents().empty()) {
+      show_frames_impl(fh, fr, std::string(), out);
+    }
+  }
+}
+
 } /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

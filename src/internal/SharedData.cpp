@@ -72,7 +72,6 @@ FrameID SharedData::add_frame(std::string name, FrameType type) {
   FrameID cl = get_loaded_frame();
   RMF_INTERNAL_CHECK(cl != ret, "Huh, frames are the same");
   if (cl != FrameID()) {
-    add_child_frame(ret);
     if (SharedDataFile::get_is_dirty()) {
       RMF_INFO("Flushing file info");
       io_->save_file(this);
@@ -95,6 +94,13 @@ FrameID SharedData::add_frame(std::string name, FrameType type) {
   RMF_INTERNAL_CHECK(get_loaded_frame_children().empty(),
                      "There are already children");
   clear_loaded_values();
+  return ret;
+}
+
+FrameID SharedData::add_frame(std::string name, FrameID parent,
+                              FrameType type) {
+  FrameID ret = add_frame(name, type);
+  set_loaded_frame_parents(FrameIDs(1, parent));
   return ret;
 }
 
