@@ -24,8 +24,6 @@ std::string get_frame_type_name(FrameType t) {
       return "center";
     case FRAME_ALIAS:
       return "alias";
-    case ALTERNATE:
-      return "alt";
     default:
       return "unknown";
   }
@@ -66,8 +64,6 @@ std::string get_type_name(NodeType t) {
       return "custom";
     case ORGANIZATIONAL:
       return "organizational";
-    case ALTERNATIVES:
-      return "alt";
     default:
       return "unknown";
   }

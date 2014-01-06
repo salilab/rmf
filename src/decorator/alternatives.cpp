@@ -60,15 +60,29 @@ NodeID get_alternative_impl(NodeConstHandle cur, FloatKey base_resolution_key,
     return NodeID(cur.get_value(roots_key).get()[closest_index]);
   }
 }
+
+NodeIDs get_alternatives_impl(NodeConstHandle cur, FloatKey base_resolution_key,
+                              IntsKey types_key, IntsKey roots_key,
+                              FloatsKey resolutions_key) {
+  NodeIDs ret(1, cur.get_id());
+
+  if (cur.get_has_value(roots_key)) {
+    RMF_FOREACH(int i, cur.get_value(roots_key).get()) {
+      ret.push_back(NodeID(i));
+    }
+  }
+  return ret;
+}
+
 std::pair<double, double> get_resolution_impl(
     NodeConstHandle root, IntermediateParticleConstFactory ipcf) {
-  std::pair<double, double> ret;
+  std::pair<double, double> ret(0.0, 0.0);
   RMF_FOREACH(NodeConstHandle ch, root.get_children()) {
     std::pair<double, double> cur = get_resolution_impl(ch, ipcf);
     ret.first += cur.first;
     ret.second += cur.second;
   }
-  if (ret.second != 0 && ipcf.get_is(root)) {
+  if (ret.second == 0 && ipcf.get_is(root)) {
     ret.first = ipcf.get(root).get_radius();
     ret.second = 1.0;
   }
@@ -78,7 +92,9 @@ std::pair<double, double> get_resolution_impl(
 float get_resolution(NodeConstHandle root) {
   IntermediateParticleConstFactory ipcf(root.get_file());
   std::pair<double, double> total = get_resolution_impl(root, ipcf);
-  return total.first / total.second;
+  RMF_USAGE_CHECK(total.first != 0,
+                  std::string("No particles were found at ") + root.get_name());
+  return total.second / total.first;
 }
 }
 
@@ -102,6 +118,16 @@ NodeHandle Alternatives::get_alternative(RepresentationType type,
                       resolutions_key_, type, resolution));
 }
 
+NodeHandles Alternatives::get_alternatives(RepresentationType type) const {
+  NodeHandles ret ;
+  RMF_FOREACH(NodeID id,
+              get_alternatives_impl(node_, base_resolution_key_, types_key_,
+                                    roots_key_, resolutions_key_)) {
+    ret.push_back(node_.get_file().get_node(id));
+  }
+  return ret;
+}
+
 void Alternatives::add_alternative(NodeHandle root, RepresentationType type) {
   node_.get_shared_data()
       ->access_static_value(node_.get_id(), types_key_)
@@ -118,6 +144,43 @@ NodeConstHandle AlternativesConst::get_alternative(RepresentationType type,
   return node_.get_file().get_node(
       get_alternative_impl(node_, base_resolution_key_, types_key_, roots_key_,
                       resolutions_key_, type, resolution));
+}
+
+NodeConstHandles AlternativesConst::get_alternatives(RepresentationType type)
+    const {
+  NodeConstHandles ret;
+  RMF_FOREACH(NodeID id,
+              get_alternatives_impl(node_, base_resolution_key_, types_key_,
+                                    roots_key_, resolutions_key_)) {
+    ret.push_back(node_.get_file().get_node(id));
+  }
+  return ret;
+}
+
+float AlternativesConst::get_resolution(NodeID id) const {
+  if (id == node_.get_id()) {
+    return node_.get_value(base_resolution_key_);
+  }
+  const Ints& roots = node_.get_value(roots_key_);
+  for (unsigned int i = 0; i < roots.size(); ++i) {
+    if (roots[i] == id.get_index()) {
+      return node_.get_value(resolutions_key_).get()[i];
+    }
+  }
+  RMF_THROW(Message("No such alternative representation"), UsageException);
+}
+
+RepresentationType AlternativesConst::get_representation_type(NodeID id) const {
+  if (id == node_.get_id()) {
+    return PARTICLE;
+  }
+  const Ints& roots = node_.get_value(roots_key_);
+  for (unsigned int i = 0; i < roots.size(); ++i) {
+    if (roots[i] == id.get_index()) {
+      return RepresentationType(node_.get_value(types_key_).get()[i]);
+    }
+  }
+  RMF_THROW(Message("No such alternative representation"), UsageException);
 }
 } /* namespace decorator */
 } /* namespace RMF */

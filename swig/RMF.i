@@ -285,6 +285,7 @@ RMF_DECORATOR(RMF::decorator, Diffuser);
 RMF_DECORATOR(RMF::decorator, Typed);
 RMF_DECORATOR(RMF::decorator, Force);
 RMF_DECORATOR(RMF::decorator, Torque);
+RMF_DECORATOR(RMF::decorator, Alternatives);
 
 %include "RMF/decorator/physics.h"
 %include "RMF/decorator/sequence.h"
@@ -293,6 +294,7 @@ RMF_DECORATOR(RMF::decorator, Torque);
 %include "RMF/decorator/feature.h"
 %include "RMF/decorator/alias.h"
 %include "RMF/decorator/publication.h"
+%include "RMF/decorator/alternatives.h"
 %include "RMF/utility.h"
 %include "RMF/signature.h"
 %include "RMF/info.h"

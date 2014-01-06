@@ -30,7 +30,7 @@ enum RepresentationType {
   /** Representation via particles, the default. */
   PARTICLE = 0,
   /** Representation via arbitrary geometry. */
-  GEOMETRY = 1,
+  SHAPE = 1,
   SURFACE = 2,
 };
 
@@ -56,6 +56,17 @@ class AlternativesConst : public Decorator<NodeConstHandle> {
   NodeConstHandle get_alternative(RepresentationType type,
                                   double resolution) const;
 
+  /** Get the resolution of a given node associated with this one.*/
+  float get_resolution(NodeID id) const;
+
+  RepresentationType get_representation_type(NodeID id) const;
+
+  /** Get all the alternatives (including this node).
+
+     You can use get_resolution() and get_representation_type() to get info
+     about them. */
+  NodeConstHandles get_alternatives(RepresentationType type) const;
+
   static std::string get_decorator_type_name() { return "AlternativesConst"; }
 };
 
@@ -77,6 +88,8 @@ class Alternatives : public Decorator<NodeHandle> {
 
   void add_alternative(NodeHandle root, RepresentationType type);
 
+  NodeHandles get_alternatives(RepresentationType type) const;
+
   static std::string get_decorator_type_name() { return "Alternatives"; }
 };
 
@@ -94,22 +107,16 @@ class AlternativesConstFactory {
   AlternativesConstFactory(FileConstHandle fh);
 
   AlternativesConst get(NodeConstHandle nh) const {
-    RMF_USAGE_CHECK((nh.get_type() == RMF::ALTERNATIVES),
-                    std::string("Bad node type. Got \"") +
-                        boost::lexical_cast<std::string>(nh.get_type()) +
-                        "\" in decorator type  Alternatives");
     return AlternativesConst(nh, base_resolution_key_, types_key_, roots_key_,
                              resolutions_key_);
   }
   /** Check whether nh has all the attributes required to be a
       AlternativesConst.*/
   bool get_is(NodeConstHandle nh) const {
-    return nh.get_type() == RMF::ALTERNATIVES &&
-           nh.get_has_value(base_resolution_key_);
+    return nh.get_has_value(base_resolution_key_);
   }
   bool get_is_static(NodeConstHandle nh) const {
-    return nh.get_type() == RMF::ALTERNATIVES &&
-           nh.get_has_value(base_resolution_key_);
+    return nh.get_has_value(base_resolution_key_);
   }
 };
 
@@ -127,21 +134,14 @@ class AlternativesFactory {
   AlternativesFactory(FileHandle fh);
 
   Alternatives get(NodeHandle nh) const {
-    RMF_USAGE_CHECK((nh.get_type() == RMF::ALTERNATIVES),
-                    std::string("Bad node type. Got \"") +
-                        boost::lexical_cast<std::string>(nh.get_type()) +
-                        "\" in decorator type  Alternatives");
-
     return Alternatives(nh, base_resolution_key_, types_key_, roots_key_,
                         resolutions_key_);
   }
   bool get_is(NodeHandle nh) const {
-    return (nh.get_type() == RMF::ALTERNATIVES &&
-            nh.get_has_value(base_resolution_key_));
+    return nh.get_has_value(base_resolution_key_);
   }
   bool get_is_static(NodeHandle nh) const {
-    return (nh.get_type() == RMF::ALTERNATIVES &&
-            nh.get_has_value(base_resolution_key_));
+    return nh.get_has_value(base_resolution_key_);
   }
 };
 

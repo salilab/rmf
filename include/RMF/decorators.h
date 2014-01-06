@@ -15,6 +15,7 @@
 #include "RMF/decorator/publication.h"
 #include "RMF/decorator/sequence.h"
 #include "RMF/decorator/shape.h"
+#include "RMF/decorator/alternatives.h"
 
 /** \namespace RMF::decorator
 
