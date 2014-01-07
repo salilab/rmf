@@ -1,6 +1,5 @@
-""" \example motion.py
- Do a silly little simulation to show things moving around
-"""
+## \example motion.py
+# Do a silly little simulation to show things moving around
 
 import RMF
 import random
