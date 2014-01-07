@@ -7,6 +7,7 @@
 #include "RMF/types.h"
 #include "RMF/internal/SharedDataHierarchy.h"
 #include "RMF/internal/SharedDataData.h"
+#include "RMF/internal/SharedDataFrames.h"
 #include "RMF/internal/small_set_map.h"
 
 #include "avrocpp/api/Specific.hh"
@@ -132,7 +133,7 @@ struct FileData {
 
   FrameID max_id;
   std::vector<internal::HierarchyNode<NodeID, NodeType> > nodes;
-  std::vector<FrameIDs> frame_children;
+  RMF_LARGE_UNORDERED_MAP<FrameID, internal::FrameData> frames;
   KeyData keys;
   DataTypes data;
   RMF_LARGE_UNORDERED_MAP<FrameID, int32_t> frame_block_offsets;
@@ -147,7 +148,7 @@ inline void clear(FileData& fd) {
   fd.extra_frame_types.clear();
   fd.node_sets.clear();
   fd.nodes.clear();
-  fd.frame_children.clear();
+  fd.frames.clear();
   clear(fd.keys);
   clear(fd.data);
   fd.frame_block_offsets.clear();

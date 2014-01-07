@@ -65,6 +65,14 @@ FileConstHandle open_rmf_buffer_read_only(BufferConstHandle buffer) {
   return FileConstHandle(internal::read_buffer(buffer));
 }
 
+FrameIDs FileConstHandle::get_root_frames() const {
+  FrameIDs ret;
+  RMF_FOREACH(FrameID fr, get_frames()) {
+    if (get_parents(fr).empty()) ret.push_back(fr);
+  }
+  return ret;
+}
+
 void FileConstHandle::reload() {
   try {
     shared_->reload();

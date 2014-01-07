@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
       if (f.get_index() < static_cast<unsigned int>(start_frame)) continue;
       if ((f.get_index() - start_frame) % step_frame != 0) continue;
       rh.set_current_frame(f);
-      orh.add_frame(rh.get_current_frame_name(), rh.get_current_frame_type());
+      orh.add_frame(rh.get_name(f), rh.get_type(f));
       RMF::clone_loaded_frame(rh, orh);
       if (orh.get_number_of_frames() % 10 == 0) std::cout << "." << std::flush;
     }

@@ -227,9 +227,10 @@ void Avro2IO<RW>::save_loaded_frame(internal::SharedData *shared_data) {
   FrameID id = shared_data->get_loaded_frame();
   frame_ = avro2::Frame();
   frame_.id = id;
-  frame_.parents = shared_data->get_loaded_frame_parents();
-  frame_.type = shared_data->get_loaded_frame_type();
-  frame_.name = shared_data->get_loaded_frame_name();
+  const internal::FrameData &fd = shared_data->get_frame_data(id);
+  frame_.parents = FrameIDs(fd.parents.begin(), fd.parents.end());
+  frame_.type = fd.type;
+  frame_.name = fd.name;
   save_all(file_data_, file_data_changes_, shared_data, frame_.data, NULL,
            internal::LoadedValues());
 }
@@ -238,15 +239,6 @@ template <class RW>
 void Avro2IO<RW>::load_loaded_frame(internal::SharedData *shared_data) {
   FrameID id = shared_data->get_loaded_frame();
   rw_.load_frame(file_data_, frame_.id, id, frame_);
-  shared_data->set_loaded_frame_name(frame_.name);
-  shared_data->set_loaded_frame_type(FrameType(frame_.type));
-  if (file_data_.frame_children.size() > id.get_index()) {
-    shared_data->set_loaded_frame_children(
-        file_data_.frame_children[id.get_index()]);
-  } else {
-    shared_data->set_loaded_frame_children(FrameIDs());
-  }
-  shared_data->set_loaded_frame_parents(frame_.parents);
   load_all(file_data_.categories, shared_data, file_data_.keys, frame_.data,
            internal::LoadedValues());
 }
@@ -273,7 +265,13 @@ void Avro2IO<RW>::load_file(internal::SharedData *shared_data) {
   RMF_INFO("Found " << get_number_of_frames() << " frames");
   shared_data->set_description(file_data_.description);
   shared_data->set_producer(file_data_.producer);
-  shared_data->set_number_of_frames(get_number_of_frames());
+  typedef std::pair<FrameID, internal::FrameData> FDP;
+  RMF_FOREACH(FDP fdp, file_data_.frames) {
+    shared_data->add_frame_data(fdp.first, fdp.second.name, fdp.second.type);
+    RMF_FOREACH(FrameID p, fdp.second.parents) {
+      shared_data->add_child_frame(p, fdp.first);
+    }
+  }
   shared_data->set_file_type("rmf3");
 
   typedef std::pair<Category, std::string> CP;

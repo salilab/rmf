@@ -527,7 +527,10 @@ struct BackwardsIO : public IO {
     RMF_INFO("Loading file");
     RMF::internal::clone_file(sd_.get(), shared_data);
     shared_data->set_file_type(sd_->get_file_type());
-    shared_data->set_number_of_frames(sd_->get_number_of_frames());
+    RMF_FOREACH(FrameID id, internal::get_frames(sd_.get())) {
+      shared_data->add_frame_data(id, "", FRAME);
+    }
+    RMF_TRACE("Found " << sd_->get_number_of_frames() << " frames.");
     RMF_FOREACH(Category c, sd_->get_categories()) {
       shared_data->get_category(sd_->get_name(c));
     }
@@ -548,8 +551,9 @@ struct BackwardsIO : public IO {
     // ignore nesting relationships for now
     if (cur.get_index() >= sd_->get_number_of_frames()) {
       RMF_TRACE("Adding new frame for " << cur);
-      FrameID nfid = sd_->add_frame(shared_data->get_loaded_frame_name(),
-                                    shared_data->get_loaded_frame_type());
+      FrameID cur_frame= shared_data->get_loaded_frame();
+      FrameID nfid = sd_->add_frame(shared_data->get_frame_data(cur).name,
+                                    shared_data->get_frame_data(cur).type);
       RMF_UNUSED(nfid);
       RMF_INTERNAL_CHECK(nfid == cur, "Number of frames don't match.");
     }
@@ -564,10 +568,6 @@ struct BackwardsIO : public IO {
     RMF_INFO("Loading frame " << shared_data->get_loaded_frame());
     FrameID cur = shared_data->get_loaded_frame();
     sd_->set_loaded_frame(cur);
-    shared_data->set_loaded_frame_name(sd_->get_loaded_frame_name());
-    shared_data->set_loaded_frame_type(sd_->get_loaded_frame_type());
-    shared_data->set_loaded_frame_parents(FrameIDs());
-    shared_data->set_loaded_frame_children(FrameIDs());
     RMF_FOREACH(Category category, shared_data->get_categories()) {
       load_frame_category(category, shared_data, internal::LoadedValues());
     }

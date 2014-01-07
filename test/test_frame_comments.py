@@ -16,7 +16,7 @@ class GenericTest(unittest.TestCase):
 
     def test_open_2x(self):
         """Test frame comments"""
-        for suffix in RMF.suffixes:
+        for suffix in ["rmfz"]:
             self._test_one(RMF._get_temporary_file_path("comments." + suffix))
 
 if __name__ == '__main__':

@@ -22,20 +22,12 @@
 #include "RMF/internal/SharedDataFile.h"
 #include "RMF/internal/SharedDataHierarchy.h"
 #include "RMF/internal/SharedDataKeys.h"
-#include "RMF/internal/SharedDataLoadedFrame.h"
+#include "RMF/internal/SharedDataFrames.h"
 #include "RMF/internal/SharedDataPath.h"
 #include "RMF/internal/SharedDataUserData.h"
 #include "RMF/names.h"
 #include "RMF/traits.h"
 #include "RMF/types.h"
-#include "SharedDataCategory.h"
-#include "SharedDataData.h"
-#include "SharedDataFile.h"
-#include "SharedDataHierarchy.h"
-#include "SharedDataKeys.h"
-#include "SharedDataLoadedFrame.h"
-#include "SharedDataPath.h"
-#include "SharedDataUserData.h"
 
 RMF_ENABLE_WARNINGS
 
@@ -67,11 +59,10 @@ class RMFEXPORT SharedData
       public SharedDataHierarchy,
       public SharedDataCategory,
       public SharedDataData,
-      RMF_FOREACH_TYPE(RMF_SHARED_DATA_PARENT) public SharedDataLoadedFrame {
-  unsigned int number_of_frames_;
+      RMF_FOREACH_TYPE(RMF_SHARED_DATA_PARENT) public SharedDataFrames {
   bool write_;
   boost::shared_ptr<backends::IO> io_;
-
+  FrameID loaded_frame_;
  public:
 
   using SharedDataHierarchy::get_name;
@@ -89,8 +80,7 @@ class RMFEXPORT SharedData
   FrameID add_frame(std::string name, FrameID parent, FrameType type);
   void flush();
   void reload();
-  unsigned int get_number_of_frames() const { return number_of_frames_; }
-  void set_number_of_frames(unsigned int n) { number_of_frames_ = n; }
+  FrameID get_loaded_frame() const { return loaded_frame_; }
   ~SharedData();
 };
 

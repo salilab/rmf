@@ -171,7 +171,7 @@ int main(int argc, char** argv) {
       std::cout << "Processing frame " << j << std::endl;
       irh0.set_current_frame(RMF::FrameID(j));
       irh1.set_current_frame(RMF::FrameID(j + 1));
-      orh.add_frame(irh0.get_current_frame_name(), RMF::FRAME);
+      orh.add_frame(irh0.get_name(RMF::FrameID(j)), RMF::FRAME);
       RMF::clone_loaded_frame(irh0, orh);
       if (j + 1 < irh0.get_number_of_frames()) {
         interpolate_frames(num_frames, noise, angle_noise, irh0, irh1, orh);

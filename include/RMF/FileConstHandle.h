@@ -175,17 +175,19 @@ class RMFEXPORT FileConstHandle {
       @{
    */
   FrameID get_current_frame() const { return shared_->get_loaded_frame(); }
-  FrameIDs get_current_frame_children() const {
-    return shared_->get_loaded_frame_children();
+  FrameType get_type(FrameID fr) const {
+    return shared_->get_frame_data(fr).type;
   }
-  FrameIDs get_current_frame_parents() const {
-    return shared_->get_loaded_frame_parents();
+  std::string get_name(FrameID fr) const {
+    return shared_->get_frame_data(fr).name;
   }
-  FrameType get_current_frame_type() const {
-    return shared_->get_loaded_frame_type();
+  FrameIDs get_children(FrameID id) const {
+    const internal::FrameData &fd = shared_->get_frame_data(id);
+    return FrameIDs(fd.children.begin(), fd.children.end());
   }
-  std::string get_current_frame_name() const {
-    return shared_->get_loaded_frame_name();
+  FrameIDs get_parents(FrameID id) const {
+    const internal::FrameData &fd = shared_->get_frame_data(id);
+    return FrameIDs(fd.parents.begin(), fd.parents.end());
   }
   void set_current_frame(FrameID frame) const {
     RMF_USAGE_CHECK(frame != FrameID(), "Invalid frame passed.");
@@ -219,6 +221,9 @@ class RMFEXPORT FileConstHandle {
   /** Return a string identifying the file type.
   */
   std::string get_file_type() const { return shared_->get_file_type(); }
+
+  /** Get all the frames that are roots (aren't subframes). */
+  FrameIDs get_root_frames() const;
 
 #ifndef SWIG
   boost::iterator_range<internal::integer_iterator<FrameID> > get_frames()

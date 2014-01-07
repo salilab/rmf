@@ -303,18 +303,10 @@ struct codec_traits<RMF::avro2::FileData> {
     if (n == 0) {
       internal_avro::decode(d, v.cur_id);
       v.max_id = std::max(v.max_id, v.cur_id);
-      RMF::avro2::Skip<std::string> junk_name;
-      internal_avro::decode(d, junk_name);
-      RMF::avro2::Skip<RMF::FrameType> junk_type;
-      internal_avro::decode(d, junk_type);
-      RMF::FrameIDs frame_parents;
-      internal_avro::decode(d, frame_parents);
+      internal_avro::decode(d, v.frames[v.cur_id].name);
+      internal_avro::decode(d, v.frames[v.cur_id].type);
+      internal_avro::decode(d, v.frames[v.cur_id].parents);
       RMF_INFO("Found frame " << v.cur_id);
-      RMF_FOREACH(RMF::FrameID p, frame_parents) {
-        v.frame_children.resize(
-            std::max<std::size_t>(v.frame_children.size(), p.get_index() + 1));
-        v.frame_children[p.get_index()].push_back(v.cur_id);
-      }
     } else {
       RMF_INFO("Found static frame");
       v.cur_id = RMF::FrameID();

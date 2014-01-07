@@ -25,7 +25,7 @@ class GenericTest(unittest.TestCase):
         for fr in f.get_frames():
             f.set_current_frame(fr)
             nfid = of.add_frame(
-                f.get_current_frame_name(), f.get_current_frame_type())
+                f.get_name(fr), f.get_type(fr))
 
             self.assertEqual(nfid, fr)
             RMF.clone_loaded_frame(f, of)

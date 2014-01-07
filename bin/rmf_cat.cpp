@@ -44,7 +44,7 @@ int main(int argc, char** argv) {
       orh.set_description(orh.get_description() + "\n" + rh.get_description());
       RMF_FOREACH(RMF::FrameID ni, rh.get_frames()) {
         rh.set_current_frame(ni);
-        orh.add_frame(rh.get_current_frame_name(), rh.get_current_frame_type());
+        orh.add_frame(rh.get_name(ni), rh.get_type(ni));
         RMF::clone_loaded_frame(rh, orh);
       }
     }

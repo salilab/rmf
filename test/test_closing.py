@@ -13,6 +13,7 @@ class Tests(unittest.TestCase):
 
     def test_perturbed(self):
         """Test closing an RMF file"""
+        # RMF.set_log_level("trace")
         for suffix in RMF.suffixes:
             f = RMF.create_rmf_file(
                 RMF._get_temporary_file_path("test_file." + suffix))
@@ -32,6 +33,7 @@ class Tests(unittest.TestCase):
 
     def test_perturbed_2(self):
         """Test reopening an RMF file"""
+        # RMF.set_log_level("trace")
         for suffix in RMF.suffixes:
             name = RMF._get_temporary_file_path("test_file2." + suffix)
             print name
