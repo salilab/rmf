@@ -125,6 +125,8 @@ RMF_SWIG_VALUE_INSTANCE(RMF, Category, ID<CategoryTag>, Categories);
 RMF_SWIG_VALUE_INSTANCE(RMF, FrameID, ID<FrameTag>, FrameIDs);
 RMF_SWIG_VALUE_INSTANCE(RMF, Vector3, Vector<3>, Vector3s);
 RMF_SWIG_VALUE_INSTANCE(RMF, Vector4, Vector<4>, Vector4s);
+RMF_SWIG_VALUE_INSTANCE(RMF, NodeType, RMF::Enum< RMF::NodeTypeTag> , NodeTypes);
+RMF_SWIG_VALUE_INSTANCE(RMF, FrameType, RMF::Enum< RMF::FrameTypeTag >, FrameTypes);
 RMF_SWIG_NATIVE_VALUES_LIST(RMF, double, Floats, FloatsList);
 RMF_SWIG_NATIVE_VALUES_LIST(RMF, int, Ints, IntsList);
 RMF_SWIG_NATIVE_VALUES_LIST(RMF, std::string, Strings, StringsList);
@@ -146,9 +148,9 @@ RMF_SWIG_VALUE(RMF, NodeHandle, NodeHandles);
 RMF_SWIG_VALUE(RMF, FileHandle, FileHandles);
 RMF_SWIG_VALUE(RMF, SetCurrentFrame, SetCurrentFrames);
 RMF_SWIG_VALUE_TEMPLATE(RMF, ID);
+RMF_SWIG_VALUE_TEMPLATE(RMF, Enum);
 RMF_SWIG_PAIR(RMF, Index, IndexRange, IndexRanges)
 RMF_SWIG_PAIR(RMF, Int, IntRange, IntRanges)
-
 
 RMF_SWIG_VALUE(RMF::decorator, ReferenceFrame, ReferenceFrames);
 
@@ -244,6 +246,11 @@ RMF_SWIG_FOREACH_TYPE(RMF_SWIG_TYPE_LIST)
 RMF_SWIG_FOREACH_TYPE(RMF_SWIG_WRAP_NULLABLE);
 
 %include "RMF/names.h"
+%include "RMF/Enum.h"
+namespace RMF {
+  %template(NodeType) Enum<NodeTypeTag>;
+  %template(FrameType) Enum<FrameTypeTag>;
+}
 %include "RMF/enums.h"
 %include "RMF/NodeConstHandle.h"
 %include "RMF/NodeHandle.h"

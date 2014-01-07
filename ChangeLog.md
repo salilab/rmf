@@ -1,4 +1,7 @@
 # Change Log #
+- RMF::NodeType and RMF::FrameType were replaced with RMF::Enum
+	instances. This increases type safety in python and makes
+	converting to and from strings easier (you can now use `str()` in python).
 - RMF::decorator::Residue::get_residue_index() and
 	RMF::decorator::Residue::get_residue_type() replace the versions
 	without `residue` in the name

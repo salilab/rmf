@@ -61,7 +61,7 @@ NodeID AvroSharedData<Base>::add_child(NodeID node, std::string name,
   add_child(node, index);
   P::add_node_key();
   RMF_INTERNAL_CHECK(
-      get_type(index) == static_cast<int>(t),
+      get_type(index) == NodeType(t),
       internal::get_error_message(
           "Types don't match for node ", name, ": ", NodeType(t), " (", t,
           ") vs ", NodeType(get_type(index)), " (", get_type(index), ")"));

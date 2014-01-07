@@ -40,7 +40,7 @@ class SharedDataLoadedFrame {
   }
 
  public:
-  SharedDataLoadedFrame() {}
+  SharedDataLoadedFrame() : type_(INVALID_FRAME_TYPE) {}
   std::string get_loaded_frame_name() const { return name_; }
   FrameType get_loaded_frame_type() const { return type_; }
   const FrameIDs& get_loaded_frame_parents() const { return parents_; }

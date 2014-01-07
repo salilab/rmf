@@ -1,4 +1,4 @@
-## \example rmf_xml.py
+# \example rmf_xml.py
 # This example converts an RMF file to xml, in order to display it in
 # an XML viewer such as firefox. Its functionality is largely
 # identical to the \c rmf_xml program. The secondary purpose it to
@@ -39,7 +39,7 @@ def show_xml(nh, kcs):
     name = nh.get_name()
     name.replace(" ", "_")
     print "<node name=\"" + name + "\" id=\"" + str(nh.get_index().get_index())\
-        + "\" type=\"" + RMF.get_type_name(nh.get_type()) + "\"/>"
+        + "\" type=\"" + str(nh.get_type()) + "\"/>"
     if verbose:
         for kc in kcs:
             show_data_xml(nh, kc)

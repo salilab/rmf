@@ -49,7 +49,7 @@ void show_node(NodeConstHandle n, std::string node_suffix, std::ostream& out,
                std::string prefix = "") {
   using std::operator<<;
   out << prefix << "\"" << n.get_name() << "\"" << node_suffix << " ["
-      << get_type_name(n.get_type()) << "]";
+      << n.get_type() << "]";
 }
 void show_node(NodeConstHandle n, std::string node_suffix, std::ostream& out,
                FloatKeys fks, FloatsKeys fsks, IntKeys iks, IntsKeys isks,
@@ -84,8 +84,8 @@ void show_node_decorators(
     decorator::DiffuserConstFactory diffusercf,
     decorator::TypedConstFactory typedcf, std::string) {
   using std::operator<<;
-  out << "\"" << n.get_name() << "\"" << node_suffix << " ["
-      << get_type_name(n.get_type()) << ":";
+  out << "\"" << n.get_name() << "\"" << node_suffix << " [" << n.get_type()
+      << ":";
   if (bdcf.get_is(n)) out << " bond";
   if (ccf.get_is(n)) out << " color";
   if (pcf.get_is(n)) out << " particle";
@@ -253,8 +253,8 @@ void show_frames_impl(FileConstHandle fh, FrameID root, std::string prefix,
   } else {
     out << " + ";
   }
-  out << fh.get_current_frame_name() << " ["
-      << get_frame_type_name(fh.get_current_frame_type()) << "]" << std::endl;
+  out << fh.get_current_frame_name() << " [" << fh.get_current_frame_type()
+      << "]" << std::endl;
   RMF_FOREACH(FrameID id, ch) { show_frames_impl(fh, id, prefix + "   ", out); }
 }
 }
