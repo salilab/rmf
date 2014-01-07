@@ -1,4 +1,4 @@
-# \example alternatives.py
+## \example alternatives.py
 # The RMF format supports storing alternative representations of the structure
 # through the RMF::decorator::Alternatives decorator and associated types.
 # Multiple versions of the hierarchy are stored, all representing the same

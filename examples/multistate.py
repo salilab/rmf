@@ -1,4 +1,4 @@
-# \example multistate.py
+## \example multistate.py
 # Show how to create an detect files where frames represent multiple
 # states of the same thing.
 

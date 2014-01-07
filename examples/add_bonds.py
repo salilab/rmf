@@ -10,7 +10,8 @@ def copy_to_residues(pin, pout, rcf, rf, pcf, pf, acf, af, ccf, cf, bf, prev):
         rpout.set_residue_type(rpin.get_residue_type())
         rpout.set_residue_index(rpin.get_residue_index())
         mass = 0
-        ca = pin.get_children()[0]  # provide a default for nonstandard residues
+        # provide a default for nonstandard residues
+        ca = pin.get_children()[0]
         for c in pin.get_children():
             # there is a hetatom
             if acf.get_is(c) and c.get_name().find("CA") != -1:

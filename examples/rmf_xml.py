@@ -1,4 +1,4 @@
-# \example rmf_xml.py
+## \example rmf_xml.py
 # This example converts an RMF file to xml, in order to display it in
 # an XML viewer such as firefox. Its functionality is largely
 # identical to the \c rmf_xml program. The secondary purpose it to
