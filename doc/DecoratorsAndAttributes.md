@@ -1,6 +1,6 @@
-# RMF Attributes and Decorators
+# Attributes and Decorators
 
-# RMF Attributes and decorators # {#decoratorsattributes}
+# Attributes and decorators # {#decoratorsattributes}
 
 [TOC]
 

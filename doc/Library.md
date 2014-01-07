@@ -1,4 +1,4 @@
-# RMF Library
+# Library
 
 # Overview # {#rmflib}
 
