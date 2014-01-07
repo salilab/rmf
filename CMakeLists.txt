@@ -27,6 +27,7 @@ if(POLICY CMP0017)
 cmake_policy(SET CMP0017 NEW)
 endif(POLICY CMP0017)
 
+include(cmake_modules/ExecuteProcess.cmake)
 include(cmake_modules/FindLog4CXX.cmake)
 include(cmake_modules/FindC++11.cmake)
 include(cmake_modules/FindCompilerFlags.cmake)
