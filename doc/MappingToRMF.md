@@ -1,4 +1,6 @@
-/** \page mapping How different types of data map to RMF files
+# Mapping Data
+
+# Mapping data to RMF files # {#mapping}
 
 This page outlines how one would go about storing various types of data in RMF files. Much of what it says is merely suggestions, and is not mandatory.
 
@@ -16,7 +18,7 @@ For nodes types, the following node shapes are used
 And a dot means an RMF::ALIAS node. The key concept to keep in mind with RMF::ALIAS nodes is that, unlike everything else, they don't introduce a new entity, simply point to one that exists elsewhere.
 See RMF::ROOT, RMF::REPRESENTATION, RMF::BOND, RMF::ORGANIZATIONAL, RMF::FEATURE for more information.
 
-\section pdb PDB files
+# PDB files #
 
 PDB files are most naturally mapped as follows:
 - each PDB chain is a node that is a child of the root and stores data using the RMF::decorator::Chain decorator
@@ -75,7 +77,7 @@ All bonds are stored as RMF::BOND nodes with two children for the endpoints of t
 
 If the PDB file has more than one model, all with the same structure, the models should be stored as frames in the RMF file.
 
-\section rigid_fits Rigid fits of proteins into EM maps or other data
+# Rigid fits of proteins into EM maps or other data #
 
 When you have a number of structures that are formed by applying a rigid transform to a set of base structures (eg fitting pdb structures into an EM map), they can be stored as follows:
 - RMF::decorator::ReferenceFrame nodes can be used to store the rigid transforms
@@ -104,7 +106,7 @@ Multiple structures can be stored as separate frames.
     }
 \enddot
 
-\section multiple_schemes Structures with multiple organization schemes
+# Structures with multiple organization schemes #
 
 If the file contains data that has multiple organization schemes, for example, grouping by type of protein, which unit cell etc, several different hierarchies can be provided, all with the same child structures using RMF::ALIAS nodes to provide the different organization schemes.
 
@@ -142,7 +144,7 @@ If the file contains data that has multiple organization schemes, for example, g
     }
 \enddot
 
-\section symmetries Symmetries
+# Symmetries #
 
 When there is symmetry, or other repeated unit, define the unit cell in one sub hierarchy and then add RMF::decorator::ReferenceFrame nodes that have that unit cell as a child to define the symmetric parts.
 
@@ -164,4 +166,3 @@ When there is symmetry, or other repeated unit, define the unit cell in one sub 
       copy_2 -> structure;
     }
 \enddot
-*/

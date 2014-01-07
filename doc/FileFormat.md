@@ -1,6 +1,6 @@
 # File Format
 
-# Overview # {#rmf}
+# Overview # {#format}
 
 [TOC]
 
@@ -48,7 +48,7 @@ relate to different experimental data - different organization schemes
 on the structure - arbitrary extra data needed by other programs -
 associated authorship and publication information
 
-## Examples ## {#example_files}
+# Examples # {#example_files}
 
 Simple example:
 - [simple pdb](simple.pdb.txt)
@@ -61,7 +61,7 @@ Larger pdb:
 - [3U7W on disk](3U7W.rmf3.txt) for how the data is stored in an RMF3 file.
 
 
-## The RMF Hierarchy ## {#hierarchy}
+# The RMF Hierarchy # {#hierarchy}
 
 More technically, each node in the %RMF hierarchy has
 
@@ -77,7 +77,7 @@ One accesses nodes in the hierarchy using handles, RMF::NodeHandle and
 RMF::NodeConstHandle. The root handle can be fetched from the
 RMF::FileHandle using RMF::FileHandle::get_root_node().
 
- ## Attributes ## {#attribute}
+ # Attributes # {#attribute}
 
 Each attribute is identified by a key (eg RMF::IntKey) and is defined by a
 unique combination of
@@ -97,7 +97,7 @@ manipulation of standard attributes. Examples include RMF::Particle,
 RMF::decorator::Colored, RMF::decorator::Ball etc. See [Decorators](\ref decoratorsattributes) for
 more information.
 
-The data types that can currently be stored in an \ref rmf "RMF File" are
+The data types that can currently be stored in an RMF file are
 | Name    |  Description | C++ type | Python type |
 |--------:|--------------|:--------:|:-----------:|
 | RMF::Float   | a floating point value | `float` | `float` |
@@ -121,7 +121,7 @@ Each data type has associated typedefs such as
 |RMF::FloatsTraits | RMF::FloatsTraits | a traits classes to tell HDF5 how to read and write one or more lists of floating point values |
 
 
-## Inheritance of properties ## {#inheritance}
+# Inheritance of properties # {#inheritance}
 
 Certain nodes modify how their children should behave. This
 modification can be either through inheritance (eg all descendants are
@@ -140,7 +140,7 @@ RMF::Ball with an ancestor that is an RMF::ReferenceFrame has global
 coordinates at the RMF::ReferenceFrame's transformation applied to its
 coordinates.  See the example rigid_bodies.py.
 
-## Frames ## {#frames}
+# Frames # {#frames}
 
 Each RMF file stores one or more frames (conformations). The
 attributes of a node in a given conformation are the union of
@@ -158,7 +158,7 @@ Frames also have arbitrary attributes associated with them, like
 nodes.
 
 
-## Adding custom data to an RMF ## {#adding}
+# Adding custom data to an RMF # {#adding}
 
 When adding data to an %RMF file that is just to be used for internal
 consumption, one should create a new category. For example,
@@ -169,7 +169,7 @@ If, instead, the data is likely to be a general interest, it probably
 makes sense to add it to the documentation of this library so that the
 names used can be standardized.
 
-## On disk formats ## {#on_disk}
+# On disk formats # {#on_disk}
 
 The RMF library supports several
 on-disk formats. They are differentiated by the file suffix. The API
@@ -188,7 +188,7 @@ A quick comparison of the various options (taken from benchmark/benchmark_rmf.cp
 
 `data` is the size of the raw data saved to disk.
 
-### RMF3 ### {#rmf_and_avro}
+## RMF3 ## {#rmf_and_avro}
 
 RMF3 stores the structure in an [Avro Object
 Container](http://avro.apache.org/docs/1.7.5/spec.html#Object+Container+Files). If
@@ -206,7 +206,7 @@ There are several ways that the files can be made more compact
 (without breaking forwards compatibility of existing files). They can be investigated
 further if there is sufficient demand.
 
-### RMF and HDF5 ### {#rmf_hdf5}
+## RMF and HDF5 ## {#rmf_hdf5}
 
 The %RMF data is stored in a single
 [HDF5](http://www.hdfgroup.org/HDF5/doc/UG/UG_frame09Groups.html)

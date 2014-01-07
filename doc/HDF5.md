@@ -1,4 +1,5 @@
-/** \page hdf5 A simple C++ and Python HDF5 Wrapper
+# HDF5
+
     We provide a simple set of classes for accessing core HDF5 functionality from C++. This was needed since
     - The HDF5 C interface is not trivial to use peroperly, particularly in regards to data type conversions and resource management
     - It is very easy to use the C interface incorrectly without knowning it.
@@ -16,4 +17,3 @@
     The top level classes are, in turn, derived from RMF::HDF5::Object, RMF::HDF5::ConstAttributes and RMF::HDF5MutableAttributes which provide access to general HDF5 per-object and attribute functionality (all objects in HDF5 can have arbitrary small pieces of data attached to them via attributes).
 
     Not all of the functionality of the HDF5 \c C library is covered in C++. You can get the corresponding native handle from most objects with methods like RMF::HDF5::File::get_handle() and use that for other operations if needed. Or submit a patch to the library.
-*/

@@ -1,6 +1,6 @@
 # Library
 
-# Overview # {#rmflib}
+# Overview # {#library}
 
 [TOC]
 
@@ -11,7 +11,7 @@ representing a node in the hierarchy.
 
 The file is automatically closed when the last handle to it is destroyed.
 
-## Basics ## {#basics}
+# Basics # {#basics}
 
 The library defines many classes, some of which are implemented using \c C++
 templates. Every class support output to a \c std::ostream in \c C++ and
@@ -24,7 +24,7 @@ In addition, there is a typedef for each type for managing lists of the objects.
 For example, a list of RMF::Category objects is passed using a RMF::Categories type.
 It looks like a \c std::vector in \c C++ and is a \c list in \c Python.
 
-## Associations ## {#associations}
+# Associations # {#associations}
 
 The %RMF wrapper has the concept of an association between nodes in
 its hierarchy and objects in the program accessing. The methods
@@ -36,20 +36,20 @@ data structures corresponding to the nodes and so avoid maintaining
 ones own lookup table. Any function used in an association must support
 a \c get_uint() function. An implementation is provided for pointers.
 
-## Parallel I/O ## {#parallel}
+# Parallel I/O # {#parallel}
 
 If RMF::FileHandle::flush() has been called since the last change, it is safe
 to read the file from another process. Writing from more than one process is not
 supported. Nor is reading or writing from more than one thread of the same
 program.
 
-## Invariants ## {#invariants}
+# Invariants # {#invariants}
 
 Currently, there is little explicit checking of invariants between attributes
 in the %RMF file. An extensible framework for checking invariants on file
 close and open will be added.
 
-## Decorators and factories ## {#rmfdecorators}
+# Decorators and factories # {#rmfdecorators}
 
 The nicest way to interact with data stored in nodes is through decorators and
 factories (see the RMF::decorator). A factory (eg RMF::decorator::ParticleFactory or RMF::decorator::ParticleConstFactory) is
@@ -60,7 +60,7 @@ for that node at that frame. The decorator (eg RMF::decorator::Particle or RMF::
 can then be used to access the attributes and set them (for non-const variants). The
 accessing is done through appropriately named functions (eg RMF::decorator::Particle::set_radius()).
 
-## Language bindings ## {#bindings}
+# Language bindings # {#bindings}
 
 The %RMF library currently supports C++ and Python. The API is
 written so that [SWIG](http://www.swig.org) can be used to
@@ -69,14 +69,17 @@ exceptions are C and Fortran. Until the SWIG %C target support is
 finished, these can be supported by writing a simple %C %API
 manually, probably a weeks work.
 
-## Helper programs ## {#helpers}
+# Helper programs # {#helpers}
 
 Several helper programs are provided. They all take the name of the RMF file as
 the first argument and an argument "-f" which is the frame to act on. Negative
 values for the frame are treated as every nth frame. That is, "-f -2" means take
 every other frame.
 
+
 - \c rmf_show prints out the hierarchy written to the file.
+
+- \c rmf_frame prints out the frame hierarchy written to the file.
 
 - \c rmf_pdb converts to and from pdb files.
 

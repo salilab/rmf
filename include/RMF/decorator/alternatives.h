@@ -53,12 +53,14 @@ class AlternativesConst : public Decorator<NodeConstHandle> {
         resolutions_key_(resolutions_key) {}
 
  public:
+  /** Get the alternative root that best matches the criteria. */
   NodeConstHandle get_alternative(RepresentationType type,
                                   double resolution) const;
 
   /** Get the resolution of a given node associated with this one.*/
   float get_resolution(NodeID id) const;
 
+  /** Get the type of the resolution with the given node id. */
   RepresentationType get_representation_type(NodeID id) const;
 
   /** Get all the alternatives (including this node).
@@ -84,10 +86,12 @@ class Alternatives : public Decorator<NodeHandle> {
                IntsKey roots_key, FloatsKey resolutions_key);
 
  public:
+  /** \copydoc AlternativesConst::get_alternative() */
   NodeHandle get_alternative(RepresentationType type, double resolution) const;
 
   void add_alternative(NodeHandle root, RepresentationType type);
 
+  /** \copydoc AlternativesConst::get_alternatives() */
   NodeHandles get_alternatives(RepresentationType type) const;
 
   static std::string get_decorator_type_name() { return "Alternatives"; }

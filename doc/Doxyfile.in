@@ -749,10 +749,11 @@ WARN_LOGFILE           = @PROJECT_BINARY_DIR@/doc/doc.log
 
 INPUT                  = @PROJECT_SOURCE_DIR@/README.md \
                          @PROJECT_SOURCE_DIR@/ChangeLog.md \
-                         @PROJECT_SOURCE_DIR@/include/RMF/HDF5 \
-                         @PROJECT_BINARY_DIR@/include/RMF/HDF5 \
                          @PROJECT_SOURCE_DIR@/include/RMF \
+                         @PROJECT_SOURCE_DIR@/include/RMF/HDF5 \
+                         @PROJECT_SOURCE_DIR@/include/RMF/decorator \
                          @PROJECT_BINARY_DIR@/include/RMF \
+                         @PROJECT_BINARY_DIR@/include/RMF/HDF5 \
                          @PROJECT_BINARY_DIR@/include/RMF/decorator \
                          @PROJECT_SOURCE_DIR@/doc \
                          @PROJECT_SOURCE_DIR@/examples \

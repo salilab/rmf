@@ -1,16 +1,16 @@
 # Attributes and Decorators
 
-# Attributes and decorators # {#decoratorsattributes}
+# Overview # {#decoratorsattributes}
 
 [TOC]
 
 The attributes and decorators are divided into several categories, each associated with a different RMF::Category. The get and set functions on the decorators always have the same names as the attribute, unless otherwise noted. For example, RMF::decorator::Particle has RMF::decorator::Particle::get_mass().
 
-## Physics ## {#physics}
+# Physics # {#physics}
 
 The category name is `physics`. It includes information about the physical structure of molecules.
 
-### Attributes ### {#physicsattributes}
+## Attributes ## {#physicsattributes}
 
 | Name           | Type         | Description                               |
 |---------------:|-------------:|:------------------------------------------|
@@ -25,7 +25,7 @@ The category name is `physics`. It includes information about the physical struc
 | `diffusion coefficient` | float | A diffusion coefficient in A^2/fs  |
 
 
-### Decorators ### {#physicsdecorators}
+## Decorators ## {#physicsdecorators}
 
 | Name                            |  Node Type              | Attributes                         |
 |--------------------------------:|:-----------------------:|:-----------------------------------|
@@ -35,11 +35,11 @@ The category name is `physics`. It includes information about the physical struc
 | RMF::decorator::Atom            |  RMF::REPRESENTATION    | coordinates, mass, radius, element |
 | RMF::decorator::Diffuser        |  RMF::REPRESENTATION    | diffusion coefficient, coordinates |
 
-## Sequence ## {#sequence}
+# Sequence # {#sequence}
 
 The category name is `sequence` and it includes information about the types and indexes of residues.
 
-### Attributes ### {#sequenceattributes}
+## Attributes ## {#sequenceattributes}
 
 | Name             | Type      | Description                                      |
 |-----------------:|----------:|:-------------------------------------------------|
@@ -54,7 +54,7 @@ The category name is `sequence` and it includes information about the types and 
 
 
 
-### Decorators ### {#sequencedecorators}
+## Decorators ## {#sequencedecorators}
 
 | Name                            |  Node Type              | Attributes                         |
 |--------------------------------:|:-----------------------:|:-----------------------------------|
@@ -66,11 +66,11 @@ The category name is `sequence` and it includes information about the types and 
 | RMF::decorator::Typed           | RMF::REPRESENTATION     |  type name                         |
 
 
-## Feature ## {#feature}
+# Feature # {#feature}
 
 The category name is `feature` and the data stored relates to scoring functions, scores and which part of the structure they apply to.
 
-### Attributes ### {#featureattributes}
+## Attributes ## {#featureattributes}
 
 | Name             | Type      | Description                                      |
 |-----------------:|----------:|:-------------------------------------------------|
@@ -84,11 +84,11 @@ The category name is `feature` and the data stored relates to scoring functions,
 | RMF::decorator::Score           | RMF::FEATURE            |  score                             |
 | RMF::decorator::Representation  | RMF::FEATURE            |  representation                    |
 
-## Shape ## {#shape}
+# Shape # {#shape}
 
 The category name is `shape` and the information relates to geometric markup of the structure.
 
-### Attributes ### {#shapeattributes}
+## Attributes ## {#shapeattributes}
 
 | Name             | Type             | Description                                      |
 |-----------------:|-----------------:|:-------------------------------------------------|
@@ -99,7 +99,7 @@ The category name is `shape` and the information relates to geometric markup of 
 | `axis lengths`   | RMF::Vector3     |  The length along each coordinate axis.          |
 | `orientation`    | RMF::Vector4     |  The ordientation quaternion.                    |
 
-### Decorators ### {#shapedecorators}
+## Decorators ## {#shapedecorators}
 
 | Name                            |  Node Type              | Attributes                         |
 |--------------------------------:|:-----------------------:|:-----------------------------------|
@@ -109,43 +109,67 @@ The category name is `shape` and the information relates to geometric markup of 
 | RMF::decorator::Cylinder        | RMF::GEOMETRY           |  coordinates list, radius          |
 | RMF::decorator::Ellipsoid       | RMF::GEOMETRY           |  coordinates, axis lengths, orientation |
 
-## Alias ## {#alias}
+# Alternatives # {#alternatives}
+
+The alternatives family is used to store alternative representation schemes for a given
+subhierarchy. For example, there can be representations at multiple resolutions or using
+a surface instead of particles. Since, in general, one wants to interact with one
+representation at a time, the alternative ones are hidden away until explicitly requested.
+
+## Attributes ## {#alternativesattributes}
+
+| Name             | Type      | Description                                      |
+|-----------------:|----------:|:-------------------------------------------------|
+| `resolution`     | float    |  The resolution of the default representation    |
+| `types`          | RMF::Ints |  The RMF::decorator::RepresentationType entries for the alternative representations. |
+| `roots`          | RMF::Ints |  The RMF::NodeID for each alternative hierarchy root. |
+| `resolutions`    | RMF::Floats |  The resolutions of the alternative representations. |
+
+
+## Decorators ## {#alternativesdecorators}
+
+| Name                            |  Node Type     | Attributes                         |
+|--------------------------------:|:--------------:|:-----------------------------------|
+| RMF::decorator::Alternatives    | any            |  You can use RMF::decorator::Alternatives::add_alternative() to add an alternative representation and RMF::decorator::Alternatives::get_alternatives() or RMF::decorator::Alternatives::get_alternative() to get them. |
+
+
+# Alias # {#alias}
 
 The category name is `alias` and it stores information for nodes that provide a reference to another node, for example to provide an alternative organizational scheme.
 
-### Attributes ### {#aliasattributes}
+## Attributes ## {#aliasattributes}
 
 | Name             | Type      | Description                                      |
 |-----------------:|----------:|:-------------------------------------------------|
 | `alias`          | int       |  NodeID of the node being aliased                |
 
-### Decorators ### {#aliasdecorators}
+## Decorators ## {#aliasdecorators}
 
 | Name                            |  Node Type              | Attributes                         |
 |--------------------------------:|:-----------------------:|:-----------------------------------|
 | RMF::decorator::Alias           | RMF::ALIAS              |  alias                             |
 
-## External ## {#external}
+# External # {#external}
 
 The category name is `external` and it store references to all or part of external files. For example, a path to a PDB file that
 should be loaded as a child of the current node.
 
-### Attributes ### {#externalattributes}
+## Attributes ## {#externalattributes}
 
 | Name             | Type      | Description                                      |
 |-----------------:|----------:|:-------------------------------------------------|
 | `path`           | string    |  Relative path to the external file              |
 
-### Decorators ### {#externaldecorators}
+## Decorators ## {#externaldecorators}
 
 | Name                            |  Node Type              | Attributes                         |
 |--------------------------------:|:-----------------------:|:-----------------------------------|
 | RMF::decorator::External           | RMF::REPRESENTATION  |  path                              |
 
 
-## Publication ## {#publication}
+# Publication # {#publication}
 
-### Attributes ### {#publicationattributes}
+## Attributes ## {#publicationattributes}
 
 | Name             | Type      | Description                                      |
 |-----------------:|----------:|:-------------------------------------------------|
@@ -156,7 +180,7 @@ should be loaded as a child of the current node.
 | `authors`        | RMF::Strings |  The author names                                |
 
 
-### Decorators ### {#publicationdecorators}
+## Decorators ## {#publicationdecorators}
 
 | Name                            |  Node Type              | Attributes                         |
 |--------------------------------:|:-----------------------:|:-----------------------------------|
