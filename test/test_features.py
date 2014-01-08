@@ -32,8 +32,8 @@ class GenericTest(unittest.TestCase):
         ch = rt.get_children()
         fn = ch[-1]
         reps = [x.get_id().get_index() for x in ch[:-1]]
-        sf = RMF.ScoreConstFactory(fh)
-        rf = RMF.RepresentationConstFactory(fh)
+        sf = RMF.ScoreFactory(fh)
+        rf = RMF.RepresentationFactory(fh)
         sd = sf.get(fn)
         rd = rf.get(fn)
         print sd.get_score()

@@ -57,13 +57,13 @@ out.add_frame("nothing", RMF.FRAME)
 print "file is", outpath
 bf = RMF.BondFactory(out)
 
-rcf = RMF.ResidueConstFactory(fh)
+rcf = RMF.ResidueFactory(fh)
 rf = RMF.ResidueFactory(out)
-pcf = RMF.ParticleConstFactory(fh)
+pcf = RMF.ParticleFactory(fh)
 pf = RMF.ParticleFactory(out)
-acf = RMF.AtomConstFactory(fh)
+acf = RMF.AtomFactory(fh)
 af = RMF.AtomFactory(out)
-ccf = RMF.ChainConstFactory(fh)
+ccf = RMF.ChainFactory(fh)
 cf = RMF.ChainFactory(out)
 bf = RMF.BondFactory(out)
 copy_to_residues(

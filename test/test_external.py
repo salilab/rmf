@@ -35,7 +35,7 @@ class GenericTest(unittest.TestCase):
         rt = rmf.get_root_node()
         ref0 = rt.get_children()[0].get_children()[0]
         ref1 = rt.get_children()[1].get_children()[0]
-        ef = RMF.ExternalConstFactory(rmf)
+        ef = RMF.ExternalFactory(rmf)
 
         ref0d = ef.get(ref0)
         path0 = ref0d.get_path()

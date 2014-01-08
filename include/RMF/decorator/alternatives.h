@@ -34,19 +34,19 @@ enum RepresentationType {
   SURFACE = 2,
 };
 
-/** See also Alternatives and AlternativesConstFactory.
+/** See also Alternatives and AlternativesFactory.
   */
-class AlternativesConst : public Decorator<NodeConstHandle> {
-  friend class AlternativesConstFactory;
+class AlternativesConst : public Decorator {
+  friend class AlternativesFactory;
+  friend class Alternatives;
   FloatKey base_resolution_key_;
   IntsKey types_key_;
   IntsKey roots_key_;
   FloatsKey resolutions_key_;
-  typedef Decorator<NodeConstHandle> P;
   AlternativesConst(NodeConstHandle nh, FloatKey base_resolution_key,
                     IntsKey types_key, IntsKey roots_key,
                     FloatsKey resolutions_key)
-      : P(nh),
+      : Decorator(nh),
         base_resolution_key_(base_resolution_key),
         types_key_(types_key),
         roots_key_(roots_key),
@@ -74,48 +74,39 @@ class AlternativesConst : public Decorator<NodeConstHandle> {
 
 /** See also AlternativesConst and AlternativesFactory.
   */
-class Alternatives : public Decorator<NodeHandle> {
+class Alternatives : public AlternativesConst {
   friend class AlternativesFactory;
-  FloatKey base_resolution_key_;
-  IntsKey types_key_;
-  IntsKey roots_key_;
-  FloatsKey resolutions_key_;
-  typedef Decorator<NodeHandle> P;
-  IntKey alternativesed_;
   Alternatives(NodeHandle nh, FloatKey base_resolution_key, IntsKey types_key,
                IntsKey roots_key, FloatsKey resolutions_key);
 
  public:
-  /** \copydoc AlternativesConst::get_alternative() */
-  NodeHandle get_alternative(RepresentationType type, double resolution) const;
-
   void add_alternative(NodeHandle root, RepresentationType type);
-
-  /** \copydoc AlternativesConst::get_alternatives() */
-  NodeHandles get_alternatives(RepresentationType type) const;
 
   static std::string get_decorator_type_name() { return "Alternatives"; }
 };
 
 /** Create decorators of type Alternatives.
 
-     See also AlternativesConst and AlternativesFactory.
+     See also Alternatives and AlternativesFactory.
   */
-class AlternativesConstFactory {
+  class AlternativesFactory: public Factory {
   Category cat_;
   FloatKey base_resolution_key_;
   IntsKey types_key_;
   IntsKey roots_key_;
   FloatsKey resolutions_key_;
  public:
-  AlternativesConstFactory(FileConstHandle fh);
+  AlternativesFactory(FileConstHandle fh);
+  AlternativesFactory(FileHandle fh);
 
+  Alternatives get(NodeHandle nh) const {
+    return Alternatives(nh, base_resolution_key_, types_key_, roots_key_,
+                        resolutions_key_);
+  }
   AlternativesConst get(NodeConstHandle nh) const {
     return AlternativesConst(nh, base_resolution_key_, types_key_, roots_key_,
                              resolutions_key_);
   }
-  /** Check whether nh has all the attributes required to be a
-      AlternativesConst.*/
   bool get_is(NodeConstHandle nh) const {
     return nh.get_has_value(base_resolution_key_);
   }
@@ -124,30 +115,12 @@ class AlternativesConstFactory {
   }
 };
 
-/** Create decorators of type Alternatives.
-
-     See also Alternatives and AlternativesConstFactory.
-  */
-class AlternativesFactory {
-  Category cat_;
-  FloatKey base_resolution_key_;
-  IntsKey types_key_;
-  IntsKey roots_key_;
-  FloatsKey resolutions_key_;
- public:
-  AlternativesFactory(FileHandle fh);
-
-  Alternatives get(NodeHandle nh) const {
-    return Alternatives(nh, base_resolution_key_, types_key_, roots_key_,
-                        resolutions_key_);
-  }
-  bool get_is(NodeHandle nh) const {
-    return nh.get_has_value(base_resolution_key_);
-  }
-  bool get_is_static(NodeHandle nh) const {
-    return nh.get_has_value(base_resolution_key_);
-  }
+#ifndef RMF_DOXYGEN
+struct AlternativesConstFactory : public AlternativesFactory {
+  AlternativesConstFactory(FileConstHandle fh) : AlternativesFactory(fh) {}
+  AlternativesConstFactory(FileHandle fh) : AlternativesFactory(fh) {}
 };
+#endif
 
 } /* namespace decorator */
 } /* namespace RMF */

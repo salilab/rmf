@@ -133,7 +133,7 @@ boost::tuple<double, std::size_t, std::size_t> create(RMF::FileHandle file) {
 double traverse(RMF::FileConstHandle file) {
   double ret = 0;
   RMF::NodeConstHandles queue(1, file.get_root_node());
-  RMF::decorator::ParticleConstFactory ipcf(file);
+  RMF::decorator::ParticleFactory ipcf(file);
   do {
     RMF::NodeConstHandle cur = queue.back();
     queue.pop_back();
@@ -147,7 +147,7 @@ double traverse(RMF::FileConstHandle file) {
 }
 
 double load(RMF::FileConstHandle file, const RMF::NodeIDs& nodes) {
-  RMF::decorator::IntermediateParticleConstFactory ipcf(file);
+  RMF::decorator::IntermediateParticleFactory ipcf(file);
   RMF::Vector3 v(0, 0, 0);
   RMF_FOREACH(RMF::FrameID fr, file.get_frames()) {
     file.set_current_frame(fr);
@@ -185,7 +185,7 @@ void benchmark_traverse(RMF::FileConstHandle file, std::string type) {
 
 void benchmark_load(RMF::FileConstHandle file, std::string type) {
   RMF::NodeIDs nodes;
-  RMF::decorator::ParticleConstFactory ipcf(file);
+  RMF::decorator::ParticleFactory ipcf(file);
   RMF_FOREACH(RMF::NodeID n, file.get_node_ids()) {
     if (ipcf.get_is(file.get_node(n))) nodes.push_back(n);
   }

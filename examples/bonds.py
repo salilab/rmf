@@ -13,6 +13,6 @@ def print_bonds(node, bf):
 
 fh = RMF.open_rmf_file_read_only(RMF.get_example_path("simple.rmf3"))
 fh.set_current_frame(RMF.FrameID(0))
-bf = RMF.BondConstFactory(fh)
+bf = RMF.BondFactory(fh)
 
 print_bonds(fh.get_root_node(), bf)

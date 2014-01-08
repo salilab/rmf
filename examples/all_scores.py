@@ -6,7 +6,7 @@ import sys
 import os.path
 fname = os.path.join(os.path.split(sys.argv[0])[0], "bd_trajectory.rmf")
 rmf = RMF.open_rmf_file_read_only(fname)
-scf = RMF.ScoreConstFactory(rmf)
+scf = RMF.ScoreFactory(rmf)
 
 
 def traverse(n):

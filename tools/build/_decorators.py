@@ -3,15 +3,9 @@
 import os.path
 
 
-def replace(msg, to_replace, const):
+def replace(msg, to_replace):
     for k in to_replace:
         msg = msg.replace(k[0], k[1])
-    if const:
-        msg = msg.replace("NONCONST", "")
-        msg = msg.replace("CONST", "Const")
-    else:
-        msg = msg.replace("NONCONST", "Const")
-        msg = msg.replace("CONST", "")
     return msg
 
 
@@ -40,40 +34,38 @@ class Base:
         self.helpers = ""
         self.check = ""
 
-    def get_data_members(self, const):
-        return replace("DATA NAME_;", self.names, const)
+    def get_data_members(self):
+        return replace("DATA NAME_;", self.names)
 
     def get_get_set_methods(self, const):
-        ret = replace(self.get_methods, self.names, const)
         if not const:
-            ret += replace(self.set_methods, self.names, const)
+            ret = replace(self.set_methods, self.names)
+        else:
+            ret = replace(self.get_methods, self.names)
         return ret
 
-    def get_bulk_methods(self, const):
-        ret = replace(self.bulk_get_methods, self.names, const)
-        if not const:
-            ret += replace(self.bulk_set_methods, self.names, const)
-        return ret
+    def get_helpers(self):
+        return replace(self.helpers, self.names)
 
-    def get_helpers(self, const):
-        return replace(self.helpers, self.names, const)
+    def get_data_arguments(self):
+        return replace("DATA NAME", self.names)
 
-    def get_data_arguments(self, const):
-        return replace("DATA NAME", self.names, const)
+    def get_data_pass(self, member):
+        if member:
+            return replace("NAME_", self.names)
+        else:
+            return replace("NAME", self.names)
 
-    def get_data_pass(self, const):
-        return replace("NAME_", self.names, const)
+    def get_data_saves(self):
+        return replace("NAME_(NAME)", self.names)
 
-    def get_data_saves(self, const):
-        return replace("NAME_(NAME)", self.names, const)
-
-    def get_data_initialize(self, const):
+    def get_data_initialize(self):
         return (
-            replace("NAME_(" + self.data_initialize + ")", self.names, const)
+            replace("NAME_(" + self.data_initialize + ")", self.names)
         )
 
-    def get_check(self, const):
-        return replace(self.check, self.names, const)
+    def get_check(self):
+        return replace(self.check, self.names)
 
 
 class Attribute(Base):
@@ -90,34 +82,34 @@ class Attribute(Base):
         self.get_methods = """
   TYPE get_%s() const {
     try {
-      return node_.GET_BOTH(NAME_);
+      return get_node().GET_BOTH(NAME_);
     } RMF_DECORATOR_CATCH( );
   }
   TYPE get_frame_%s() const {
     try {
-      return node_.GET_FRAME(NAME_);
+      return get_node().GET_FRAME(NAME_);
     } RMF_DECORATOR_CATCH( );
   }
   TYPE get_static_%s() const {
     try {
-      return node_.GET_STATIC(NAME_);
+      return get_node().GET_STATIC(NAME_);
     } RMF_DECORATOR_CATCH( );
   }
 """ % (function_name, function_name, function_name)
         self.set_methods = """
   void set_%s(TYPE v) {
     try {
-      node_.SET_BOTH(NAME_, v);
+      get_node().SET_BOTH(NAME_, v);
     } RMF_DECORATOR_CATCH( );
   }
   void set_frame_%s(TYPE v) {
     try {
-      node_.SET_FRAME(NAME_, v);
+      get_node().SET_FRAME(NAME_, v);
     } RMF_DECORATOR_CATCH( );
   }
   void set_static_%s(TYPE v) {
     try {
-      node_.SET_STATIC(NAME_, v);
+      get_node().SET_STATIC(NAME_, v);
     } RMF_DECORATOR_CATCH( );
   }
 """ % (function_name, function_name, function_name)
@@ -130,17 +122,17 @@ class NodeAttribute(Attribute):
     def __init__(self, name):
         Attribute.__init__(self, name, "Int", True)
         self.get_methods = """
-  NodeCONSTHandle get_NAME() const {
+  NodeID get_NAME() const {
     try {
-      int id = node_.GET_BOTH(NAME_);
-      return node_.get_file().get_node(NodeID(id));
+      int id = get_node().GET_BOTH(NAME_);
+      return NodeID(id);
     } RMF_DECORATOR_CATCH( );
   }
 """
         self.set_methods = """
   void set_NAME(NodeConstHandle v) {
     try {
-      node_.SET_BOTH(NAME_, v.get_index().get_index());
+      get_node().SET_BOTH(NAME_, v.get_id().get_index());
     } RMF_DECORATOR_CATCH( );
   }
 """
@@ -153,8 +145,8 @@ class PathAttribute(Attribute):
         self.get_methods = """
   String get_NAME() const {
     try {
-      String relpath = node_.GET_BOTH(NAME_);
-      String filename = node_.get_file().get_path();
+      String relpath = get_node().GET_BOTH(NAME_);
+      String filename = get_node().get_file().get_path();
       return internal::get_absolute_path(filename, relpath);
     } RMF_DECORATOR_CATCH( );
   }
@@ -162,9 +154,9 @@ class PathAttribute(Attribute):
         self.set_methods = """
   void set_NAME(String path) {
    try {
-     String filename = node_.get_file().get_path();
+     String filename = get_node().get_file().get_path();
      String relpath = internal::get_relative_path(filename, path);
-     node_.SET_BOTH(NAME_, relpath);
+     get_node().SET_BOTH(NAME_, relpath);
    } RMF_DECORATOR_CATCH( );
   }
 """
@@ -181,10 +173,10 @@ class AttributePair(Base):
             end):
         Base.__init__(self, name, "boost::array<%sKey, 2>" %
                       data_type, return_type)
-        self.helpers = """  DATA get_NAME_keys(FileCONSTHandle fh) {
+        self.helpers = """  template <class H> DATA get_NAME_keys(H fh) const {
      DATA ret;
-     ret[0] = fh.get_key<%sTraits>(cat_, "%s");
-     ret[1] = fh.get_key<%sTraits>(cat_, "%s");
+     ret[0] = fh.template get_key<%sTraits>(cat_, "%s");
+     ret[1] = fh.template get_key<%sTraits>(cat_, "%s");
      return ret;
     }
 """ % (data_type, begin, data_type, end)
@@ -200,37 +192,37 @@ class SingletonRangeAttribute(AttributePair):
         self.get_methods = """
   TYPE get_NAME() const {
     try {
-      return node_.GET_BOTH(NAME_[0]);
+      return get_node().GET_BOTH(NAME_[0]);
     } RMF_DECORATOR_CATCH( );
   }
   TYPE get_frame_NAME() const {
     try {
-      return node_.GET_FRAME(NAME_[0]);
+      return get_node().GET_FRAME(NAME_[0]);
     } RMF_DECORATOR_CATCH( );
   }
   TYPE get_static_NAME() const {
     try {
-      return node_.GET_STATIC(NAME_[0]);
+      return get_node().GET_STATIC(NAME_[0]);
     } RMF_DECORATOR_CATCH( );
   }
 """
         self.set_methods = """
   void set_NAME(TYPE v) {
     try {
-      node_.SET_BOTH(NAME_[0], v);
-      node_.SET_BOTH(NAME_[1], v);
+      get_node().SET_BOTH(NAME_[0], v);
+      get_node().SET_BOTH(NAME_[1], v);
     } RMF_DECORATOR_CATCH( );
   }
   void set_frame_NAME(TYPE v) {
     try {
-      node_.SET_FRAME(NAME_[0], v);
-      node_.SET_FRAME(NAME_[1], v);
+      get_node().SET_FRAME(NAME_[0], v);
+      get_node().SET_FRAME(NAME_[1], v);
     } RMF_DECORATOR_CATCH( );
   }
   void set_static_NAME(TYPE v) {
     try {
-      node_.SET_STATIC(NAME_[0], v);
-      node_.SET_STATIC(NAME_[1], v);
+      get_node().SET_STATIC(NAME_[0], v);
+      get_node().SET_STATIC(NAME_[1], v);
     } RMF_DECORATOR_CATCH( );
   }
 """
@@ -245,37 +237,37 @@ class RangeAttribute(AttributePair):
         self.get_methods = """  /** DOC */
   TYPE get_NAME() const {
     try {
-      return std::make_pair(node_.GET_BOTH(NAME_[0]), node_.GET_BOTH(NAME_[1]));
+      return std::make_pair(get_node().GET_BOTH(NAME_[0]), get_node().GET_BOTH(NAME_[1]));
     } RMF_DECORATOR_CATCH( );
   }
   TYPE get_static_NAME() const {
     try {
-      return std::make_pair(node_.GET_STATIC(NAME_[0]), node_.GET_STATIC(NAME_[1]));
+      return std::make_pair(get_node().GET_STATIC(NAME_[0]), get_node().GET_STATIC(NAME_[1]));
     } RMF_DECORATOR_CATCH( );
   }
   TYPE get_frame_NAME() const {
     try {
-      return std::make_pair(node_.GET_FRAME(NAME_[0]), node_.GET_FRAME(NAME_[1]));
+      return std::make_pair(get_node().GET_FRAME(NAME_[0]), get_node().GET_FRAME(NAME_[1]));
     } RMF_DECORATOR_CATCH( );
   }
 """
         self.set_methods = """
   void set_NAME(TYPE v) {
     try {
-      node_.SET_BOTH(NAME_[0], v.first);
-      node_.SET_BOTH(NAME_[1], v.second);
+      get_node().SET_BOTH(NAME_[0], v.first);
+      get_node().SET_BOTH(NAME_[1], v.second);
     } RMF_DECORATOR_CATCH( );
   }
   void set_frame_NAME(TYPE v) {
     try {
-      node_.SET_FRAME(NAME_[0], v.first);
-      node_.SET_FRAME(NAME_[1], v.second);
+      get_node().SET_FRAME(NAME_[0], v.first);
+      get_node().SET_FRAME(NAME_[1], v.second);
     } RMF_DECORATOR_CATCH( );
   }
     void set_static_NAME(TYPE v) {
     try {
-      node_.SET_STATIC(NAME_[0], v.first);
-      node_.SET_STATIC(NAME_[1], v.second);
+      get_node().SET_STATIC(NAME_[0], v.first);
+      get_node().SET_STATIC(NAME_[1], v.second);
     } RMF_DECORATOR_CATCH( );
   }
 """
@@ -285,21 +277,34 @@ class RangeAttribute(AttributePair):
 
 
 decorator = """
-  /** See also NAMENONCONST and NAMECONSTFactory.
+  /** See also NAME and NAMEFactory.
     */
-    class NAMECONST: public Decorator<NodeCONSTHandle> {
-    friend class NAMECONSTFactory;
-
-    typedef Decorator<NodeCONSTHandle> P;
-DATA_MEMBERS
-    NAMECONST(NodeCONSTHandle nh,
+    class NAMEConst: public Decorator {
+    friend class NAMEFactory;
+    friend class NAME;
+    DATA_MEMBERS
+    NAMEConst(NodeConstHandle nh,
               DATA_ARGUMENTS):
        DATA_SAVES {
     }
   public:
-METHODS
+    CONSTMETHODS
     static std::string get_decorator_type_name() {
-         return "NAMECONST";
+         return "NAMEConst";
+    }
+  };
+   /** See also NAMEFactory.
+    */
+    class NAME: public NAMEConst {
+    friend class NAMEFactory;
+    NAME(NodeHandle nh,
+              DATA_ARGUMENTS):
+       NAMEConst(nh, DATA_PASS_ARGUMENTS) {
+    }
+  public:
+    NONCONSTMETHODS
+    static std::string get_decorator_type_name() {
+         return "NAME";
     }
   };
 
@@ -308,33 +313,50 @@ METHODS
 
 factory = """
   /** Create decorators of type NAME.
-
-       See also NAMECONST and NAMENONCONSTFactory.
     */
-  class NAMECONSTFactory {
+  class NAMEFactory: public Factory {
     Category cat_;
 DATA_MEMBERS
 HELPERS
   public:
-    NAMECONSTFactory(FileCONSTHandle fh):
+    NAMEFactory(FileConstHandle fh):
     cat_(fh.get_category("CATEGORY")),
     DATA_INITIALIZE {
     }
-    /** Get a NAMECONST for nh.*/
-    NAMECONST get(NodeCONSTHandle nh) const {
+     NAMEFactory(FileHandle fh):
+    cat_(fh.get_category("CATEGORY")),
+    DATA_INITIALIZE {
+    }
+    /** Get a NAMEConst for nh.*/
+    NAMEConst get(NodeConstHandle nh) const {
       CREATE_CHECKS
-      return NAMECONST(nh, DATA_PASS);
+      return NAMEConst(nh, DATA_PASS);
+    }
+    /** Get a NAME for nh.*/
+    NAME get(NodeHandle nh) const {
+      CREATE_CHECKS
+      return NAME(nh, DATA_PASS);
     }
     /** Check whether nh has all the attributes required to be a
-        NAMECONST.*/
-    bool get_is(NodeCONSTHandle nh) const {
+        NAMEConst.*/
+    bool get_is(NodeConstHandle nh) const {
       return FRAME_CHECKS;
     }
-    bool get_is_static(NodeCONSTHandle nh) const {
+    bool get_is_static(NodeConstHandle nh) const {
       return STATIC_CHECKS;
     }
-    BULK_METHODS
   };
+  #ifndef RMF_DOXYGEN
+struct NAMEConstFactory: public NAMEFactory {
+    NAMEConstFactory(FileConstHandle fh):
+    NAMEFactory(fh) {
+    }
+    NAMEConstFactory(FileHandle fh):
+    NAMEFactory(fh) {
+    }
+
+};
+  #endif
 
 """
 
@@ -351,10 +373,10 @@ class Decorator:
         self.attributes = attributes
         self.check_all_attributes = check_all_attributes
 
-    def _get_data_members(self, const):
+    def _get_data_members(self):
         ret = []
         for a in self.attributes:
-            ret.append(a.get_data_members(const))
+            ret.append(a.get_data_members())
         return "\n".join(ret)
 
     def _get_methods(self, const):
@@ -369,29 +391,29 @@ class Decorator:
             ret.append(a.get_bulk_methods(const))
         return "\n".join(ret)
 
-    def _get_helpers(self, const):
+    def _get_helpers(self):
         ret = []
         for a in self.attributes:
-            ret.append(a.get_helpers(const))
+            ret.append(a.get_helpers())
         return "\n".join(ret)
 
-    def _get_data_arguments(self, const):
+    def _get_data_arguments(self):
         ret = []
         for a in self.attributes:
-            ret.append(a.get_data_arguments(const))
+            ret.append(a.get_data_arguments())
         return ",\n".join(ret)
 
-    def _get_data_pass(self, const):
+    def _get_data_pass(self, member):
         ret = []
         for a in self.attributes:
-            ret.append(a.get_data_pass(const))
+            ret.append(a.get_data_pass(member))
         return ",\n".join(ret)
 
-    def _get_data_saves(self, const):
+    def _get_data_saves(self):
         ret = []
         for a in self.attributes:
-            ret.append(a.get_data_saves(const))
-        return ",\n".join(["P(nh)"] + ret)
+            ret.append(a.get_data_saves())
+        return ",\n".join(["Decorator(nh)"] + ret)
 
     def _get_type_check(self):
         cret = []
@@ -399,59 +421,51 @@ class Decorator:
             cret.append("nh.get_type() == RMF::%s" % t)
         return "(" + "||".join(cret) + ")"
 
-    def _get_checks(self, const, use_all=False):
+    def _get_checks(self, use_all=False):
         ret = [self._get_type_check()]
         if self.check_all_attributes or use_all:
             for a in self.attributes:
-                ret.append(a.get_check(const))
+                ret.append(a.get_check())
         else:
         # for a in self.attributes:
-            ret.append(self.attributes[0].get_check(const))
+            ret.append(self.attributes[0].get_check())
         return "\n    && ".join(x for x in ret if x != "")
 
-    def _get_construct(self, const):
+    def _get_construct(self):
         ret = []
         # make handle missing later
         ret.append("Category cat = fh.get_category(\""
                    + self.category + "\");")
         ret.append("RMF_UNUSED(cat);")
         for a in self.attributes:
-            ret.append(a.get_construct(const))
+            ret.append(a.get_construct())
         return "\n".join(ret)
 
-    def _get_data_initialize(self, const):
+    def _get_data_initialize(self):
         ret = []
         for a in self.attributes:
-            ret.append(a.get_data_initialize(const))
+            ret.append(a.get_data_initialize())
         return ", ".join(ret)
 
-    def _get_list(self, const):
-        ret = [("HELPERS", self._get_helpers(const)),
-               ("DATA_MEMBERS", self._get_data_members(const)),
-               ("BULK_METHODS", self._get_bulk_methods(const)),
-               ("METHODS", self._get_methods(const)),
-               ("DATA_ARGUMENTS", self._get_data_arguments(const)),
-               ("DATA_SAVES", self._get_data_saves(const)),
-               ("DATA_PASS", self._get_data_pass(const)),
-               ("DATA_INITIALIZE", self._get_data_initialize(const))]
-        if const:
-            ret.append(("CREATE_CHECKS", """RMF_USAGE_CHECK(%s, std::string("Bad node type. Got \\\"")
+    def _get_list(self):
+        ret = [("HELPERS", self._get_helpers()),
+               ("DATA_MEMBERS", self._get_data_members()),
+               ("NONCONSTMETHODS", self._get_methods(False)),
+               ("CONSTMETHODS", self._get_methods(True)),
+               ("DATA_ARGUMENTS", self._get_data_arguments()),
+               ("DATA_SAVES", self._get_data_saves()),
+               ("DATA_PASS_ARGUMENTS", self._get_data_pass(False)),
+               ("DATA_PASS", self._get_data_pass(True)),
+               ("DATA_INITIALIZE", self._get_data_initialize())]
+        ret.append(("CREATE_CHECKS", """RMF_USAGE_CHECK(%s, std::string("Bad node type. Got \\\"")
                                       + boost::lexical_cast<std::string>(nh.get_type())
                                       + "\\\" in decorator type  %s");""" % (self._get_type_check(),
                                                                              self.name)))
-        else:
-            ret.append(("CREATE_CHECKS", """RMF_USAGE_CHECK(%s, std::string("Bad node type. Got \\\"")
-                                      + boost::lexical_cast<std::string>(nh.get_type())
-                                      + "\\\" in decorator type  %s");
-                                      %s
-                                      """ % (self._get_type_check(), self.name,
-                                             self.init_function)))
-
         ret.append(
-            ("FRAME_CHECKS", self._get_checks(const)
+            ("FRAME_CHECKS", self._get_checks()
              .replace("GET", "get_value")))
         ret.append(
-            ("STATIC_CHECKS", self._get_checks(const, use_all=True)
+            ("STATIC_CHECKS", self._get_checks(use_all=True)
              .replace("GET", "get_static_value")))
         return ret
 
@@ -459,10 +473,8 @@ class Decorator:
         ret = ""
         common = [("NAME", self.name),
                   ("CATEGORY", self.category)]
-        ret += replace(decorator, common + self._get_list(True), True)
-        ret += replace(decorator, common + self._get_list(False), False)
-        ret += replace(factory, common + self._get_list(True), True)
-        ret += replace(factory, common + self._get_list(False), False)
+        ret += replace(decorator, common + self._get_list())
+        ret += replace(factory, common + self._get_list())
         return ret
 
 
@@ -471,7 +483,8 @@ def make_header(name, infos, deps):
     if not os.path.exists(path):
         os.makedirs(path)
 
-    fl = open(os.path.join("include", "RMF", "decorator", name + ".h"), "w")
+    path = os.path.join("include", "RMF", "decorator", name + ".h")
+    fl = open(path, "w")
     print >> fl, """/**
  *  \\file RMF/decorator/%(name)s.h
  *  \\brief Helper functions for manipulating RMF files.
@@ -509,3 +522,9 @@ namespace decorator {
 RMF_DISABLE_WARNINGS
 
 #endif /* RMF_%(NAME)s_DECORATORS_H */""" % {"name": name, "NAME": name.upper()}
+
+    del fl
+    try:
+        os.system("clang-format-3.4 -i --style=Google " + path)
+    except:
+        pass

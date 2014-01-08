@@ -40,7 +40,7 @@ fh = RMF.open_rmf_file_read_only(RMF.get_example_path("reference_frames.rmf"))
 
 
 visit(fh.get_root_node(), RMF.CoordinateTransformer(),
-      RMF.ReferenceFrameConstFactory(fh),
-      RMF.ParticleConstFactory(fh),
-      RMF.SegmentConstFactory(fh),
-      RMF.BallConstFactory(fh))
+      RMF.ReferenceFrameFactory(fh),
+      RMF.ParticleFactory(fh),
+      RMF.SegmentFactory(fh),
+      RMF.BallFactory(fh))

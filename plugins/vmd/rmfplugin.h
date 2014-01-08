@@ -29,21 +29,21 @@ molfile_plugin_t pluginz;
 
 class Data {
   RMF::FileConstHandle file_;
-  RMF::decorator::AtomConstFactory af_;
-  RMF::decorator::ResidueConstFactory rf_;
-  RMF::decorator::ChainConstFactory chf_;
-  RMF::decorator::ParticleConstFactory pf_;
-  RMF::decorator::ReferenceFrameConstFactory rff_;
-  RMF::decorator::BallConstFactory bf_;
-  RMF::decorator::SegmentConstFactory sf_;
-  RMF::decorator::CylinderConstFactory cf_;
-  RMF::decorator::BondConstFactory bdf_;
-  RMF::decorator::ScoreConstFactory scf_;
-  RMF::decorator::RepresentationConstFactory rcf_;
-  RMF::decorator::DomainConstFactory df_;
-  RMF::decorator::FragmentConstFactory ff_;
-  RMF::decorator::CopyConstFactory cpf_;
-  RMF::decorator::TypedConstFactory tf_;
+  RMF::decorator::AtomFactory af_;
+  RMF::decorator::ResidueFactory rf_;
+  RMF::decorator::ChainFactory chf_;
+  RMF::decorator::ParticleFactory pf_;
+  RMF::decorator::ReferenceFrameFactory rff_;
+  RMF::decorator::BallFactory bf_;
+  RMF::decorator::SegmentFactory sf_;
+  RMF::decorator::CylinderFactory cf_;
+  RMF::decorator::BondFactory bdf_;
+  RMF::decorator::ScoreFactory scf_;
+  RMF::decorator::RepresentationFactory rcf_;
+  RMF::decorator::DomainFactory df_;
+  RMF::decorator::FragmentFactory ff_;
+  RMF::decorator::CopyFactory cpf_;
+  RMF::decorator::TypedFactory tf_;
   struct Body {
     std::vector<RMF::decorator::ReferenceFrameConst> frames;
     RMF::NodeIDs atoms;

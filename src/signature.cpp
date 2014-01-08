@@ -26,16 +26,16 @@ namespace RMF {
 
 namespace {
 std::string get_static_signature(
-    FileConstHandle file, decorator::BondConstFactory bdcf,
-    decorator::ColoredConstFactory ccf, decorator::ParticleConstFactory pcf,
-    decorator::IntermediateParticleConstFactory ipcf,
-    decorator::RigidParticleConstFactory rpcf, decorator::ScoreConstFactory scf,
-    decorator::BallConstFactory bcf, decorator::CylinderConstFactory cycf,
-    decorator::SegmentConstFactory segcf, decorator::ResidueConstFactory rcf,
-    decorator::AtomConstFactory acf, decorator::ChainConstFactory chaincf,
-    decorator::DomainConstFactory fragcf, decorator::CopyConstFactory copycf,
-    decorator::DiffuserConstFactory diffusercf,
-    decorator::TypedConstFactory typedcf) {
+    FileConstHandle file, decorator::BondFactory bdcf,
+    decorator::ColoredFactory ccf, decorator::ParticleFactory pcf,
+    decorator::IntermediateParticleFactory ipcf,
+    decorator::RigidParticleFactory rpcf, decorator::ScoreFactory scf,
+    decorator::BallFactory bcf, decorator::CylinderFactory cycf,
+    decorator::SegmentFactory segcf, decorator::ResidueFactory rcf,
+    decorator::AtomFactory acf, decorator::ChainFactory chaincf,
+    decorator::DomainFactory fragcf, decorator::CopyFactory copycf,
+    decorator::DiffuserFactory diffusercf,
+    decorator::TypedFactory typedcf) {
   std::ostringstream ret;
   ret << "hierarchy [\n";
   RMF_FOREACH(NodeID n, file.get_node_ids()) {
@@ -74,16 +74,16 @@ std::string get_static_signature(
 }
 
 std::string get_frame_signature(
-    FileConstHandle file, decorator::BondConstFactory bdcf,
-    decorator::ColoredConstFactory ccf, decorator::ParticleConstFactory pcf,
-    decorator::IntermediateParticleConstFactory ipcf,
-    decorator::RigidParticleConstFactory rpcf, decorator::ScoreConstFactory scf,
-    decorator::BallConstFactory bcf, decorator::CylinderConstFactory cycf,
-    decorator::SegmentConstFactory segcf, decorator::ResidueConstFactory rcf,
-    decorator::AtomConstFactory acf, decorator::ChainConstFactory chaincf,
-    decorator::DomainConstFactory fragcf, decorator::CopyConstFactory copycf,
-    decorator::DiffuserConstFactory diffusercf,
-    decorator::TypedConstFactory typedcf) {
+    FileConstHandle file, decorator::BondFactory bdcf,
+    decorator::ColoredFactory ccf, decorator::ParticleFactory pcf,
+    decorator::IntermediateParticleFactory ipcf,
+    decorator::RigidParticleFactory rpcf, decorator::ScoreFactory scf,
+    decorator::BallFactory bcf, decorator::CylinderFactory cycf,
+    decorator::SegmentFactory segcf, decorator::ResidueFactory rcf,
+    decorator::AtomFactory acf, decorator::ChainFactory chaincf,
+    decorator::DomainFactory fragcf, decorator::CopyFactory copycf,
+    decorator::DiffuserFactory diffusercf,
+    decorator::TypedFactory typedcf) {
   std::ostringstream ret;
   ret << file.get_current_frame() << " [\n";
   RMF_FOREACH(NodeID n, file.get_node_ids()) {
@@ -113,22 +113,22 @@ std::string get_frame_signature(
 }
 
 std::string get_signature_string(FileConstHandle file) {
-  decorator::BondConstFactory bdf(file);
-  decorator::ColoredConstFactory ccf(file);
-  decorator::ParticleConstFactory pcf(file);
-  decorator::IntermediateParticleConstFactory ipcf(file);
-  decorator::RigidParticleConstFactory rpcf(file);
-  decorator::ScoreConstFactory scf(file);
-  decorator::BallConstFactory bcf(file);
-  decorator::CylinderConstFactory cycf(file);
-  decorator::SegmentConstFactory segcf(file);
-  decorator::ResidueConstFactory rcf(file);
-  decorator::AtomConstFactory acf(file);
-  decorator::ChainConstFactory chaincf(file);
-  decorator::DomainConstFactory fragcf(file);
-  decorator::CopyConstFactory copycf(file);
-  decorator::DiffuserConstFactory diffusercf(file);
-  decorator::TypedConstFactory typedcf(file);
+  decorator::BondFactory bdf(file);
+  decorator::ColoredFactory ccf(file);
+  decorator::ParticleFactory pcf(file);
+  decorator::IntermediateParticleFactory ipcf(file);
+  decorator::RigidParticleFactory rpcf(file);
+  decorator::ScoreFactory scf(file);
+  decorator::BallFactory bcf(file);
+  decorator::CylinderFactory cycf(file);
+  decorator::SegmentFactory segcf(file);
+  decorator::ResidueFactory rcf(file);
+  decorator::AtomFactory acf(file);
+  decorator::ChainFactory chaincf(file);
+  decorator::DomainFactory fragcf(file);
+  decorator::CopyFactory copycf(file);
+  decorator::DiffuserFactory diffusercf(file);
+  decorator::TypedFactory typedcf(file);
 
   std::string ret = get_static_signature(file, bdf, ccf, pcf, ipcf, rpcf, scf,
                                          bcf, cycf, segcf, rcf, acf, chaincf,

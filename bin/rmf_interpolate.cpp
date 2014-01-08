@@ -66,16 +66,16 @@ void interpolate_frame(
                                           boost::normal_distribution<> >& noise,
     boost::variate_generator<boost::mt19937&, boost::normal_distribution<> >&
         angle_noise,
-    RMF::decorator::IntermediateParticleConstFactory ipcf0,
-    RMF::decorator::IntermediateParticleConstFactory ipcf1,
+    RMF::decorator::IntermediateParticleFactory ipcf0,
+    RMF::decorator::IntermediateParticleFactory ipcf1,
     RMF::decorator::IntermediateParticleFactory ipf,
-    RMF::decorator::BallConstFactory bcf0,
-    RMF::decorator::BallConstFactory bcf1, RMF::decorator::BallFactory bf,
-    RMF::decorator::ReferenceFrameConstFactory rfcf0,
-    RMF::decorator::ReferenceFrameConstFactory rfcf1,
+    RMF::decorator::BallFactory bcf0,
+    RMF::decorator::BallFactory bcf1, RMF::decorator::BallFactory bf,
+    RMF::decorator::ReferenceFrameFactory rfcf0,
+    RMF::decorator::ReferenceFrameFactory rfcf1,
     RMF::decorator::ReferenceFrameFactory rff,
-    RMF::decorator::CylinderConstFactory ccf0,
-    RMF::decorator::CylinderConstFactory ccf1,
+    RMF::decorator::CylinderFactory ccf0,
+    RMF::decorator::CylinderFactory ccf1,
     RMF::decorator::CylinderFactory cf, RMF::NodeConstHandle input0,
     RMF::NodeConstHandle input1, RMF::NodeHandle output) {
   if (ipcf0.get_is(input0)) {
@@ -105,17 +105,17 @@ void interpolate_frames(int num, double noise, double angle_noise,
                         RMF::FileConstHandle input_file0,
                         RMF::FileConstHandle input_file1,
                         RMF::FileHandle output_file) {
-  RMF::decorator::IntermediateParticleConstFactory ipcf0(input_file0);
-  RMF::decorator::IntermediateParticleConstFactory ipcf1(input_file1);
+  RMF::decorator::IntermediateParticleFactory ipcf0(input_file0);
+  RMF::decorator::IntermediateParticleFactory ipcf1(input_file1);
   RMF::decorator::IntermediateParticleFactory ipf(output_file);
-  RMF::decorator::BallConstFactory bcf0(input_file0);
-  RMF::decorator::BallConstFactory bcf1(input_file1);
+  RMF::decorator::BallFactory bcf0(input_file0);
+  RMF::decorator::BallFactory bcf1(input_file1);
   RMF::decorator::BallFactory bf(output_file);
-  RMF::decorator::CylinderConstFactory ccf0(input_file0);
-  RMF::decorator::CylinderConstFactory ccf1(input_file1);
+  RMF::decorator::CylinderFactory ccf0(input_file0);
+  RMF::decorator::CylinderFactory ccf1(input_file1);
   RMF::decorator::CylinderFactory cf(output_file);
-  RMF::decorator::ReferenceFrameConstFactory rfcf0(input_file0);
-  RMF::decorator::ReferenceFrameConstFactory rfcf1(input_file1);
+  RMF::decorator::ReferenceFrameFactory rfcf0(input_file0);
+  RMF::decorator::ReferenceFrameFactory rfcf1(input_file1);
   RMF::decorator::ReferenceFrameFactory rff(output_file);
   // boost::random_device seed_gen;
   boost::mt19937 rng;

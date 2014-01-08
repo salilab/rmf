@@ -258,10 +258,6 @@ namespace RMF {
 %include "RMF/FileHandle.h"
 %include "RMF/validate.h"
 %include "RMF/Decorator.h"
-namespace RMF {
-  %template(_Decorator) Decorator<NodeHandle>;
-  %template(_ConstDecorator) Decorator<NodeConstHandle>;
-}
 
 RMF_DECORATOR(RMF::decorator, Particle);
 RMF_DECORATOR(RMF::decorator, IntermediateParticle);

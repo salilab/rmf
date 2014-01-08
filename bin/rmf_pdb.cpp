@@ -123,8 +123,8 @@ RMF_ENABLE_WARNINGS namespace {
 
   int write_atoms(
       std::ostream & out, int current_index, RMF::NodeConstHandle nh,
-      RMF::decorator::AtomConstFactory af, RMF::decorator::ChainConstFactory cf,
-      RMF::decorator::ResidueConstFactory rf, std::string chain = std::string(),
+      RMF::decorator::AtomFactory af, RMF::decorator::ChainFactory cf,
+      RMF::decorator::ResidueFactory rf, std::string chain = std::string(),
       int residue_index = -1, std::string residue_type = std::string()) {
     if (cf.get_is(nh)) {
       chain = cf.get(nh).get_chain_id();
@@ -175,9 +175,9 @@ int main(int argc, char** argv) {
     } else {
       out = &std::cout;
     }
-    RMF::decorator::AtomConstFactory af(rh);
-    RMF::decorator::ChainConstFactory cf(rh);
-    RMF::decorator::ResidueConstFactory rf(rh);
+    RMF::decorator::AtomFactory af(rh);
+    RMF::decorator::ChainFactory cf(rh);
+    RMF::decorator::ResidueFactory rf(rh);
     RMF::NodeConstHandle rn = rh.get_root_node();
     for (unsigned int input_frame = start_frame, output_frame = 0;
          input_frame < rh.get_number_of_frames();

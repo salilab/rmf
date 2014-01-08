@@ -70,7 +70,7 @@ void show_data_xml(Handle nh, RMF::Category kc, std::ostream& out) {
 
 void show_hierarchy(RMF::NodeConstHandle nh, const RMF::Categories& cs,
                     std::set<RMF::NodeConstHandle>& seen, std::ostream& out) {
-  out << "<node name=\"" << nh.get_name() << "\" id=\"" << nh.get_index()
+  out << "<node name=\"" << nh.get_name() << "\" id=\"" << nh.get_id()
       << "\" "
       << "type=\"" << nh.get_type() << "\">\n";
   if (seen.find(nh) == seen.end()) {

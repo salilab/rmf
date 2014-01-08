@@ -39,7 +39,7 @@ RMF_ENABLE_WARNINGS
 #define RMF_NODE_CATCH(extra_info)                                             \
   catch (Exception& e) {                                                       \
     RMF_RETHROW(                                                               \
-        File(get_file_name()) << Node(get_index())                             \
+        File(get_file_name()) << Node(get_id())                             \
                               << Frame(get_current_frame_id())                 \
                               << Operation(BOOST_CURRENT_FUNCTION) extra_info, \
         e);                                                                    \
@@ -181,8 +181,6 @@ class RMFEXPORT NodeConstHandle {
 
   //! get the type of this node
   NodeType get_type() const { return NodeType(shared_->get_type(node_)); }
-  //! get a unique id for this node
-  NodeID get_index() const { return NodeID(node_); }
 
   /** \name Functions to access attributes
 

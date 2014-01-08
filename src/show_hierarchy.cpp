@@ -72,17 +72,17 @@ void show_node(NodeConstHandle n, std::string node_suffix, std::ostream& out,
 
 void show_node_decorators(
     NodeConstHandle n, std::string node_suffix, std::ostream& out,
-    decorator::BondConstFactory bdcf, decorator::ColoredConstFactory ccf,
-    decorator::ParticleConstFactory pcf,
-    decorator::IntermediateParticleConstFactory ipcf,
-    decorator::RigidParticleConstFactory rpcf, decorator::ScoreConstFactory scf,
-    decorator::RepresentationConstFactory repcf,
-    decorator::BallConstFactory bcf, decorator::CylinderConstFactory cycf,
-    decorator::SegmentConstFactory segcf, decorator::ResidueConstFactory rcf,
-    decorator::AtomConstFactory acf, decorator::ChainConstFactory chaincf,
-    decorator::DomainConstFactory fragcf, decorator::CopyConstFactory copycf,
-    decorator::DiffuserConstFactory diffusercf,
-    decorator::TypedConstFactory typedcf, std::string) {
+    decorator::BondFactory bdcf, decorator::ColoredFactory ccf,
+    decorator::ParticleFactory pcf,
+    decorator::IntermediateParticleFactory ipcf,
+    decorator::RigidParticleFactory rpcf, decorator::ScoreFactory scf,
+    decorator::RepresentationFactory repcf,
+    decorator::BallFactory bcf, decorator::CylinderFactory cycf,
+    decorator::SegmentFactory segcf, decorator::ResidueFactory rcf,
+    decorator::AtomFactory acf, decorator::ChainFactory chaincf,
+    decorator::DomainFactory fragcf, decorator::CopyFactory copycf,
+    decorator::DiffuserFactory diffusercf,
+    decorator::TypedFactory typedcf, std::string) {
   using std::operator<<;
   out << "\"" << n.get_name() << "\"" << node_suffix << " [" << n.get_type()
       << ":";
@@ -121,7 +121,7 @@ std::vector<ID<TypeT> > get_keys(FileConstHandle f) {
 // Note that older g++ is confused by queue.back().get<2>()
 #define RMF_PRINT_TREE(stream, start, show)                                  \
   {                                                                          \
-    decorator::AlternativesConstFactory altcf(root.get_file());              \
+    decorator::AlternativesFactory altcf(root.get_file());              \
     typedef boost::tuple<std::string, std::string, std::string,              \
                          NodeConstHandle> QI;                                \
     std::vector<QI> queue;                                                   \
@@ -165,7 +165,7 @@ std::vector<ID<TypeT> > get_keys(FileConstHandle f) {
 
 void show_hierarchy(NodeConstHandle root, std::ostream& out) {
   using std::operator<<;
-  decorator::AlternativesConstFactory altcf(root.get_file());
+  decorator::AlternativesFactory altcf(root.get_file());
   RMF_PRINT_TREE(out, root, show_node(n, node_suffix, out));
 }
 
@@ -217,23 +217,23 @@ void show_hierarchy_with_values(NodeConstHandle root, std::ostream& out) {
 
 void show_hierarchy_with_decorators(NodeConstHandle root, bool,
                                     std::ostream& out) {
-  decorator::BondConstFactory bdf(root.get_file());
-  decorator::ColoredConstFactory ccf(root.get_file());
-  decorator::ParticleConstFactory pcf(root.get_file());
-  decorator::IntermediateParticleConstFactory ipcf(root.get_file());
-  decorator::RigidParticleConstFactory rpcf(root.get_file());
-  decorator::ScoreConstFactory scf(root.get_file());
-  decorator::RepresentationConstFactory repcf(root.get_file());
-  decorator::BallConstFactory bcf(root.get_file());
-  decorator::CylinderConstFactory cycf(root.get_file());
-  decorator::SegmentConstFactory segcf(root.get_file());
-  decorator::ResidueConstFactory rcf(root.get_file());
-  decorator::AtomConstFactory acf(root.get_file());
-  decorator::ChainConstFactory chaincf(root.get_file());
-  decorator::DomainConstFactory fragcf(root.get_file());
-  decorator::CopyConstFactory copycf(root.get_file());
-  decorator::DiffuserConstFactory diffusercf(root.get_file());
-  decorator::TypedConstFactory typedcf(root.get_file());
+  decorator::BondFactory bdf(root.get_file());
+  decorator::ColoredFactory ccf(root.get_file());
+  decorator::ParticleFactory pcf(root.get_file());
+  decorator::IntermediateParticleFactory ipcf(root.get_file());
+  decorator::RigidParticleFactory rpcf(root.get_file());
+  decorator::ScoreFactory scf(root.get_file());
+  decorator::RepresentationFactory repcf(root.get_file());
+  decorator::BallFactory bcf(root.get_file());
+  decorator::CylinderFactory cycf(root.get_file());
+  decorator::SegmentFactory segcf(root.get_file());
+  decorator::ResidueFactory rcf(root.get_file());
+  decorator::AtomFactory acf(root.get_file());
+  decorator::ChainFactory chaincf(root.get_file());
+  decorator::DomainFactory fragcf(root.get_file());
+  decorator::CopyFactory copycf(root.get_file());
+  decorator::DiffuserFactory diffusercf(root.get_file());
+  decorator::TypedFactory typedcf(root.get_file());
   using std::operator<<;
   RMF_PRINT_TREE(
       out, root,

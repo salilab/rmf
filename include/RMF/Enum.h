@@ -93,19 +93,6 @@ typedef Enum<NodeTypeTag> NodeType;
 #ifndef RMF_DOXYGEN
 typedef std::vector<FrameType> FrameTypes;
 typedef std::vector<NodeType> NodeTypes;
-/*template <>
-extern RMFEXPORT RMF_SMALL_UNORDERED_MAP<std::string, int>
-  Enum<NodeTypeTag>::from_name;
-template <>
-extern RMFEXPORT RMF_SMALL_UNORDERED_MAP<int, std::string>
-  Enum<NodeTypeTag>::to_name;
-template <>
-extern RMFEXPORT RMF_SMALL_UNORDERED_MAP<std::string, int>
-  Enum<FrameTypeTag>::from_name;
-template <>
-extern RMFEXPORT RMF_SMALL_UNORDERED_MAP<int, std::string>
-Enum<NodeTypeTag>::to_name;*/
-
 #endif
 
 } /* namespace RMF */

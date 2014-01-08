@@ -22,9 +22,9 @@
 RMF_ENABLE_WARNINGS
 namespace RMF {
 namespace {
-bool validate_impl(NodeConstHandle cur, decorator::ParticleConstFactory pcf,
-                   decorator::ResidueConstFactory rcf,
-                   decorator::AtomConstFactory acf) {
+bool validate_impl(NodeConstHandle cur, decorator::ParticleFactory pcf,
+                   decorator::ResidueFactory rcf,
+                   decorator::AtomFactory acf) {
   NodeConstHandles ch = cur.get_children();
   bool ret = true;
   if (ch.empty() && cur.get_type() == REPRESENTATION) {
@@ -40,9 +40,9 @@ bool validate_impl(NodeConstHandle cur, decorator::ParticleConstFactory pcf,
 }
 } // namespace
 void validate(FileConstHandle fh) {
-  decorator::ParticleConstFactory pcf(fh);
-  decorator::ResidueConstFactory rcf(fh);
-  decorator::AtomConstFactory acf(fh);
+  decorator::ParticleFactory pcf(fh);
+  decorator::ResidueFactory rcf(fh);
+  decorator::AtomFactory acf(fh);
   bool ok = validate_impl(fh.get_root_node(), pcf, rcf, acf);
   if (!ok) {
     RMF_THROW(Message("Invalid hierarchy"), IOException);

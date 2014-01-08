@@ -9,10 +9,10 @@ class GenericTest(unittest.TestCase):
         print name
         f = RMF.create_rmf_file(name)
         f0 = f.add_frame("hi", RMF.FRAME)
-        self.assertEqual(f.get_current_frame_name(), "hi")
+        self.assertEqual(f.get_name(f0), "hi")
         print "on 1"
         f1 = f.add_frame("there", RMF.FRAME)
-        self.assertEqual(f.get_current_frame_name(), "there")
+        self.assertEqual(f.get_name(f1), "there")
 
     def test_open_2x(self):
         """Test frame comments"""

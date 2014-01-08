@@ -3,7 +3,7 @@ import unittest
 import RMF
 
 
-class GenericTest(unittest.TestCase):
+class Tests(unittest.TestCase):
 
     def test_multiparent(self):
         """Test that nodes with multiple parents can be used and resolve"""
@@ -25,6 +25,7 @@ class GenericTest(unittest.TestCase):
             path = RMF._get_temporary_file_path("alias." + suffix)
             print path
             fh = RMF.create_rmf_file(path)
+            print "create factory"
             af = RMF.AliasFactory(fh)
             rh = fh.get_root_node()
             nh = rh.add_child("hi", RMF.REPRESENTATION)
@@ -32,8 +33,10 @@ class GenericTest(unittest.TestCase):
             ch = nh.get_children()
             self.assertEqual(len(ch), 1)
             print ch
-            self.assertEqual(af.get(ch[0]).get_aliased(), rh)
-
+            print "final check"
+            print af.get(ch[0]).get_aliased()
+            self.assertEqual(af.get(ch[0]).get_aliased(), rh.get_id())
+            print "done"
 
 if __name__ == '__main__':
     unittest.main()

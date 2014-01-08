@@ -29,7 +29,7 @@ class GenericTest(unittest.TestCase):
         del c
         fh = RMF.open_rmf_file_read_only(name)
         fh.set_current_frame(RMF.FrameID(0))
-        cf = RMF.ChainConstFactory(fh)
+        cf = RMF.ChainFactory(fh)
         n = fh.get_root_node().get_children()[0]
         RMF.show_hierarchy_with_values(n)
         self.assert_(cf.get_is(n))
