@@ -122,10 +122,10 @@ class NodeAttribute(Attribute):
     def __init__(self, name):
         Attribute.__init__(self, name, "Int", True)
         self.get_methods = """
-  NodeID get_NAME() const {
+  NodeConstHandle get_NAME() const {
     try {
       int id = get_node().GET_BOTH(NAME_);
-      return NodeID(id);
+      return get_node().get_file().get_node(NodeID(id));
     } RMF_DECORATOR_CATCH( );
   }
 """

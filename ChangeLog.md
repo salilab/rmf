@@ -1,7 +1,6 @@
 # Change Log #
 - RMF::NodeConstHandle::get_index() went away as it was a duplicate of
 	RMF::NodeConstHandle::get_id()
-- RMF::decorator::Alias::get_aliased() now returns a RMF::NodeID
 - RMF::NodeType and RMF::FrameType were replaced with RMF::Enum
 	instances. This increases type safety in python and makes
 	converting to and from strings easier (you can now use `str()` in python).

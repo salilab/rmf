@@ -35,7 +35,7 @@ class Tests(unittest.TestCase):
             print ch
             print "final check"
             print af.get(ch[0]).get_aliased()
-            self.assertEqual(af.get(ch[0]).get_aliased(), rh.get_id())
+            self.assertEqual(af.get(ch[0]).get_aliased(), rh)
             print "done"
 
 if __name__ == '__main__':

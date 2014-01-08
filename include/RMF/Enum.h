@@ -85,6 +85,7 @@ inline std::istream& operator>>(std::istream& in, Enum<Traits>& v) {
   return in;
 }
 #endif
+
 /**  The type for frames. */
 typedef Enum<FrameTypeTag> FrameType;
 /**  The type for frames. */
