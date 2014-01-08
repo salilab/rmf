@@ -65,7 +65,7 @@ class SharedDataData {
   typename Traits::ReturnType get_value(const SharedDataDataTypes& data,
                                         NodeID node, ID<Traits> k) const {
     typename TypeData<Traits>::const_iterator it0 = data.find(k);
-    if (it0 == static_cast<const TypeData<Traits>& >(data).end())
+    if (it0 == static_cast<const TypeData<Traits>&>(data).end())
       return Traits::get_null_value();
     typename KeyData<Traits>::const_iterator it1 = it0->second.find(node);
     if (it1 == it0->second.end()) return Traits::get_null_value();

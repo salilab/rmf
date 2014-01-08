@@ -456,7 +456,6 @@ struct codec_traits<BackwardsFrame> {
 namespace RMF {
 namespace avro2 {
 
-
 void flush_buffer(boost::shared_ptr<internal_avro::DataFileWriterBase> writer,
                   boost::shared_ptr<internal_avro::OutputStream> stream,
                   BufferHandle buffer) {
@@ -466,7 +465,7 @@ void flush_buffer(boost::shared_ptr<internal_avro::DataFileWriterBase> writer,
   buffer.access_buffer().clear();
   boost::shared_ptr<internal_avro::InputStream> input_stream =
       internal_avro::memoryInputStream(*stream);
-  const uint8_t *data;
+  const uint8_t* data;
   size_t len;
   while (input_stream->next(&data, &len)) {
     buffer.access_buffer().insert(buffer.access_buffer().end(), data,
@@ -483,7 +482,8 @@ BufferConstHandle try_convert(BufferConstHandle buffer, std::string message) {
   try {
     reader = boost::make_shared<internal_avro::DataFileReader<BackwardsFrame> >(
         stream, valid_backwards_schema);
-  } catch(std::exception e) {
+  }
+  catch (std::exception e) {
     RMF_THROW(Message(message + " and " + e.what()), IOException);
   }
 

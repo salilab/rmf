@@ -161,7 +161,7 @@
       RMF_GCC_PRAGMA(diagnostic warning "-Winit-self")          \
       RMF_GCC_PRAGMA(diagnostic warning "-Wcast-align")         \
       RMF_GCC_PRAGMA(diagnostic warning "-Woverloaded-virtual") \
-      RMF_GCC_PRAGMA(diagnostic ignored "-Wconversion") \
+      RMF_GCC_PRAGMA(diagnostic ignored "-Wconversion")         \
       RMF_GCC_PRAGMA(diagnostic warning                         \
                      "-Wundef") RMF_GCC_PROTOTYPES RMF_GCC_CXX0X_COMPAT
 

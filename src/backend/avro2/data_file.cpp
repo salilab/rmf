@@ -29,8 +29,8 @@ void write(internal_avro::DataFileWriterBase *writer,
   writer->incr();
 }
 
-void load_frame(FrameID id, internal_avro::DataFileReader<Frame>& reader,
-                Frame& frame) {
+void load_frame(FrameID id, internal_avro::DataFileReader<Frame> &reader,
+                Frame &frame) {
   RMF_TRACE("Looking for frame " << id);
 
   do {
@@ -44,7 +44,6 @@ void load_frame(FrameID id, internal_avro::DataFileReader<Frame>& reader,
     }
   } while (true);
 }
-
 
 void load_file_data(internal_avro::DataFileReader<FileData> &reader,
                     FileData &fd) {
@@ -65,7 +64,6 @@ void load_file_data(internal_avro::DataFileReader<FileData> &reader,
     }
   }
 }
-
 }
 }
 RMF_DISABLE_WARNINGS

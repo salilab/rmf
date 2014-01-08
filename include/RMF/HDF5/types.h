@@ -318,8 +318,10 @@ inline void get_as_impl(InType in, OutType& out) {
 }
 template <class Traits, class InType>
 inline void get_as_impl(InType in, ID<Traits>& out) {
-  if (in == -1) out = ID<Traits>();
-  else out = ID<Traits>(in);
+  if (in == -1)
+    out = ID<Traits>();
+  else
+    out = ID<Traits>(in);
 }
 template <class OutType, class Traits>
 inline void get_as_impl(ID<Traits> in, OutType& out) {

@@ -89,12 +89,13 @@ class Alternatives : public AlternativesConst {
 
      See also Alternatives and AlternativesFactory.
   */
-  class AlternativesFactory: public Factory {
+class AlternativesFactory : public Factory {
   Category cat_;
   FloatKey base_resolution_key_;
   IntsKey types_key_;
   IntsKey roots_key_;
   FloatsKey resolutions_key_;
+
  public:
   AlternativesFactory(FileConstHandle fh);
   AlternativesFactory(FileHandle fh);

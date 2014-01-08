@@ -34,8 +34,7 @@ std::string get_static_signature(
     decorator::SegmentFactory segcf, decorator::ResidueFactory rcf,
     decorator::AtomFactory acf, decorator::ChainFactory chaincf,
     decorator::DomainFactory fragcf, decorator::CopyFactory copycf,
-    decorator::DiffuserFactory diffusercf,
-    decorator::TypedFactory typedcf) {
+    decorator::DiffuserFactory diffusercf, decorator::TypedFactory typedcf) {
   std::ostringstream ret;
   ret << "hierarchy [\n";
   RMF_FOREACH(NodeID n, file.get_node_ids()) {
@@ -53,8 +52,10 @@ std::string get_static_signature(
     ret << n << ":";
     if (bdcf.get_is_static(nh)) ret << " bond";
     if (ccf.get_is_static(nh)) ret << " color";
-    if (pcf.get_is_static(nh)) ret << " particle";
-    else if (ipcf.get_is_static(nh)) ret << " iparticle";
+    if (pcf.get_is_static(nh))
+      ret << " particle";
+    else if (ipcf.get_is_static(nh))
+      ret << " iparticle";
     if (rpcf.get_is_static(nh)) ret << " rigid";
     if (scf.get_is_static(nh)) ret << " score";
     if (bcf.get_is_static(nh)) ret << " ball";
@@ -82,8 +83,7 @@ std::string get_frame_signature(
     decorator::SegmentFactory segcf, decorator::ResidueFactory rcf,
     decorator::AtomFactory acf, decorator::ChainFactory chaincf,
     decorator::DomainFactory fragcf, decorator::CopyFactory copycf,
-    decorator::DiffuserFactory diffusercf,
-    decorator::TypedFactory typedcf) {
+    decorator::DiffuserFactory diffusercf, decorator::TypedFactory typedcf) {
   std::ostringstream ret;
   ret << file.get_current_frame() << " [\n";
   RMF_FOREACH(NodeID n, file.get_node_ids()) {
@@ -91,8 +91,10 @@ std::string get_frame_signature(
     ret << n << ":";
     if (bdcf.get_is(nh)) ret << " bond";
     if (ccf.get_is(nh)) ret << " color";
-    if (pcf.get_is(nh)) ret << " particle";
-    else if (ipcf.get_is(nh)) ret << " iparticle";
+    if (pcf.get_is(nh))
+      ret << " particle";
+    else if (ipcf.get_is(nh))
+      ret << " iparticle";
     if (rpcf.get_is(nh)) ret << " rigid";
     if (scf.get_is(nh)) ret << " score";
     if (bcf.get_is(nh)) ret << " ball";

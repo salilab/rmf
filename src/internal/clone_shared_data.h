@@ -69,7 +69,8 @@ void clone_hierarchy(SDA* sda, SDB* sdb) {
   }
   if (parents.empty()) return;
   RMF_LARGE_UNORDERED_SET<NodeID> existing;
-  RMF_LARGE_UNORDERED_MAP<NodeID, RMF_SMALL_UNORDERED_SET<NodeID> > existing_parents;
+  RMF_LARGE_UNORDERED_MAP<NodeID, RMF_SMALL_UNORDERED_SET<NodeID> >
+      existing_parents;
   RMF_FOREACH(NodeID nb, get_nodes(sdb)) {
     existing.insert(nb);
     RMF_FOREACH(NodeID ch, sdb->get_children(nb)) {

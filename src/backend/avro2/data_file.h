@@ -33,7 +33,6 @@ RMFEXPORT void load_file_data(internal_avro::DataFileReader<FileData> &reader,
 RMFEXPORT void load_frame(FrameID id,
                           internal_avro::DataFileReader<Frame> &reader,
                           Frame &frame);
-
 }
 }
 

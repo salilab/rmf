@@ -144,9 +144,7 @@ struct BufferWriterTraits {
     RMF_INFO("Writing to buffer");
     avro2::write(writer_.get(), t);
   }
-  void flush() {
-    flush_buffer(writer_, stream_, buffer_);
-  }
+  void flush() { flush_buffer(writer_, stream_, buffer_); }
   void load_frame(const FileData &, FrameID, FrameID, Frame &fr) {
     fr = Frame();
   }
@@ -162,7 +160,8 @@ struct BufferReaderBase {
   BufferReaderBase(BufferConstHandle buffer) : buffer_(buffer) {
     try {
       get_reader<Frame>();
-    } catch (const std::exception &e) {
+    }
+    catch (const std::exception &e) {
       buffer_ = try_convert(buffer_, e.what());
     }
   }

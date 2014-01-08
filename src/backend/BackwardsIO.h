@@ -551,7 +551,7 @@ struct BackwardsIO : public IO {
     // ignore nesting relationships for now
     if (cur.get_index() >= sd_->get_number_of_frames()) {
       RMF_TRACE("Adding new frame for " << cur);
-      FrameID cur_frame= shared_data->get_loaded_frame();
+      FrameID cur_frame = shared_data->get_loaded_frame();
       FrameID nfid = sd_->add_frame(shared_data->get_frame_data(cur).name,
                                     shared_data->get_frame_data(cur).type);
       RMF_UNUSED(nfid);

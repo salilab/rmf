@@ -23,8 +23,7 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 namespace {
 bool validate_impl(NodeConstHandle cur, decorator::ParticleFactory pcf,
-                   decorator::ResidueFactory rcf,
-                   decorator::AtomFactory acf) {
+                   decorator::ResidueFactory rcf, decorator::AtomFactory acf) {
   NodeConstHandles ch = cur.get_children();
   bool ret = true;
   if (ch.empty() && cur.get_type() == REPRESENTATION) {
@@ -38,7 +37,7 @@ bool validate_impl(NodeConstHandle cur, decorator::ParticleFactory pcf,
   }
   return ret;
 }
-} // namespace
+}  // namespace
 void validate(FileConstHandle fh) {
   decorator::ParticleFactory pcf(fh);
   decorator::ResidueFactory rcf(fh);

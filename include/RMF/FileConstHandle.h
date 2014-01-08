@@ -182,11 +182,11 @@ class RMFEXPORT FileConstHandle {
     return shared_->get_frame_data(fr).name;
   }
   FrameIDs get_children(FrameID id) const {
-    const internal::FrameData &fd = shared_->get_frame_data(id);
+    const internal::FrameData& fd = shared_->get_frame_data(id);
     return FrameIDs(fd.children.begin(), fd.children.end());
   }
   FrameIDs get_parents(FrameID id) const {
-    const internal::FrameData &fd = shared_->get_frame_data(id);
+    const internal::FrameData& fd = shared_->get_frame_data(id);
     return FrameIDs(fd.parents.begin(), fd.parents.end());
   }
   void set_current_frame(FrameID frame) const {

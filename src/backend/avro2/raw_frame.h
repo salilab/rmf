@@ -377,7 +377,9 @@ struct codec_traits<rmf_raw_avro2::Node> {
 template <>
 struct codec_traits<rmf_raw_avro2::Type> {
   template <class Encoder>
-  static void encode(Encoder& e, rmf_raw_avro2::Type v) { e.encodeEnum(v); }
+  static void encode(Encoder& e, rmf_raw_avro2::Type v) {
+    e.encodeEnum(v);
+  }
   template <class Decoder>
   static void decode(Decoder& d, rmf_raw_avro2::Type& v) {
     v = static_cast<rmf_raw_avro2::Type>(d.decodeEnum());

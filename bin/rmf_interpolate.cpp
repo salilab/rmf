@@ -69,13 +69,11 @@ void interpolate_frame(
     RMF::decorator::IntermediateParticleFactory ipcf0,
     RMF::decorator::IntermediateParticleFactory ipcf1,
     RMF::decorator::IntermediateParticleFactory ipf,
-    RMF::decorator::BallFactory bcf0,
-    RMF::decorator::BallFactory bcf1, RMF::decorator::BallFactory bf,
-    RMF::decorator::ReferenceFrameFactory rfcf0,
+    RMF::decorator::BallFactory bcf0, RMF::decorator::BallFactory bcf1,
+    RMF::decorator::BallFactory bf, RMF::decorator::ReferenceFrameFactory rfcf0,
     RMF::decorator::ReferenceFrameFactory rfcf1,
     RMF::decorator::ReferenceFrameFactory rff,
-    RMF::decorator::CylinderFactory ccf0,
-    RMF::decorator::CylinderFactory ccf1,
+    RMF::decorator::CylinderFactory ccf0, RMF::decorator::CylinderFactory ccf1,
     RMF::decorator::CylinderFactory cf, RMF::NodeConstHandle input0,
     RMF::NodeConstHandle input1, RMF::NodeHandle output) {
   if (ipcf0.get_is(input0)) {

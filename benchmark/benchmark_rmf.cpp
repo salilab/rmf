@@ -92,9 +92,10 @@ std::size_t create_hierarchy(RMF::FileHandle file) {
   return total_size;
 }
 
-std::pair<double, std::size_t> create_frame(
-    RMF::FileHandle fh, RMF::decorator::ParticleFactory ipf,
-    const RMF::NodeIDs& atoms, int frame) {
+std::pair<double, std::size_t> create_frame(RMF::FileHandle fh,
+                                            RMF::decorator::ParticleFactory ipf,
+                                            const RMF::NodeIDs& atoms,
+                                            int frame) {
   RMF::Vector3 ret(0, 0, 0);
   std::size_t total_size = 0;
   RMF_FOREACH(RMF::NodeID n, atoms) {
@@ -207,7 +208,7 @@ RMF::FileConstHandle benchmark_open(std::string path, std::string type) {
             << std::endl;
   return ret;
 }
-} // namespace
+}  // namespace
 
 int main(int, char**) {
   try {

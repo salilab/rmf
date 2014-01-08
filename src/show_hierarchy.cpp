@@ -73,22 +73,21 @@ void show_node(NodeConstHandle n, std::string node_suffix, std::ostream& out,
 void show_node_decorators(
     NodeConstHandle n, std::string node_suffix, std::ostream& out,
     decorator::BondFactory bdcf, decorator::ColoredFactory ccf,
-    decorator::ParticleFactory pcf,
-    decorator::IntermediateParticleFactory ipcf,
+    decorator::ParticleFactory pcf, decorator::IntermediateParticleFactory ipcf,
     decorator::RigidParticleFactory rpcf, decorator::ScoreFactory scf,
-    decorator::RepresentationFactory repcf,
-    decorator::BallFactory bcf, decorator::CylinderFactory cycf,
-    decorator::SegmentFactory segcf, decorator::ResidueFactory rcf,
-    decorator::AtomFactory acf, decorator::ChainFactory chaincf,
-    decorator::DomainFactory fragcf, decorator::CopyFactory copycf,
-    decorator::DiffuserFactory diffusercf,
+    decorator::RepresentationFactory repcf, decorator::BallFactory bcf,
+    decorator::CylinderFactory cycf, decorator::SegmentFactory segcf,
+    decorator::ResidueFactory rcf, decorator::AtomFactory acf,
+    decorator::ChainFactory chaincf, decorator::DomainFactory fragcf,
+    decorator::CopyFactory copycf, decorator::DiffuserFactory diffusercf,
     decorator::TypedFactory typedcf, std::string) {
   using std::operator<<;
   out << "\"" << n.get_name() << "\"" << node_suffix << " [" << n.get_type()
       << ":";
   if (bdcf.get_is(n)) out << " bond";
   if (ccf.get_is(n)) out << " color";
-  if (pcf.get_is(n)) out << " particle";
+  if (pcf.get_is(n))
+    out << " particle";
   else if (ipcf.get_is(n))
     out << " iparticle";
   if (rpcf.get_is(n)) out << " rigid";
@@ -121,7 +120,7 @@ std::vector<ID<TypeT> > get_keys(FileConstHandle f) {
 // Note that older g++ is confused by queue.back().get<2>()
 #define RMF_PRINT_TREE(stream, start, show)                                  \
   {                                                                          \
-    decorator::AlternativesFactory altcf(root.get_file());              \
+    decorator::AlternativesFactory altcf(root.get_file());                   \
     typedef boost::tuple<std::string, std::string, std::string,              \
                          NodeConstHandle> QI;                                \
     std::vector<QI> queue;                                                   \
@@ -252,8 +251,7 @@ void show_frames_impl(FileConstHandle fh, FrameID root, std::string prefix,
   } else {
     out << " + ";
   }
-  out << fh.get_name(root) << " [" << fh.get_type(root) << "]"
-      << std::endl;
+  out << fh.get_name(root) << " [" << fh.get_type(root) << "]" << std::endl;
   RMF_FOREACH(FrameID id, ch) { show_frames_impl(fh, id, prefix + "   ", out); }
 }
 }

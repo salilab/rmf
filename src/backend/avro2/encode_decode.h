@@ -119,7 +119,7 @@ struct codec_traits<RMF_VECTOR<V> > {
 template <RMF::VectorDimension V>
 struct codec_traits<RMF::avro2::Skip<RMF_VECTOR<V> > > {
   template <class Decoder>
-  static void decode(Decoder& d, RMF::avro2::Skip<RMF_VECTOR<V> >& ) {
+  static void decode(Decoder& d, RMF::avro2::Skip<RMF_VECTOR<V> >&) {
     for (unsigned int i = 0; i < V; ++i) {
       float f;
       internal_avro::decode(d, f);
@@ -174,7 +174,6 @@ struct codec_traits<RMF::ID<V> > {
   }
 };
 
-
 template <class K, class V>
 struct codec_traits<boost::unordered_map<K, V> > {
   typedef std::pair<K, V> KP;
@@ -219,8 +218,7 @@ struct codec_traits<boost::unordered_set<K> > {
 template <class K>
 struct codec_traits<RMF::avro2::Skip<boost::unordered_set<K> > > {
   template <class Decoder>
-  static void decode(Decoder& d,
-                     RMF::avro2::Skip<boost::unordered_set<K> >&) {
+  static void decode(Decoder& d, RMF::avro2::Skip<boost::unordered_set<K> >&) {
     RMF::avro2::Skip<std::vector<K> > values;
     internal_avro::decode(d, values);
   }

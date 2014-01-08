@@ -32,6 +32,7 @@ struct FrameData {
 
 class SharedDataFrames {
   RMF_LARGE_UNORDERED_MAP<FrameID, FrameData> frames_;
+
  public:
   SharedDataFrames() {}
   const FrameData& get_frame_data(FrameID fid) const {

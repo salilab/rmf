@@ -109,13 +109,16 @@ Alternatives::Alternatives(NodeHandle nh, FloatKey base_resolution_key,
 }
 
 void Alternatives::add_alternative(NodeHandle root, RepresentationType type) {
-  get_node().get_shared_data()
+  get_node()
+      .get_shared_data()
       ->access_static_value(get_node().get_id(), types_key_)
       .push_back(type);
-  get_node().get_shared_data()
+  get_node()
+      .get_shared_data()
       ->access_static_value(get_node().get_id(), resolutions_key_)
       .push_back(get_resolution_impl(root));
-  get_node().get_shared_data()
+  get_node()
+      .get_shared_data()
       ->access_static_value(get_node().get_id(), roots_key_)
       .push_back(root.get_id().get_index());
 }
@@ -123,16 +126,16 @@ void Alternatives::add_alternative(NodeHandle root, RepresentationType type) {
 NodeConstHandle AlternativesConst::get_alternative(RepresentationType type,
                                                    double resolution) const {
   return get_node().get_file().get_node(
-      get_alternative_impl(get_node(), base_resolution_key_, types_key_, roots_key_,
-                      resolutions_key_, type, resolution));
+      get_alternative_impl(get_node(), base_resolution_key_, types_key_,
+                           roots_key_, resolutions_key_, type, resolution));
 }
 
 NodeConstHandles AlternativesConst::get_alternatives(RepresentationType type)
     const {
   NodeConstHandles ret;
   RMF_FOREACH(NodeID id,
-              get_alternatives_impl(get_node(), base_resolution_key_, types_key_,
-                                    roots_key_, resolutions_key_)) {
+              get_alternatives_impl(get_node(), base_resolution_key_,
+                                    types_key_, roots_key_, resolutions_key_)) {
     ret.push_back(get_node().get_file().get_node(id));
   }
   return ret;

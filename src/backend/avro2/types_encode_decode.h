@@ -116,7 +116,9 @@ struct codec_traits<RMF::avro2::HierarchyNode> {
 template <>
 struct codec_traits<RMF::avro2::KeyType> {
   template <class Encoder>
-  static void encode(Encoder& e, RMF::avro2::KeyType v) { e.encodeEnum(v); }
+  static void encode(Encoder& e, RMF::avro2::KeyType v) {
+    e.encodeEnum(v);
+  }
   template <class Decoder>
   static void decode(Decoder& d, RMF::avro2::KeyType& v) {
     v = static_cast<RMF::avro2::KeyType>(d.decodeEnum());
@@ -165,7 +167,6 @@ struct codec_traits<RMF::avro2::Skip<RMF::internal::KeyData<Traits> > > {
   }
 };
 
-
 template <class Traits>
 struct codec_traits<RMF::internal::TypeData<Traits> > {
   template <class Encoder>
@@ -184,7 +185,7 @@ template <class Traits>
 struct codec_traits<RMF::avro2::Skip<RMF::internal::TypeData<Traits> > > {
   template <class Decoder>
   static void decode(Decoder& d,
-                     RMF::avro2::Skip<RMF::internal::TypeData<Traits> >& ) {
+                     RMF::avro2::Skip<RMF::internal::TypeData<Traits> >&) {
     typename RMF::avro2::Skip<typename RMF::internal::TypeData<Traits>::P> v;
     internal_avro::decode(d, v);
   }

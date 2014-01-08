@@ -37,18 +37,18 @@ namespace backends {
 struct IO;
 }
 
-#define RMF_HOIST(Traits, UCName)                    \
-  using SharedDataKeys<Traits>::get_key;             \
-  using SharedDataKeys<Traits>::get_name;            \
-  using SharedDataKeys<Traits>::get_keys;            \
-  using SharedDataKeys<Traits>::get_category;        \
-  using SharedDataKeys<Traits>::ensure_key;          \
-  using SharedDataKeys<Traits>::access_key_data;     \
+#define RMF_HOIST(Traits, UCName)                \
+  using SharedDataKeys<Traits>::get_key;         \
+  using SharedDataKeys<Traits>::get_name;        \
+  using SharedDataKeys<Traits>::get_keys;        \
+  using SharedDataKeys<Traits>::get_category;    \
+  using SharedDataKeys<Traits>::ensure_key;      \
+  using SharedDataKeys<Traits>::access_key_data; \
   using SharedDataKeys<Traits>::get_key_data;
 
 #define RMF_SHARED_DATA_PARENT(Traits, UCName) \
  public                                        \
- SharedDataKeys<Traits>,
+  SharedDataKeys<Traits>,
 
 namespace internal {
 
@@ -63,8 +63,8 @@ class RMFEXPORT SharedData
   bool write_;
   boost::shared_ptr<backends::IO> io_;
   FrameID loaded_frame_;
- public:
 
+ public:
   using SharedDataHierarchy::get_name;
   using SharedDataCategory::get_name;
   using SharedDataCategory::get_category;
