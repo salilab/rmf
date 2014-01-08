@@ -1,6 +1,6 @@
 
 include("Files.cmake")
-include(${PROJECT_SOURCE_DIR}/cmake_modules/AddTests.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake_modules/IMPAddTests.cmake)
 
 include_directories(${PROJECT_SOURCE_DIR}/bin)
 set(IMP_LINK_LIBRARIES "RMF-lib" CACHE INTERNAL "")

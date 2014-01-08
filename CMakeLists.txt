@@ -4,6 +4,14 @@ project(RMF)
 # needs to be in main CMakeLists.txt
 enable_testing()
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake_modules)
+
+include(cmake_modules/IMPExecuteProcess.cmake)
+include(cmake_modules/FindLog4CXX.cmake)
+include(cmake_modules/IMPFindC++11.cmake)
+include(cmake_modules/IMPFindCompilerFlags.cmake)
+
+
 message(STATUS "Running setup_cmake.py")
 execute_process(COMMAND python ${PROJECT_SOURCE_DIR}/tools/build/setup-cmake.py
                   RESULT_VARIABLE setup
@@ -19,18 +27,16 @@ endif()
 include_directories("${PROJECT_BINARY_DIR}/src"
   "${PROJECT_SOURCE_DIR}/src")
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake_modules)
 
 set(RMF_INCLUDE_PATH "" CACHE INTERNAL "" FORCE)
+
+# make sure it initialized
+set(RMF_TESTS "" CACHE INTERNAL "" FORCE)
 
 if(POLICY CMP0017)
 cmake_policy(SET CMP0017 NEW)
 endif(POLICY CMP0017)
 
-include(cmake_modules/ExecuteProcess.cmake)
-include(cmake_modules/FindLog4CXX.cmake)
-include(cmake_modules/FindC++11.cmake)
-include(cmake_modules/FindCompilerFlags.cmake)
 
 if(DEFINED RMF_TYPES_HEADER)
 message(STATUS "Using types header at ${RMF_TYPES_HEADER}")
