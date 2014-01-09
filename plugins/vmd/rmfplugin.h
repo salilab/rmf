@@ -1,4 +1,10 @@
-/** Copyright and file description */
+/**
+ *  \file rmfplugin.h
+ *  \brief Handle read/write of Model data from/to files.
+ *
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *
+ */
 
 #ifndef RMF_RMFPLUGIN_H
 #define RMF_RMFPLUGIN_H
@@ -67,6 +73,7 @@ class Data {
   double resolution_;
   int states_;
   RMF::Vector3 upper_bound_;
+  double max_radius_;
   bool done_;
 
   // find nodes to push to vmd
@@ -111,6 +118,7 @@ Data::Data(std::string name)
       resolution_(1.0),
       states_(1),
       upper_bound_(0, 0, 0),
+      max_radius_(0),
       done_(false) {
   RMF::Floats resolutions =
       RMF::decorator::get_resolutions(file_.get_root_node());
@@ -133,6 +141,7 @@ Data::Data(std::string name)
     if (pf_.get_is(file_.get_node(id))) {
       RMF::decorator::ParticleConst pc = pf_.get(file_.get_node(id));
       double r = pc.get_radius();
+      max_radius_ = std::max<double>(r, max_radius_);
       RMF::Vector3 c = pc.get_coordinates();
       for (unsigned int i = 0; i < 3; ++i) {
         upper_bound_[i] = std::max<double>(upper_bound_[i], c[i] + r);
@@ -261,8 +270,10 @@ boost::array<int, 3> Data::get_structure(RMF::NodeConstHandle cur,
 }
 
 void Data::read_structure(molfile_atom_t *atoms) {
+  RMF_INFO("Reading structure");
   unsigned int so_far = 0;
   for (unsigned int i = 0; i < states_; ++i) {
+    RMF_INFO("Getting structure (" << so_far << ")");
     boost::array<int, 3> ret =
         get_structure(file_.get_root_node(), so_far, atoms + so_far, 0, " ", -1,
                       "NONE", resolution_);
@@ -273,6 +284,7 @@ void Data::read_structure(molfile_atom_t *atoms) {
 bool Data::read_next_frame(molfile_timestep_t *frame) {
   if (done_) return false;
   RMF::FrameID curf = file_.get_current_frame();
+  RMF_INFO("Reading next frame at " << curf);
   frame->physical_time = curf.get_index() / states_;
   float *coords = frame->coords;
   for (unsigned int state = 0; state < states_; ++state) {
@@ -286,7 +298,7 @@ bool Data::read_next_frame(molfile_timestep_t *frame) {
         RMF::Vector3 cc;
         cc = pf_.get(file_.get_node(n)).get_coordinates();
         cc = tr.get_global_coordinates(cc);
-        cc[0] += upper_bound_[0] * state;
+        cc[0] += (max_radius_ * 3 + upper_bound_[0]) * state;
         std::copy(cc.begin(), cc.end(), coords);
         coords += 3;
       }
@@ -319,6 +331,7 @@ bool Data::read_next_frame(molfile_timestep_t *frame) {
 }
 
 void Data::read_graphics(int *nelem, const molfile_graphics_t **gdata) {
+  RMF_INFO("Reading graphics");
   *nelem =
       get_graphics(file_.get_root_node(), RMF::CoordinateTransformer(), NULL);
   graphics_.reset(new molfile_graphics_t[*nelem]);
@@ -330,8 +343,10 @@ void Data::read_graphics(int *nelem, const molfile_graphics_t **gdata) {
 void Data::read_bonds(int *nbonds, int **fromptr, int **toptr,
                       float **bondorderptr, int **bondtype, int *nbondtypes,
                       char ***bondtypename) {
+  RMF_INFO("Reading bonds");
   int base_bonds = get_bonds(file_.get_root_node(), 0, NULL, NULL, NULL);
   *nbonds = base_bonds * states_;
+  RMF_TRACE("Found " << *nbonds << " bonds.");
   bonds_from_.reset(new int[*nbonds]);
   *fromptr = bonds_from_.get();
   bonds_to_.reset(new int[*nbonds]);
@@ -351,13 +366,15 @@ void Data::read_bonds(int *nbonds, int **fromptr, int **toptr,
   bondtypename[0] = &bt_char_;
 
   for (unsigned int i = 0; i < states_; ++i) {
-    get_bonds(file_.get_root_node(), num_atoms_ * i, *fromptr, *toptr,
-              *bondtype);
+    RMF_INFO("Getting bonds (" << num_atoms_ * i << ")");
+    get_bonds(file_.get_root_node(), num_atoms_ * i, *fromptr + base_bonds * i,
+              *toptr + base_bonds * i, *bondtype + base_bonds * i);
   }
 }
 
 int Data::get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
                        molfile_graphics_t *graphics) {
+  RMF_INFO("Getting graphics");
   int ret = 0;
   if (graphics && rff_.get_is(cur)) {
     tr = RMF::CoordinateTransformer(tr, rff_.get(cur));
@@ -468,107 +485,12 @@ int Data::get_bonds(RMF::NodeConstHandle cur, int offset, int *from, int *to,
   return ret;
 }
 void Data::read_timestep_data(molfile_timestep_metadata_t *data) {
+  RMF_INFO("Reading timestep data");
   data->count = file_.get_number_of_frames();
   if (data->count == 0) data->count = 1;
   data->avg_bytes_per_timestep =
       sizeof(float) * 3 * get_number_of_atoms() * states_;
   data->has_velocities = 0;
-}
-
-void close_rmf_read(void *mydata) {
-  Data *data = reinterpret_cast<Data *>(mydata);
-  delete data;
-}
-
-void *open_rmf_read(const char *filename, const char *, int *natoms) {
-  Data *data = new Data(filename);
-  *natoms = data->get_number_of_atoms() * data->get_number_of_states();
-  if (*natoms == 0) {
-    *natoms = MOLFILE_NUMATOMS_NONE;
-  }
-  return data;
-}
-
-int read_rmf_structure(void *mydata, int *optflags, molfile_atom_t *atoms) {
-  Data *data = reinterpret_cast<Data *>(mydata);
-  *optflags = MOLFILE_RADIUS | MOLFILE_MASS;
-  // copy from atoms
-  data->read_structure(atoms);
-
-  return VMDPLUGIN_SUCCESS;
-}
-
-int read_rmf_timestep(void *mydata, int /*natoms*/, molfile_timestep_t *frame) {
-  std::cout << "read timestep" << std::endl;
-  Data *data = reinterpret_cast<Data *>(mydata);
-  if (data->read_next_frame(frame)) {
-    return VMDPLUGIN_SUCCESS;
-  } else {
-    return MOLFILE_EOF;
-  }
-}
-
-int read_rmf_bonds(void *mydata, int *nbonds, int **fromptr, int **toptr,
-                   float **bondorderptr, int **bondtype, int *nbondtypes,
-                   char ***bondtypename) {
-  Data *data = reinterpret_cast<Data *>(mydata);
-  data->read_bonds(nbonds, fromptr, toptr, bondorderptr, bondtype, nbondtypes,
-                   bondtypename);
-  // scan hierarchy and extract bonds
-  return VMDPLUGIN_SUCCESS;
-}
-
-int read_rmf_graphics(void *mydata, int *nelem,
-                      const molfile_graphics_t **gdata) {
-  Data *data = reinterpret_cast<Data *>(mydata);
-  data->read_graphics(nelem, gdata);
-  return VMDPLUGIN_SUCCESS;
-}
-int read_rmf_timestep_metadata(void *mydata,
-                               molfile_timestep_metadata_t *tdata) {
-  Data *data = reinterpret_cast<Data *>(mydata);
-  data->read_timestep_data(tdata);
-  return VMDPLUGIN_SUCCESS;
-}
-
-void init_plugin(molfile_plugin_t &plugin) {
-  memset(&plugin, 0, sizeof(molfile_plugin_t));
-  plugin.abiversion = vmdplugin_ABIVERSION;
-  plugin.type = MOLFILE_PLUGIN_TYPE;
-  plugin.name = "rmf";
-  plugin.prettyname = "RMF";
-  plugin.author = "Daniel Russel";
-  plugin.majorv = 0;
-  plugin.minorv = 9;
-  // try this
-  plugin.is_reentrant = VMDPLUGIN_THREADSAFE;
-  plugin.open_file_read = open_rmf_read;
-  plugin.read_structure = read_rmf_structure;
-  plugin.read_bonds = read_rmf_bonds;
-  plugin.read_rawgraphics = read_rmf_graphics;
-  plugin.close_file_read = close_rmf_read;
-  plugin.read_timestep_metadata = read_rmf_timestep_metadata;
-  plugin.read_next_timestep = read_rmf_timestep;
-}
-
-void init_plugins() {
-  init_plugin(plugin);
-  plugin.name = "rmf";
-  plugin.prettyname = "RMF";
-  plugin.filename_extension = "rmf";
-  init_plugin(plugin3);
-  plugin3.name = "rmf3";
-  plugin3.prettyname = "RMF3";
-  plugin3.filename_extension = "rmf3";
-  init_plugin(pluginz);
-  pluginz.name = "rmfz";
-  pluginz.prettyname = "RMFz";
-  pluginz.filename_extension = "rmfz";
-  // init_plugin(pluginrestraints);
-  // pluginrestraints.name = "rmf-with-restraints";
-  // pluginrestraints.prettyname = "RMF with restraints";
-  // pluginrestraints.filename_extension = "rmf-with-restraints";
-  // pluginrestraints.read_bonds = read_rmf_bonds_and_restraints;
 }
 }
 #endif /* RMF_RMFPLUGIN_H */
