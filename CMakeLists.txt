@@ -12,8 +12,8 @@ include(cmake_modules/IMPFindC++11.cmake)
 include(cmake_modules/IMPFindCompilerFlags.cmake)
 
 
-message(STATUS "Running setup-cmake.py")
-execute_process(COMMAND python ${PROJECT_SOURCE_DIR}/tools/developer_tools/setup-cmake.py
+message(STATUS "Running setup_cmake.py")
+execute_process(COMMAND python ${PROJECT_SOURCE_DIR}/tools/developer_tools/setup_cmake.py
                   RESULT_VARIABLE setup
                   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 if(NOT ${setup} EQUAL 0)
