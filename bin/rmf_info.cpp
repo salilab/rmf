@@ -10,6 +10,7 @@
 #include "RMF/FileConstHandle.h"
 #include "RMF/ID.h"
 #include "RMF/info.h"
+#include "RMF/decorator/alternatives.h"
 #include "common.h"
 
 namespace {
@@ -36,6 +37,10 @@ int main(int argc, char** argv) {
     rh.set_current_frame(RMF::FrameID(frame));
     std::cout << "frames: " << rh.get_number_of_frames() << std::endl;
     RMF::show_info(rh, std::cout);
+    RMF::decorator::AlternativesFactory af(rh);
+    using RMF::operator<<;
+    std::cout << "resolutions: " << RMF::decorator::get_resolutions(
+                                        rh.get_root_node()) << std::endl;
     return 0;
   }
   catch (const std::exception& e) {

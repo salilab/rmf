@@ -60,8 +60,17 @@ class RMFEXPORT AlternativesConst : public Decorator {
   /** Get the resolution of a given node associated with this one.*/
   float get_resolution(NodeID id) const;
 
+  /** Get the resolution of a given node associated with this one.*/
+  float get_resolution(NodeConstHandle id) const {
+    return get_resolution(id.get_id());
+  }
+
   /** Get the type of the resolution with the given node id. */
   RepresentationType get_representation_type(NodeID id) const;
+
+  RepresentationType get_representation_type(NodeConstHandle id) const {
+    return get_representation_type(id.get_id());
+  }
 
   /** Get all the alternatives (including this node).
 
@@ -122,6 +131,14 @@ struct AlternativesConstFactory : public AlternativesFactory {
   AlternativesConstFactory(FileHandle fh) : AlternativesFactory(fh) {}
 };
 #endif
+
+/** Return a list of (clustered) resolution levels available in the subtree.
+
+    Use this, for example, when making a slider for display.
+*/
+RMFEXPORT Floats get_resolutions(NodeConstHandle root,
+                                 RepresentationType type = PARTICLE,
+                                 double accuracy = 0);
 
 } /* namespace decorator */
 } /* namespace RMF */
