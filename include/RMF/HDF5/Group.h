@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF_HDF_5GROUP_H
-#define RMF_HDF_5GROUP_H
+#ifndef RMF_HDF5_GROUP_H
+#define RMF_HDF5_GROUP_H
 
 #include "RMF/config.h"
 #include "ConstGroup.h"
@@ -109,7 +109,7 @@ class RMFEXPORT Group : public MutableAttributes<ConstGroup> {
       below.
       @{
    */
-  RMF_FOREACH_HDF5_TYPE(RMF_HDF5_DATA_SET_METHODS);
+  RMF_HDF5_FOREACH_TYPE(RMF_HDF5_DATA_SET_METHODS);
   /** @} */
 
   Group get_child_group(unsigned int i) const;
@@ -120,4 +120,4 @@ class RMFEXPORT Group : public MutableAttributes<ConstGroup> {
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_HDF_5GROUP_H */
+#endif /* RMF_HDF5_GROUP_H */

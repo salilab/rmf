@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF_HDF_5CONST_DATA_SET_D_H
-#define RMF_HDF_5CONST_DATA_SET_D_H
+#ifndef RMF_HDF5_CONST_DATA_SET_D_H
+#define RMF_HDF5_CONST_DATA_SET_D_H
 
 #include "RMF/config.h"
 #include "RMF/log.h"
@@ -227,20 +227,20 @@ class ConstDataSetD : public ConstDataSetAttributes {
 };
 
 #ifndef RMF_DOXYGEN
-#define RMF_DECLARE_CONST_DATA_SET(lcname, Ucname, PassValue, ReturnValue, \
-                                   PassValues, ReturnValues)               \
-  typedef ConstDataSetD<Ucname##Traits, 1> Ucname##ConstDataSet1D;         \
-  typedef std::vector<Ucname##ConstDataSet1D> Ucname##ConstDataSet1Ds;     \
-  typedef ConstDataSetD<Ucname##Traits, 2> Ucname##ConstDataSet2D;         \
-  typedef std::vector<Ucname##ConstDataSet2D> Ucname##ConstDataSet2Ds;     \
-  typedef ConstDataSetD<Ucname##Traits, 3> Ucname##ConstDataSet3D;         \
+#define RMF_HDF5_DECLARE_CONST_DATA_SET(lcname, Ucname, PassValue,             \
+                                        ReturnValue, PassValues, ReturnValues) \
+  typedef ConstDataSetD<Ucname##Traits, 1> Ucname##ConstDataSet1D;             \
+  typedef std::vector<Ucname##ConstDataSet1D> Ucname##ConstDataSet1Ds;         \
+  typedef ConstDataSetD<Ucname##Traits, 2> Ucname##ConstDataSet2D;             \
+  typedef std::vector<Ucname##ConstDataSet2D> Ucname##ConstDataSet2Ds;         \
+  typedef ConstDataSetD<Ucname##Traits, 3> Ucname##ConstDataSet3D;             \
   typedef std::vector<Ucname##ConstDataSet3D> Ucname##ConstDataSet3Ds
 
 /** \name Basic data set types
      \ingroup hdf5
      @{
  */
-RMF_FOREACH_HDF5_TYPE(RMF_DECLARE_CONST_DATA_SET);
+RMF_HDF5_FOREACH_TYPE(RMF_HDF5_DECLARE_CONST_DATA_SET);
 /** @} */
 #endif
 
@@ -249,4 +249,4 @@ RMF_FOREACH_HDF5_TYPE(RMF_DECLARE_CONST_DATA_SET);
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_HDF_5CONST_DATA_SET_D_H */
+#endif /* RMF_HDF5_CONST_DATA_SET_D_H */

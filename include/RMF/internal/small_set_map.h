@@ -1,3 +1,11 @@
+/**
+ *  \file RMF/internal/SharedData.h
+ *  \brief Handle read/write of Model data from/to files.
+ *
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *
+ */
+
 #ifndef RMF_INTERNAL_SMALL_SET_MAP_H
 #define RMF_INTERNAL_SMALL_SET_MAP_H
 
@@ -24,4 +32,4 @@
 #define RMF_SMALL_UNORDERED_MAP boost::container::flat_map
 #endif
 
-#endif
+#endif /* RMF_INTERNAL_SMALL_SET_MAP_H */

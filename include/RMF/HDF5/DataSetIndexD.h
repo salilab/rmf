@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF_HDF_5DATA_SET_INDEX_D_H
-#define RMF_HDF_5DATA_SET_INDEX_D_H
+#ifndef RMF_HDF5_DATA_SET_INDEX_D_H
+#define RMF_HDF5_DATA_SET_INDEX_D_H
 
 #include "RMF/config.h"
 #include "infrastructure_macros.h"
@@ -105,4 +105,4 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_HDF_5DATA_SET_INDEX_D_H */
+#endif /* RMF_HDF5_DATA_SET_INDEX_D_H */

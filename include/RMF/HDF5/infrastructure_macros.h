@@ -49,7 +49,7 @@ using RMF::operator<<;
     - the C++ type for accepting more than one value
     - the C++ type for returning more than one value
  */
-#define RMF_FOREACH_HDF5_TYPE(macroname)                                   \
+#define RMF_HDF5_FOREACH_TYPE(macroname)                                   \
   RMF_FOREACH_SIMPLE_TYPE(macroname);                                      \
   macroname(string, String, String, String, const Strings&, Strings);      \
   macroname(strings, Strings, Strings, Strings, const StringsList&,        \
@@ -60,7 +60,7 @@ using RMF::operator<<;
   macroname(indexes, Indexes, const Indexes&, Indexes, const IndexesList&, \
             IndexesList);
 #else
-#define RMF_FOREACH_HDF5_TYPE(macroname) \
+#define RMF_HDF5_FOREACH_TYPE(macroname) \
   macroname(type, Type, Type, Types, const Types&, Types);
 #endif
 

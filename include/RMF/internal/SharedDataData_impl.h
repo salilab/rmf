@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF_INTERNAL_SHARED_DATA_H
-#define RMF_INTERNAL_SHARED_DATA_H
+#ifndef RMF_INTERNAL_SHARED_DATA_DATA_IMPL_H
+#define RMF_INTERNAL_SHARED_DATA_DATA_IMPL_H
 
 #include "RMF/config.h"
 #include "RMF/Key.h"
@@ -137,4 +137,4 @@ inline std::string SharedData::get_category_name(Category kc) const {
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_INTERNAL_SHARED_DATA_H */
+#endif /* RMF_INTERNAL_SHARED_DATA_DATA_IMPL_H */

@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF_HDF_5CONST_ATTRIBUTES_H
-#define RMF_HDF_5CONST_ATTRIBUTES_H
+#ifndef RMF_HDF5_CONST_ATTRIBUTES_H
+#define RMF_HDF5_CONST_ATTRIBUTES_H
 
 #include "RMF/config.h"
 #include "handle.h"
@@ -87,4 +87,4 @@ class ConstAttributes : public Base {
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_HDF_5CONST_ATTRIBUTES_H */
+#endif /* RMF_HDF5_CONST_ATTRIBUTES_H */

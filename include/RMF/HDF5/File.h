@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF_HDF_5FILE_H
-#define RMF_HDF_5FILE_H
+#ifndef RMF_HDF5_FILE_H
+#define RMF_HDF5_FILE_H
 
 #include "RMF/config.h"
 #include "Group.h"
@@ -99,4 +99,4 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_HDF_5FILE_H */
+#endif /* RMF_HDF5_FILE_H */

@@ -6,6 +6,9 @@
  *
  */
 
+#ifndef RMF_DECORATORS_H
+#define RMF_DECORATORS_H
+
 // IWYU pragma: private
 
 #include "RMF/decorator/alias.h"
@@ -20,3 +23,4 @@
 /** \namespace RMF::decorator
 
     Decorators for nodes. */
+#endif /* RMF_DECORATORS_H */

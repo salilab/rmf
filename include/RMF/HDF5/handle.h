@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF_HDF_5_HANDLE_H
-#define RMF_HDF_5_HANDLE_H
+#ifndef RMF_HDF5__HANDLE_H
+#define RMF_HDF5__HANDLE_H
 
 #include "RMF/config.h"
 #include "infrastructure_macros.h"
@@ -91,4 +91,4 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_HDF_5_HANDLE_H */
+#endif /* RMF_HDF5__HANDLE_H */

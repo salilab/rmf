@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF_HDF_5DATA_SET_D_H
-#define RMF_HDF_5DATA_SET_D_H
+#ifndef RMF_HDF5_DATA_SET_D_H
+#define RMF_HDF5_DATA_SET_D_H
 
 #include "RMF/config.h"
 #include "types.h"
@@ -121,8 +121,8 @@ class DataSetD : public MutableAttributes<ConstDataSetD<TypeTraits, D> > {
 
 #ifndef RMF_DOXYGEN
 
-#define RMF_DECLARE_DATA_SET(lcname, Ucname, PassValue, ReturnValue,        \
-                             PassValues, ReturnValues)                      \
+#define RMF_HDF5_DECLARE_DATA_SET(lcname, Ucname, PassValue, ReturnValue,   \
+                                  PassValues, ReturnValues)                 \
   typedef DataSetD<Ucname##Traits, 1> Ucname##DataSet1D;                    \
   typedef std::vector<Ucname##DataSet1D> Ucname##DataSet1Ds;                \
   typedef DataSetD<Ucname##Traits, 2> Ucname##DataSet2D;                    \
@@ -143,7 +143,7 @@ class DataSetD : public MutableAttributes<ConstDataSetD<TypeTraits, D> > {
      \ingroup hdf5
      @{
  */
-RMF_FOREACH_HDF5_TYPE(RMF_DECLARE_DATA_SET);
+RMF_HDF5_FOREACH_TYPE(RMF_HDF5_DECLARE_DATA_SET);
 /** @} */
 #endif
 
@@ -152,4 +152,4 @@ RMF_FOREACH_HDF5_TYPE(RMF_DECLARE_DATA_SET);
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_HDF_5DATA_SET_D_H */
+#endif /* RMF_HDF5_DATA_SET_D_H */

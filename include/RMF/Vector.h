@@ -93,4 +93,4 @@ class Vector {
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_VECTOR_3D_H */
+#endif /* RMF_VECTOR_H */

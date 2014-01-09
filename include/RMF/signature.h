@@ -1,5 +1,5 @@
 /**
- *  \file RMF/utility.h
+ *  \file RMF/signature.h
  *  \brief Helper functions for manipulating RMF files.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.

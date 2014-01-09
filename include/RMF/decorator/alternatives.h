@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF_ALTERNATIVES_DECORATORS_H
-#define RMF_ALTERNATIVES_DECORATORS_H
+#ifndef RMF_DECORATORS_ALTERNATIVES_H
+#define RMF_DECORATORS_ALTERNATIVES_H
 
 #include <RMF/config.h>
 #include <RMF/infrastructure_macros.h>
@@ -127,4 +127,4 @@ struct AlternativesConstFactory : public AlternativesFactory {
 } /* namespace RMF */
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_ALTERNATIVES_DECORATORS_H */
+#endif /* RMF_DECORATORS_ALTERNATIVES_H */

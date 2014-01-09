@@ -1,5 +1,5 @@
 /**
- *  \file RMF/Log.h
+ *  \file RMF/log.h
  *  \brief Helper functions for manipulating RMF files.
  *
  *  Copyright 2007-2012 IMP Inventors. All rights reserved.

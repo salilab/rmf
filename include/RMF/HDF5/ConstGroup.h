@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF_HDF_5CONST_GROUP_H
-#define RMF_HDF_5CONST_GROUP_H
+#ifndef RMF_HDF5_CONST_GROUP_H
+#define RMF_HDF5_CONST_GROUP_H
 
 #include "RMF/config.h"
 #include "Object.h"
@@ -83,7 +83,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
         below.
         @{
      */
-    RMF_FOREACH_HDF5_TYPE(RMF_HDF5_DATA_SET_CONST_METHODS);
+    RMF_HDF5_FOREACH_TYPE(RMF_HDF5_DATA_SET_CONST_METHODS);
     /** @} */
 
     unsigned int get_number_of_children() const;
@@ -99,4 +99,4 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_HDF_5CONST_GROUP_H */
+#endif /* RMF_HDF5_CONST_GROUP_H */

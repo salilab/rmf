@@ -357,4 +357,4 @@ inline OutType get_as(const std::vector<InType> in) {
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_TYPES_H */
+#endif /* RMF_HDF5_TYPES_H */

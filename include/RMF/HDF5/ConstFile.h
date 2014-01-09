@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF_HDF_5CONST_FILE_H
-#define RMF_HDF_5CONST_FILE_H
+#ifndef RMF_HDF5_CONST_FILE_H
+#define RMF_HDF5_CONST_FILE_H
 
 #include "RMF/config.h"
 #include "ConstGroup.h"
@@ -64,4 +64,4 @@ RMFEXPORT void set_show_errors(bool tf);
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_HDF_5CONST_FILE_H */
+#endif /* RMF_HDF5_CONST_FILE_H */

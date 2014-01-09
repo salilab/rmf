@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF_VALIDATOR_H
-#define RMF_VALIDATOR_H
+#ifndef RMF_VALIDATE_H
+#define RMF_VALIDATE_H
 
 #include <boost/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
@@ -30,4 +30,4 @@ RMFEXPORT void validate(FileConstHandle fh);
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_VALIDATOR_H */
+#endif /* RMF_VALIDATE_H */
