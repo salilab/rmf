@@ -758,7 +758,6 @@ INPUT                  = @PROJECT_SOURCE_DIR@/README.md \
                          @PROJECT_SOURCE_DIR@/doc \
                          @PROJECT_SOURCE_DIR@/examples \
                          @PROJECT_SOURCE_DIR@/benchmark \
-                         @PROJECT_SOURCE_DIR@/plugins \
                          @PROJECT_BINARY_DIR@/doc
 
 # This tag can be used to specify the character encoding of the source files
