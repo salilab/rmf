@@ -56,6 +56,7 @@ class Data {
   RMF::decorator::FragmentFactory ff_;
   RMF::decorator::CopyFactory cpf_;
   RMF::decorator::TypedFactory tf_;
+  RMF::decorator::AlternativesFactory altf_;
   struct Body {
     std::vector<RMF::decorator::ReferenceFrameConst> frames;
     RMF::NodeIDs atoms;
@@ -115,6 +116,7 @@ Data::Data(std::string name)
       ff_(file_),
       cpf_(file_),
       tf_(file_),
+      altf_(file_),
       resolution_(1.0),
       states_(1),
       upper_bound_(0, 0, 0),
@@ -158,6 +160,9 @@ boost::array<int, 3> Data::get_structure(RMF::NodeConstHandle cur,
                                          double resolution) {
   boost::array<int, 3> ret = {{0}};
   if (cur.get_type() == RMF::ALIAS) return ret;
+  if (altf_.get_is(cur)) {
+    cur = altf_.get(cur).get_alternative(RMF::decorator::PARTICLE, resolution);
+  }
   if (rff_.get_is(cur)) {
     bodies_.push_back(Body());
     bodies_.back().frames = bodies_[body].frames;

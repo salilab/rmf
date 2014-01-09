@@ -39,8 +39,10 @@ int main(int argc, char** argv) {
     RMF::show_info(rh, std::cout);
     RMF::decorator::AlternativesFactory af(rh);
     using RMF::operator<<;
-    std::cout << "resolutions: " << RMF::decorator::get_resolutions(
-                                        rh.get_root_node()) << std::endl;
+    std::cout << "resolutions: "
+              << RMF::decorator::get_resolutions(rh.get_root_node(),
+                                                 RMF::decorator::PARTICLE, 0)
+              << std::endl;
     return 0;
   }
   catch (const std::exception& e) {

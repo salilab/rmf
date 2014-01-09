@@ -173,12 +173,16 @@ RepresentationType AlternativesConst::get_representation_type(NodeID id) const {
 
 namespace {
 Floats get_resolutions_impl(NodeConstHandle root, AlternativesFactory af,
-                            IntermediateParticleFactory ipf,
                             RepresentationType type) {
   Floats ret;
   if (af.get_is(root)) {
     RMF_FOREACH(NodeConstHandle a, af.get(root).get_alternatives(type)) {
       ret.push_back(af.get(root).get_resolution(a));
+    }
+  } else {
+    RMF_FOREACH(NodeConstHandle ch, root.get_children()) {
+      Floats cur = get_resolutions_impl(ch, af, type);
+      ret.insert(ret.end(), cur.begin(), cur.end());
     }
   }
   return ret;
@@ -188,8 +192,7 @@ Floats get_resolutions_impl(NodeConstHandle root, AlternativesFactory af,
 Floats get_resolutions(NodeConstHandle root, RepresentationType type,
                        double accuracy) {
   AlternativesFactory af(root.get_file());
-  IntermediateParticleFactory ipf(root.get_file());
-  Floats unclustered = get_resolutions_impl(root, af, ipf, type);
+  Floats unclustered = get_resolutions_impl(root, af, type);
   if (unclustered.empty()) unclustered.push_back(1.0);
   std::sort(unclustered.begin(), unclustered.end());
   double lb = unclustered[0];
