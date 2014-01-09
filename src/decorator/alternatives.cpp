@@ -197,7 +197,7 @@ Floats get_resolutions(NodeConstHandle root, RepresentationType type,
   Floats ret;
   RMF_FOREACH(double r, unclustered) {
     if (r > lb + accuracy) {
-      ret.push_back(.5*(lb + ub));
+      ret.push_back(.5 * (lb + ub));
       lb = r;
     }
     ub = r;
