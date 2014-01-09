@@ -36,7 +36,7 @@ enum RepresentationType {
 
 /** See also Alternatives and AlternativesFactory.
   */
-class AlternativesConst : public Decorator {
+class RMFEXPORT AlternativesConst : public Decorator {
   friend class AlternativesFactory;
   friend class Alternatives;
   FloatKey base_resolution_key_;
@@ -74,7 +74,7 @@ class AlternativesConst : public Decorator {
 
 /** See also AlternativesConst and AlternativesFactory.
   */
-class Alternatives : public AlternativesConst {
+class RMFEXPORT Alternatives : public AlternativesConst {
   friend class AlternativesFactory;
   Alternatives(NodeHandle nh, FloatKey base_resolution_key, IntsKey types_key,
                IntsKey roots_key, FloatsKey resolutions_key);
@@ -89,7 +89,7 @@ class Alternatives : public AlternativesConst {
 
      See also Alternatives and AlternativesFactory.
   */
-class AlternativesFactory : public Factory {
+class RMFEXPORT AlternativesFactory : public Factory {
   Category cat_;
   FloatKey base_resolution_key_;
   IntsKey types_key_;
