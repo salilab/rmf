@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os.path
+import sys
 
 
 def replace(msg, to_replace):
@@ -524,7 +525,11 @@ RMF_DISABLE_WARNINGS
 #endif /* RMF_%(NAME)s_DECORATORS_H */""" % {"name": name, "NAME": name.upper()}
 
     del fl
-    try:
-        os.system("clang-format-3.4 -i --style=Google " + path)
-    except:
-        pass
+    root = os.path.split(os.path.split(sys.argv[0])[0])[0]
+    os.system(
+        os.path.join(
+            root,
+            "developer_tools",
+            "cleanup_code.py") +
+        " " +
+        path)
