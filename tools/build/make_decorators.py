@@ -136,7 +136,21 @@ typed = Decorator(["REPRESENTATION"], "sequence",
                   "Typed",
                   [Attribute("type name", "String")])
 
-make_header("sequence", [residue, chain, fragment, domain, typed, copy], [])
+state = Decorator(["REPRESENTATION"], "sequence",
+                  "State",
+                  [Attribute("state index", "Int")])
+
+
+make_header(
+    "sequence",
+    [residue,
+     chain,
+     fragment,
+     domain,
+     typed,
+     copy,
+     state],
+    [])
 
 
 salias = Decorator(["ALIAS"], "alias",
