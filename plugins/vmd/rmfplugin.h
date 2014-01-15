@@ -124,8 +124,12 @@ Data::Data(std::string name)
       stf_(file_),
       resolution_(1.0),
       states_(1),
-      lower_bounds_(0, 0, 0),
-      upper_bounds_(0, 0, 0),
+      lower_bounds_(std::numeric_limits<float>::max(),
+                    std::numeric_limits<float>::max(),
+                    std::numeric_limits<float>::max()),
+      upper_bounds_(-std::numeric_limits<float>::max(),
+                    -std::numeric_limits<float>::max(),
+                    -std::numeric_limits<float>::max()),
       max_radius_(0),
       done_(false) {
   RMF::Floats resolutions =
@@ -182,13 +186,14 @@ boost::array<int, 3> Data::get_structure(RMF::NodeConstHandle cur,
   }
   if (stf_.get_is(cur)) {
     int state_index = stf_.get(cur).get_state_index();
-    if (!atoms) {
-      if (!rff_.get_is(cur)) {
+    // don't create duplicate bodies for 0
+    if (!atoms && state_index != bodies_[body].state) {
+      if (rff_.get_is(cur)) {
         bodies_.back().state = state_index;
       } else {
         bodies_.push_back(Body());
         bodies_.back().frames = bodies_[body].frames;
-        bodies_.back().state = bodies_[body].state;
+        bodies_.back().state = state_index;
         body = bodies_.size() - 1;
       }
       states_ = std::max<int>(states_, state_index + 1);
@@ -317,6 +322,8 @@ bool Data::read_next_frame(molfile_timestep_t *frame) {
     RMF::CoordinateTransformer tr;
     double offset = (upper_bounds_[0] - lower_bounds_[0] + max_radius_ * 3) *
                     bodies_[i].state;
+    std::cout << "offset is " << offset << " (" << bodies_[i].state << ")"
+              << std::endl;
     RMF_FOREACH(RMF::decorator::ReferenceFrameConst rf, bodies_[i].frames) {
       tr = RMF::CoordinateTransformer(tr, rf);
     }
@@ -352,6 +359,9 @@ bool Data::read_next_frame(molfile_timestep_t *frame) {
   } else {
     file_.set_current_frame(RMF::FrameID(next));
   }
+  std::copy(frame->coords, frame->coords + num_atoms_ * 3,
+            std::ostream_iterator<float>(std::cout, ", "));
+  std::cout << std::endl;
   return true;
 }
 
@@ -396,7 +406,6 @@ void Data::read_bonds(int *nbonds, int **fromptr, int **toptr,
 
 int Data::get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
                        molfile_graphics_t *graphics) {
-  RMF_INFO("Getting graphics");
   int ret = 0;
   if (graphics && rff_.get_is(cur)) {
     tr = RMF::CoordinateTransformer(tr, rff_.get(cur));

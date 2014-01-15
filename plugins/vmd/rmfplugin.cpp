@@ -15,7 +15,7 @@ void close_rmf_read(void *mydata) {
 void *open_rmf_read(const char *filename, const char *, int *natoms) {
   RMF_TRACE("Begin open_rmf_read");
   Data *data = new Data(filename);
-  *natoms = data->get_number_of_atoms() * data->get_number_of_states();
+  *natoms = data->get_number_of_atoms();
   std::cout << "Found " << *natoms << " atoms " << std::endl;
   if (*natoms == 0) {
     *natoms = MOLFILE_NUMATOMS_NONE;
