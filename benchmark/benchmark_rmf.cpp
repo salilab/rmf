@@ -22,6 +22,7 @@
 #include "RMF/Vector.h"
 #include "RMF/decorator/physics.h"
 #include "RMF/decorator/sequence.h"
+#include "RMF/HDF5/ConstFile.h"
 #include "RMF/enums.h"
 #include "RMF/infrastructure_macros.h"
 #include "RMF/log.h"
@@ -33,6 +34,18 @@ const int scale = 1;
 const int scale = 5;
 #endif
 
+std::string show_size(unsigned int sz) {
+  std::ostringstream oss;
+  if (sz > 1000000) {
+    oss << sz / 1000000 << "M";
+  } else if (sz > 1000) {
+    oss << sz / 1000 << "k";
+  } else {
+    oss << sz << "b";
+  }
+  return oss.str();
+}
+
 void benchmark_size(std::string path, std::string type) {
   unsigned int size = 0;
   if (boost::filesystem::is_directory(path)) {
@@ -43,7 +56,7 @@ void benchmark_size(std::string path, std::string type) {
   } else {
     size = boost::filesystem::file_size(path);
   }
-  std::cout << type << ", size, " << size / 1000000 << "M, " << size
+  std::cout << type << ", size, " << show_size(size) << ", " << size
             << std::endl;
 }
 
@@ -214,16 +227,18 @@ int main(int, char**) {
   try {
     RMF::set_log_level("Off");
     std::string name_base = RMF::internal::get_unique_path();
-
+#ifndef NDEBUG
+    std::cout << name_base << std::endl;
+#endif
     {
       const std::string name = name_base + ".rmf3";
       {
         RMF::FileHandle fh = RMF::create_rmf_file(name);
         std::pair<std::size_t, std::size_t> sizes =
             benchmark_create(fh, "rmf3");
-        std::cout << "raw, total, " << (sizes.first + sizes.second) / 1000000
-                  << "M, " << (sizes.first + sizes.second) << std::endl;
-        std::cout << "raw, frame, " << sizes.second / 1000000 << "M, "
+        std::cout << "raw, total, " << show_size(sizes.first + sizes.second)
+                  << ", " << (sizes.first + sizes.second) << std::endl;
+        std::cout << "raw, frame, " << show_size(sizes.second) << ", "
                   << sizes.second << std::endl;
       }
       {
