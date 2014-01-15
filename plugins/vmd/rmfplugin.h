@@ -203,9 +203,8 @@ boost::array<int, 3> Data::get_structure(RMF::NodeConstHandle cur,
     resname = rf_.get(cur).get_residue_type();
   }
   RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
-    boost::array<int, 3> count =
-        get_structure(c, next_index, atoms, body, chain, resid,
-                      resname, resolution);
+    boost::array<int, 3> count = get_structure(
+        c, next_index, atoms, body, chain, resid, resname, resolution);
     for (unsigned int i = 0; i < 3; ++i) {
       ret[i] += count[i];
       next_index += count[i];
