@@ -572,7 +572,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       RMF_INFO("Loading frame " << shared_data->get_loaded_frame());
       FrameID cur = shared_data->get_loaded_frame();
       sd_->set_loaded_frame(cur);
-      RMF_FOREACH(Category category, shared_data->get_categories()) {
+      RMF_FOREACH(Category category, sd_->get_categories()) {
         load_frame_category(category, shared_data, internal::LoadedValues());
       }
     }
