@@ -61,9 +61,7 @@ NodeID get_alternative_impl(NodeConstHandle cur, FloatKey base_resolution_key,
   }
 }
 
-NodeIDs get_alternatives_impl(NodeConstHandle cur, FloatKey base_resolution_key,
-                              IntsKey types_key, IntsKey roots_key,
-                              FloatsKey resolutions_key) {
+NodeIDs get_alternatives_impl(NodeConstHandle cur, IntsKey roots_key) {
   NodeIDs ret(1, cur.get_id());
 
   if (cur.get_has_value(roots_key)) {
@@ -136,10 +134,10 @@ NodeConstHandle AlternativesConst::get_alternative(RepresentationType type,
 
 NodeConstHandles AlternativesConst::get_alternatives(RepresentationType type)
     const {
+  RMF_USAGE_CHECK(type == PARTICLE, "Only particles supported");
   NodeConstHandles ret;
   RMF_FOREACH(NodeID id,
-              get_alternatives_impl(get_node(), base_resolution_key_,
-                                    types_key_, roots_key_, resolutions_key_)) {
+              get_alternatives_impl(get_node(), types_key_)) {
     ret.push_back(get_node().get_file().get_node(id));
   }
   return ret;
@@ -151,7 +149,7 @@ float AlternativesConst::get_resolution(NodeID id) const {
   }
   const Ints& roots = get_node().get_value(roots_key_);
   for (unsigned int i = 0; i < roots.size(); ++i) {
-    if (roots[i] == id.get_index()) {
+    if (roots[i] == static_cast<int>(id.get_index())) {
       return get_node().get_value(resolutions_key_).get()[i];
     }
   }
@@ -164,7 +162,7 @@ RepresentationType AlternativesConst::get_representation_type(NodeID id) const {
   }
   const Ints& roots = get_node().get_value(roots_key_);
   for (unsigned int i = 0; i < roots.size(); ++i) {
-    if (roots[i] == id.get_index()) {
+    if (roots[i] == static_cast<int>(id.get_index())) {
       return RepresentationType(get_node().get_value(types_key_).get()[i]);
     }
   }
