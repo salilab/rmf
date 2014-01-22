@@ -16,12 +16,5 @@ add_custom_target(RMF-decorators ALL DEPENDS "${PROJECT_BINARY_DIR}/include/RMF/
   "${PROJECT_SOURCE_DIR}/tools/build/make_decorators.py")
 set_property(TARGET "RMF-decorators" PROPERTY FOLDER "RMF")
 
-add_custom_target(RMF-all-header
-  COMMAND "python" "${PROJECT_SOURCE_DIR}/tools/developer_tools/make_all_header.py" ${PROJECT_BINARY_DIR}/include/RMF.h RMF ${PROJECT_SOURCE_DIR}/include/RMF
-  COMMAND "python" "${PROJECT_SOURCE_DIR}/tools/developer_tools/make_all_header.py" ${PROJECT_BINARY_DIR}/include/RMF/HDF5.h RMF/HDF5 ${PROJECT_SOURCE_DIR}/include/RMF/HDF5
-   DEPENDS "${PROJECT_SOURCE_DIR}/tools/developer_tools/make_all_header.py")
-set_property(TARGET "RMF-all-header" PROPERTY FOLDER "RMF")
-
-
 INSTALL(DIRECTORY ${PROJECT_SOURCE_DIR}/include/RMF  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 INSTALL(DIRECTORY ${PROJECT_BINARY_DIR}/include/RMF  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

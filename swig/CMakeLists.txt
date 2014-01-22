@@ -37,8 +37,7 @@ set_source_files_properties(${PROJECT_BINARY_DIR}/include/RMF.h
 set_source_files_properties(${PROJECT_BINARY_DIR}/include/RMF/HDF5.h
                               PROPERTIES GENERATED 1)
 
-SET(SWIG_MODULE_RMF_EXTRA_DEPS
- RMF-all-header ${rmf_headers}  ${headers} ${SWIG_INCLUDES} RMF-decorators
+SET(SWIG_MODULE_RMF_EXTRA_DEPS ${rmf_headers}  ${headers} ${SWIG_INCLUDES} RMF-decorators
   )
 
 set(CMAKE_SWIG_OUTDIR ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" FORCE)
@@ -63,8 +62,7 @@ INSTALL(FILES "${CMAKE_BINARY_DIR}/lib/RMF.py" DESTINATION ${CMAKE_INSTALL_PYTHO
 
 
 SET_SOURCE_FILES_PROPERTIES(RMF_HDF5.i PROPERTIES CPLUSPLUS ON)
-SET(SWIG_MODULE_RMF_HDF5_EXTRA_DEPS
- RMF-all-header ${headers}  ${hdf5_headers} ${SWIG_INCLUDES}
+SET(SWIG_MODULE_RMF_HDF5_EXTRA_DEPS ${headers}  ${hdf5_headers} ${SWIG_INCLUDES}
   )
 
 set(CMAKE_SWIG_OUTDIR ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" FORCE)

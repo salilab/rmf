@@ -11,6 +11,11 @@ include(cmake_modules/FindLog4CXX.cmake)
 include(cmake_modules/IMPFindC++11.cmake)
 include(cmake_modules/IMPFindCompilerFlags.cmake)
 
+imp_execute_process("Making RMF.h" ${PROJECT_SOURCE_DIR}
+  COMMAND "python" "${PROJECT_SOURCE_DIR}/tools/developer_tools/make_all_header.py" ${PROJECT_BINARY_DIR}/include/RMF.h RMF ${PROJECT_SOURCE_DIR}/include/RMF)
+imp_execute_process("Making RMF/HDF5.h" ${PROJECT_SOURCE_DIR}
+  COMMAND "python" "${PROJECT_SOURCE_DIR}/tools/developer_tools/make_all_header.py" ${PROJECT_BINARY_DIR}/include/RMF/HDF5.h RMF/HDF5 ${PROJECT_SOURCE_DIR}/include/RMF/HDF5)
+
 
 message(STATUS "Running setup_cmake.py")
 execute_process(COMMAND python ${PROJECT_SOURCE_DIR}/tools/developer_tools/setup_cmake.py
