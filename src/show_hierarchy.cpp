@@ -26,6 +26,18 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 
 namespace {
+
+template <class TypeT>
+std::vector<ID<TypeT> > get_keys(FileConstHandle f) {
+  Categories kcs = f.get_categories();
+  std::vector<ID<TypeT> > ret;
+  for (unsigned int i = 0; i < kcs.size(); ++i) {
+    std::vector<ID<TypeT> > curp = f.get_keys<TypeT>(kcs[i]);
+    ret.insert(ret.end(), curp.begin(), curp.end());
+  }
+  return ret;
+}
+
 template <class Traits>
 void show_data(NodeConstHandle n, std::ostream& out,
                const std::vector<ID<Traits> >& ks, std::string prefix) {
@@ -47,8 +59,75 @@ void show_data(NodeConstHandle n, std::ostream& out,
   }
 }
 
-void show_node(NodeConstHandle n, std::string node_suffix, std::ostream& out,
-               std::string prefix = "") {
+template <class Show>
+void print_tree(std::ostream& out, RMF::NodeConstHandle start, Show show) {
+  decorator::AlternativesFactory altcf(start.get_file());
+  typedef boost::tuple<std::string, std::string, std::string, NodeConstHandle>
+      QI;
+  std::vector<QI> queue;
+  queue.push_back(QI(std::string(), std::string(), std::string(), start));
+  do {
+    const QI& back = queue.back();
+    NodeConstHandle n = back.get<3>();
+    std::string prefix0 = back.get<0>();
+    std::string prefix1 = back.get<1>();
+    std::string node_suffix = back.get<2>();
+    queue.pop_back();
+    if (altcf.get_is(n)) {
+      decorator::AlternativesConst ad = altcf.get(n);
+      NodeConstHandles alts = ad.get_alternatives(decorator::PARTICLE);
+      RMF_INTERNAL_CHECK(alts.front() == n, "The node itself is not in front");
+      std::reverse(alts.begin(), alts.end());
+      alts.pop_back();
+      RMF_FOREACH(NodeConstHandle cur, alts) {
+        std::ostringstream oss;
+        oss << "[" << decorator::get_resolution(cur) << "]";
+        queue.push_back(QI(prefix0, prefix1, oss.str(), cur));
+      }
+      std::ostringstream oss;
+      oss << "[" << decorator::get_resolution(n) << "]";
+      node_suffix = oss.str();
+    }
+    out << prefix0;
+    NodeConstHandles children = n.get_children();
+    if (children.size() > 0)
+      out << " + ";
+    else
+      out << " - ";
+    show(n, prefix0, node_suffix, out);
+    out << std::endl;
+    for (int i = static_cast<int>(children.size()) - 1; i >= 0; --i) {
+      queue.push_back(
+          QI(prefix1 + "  ", prefix1 + "  ", node_suffix, children[i]));
+    }
+  } while (!queue.empty());
+}
+
+
+struct LessName {
+  FileConstHandle fh_;
+  LessName(FileConstHandle fh) : fh_(fh) {}
+  template <class Traits>
+  bool operator()(ID<Traits> a, ID<Traits> b) const {
+    return fh_.get_name(a) < fh_.get_name(b);
+  }
+};
+
+void show_frames_impl(FileConstHandle fh, FrameID root, std::string prefix,
+                      std::ostream& out) {
+  FrameIDs ch = fh.get_children(root);
+  out << prefix;
+  if (ch.empty()) {
+    out << " - ";
+  } else {
+    out << " + ";
+  }
+  out << fh.get_name(root) << " [" << fh.get_type(root) << "]" << std::endl;
+  RMF_FOREACH(FrameID id, ch) { show_frames_impl(fh, id, prefix + "   ", out); }
+}
+
+void simple_show_node(NodeConstHandle n, std::string prefix,
+                      std::string node_suffix, std::ostream& out) {
   using std::operator<<;
   out << prefix << "\"" << n.get_name() << "\"" << node_suffix << " ["
       << n.get_type() << "]";
@@ -59,7 +138,7 @@ void show_node(NodeConstHandle n, std::string node_suffix, std::ostream& out,
                Vector4Keys v4ks, Vector3sKeys v3sks, std::string prefix) {
   using std::operator<<;
   if (true) {
-    show_node(n, node_suffix, out);
+    simple_show_node(n, "", node_suffix, out);
     show_data(n, out, fks, prefix + "  ");
     show_data(n, out, iks, prefix + "  ");
     show_data(n, out, sks, prefix + "  ");
@@ -108,80 +187,7 @@ void show_node_decorators(
   out << "]";
 }
 
-template <class TypeT>
-std::vector<ID<TypeT> > get_keys(FileConstHandle f) {
-  Categories kcs = f.get_categories();
-  std::vector<ID<TypeT> > ret;
-  for (unsigned int i = 0; i < kcs.size(); ++i) {
-    std::vector<ID<TypeT> > curp = f.get_keys<TypeT>(kcs[i]);
-    ret.insert(ret.end(), curp.begin(), curp.end());
-  }
-  return ret;
-}
-
-// Note that older g++ is confused by queue.back().get<2>()
-#define RMF_PRINT_TREE(stream, start, show)                                  \
-  {                                                                          \
-    decorator::AlternativesFactory altcf(root.get_file());                   \
-    typedef boost::tuple<std::string, std::string, std::string,              \
-                         NodeConstHandle> QI;                                \
-    std::vector<QI> queue;                                                   \
-    queue.push_back(QI(std::string(), std::string(), std::string(), start)); \
-    do {                                                                     \
-      const QI& back = queue.back();                                         \
-      NodeConstHandle n = back.get<3>();                                     \
-      std::string prefix0 = back.get<0>();                                   \
-      std::string prefix1 = back.get<1>();                                   \
-      std::string node_suffix = back.get<2>();                               \
-      queue.pop_back();                                                      \
-      if (altcf.get_is(n)) {                                                 \
-        decorator::AlternativesConst ad = altcf.get(n);                      \
-        NodeConstHandles alts = ad.get_alternatives(decorator::PARTICLE);    \
-        std::reverse(alts.begin(), alts.end());                              \
-        alts.pop_back();                                                     \
-        RMF_FOREACH(NodeConstHandle cur, alts) {                             \
-          std::ostringstream oss;                                            \
-          oss << "[" << decorator::get_resolution(cur) << "]";               \
-          queue.push_back(QI(prefix0, prefix1, oss.str(), cur));             \
-        }                                                                    \
-        std::ostringstream oss;                                              \
-        oss << "[" << decorator::get_resolution(n) << "]";                   \
-        node_suffix = oss.str();                                             \
-      }                                                                      \
-      stream << prefix0;                                                     \
-      NodeConstHandles children = n.get_children();                          \
-      if (children.size() > 0)                                               \
-        stream << " + ";                                                     \
-      else                                                                   \
-        stream << " - ";                                                     \
-      show;                                                                  \
-      stream << std::endl;                                                   \
-      for (int i = static_cast<int>(children.size()) - 1; i >= 0; --i) {     \
-        queue.push_back(                                                     \
-            QI(prefix1 + "  ", prefix1 + "  ", node_suffix, children[i]));   \
-      }                                                                      \
-    } while (!queue.empty());                                                \
-  }
-}
-
-void show_hierarchy(NodeConstHandle root, std::ostream& out) {
-  using std::operator<<;
-  decorator::AlternativesFactory altcf(root.get_file());
-  RMF_PRINT_TREE(out, root, show_node(n, node_suffix, out));
-}
-
-namespace {
-struct LessName {
-  FileConstHandle fh_;
-  LessName(FileConstHandle fh) : fh_(fh) {}
-  template <class Traits>
-  bool operator()(ID<Traits> a, ID<Traits> b) const {
-    return fh_.get_name(a) < fh_.get_name(b);
-  }
-};
-}
-
-void show_hierarchy_with_values(NodeConstHandle root, std::ostream& out) {
+struct ShowValues {
   FloatKeys fks;
   IntKeys iks;
   StringKeys sks;
@@ -191,72 +197,95 @@ void show_hierarchy_with_values(NodeConstHandle root, std::ostream& out) {
   Vector3Keys v3ks;
   Vector4Keys v4ks;
   Vector3sKeys v3sks;
-  fks = get_keys<FloatTraits>(root.get_file());
-  std::sort(fks.begin(), fks.end(), LessName(root.get_file()));
-  iks = get_keys<IntTraits>(root.get_file());
-  std::sort(iks.begin(), iks.end(), LessName(root.get_file()));
-  sks = get_keys<StringTraits>(root.get_file());
-  std::sort(sks.begin(), sks.end(), LessName(root.get_file()));
-  fsks = get_keys<FloatsTraits>(root.get_file());
-  std::sort(fsks.begin(), fsks.end(), LessName(root.get_file()));
-  isks = get_keys<IntsTraits>(root.get_file());
-  std::sort(isks.begin(), isks.end(), LessName(root.get_file()));
-  ssks = get_keys<StringsTraits>(root.get_file());
-  std::sort(ssks.begin(), ssks.end(), LessName(root.get_file()));
-  v3ks = get_keys<Vector3Traits>(root.get_file());
-  std::sort(v3ks.begin(), v3ks.end(), LessName(root.get_file()));
-  v4ks = get_keys<Vector4Traits>(root.get_file());
-  std::sort(v4ks.begin(), v4ks.end(), LessName(root.get_file()));
-  v3sks = get_keys<Vector3sTraits>(root.get_file());
-  std::sort(v3sks.begin(), v3sks.end(), LessName(root.get_file()));
-  using std::operator<<;
+  ShowValues(FileConstHandle fh) {
+    fks = get_keys<FloatTraits>(fh);
+    std::sort(fks.begin(), fks.end(), LessName(fh));
+    iks = get_keys<IntTraits>(fh);
+    std::sort(iks.begin(), iks.end(), LessName(fh));
+    sks = get_keys<StringTraits>(fh);
+    std::sort(sks.begin(), sks.end(), LessName(fh));
+    fsks = get_keys<FloatsTraits>(fh);
+    std::sort(fsks.begin(), fsks.end(), LessName(fh));
+    isks = get_keys<IntsTraits>(fh);
+    std::sort(isks.begin(), isks.end(), LessName(fh));
+    ssks = get_keys<StringsTraits>(fh);
+    std::sort(ssks.begin(), ssks.end(), LessName(fh));
+    v3ks = get_keys<Vector3Traits>(fh);
+    std::sort(v3ks.begin(), v3ks.end(), LessName(fh));
+    v4ks = get_keys<Vector4Traits>(fh);
+    std::sort(v4ks.begin(), v4ks.end(), LessName(fh));
+    v3sks = get_keys<Vector3sTraits>(fh);
+    std::sort(v3sks.begin(), v3sks.end(), LessName(fh));
+  }
+  void operator()(NodeConstHandle cur, std::string prefix, std::string suffix,
+                  std::ostream& out) {
+    show_node(cur, suffix, out, fks, fsks, iks, isks, sks, ssks, v3ks, v4ks,
+              v3sks, prefix + "   ");
+  }
+};
 
-  RMF_PRINT_TREE(out, root,
-                 show_node(n, node_suffix, out, fks, fsks, iks, isks, sks, ssks,
-                           v3ks, v4ks, v3sks, prefix0 + "   "));
+struct ShowDecorators {
+  decorator::BondFactory bdf;
+  decorator::ColoredFactory ccf;
+  decorator::ParticleFactory pcf;
+  decorator::IntermediateParticleFactory ipcf;
+  decorator::RigidParticleFactory rpcf;
+  decorator::ScoreFactory scf;
+  decorator::RepresentationFactory repcf;
+  decorator::BallFactory bcf;
+  decorator::CylinderFactory cycf;
+  decorator::SegmentFactory segcf;
+  decorator::ResidueFactory rcf;
+  decorator::AtomFactory acf;
+  decorator::ChainFactory chaincf;
+  decorator::DomainFactory fragcf;
+  decorator::CopyFactory copycf;
+  decorator::DiffuserFactory diffusercf;
+  decorator::TypedFactory typedcf;
+  ShowDecorators(FileConstHandle fh)
+      : bdf(fh),
+        ccf(fh),
+        pcf(fh),
+        ipcf(fh),
+        rpcf(fh),
+        scf(fh),
+        repcf(fh),
+        bcf(fh),
+        cycf(fh),
+        segcf(fh),
+        rcf(fh),
+        acf(fh),
+        chaincf(fh),
+        fragcf(fh),
+        copycf(fh),
+        diffusercf(fh),
+        typedcf(fh) {}
+  void operator()(NodeConstHandle cur, std::string prefix, std::string suffix,
+                  std::ostream& out) {
+    show_node_decorators(cur, suffix, out, bdf, ccf, pcf, ipcf, rpcf, scf,
+                         repcf, bcf, cycf, segcf, rcf, acf, chaincf, fragcf,
+                         copycf, diffusercf, typedcf, prefix + "   ");
+  }
+};
+
+
+}
+
+void show_hierarchy(NodeConstHandle root, std::ostream& out) {
+  using std::operator<<;
+  decorator::AlternativesFactory altcf(root.get_file());
+  print_tree(out, root, simple_show_node);
+}
+
+void show_hierarchy_with_values(NodeConstHandle root, std::ostream& out) {
+  print_tree(out, root, ShowValues(root.get_file()));
 }
 
 void show_hierarchy_with_decorators(NodeConstHandle root, bool,
                                     std::ostream& out) {
-  decorator::BondFactory bdf(root.get_file());
-  decorator::ColoredFactory ccf(root.get_file());
-  decorator::ParticleFactory pcf(root.get_file());
-  decorator::IntermediateParticleFactory ipcf(root.get_file());
-  decorator::RigidParticleFactory rpcf(root.get_file());
-  decorator::ScoreFactory scf(root.get_file());
-  decorator::RepresentationFactory repcf(root.get_file());
-  decorator::BallFactory bcf(root.get_file());
-  decorator::CylinderFactory cycf(root.get_file());
-  decorator::SegmentFactory segcf(root.get_file());
-  decorator::ResidueFactory rcf(root.get_file());
-  decorator::AtomFactory acf(root.get_file());
-  decorator::ChainFactory chaincf(root.get_file());
-  decorator::DomainFactory fragcf(root.get_file());
-  decorator::CopyFactory copycf(root.get_file());
-  decorator::DiffuserFactory diffusercf(root.get_file());
-  decorator::TypedFactory typedcf(root.get_file());
-  using std::operator<<;
-  RMF_PRINT_TREE(
-      out, root,
-      show_node_decorators(n, node_suffix, out, bdf, ccf, pcf, ipcf, rpcf, scf,
-                           repcf, bcf, cycf, segcf, rcf, acf, chaincf, fragcf,
-                           copycf, diffusercf, typedcf, prefix0 + "   "));
+  print_tree(out, root, ShowDecorators(root.get_file()));
 }
 
-namespace {
-void show_frames_impl(FileConstHandle fh, FrameID root, std::string prefix,
-                      std::ostream& out) {
-  FrameIDs ch = fh.get_children(root);
-  out << prefix;
-  if (ch.empty()) {
-    out << " - ";
-  } else {
-    out << " + ";
-  }
-  out << fh.get_name(root) << " [" << fh.get_type(root) << "]" << std::endl;
-  RMF_FOREACH(FrameID id, ch) { show_frames_impl(fh, id, prefix + "   ", out); }
-}
-}
 
 void show_frames(FileConstHandle fh, std::ostream& out) {
   RMF_FOREACH(FrameID fr, fh.get_root_frames()) {
