@@ -58,11 +58,16 @@ class Data {
   RMF::decorator::TypedFactory tf_;
   RMF::decorator::AlternativesFactory altf_;
   RMF::decorator::StateFactory stf_;
+  struct AtomInfo {
+    std::string chain_id;
+    int residue_index;
+    std::string residue_name;
+    RMF::NodeID node_id;
+  };
   struct Body {
     std::vector<RMF::decorator::ReferenceFrameConst> frames;
-    RMF::NodeIDs atoms;
-    RMF::NodeIDs balls;
-    RMF::NodeIDs representation;
+    std::vector<AtomInfo> atoms;
+    std::vector<AtomInfo> balls;
     int state;
     Body() : state(0) {}
   };
@@ -81,10 +86,10 @@ class Data {
   bool done_;
 
   // find nodes to push to vmd
-  boost::array<int, 3> get_structure(RMF::NodeConstHandle cur,
-                                     molfile_atom_t *atoms, int body,
-                                     std::string chain, int resid,
-                                     std::string resname, double resolution);
+  boost::array<int, 3> fill_bodies(RMF::NodeConstHandle cur, int body,
+                                  std::string chain, int resid,
+                                  std::string resname, double resolution);
+  void get_structure(molfile_atom_t *atoms);
   void fill_index();
   int get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
                    molfile_graphics_t *graphics);
@@ -142,8 +147,8 @@ Data::Data(std::string name)
 
   bodies_.push_back(Body());
 
-  boost::array<int, 3> na = get_structure(file_.get_root_node(), NULL, 0, " ",
-                                          -1, std::string(), resolution_);
+  boost::array<int, 3> na = fill_bodies(file_.get_root_node(), 0, " ", -1,
+                                        std::string(), resolution_);
   fill_index();
   num_atoms_ = na[0] + na[1] + na[2];
   std::cout << "RMF: found " << states_ << " states and " << num_atoms_
@@ -164,11 +169,9 @@ Data::Data(std::string name)
 }
 
 //
-boost::array<int, 3> Data::get_structure(RMF::NodeConstHandle cur,
-                                         molfile_atom_t *atoms, int body,
-                                         std::string chain, int resid,
-                                         std::string resname,
-                                         double resolution) {
+boost::array<int, 3> Data::fill_bodies(RMF::NodeConstHandle cur, int body,
+                                      std::string chain, int resid,
+                                      std::string resname, double resolution) {
   RMF_INTERNAL_CHECK(!atoms || body == -1, "Both body and atoms...");
   boost::array<int, 3> ret = {{0}};
   if (cur.get_type() == RMF::ALIAS) return ret;
@@ -176,18 +179,16 @@ boost::array<int, 3> Data::get_structure(RMF::NodeConstHandle cur,
     cur = altf_.get(cur).get_alternative(RMF::decorator::PARTICLE, resolution);
   }
   if (rff_.get_is(cur)) {
-    if (!atoms) {
       bodies_.push_back(Body());
       bodies_.back().frames = bodies_[body].frames;
       bodies_.back().frames.push_back(rff_.get(cur));
       bodies_.back().state = bodies_[body].state;
       body = bodies_.size() - 1;
-    }
   }
   if (stf_.get_is(cur)) {
     int state_index = stf_.get(cur).get_state_index();
     // don't create duplicate bodies for 0
-    if (!atoms && state_index != bodies_[body].state) {
+    if (state_index != bodies_[body].state) {
       if (rff_.get_is(cur)) {
         bodies_.back().state = state_index;
       } else {
@@ -209,15 +210,29 @@ boost::array<int, 3> Data::get_structure(RMF::NodeConstHandle cur,
   }
   RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
     boost::array<int, 3> count =
-        get_structure(c, atoms, body, chain, resid, resname, resolution);
+        fill_bodies(c, body, chain, resid, resname, resolution);
     for (unsigned int i = 0; i < 3; ++i) {
       ret[i] += count[i];
-      if (atoms) atoms += count[i];
     }
   }
 
   if (ret[0] == 0 && pf_.get_is(cur)) {
-    if (atoms) {
+    AtomInfo ai = {chain, resid, resname, cur.get_id()};
+    bodies_[body].atoms.push_back(ai);
+    ++ret[0];
+  }
+  if (bf_.get_is(cur)) {
+    AtomInfo ai = {chain, resid, resname, cur.get_id()};
+    bodies_[body].balls.push_back(ai);
+    ++ret[1];
+  }
+  return ret;
+}
+
+void Data::get_structure(molfile_atom_t *atoms) {
+  RMF_FOREACH(const Body & body, bodies_) {
+    RMF_FOREACH(const AtomInfo & n, body.atoms) {
+      RMF::NodeConstHandle cur = file_.get_node(n.node_id);
       std::string nm = cur.get_name();
       std::string at;
       if (af_.get_is(cur)) {
@@ -237,10 +252,18 @@ boost::array<int, 3> Data::get_structure(RMF::NodeConstHandle cur,
         std::copy(nm.begin(), nm.end(), atoms->name);
       }
       std::copy(at.begin(), at.end(), atoms->type);
-      std::copy(resname.begin(), resname.end(), atoms->resname);
-      atoms->resid = resid;
-      atoms->chain[0] = chain[0];
-      atoms->chain[1] = '\0';
+      std::copy(n.residue_name.begin(), n.residue_name.end(), atoms->resname);
+      atoms->resid = n.residue_index;
+      if (n.chain_id.size() > 0) {
+        atoms->chain[0] = n.chain_id[0];
+      } else {
+        atoms->chain[0] = '-';
+      }
+      if (n.chain_id.size() > 1) {
+        atoms->chain[1] = n.chain_id[1];
+      } else {
+        atoms->chain[1] = '\0';
+      }
       if (cpf_.get_is(cur)) {
         sprintf(atoms->segid, "%d", cpf_.get(cur).get_copy_index());
       } else {
@@ -248,43 +271,51 @@ boost::array<int, 3> Data::get_structure(RMF::NodeConstHandle cur,
       }
       atoms->mass = pf_.get(cur).get_mass();
       atoms->radius = pf_.get(cur).get_radius();
-    } else {
-      bodies_[body].atoms.push_back(cur.get_id());
+      ++atoms;
     }
-    ++ret[0];
-  }
-  if (bf_.get_is(cur)) {
-    if (atoms) {
+    RMF_FOREACH(AtomInfo n, body.balls) {
+      RMF::NodeConstHandle cur = file_.get_node(n.node_id);
       std::string nm = cur.get_name();
       std::copy(nm.begin(), nm.end(), atoms->name);
       std::string ball("ball");
       std::copy(ball.begin(), ball.end(), atoms->type);
-      std::copy(resname.begin(), resname.end(), atoms->resname);
-      atoms->resid = resid;
-      atoms->chain[0] = chain[0];
-      atoms->chain[1] = '\0';
-      atoms->segid[0] = '\0';
+      atoms->resid = n.residue_index;
+      if (n.chain_id.size() > 0) {
+        atoms->chain[0] = n.chain_id[0];
+      } else {
+        atoms->chain[0] = '-';
+      }
+      if (n.chain_id.size() > 1) {
+        atoms->chain[1] = n.chain_id[1];
+      } else {
+        atoms->chain[1] = '\0';
+      }
+      if (cpf_.get_is(cur)) {
+        sprintf(atoms->segid, "%d", cpf_.get(cur).get_copy_index());
+      } else {
+        atoms->segid[0] = '\0';
+      }
       atoms->mass = 0;
       atoms->radius = bf_.get(cur).get_radius();
-    } else {
-      bodies_[body].balls.push_back(cur.get_id());
     }
-    ++ret[1];
   }
-  return ret;
 }
+
 
 void Data::read_structure(molfile_atom_t *atoms) {
   RMF_INFO("Reading structure");
-  get_structure(file_.get_root_node(), atoms, 0, " ", -1, "NONE", resolution_);
+  get_structure(atoms);
 }
 
 void Data::fill_index() {
   int cur_index = -1;
   RMF_FOREACH(const Body & body, bodies_) {
-    RMF_FOREACH(RMF::NodeID n, body.atoms) { index_[n] = ++cur_index; }
-    RMF_FOREACH(RMF::NodeID n, body.balls) { index_[n] = ++cur_index; }
-    RMF_FOREACH(RMF::NodeID n, body.representation) { index_[n] = ++cur_index; }
+    RMF_FOREACH(const AtomInfo & n, body.atoms) {
+      index_[n.node_id] = ++cur_index;
+    }
+    RMF_FOREACH(const AtomInfo & n, body.balls) {
+      index_[n.node_id] = ++cur_index;
+    }
   }
 }
 
@@ -306,23 +337,15 @@ bool Data::read_next_frame(molfile_timestep_t *frame) {
     RMF_FOREACH(RMF::decorator::ReferenceFrameConst rf, body.frames) {
       tr = RMF::CoordinateTransformer(tr, rf);
     }
-    RMF_FOREACH(RMF::NodeID n, body.atoms) {
-      RMF::Vector3 cc = pf_.get(file_.get_node(n)).get_coordinates();
+    RMF_FOREACH(const AtomInfo & n, body.atoms) {
+      RMF::Vector3 cc = pf_.get(file_.get_node(n.node_id)).get_coordinates();
       cc = tr.get_global_coordinates(cc);
       cc[0] += offset;
       std::copy(cc.begin(), cc.end(), coords);
       coords += 3;
     }
-    RMF_FOREACH(RMF::NodeID n, body.balls) {
-      RMF::Vector3 cc = bf_.get(file_.get_node(n)).get_coordinates();
-      cc = tr.get_global_coordinates(cc);
-      cc[0] += offset;
-      std::copy(cc.begin(), cc.end(), coords);
-      coords += 3;
-    }
-
-    RMF_FOREACH(RMF::NodeID n, body.representation) {
-      RMF::Vector3 cc = pf_.get(file_.get_node(n)).get_coordinates();
+    RMF_FOREACH(const AtomInfo & n, body.balls) {
+      RMF::Vector3 cc = bf_.get(file_.get_node(n.node_id)).get_coordinates();
       cc = tr.get_global_coordinates(cc);
       cc[0] += offset;
       std::copy(cc.begin(), cc.end(), coords);
