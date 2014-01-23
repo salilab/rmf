@@ -1,6 +1,11 @@
+/**
+ *
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *
+ */
 
-#ifndef RMF_AVRO2_TYPE_ENCODE_DECODE_H
-#define RMF_AVRO2_TYPE_ENCODE_DECODE_H
+#ifndef RMF_AVRO2_TYPES_ENCODE_DECODE_H
+#define RMF_AVRO2_TYPES_ENCODE_DECODE_H
 
 #include "RMF/constants.h"
 #include "RMF/log.h"
@@ -77,7 +82,6 @@ template <class T, class Ty>
 struct codec_traits<RMF::internal::HierarchyNode<T, Ty> > {
   template <class Encoder>
   static void encode(Encoder& e, const RMF::internal::HierarchyNode<T, Ty>& v) {
-    RMF_TRACE("Encoding node " << v.name << " " << v.type);
     internal_avro::encode(e, v.name);
     internal_avro::encode(e, v.type);
     internal_avro::encode(e, v.parents);
@@ -87,7 +91,6 @@ struct codec_traits<RMF::internal::HierarchyNode<T, Ty> > {
   static void decode(Decoder& d, RMF::internal::HierarchyNode<T, Ty>& v) {
     internal_avro::decode(d, v.name);
     internal_avro::decode(d, v.type);
-    RMF_TRACE("Found node " << v.name << " " << v.type);
     internal_avro::decode(d, v.parents);
     internal_avro::decode(d, v.children);
   }
@@ -97,7 +100,6 @@ template <>
 struct codec_traits<RMF::avro2::HierarchyNode> {
   template <class Encoder>
   static void encode(Encoder& e, const RMF::avro2::HierarchyNode& v) {
-    RMF_TRACE("Encoding node " << v.id << " " << v.name << " " << v.type);
     internal_avro::encode(e, v.id);
     internal_avro::encode(e, v.name);
     internal_avro::encode(e, v.type);
@@ -108,7 +110,6 @@ struct codec_traits<RMF::avro2::HierarchyNode> {
     internal_avro::decode(d, v.id);
     internal_avro::decode(d, v.name);
     internal_avro::decode(d, v.type);
-    RMF_TRACE("Found node " << v.id << " " << v.name << " " << v.type);
     internal_avro::decode(d, v.parents);
   }
 };
@@ -370,4 +371,4 @@ struct codec_traits<RMF::avro2::FileDataChanges> {
   }
 };
 }
-#endif  // RMF_AVRO2_TYPE_ENCODE_DECODE_H
+#endif /* RMF_AVRO2_TYPES_ENCODE_DECODE_H */
