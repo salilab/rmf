@@ -1,4 +1,4 @@
-## \example benchmark_rmf.py
+# \example benchmark_rmf.py
 # \brief Benchmark operations on the RMF from python to see how much overhead
 #        that adds
 
@@ -19,8 +19,8 @@ def create_residue(nh, af, pf):
 def create_chain(nh, rf, af, pf):
     for i in range(0, 60 * scale):
         child = nh.add_child(str(i), RMF.REPRESENTATION)
-        rf.get(child).set_type("cys")
-        rf.get(child).set_index(i)
+        rf.get(child).set_residue_type("cys")
+        rf.get(child).set_residue_index(i)
         create_residue(child, af, pf)
 
 
