@@ -172,7 +172,6 @@ Data::Data(std::string name)
 boost::array<int, 3> Data::fill_bodies(RMF::NodeConstHandle cur, int body,
                                       std::string chain, int resid,
                                       std::string resname, double resolution) {
-  RMF_INTERNAL_CHECK(!atoms || body == -1, "Both body and atoms...");
   boost::array<int, 3> ret = {{0}};
   if (cur.get_type() == RMF::ALIAS) return ret;
   if (altf_.get_is(cur)) {
