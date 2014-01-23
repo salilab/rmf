@@ -62,7 +62,9 @@ NodeIDs get_alternatives_impl(NodeConstHandle cur, IntsKey roots_key) {
   NodeIDs ret(1, cur.get_id());
 
   if (cur.get_has_value(roots_key)) {
-    RMF_FOREACH(int i, cur.get_value(roots_key).get()) {
+    Ints roots = cur.get_value(roots_key).get();
+    RMF_FOREACH(int i, roots) {
+      RMF_INTERNAL_CHECK(i != 0, "The root can't be an alternative rep");
       ret.push_back(NodeID(i));
     }
   }
@@ -98,6 +100,8 @@ Alternatives::Alternatives(NodeHandle nh, IntsKey types_key, IntsKey roots_key)
     : AlternativesConst(nh, types_key, roots_key) {}
 
 void Alternatives::add_alternative(NodeHandle root, RepresentationType type) {
+  RMF_USAGE_CHECK(root.get_id() != NodeID(0),
+                  "The root can't be an alternative");
   get_node()
       .get_shared_data()
       ->access_static_value(get_node().get_id(), types_key_)
@@ -106,6 +110,10 @@ void Alternatives::add_alternative(NodeHandle root, RepresentationType type) {
       .get_shared_data()
       ->access_static_value(get_node().get_id(), roots_key_)
       .push_back(root.get_id().get_index());
+  std::cout << get_node().get_value(types_key_) << " "
+            << get_node().get_value(roots_key_) << std::endl;
+
+  RMF_INTERNAL_CHECK(get_alternatives(type).size() > 1, "None found");
 }
 
 NodeConstHandle AlternativesConst::get_alternative(RepresentationType type,
@@ -118,8 +126,7 @@ NodeConstHandles AlternativesConst::get_alternatives(RepresentationType type)
     const {
   RMF_USAGE_CHECK(type == PARTICLE, "Only particles supported");
   NodeConstHandles ret;
-  RMF_FOREACH(NodeID nid,
-              get_alternatives_impl(get_node(), types_key_)) {
+  RMF_FOREACH(NodeID nid, get_alternatives_impl(get_node(), roots_key_)) {
     ret.push_back(get_node().get_file().get_node(nid));
   }
   return ret;
