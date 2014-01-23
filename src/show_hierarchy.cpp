@@ -13,6 +13,8 @@
 #include "RMF/decorator/feature.h"
 #include "RMF/decorator/physics.h"
 #include "RMF/decorator/sequence.h"
+#include "RMF/decorator/bond.h"
+#include "RMF/decorator/representation.h"
 #include "RMF/decorator/alternatives.h"
 #include "RMF/decorator/shape.h"
 #include "RMF/enums.h"
@@ -139,11 +141,11 @@ std::vector<ID<TypeT> > get_keys(FileConstHandle f) {
         alts.pop_back();                                                     \
         RMF_FOREACH(NodeConstHandle cur, alts) {                             \
           std::ostringstream oss;                                            \
-          oss << "[" << ad.get_resolution(cur.get_id()) << "]";              \
+          oss << "[" << decorator::get_resolution(cur) << "]";               \
           queue.push_back(QI(prefix0, prefix1, oss.str(), cur));             \
         }                                                                    \
         std::ostringstream oss;                                              \
-        oss << "[" << ad.get_resolution(n.get_id()) << "]";                  \
+        oss << "[" << decorator::get_resolution(n) << "]";                   \
         node_suffix = oss.str();                                             \
       }                                                                      \
       stream << prefix0;                                                     \

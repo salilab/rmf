@@ -298,6 +298,8 @@ RMF_DECORATOR(RMF::decorator, Alternatives);
 %include "RMF/decorator/alias.h"
 %include "RMF/decorator/publication.h"
 %include "RMF/decorator/alternatives.h"
+%include "RMF/decorator/representation.h"
+%include "RMF/decorator/bond.h"
 %include "RMF/utility.h"
 %include "RMF/signature.h"
 %include "RMF/info.h"

@@ -1,4 +1,8 @@
 # Change Log #
+- RMF::decorator::Bond and RMF::decorator::BondConst now return
+	RMF::NodeHandle and RMF::NodeConstHandle instead of ints.
+- RMF::decorator::Representation and RMF::decorator::RepresentationConst now return
+	RMF::NodeHandles and RMF::NodeConstHandles instead of ints.
 - RMF::NodeConstHandle::get_index() went away as it was a duplicate of
 	RMF::NodeConstHandle::get_id()
 - RMF::NodeType and RMF::FrameType were replaced with RMF::Enum

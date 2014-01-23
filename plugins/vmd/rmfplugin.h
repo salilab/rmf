@@ -26,6 +26,8 @@
 #include "RMF/decorator/physics.h"
 #include "RMF/decorator/sequence.h"
 #include "RMF/decorator/shape.h"
+#include "RMF/decorator/representation.h"
+#include "RMF/decorator/bond.h"
 #include "RMF/decorator/alternatives.h"
 #include "RMF/enums.h"
 #include "RMF/exceptions.h"
@@ -59,6 +61,7 @@ class Data {
   RMF::decorator::AlternativesFactory altf_;
   RMF::decorator::StateFactory stf_;
   struct AtomInfo {
+    // can precumpte the actual molfile_atom_t data to simplify things
     std::string chain_id;
     int residue_index;
     std::string residue_name;
@@ -479,7 +482,7 @@ int Data::get_bonds(RMF::NodeConstHandle cur, int *from, int *to, int *type) {
       }
     }
     if (!child_feature && rcf_.get_is(cur)) {
-      RMF::Ints reps = rcf_.get(cur).get_representation();
+      RMF::NodeConstHandles reps = rcf_.get(cur).get_representation();
       for (unsigned int i = 0; i < reps.size(); ++i) {
         RMF::NodeID bonded0(reps[i]);
         for (unsigned int j = 0; j < i; ++j) {

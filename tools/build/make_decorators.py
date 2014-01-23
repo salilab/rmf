@@ -34,12 +34,6 @@ refframe = Decorator(["REPRESENTATION", "ORGANIZATIONAL"], "physics",
                          Attribute(
                              "translation", "Vector3")])
 
-bond = Decorator(["BOND"], "physics",
-                 "Bond",
-                 [Attribute(
-                     "bonded 0", "Int"),
-                  Attribute("bonded 1", "Int")])
-
 
 atom = Decorator(["REPRESENTATION"], "physics",
                  "Atom",
@@ -52,19 +46,15 @@ diffuser = Decorator(["REPRESENTATION"], "physics",
 
 make_header(
     "physics", [particle, iparticle, pparticle, diffuser,
-                atom, bond, refframe],
+                atom, refframe],
     ["alias"])
 
 
 score = Decorator(["FEATURE"], "feature",
                   "Score",
                   [Attribute("score", "Float")])
-representation = Decorator(["FEATURE"], "feature",
-                           "Representation",
-                           [Attribute(
-                               "representation", "Ints")])
 
-make_header("feature", [score, representation], [])
+make_header("feature", [score], [])
 
 
 colored = Decorator(

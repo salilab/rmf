@@ -39,33 +39,17 @@ enum RepresentationType {
 class RMFEXPORT AlternativesConst : public Decorator {
   friend class AlternativesFactory;
   friend class Alternatives;
-  FloatKey base_resolution_key_;
   IntsKey types_key_;
   IntsKey roots_key_;
-  FloatsKey resolutions_key_;
-  AlternativesConst(NodeConstHandle nh, FloatKey base_resolution_key,
-                    IntsKey types_key, IntsKey roots_key,
-                    FloatsKey resolutions_key)
-      : Decorator(nh),
-        base_resolution_key_(base_resolution_key),
-        types_key_(types_key),
-        roots_key_(roots_key),
-        resolutions_key_(resolutions_key) {}
+  AlternativesConst(NodeConstHandle nh, IntsKey types_key, IntsKey roots_key)
+      : Decorator(nh), types_key_(types_key), roots_key_(roots_key) {}
 
  public:
   /** Get the alternative root that best matches the criteria. */
   NodeConstHandle get_alternative(RepresentationType type,
                                   double resolution) const;
 
-  /** Get the resolution of a given node associated with this one.*/
-  float get_resolution(NodeID id) const;
-
-  /** Get the resolution of a given node associated with this one.*/
-  float get_resolution(NodeConstHandle id) const {
-    return get_resolution(id.get_id());
-  }
-
-  /** Get the type of the resolution with the given node id. */
+  /** Get the type of the representation with the given node id. */
   RepresentationType get_representation_type(NodeID id) const;
 
   RepresentationType get_representation_type(NodeConstHandle id) const {
@@ -85,8 +69,7 @@ class RMFEXPORT AlternativesConst : public Decorator {
   */
 class RMFEXPORT Alternatives : public AlternativesConst {
   friend class AlternativesFactory;
-  Alternatives(NodeHandle nh, FloatKey base_resolution_key, IntsKey types_key,
-               IntsKey roots_key, FloatsKey resolutions_key);
+  Alternatives(NodeHandle nh, IntsKey types_key, IntsKey roots_key);
 
  public:
   void add_alternative(NodeHandle root, RepresentationType type);
@@ -100,28 +83,24 @@ class RMFEXPORT Alternatives : public AlternativesConst {
   */
 class RMFEXPORT AlternativesFactory : public Factory {
   Category cat_;
-  FloatKey base_resolution_key_;
   IntsKey types_key_;
   IntsKey roots_key_;
-  FloatsKey resolutions_key_;
 
  public:
   AlternativesFactory(FileConstHandle fh);
   AlternativesFactory(FileHandle fh);
 
   Alternatives get(NodeHandle nh) const {
-    return Alternatives(nh, base_resolution_key_, types_key_, roots_key_,
-                        resolutions_key_);
+    return Alternatives(nh, types_key_, roots_key_);
   }
   AlternativesConst get(NodeConstHandle nh) const {
-    return AlternativesConst(nh, base_resolution_key_, types_key_, roots_key_,
-                             resolutions_key_);
+    return AlternativesConst(nh, types_key_, roots_key_);
   }
   bool get_is(NodeConstHandle nh) const {
-    return nh.get_has_value(base_resolution_key_);
+    return nh.get_has_value(types_key_);
   }
   bool get_is_static(NodeConstHandle nh) const {
-    return nh.get_has_value(base_resolution_key_);
+    return nh.get_has_value(types_key_);
   }
 };
 
@@ -131,6 +110,9 @@ struct AlternativesConstFactory : public AlternativesFactory {
   AlternativesConstFactory(FileHandle fh) : AlternativesFactory(fh) {}
 };
 #endif
+
+/** Return the cannonical resolution of the subtree. */
+RMFEXPORT double get_resolution(NodeConstHandle root);
 
 /** Return a list of (clustered) resolution levels available in the subtree.
 

@@ -93,7 +93,12 @@ typedef std::vector<NodeConstHandle> NodeConstHandles;
 
     See the NodeHandle for modifying the contents.
  */
-class RMFEXPORT NodeConstHandle {
+class RMFEXPORT NodeConstHandle
+#ifdef SWIG
+// get conversions right
+    : public NodeID
+#endif
+      {
   friend class FileHandle;
   int compare(const NodeConstHandle& o) const {
     if (node_ < o.node_)
@@ -136,6 +141,10 @@ class RMFEXPORT NodeConstHandle {
     return shared_;
   }
 #endif
+#if !defined(SWIG)
+  operator NodeID() const { return node_; }
+#endif
+
   NodeID get_id() const { return node_; }
   RMF_COMPARISONS(NodeConstHandle);
   RMF_HASHABLE(NodeConstHandle, return node_.get_index());

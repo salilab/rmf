@@ -18,6 +18,7 @@
 #include "RMF/decorator/physics.h"
 #include "RMF/decorator/sequence.h"
 #include "RMF/decorator/feature.h"
+#include "RMF/decorator/bond.h"
 #include "RMF/decorator/shape.h"
 
 RMF_ENABLE_WARNINGS

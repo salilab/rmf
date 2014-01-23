@@ -23,7 +23,7 @@ class GenericTest(unittest.TestCase):
         sd = sf.get(fn)
         sd.set_score(10.0)
         rd = rf.get(fn)
-        rd.set_representation([r.get_id().get_index() for r in reps])
+        rd.set_representation(reps)
 
     def _test(self, path):
         fh = RMF.open_rmf_file_read_only(path)
@@ -31,7 +31,7 @@ class GenericTest(unittest.TestCase):
         rt = fh.get_root_node()
         ch = rt.get_children()
         fn = ch[-1]
-        reps = [x.get_id().get_index() for x in ch[:-1]]
+        reps = [x for x in ch[:-1]]
         sf = RMF.ScoreFactory(fh)
         rf = RMF.RepresentationFactory(fh)
         sd = sf.get(fn)
