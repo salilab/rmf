@@ -90,8 +90,8 @@ class Data {
 
   // find nodes to push to vmd
   boost::array<int, 3> fill_bodies(RMF::NodeConstHandle cur, int body,
-                                  std::string chain, int resid,
-                                  std::string resname, double resolution);
+                                   std::string chain, int resid,
+                                   std::string resname, double resolution);
   void get_structure(molfile_atom_t *atoms);
   void fill_index();
   int get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
@@ -173,19 +173,19 @@ Data::Data(std::string name)
 
 //
 boost::array<int, 3> Data::fill_bodies(RMF::NodeConstHandle cur, int body,
-                                      std::string chain, int resid,
-                                      std::string resname, double resolution) {
+                                       std::string chain, int resid,
+                                       std::string resname, double resolution) {
   boost::array<int, 3> ret = {{0}};
   if (cur.get_type() == RMF::ALIAS) return ret;
   if (altf_.get_is(cur)) {
     cur = altf_.get(cur).get_alternative(RMF::decorator::PARTICLE, resolution);
   }
   if (rff_.get_is(cur)) {
-      bodies_.push_back(Body());
-      bodies_.back().frames = bodies_[body].frames;
-      bodies_.back().frames.push_back(rff_.get(cur));
-      bodies_.back().state = bodies_[body].state;
-      body = bodies_.size() - 1;
+    bodies_.push_back(Body());
+    bodies_.back().frames = bodies_[body].frames;
+    bodies_.back().frames.push_back(rff_.get(cur));
+    bodies_.back().state = bodies_[body].state;
+    body = bodies_.size() - 1;
   }
   if (stf_.get_is(cur)) {
     int state_index = stf_.get(cur).get_state_index();
@@ -302,7 +302,6 @@ void Data::get_structure(molfile_atom_t *atoms) {
     }
   }
 }
-
 
 void Data::read_structure(molfile_atom_t *atoms) {
   RMF_INFO("Reading structure");
