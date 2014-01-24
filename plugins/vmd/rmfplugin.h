@@ -521,7 +521,6 @@ int Data::get_bonds(RMF::NodeConstHandle cur, int *from, int *to, int *type) {
 void Data::read_timestep_data(molfile_timestep_metadata_t *data) {
   RMF_INFO("Reading timestep data");
   data->count = file_.get_number_of_frames();
-  if (data->count == 0) data->count = 1;
   data->avg_bytes_per_timestep = sizeof(float) * 3 * get_number_of_atoms();
   data->has_velocities = 0;
 }
