@@ -146,7 +146,9 @@ Data::Data(std::string name)
               << ". Please enter desired resolution: " << std::endl;
     std::cin >> resolution_;
   }
-  file_.set_current_frame(RMF::FrameID(0));
+  if (file_.get_number_of_frames() > 0) {
+    file_.set_current_frame(RMF::FrameID(0));
+  }
 
   bodies_.push_back(Body());
 
