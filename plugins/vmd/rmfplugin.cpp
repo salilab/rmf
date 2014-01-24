@@ -47,8 +47,8 @@ int read_rmf_structure(void *mydata, int *optflags, molfile_atom_t *atoms) {
   }
 }
 
-int read_rmf_timestep(void *mydata, int /*natoms*/, molfile_timestep_t *frame) {
-  RMF_TRACE("Begin read_rmf_timestep");
+int read_rmf_timestep(void *mydata, int natoms, molfile_timestep_t *frame) {
+  RMF_TRACE("Begin read_rmf_timestep: " << natoms);
   try {
     Data *data = reinterpret_cast<Data *>(mydata);
     if (data->read_next_frame(frame)) {
