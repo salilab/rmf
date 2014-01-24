@@ -348,7 +348,7 @@ def get_example_path(name):
    dir.append(name)
    return os.path.join(*dir)
 
-suffixes=["rmf3", "rmfz", "rmf2", "rmfa", "rmft", "rmf", "_rmf_test_buffer"]
+suffixes=["rmf", "rmfz", "rmf-avro", "rmf3", "rmf-hdf5", "_rmf_test_buffer"]
 
 import RMF_HDF5
 HDF5=RMF_HDF5

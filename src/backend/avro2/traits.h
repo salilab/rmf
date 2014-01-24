@@ -9,16 +9,15 @@
 #ifndef RMF_AVRO2_TRAITS_H
 #define RMF_AVRO2_TRAITS_H
 
-#include "RMF/compiler_macros.h"
-#include "RMF/log.h"
 #include "RMF/BufferConstHandle.h"
 #include "RMF/BufferHandle.h"
+#include "RMF/compiler_macros.h"
+#include "RMF/log.h"
+#include "avrocpp/api/Compiler.hh"
 #include "data_file.h"
 #include "generated/embed_jsons.h"
-#include "avrocpp/api/Compiler.hh"
-
-#include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/shared_ptr.hpp>
 
 RMF_ENABLE_WARNINGS
 
@@ -116,7 +115,7 @@ struct FileWriterTraits : public FileWriterTraitsBase {
 struct FileReaderBase {
   std::string path_;
 
-  FileReaderBase(std::string path) : path_(path) {}
+  FileReaderBase(std::string path) : path_(path) { get_reader<Frame>(); }
   template <class T>
   boost::shared_ptr<internal_avro::DataFileReader<T> > get_reader() {
     return boost::make_shared<internal_avro::DataFileReader<T> >(path_.c_str(),
@@ -178,4 +177,4 @@ struct BufferReaderBase {
 }
 
 RMF_DISABLE_WARNINGS
-#endif  // RMF_AVRO2_TRAITS_H
+#endif /* RMF_AVRO2_TRAITS_H */

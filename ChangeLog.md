@@ -1,4 +1,5 @@
 # Change Log #
+- RMF now uses the new avro-based format with the `.rmf` suffix.
 - RMF::decorator::Bond and RMF::decorator::BondConst now return
 	RMF::NodeHandle and RMF::NodeConstHandle instead of ints.
 - RMF::decorator::Representation and RMF::decorator::RepresentationConst now return

@@ -29,14 +29,15 @@ namespace RMF {
 
 namespace avro2 {
 
-template <bool GZIP>
+template <bool GZIP, bool OLD>
 class Avro2IOFileFactory : public backends::IOFactory {
  public:
   virtual std::string get_file_extension() const RMF_OVERRIDE {
+    if (OLD) return ".rmf3";
     if (GZIP)
       return ".rmfz";
     else
-      return ".rmf3";
+      return ".rmf";
   }
   virtual boost::shared_ptr<backends::IO> read_file(const std::string &name)
       const RMF_OVERRIDE {
@@ -72,8 +73,9 @@ class Avro2IOBufferFactory : public backends::IOFactory {
 
 std::vector<boost::shared_ptr<backends::IOFactory> > get_factories() {
   std::vector<boost::shared_ptr<backends::IOFactory> > ret;
-  ret.push_back(boost::make_shared<Avro2IOFileFactory<false> >());
-  ret.push_back(boost::make_shared<Avro2IOFileFactory<true> >());
+  ret.push_back(boost::make_shared<Avro2IOFileFactory<false, false> >());
+  ret.push_back(boost::make_shared<Avro2IOFileFactory<true, false> >());
+  ret.push_back(boost::make_shared<Avro2IOFileFactory<false, true> >());
   ret.push_back(boost::make_shared<Avro2IOBufferFactory>());
   return ret;
 }

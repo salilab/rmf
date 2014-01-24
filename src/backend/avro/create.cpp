@@ -46,7 +46,7 @@ typedef backends::BackwardsIO<avro_backend::AvroSharedData<
 
 struct SingleTextAvroFactory : public RMF::backends::IOFactory {
   virtual std::string get_file_extension() const RMF_OVERRIDE {
-    return ".rmft";
+    return ".rmf-text";
   }
   virtual boost::shared_ptr<RMF::backends::IO> read_file(
       const std::string& name) const RMF_OVERRIDE {
@@ -82,7 +82,7 @@ struct SingleAvroFactory : public SingleTextAvroFactory {
 
 struct MultipleAvroFactory : public RMF::backends::IOFactory {
   virtual std::string get_file_extension() const RMF_OVERRIDE {
-    return ".rmf2";
+    return ".rmf-avro";
   }
   virtual boost::shared_ptr<RMF::backends::IO> read_file(
       const std::string& name) const RMF_OVERRIDE {

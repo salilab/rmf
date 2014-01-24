@@ -33,7 +33,9 @@ namespace {
 typedef backends::BackwardsIO<HDF5SharedData> MIO;
 
 struct HDF5Factory : public RMF::backends::IOFactory {
-  virtual std::string get_file_extension() const RMF_OVERRIDE { return ".rmf"; }
+  virtual std::string get_file_extension() const RMF_OVERRIDE {
+    return ".rmf-hdf5";
+  }
   virtual boost::shared_ptr<RMF::backends::IO> read_file(
       const std::string& name) const RMF_OVERRIDE {
     return boost::make_shared<MIO>(name, false, true);

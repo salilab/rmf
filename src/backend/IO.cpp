@@ -1,3 +1,11 @@
+/**
+ *  \file RMF/Category.h
+ *  \brief Handle read/write of Model data from/to files.
+ *
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *
+ */
+
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <algorithm>
@@ -6,6 +14,7 @@
 
 #include "RMF/BufferConstHandle.h"
 #include "RMF/BufferHandle.h"
+#include "RMF/log.h"
 #include "RMF/infrastructure_macros.h"
 #include "avro/factory.h"
 #include "avro2/factory.h"
@@ -61,9 +70,15 @@ boost::shared_ptr<IO> read_file(const std::string &name) {
     return read_buffer(test_buffers.find(name)->second);
   } else {
     RMF_FOREACH(boost::shared_ptr<IOFactory> f, factories) {
-      if (!boost::algorithm::ends_with(name, f->get_file_extension())) continue;
-      boost::shared_ptr<IO> cur = f->read_file(name);
-      if (cur) return cur;
+      // if (!boost::algorithm::ends_with(name, f->get_file_extension()))
+      // continue;
+      try {
+        boost::shared_ptr<IO> cur = f->read_file(name);
+        if (cur) return cur;
+      }
+      catch (const std::exception &e) {
+        RMF_INFO("Exception: " << e.what());
+      }
     }
   }
   return boost::shared_ptr<IO>();
