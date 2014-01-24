@@ -30,6 +30,7 @@
 #include <algorithm>
 #include <boost/range/algorithm/copy.hpp>
 #include <boost/range/algorithm_ext/copy_n.hpp>
+#include <boost/range/distance.hpp>
 #include <boost/scoped_array.hpp>
 #include <iostream>
 #include <stddef.h>
@@ -41,6 +42,16 @@ namespace {
 molfile_plugin_t plugin;
 molfile_plugin_t plugin3;
 molfile_plugin_t pluginz;
+
+template <class R, class OIt>
+void my_copy_n(const R &range, std::size_t n, OIt out) {
+  if (boost::distance(range) <=n) {
+    boost::range::copy(range, out);
+  } else {
+    // some boost object to the input being too small
+    boost::range::copy_n(range, n, out);
+  }
+}
 
 class Data {
   RMF::FileConstHandle file_;
@@ -156,9 +167,9 @@ Data::Data(std::string name)
 
   bodies_.push_back(Body());
 
-  boost::array<char, 2> default_chain = {};
-  boost::array<char, 8> default_resname = {};
-  boost::array<char, 8> default_segment = {};
+  boost::array<char, 2> default_chain = {0};
+  boost::array<char, 8> default_resname = {0};
+  boost::array<char, 8> default_segment = {0};
   boost::array<int, 3> na =
       fill_bodies(file_.get_root_node(), 0, default_chain, -1, default_resname,
                   resolution_, default_segment);
@@ -189,7 +200,7 @@ boost::array<int, 3> Data::fill_bodies(RMF::NodeConstHandle cur, int body,
   boost::array<int, 3> ret = {{0}};
   if (cur.get_type() == RMF::ALIAS) return ret;
   if (cur.get_type() == RMF::REPRESENTATION && segment[0] == '\0') {
-    boost::range::copy_n(cur.get_name(), 8, segment.begin());
+    my_copy_n(cur.get_name(), 8, segment.begin());
   }
   if (altf_.get_is(cur)) {
     cur = altf_.get(cur).get_alternative(RMF::decorator::PARTICLE, resolution);
@@ -218,12 +229,12 @@ boost::array<int, 3> Data::fill_bodies(RMF::NodeConstHandle cur, int body,
   }
 
   if (chf_.get_is(cur)) {
-    boost::range::copy_n(chf_.get(cur).get_chain_id(), 2, chain.begin());
+    my_copy_n(chf_.get(cur).get_chain_id(), 2, chain.begin());
     //    chain = chf_.get(cur).get_chain_id();
   }
   if (rf_.get_is(cur)) {
     resid = rf_.get(cur).get_residue_index();
-    boost::range::copy_n(rf_.get(cur).get_residue_type(), 8, resname.begin());
+    my_copy_n(rf_.get(cur).get_residue_type(), 8, resname.begin());
   }
   RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
     boost::array<int, 3> count =
@@ -261,8 +272,8 @@ void Data::get_structure(molfile_atom_t *atoms) {
       } else if (tf_.get_is(cur)) {
         at = tf_.get(cur).get_type_name();
       }
-      boost::range::copy_n(nm, 16, atoms->name);
-      boost::range::copy_n(at, 16, atoms->type);
+      my_copy_n(nm, 16, atoms->name);
+      my_copy_n(at, 16, atoms->type);
       atoms->resid = n.residue_index;
       boost::range::copy(n.chain_id, atoms->chain);
       atoms->mass = pf_.get(cur).get_mass();
@@ -271,8 +282,8 @@ void Data::get_structure(molfile_atom_t *atoms) {
     }
     RMF_FOREACH(AtomInfo n, body.balls) {
       RMF::NodeConstHandle cur = file_.get_node(n.node_id);
-      boost::range::copy_n(cur.get_name(), 16, atoms->name);
-      boost::range::copy_n(std::string("ball"), 16, atoms->type);
+      my_copy_n(cur.get_name(), 16, atoms->name);
+      my_copy_n(std::string("ball"), 16, atoms->type);
       atoms->resid = n.residue_index;
       if (n.chain_id.size() > 0) {
         atoms->chain[0] = n.chain_id[0];
