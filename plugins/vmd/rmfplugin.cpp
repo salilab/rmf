@@ -35,7 +35,7 @@ int read_rmf_structure(void *mydata, int *optflags, molfile_atom_t *atoms) {
   RMF_TRACE("Begin read_rmf_structure");
   try {
     Data *data = reinterpret_cast<Data *>(mydata);
-    *optflags = MOLFILE_RADIUS | MOLFILE_MASS;
+    *optflags = MOLFILE_RADIUS | MOLFILE_MASS | MOLFILE_ALTLOC;
     // copy from atoms
     data->read_structure(atoms);
     RMF_TRACE("End read_rmf_structure");

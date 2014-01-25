@@ -31,6 +31,7 @@
 #include <boost/range/algorithm/copy.hpp>
 #include <boost/range/algorithm_ext/copy_n.hpp>
 #include <boost/range/distance.hpp>
+#include <boost/range/iterator_range_core.hpp>
 #include <boost/scoped_array.hpp>
 #include <iostream>
 #include <stddef.h>
@@ -45,7 +46,7 @@ molfile_plugin_t pluginz;
 
 template <class R, class OIt>
 void my_copy_n(const R &range, std::size_t n, OIt out) {
-  if (boost::distance(range) <=n) {
+  if (boost::distance(range) <= n) {
     boost::range::copy(range, out);
   } else {
     // some boost object to the input being too small
@@ -77,6 +78,7 @@ class Data {
     boost::array<char, 2> chain_id;
     int residue_index;
     boost::array<char, 8> residue_name;
+    boost::array<char, 2> altid;
     boost::array<char, 8> segment;
     RMF::NodeID node_id;
   };
@@ -102,11 +104,12 @@ class Data {
   bool done_;
 
   // find nodes to push to vmd
-  boost::array<int, 3> fill_bodies(RMF::NodeConstHandle cur, int body,
+  boost::array<int, 2> fill_bodies(RMF::NodeConstHandle cur, int body,
                                    boost::array<char, 2> chain, int resid,
                                    boost::array<char, 8> resname,
-                                   double resolution,
-                                   boost::array<char, 8> segment);
+                                   boost::array<char, 2> altid,
+                                   boost::array<char, 8> segment,
+                                   double resolution);
   void get_structure(molfile_atom_t *atoms);
   void fill_index();
   int get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
@@ -158,8 +161,11 @@ Data::Data(std::string name)
       RMF::decorator::get_resolutions(file_.get_root_node());
   if (resolutions.size() > 1) {
     std::cout << "RMF: Resolutions are " << RMF::Showable(resolutions)
-              << ". Please enter desired resolution: " << std::endl;
+              << ". Please enter desired resolution (or a negative for all): "
+              << std::flush;
     std::cin >> resolution_;
+    // fix divide by zero
+    if (resolution_ == 0) resolution_ = .0001;
   }
   if (file_.get_number_of_frames() > 0) {
     file_.set_current_frame(RMF::FrameID(0));
@@ -169,12 +175,13 @@ Data::Data(std::string name)
 
   boost::array<char, 2> default_chain = {0};
   boost::array<char, 8> default_resname = {0};
+  boost::array<char, 2> default_altid = {0};
   boost::array<char, 8> default_segment = {0};
-  boost::array<int, 3> na =
+  boost::array<int, 2> na =
       fill_bodies(file_.get_root_node(), 0, default_chain, -1, default_resname,
-                  resolution_, default_segment);
+                  default_altid, default_segment, resolution_);
   fill_index();
-  num_atoms_ = na[0] + na[1] + na[2];
+  num_atoms_ = na[0] + na[1];
   std::cout << "RMF: found " << states_ << " states and " << num_atoms_
             << " atoms." << std::endl;
 
@@ -192,19 +199,40 @@ Data::Data(std::string name)
   }
 }
 
-boost::array<int, 3> Data::fill_bodies(RMF::NodeConstHandle cur, int body,
+boost::array<int, 2> Data::fill_bodies(RMF::NodeConstHandle cur, int body,
                                        boost::array<char, 2> chain, int resid,
                                        boost::array<char, 8> resname,
-                                       double resolution,
-                                       boost::array<char, 8> segment) {
-  boost::array<int, 3> ret = {{0}};
+                                       boost::array<char, 2> altid,
+                                       boost::array<char, 8> segment,
+                                       double resolution) {
+  boost::array<int, 2> ret = {{0}};
+  if (altf_.get_is(cur)) {
+    if (resolution >= 0) {
+      cur =
+          altf_.get(cur).get_alternative(RMF::decorator::PARTICLE, resolution);
+    } else {
+      RMF::NodeConstHandles alts =
+          altf_.get(cur).get_alternatives(RMF::decorator::PARTICLE);
+      int alt = 1;
+      RMF_FOREACH(RMF::NodeConstHandle c,
+                  boost::make_iterator_range(alts.begin() + 1, alts.end())) {
+        altid[0] = 'A' + alt;
+        boost::array<int, 2> count = fill_bodies(c, body, chain, resid, resname,
+                                                 altid, segment, resolution);
+        for (unsigned int i = 0; i < 2; ++i) {
+          ret[i] += count[i];
+        }
+        ++alt;
+      }
+      altid[0] = 'A';
+      cur = alts.front();
+    }
+  }
   if (cur.get_type() == RMF::ALIAS) return ret;
   if (cur.get_type() == RMF::REPRESENTATION && segment[0] == '\0') {
     my_copy_n(cur.get_name(), 8, segment.begin());
   }
-  if (altf_.get_is(cur)) {
-    cur = altf_.get(cur).get_alternative(RMF::decorator::PARTICLE, resolution);
-  }
+
   if (rff_.get_is(cur)) {
     bodies_.push_back(Body());
     bodies_.back().frames = bodies_[body].frames;
@@ -237,20 +265,20 @@ boost::array<int, 3> Data::fill_bodies(RMF::NodeConstHandle cur, int body,
     my_copy_n(rf_.get(cur).get_residue_type(), 8, resname.begin());
   }
   RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
-    boost::array<int, 3> count =
-        fill_bodies(c, body, chain, resid, resname, resolution, segment);
-    for (unsigned int i = 0; i < 3; ++i) {
+    boost::array<int, 2> count =
+        fill_bodies(c, body, chain, resid, resname, altid, segment, resolution);
+    for (unsigned int i = 0; i < 2; ++i) {
       ret[i] += count[i];
     }
   }
 
   if (ret[0] == 0 && pf_.get_is(cur)) {
-    AtomInfo ai = {chain, resid, resname, segment, cur.get_id()};
+    AtomInfo ai = {chain, resid, resname, altid, segment, cur.get_id()};
     bodies_[body].atoms.push_back(ai);
     ++ret[0];
   }
   if (bf_.get_is(cur)) {
-    AtomInfo ai = {chain, resid, resname, segment, cur.get_id()};
+    AtomInfo ai = {chain, resid, resname, altid, segment, cur.get_id()};
     bodies_[body].balls.push_back(ai);
     ++ret[1];
   }
@@ -278,6 +306,7 @@ void Data::get_structure(molfile_atom_t *atoms) {
       boost::range::copy(n.chain_id, atoms->chain);
       atoms->mass = pf_.get(cur).get_mass();
       atoms->radius = pf_.get(cur).get_radius();
+      my_copy_n(n.altid, 2, atoms->altloc);
       ++atoms;
     }
     RMF_FOREACH(AtomInfo n, body.balls) {
