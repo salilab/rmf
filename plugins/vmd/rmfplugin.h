@@ -434,6 +434,9 @@ void Data::read_bonds(int *nbonds, int **fromptr, int **toptr,
 
   RMF_INFO("Getting bonds (" << num_atoms_ << ")");
   get_bonds(file_.get_root_node(), *fromptr, *toptr, *bondtype);
+  RMF_FOREACH(int bt, boost::make_iterator_range(*bondtype, *bondtype + *nbonds)) {
+    RMF_INTERNAL_CHECK(bt >=0 && bt < *nbondtypes, "Invalid bond type ");
+  }
 }
 
 int Data::get_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr,
@@ -545,6 +548,7 @@ int Data::get_bonds(RMF::NodeConstHandle cur, int *from, int *to, int *type) {
     if (from) {
       from += ci;
       to += ci;
+      type += ci;
     }
     ret += ci;
   }

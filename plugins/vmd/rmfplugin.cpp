@@ -4,6 +4,7 @@
  *
  */
 #include "rmfplugin.h"
+#include <RMF/exceptions.h>
 
 namespace {
 
@@ -75,6 +76,10 @@ int read_rmf_bonds(void *mydata, int *nbonds, int **fromptr, int **toptr,
                      bondtypename);
     // scan hierarchy and extract bonds
     RMF_TRACE("End read_rmf_bonds");
+    RMF_FOREACH(int bt, boost::make_iterator_range(*bondtype, *bondtype + *nbonds)) {
+      RMF_INTERNAL_CHECK(bt >=0 && bt < *nbondtypes, "Invalid bond type ");
+    }
+
     return VMDPLUGIN_SUCCESS;
   }
   catch (const std::exception &e) {
