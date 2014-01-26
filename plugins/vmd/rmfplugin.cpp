@@ -65,6 +65,7 @@ int read_rmf_graphics(void *mydata, int *nelem,
   return catch_exceptions("read rmf graphics", mydata,
                           boost::bind(&Data::read_graphics, _1, nelem, gdata));
 }
+
 int read_rmf_timestep_metadata(void *mydata,
                                molfile_timestep_metadata_t *tdata) {
   return catch_exceptions(
@@ -90,28 +91,29 @@ void init_plugin(molfile_plugin_t &plugin) {
   plugin.read_timestep_metadata = read_rmf_timestep_metadata;
   plugin.read_next_timestep = read_rmf_timestep;
 }
+}
 
-void init_plugins() {
+VMDPLUGIN_API int VMDPLUGIN_init() {
   init_plugin(plugin);
   plugin.name = "rmf";
   plugin.prettyname = "RMF";
   plugin.filename_extension = "rmf";
+
   init_plugin(plugin3);
   plugin3.name = "rmf3";
   plugin3.prettyname = "RMF3";
   plugin3.filename_extension = "rmf3";
+
   init_plugin(pluginz);
   pluginz.name = "rmfz";
   pluginz.prettyname = "RMFz";
   pluginz.filename_extension = "rmfz";
-}
-}
 
-VMDPLUGIN_API int VMDPLUGIN_init() {
-  init_plugins();
   RMF::set_log_level("trace");
+
   return VMDPLUGIN_SUCCESS;
 }
+
 VMDPLUGIN_API int VMDPLUGIN_register(void *v, vmdplugin_register_cb cb) {
   std::cout << "Register" << std::endl;
   (*cb)(v, (vmdplugin_t *)&plugin);
@@ -119,7 +121,7 @@ VMDPLUGIN_API int VMDPLUGIN_register(void *v, vmdplugin_register_cb cb) {
   (*cb)(v, (vmdplugin_t *)&pluginz);
   return 0;
 }
+
 VMDPLUGIN_API int VMDPLUGIN_fini() {
-  std::cout << "Fini" << std::endl;
   return VMDPLUGIN_SUCCESS;
 }
