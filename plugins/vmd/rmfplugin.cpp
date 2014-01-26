@@ -14,16 +14,9 @@ void close_rmf_read(void *mydata) {
 }
 
 void *open_rmf_read(const char *filename, const char *, int *natoms) {
-  RMF_TRACE("Begin open_rmf_read");
+  RMF_TRACE("open_rmf_read");
   try {
-    Data *data = new Data(filename);
-    *natoms = data->get_number_of_atoms();
-    std::cout << "Found " << *natoms << " atoms " << std::endl;
-    if (*natoms == 0) {
-      *natoms = MOLFILE_NUMATOMS_NONE;
-    }
-    RMF_TRACE("End open_rmf_read");
-    return data;
+    return new Data(filename, natoms);
   }
   catch (std::exception &e) {
     std::cerr << "Caught exception: " << e.what() << std::endl;
@@ -33,17 +26,13 @@ void *open_rmf_read(const char *filename, const char *, int *natoms) {
 }
 
 int read_rmf_structure(void *mydata, int *optflags, molfile_atom_t *atoms) {
-  RMF_TRACE("Begin read_rmf_structure");
+  RMF_TRACE("read_rmf_structure");
   try {
     Data *data = reinterpret_cast<Data *>(mydata);
-    *optflags = MOLFILE_RADIUS | MOLFILE_MASS | MOLFILE_ALTLOC;
-    // copy from atoms
-    data->read_structure(atoms);
-    RMF_TRACE("End read_rmf_structure");
-    return VMDPLUGIN_SUCCESS;
+    return data->read_structure(optflags, atoms);
   }
   catch (const std::exception &e) {
-    std::cerr << e.what() << std::endl;
+    std::cerr << "Caught exception: " << e.what() << std::endl;
     return VMDPLUGIN_ERROR;
   }
 }
@@ -52,16 +41,10 @@ int read_rmf_timestep(void *mydata, int natoms, molfile_timestep_t *frame) {
   RMF_TRACE("Begin read_rmf_timestep: " << natoms);
   try {
     Data *data = reinterpret_cast<Data *>(mydata);
-    if (data->read_next_frame(frame)) {
-      RMF_TRACE("End read_rmf_timestep");
-      return VMDPLUGIN_SUCCESS;
-    } else {
-      RMF_TRACE("End read_rmf_timestep");
-      return MOLFILE_EOF;
-    }
+    return data->read_timestep(frame);
   }
   catch (const std::exception &e) {
-    std::cerr << e.what() << std::endl;
+    std::cerr << "Caught exception: " << e.what() << std::endl;
     return VMDPLUGIN_ERROR;
   }
 }
@@ -72,44 +55,33 @@ int read_rmf_bonds(void *mydata, int *nbonds, int **fromptr, int **toptr,
   RMF_TRACE("Begin read_rmf_bonds");
   try {
     Data *data = reinterpret_cast<Data *>(mydata);
-    data->read_bonds(nbonds, fromptr, toptr, bondorderptr, bondtype, nbondtypes,
-                     bondtypename);
-    // scan hierarchy and extract bonds
-    RMF_TRACE("End read_rmf_bonds");
-    RMF_FOREACH(int bt, boost::make_iterator_range(*bondtype, *bondtype + *nbonds)) {
-      RMF_INTERNAL_CHECK(bt >=0 && bt < *nbondtypes, "Invalid bond type ");
-    }
-
-    return VMDPLUGIN_SUCCESS;
+    return data->read_bonds(nbonds, fromptr, toptr, bondorderptr, bondtype,
+                            nbondtypes, bondtypename);
   }
   catch (const std::exception &e) {
-    std::cerr << e.what() << std::endl;
+    std::cerr << "Caught exception: " << e.what() << std::endl;
     return VMDPLUGIN_ERROR;
   }
 }
 
 int read_rmf_graphics(void *mydata, int *nelem,
                       const molfile_graphics_t **gdata) {
-  RMF_TRACE("Begin read_rmf_graphics");
+  RMF_TRACE("read_rmf_graphics");
   try {
     Data *data = reinterpret_cast<Data *>(mydata);
-    data->read_graphics(nelem, gdata);
-    RMF_TRACE("End read_rmf_graphics");
-    return VMDPLUGIN_SUCCESS;
+    return data->read_graphics(nelem, gdata);
   }
   catch (const std::exception &e) {
-    std::cerr << e.what() << std::endl;
+    std::cerr << "Caught exception: " << e.what() << std::endl;
     return VMDPLUGIN_ERROR;
   }
 }
 int read_rmf_timestep_metadata(void *mydata,
                                molfile_timestep_metadata_t *tdata) {
-  RMF_TRACE("Begin read_rmf_timestep_metadata");
+  RMF_TRACE("read_rmf_timestep_metadata");
   try {
     Data *data = reinterpret_cast<Data *>(mydata);
-    data->read_timestep_data(tdata);
-    RMF_TRACE("End read_rmf_timestep_metadata");
-    return VMDPLUGIN_SUCCESS;
+    return data->read_timestep_metadata(tdata);
   }
   catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
