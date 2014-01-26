@@ -5,8 +5,23 @@
  */
 #include "rmfplugin.h"
 #include <RMF/exceptions.h>
+#include <boost/bind.hpp>
+#include <boost/lambda/construct.hpp>
 
 namespace {
+
+template <class M>
+int catch_exceptions(std::string name, void *mydata, M m) {
+  RMF_TRACE(name);
+  try {
+    Data *data = reinterpret_cast<Data *>(mydata);
+    return m(data);
+  }
+  catch (std::exception &e) {
+    std::cerr << "Caught exception: " << e.what() << std::endl;
+    return VMDPLUGIN_ERROR;
+  }
+}
 
 void close_rmf_read(void *mydata) {
   Data *data = reinterpret_cast<Data *>(mydata);
@@ -14,7 +29,7 @@ void close_rmf_read(void *mydata) {
 }
 
 void *open_rmf_read(const char *filename, const char *, int *natoms) {
-  RMF_TRACE("open_rmf_read");
+  RMF_TRACE("open rmf file");
   try {
     return new Data(filename, natoms);
   }
@@ -26,67 +41,35 @@ void *open_rmf_read(const char *filename, const char *, int *natoms) {
 }
 
 int read_rmf_structure(void *mydata, int *optflags, molfile_atom_t *atoms) {
-  RMF_TRACE("read_rmf_structure");
-  try {
-    Data *data = reinterpret_cast<Data *>(mydata);
-    return data->read_structure(optflags, atoms);
-  }
-  catch (const std::exception &e) {
-    std::cerr << "Caught exception: " << e.what() << std::endl;
-    return VMDPLUGIN_ERROR;
-  }
+  return catch_exceptions(
+      "read rmf structure", mydata,
+      boost::bind(&Data::read_structure, _1, optflags, atoms));
 }
 
-int read_rmf_timestep(void *mydata, int natoms, molfile_timestep_t *frame) {
-  RMF_TRACE("Begin read_rmf_timestep: " << natoms);
-  try {
-    Data *data = reinterpret_cast<Data *>(mydata);
-    return data->read_timestep(frame);
-  }
-  catch (const std::exception &e) {
-    std::cerr << "Caught exception: " << e.what() << std::endl;
-    return VMDPLUGIN_ERROR;
-  }
+int read_rmf_timestep(void *mydata, int, molfile_timestep_t *frame) {
+  return catch_exceptions("read rmf timestep", mydata,
+                          boost::bind(&Data::read_timestep, _1, frame));
 }
 
 int read_rmf_bonds(void *mydata, int *nbonds, int **fromptr, int **toptr,
                    float **bondorderptr, int **bondtype, int *nbondtypes,
                    char ***bondtypename) {
-  RMF_TRACE("Begin read_rmf_bonds");
-  try {
-    Data *data = reinterpret_cast<Data *>(mydata);
-    return data->read_bonds(nbonds, fromptr, toptr, bondorderptr, bondtype,
-                            nbondtypes, bondtypename);
-  }
-  catch (const std::exception &e) {
-    std::cerr << "Caught exception: " << e.what() << std::endl;
-    return VMDPLUGIN_ERROR;
-  }
+  return catch_exceptions(
+      "read rmf bonds", mydata,
+      boost::bind(&Data::read_bonds, _1, nbonds, fromptr, toptr, bondorderptr,
+                  bondtype, nbondtypes, bondtypename));
 }
 
 int read_rmf_graphics(void *mydata, int *nelem,
                       const molfile_graphics_t **gdata) {
-  RMF_TRACE("read_rmf_graphics");
-  try {
-    Data *data = reinterpret_cast<Data *>(mydata);
-    return data->read_graphics(nelem, gdata);
-  }
-  catch (const std::exception &e) {
-    std::cerr << "Caught exception: " << e.what() << std::endl;
-    return VMDPLUGIN_ERROR;
-  }
+  return catch_exceptions("read rmf graphics", mydata,
+                          boost::bind(&Data::read_graphics, _1, nelem, gdata));
 }
 int read_rmf_timestep_metadata(void *mydata,
                                molfile_timestep_metadata_t *tdata) {
-  RMF_TRACE("read_rmf_timestep_metadata");
-  try {
-    Data *data = reinterpret_cast<Data *>(mydata);
-    return data->read_timestep_metadata(tdata);
-  }
-  catch (const std::exception &e) {
-    std::cerr << e.what() << std::endl;
-    return VMDPLUGIN_ERROR;
-  }
+  return catch_exceptions(
+      "read rmf timestep metadata", mydata,
+      boost::bind(&Data::read_timestep_metadata, _1, tdata));
 }
 
 void init_plugin(molfile_plugin_t &plugin) {
@@ -98,7 +81,6 @@ void init_plugin(molfile_plugin_t &plugin) {
   plugin.author = "Daniel Russel";
   plugin.majorv = 0;
   plugin.minorv = 9;
-  // try this
   plugin.is_reentrant = VMDPLUGIN_THREADSAFE;
   plugin.open_file_read = open_rmf_read;
   plugin.read_structure = read_rmf_structure;
@@ -122,11 +104,6 @@ void init_plugins() {
   pluginz.name = "rmfz";
   pluginz.prettyname = "RMFz";
   pluginz.filename_extension = "rmfz";
-  // init_plugin(pluginrestraints);
-  // pluginrestraints.name = "rmf-with-restraints";
-  // pluginrestraints.prettyname = "RMF with restraints";
-  // pluginrestraints.filename_extension = "rmf-with-restraints";
-  // pluginrestraints.read_bonds = read_rmf_bonds_and_restraints;
 }
 }
 
