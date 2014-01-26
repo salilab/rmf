@@ -82,7 +82,7 @@ class Data {
   };
   struct Body {
     std::vector<RMF::decorator::ReferenceFrameConst> frames;
-    std::vector<AtomInfo> atoms;
+    std::vector<AtomInfo> particles;
     std::vector<AtomInfo> balls;
     int state;
     Body() : state(0) {}
@@ -110,6 +110,12 @@ class Data {
   void fill_index();
   void fill_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr);
   void fill_bonds(RMF::NodeConstHandle cur);
+
+  void copy_basics(const AtomInfo &ai, molfile_atom_t *out);
+  molfile_atom_t *copy_particles(const std::vector<AtomInfo> &atoms,
+                                 molfile_atom_t *out);
+  molfile_atom_t *copy_balls(const std::vector<AtomInfo> &balls,
+                             molfile_atom_t *out);
 
  public:
   Data(std::string name, int *num_atoms);
@@ -270,7 +276,7 @@ boost::array<int, 2> Data::fill_bodies(RMF::NodeConstHandle cur, int body,
 
   if (ret[0] == 0 && pf_.get_is(cur)) {
     AtomInfo ai = {chain, resid, resname, altid, segment, cur.get_id()};
-    bodies_[body].atoms.push_back(ai);
+    bodies_[body].particles.push_back(ai);
     ++ret[0];
   }
   if (bf_.get_is(cur)) {
@@ -284,7 +290,7 @@ boost::array<int, 2> Data::fill_bodies(RMF::NodeConstHandle cur, int body,
 void Data::fill_index() {
   int cur_index = -1;
   RMF_FOREACH(const Body & body, bodies_) {
-    RMF_FOREACH(const AtomInfo & n, body.atoms) {
+    RMF_FOREACH(const AtomInfo & n, body.particles) {
       index_[n.node_id] = ++cur_index;
     }
     RMF_FOREACH(const AtomInfo & n, body.balls) {
@@ -372,57 +378,64 @@ void Data::fill_bonds(RMF::NodeConstHandle cur) {
   RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) { fill_bonds(c); }
 }
 
-int Data::read_structure(int *optflags, molfile_atom_t *atoms) {
-  RMF_INFO("Reading structure");
-  RMF_FOREACH(const Body & body,
-              bodies_) {RMF_FOREACH(const AtomInfo & n, body.atoms) {
-      RMF::NodeConstHandle cur = file_.get_node(n.node_id);
-  std::string nm = cur.get_name();
-  std::string at;
-  if (af_.get_is(cur)) {
-    at = cur.get_name();
-  } else if (ff_.get_is(cur)) {
-    at = "FRAGMENT";
-  } else if (df_.get_is(cur)) {
-    at = "DOMAIN";
-  } else if (tf_.get_is(cur)) {
-    at = tf_.get(cur).get_type_name();
-  }
-  my_copy_n(nm, 16, atoms->name);
-  my_copy_n(at, 16, atoms->type);
-  atoms->resid = n.residue_index;
-  std::copy(n.chain_id.begin(), n.chain_id.end(), atoms->chain);
-  atoms->mass = pf_.get(cur).get_mass();
-  atoms->radius = pf_.get(cur).get_radius();
-  my_copy_n(n.altid, 2, atoms->altloc);
-  ++atoms;
-}
-RMF_FOREACH(AtomInfo n, body.balls) {
+void Data::copy_basics(const AtomInfo &n, molfile_atom_t *out) {
+  out->resid = n.residue_index;
+  std::copy(n.chain_id.begin(), n.chain_id.end(), out->chain);
+  my_copy_n(n.altid, 2, out->altloc);
+  my_copy_n(n.segment, 8, out->segid);
+  my_copy_n(n.residue_name, 8, out->resname);
   RMF::NodeConstHandle cur = file_.get_node(n.node_id);
-  my_copy_n(cur.get_name(), 16, atoms->name);
-  my_copy_n(std::string("ball"), 16, atoms->type);
-  atoms->resid = n.residue_index;
-  if (n.chain_id.size() > 0) {
-    atoms->chain[0] = n.chain_id[0];
-  } else {
-    atoms->chain[0] = '-';
-  }
-  if (n.chain_id.size() > 1) {
-    atoms->chain[1] = n.chain_id[1];
-  } else {
-    atoms->chain[1] = '\0';
-  }
-  if (cpf_.get_is(cur)) {
-    sprintf(atoms->segid, "%d", cpf_.get(cur).get_copy_index());
-  } else {
-    atoms->segid[0] = '\0';
-  }
-  atoms->mass = 0;
-  atoms->radius = bf_.get(cur).get_radius();
+  my_copy_n(cur.get_name(), 16, out->name);
 }
+
+molfile_atom_t *Data::copy_particles(const std::vector<AtomInfo> &atoms,
+                                     molfile_atom_t *out) {
+  RMF_FOREACH(const AtomInfo & n, atoms) {
+    copy_basics(n, out);
+
+    RMF::NodeConstHandle cur = file_.get_node(n.node_id);
+    std::string at;
+    if (af_.get_is(cur)) {
+      at = cur.get_name();
+    } else if (ff_.get_is(cur)) {
+      at = "FRAGMENT";
+    } else if (df_.get_is(cur)) {
+      at = "DOMAIN";
+    } else if (tf_.get_is(cur)) {
+      at = tf_.get(cur).get_type_name();
+    }
+    my_copy_n(at, 16, out->type);
+
+    out->mass = pf_.get(cur).get_mass();
+    out->radius = pf_.get(cur).get_radius();
+
+    ++out;
+  }
+  return out;
 }
-*optflags = MOLFILE_RADIUS | MOLFILE_MASS | MOLFILE_ALTLOC;
-return VMDPLUGIN_SUCCESS;
+
+molfile_atom_t *Data::copy_balls(const std::vector<AtomInfo> &balls,
+                                 molfile_atom_t *out) {
+  RMF_FOREACH(AtomInfo n, balls) {
+    copy_basics(n, out);
+
+    RMF::NodeConstHandle cur = file_.get_node(n.node_id);
+    my_copy_n(std::string("ball"), 16, out->type);
+    out->mass = 0;
+    out->radius = bf_.get(cur).get_radius();
+    ++out;
+  }
+  return out;
+}
+
+int Data::read_structure(int *optflags, molfile_atom_t *out) {
+  RMF_INFO("Reading structure");
+  RMF_FOREACH(const Body & body, bodies_) {
+    out = copy_particles(body.particles, out);
+    out = copy_balls(body.balls, out);
+  }
+  *optflags = MOLFILE_RADIUS | MOLFILE_MASS | MOLFILE_ALTLOC;
+  return VMDPLUGIN_SUCCESS;
 }
 
 int Data::read_timestep(molfile_timestep_t *frame) {
@@ -443,7 +456,7 @@ int Data::read_timestep(molfile_timestep_t *frame) {
     RMF_FOREACH(RMF::decorator::ReferenceFrameConst rf, body.frames) {
       tr = RMF::CoordinateTransformer(tr, rf);
     }
-    RMF_FOREACH(const AtomInfo & n, body.atoms) {
+    RMF_FOREACH(const AtomInfo & n, body.particles) {
       RMF::Vector3 cc = pf_.get(file_.get_node(n.node_id)).get_coordinates();
       cc = tr.get_global_coordinates(cc);
       cc[0] += offset;
@@ -512,7 +525,7 @@ int Data::read_timestep_metadata(molfile_timestep_metadata_t *data) {
   data->count = file_.get_number_of_frames();
   int na = 0;
   RMF_FOREACH(const Body & bd, bodies_) {
-    na += bd.atoms.size() + bd.balls.size();
+    na += bd.particles.size() + bd.balls.size();
   }
   data->avg_bytes_per_timestep = sizeof(float) * 3 * na;
   data->has_velocities = 0;
