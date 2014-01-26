@@ -47,10 +47,10 @@ molfile_plugin_t pluginz;
 template <class R, class OIt>
 void my_copy_n(const R &range, std::size_t n, OIt out) {
   if (boost::distance(range) <= n) {
-    boost::range::copy(range, out);
+    // older boost doesn't have range copy
+    std::copy(range.begin(), range.end(), out);
   } else {
-    // some boost object to the input being too small
-    boost::range::copy_n(range, n, out);
+    std::copy(range.begin(), range.begin() + n, out);
   }
 }
 
@@ -434,8 +434,9 @@ void Data::read_bonds(int *nbonds, int **fromptr, int **toptr,
 
   RMF_INFO("Getting bonds (" << num_atoms_ << ")");
   get_bonds(file_.get_root_node(), *fromptr, *toptr, *bondtype);
-  RMF_FOREACH(int bt, boost::make_iterator_range(*bondtype, *bondtype + *nbonds)) {
-    RMF_INTERNAL_CHECK(bt >=0 && bt < *nbondtypes, "Invalid bond type ");
+  RMF_FOREACH(int bt,
+              boost::make_iterator_range(*bondtype, *bondtype + *nbonds)) {
+    RMF_INTERNAL_CHECK(bt >= 0 && bt < *nbondtypes, "Invalid bond type ");
   }
 }
 
