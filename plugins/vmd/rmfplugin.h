@@ -108,8 +108,10 @@ class Data {
                                    boost::array<char, 8> segment,
                                    double resolution);
   void fill_index();
+  void fill_bounds();
   void fill_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr);
   void fill_bonds(RMF::NodeConstHandle cur);
+  double get_resolution();
 
   void copy_basics(const AtomInfo &ai, molfile_atom_t *out);
   molfile_atom_t *copy_particles(const std::vector<AtomInfo> &atoms,
@@ -146,7 +148,7 @@ Data::Data(std::string name, int *num_atoms)
       tf_(file_),
       altf_(file_),
       stf_(file_),
-      resolution_(1.0),
+      resolution_(get_resolution()),
       states_(1),
       lower_bounds_(std::numeric_limits<float>::max(),
                     std::numeric_limits<float>::max(),
@@ -156,16 +158,6 @@ Data::Data(std::string name, int *num_atoms)
                     -std::numeric_limits<float>::max()),
       max_radius_(0),
       done_(false) {
-  RMF::Floats resolutions =
-      RMF::decorator::get_resolutions(file_.get_root_node());
-  if (resolutions.size() > 1) {
-    std::cout << "RMF: Resolutions are " << RMF::Showable(resolutions)
-              << ". Please enter desired resolution (or a negative for all): "
-              << std::flush;
-    std::cin >> resolution_;
-    // fix divide by zero
-    if (resolution_ == 0) resolution_ = .0001;
-  }
   if (file_.get_number_of_frames() > 0) {
     file_.set_current_frame(RMF::FrameID(0));
   }
@@ -187,6 +179,26 @@ Data::Data(std::string name, int *num_atoms)
   std::cout << "RMF: found " << states_ << " states and " << *num_atoms
             << " atoms." << std::endl;
 
+  fill_bounds();
+}
+
+double Data::get_resolution() {
+  RMF::Floats resolutions =
+      RMF::decorator::get_resolutions(file_.get_root_node());
+  if (resolutions.size() > 1) {
+    std::cout << "RMF: Resolutions are " << RMF::Showable(resolutions)
+              << ".\nPlease enter desired resolution (or -1 for all): "
+              << std::flush;
+    double r = -1;
+    std::cin >> r;
+    std::cout << "Using resolution " << r << std::endl;
+    // fix divide by zero
+    if (r == 0) return .0001;
+    else return r;
+  } return 1;
+}
+
+void Data::fill_bounds() {
   RMF_FOREACH(RMF::NodeID id, file_.get_node_ids()) {
     if (pf_.get_is(file_.get_node(id))) {
       RMF::decorator::ParticleConst pc = pf_.get(file_.get_node(id));
