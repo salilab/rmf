@@ -28,8 +28,6 @@
 #include "RMF/types.h"
 #include "molfile_plugin.h"
 #include <algorithm>
-#include <boost/range/algorithm/copy.hpp>
-#include <boost/range/algorithm_ext/copy_n.hpp>
 #include <boost/range/distance.hpp>
 #include <boost/range/iterator_range_core.hpp>
 #include <boost/scoped_array.hpp>
