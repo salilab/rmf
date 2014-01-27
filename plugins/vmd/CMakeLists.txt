@@ -13,7 +13,7 @@ include_directories(${VMDPLUGIN_INCLUDE_PATH})
 
 message(STATUS "Using VMD headers found in ${VMDPLUGIN_INCLUDE_PATH}")
 
-add_library(RMF-vmd MODULE "rmfplugin.cpp")
+add_library(RMF-vmd MODULE "init.cpp" "Data.cpp" "Data_read.cpp")
 set_target_properties("RMF-vmd" PROPERTIES OUTPUT_NAME "rmfplugin")
 set_target_properties("RMF-vmd" PROPERTIES PREFIX "")
 set_target_properties("RMF-vmd" PROPERTIES SUFFIX ".so")

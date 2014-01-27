@@ -6,42 +6,12 @@
  *
  */
 
-#ifndef RMF_RMFPLUGIN_H
-#define RMF_RMFPLUGIN_H
-
-#include "RMF/CoordinateTransformer.h"
-#include "RMF/FileConstHandle.h"
-#include "RMF/ID.h"
-#include "RMF/NodeConstHandle.h"
-#include "RMF/Vector.h"
-#include "RMF/decorator/alternatives.h"
-#include "RMF/decorator/bond.h"
-#include "RMF/decorator/feature.h"
-#include "RMF/decorator/physics.h"
-#include "RMF/decorator/representation.h"
-#include "RMF/decorator/sequence.h"
-#include "RMF/decorator/shape.h"
-#include "RMF/enums.h"
-#include "RMF/exceptions.h"
-#include "RMF/infrastructure_macros.h"
-#include "RMF/log.h"
-#include "RMF/types.h"
-#include "molfile_plugin.h"
-#include <algorithm>
-#include <boost/range/distance.hpp>
+#include "Data.h"
 #include <boost/range/iterator_range_core.hpp>
-#include <boost/scoped_array.hpp>
-#include <iostream>
-#include <stddef.h>
-#include <string>
-#include <utility>
-#include <vector>
+
+namespace RMF_vmd {
 
 namespace {
-molfile_plugin_t plugin;
-molfile_plugin_t plugin3;
-molfile_plugin_t pluginz;
-
 template <class R, class OIt>
 void my_copy_n(const R &range, std::size_t n, OIt out) {
   if (boost::distance(range) <= n) {
@@ -51,99 +21,7 @@ void my_copy_n(const R &range, std::size_t n, OIt out) {
     std::copy(range.begin(), range.begin() + n, out);
   }
 }
-
-class Data {
-  RMF::FileConstHandle file_;
-  RMF::decorator::AtomFactory af_;
-  RMF::decorator::ResidueFactory rf_;
-  RMF::decorator::ChainFactory chf_;
-  RMF::decorator::ParticleFactory pf_;
-  RMF::decorator::ReferenceFrameFactory rff_;
-  RMF::decorator::BallFactory bf_;
-  RMF::decorator::SegmentFactory sf_;
-  RMF::decorator::CylinderFactory cf_;
-  RMF::decorator::BondFactory bdf_;
-  RMF::decorator::ScoreFactory scf_;
-  RMF::decorator::RepresentationFactory rcf_;
-  RMF::decorator::DomainFactory df_;
-  RMF::decorator::FragmentFactory ff_;
-  RMF::decorator::CopyFactory cpf_;
-  RMF::decorator::TypedFactory tf_;
-  RMF::decorator::AlternativesFactory altf_;
-  RMF::decorator::StateFactory stf_;
-  struct AtomInfo {
-    // can precumpte the actual molfile_atom_t data to simplify things
-    boost::array<char, 2> chain_id;
-    int residue_index;
-    boost::array<char, 8> residue_name;
-    boost::array<char, 2> altid;
-    boost::array<char, 8> segment;
-    RMF::NodeID node_id;
-  };
-  struct Body {
-    std::vector<RMF::decorator::ReferenceFrameConst> frames;
-    std::vector<AtomInfo> particles;
-    std::vector<AtomInfo> balls;
-    int state;
-    Body() : state(0) {}
-  };
-  std::vector<Body> bodies_;
-  boost::unordered_map<RMF::NodeID, int> index_;
-  std::vector<molfile_graphics_t> graphics_;
-  std::vector<int> bond_to_, bond_from_, bond_type_;
-  boost::scoped_array<char> bond_type_name_, restraint_bond_type_name_;
-  std::vector<char *> bond_type_names_;
-  double resolution_;
-  enum ShowRestraints {
-    BONDS = 1,
-    RESTRAINTS = 2
-  };
-  int show_restraints_;
-  RMF::Vector3 lower_bounds_;
-  RMF::Vector3 upper_bounds_;
-  double max_radius_;
-  bool done_;
-
-  // find nodes to push to vmd
-  boost::array<int, 2> fill_bodies(RMF::NodeConstHandle cur, int body,
-                                   boost::array<char, 2> chain, int resid,
-                                   boost::array<char, 8> resname,
-                                   boost::array<char, 2> altid,
-                                   boost::array<char, 8> segment,
-                                   double resolution);
-  void fill_index();
-  void fill_bounds();
-  void fill_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr);
-  void fill_bonds(RMF::NodeConstHandle cur);
-  int handle_reference_frame(int body, RMF::NodeConstHandle cur);
-  int handle_state(int body, RMF::NodeConstHandle cur);
-  boost::tuple<RMF::NodeConstHandle, boost::array<char, 2>,
-               boost::array<int, 2> >
-      handle_alternative(RMF::NodeConstHandle cur, int body,
-                         boost::array<char, 2> chain, int resid,
-                         boost::array<char, 8> resname,
-                         boost::array<char, 2> altid,
-                         boost::array<char, 8> segment, double resolution);
-  void handle_bond(RMF::NodeConstHandle cur);
-  void handle_restraint(RMF::NodeConstHandle cur);
-  double get_resolution();
-  int get_show_restraints();
-
-  void copy_basics(const AtomInfo &ai, molfile_atom_t *out);
-  molfile_atom_t *copy_particles(const std::vector<AtomInfo> &atoms,
-                                 molfile_atom_t *out);
-  molfile_atom_t *copy_balls(const std::vector<AtomInfo> &balls,
-                             molfile_atom_t *out);
-
- public:
-  Data(std::string name, int *num_atoms);
-  int read_structure(int *optflags, molfile_atom_t *atoms);
-  int read_timestep(molfile_timestep_t *frame);
-  int read_graphics(int *nelem, const molfile_graphics_t **gdata);
-  int read_bonds(int *nbonds, int **fromptr, int **toptr, float **bondorderptr,
-                 int **bondtype, int *nbondtypes, char ***bondtypename);
-  int read_timestep_metadata(molfile_timestep_metadata_t *data);
-};
+}
 
 Data::Data(std::string name, int *num_atoms)
     : file_(RMF::open_rmf_file_read_only(name)),
@@ -514,104 +392,4 @@ molfile_atom_t *Data::copy_balls(const std::vector<AtomInfo> &balls,
   return out;
 }
 
-int Data::read_structure(int *optflags, molfile_atom_t *out) {
-  RMF_INFO("Reading structure");
-  RMF_FOREACH(const Body & body, bodies_) {
-    out = copy_particles(body.particles, out);
-    out = copy_balls(body.balls, out);
-  }
-  *optflags = MOLFILE_RADIUS | MOLFILE_MASS | MOLFILE_ALTLOC;
-  return VMDPLUGIN_SUCCESS;
-}
-
-int Data::read_timestep(molfile_timestep_t *frame) {
-  if (done_) return MOLFILE_EOF;
-  RMF::FrameID curf = file_.get_current_frame();
-  RMF_INFO("Reading next frame at " << curf);
-  frame->physical_time = curf.get_index();
-  float *coords = frame->coords;
-  file_.set_current_frame(RMF::FrameID(curf.get_index()));
-  RMF_FOREACH(const Body & body, bodies_) {
-    RMF::CoordinateTransformer tr;
-    double offset =
-        (upper_bounds_[0] - lower_bounds_[0] + max_radius_ * 3) * body.state;
-    RMF_FOREACH(RMF::decorator::ReferenceFrameConst rf, body.frames) {
-      tr = RMF::CoordinateTransformer(tr, rf);
-    }
-    RMF_FOREACH(const AtomInfo & n, body.particles) {
-      RMF::Vector3 cc = pf_.get(file_.get_node(n.node_id)).get_coordinates();
-      cc = tr.get_global_coordinates(cc);
-      cc[0] += offset;
-      std::copy(cc.begin(), cc.end(), coords);
-      coords += 3;
-    }
-    RMF_FOREACH(const AtomInfo & n, body.balls) {
-      RMF::Vector3 cc = bf_.get(file_.get_node(n.node_id)).get_coordinates();
-      cc = tr.get_global_coordinates(cc);
-      cc[0] += offset;
-      std::copy(cc.begin(), cc.end(), coords);
-      coords += 3;
-    }
-  }
-  unsigned int next = curf.get_index() + 1;
-  if (next >= file_.get_number_of_frames()) {
-    done_ = true;
-  } else {
-    file_.set_current_frame(RMF::FrameID(next));
-  }
-  return VMDPLUGIN_SUCCESS;
-}
-
-int Data::read_graphics(int *nelem, const molfile_graphics_t **gdata) {
-  RMF_INFO("Reading graphics");
-  fill_graphics(file_.get_root_node(), RMF::CoordinateTransformer());
-  *nelem = graphics_.size();
-  *gdata = &graphics_[0];
-  return VMDPLUGIN_SUCCESS;
-}
-
-int Data::read_bonds(int *nbonds, int **fromptr, int **toptr,
-                     float **bondorderptr, int **bondtype, int *nbondtypes,
-                     char ***bondtypename) {
-  RMF_INFO("Reading bonds");
-  fill_bonds(file_.get_root_node());
-  RMF_INTERNAL_CHECK(bond_type_.size() == bond_from_.size(),
-                     "Sizes don't match");
-  RMF_INTERNAL_CHECK(bond_type_.size() == bond_to_.size(), "Sizes don't match");
-  *nbonds = bond_type_.size();
-  RMF_TRACE("Found " << *nbonds << " bonds.");
-  *fromptr = &bond_from_[0];
-  *toptr = &bond_to_[0];
-  *bondtype = &bond_type_[0];
-  *bondorderptr = NULL;
-  *nbondtypes = 2;
-  bond_type_name_.reset(new char[2]);
-  bond_type_name_[0] = 'B';
-  bond_type_name_[1] = '\0';
-  restraint_bond_type_name_.reset(new char[2]);
-  restraint_bond_type_name_[0] = 'R';
-  restraint_bond_type_name_[1] = '\0';
-  bond_type_names_.push_back(bond_type_name_.get());
-  bond_type_names_.push_back(restraint_bond_type_name_.get());
-  *bondtypename = &bond_type_names_[0];
-
-  RMF_FOREACH(int bt,
-              boost::make_iterator_range(*bondtype, *bondtype + *nbonds)) {
-    RMF_INTERNAL_CHECK(bt >= 0 && bt < *nbondtypes, "Invalid bond type ");
-  }
-  return VMDPLUGIN_SUCCESS;
-}
-
-int Data::read_timestep_metadata(molfile_timestep_metadata_t *data) {
-  RMF_INFO("Reading timestep data");
-  data->count = file_.get_number_of_frames();
-  int na = 0;
-  RMF_FOREACH(const Body & bd, bodies_) {
-    na += bd.particles.size() + bd.balls.size();
-  }
-  data->avg_bytes_per_timestep = sizeof(float) * 3 * na;
-  data->has_velocities = 0;
-  return VMDPLUGIN_SUCCESS;
-}
-}
-#endif /* RMF_RMFPLUGIN_H */
+}  // namespace RMF_vmd

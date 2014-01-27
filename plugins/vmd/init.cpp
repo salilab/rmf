@@ -3,18 +3,22 @@
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
-#include "rmfplugin.h"
+#include "Data.h"
+#include <RMF/log.h>
 #include <RMF/exceptions.h>
 #include <boost/bind.hpp>
 #include <boost/lambda/construct.hpp>
 
 namespace {
+molfile_plugin_t plugin;
+molfile_plugin_t plugin3;
+molfile_plugin_t pluginz;
 
 template <class M>
 int catch_exceptions(std::string name, void *mydata, M m) {
   RMF_TRACE(name);
   try {
-    Data *data = reinterpret_cast<Data *>(mydata);
+    RMF_vmd::Data *data = reinterpret_cast<RMF_vmd::Data *>(mydata);
     return m(data);
   }
   catch (std::exception &e) {
@@ -24,14 +28,14 @@ int catch_exceptions(std::string name, void *mydata, M m) {
 }
 
 void close_rmf_read(void *mydata) {
-  Data *data = reinterpret_cast<Data *>(mydata);
+  RMF_vmd::Data *data = reinterpret_cast<RMF_vmd::Data *>(mydata);
   delete data;
 }
 
 void *open_rmf_read(const char *filename, const char *, int *natoms) {
   RMF_TRACE("open rmf file");
   try {
-    return new Data(filename, natoms);
+    return new RMF_vmd::Data(filename, natoms);
   }
   catch (std::exception &e) {
     std::cerr << "Caught exception: " << e.what() << std::endl;
@@ -43,12 +47,13 @@ void *open_rmf_read(const char *filename, const char *, int *natoms) {
 int read_rmf_structure(void *mydata, int *optflags, molfile_atom_t *atoms) {
   return catch_exceptions(
       "read rmf structure", mydata,
-      boost::bind(&Data::read_structure, _1, optflags, atoms));
+      boost::bind(&RMF_vmd::Data::read_structure, _1, optflags, atoms));
 }
 
 int read_rmf_timestep(void *mydata, int, molfile_timestep_t *frame) {
-  return catch_exceptions("read rmf timestep", mydata,
-                          boost::bind(&Data::read_timestep, _1, frame));
+  return catch_exceptions(
+      "read rmf timestep", mydata,
+      boost::bind(&RMF_vmd::Data::read_timestep, _1, frame));
 }
 
 int read_rmf_bonds(void *mydata, int *nbonds, int **fromptr, int **toptr,
@@ -56,21 +61,22 @@ int read_rmf_bonds(void *mydata, int *nbonds, int **fromptr, int **toptr,
                    char ***bondtypename) {
   return catch_exceptions(
       "read rmf bonds", mydata,
-      boost::bind(&Data::read_bonds, _1, nbonds, fromptr, toptr, bondorderptr,
-                  bondtype, nbondtypes, bondtypename));
+      boost::bind(&RMF_vmd::Data::read_bonds, _1, nbonds, fromptr, toptr,
+                  bondorderptr, bondtype, nbondtypes, bondtypename));
 }
 
 int read_rmf_graphics(void *mydata, int *nelem,
                       const molfile_graphics_t **gdata) {
-  return catch_exceptions("read rmf graphics", mydata,
-                          boost::bind(&Data::read_graphics, _1, nelem, gdata));
+  return catch_exceptions(
+      "read rmf graphics", mydata,
+      boost::bind(&RMF_vmd::Data::read_graphics, _1, nelem, gdata));
 }
 
 int read_rmf_timestep_metadata(void *mydata,
                                molfile_timestep_metadata_t *tdata) {
   return catch_exceptions(
       "read rmf timestep metadata", mydata,
-      boost::bind(&Data::read_timestep_metadata, _1, tdata));
+      boost::bind(&RMF_vmd::Data::read_timestep_metadata, _1, tdata));
 }
 
 void init_plugin(molfile_plugin_t &plugin) {
@@ -109,7 +115,7 @@ VMDPLUGIN_API int VMDPLUGIN_init() {
   pluginz.prettyname = "RMFz";
   pluginz.filename_extension = "rmfz";
 
-  RMF::set_log_level("trace");
+  RMF::set_log_level("off");
 
   return VMDPLUGIN_SUCCESS;
 }
@@ -122,6 +128,4 @@ VMDPLUGIN_API int VMDPLUGIN_register(void *v, vmdplugin_register_cb cb) {
   return 0;
 }
 
-VMDPLUGIN_API int VMDPLUGIN_fini() {
-  return VMDPLUGIN_SUCCESS;
-}
+VMDPLUGIN_API int VMDPLUGIN_fini() { return VMDPLUGIN_SUCCESS; }
