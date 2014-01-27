@@ -193,9 +193,12 @@ double Data::get_resolution() {
     std::cin >> r;
     std::cout << "Using resolution " << r << std::endl;
     // fix divide by zero
-    if (r == 0) return .0001;
-    else return r;
-  } return 1;
+    if (r == 0)
+      return .0001;
+    else
+      return r;
+  }
+  return 1;
 }
 
 void Data::fill_bounds() {
@@ -328,14 +331,14 @@ void Data::fill_graphics(RMF::NodeConstHandle cur,
       size = cf_.get(cur).get_radius();
     }
     RMF::Vector3 last_coords = tr.get_global_coordinates(coords[0]);
-    for (unsigned int i = 1; i < coords.size(); ++i) {
+    RMF_FOREACH(const RMF::Vector3 & cc,
+                boost::make_iterator_range(coords.begin() + 1, coords.end())) {
       molfile_graphics_t g;
       g.type = type;
       g.size = size;
       g.style = 0;
       std::copy(last_coords.begin(), last_coords.end(), g.data);
-      last_coords = coords[i];
-      last_coords = tr.get_global_coordinates(last_coords);
+      last_coords = tr.get_global_coordinates(cc);
       std::copy(last_coords.begin(), last_coords.end(), g.data + 3);
       graphics_.push_back(g);
     }
