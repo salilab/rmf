@@ -94,7 +94,11 @@ class Data {
   boost::scoped_array<char> bond_type_name_, restraint_bond_type_name_;
   std::vector<char *> bond_type_names_;
   double resolution_;
-  int states_;
+  enum ShowRestraints {
+    BONDS = 1,
+    RESTRAINTS = 2
+  };
+  int show_restraints_;
   RMF::Vector3 lower_bounds_;
   RMF::Vector3 upper_bounds_;
   double max_radius_;
@@ -111,7 +115,19 @@ class Data {
   void fill_bounds();
   void fill_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr);
   void fill_bonds(RMF::NodeConstHandle cur);
+  int handle_reference_frame(int body, RMF::NodeConstHandle cur);
+  int handle_state(int body, RMF::NodeConstHandle cur);
+  boost::tuple<RMF::NodeConstHandle, boost::array<char, 2>,
+               boost::array<int, 2> >
+      handle_alternative(RMF::NodeConstHandle cur, int body,
+                         boost::array<char, 2> chain, int resid,
+                         boost::array<char, 8> resname,
+                         boost::array<char, 2> altid,
+                         boost::array<char, 8> segment, double resolution);
+  void handle_bond(RMF::NodeConstHandle cur);
+  void handle_restraint(RMF::NodeConstHandle cur);
   double get_resolution();
+  int get_show_restraints();
 
   void copy_basics(const AtomInfo &ai, molfile_atom_t *out);
   molfile_atom_t *copy_particles(const std::vector<AtomInfo> &atoms,
@@ -149,7 +165,7 @@ Data::Data(std::string name, int *num_atoms)
       altf_(file_),
       stf_(file_),
       resolution_(get_resolution()),
-      states_(1),
+      show_restraints_(get_show_restraints()),
       lower_bounds_(std::numeric_limits<float>::max(),
                     std::numeric_limits<float>::max(),
                     std::numeric_limits<float>::max()),
@@ -176,15 +192,14 @@ Data::Data(std::string name, int *num_atoms)
   if (*num_atoms == 0) {
     *num_atoms = MOLFILE_NUMATOMS_NONE;
   }
-  std::cout << "RMF: found " << states_ << " states and " << *num_atoms
-            << " atoms." << std::endl;
+  std::cout << "RMF: found " << *num_atoms << " atoms." << std::endl;
 
   fill_bounds();
 }
 
 double Data::get_resolution() {
-  RMF::Floats resolutions =
-      RMF::decorator::get_resolutions(file_.get_root_node());
+  RMF::Floats resolutions = RMF::decorator::get_resolutions(
+      file_.get_root_node(), RMF::decorator::PARTICLE, .1);
   if (resolutions.size() > 1) {
     std::cout << "RMF: Resolutions are " << RMF::Showable(resolutions)
               << ".\nPlease enter desired resolution (or -1 for all): "
@@ -199,6 +214,34 @@ double Data::get_resolution() {
       return r;
   }
   return 1;
+}
+
+int Data::get_show_restraints() {
+  bool has_restraints = false;
+  RMF_FOREACH(RMF::NodeID n, file_.get_node_ids()) {
+    if (rcf_.get_is(file_.get_node(n))) {
+      has_restraints = true;
+      break;
+    }
+  }
+  if (has_restraints) {
+    std::cout << "RMF: File has restraints. Please choose what to display.\n"
+              << "0 for just bonds, 1 for just restraints or 2 for both:"
+              << std::flush;
+    int r = -1;
+    std::cin >> r;
+    switch (r) {
+      case 0:
+        return BONDS;
+      case 1:
+        return RESTRAINTS;
+      default:
+        return BONDS | RESTRAINTS;
+    }
+  } else {
+    std::cout << "No restraints found in file." << std::endl;
+    return BONDS;
+  }
 }
 
 void Data::fill_bounds() {
@@ -216,6 +259,62 @@ void Data::fill_bounds() {
   }
 }
 
+int Data::handle_reference_frame(int body, RMF::NodeConstHandle cur) {
+  bodies_.push_back(Body());
+  bodies_.back().frames = bodies_[body].frames;
+  bodies_.back().frames.push_back(rff_.get(cur));
+  bodies_.back().state = bodies_[body].state;
+  return bodies_.size() - 1;
+}
+
+int Data::handle_state(int body, RMF::NodeConstHandle cur) {
+  int state_index = stf_.get(cur).get_state_index();
+  // don't create duplicate bodies for 0
+  if (state_index != bodies_[body].state) {
+    if (rff_.get_is(cur)) {
+      bodies_.back().state = state_index;
+      return body;
+    } else {
+      bodies_.push_back(Body());
+      bodies_.back().frames = bodies_[body].frames;
+      bodies_.back().state = state_index;
+      return bodies_.size() - 1;
+    }
+  } else {
+    return body;
+  }
+}
+
+boost::tuple<RMF::NodeConstHandle, boost::array<char, 2>, boost::array<int, 2> >
+Data::handle_alternative(RMF::NodeConstHandle cur, int body,
+                         boost::array<char, 2> chain, int resid,
+                         boost::array<char, 8> resname,
+                         boost::array<char, 2> altid,
+                         boost::array<char, 8> segment, double resolution) {
+  boost::array<int, 2> count = {{0}};
+  if (resolution >= 0) {
+    RMF::NodeConstHandle alt =
+        altf_.get(cur).get_alternative(RMF::decorator::PARTICLE, resolution);
+    return boost::make_tuple(alt, altid, count);
+  } else {
+    RMF::NodeConstHandles alts =
+        altf_.get(cur).get_alternatives(RMF::decorator::PARTICLE);
+    int alt = 1;
+    RMF_FOREACH(RMF::NodeConstHandle c,
+                boost::make_iterator_range(alts.begin() + 1, alts.end())) {
+      altid[0] = 'A' + alt;
+      boost::array<int, 2> cur = fill_bodies(c, body, chain, resid, resname,
+                                             altid, segment, resolution);
+      for (unsigned int i = 0; i < 2; ++i) {
+        count[i] += cur[i];
+      }
+      ++alt;
+    }
+    altid[0] = 'A';
+    return boost::make_tuple(alts.front(), altid, count);
+  }
+}
+
 boost::array<int, 2> Data::fill_bodies(RMF::NodeConstHandle cur, int body,
                                        boost::array<char, 2> chain, int resid,
                                        boost::array<char, 8> resname,
@@ -223,55 +322,19 @@ boost::array<int, 2> Data::fill_bodies(RMF::NodeConstHandle cur, int body,
                                        boost::array<char, 8> segment,
                                        double resolution) {
   boost::array<int, 2> ret = {{0}};
-  if (altf_.get_is(cur)) {
-    if (resolution >= 0) {
-      cur =
-          altf_.get(cur).get_alternative(RMF::decorator::PARTICLE, resolution);
-    } else {
-      RMF::NodeConstHandles alts =
-          altf_.get(cur).get_alternatives(RMF::decorator::PARTICLE);
-      int alt = 1;
-      RMF_FOREACH(RMF::NodeConstHandle c,
-                  boost::make_iterator_range(alts.begin() + 1, alts.end())) {
-        altid[0] = 'A' + alt;
-        boost::array<int, 2> count = fill_bodies(c, body, chain, resid, resname,
-                                                 altid, segment, resolution);
-        for (unsigned int i = 0; i < 2; ++i) {
-          ret[i] += count[i];
-        }
-        ++alt;
-      }
-      altid[0] = 'A';
-      cur = alts.front();
-    }
-  }
+  // must be firest due to ret
+  if (altf_.get_is(cur))
+    boost::tie(cur, altid, ret) = handle_alternative(
+        cur, body, chain, resid, resname, altid, segment, resolution);
+
   if (cur.get_type() == RMF::ALIAS) return ret;
   if (cur.get_type() == RMF::REPRESENTATION && segment[0] == '\0') {
     my_copy_n(cur.get_name(), 8, segment.begin());
   }
 
-  if (rff_.get_is(cur)) {
-    bodies_.push_back(Body());
-    bodies_.back().frames = bodies_[body].frames;
-    bodies_.back().frames.push_back(rff_.get(cur));
-    bodies_.back().state = bodies_[body].state;
-    body = bodies_.size() - 1;
-  }
-  if (stf_.get_is(cur)) {
-    int state_index = stf_.get(cur).get_state_index();
-    // don't create duplicate bodies for 0
-    if (state_index != bodies_[body].state) {
-      if (rff_.get_is(cur)) {
-        bodies_.back().state = state_index;
-      } else {
-        bodies_.push_back(Body());
-        bodies_.back().frames = bodies_[body].frames;
-        bodies_.back().state = state_index;
-        body = bodies_.size() - 1;
-      }
-      states_ = std::max<int>(states_, state_index + 1);
-    }
-  }
+  if (rff_.get_is(cur)) body = handle_reference_frame(body, cur);
+
+  if (stf_.get_is(cur)) body = handle_state(body, cur);
 
   if (chf_.get_is(cur)) {
     my_copy_n(chf_.get(cur).get_chain_id(), 2, chain.begin());
@@ -281,6 +344,7 @@ boost::array<int, 2> Data::fill_bodies(RMF::NodeConstHandle cur, int body,
     resid = rf_.get(cur).get_residue_index();
     my_copy_n(rf_.get(cur).get_residue_type(), 8, resname.begin());
   }
+
   RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
     boost::array<int, 2> count =
         fill_bodies(c, body, chain, resid, resname, altid, segment, resolution);
@@ -348,47 +412,54 @@ void Data::fill_graphics(RMF::NodeConstHandle cur,
   }
 }
 
-void Data::fill_bonds(RMF::NodeConstHandle cur) {
-  if (bdf_.get_is(cur)) {
-    RMF::NodeID bonded0(bdf_.get(cur).get_bonded_0());
-    RMF::NodeID bonded1(bdf_.get(cur).get_bonded_1());
+void Data::handle_bond(RMF::NodeConstHandle cur) {
+  RMF::NodeID bonded0(bdf_.get(cur).get_bonded_0());
+  RMF::NodeID bonded1(bdf_.get(cur).get_bonded_1());
 
-    if (index_.find(bonded0) != index_.end() &&
-        index_.find(bonded1) != index_.end()) {
-      bond_from_.push_back(index_.find(bonded0)->second + 1);
-      bond_to_.push_back(index_.find(bonded1)->second + 1);
-      bond_type_.push_back(0);
-    } else {
-      std::cout << "Skipping bond " << bonded0 << " to " << bonded1
-                << std::endl;
+  if (index_.find(bonded0) != index_.end() &&
+      index_.find(bonded1) != index_.end()) {
+    bond_from_.push_back(index_.find(bonded0)->second + 1);
+    bond_to_.push_back(index_.find(bonded1)->second + 1);
+    bond_type_.push_back(0);
+  } else {
+    std::cout << "Skipping bond " << bonded0 << " to " << bonded1 << std::endl;
+  }
+}
+
+void Data::handle_restraint(RMF::NodeConstHandle cur) {
+  bool child_feature = false;
+  RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
+    if (c.get_type() == RMF::FEATURE) {
+      child_feature = true;
+      break;
     }
   }
-  if (cur.get_type() == RMF::FEATURE) {
-    bool child_feature = false;
-    RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) {
-      if (c.get_type() == RMF::FEATURE) {
-        child_feature = true;
-        break;
-      }
-    }
-    if (!child_feature && rcf_.get_is(cur)) {
-      RMF::NodeConstHandles reps = rcf_.get(cur).get_representation();
-      for (unsigned int i = 0; i < reps.size(); ++i) {
-        RMF::NodeID bonded0(reps[i]);
-        for (unsigned int j = 0; j < i; ++j) {
-          RMF::NodeID bonded1(reps[j]);
-          if (index_.find(bonded0) != index_.end() &&
-              index_.find(bonded1) != index_.end()) {
-            bond_from_.push_back(index_.find(bonded0)->second + 1);
-            bond_to_.push_back(index_.find(bonded1)->second + 1);
-            bond_type_.push_back(1);
-          } else {
-            std::cout << "Skipping feature bond " << bonded0 << " to "
-                      << bonded1 << std::endl;
-          }
+  if (!child_feature && rcf_.get_is(cur)) {
+    RMF::NodeConstHandles reps = rcf_.get(cur).get_representation();
+    for (unsigned int i = 0; i < reps.size(); ++i) {
+      RMF::NodeID bonded0(reps[i]);
+      for (unsigned int j = 0; j < i; ++j) {
+        RMF::NodeID bonded1(reps[j]);
+        if (index_.find(bonded0) != index_.end() &&
+            index_.find(bonded1) != index_.end()) {
+          bond_from_.push_back(index_.find(bonded0)->second + 1);
+          bond_to_.push_back(index_.find(bonded1)->second + 1);
+          bond_type_.push_back(1);
+        } else {
+          std::cout << "Skipping feature bond " << bonded0 << " to " << bonded1
+                    << std::endl;
         }
       }
     }
+  }
+}
+
+void Data::fill_bonds(RMF::NodeConstHandle cur) {
+  if (show_restraints_ & BONDS && bdf_.get_is(cur)) {
+    handle_bond(cur);
+  }
+  if (show_restraints_ & RESTRAINTS && cur.get_type() == RMF::FEATURE) {
+    handle_restraint(cur);
   }
   RMF_FOREACH(RMF::NodeConstHandle c, cur.get_children()) { fill_bonds(c); }
 }
@@ -461,13 +532,9 @@ int Data::read_timestep(molfile_timestep_t *frame) {
   float *coords = frame->coords;
   file_.set_current_frame(RMF::FrameID(curf.get_index()));
   RMF_FOREACH(const Body & body, bodies_) {
-    std::cout << "Handling body with " << body.frames.size() << " frames"
-              << std::endl;
     RMF::CoordinateTransformer tr;
     double offset =
         (upper_bounds_[0] - lower_bounds_[0] + max_radius_ * 3) * body.state;
-    std::cout << "offset is " << offset << " (" << body.state << ")"
-              << std::endl;
     RMF_FOREACH(RMF::decorator::ReferenceFrameConst rf, body.frames) {
       tr = RMF::CoordinateTransformer(tr, rf);
     }
