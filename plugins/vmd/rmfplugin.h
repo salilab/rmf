@@ -384,9 +384,9 @@ void Data::fill_graphics(RMF::NodeConstHandle cur,
   if (rff_.get_is(cur)) {
     tr = RMF::CoordinateTransformer(tr, rff_.get(cur));
   }
-  if (sf_.get_is(cur)) {
+  if (sf_.get_is_static(cur)) {
     RMF::decorator::SegmentConst s = sf_.get(cur);
-    RMF::Vector3s coords = s.get_coordinates_list();
+    RMF::Vector3s coords = s.get_static_coordinates_list();
     RMF_INTERNAL_CHECK(coords.size() > 0, "Empty coordinates");
     int type = MOLFILE_LINE;
     double size = 0;
