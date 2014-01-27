@@ -111,4 +111,4 @@ int Data::read_timestep_metadata(molfile_timestep_metadata_t *data) {
   data->has_velocities = 0;
   return VMDPLUGIN_SUCCESS;
 }
-} // namespace RMF_vmd
+}  // namespace RMF_vmd

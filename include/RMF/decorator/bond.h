@@ -1,13 +1,13 @@
 /**
- *  \file RMF/decorator/bonds.h
+ *  \file RMF/decorator/bond.h
  *  \brief Helper functions for manipulating RMF files.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
-#ifndef RMF_DECORATOR_BONDS_H
-#define RMF_DECORATOR_BONDS_H
+#ifndef RMF_DECORATOR_BOND_H
+#define RMF_DECORATOR_BOND_H
 
 #include <RMF/config.h>
 #include <RMF/infrastructure_macros.h>
@@ -173,7 +173,6 @@ class Bond : public BondConst {
     }
     RMF_DECORATOR_CATCH();
   }
-
 
   void set_bonded_0(NodeConstHandle v) {
     try {

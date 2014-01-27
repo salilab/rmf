@@ -77,7 +77,7 @@ The category name is `feature` and the data stored relates to scoring functions,
 | `score`          | float     |  Some sort or score                              |
 | `representation` | RMF::Ints |  The NodeIDs of the nodes involved in this score |
 
-### Decorators ### {#featuredecorators}
+## Decorators ## {#featuredecorators}
 
 | Name                            |  Node Type              | Attributes                         |
 |--------------------------------:|:-----------------------:|:-----------------------------------|
