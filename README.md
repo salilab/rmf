@@ -5,11 +5,10 @@ storing hierarchical molecular data (such as atomic or coarse grained
 representations of proteins), along with markup, including geometry
 and score data.
 
-Note the the repository has a subrepository so you must use
-`git clone --recursive` when cloning (or call `git submodule init`
-after cloning if you have an older git and do
-`git pull --recurse-submodules` when updating (or
-`git submodule update` after updating if your git is older).
+Note the the repository has a subrepository so you must use the
+provided `setup_git.py` script to initialize the repository after cloning
+or do `git clone --recursive` and be `git submodule update --init`
+whenever you update.
 
 The library uses the [HDF5](http://www.hdf5.org) library or
 [Avro](http://avro.apache.org) library to manage the data on
