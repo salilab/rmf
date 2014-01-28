@@ -21,6 +21,9 @@ radius = Attribute("radius", "Float")
 particle = Decorator(["REPRESENTATION"], "physics",
                      "Particle",
                      [mass, coordinates, radius])
+gparticle = Decorator(["REPRESENTATION"], "physics",
+                      "GaussianParticle",
+                      [mass, Attribute("standard deviations", "Vector3")])
 iparticle = Decorator(["REPRESENTATION"], "physics",
                       "IntermediateParticle",
                       [radius, coordinates])
@@ -45,7 +48,7 @@ diffuser = Decorator(["REPRESENTATION"], "physics",
                      [Attribute("diffusion coefficient", "Float")])
 
 make_header(
-    "physics", [particle, iparticle, pparticle, diffuser,
+    "physics", [particle, iparticle, gparticle, pparticle, diffuser,
                 atom, refframe],
     ["alias"])
 
@@ -62,6 +65,7 @@ colored = Decorator(
     "shape",
     "Colored",
     [Attribute("rgb color", "Vector3")])
+
 geometry_coordinates = Attribute("coordinates list", "Vector3s")
 
 geometry_index = Attribute(

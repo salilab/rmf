@@ -8,11 +8,42 @@
 
 #include "RMF/decorator/alternatives.h"
 #include "RMF/decorator/physics.h"
+#include <numeric>
 
 RMF_ENABLE_WARNINGS
 
 namespace RMF {
 namespace decorator {
+
+namespace {
+double get_resolution_metric(double a, double b) {
+  if (a < b) std::swap(a, b);
+  return a / b - 1;
+}
+
+std::pair<double, double> get_resolution_impl(NodeConstHandle root,
+                                              IntermediateParticleFactory ipcf,
+                                              GaussianParticleFactory gpf) {
+  std::pair<double, double> ret(0.0, 0.0);
+  RMF_FOREACH(NodeConstHandle ch, root.get_children()) {
+    std::pair<double, double> cur = get_resolution_impl(ch, ipcf, gpf);
+    ret.first += cur.first;
+    ret.second += cur.second;
+  }
+  if (ret.second == 0) {
+    if (ipcf.get_is(root)) {
+      ret.first = ipcf.get(root).get_radius();
+      ret.second = 1.0;
+    } else if (gpf.get_is(root)) {
+      Vector3 sdfs = gpf.get(root).get_standard_deviations();
+      ret.first = std::accumulate(sdfs.begin(), sdfs.end(), 0.0) / 3.0;
+      ret.second = 1.0;
+    }
+  }
+  return ret;
+}
+}
+
 AlternativesFactory::AlternativesFactory(FileHandle fh)
     : cat_(fh.get_category("alternatives")),
       types_key_(fh.get_key<IntsTraits>(cat_, "types")),
@@ -23,27 +54,19 @@ AlternativesFactory::AlternativesFactory(FileConstHandle fh)
       types_key_(fh.get_key<IntsTraits>(cat_, "types")),
       roots_key_(fh.get_key<IntsTraits>(cat_, "roots")) {}
 
-namespace {
-double get_resolution_metric(double a, double b) {
-  if (a < b) std::swap(a, b);
-  return a / b - 1;
-}
+NodeID AlternativesConst::get_alternative_impl(RepresentationType type,
+                                               float resolution) const {
+  if (!get_node().get_has_value(types_key_)) return get_node().get_id();
 
-NodeID get_alternative_impl(NodeConstHandle cur, IntsKey types_key,
-                            IntsKey roots_key, RepresentationType type,
-                            float resolution) {
-  RMF_USAGE_CHECK(type == PARTICLE, "Only particle type supported currently");
-  if (!cur.get_has_value(types_key)) return cur.get_id();
-
-  double closest_resolution = get_resolution(cur);
+  double closest_resolution = get_resolution(get_node());
   int closest_index = -1;
-  Nullable<IntsTraits> types = cur.get_value(types_key);
+  Nullable<IntsTraits> types = get_node().get_value(types_key_);
   if (!types.get_is_null()) {
-    Ints roots = cur.get_value(roots_key);
+    Ints roots = get_node().get_value(roots_key_);
     for (unsigned int i = 0; i < types.get().size(); ++i) {
       if (types.get()[i] != type) continue;
       double cur_resolution =
-          get_resolution(cur.get_file().get_node(NodeID(roots[i])));
+          get_resolution(get_node().get_file().get_node(NodeID(roots[i])));
       if (get_resolution_metric(resolution, cur_resolution) <
           get_resolution_metric(resolution, closest_resolution)) {
         closest_index = i;
@@ -52,45 +75,33 @@ NodeID get_alternative_impl(NodeConstHandle cur, IntsKey types_key,
     }
   }
   if (closest_index == -1) {
-    return cur.get_id();
+    return get_node().get_id();
   } else {
-    return NodeID(cur.get_value(roots_key).get()[closest_index]);
+    return NodeID(get_node().get_value(roots_key_).get()[closest_index]);
   }
 }
 
-NodeIDs get_alternatives_impl(NodeConstHandle cur, IntsKey roots_key) {
-  NodeIDs ret(1, cur.get_id());
+NodeIDs AlternativesConst::get_alternatives_impl(RepresentationType type)
+    const {
+  NodeIDs ret;
+  if (type == PARTICLE) ret.push_back(get_node().get_id());
 
-  if (cur.get_has_value(roots_key)) {
-    Ints roots = cur.get_value(roots_key).get();
-    RMF_FOREACH(int i, roots) {
-      RMF_INTERNAL_CHECK(i != 0, "The root can't be an alternative rep");
-      ret.push_back(NodeID(i));
+  if (get_node().get_has_value(roots_key_)) {
+    Ints roots = get_node().get_value(roots_key_).get();
+    Ints types = get_node().get_value(types_key_).get();
+
+    for (unsigned int i = 0; i < roots.size(); ++i) {
+      RMF_INTERNAL_CHECK(roots[i] != 0, "The root can't be an alternative rep");
+      if (RepresentationType(types[i]) == type) ret.push_back(NodeID(roots[i]));
     }
   }
   return ret;
 }
 
-std::pair<double, double> get_resolution_impl(
-    NodeConstHandle root, IntermediateParticleFactory ipcf) {
-  std::pair<double, double> ret(0.0, 0.0);
-  RMF_FOREACH(NodeConstHandle ch, root.get_children()) {
-    std::pair<double, double> cur = get_resolution_impl(ch, ipcf);
-    ret.first += cur.first;
-    ret.second += cur.second;
-  }
-  if (ret.second == 0 && ipcf.get_is(root)) {
-    ret.first = ipcf.get(root).get_radius();
-    ret.second = 1.0;
-  }
-  return ret;
-}
-
-}
-
 double get_resolution(NodeConstHandle root) {
   IntermediateParticleFactory ipcf(root.get_file());
-  std::pair<double, double> total = get_resolution_impl(root, ipcf);
+  GaussianParticleFactory gpf(root.get_file());
+  std::pair<double, double> total = get_resolution_impl(root, ipcf, gpf);
   RMF_USAGE_CHECK(total.first != 0,
                   std::string("No particles were found at ") + root.get_name());
   return total.second / total.first;
@@ -110,32 +121,27 @@ void Alternatives::add_alternative(NodeHandle root, RepresentationType type) {
       .get_shared_data()
       ->access_static_value(get_node().get_id(), roots_key_)
       .push_back(root.get_id().get_index());
-  std::cout << get_node().get_value(types_key_) << " "
-            << get_node().get_value(roots_key_) << std::endl;
 
-  RMF_INTERNAL_CHECK(get_alternatives(type).size() > 1, "None found");
+  RMF_INTERNAL_CHECK(get_alternatives(type).size() >= 1, "None found");
 }
 
 NodeConstHandle AlternativesConst::get_alternative(RepresentationType type,
                                                    double resolution) const {
-  return get_node().get_file().get_node(get_alternative_impl(
-      get_node(), types_key_, roots_key_, type, resolution));
+  return get_node().get_file().get_node(get_alternative_impl(type, resolution));
 }
 
 NodeConstHandles AlternativesConst::get_alternatives(RepresentationType type)
     const {
-  RMF_USAGE_CHECK(type == PARTICLE, "Only particles supported");
   NodeConstHandles ret;
-  RMF_FOREACH(NodeID nid, get_alternatives_impl(get_node(), roots_key_)) {
+  RMF_FOREACH(NodeID nid, get_alternatives_impl(type)) {
     ret.push_back(get_node().get_file().get_node(nid));
   }
   return ret;
 }
 
 RepresentationType AlternativesConst::get_representation_type(NodeID id) const {
-  if (id == get_node().get_id()) {
-    return PARTICLE;
-  }
+  if (id == get_node().get_id()) return PARTICLE;
+
   Ints roots = get_node().get_value(roots_key_);
   for (unsigned int i = 0; i < roots.size(); ++i) {
     if (roots[i] == static_cast<int>(id.get_index())) {

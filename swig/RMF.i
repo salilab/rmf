@@ -127,6 +127,7 @@ RMF_SWIG_VALUE_INSTANCE(RMF, Vector3, Vector<3>, Vector3s);
 RMF_SWIG_VALUE_INSTANCE(RMF, Vector4, Vector<4>, Vector4s);
 RMF_SWIG_VALUE_INSTANCE(RMF, NodeType, RMF::Enum< RMF::NodeTypeTag> , NodeTypes);
 RMF_SWIG_VALUE_INSTANCE(RMF, FrameType, RMF::Enum< RMF::FrameTypeTag >, FrameTypes);
+RMF_SWIG_VALUE_INSTANCE(RMF, RepresentationType, RMF::Enum< RMF::RepresentationTypeTag >, RepresentationTypes);
 RMF_SWIG_NATIVE_VALUES_LIST(RMF, double, Floats, FloatsList);
 RMF_SWIG_NATIVE_VALUES_LIST(RMF, int, Ints, IntsList);
 RMF_SWIG_NATIVE_VALUES_LIST(RMF, std::string, Strings, StringsList);
@@ -250,6 +251,7 @@ RMF_SWIG_FOREACH_TYPE(RMF_SWIG_WRAP_NULLABLE);
 namespace RMF {
   %template(NodeType) Enum<NodeTypeTag>;
   %template(FrameType) Enum<FrameTypeTag>;
+  %template(RepresentationType) Enum<RepresentationTypeTag>;
 }
 %include "RMF/enums.h"
 %include "RMF/NodeConstHandle.h"

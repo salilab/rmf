@@ -39,9 +39,12 @@ int main(int argc, char** argv) {
     RMF::show_info(rh, std::cout);
     RMF::decorator::AlternativesFactory af(rh);
     using RMF::operator<<;
-    std::cout << "resolutions: "
+    std::cout << "resolutions: " << RMF::decorator::get_resolutions(
+                                        rh.get_root_node(), RMF::PARTICLE, 0)
+              << std::endl;
+    std::cout << "gaussian resolutions: "
               << RMF::decorator::get_resolutions(rh.get_root_node(),
-                                                 RMF::decorator::PARTICLE, 0)
+                                                 RMF::GAUSSIAN_PARTICLE, 0)
               << std::endl;
     return 0;
   }

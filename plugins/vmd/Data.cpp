@@ -76,8 +76,8 @@ Data::Data(std::string name, int *num_atoms)
 }
 
 double Data::get_resolution() {
-  RMF::Floats resolutions = RMF::decorator::get_resolutions(
-      file_.get_root_node(), RMF::decorator::PARTICLE, .1);
+  RMF::Floats resolutions =
+      RMF::decorator::get_resolutions(file_.get_root_node(), RMF::PARTICLE, .1);
   if (resolutions.size() > 1) {
     std::cout << "RMF: Resolutions are " << RMF::Showable(resolutions)
               << ".\nPlease enter desired resolution (or -1 for all): "
@@ -104,7 +104,7 @@ int Data::get_show_restraints() {
   }
   if (has_restraints) {
     std::cout << "RMF: File has restraints. Please choose what to display.\n"
-              << "0 for just bonds, 1 for just restraints or 2 for both:"
+              << "0 for just bonds, 1 for just restraints or 2 for both: "
               << std::flush;
     int r = -1;
     std::cin >> r;
@@ -172,11 +172,10 @@ Data::handle_alternative(RMF::NodeConstHandle cur, int body,
   boost::array<int, 2> count = {{0}};
   if (resolution >= 0) {
     RMF::NodeConstHandle alt =
-        altf_.get(cur).get_alternative(RMF::decorator::PARTICLE, resolution);
+        altf_.get(cur).get_alternative(RMF::PARTICLE, resolution);
     return boost::make_tuple(alt, altid, count);
   } else {
-    RMF::NodeConstHandles alts =
-        altf_.get(cur).get_alternatives(RMF::decorator::PARTICLE);
+    RMF::NodeConstHandles alts = altf_.get(cur).get_alternatives(RMF::PARTICLE);
     int alt = 1;
     RMF_FOREACH(RMF::NodeConstHandle c,
                 boost::make_iterator_range(alts.begin() + 1, alts.end())) {

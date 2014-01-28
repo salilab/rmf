@@ -15,6 +15,7 @@
 #include <RMF/FileHandle.h>
 #include <RMF/Decorator.h>
 #include <RMF/constants.h>
+#include <RMF/Enum.h>
 #include <RMF/Vector.h>
 #include <RMF/internal/utility.h>
 #include <RMF/internal/paths.h>
@@ -25,15 +26,6 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 namespace decorator {
 
-/** The different ways of representing a structure. */
-enum RepresentationType {
-  /** Representation via particles, the default. */
-  PARTICLE = 0,
-  /** Representation via arbitrary geometry. */
-  SHAPE = 1,
-  SURFACE = 2,
-};
-
 /** See also Alternatives and AlternativesFactory.
   */
 class RMFEXPORT AlternativesConst : public Decorator {
@@ -43,6 +35,8 @@ class RMFEXPORT AlternativesConst : public Decorator {
   IntsKey roots_key_;
   AlternativesConst(NodeConstHandle nh, IntsKey types_key, IntsKey roots_key)
       : Decorator(nh), types_key_(types_key), roots_key_(roots_key) {}
+  NodeID get_alternative_impl(RepresentationType type, float resolution) const;
+  NodeIDs get_alternatives_impl(RepresentationType type) const;
 
  public:
   /** Get the alternative root that best matches the criteria. */
@@ -96,9 +90,7 @@ class RMFEXPORT AlternativesFactory : public Factory {
   AlternativesConst get(NodeConstHandle nh) const {
     return AlternativesConst(nh, types_key_, roots_key_);
   }
-  bool get_is(NodeConstHandle nh) const {
-    return nh.get_has_value(types_key_);
-  }
+  bool get_is(NodeConstHandle nh) const { return nh.get_has_value(types_key_); }
   bool get_is_static(NodeConstHandle nh) const {
     return nh.get_has_value(types_key_);
   }

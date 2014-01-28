@@ -47,6 +47,7 @@ void do_init() {
       new log4cxx::ConsoleAppender(layout);
   static Configurator config(appender);
   use(config);
+  set_log_level("off");
 }
 
 void init_logger() {

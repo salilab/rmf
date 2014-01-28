@@ -68,6 +68,13 @@ extern RMFEXPORT const FrameType CENTER;
 extern RMFEXPORT const FrameType FRAME_ALIAS;
 //! An alternate state for a frame or model
 extern RMFEXPORT const FrameType ALTERNATE;
+
+/** Representation via particles, the default. */
+extern RMFEXPORT const RepresentationType PARTICLE;
+
+/** A set of GaussianParticle nodes. */
+extern RMFEXPORT const RepresentationType GAUSSIAN_PARTICLE;
+
 } /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

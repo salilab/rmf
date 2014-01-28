@@ -32,6 +32,13 @@ struct RMFEXPORT NodeTypeTag {
 #endif
 };
 
+struct RepresentationTypeTag {
+#ifndef IMP_DOXYGEN
+  static RMF_SMALL_UNORDERED_MAP<std::string, int>& get_from();
+  static RMF_SMALL_UNORDERED_MAP<int, std::string>& get_to();
+#endif
+};
+
 /** A general purpose Enum that has associated names and is type checked in
  * python.*/
 template <class TagT>
@@ -90,10 +97,13 @@ inline std::istream& operator>>(std::istream& in, Enum<Traits>& v) {
 typedef Enum<FrameTypeTag> FrameType;
 /**  The type for frames. */
 typedef Enum<NodeTypeTag> NodeType;
+/**  The type for frames. */
+typedef Enum<RepresentationTypeTag> RepresentationType;
 
 #ifndef RMF_DOXYGEN
 typedef std::vector<FrameType> FrameTypes;
 typedef std::vector<NodeType> NodeTypes;
+typedef std::vector<RepresentationType> RepresentationTypes;
 #endif
 
 } /* namespace RMF */

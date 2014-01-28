@@ -33,6 +33,9 @@ const FrameType CENTER(3, "center");
 const FrameType FRAME_ALIAS(4, "alias");
 const FrameType ALTERNATE(5, "alternate");
 
+const RepresentationType PARTICLE(0, "particle");
+const RepresentationType GAUSSIAN_PARTICLE(1, "gaussian_particle");
+
 } /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

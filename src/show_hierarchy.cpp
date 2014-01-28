@@ -75,18 +75,31 @@ void print_tree(std::ostream& out, RMF::NodeConstHandle start, Show show) {
     queue.pop_back();
     if (altcf.get_is(n)) {
       decorator::AlternativesConst ad = altcf.get(n);
-      NodeConstHandles alts = ad.get_alternatives(decorator::PARTICLE);
-      RMF_INTERNAL_CHECK(alts.front() == n, "The node itself is not in front");
-      std::reverse(alts.begin(), alts.end());
-      alts.pop_back();
-      RMF_FOREACH(NodeConstHandle cur, alts) {
-        std::ostringstream oss;
-        oss << "[" << decorator::get_resolution(cur) << "]";
-        queue.push_back(QI(prefix0, prefix1, oss.str(), cur));
+      {
+        NodeConstHandles alts = ad.get_alternatives(GAUSSIAN_PARTICLE);
+        std::reverse(alts.begin(), alts.end());
+        RMF_FOREACH(NodeConstHandle cur, alts) {
+          RMF_INTERNAL_CHECK(cur != n, "Node can't be a gaussian one");
+          std::ostringstream oss;
+          oss << "[G" << decorator::get_resolution(cur) << "]";
+          queue.push_back(QI(prefix0, prefix1, oss.str(), cur));
+        }
       }
-      std::ostringstream oss;
-      oss << "[" << decorator::get_resolution(n) << "]";
-      node_suffix = oss.str();
+      {
+        NodeConstHandles alts = ad.get_alternatives(PARTICLE);
+        RMF_INTERNAL_CHECK(alts.front() == n,
+                           "The node itself is not in front");
+        std::reverse(alts.begin(), alts.end());
+        RMF_FOREACH(NodeConstHandle cur, alts) {
+          if (cur == n) continue;
+          std::ostringstream oss;
+          oss << "[" << decorator::get_resolution(cur) << "]";
+          queue.push_back(QI(prefix0, prefix1, oss.str(), cur));
+        }
+        std::ostringstream oss;
+        oss << "[" << decorator::get_resolution(n) << "]";
+        node_suffix = oss.str();
+      }
     }
     out << prefix0;
     NodeConstHandles children = n.get_children();
@@ -94,7 +107,7 @@ void print_tree(std::ostream& out, RMF::NodeConstHandle start, Show show) {
       out << " + ";
     else
       out << " - ";
-    show(n, prefix0, node_suffix, out);
+    show(n, prefix1, node_suffix, out);
     out << std::endl;
     for (int i = static_cast<int>(children.size()) - 1; i >= 0; --i) {
       queue.push_back(
@@ -102,7 +115,6 @@ void print_tree(std::ostream& out, RMF::NodeConstHandle start, Show show) {
     }
   } while (!queue.empty());
 }
-
 
 struct LessName {
   FileConstHandle fh_;
@@ -129,8 +141,8 @@ void show_frames_impl(FileConstHandle fh, FrameID root, std::string prefix,
 void simple_show_node(NodeConstHandle n, std::string prefix,
                       std::string node_suffix, std::ostream& out) {
   using std::operator<<;
-  out << prefix << "\"" << n.get_name() << "\"" << node_suffix << " ["
-      << n.get_type() << "]";
+  out << "\"" << n.get_name() << "\"" << node_suffix << " [" << n.get_type()
+      << "]";
 }
 void show_node(NodeConstHandle n, std::string node_suffix, std::ostream& out,
                FloatKeys fks, FloatsKeys fsks, IntKeys iks, IntsKeys isks,
@@ -267,8 +279,6 @@ struct ShowDecorators {
                          copycf, diffusercf, typedcf, prefix + "   ");
   }
 };
-
-
 }
 
 void show_hierarchy(NodeConstHandle root, std::ostream& out) {
@@ -285,7 +295,6 @@ void show_hierarchy_with_decorators(NodeConstHandle root, bool,
                                     std::ostream& out) {
   print_tree(out, root, ShowDecorators(root.get_file()));
 }
-
 
 void show_frames(FileConstHandle fh, std::ostream& out) {
   RMF_FOREACH(FrameID fr, fh.get_root_frames()) {

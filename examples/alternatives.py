@@ -17,6 +17,8 @@ f.add_frame("frame", RMF.FRAME)
 rh = f.get_root_node()
 
 pf = RMF.ParticleFactory(f)
+gpf = RMF.GaussianParticleFactory(f)
+rff = RMF.ReferenceFrameFactory(f)
 
 
 def frange(x, y, jump):
@@ -27,9 +29,9 @@ def frange(x, y, jump):
 
 def create_hierarchy(radius):
     root = f.add_node(str(radius), RMF.REPRESENTATION)
-    for i in frange(0., 16, radius):
-        for j in frange(0., 16, radius):
-            for k in frange(0., 16, radius):
+    for i in frange(0., 8, radius):
+        for j in frange(0., 8, radius):
+            for k in frange(0., 8, radius):
                 center = RMF.Vector3(
                     i + radius / 2,
                     j + radius / 2,
@@ -43,12 +45,39 @@ def create_hierarchy(radius):
                 d.set_static_mass(radius ** 3)
     return root
 
+
+def create_gmm(radius=1.):
+    root = f.add_node("gmm" + str(radius), RMF.REPRESENTATION)
+    for i in frange(0., 8, radius):
+        for j in frange(0., 8, radius):
+            center = RMF.Vector3(
+                i + radius / 2,
+                j + radius / 2,
+                4)
+
+            n = root.add_child(
+                str(i) + "-" + str(j),
+                RMF.REPRESENTATION)
+            d = gpf.get(n)
+            d.set_standard_deviations(
+                RMF.Vector3(radius / 2, radius / 2, 4))
+            d.set_static_mass(radius ** 3)
+            rf = rff.get(n)
+            rf.set_rotation(RMF.Vector4(1, 0, 0, 0))
+            rf.set_translation(center)
+    return root
+
 n = create_hierarchy(4)
 rh.add_child(n)
 
 af = RMF.AlternativesFactory(f)
 da = af.get(n)
-#da.add_alternative(create_hierarchy(1), RMF.PARTICLE)
-#da.add_alternative(create_hierarchy(2), RMF.PARTICLE)
-#da.add_alternative(create_hierarchy(4), RMF.PARTICLE)
-da.add_alternative(create_hierarchy(8), RMF.PARTICLE)
+da.add_alternative(create_hierarchy(1), RMF.PARTICLE)
+da.add_alternative(create_hierarchy(2), RMF.PARTICLE)
+da.add_alternative(create_hierarchy(4), RMF.PARTICLE)
+da.add_alternative(create_gmm(), RMF.GAUSSIAN_PARTICLE)
+
+RMF.show_hierarchy(n)
+
+print "particles", RMF.get_resolutions(n, RMF.PARTICLE)
+print "gaussian particles", RMF.get_resolutions(n, RMF.GAUSSIAN_PARTICLE)
