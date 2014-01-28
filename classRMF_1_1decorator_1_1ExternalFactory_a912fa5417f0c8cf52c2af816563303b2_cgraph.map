@@ -1,0 +1,4 @@
+<map id="RMF::decorator::ExternalFactory::get_is" name="RMF::decorator::ExternalFactory::get_is">
+<area shape="rect" id="node2" href="$classRMF_1_1NodeConstHandle.html#a21e664736cab122b6151b95ef3f39dfc" title="get the type of this node " alt="" coords="225,5,391,49"/>
+<area shape="rect" id="node3" href="$classRMF_1_1NodeConstHandle.html#a6c5fe436d4565f3604d08362cd3951b0" title="get the value of the attribute k from this node or null if it \ * doesn&#39;t have a value. \ " alt="" coords="225,73,391,117"/>
+</map>

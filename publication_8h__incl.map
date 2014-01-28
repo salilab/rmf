@@ -1,0 +1,18 @@
+<map id="publication.h" name="publication.h">
+<area shape="rect" id="node2" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="2007,595,2107,623"/>
+<area shape="rect" id="node4" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="1453,502,1584,546"/>
+<area shape="rect" id="node13" href="$NodeHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="916,177,1055,205"/>
+<area shape="rect" id="node20" href="$constants_8h.html" title="Various utilities for rmfing. " alt="" coords="2123,347,2244,375"/>
+<area shape="rect" id="node25" href="$FileHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="701,83,829,111"/>
+<area shape="rect" id="node27" href="$Decorator_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="3048,83,3171,111"/>
+<area shape="rect" id="node46" href="$Vector_8h.html" title="Represent coordinates. " alt="" coords="1900,425,1969,453"/>
+<area shape="rect" id="node3" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="1311,673,1477,701"/>
+<area shape="rect" id="node15" href="$ID_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1729,425,1775,453"/>
+<area shape="rect" id="node16" href="$exceptions_8h.html" title="Various general useful macros for IMP. " alt="" coords="1312,510,1408,538"/>
+<area shape="rect" id="node17" href="$NodeConstHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1333,270,1475,298"/>
+<area shape="rect" id="node18" href="$Nullable_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1455,425,1568,453"/>
+<area shape="rect" id="node21" href="$enums_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="535,347,640,375"/>
+<area shape="rect" id="node23" href="$types_8h.html" title="RMF/types.h" alt="" coords="2269,347,2365,375"/>
+<area shape="rect" id="node22" href="$keys_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1904,347,1996,375"/>
+<area shape="rect" id="node26" href="$FileConstHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="597,177,728,205"/>
+</map>

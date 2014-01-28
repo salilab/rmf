@@ -1,0 +1,195 @@
+ + "root" [root]
+   + "/Users/drussel/src/imp/imp/modules/rmf/dependency/RMF_source/examples/simple.pdb: " [representation]
+     + "A" [representation]
+         chain id (sequence): "A"(s)
+       + "0" [representation]
+           residue index (sequence): 0(s)
+           residue type (sequence): "MET"(s)
+         - "N" [representation]
+             mass (physics): 14.0067(s)
+             radius (physics): 1.85(s)
+             element (physics): 7(s)
+             coordinates: [24.277, 8.374, -9.854]
+         - "CA" [representation]
+             mass (physics): 12.0107(s)
+             radius (physics): 2.275(s)
+             element (physics): 6(s)
+             coordinates: [24.404, 9.859, -9.939]
+         - "C" [representation]
+             mass (physics): 12.0107(s)
+             radius (physics): 2(s)
+             element (physics): 6(s)
+             coordinates: [25.814, 10.249, -10.359]
+         - "O" [representation]
+             mass (physics): 15.9994(s)
+             radius (physics): 1.7(s)
+             element (physics): 8(s)
+             coordinates: [26.748, 9.469, -10.197]
+         - "CB" [representation]
+             mass (physics): 12.0107(s)
+             radius (physics): 2.175(s)
+             element (physics): 6(s)
+             coordinates: [24.07, 10.495, -8.596]
+         - "CG" [representation]
+             mass (physics): 12.0107(s)
+             radius (physics): 2.175(s)
+             element (physics): 6(s)
+             coordinates: [24.88, 9.939, -7.442]
+         - "SD" [representation]
+             mass (physics): 32.065(s)
+             radius (physics): 2(s)
+             element (physics): 16(s)
+             coordinates: [24.262, 10.555, -5.873]
+         - "CE" [representation]
+             mass (physics): 12.0107(s)
+             radius (physics): 2.06(s)
+             element (physics): 6(s)
+             coordinates: [24.822, 12.266, -5.967]
+       + "1" [representation]
+           residue index (sequence): 1(s)
+           residue type (sequence): "VAL"(s)
+         - "N" [representation]
+             mass (physics): 14.0067(s)
+             radius (physics): 1.85(s)
+             element (physics): 7(s)
+             coordinates: [25.964, 11.453, -10.903]
+         - "CA" [representation]
+             mass (physics): 12.0107(s)
+             radius (physics): 2.275(s)
+             element (physics): 6(s)
+             coordinates: [27.263, 11.924, -11.359]
+         - "C" [representation]
+             mass (physics): 12.0107(s)
+             radius (physics): 2(s)
+             element (physics): 6(s)
+             coordinates: [27.392, 13.428, -11.115]
+         - "O" [representation]
+             mass (physics): 15.9994(s)
+             radius (physics): 1.7(s)
+             element (physics): 8(s)
+             coordinates: [26.443, 14.184, -11.327]
+         - "CB" [representation]
+             mass (physics): 12.0107(s)
+             radius (physics): 2.275(s)
+             element (physics): 6(s)
+             coordinates: [27.455, 11.631, -12.878]
+         - "CG1" [representation]
+             mass (physics): 12.0107(s)
+             radius (physics): 2.06(s)
+             element (physics): 6(s)
+             coordinates: [28.756, 12.209, -13.382]
+         - "CG2" [representation]
+             mass (physics): 12.0107(s)
+             radius (physics): 2.06(s)
+             element (physics): 6(s)
+             coordinates: [27.432, 10.131, -13.14]
+       + "2" [representation]
+           residue index (sequence): 2(s)
+           residue type (sequence): "LEU"(s)
+         - "N" [representation]
+             mass (physics): 14.0067(s)
+             radius (physics): 1.85(s)
+             element (physics): 7(s)
+             coordinates: [28.555, 13.855, -10.636]
+         - "CA" [representation]
+             mass (physics): 12.0107(s)
+             radius (physics): 2.275(s)
+             element (physics): 6(s)
+             coordinates: [28.797, 15.269, -10.39]
+         - "C" [representation]
+             mass (physics): 12.0107(s)
+             radius (physics): 2(s)
+             element (physics): 6(s)
+             coordinates: [29.492, 15.903, -11.585]
+         - "O" [representation]
+             mass (physics): 15.9994(s)
+             radius (physics): 1.7(s)
+             element (physics): 8(s)
+             coordinates: [30.25, 15.24, -12.306]
+         - "CB" [representation]
+             mass (physics): 12.0107(s)
+             radius (physics): 2.175(s)
+             element (physics): 6(s)
+             coordinates: [29.688, 15.47, -9.152]
+         - "CG" [representation]
+             mass (physics): 12.0107(s)
+             radius (physics): 2.275(s)
+             element (physics): 6(s)
+             coordinates: [29.084, 15.416, -7.751]
+         - "CD1" [representation]
+             mass (physics): 12.0107(s)
+             radius (physics): 2.06(s)
+             element (physics): 6(s)
+             coordinates: [28.73, 13.988, -7.39]
+         - "CD2" [representation]
+             mass (physics): 12.0107(s)
+             radius (physics): 2.06(s)
+             element (physics): 6(s)
+             coordinates: [30.085, 16.008, -6.776]
+     + "bonds" [organizational]
+       - "bond" [bond]
+           bonded 0 (physics): 4(s)
+           bonded 1 (physics): 5(s)
+       - "bond" [bond]
+           bonded 0 (physics): 7(s)
+           bonded 1 (physics): 6(s)
+       - "bond" [bond]
+           bonded 0 (physics): 6(s)
+           bonded 1 (physics): 5(s)
+       - "bond" [bond]
+           bonded 0 (physics): 6(s)
+           bonded 1 (physics): 13(s)
+       - "bond" [bond]
+           bonded 0 (physics): 8(s)
+           bonded 1 (physics): 5(s)
+       - "bond" [bond]
+           bonded 0 (physics): 9(s)
+           bonded 1 (physics): 8(s)
+       - "bond" [bond]
+           bonded 0 (physics): 10(s)
+           bonded 1 (physics): 9(s)
+       - "bond" [bond]
+           bonded 0 (physics): 11(s)
+           bonded 1 (physics): 10(s)
+       - "bond" [bond]
+           bonded 0 (physics): 13(s)
+           bonded 1 (physics): 14(s)
+       - "bond" [bond]
+           bonded 0 (physics): 15(s)
+           bonded 1 (physics): 14(s)
+       - "bond" [bond]
+           bonded 0 (physics): 15(s)
+           bonded 1 (physics): 21(s)
+       - "bond" [bond]
+           bonded 0 (physics): 16(s)
+           bonded 1 (physics): 15(s)
+       - "bond" [bond]
+           bonded 0 (physics): 17(s)
+           bonded 1 (physics): 14(s)
+       - "bond" [bond]
+           bonded 0 (physics): 19(s)
+           bonded 1 (physics): 17(s)
+       - "bond" [bond]
+           bonded 0 (physics): 18(s)
+           bonded 1 (physics): 17(s)
+       - "bond" [bond]
+           bonded 0 (physics): 21(s)
+           bonded 1 (physics): 22(s)
+       - "bond" [bond]
+           bonded 0 (physics): 24(s)
+           bonded 1 (physics): 23(s)
+       - "bond" [bond]
+           bonded 0 (physics): 23(s)
+           bonded 1 (physics): 22(s)
+       - "bond" [bond]
+           bonded 0 (physics): 25(s)
+           bonded 1 (physics): 22(s)
+       - "bond" [bond]
+           bonded 0 (physics): 26(s)
+           bonded 1 (physics): 25(s)
+       - "bond" [bond]
+           bonded 0 (physics): 27(s)
+           bonded 1 (physics): 26(s)
+       - "bond" [bond]
+           bonded 0 (physics): 28(s)
+           bonded 1 (physics): 26(s)
