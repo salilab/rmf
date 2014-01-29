@@ -23,7 +23,7 @@ particle = Decorator(["REPRESENTATION"], "physics",
                      [mass, coordinates, radius])
 gparticle = Decorator(["REPRESENTATION"], "physics",
                       "GaussianParticle",
-                      [mass, Attribute("variances", "Vector3")])
+                      [Attribute("variances", "Vector3"), mass])
 iparticle = Decorator(["REPRESENTATION"], "physics",
                       "IntermediateParticle",
                       [radius, coordinates])
