@@ -17,6 +17,13 @@
 RMF_ENABLE_WARNINGS
 
 namespace RMF {
+/** \name Node Types
+    \anchor nodetypes
+
+    The types nodes can take in an RMF file.
+    @{
+*/
+
 extern RMFEXPORT const NodeType INVALID_NODE_TYPE;
 //! The root node
 extern RMFEXPORT const NodeType ROOT;
@@ -27,9 +34,9 @@ extern RMFEXPORT const NodeType REPRESENTATION;
 extern RMFEXPORT const NodeType GEOMETRY;
 //! Store information about some feature of the system
 /** For example, the particles involved in scoring
-    functions and their score can be encoded as feature
-    nodes.
- */
+  functions and their score can be encoded as feature
+  nodes.
+*/
 extern RMFEXPORT const NodeType FEATURE;
 /** Store a reference to another node. This node should
     be an alias decorator node and have no other data,
@@ -54,7 +61,14 @@ extern RMFEXPORT const NodeType ORGANIZATIONAL;
 //! An internal link to another node
 extern RMFEXPORT const NodeType LINK;
 #endif
+/**@} */
 
+/** \name Frame Types
+    \anchor frametypes
+
+    The types frames can take in an RMF file.
+    @{
+*/
 extern RMFEXPORT const FrameType INVALID_FRAME_TYPE;
 //! The root frame
 extern RMFEXPORT const FrameType STATIC;
@@ -68,12 +82,21 @@ extern RMFEXPORT const FrameType CENTER;
 extern RMFEXPORT const FrameType FRAME_ALIAS;
 //! An alternate state for a frame or model
 extern RMFEXPORT const FrameType ALTERNATE;
+/** @} */
 
-/** Representation via particles, the default. */
+/** \name Representation Types
+    \anchor representationtypes
+
+    The types that representations used in the decorator::Alternatives decorator
+    can take.
+    @{
+*/
+/** Representation via decorator::Particle nodes, the default. */
 extern RMFEXPORT const RepresentationType PARTICLE;
 
-/** A set of GaussianParticle nodes. */
+/** Represent the structure with at set of decorator::GaussianParticle nodes. */
 extern RMFEXPORT const RepresentationType GAUSSIAN_PARTICLE;
+/** @} */
 
 } /* namespace RMF */
 

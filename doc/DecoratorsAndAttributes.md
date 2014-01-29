@@ -116,14 +116,15 @@ subhierarchy. For example, there can be representations at multiple resolutions 
 a surface instead of particles. Since, in general, one wants to interact with one
 representation at a time, the alternative ones are hidden away until explicitly requested.
 
+Each alternative should be viewed as an alternative version of the tree rooted at the
+alternative node.
+
 ## Attributes ## {#alternativesattributes}
 
 | Name             | Type      | Description                                      |
 |-----------------:|----------:|:-------------------------------------------------|
-| `resolution`     | float    |  The resolution of the default representation    |
 | `types`          | RMF::Ints |  The RMF::decorator::RepresentationType entries for the alternative representations. |
 | `roots`          | RMF::Ints |  The RMF::NodeID for each alternative hierarchy root. |
-| `resolutions`    | RMF::Floats |  The resolutions of the alternative representations. |
 
 
 ## Decorators ## {#alternativesdecorators}
