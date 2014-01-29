@@ -100,6 +100,7 @@ add_subdirectory(src)
 add_subdirectory(bin)
 
 add_subdirectory(plugins/vmd/)
+add_subdirectory(plugins/pymol/)
 
 # swig support is a little broken
 
