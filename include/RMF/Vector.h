@@ -12,6 +12,8 @@
 #include "RMF/config.h"
 #include "infrastructure_macros.h"
 #include "exceptions.h"
+#include <boost/range/begin.hpp>
+#include <boost/range/end.hpp>
 #include <algorithm>
 
 RMF_ENABLE_WARNINGS
@@ -26,15 +28,11 @@ class Vector {
 
  public:
   Vector() {}
-  template <class It>
-  Vector(It b, It e) {
-    std::copy(b, e, data_);
-  }
   template <class Range>
   explicit Vector(Range r) {
-    RMF_USAGE_CHECK(std::distance(r.begin(), r.end()) == D,
+    RMF_USAGE_CHECK(std::distance(boost::begin(r), boost::end(r)) == D,
                     "sizes don't match");
-    std::copy(r.begin(), r.end(), data_);
+    std::copy(boost::begin(r), boost::end(r), data_);
   }
   Vector(const std::vector<float>& input) {
     RMF_USAGE_CHECK(input.size() == D, "sizes don't match");
