@@ -7,7 +7,7 @@
  */
 
 #include "Data.h"
-#include <boost/range/iterator_range_core.hpp>
+#include <boost/range/iterator_range.hpp>
 
 namespace RMF_vmd {
 
