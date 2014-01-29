@@ -95,9 +95,9 @@ inline std::istream& operator>>(std::istream& in, Enum<Traits>& v) {
 
 /**  The type for frames. */
 typedef Enum<FrameTypeTag> FrameType;
-/**  The type for frames. */
+/**  The type for nodes. */
 typedef Enum<NodeTypeTag> NodeType;
-/**  The type for frames. */
+/**  The type for representations used in decoratort::Alternative. */
 typedef Enum<RepresentationTypeTag> RepresentationType;
 
 #ifndef RMF_DOXYGEN
