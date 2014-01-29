@@ -280,19 +280,16 @@ Decorators</h2>
 <h1><a class="anchor" id="alternatives"></a>
 Alternatives</h1>
 <p>The alternatives family is used to store alternative representation schemes for a given subhierarchy. For example, there can be representations at multiple resolutions or using a surface instead of particles. Since, in general, one wants to interact with one representation at a time, the alternative ones are hidden away until explicitly requested.</p>
+<p>Each alternative should be viewed as an alternative version of the tree rooted at the alternative node.</p>
 <h2><a class="anchor" id="alternativesattributes"></a>
 Attributes</h2>
 <table class="doxtable">
 <tr>
 <th align="right">Name </th><th align="right">Type </th><th align="left">Description  </th></tr>
 <tr>
-<td align="right"><code>resolution</code> </td><td align="right">float </td><td align="left">The resolution of the default representation </td></tr>
-<tr>
 <td align="right"><code>types</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a6c938fb137bdddb4f61c5711206300d5">RMF::Ints</a> </td><td align="left">The RMF::decorator::RepresentationType entries for the alternative representations. </td></tr>
 <tr>
 <td align="right"><code>roots</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a6c938fb137bdddb4f61c5711206300d5">RMF::Ints</a> </td><td align="left">The <a class="el" href="namespaceRMF.html#a6a47f5e7d9ef4573ff2ee2df65aab051">RMF::NodeID</a> for each alternative hierarchy root. </td></tr>
-<tr>
-<td align="right"><code>resolutions</code> </td><td align="right"><a class="el" href="namespaceRMF.html#affffd1547fb5b085b9b5875cafe5771a">RMF::Floats</a> </td><td align="left">The resolutions of the alternative representations. </td></tr>
 </table>
 <h2><a class="anchor" id="alternativesdecorators"></a>
 Decorators</h2>

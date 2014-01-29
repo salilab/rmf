@@ -3,7 +3,6 @@ var classRMF_1_1Vector =
     [ "const_iterator", "classRMF_1_1Vector.html#a5eac6ca1030f18f2c30ea547b7846994", null ],
     [ "iterator", "classRMF_1_1Vector.html#a9873891ecdd6166c1cffa50684f02da6", null ],
     [ "Vector", "classRMF_1_1Vector.html#a779017dbeee8296bc13d72ef42c62f86", null ],
-    [ "Vector", "classRMF_1_1Vector.html#af81aba73f1a8fda2abd264b142a080a3", null ],
     [ "Vector", "classRMF_1_1Vector.html#a7853f3efaf9a902fbb3634002c07732e", null ],
     [ "Vector", "classRMF_1_1Vector.html#a87d0baa85a335f3a146a2e61a4e3a1c5", null ],
     [ "Vector", "classRMF_1_1Vector.html#a3a047c5526b89e01d13d853a80c69639", null ],

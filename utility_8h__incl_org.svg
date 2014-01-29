@@ -602,7 +602,7 @@
 <!-- Node33 -->
 <g id="node33" class="node"><title>Node33</title>
 <g id="a_node33"><a xlink:href="Vector_8h.html" target="_top" xlink:title="Represent coordinates. ">
-<polygon fill="none" stroke="black" points="990.364,-187 990.364,-207 1042.51,-207 1042.51,-187 990.364,-187"/>
+<polygon fill="none" stroke="red" points="990.364,-187 990.364,-207 1042.51,-207 1042.51,-187 990.364,-187"/>
 <text text-anchor="middle" x="1016.44" y="-193" font-family="Helvetica,sans-Serif" font-size="10.00">Vector.h</text>
 </a>
 </g>

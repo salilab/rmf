@@ -1,6 +1,5 @@
 var NAVTREEINDEX3 =
 {
-"classRMF_1_1decorator_1_1ChainFactory.html#a20c8ea9a00651cc6569df23ade09166e":[9,0,0,0,17,4],
 "classRMF_1_1decorator_1_1ChainFactory.html#a830bcbee721d2deef3af7d2b76055d58":[9,0,0,0,17,2],
 "classRMF_1_1decorator_1_1ChainFactory.html#aa22b2316967eadf2bfd8af28caff481e":[9,0,0,0,17,3],
 "classRMF_1_1decorator_1_1ChainFactory.html#aa81524780781c96485ec7da6b5b6da9a":[9,0,0,0,17,1],
@@ -249,5 +248,6 @@ var NAVTREEINDEX3 =
 "classRMF_1_1decorator_1_1JournalArticle.html#ac4f5924ed3cc06f8582b76aa9aa9113b":[9,0,0,0,48,13],
 "classRMF_1_1decorator_1_1JournalArticle.html#ae9911119862d6fa8df4498546b349da2":[9,0,0,0,48,2],
 "classRMF_1_1decorator_1_1JournalArticle.html#af4e2c68fbb5a6f36712a4a6e48a25919":[9,0,0,0,48,11],
-"classRMF_1_1decorator_1_1JournalArticleConst.html":[9,0,0,0,49]
+"classRMF_1_1decorator_1_1JournalArticleConst.html":[9,0,0,0,49],
+"classRMF_1_1decorator_1_1JournalArticleConst.html#a086655b99632af8b33900c57dd014b0d":[9,0,0,0,49,0]
 };

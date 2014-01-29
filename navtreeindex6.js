@@ -1,6 +1,5 @@
 var NAVTREEINDEX6 =
 {
-"signature_8h_source.html":[10,0,70],
 "structRMF_1_1HDF5_1_1DataSetCreationPropertiesD.html":[9,0,0,1,5],
 "structRMF_1_1HDF5_1_1DataSetCreationPropertiesD.html#a40c51f46209b50b9b0f593bc3bfc7824":[9,0,0,1,5,1],
 "structRMF_1_1HDF5_1_1DataSetCreationPropertiesD.html#a493ff7d30f0358e4252b14836c8e996f":[9,0,0,1,5,0],

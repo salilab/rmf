@@ -1,6 +1,5 @@
 var NAVTREEINDEX4 =
 {
-"classRMF_1_1decorator_1_1JournalArticleConst.html#a086655b99632af8b33900c57dd014b0d":[9,0,0,0,49,0],
 "classRMF_1_1decorator_1_1JournalArticleConst.html#a11beff984e2097beda304745c1265abd":[9,0,0,0,49,15],
 "classRMF_1_1decorator_1_1JournalArticleConst.html#a14ea3860bf5f21d97f550ee82a0c7038":[9,0,0,0,49,14],
 "classRMF_1_1decorator_1_1JournalArticleConst.html#a29c8acf148024c6cf4e98ae1cd3156f5":[9,0,0,0,49,8],
@@ -249,5 +248,6 @@ var NAVTREEINDEX4 =
 "classRMF_1_1decorator_1_1TypedFactory.html#acec65ff0d49bdab13499e8dafc2be09e":[9,0,0,0,77,0],
 "classes.html":[9,1],
 "compiler__macros_8h.html":[10,0,13],
-"compiler__macros_8h.html#a0e2bbe7355e88ca1248001aeb239388c":[10,0,13,3]
+"compiler__macros_8h.html#a0e2bbe7355e88ca1248001aeb239388c":[10,0,13,3],
+"compiler__macros_8h.html#a11790b96fa77fe2d1a448345e84e38cf":[10,0,13,10]
 };

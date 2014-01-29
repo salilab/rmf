@@ -1,7 +1,7 @@
 <map id="CoordinateTransformer.h" name="CoordinateTransformer.h">
-<area shape="rect" id="node3" href="$Vector_8h.html" title="Represent coordinates. " alt="" coords="1345,99,1447,127"/>
-<area shape="rect" id="node4" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="1524,270,1624,298"/>
-<area shape="rect" id="node5" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="1334,347,1500,375"/>
-<area shape="rect" id="node6" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="526,193,687,221"/>
-<area shape="rect" id="node14" href="$exceptions_8h.html" title="Various general useful macros for IMP. " alt="" coords="1213,193,1309,221"/>
+<area shape="rect" id="node3" href="$Vector_8h.html" title="Represent coordinates. " alt="" coords="1110,99,1212,127"/>
+<area shape="rect" id="node4" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="1575,270,1675,298"/>
+<area shape="rect" id="node5" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="819,347,985,375"/>
+<area shape="rect" id="node6" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="598,193,759,221"/>
+<area shape="rect" id="node14" href="$exceptions_8h.html" title="Various general useful macros for IMP. " alt="" coords="1028,193,1124,221"/>
 </map>
