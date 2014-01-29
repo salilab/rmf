@@ -2057,9 +2057,9 @@
                   <Anchor>a5ee6c616abd9bf72ab2cc79c2a8b65c2</Anchor>
                  </Node>
                  <Node>
-                  <Name>set_frame_standard_deviations</Name>
+                  <Name>set_frame_variances</Name>
                   <Path>classRMF_1_1decorator_1_1GaussianParticle.html</Path>
-                  <Anchor>a89be8b3cac0268ee9889ff1de02a182b</Anchor>
+                  <Anchor>a0e79f7398c9945a4603420be69cf6b75</Anchor>
                  </Node>
                  <Node>
                   <Name>set_mass</Name>
@@ -2067,19 +2067,19 @@
                   <Anchor>adbfa86c84dbb9dcca56027d3aaf0b64b</Anchor>
                  </Node>
                  <Node>
-                  <Name>set_standard_deviations</Name>
-                  <Path>classRMF_1_1decorator_1_1GaussianParticle.html</Path>
-                  <Anchor>a0ef5ca2939f0982931a97f9ab449d6b1</Anchor>
-                 </Node>
-                 <Node>
                   <Name>set_static_mass</Name>
                   <Path>classRMF_1_1decorator_1_1GaussianParticle.html</Path>
                   <Anchor>a5e28abbecc593694da96e0dbe129c5b8</Anchor>
                  </Node>
                  <Node>
-                  <Name>set_static_standard_deviations</Name>
+                  <Name>set_static_variances</Name>
                   <Path>classRMF_1_1decorator_1_1GaussianParticle.html</Path>
-                  <Anchor>ada06a24ab48a1fbc014b210b976fa60b</Anchor>
+                  <Anchor>ac154a472724d55c86761cf0afd015d9a</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>set_variances</Name>
+                  <Path>classRMF_1_1decorator_1_1GaussianParticle.html</Path>
+                  <Anchor>a0c50f0af70d33f2c66f5b53dc06de949</Anchor>
                  </Node>
                  <Node>
                   <Name>GaussianParticleFactory</Name>
@@ -2103,9 +2103,9 @@
                   <Anchor>aa3b58587aba4565a217b00e21dd4e71f</Anchor>
                  </Node>
                  <Node>
-                  <Name>get_frame_standard_deviations</Name>
+                  <Name>get_frame_variances</Name>
                   <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
-                  <Anchor>a275fdefa388b8271d812fc560a95a1fb</Anchor>
+                  <Anchor>adb8002a90978c986fa1ffd836c1daee2</Anchor>
                  </Node>
                  <Node>
                   <Name>get_mass</Name>
@@ -2113,19 +2113,19 @@
                   <Anchor>a327d9980675aae4da171d7f68e58ee67</Anchor>
                  </Node>
                  <Node>
-                  <Name>get_standard_deviations</Name>
-                  <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
-                  <Anchor>afd14094aa2465a6c150be7c3f7a3a0e4</Anchor>
-                 </Node>
-                 <Node>
                   <Name>get_static_mass</Name>
                   <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
                   <Anchor>a4790941d9fcba0fa8dcc15de4901bddf</Anchor>
                  </Node>
                  <Node>
-                  <Name>get_static_standard_deviations</Name>
+                  <Name>get_static_variances</Name>
                   <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
-                  <Anchor>a6cd1c7db2265867af16bb43151b631f4</Anchor>
+                  <Anchor>aa9763f97edb067fc9f1ad4170a70aaba</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>get_variances</Name>
+                  <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
+                  <Anchor>a6e24d92b88d1bd2be4479b3ed30ad117</Anchor>
                  </Node>
                  <Node>
                   <Name>GaussianParticle</Name>
@@ -10782,9 +10782,9 @@
                 <Anchor>a5ee6c616abd9bf72ab2cc79c2a8b65c2</Anchor>
                </Node>
                <Node>
-                <Name>set_frame_standard_deviations</Name>
+                <Name>set_frame_variances</Name>
                 <Path>classRMF_1_1decorator_1_1GaussianParticle.html</Path>
-                <Anchor>a89be8b3cac0268ee9889ff1de02a182b</Anchor>
+                <Anchor>a0e79f7398c9945a4603420be69cf6b75</Anchor>
                </Node>
                <Node>
                 <Name>set_mass</Name>
@@ -10792,19 +10792,19 @@
                 <Anchor>adbfa86c84dbb9dcca56027d3aaf0b64b</Anchor>
                </Node>
                <Node>
-                <Name>set_standard_deviations</Name>
-                <Path>classRMF_1_1decorator_1_1GaussianParticle.html</Path>
-                <Anchor>a0ef5ca2939f0982931a97f9ab449d6b1</Anchor>
-               </Node>
-               <Node>
                 <Name>set_static_mass</Name>
                 <Path>classRMF_1_1decorator_1_1GaussianParticle.html</Path>
                 <Anchor>a5e28abbecc593694da96e0dbe129c5b8</Anchor>
                </Node>
                <Node>
-                <Name>set_static_standard_deviations</Name>
+                <Name>set_static_variances</Name>
                 <Path>classRMF_1_1decorator_1_1GaussianParticle.html</Path>
-                <Anchor>ada06a24ab48a1fbc014b210b976fa60b</Anchor>
+                <Anchor>ac154a472724d55c86761cf0afd015d9a</Anchor>
+               </Node>
+               <Node>
+                <Name>set_variances</Name>
+                <Path>classRMF_1_1decorator_1_1GaussianParticle.html</Path>
+                <Anchor>a0c50f0af70d33f2c66f5b53dc06de949</Anchor>
                </Node>
                <Node>
                 <Name>GaussianParticleFactory</Name>
@@ -10828,9 +10828,9 @@
                 <Anchor>aa3b58587aba4565a217b00e21dd4e71f</Anchor>
                </Node>
                <Node>
-                <Name>get_frame_standard_deviations</Name>
+                <Name>get_frame_variances</Name>
                 <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
-                <Anchor>a275fdefa388b8271d812fc560a95a1fb</Anchor>
+                <Anchor>adb8002a90978c986fa1ffd836c1daee2</Anchor>
                </Node>
                <Node>
                 <Name>get_mass</Name>
@@ -10838,19 +10838,19 @@
                 <Anchor>a327d9980675aae4da171d7f68e58ee67</Anchor>
                </Node>
                <Node>
-                <Name>get_standard_deviations</Name>
-                <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
-                <Anchor>afd14094aa2465a6c150be7c3f7a3a0e4</Anchor>
-               </Node>
-               <Node>
                 <Name>get_static_mass</Name>
                 <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
                 <Anchor>a4790941d9fcba0fa8dcc15de4901bddf</Anchor>
                </Node>
                <Node>
-                <Name>get_static_standard_deviations</Name>
+                <Name>get_static_variances</Name>
                 <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
-                <Anchor>a6cd1c7db2265867af16bb43151b631f4</Anchor>
+                <Anchor>aa9763f97edb067fc9f1ad4170a70aaba</Anchor>
+               </Node>
+               <Node>
+                <Name>get_variances</Name>
+                <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
+                <Anchor>a6e24d92b88d1bd2be4479b3ed30ad117</Anchor>
                </Node>
                <Node>
                 <Name>GaussianParticle</Name>
