@@ -32,7 +32,7 @@ struct RMFEXPORT NodeTypeTag {
 #endif
 };
 
-struct RepresentationTypeTag {
+struct RMFEXPORT RepresentationTypeTag {
 #ifndef IMP_DOXYGEN
   static RMF_SMALL_UNORDERED_MAP<std::string, int>& get_from();
   static RMF_SMALL_UNORDERED_MAP<int, std::string>& get_to();
