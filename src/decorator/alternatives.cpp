@@ -35,7 +35,7 @@ std::pair<double, double> get_resolution_impl(NodeConstHandle root,
       ret.first = ipcf.get(root).get_radius();
       ret.second = 1.0;
     } else if (gpf.get_is(root)) {
-      Vector3 sdfs = gpf.get(root).get_standard_deviations();
+      Vector3 sdfs = gpf.get(root).get_variances();
       ret.first = std::accumulate(sdfs.begin(), sdfs.end(), 0.0) / 3.0;
       ret.second = 1.0;
     }

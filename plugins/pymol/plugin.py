@@ -67,7 +67,8 @@ def _create_atoms(n, model, data):
     if data.bond_factory.get_is(n):
         bd = data.bond_factory.get(n)
         b = chempy.Bond()
-        b.index = [data.index[bd.get_bonded_0()], data.index[bd.get_bonded_1()]]
+        b.index = [
+            data.index[bd.get_bonded_0()], data.index[bd.get_bonded_1()]]
         model.add_bond(b)
     if not child and data.particle_factory.get_is(n):
         pd = data.particle_factory.get(n)

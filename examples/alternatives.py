@@ -1,4 +1,4 @@
-## \example alternatives.py
+# \example alternatives.py
 # The RMF format supports storing alternative representations of the structure
 # through the RMF::decorator::Alternatives decorator and associated types.
 # Multiple versions of the hierarchy are stored, all representing the same
@@ -59,8 +59,7 @@ def create_gmm(radius=1.):
                 str(i) + "-" + str(j),
                 RMF.REPRESENTATION)
             d = gpf.get(n)
-            d.set_standard_deviations(
-                RMF.Vector3(radius / 2, radius / 2, 4))
+            d.set_variances(RMF.Vector3(radius / 2, radius / 2, 4))
             d.set_static_mass(radius ** 3)
             rf = rff.get(n)
             rf.set_rotation(RMF.Vector4(1, 0, 0, 0))
