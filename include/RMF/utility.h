@@ -12,6 +12,8 @@
 #include "NodeConstHandle.h"
 #include "RMF/config.h"
 #include "RMF/internal/errors.h"
+#include "Vector.h"
+#include <boost/array.hpp>
 #include "internal/errors.h"
 
 RMF_ENABLE_WARNINGS
@@ -66,6 +68,15 @@ RMFEXPORT void add_child_alias(decorator::AliasFactory af, NodeHandle parent,
 
 /** This function simply throws an exception. It is here for testing.*/
 RMFEXPORT void test_throw_exception();
+
+/** Return a lowerbound/upperbound pair that ]bounds the data stored in the
+ * tree.
+ */
+RMFEXPORT boost::array<RMF::Vector3, 2> get_bounding_box(NodeConstHandle root);
+
+/** Return the diameter of the system. Unlike bounding box, this one can
+    be called from python. */
+RMFEXPORT float get_diameter(NodeConstHandle root);
 
 } /* namespace RMF */
 

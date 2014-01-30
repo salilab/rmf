@@ -32,7 +32,7 @@ int Data::read_timestep(molfile_timestep_t *frame) {
   RMF_FOREACH(const Body & body, bodies_) {
     RMF::CoordinateTransformer tr;
     double offset =
-        (upper_bounds_[0] - lower_bounds_[0] + max_radius_ * 3) * body.state;
+        (bounds_[1][0] - bounds_[0][0] + max_radius_ * 3) * body.state;
     RMF_FOREACH(RMF::decorator::ReferenceFrameConst rf, body.frames) {
       tr = RMF::CoordinateTransformer(tr, rf);
     }

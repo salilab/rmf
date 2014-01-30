@@ -7,6 +7,7 @@
  */
 
 #include "Data.h"
+#include <RMF/utility.h>
 #include <boost/range/iterator_range.hpp>
 
 namespace RMF_vmd {
@@ -44,12 +45,6 @@ Data::Data(std::string name, int *num_atoms)
       stf_(file_),
       resolution_(get_resolution()),
       show_restraints_(get_show_restraints()),
-      lower_bounds_(std::numeric_limits<float>::max(),
-                    std::numeric_limits<float>::max(),
-                    std::numeric_limits<float>::max()),
-      upper_bounds_(-std::numeric_limits<float>::max(),
-                    -std::numeric_limits<float>::max(),
-                    -std::numeric_limits<float>::max()),
       max_radius_(0),
       done_(false) {
   if (file_.get_number_of_frames() > 0) {
@@ -70,9 +65,9 @@ Data::Data(std::string name, int *num_atoms)
   if (*num_atoms == 0) {
     *num_atoms = MOLFILE_NUMATOMS_NONE;
   }
-  std::cout << "RMF: found " << *num_atoms << " atoms." << std::endl;
 
-  fill_bounds();
+  bounds_ = RMF::get_bounding_box(file_.get_root_node());
+  std::cout << "RMF: found " << *num_atoms << " atoms." << std::endl;
 }
 
 double Data::get_resolution() {
@@ -119,21 +114,6 @@ int Data::get_show_restraints() {
   } else {
     std::cout << "No restraints found in file." << std::endl;
     return BONDS;
-  }
-}
-
-void Data::fill_bounds() {
-  RMF_FOREACH(RMF::NodeID id, file_.get_node_ids()) {
-    if (pf_.get_is(file_.get_node(id))) {
-      RMF::decorator::ParticleConst pc = pf_.get(file_.get_node(id));
-      double r = pc.get_radius();
-      max_radius_ = std::max<double>(r, max_radius_);
-      RMF::Vector3 c = pc.get_coordinates();
-      for (unsigned int i = 0; i < 3; ++i) {
-        upper_bounds_[i] = std::max<double>(upper_bounds_[i], c[i] + r);
-        lower_bounds_[i] = std::min<double>(lower_bounds_[i], c[i] + r);
-      }
-    }
   }
 }
 

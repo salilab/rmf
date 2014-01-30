@@ -19,12 +19,17 @@
 #include "RMF/NodeHandle.h"
 #include "RMF/compiler_macros.h"
 #include "RMF/decorator/alias.h"
+#include "RMF/decorator/physics.h"
+#include "RMF/decorator/shape.h"
+#include "RMF/CoordinateTransformer.h"
 #include "RMF/exceptions.h"
 #include "RMF/infrastructure_macros.h"
 #include "RMF/internal/utility.h"
 #include "RMF/utility.h"
 #include "internal/clone_shared_data.h"
 #include "internal/shared_data_equality.h"
+#include <boost/range/algorithm/max_element.hpp>
+#include <limits>
 
 RMF_ENABLE_WARNINGS
 
@@ -103,6 +108,75 @@ void add_child_alias(decorator::AliasFactory af, NodeHandle parent,
 
 void test_throw_exception() {
   RMF_THROW(Message("Test exception"), UsageException);
+}
+
+namespace {
+void handle_vector(const CoordinateTransformer &tr, const Vector3 &v, float r,
+                   boost::array<RMF::Vector3, 2> &bb) {
+  Vector3 trv = tr.get_global_coordinates(v);
+  for (unsigned int i = 0; i < 3; ++i) {
+    bb[0][i] = std::min(v[i] - r, bb[0][i]);
+    bb[1][i] = std::max(v[i] + r, bb[1][i]);
+  }
+}
+void get_bounding_box_impl(NodeConstHandle root, CoordinateTransformer tr,
+                           decorator::IntermediateParticleFactory ipf,
+                           decorator::BallFactory bf,
+                           decorator::SegmentFactory sf,
+                           decorator::CylinderFactory cf,
+                           decorator::GaussianParticleFactory gpf,
+                           decorator::ReferenceFrameFactory rff,
+                           boost::array<RMF::Vector3, 2> &bb) {
+  if (rff.get_is(root)) {
+    tr = CoordinateTransformer(tr, rff.get(root));
+  }
+  if (ipf.get_is(root)) {
+    RMF::decorator::IntermediateParticleConst pc = ipf.get(root);
+    double r = pc.get_radius();
+    RMF::Vector3 c = pc.get_coordinates();
+    handle_vector(tr, c, r, bb);
+  }
+  if (gpf.get_is(root)) {
+    handle_vector(tr, Vector3(0, 0, 0),
+                  *boost::max_element(gpf.get(root).get_variances()) * 5, bb);
+  }
+  if (bf.get_is(root)) {
+    handle_vector(tr, bf.get(root).get_coordinates(), bf.get(root).get_radius(),
+                  bb);
+  }
+  if (sf.get_is(root)) {
+    RMF_FOREACH(const Vector3 & v, sf.get(root).get_coordinates_list()) {
+      handle_vector(tr, v, cf.get_is(root) ? cf.get(root).get_radius() : 0.0f,
+                    bb);
+    }
+  }
+  RMF_FOREACH(NodeConstHandle ch, root.get_children()) {
+    get_bounding_box_impl(ch, tr, ipf, bf, sf, cf, gpf, rff, bb);
+  }
+}
+}
+
+boost::array<RMF::Vector3, 2> get_bounding_box(NodeConstHandle root) {
+  boost::array<RMF::Vector3, 2> ret;
+  float v = std::numeric_limits<float>::max();
+  ret[0] = RMF::Vector3(v, v, v);
+  ret[1] = RMF::Vector3(-v, -v, -v);
+  FileConstHandle fh = root.get_file();
+  get_bounding_box_impl(
+      root, CoordinateTransformer(), decorator::IntermediateParticleFactory(fh),
+      decorator::BallFactory(fh), decorator::SegmentFactory(fh),
+      decorator::CylinderFactory(fh), decorator::GaussianParticleFactory(fh),
+      decorator::ReferenceFrameFactory(fh), ret);
+  return ret;
+}
+
+float get_diameter(NodeConstHandle root) {
+  boost::array<RMF::Vector3, 2> bb = get_bounding_box(root);
+  float max = 0;
+  for (unsigned int i = 0; i < 3; ++i) {
+    max = std::max(bb[1][i] - bb[0][i], max);
+  }
+  return max;
 }
 
 } /* namespace RMF */

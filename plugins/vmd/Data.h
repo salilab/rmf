@@ -80,8 +80,7 @@ class Data {
     RESTRAINTS = 2
   };
   int show_restraints_;
-  RMF::Vector3 lower_bounds_;
-  RMF::Vector3 upper_bounds_;
+  boost::array<RMF::Vector3, 2> bounds_;
   double max_radius_;
   bool done_;
 
@@ -93,7 +92,6 @@ class Data {
                                    boost::array<char, 8> segment,
                                    double resolution);
   void fill_index();
-  void fill_bounds();
   void fill_graphics(RMF::NodeConstHandle cur, RMF::CoordinateTransformer tr);
   void fill_bonds(RMF::NodeConstHandle cur);
   int handle_reference_frame(int body, RMF::NodeConstHandle cur);
