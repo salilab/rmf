@@ -1,6 +1,7 @@
 from pymol import cmd
 from pymol import cgo
 from chempy import models
+import cProfile
 import RMF
 
 colors = {}
@@ -61,6 +62,10 @@ class RecurseData:
 
 
 def _create_atoms(n, model, cgol, data):
+    if data.resolution != -1 and data.alternatives_factory.get_is(n):
+        n = data.alternatives_factory.get(
+            n).get_alternative(data.resolution,
+                               RMF.PARTICLE)
     if data.reference_frame_factory.get_is(n):
         data = data.recurse(coordinate_transformer=RMF.CoordinateTransformer(
             data.coordinate_transformer,
@@ -129,7 +134,7 @@ def _create_atoms(n, model, cgol, data):
         at.segi = data.segment
         at.symbol = periodic_table[element]
         model.add_atom(at)
-        index = model.index_atom(at)
+        index = len(data.index)
         data.index[n] = index
         child = True
     return child
@@ -161,17 +166,21 @@ def _create_molecules(n, data):
             _create_molecules(c, data)
 
 
-def _open_rmf(path):
-    fh = RMF.open_rmf_file_read_only(path)
-    res = RMF.get_resolutions(fh.get_root_node(), RMF.PARTICLE, .1)
-    if len(res) == 1:
-        res = [-1]
-    fh.set_current_frame(RMF.FrameID(0))
-    data = RecurseData(fh)
-    for f in fh.get_frames():
-        fh.set_current_frame(f)
-        for r in res:
-            data.resolution = r
-            _create_molecules(fh.get_root_node(), data)
+def _do_it(path):
+        fh = RMF.open_rmf_file_read_only(path)
+        res = RMF.get_resolutions(fh.get_root_node(), RMF.PARTICLE, .1)
+        if len(res) == 1:
+            res = [-1]
+        fh.set_current_frame(RMF.FrameID(0))
+        data = RecurseData(fh)
+        for f in fh.get_frames():
+            fh.set_current_frame(f)
+            for r in res:
+                data.resolution = r
+                _create_molecules(fh.get_root_node(), data)
 
+
+def _open_rmf(path):
+    # exec("_do_it(path)")
+    cProfile.runctx("_do_it(path)", globals(), locals())
 cmd.extend('rmf', _open_rmf)
