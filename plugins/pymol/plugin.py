@@ -1,4 +1,5 @@
 from pymol import cmd
+from pymol import cgo
 from chempy import models
 import RMF
 
@@ -28,15 +29,25 @@ class RecurseData:
             self.bond_factory = RMF.BondFactory(fh)
             self.particle_factory = RMF.ParticleFactory(fh)
             self.colored_factory = RMF.ColoredFactory(fh)
+            self.state_factory = RMF.StateFactory(fh)
             self.reference_frame_factory = RMF.ReferenceFrameFactory(fh)
-            self.color = ""
+            self.alternatives_factory = RMF.AlternativesFactory(fh)
+            self.ball_factory = RMF.BallFactory(fh)
+            self.segment_factory = RMF.SegmentFactory(fh)
+            self.cylinder_factory = RMF.CylinderFactory(fh)
+            self.color_name = None
+            self.color = None
+            self.color_key = None
+            self.diameter = RMF.get_diameter(fh.get_root_node()) * 1.5
             self.coordinate_transformer = RMF.CoordinateTransformer()
-            self.molecule_name = ""
-            self.residue_index = 1
-            self.residue_type = ""
+            self.molecule_name = None
+            self.residue_index = None
+            self.residue_type = None
             self.chain_id = ""
+            self.state = 0
             self.segment = ""
             self.index = {}
+            self.resolution = -1
 
     def recurse(self, **kwargs):
         ret = RecurseData(self.file, init=False)
@@ -49,20 +60,47 @@ class RecurseData:
         return ret
 
 
-def _create_atoms(n, model, data):
+def _create_atoms(n, model, cgol, data):
+    if data.reference_frame_factory.get_is(n):
+        data = data.recurse(coordinate_transformer=RMF.CoordinateTransformer(
+            data.coordinate_transformer,
+            data.reference_frame_factory.get(n)))
+    if data.state_factory.get_is(n):
+        data = data.recurse(state=data.state_factory.get(n).get_state())
+    if data.colored_factory.get_is(n):
+        c = data.colored_factory.get(n).get_rgb_color()
+        ck = tuple((int(255. * x) for x in c))
+        if data.color_key != ck:
+            if ck not in colors:
+                name = "rmf" + str(len(colors))
+                print "color", name, c, ck
+                cmd.set_color(name, list(c))
+                colors[ck] = name
+            data = data.recurse(color_name=colors[ck], color=c)
     if data.chain_factory.get_is(n):
-        data.chain_id = data.chain_factory.get(n).get_chain_id()
+        data = data.recurse(chain_id=data.chain_factory.get(n).get_chain_id())
+    if data.ball_factory.get_is(n):
+        d = data.ball_factory.get(n)
+        cgol.extend([cgo.COLOR] + data.color)
+        cgol.extend(
+            [cgo.SPHERE,
+             d.get_coordinates()[0],
+             d.get_coordinates()[1],
+             d.get_coordinates()[2],
+             d.get_radius()])
+    if data.cylinder_factory.get_is(n):
+        d = data.cylinder_factory.get(n)
 
+    if data.segment_factory.get_is(n):
+        pass
     if data.residue_factory.get_is(n):
         rd = data.residue_factory.get(n)
-        data.residue_index = rd.get_residue_index()
-        data.residue_name = rd.get_residue_type()
-    if data.reference_frame_factory:
-        pass
-
+        data = data.recurse(
+            residue_index=rd.get_residue_index(),
+            residue_name=rd.get_residue_type())
     child = False
     for ch in n.get_children():
-        if _create_atoms(ch, model, data):
+        if _create_atoms(ch, model, cgol, data):
             child = True
     if data.bond_factory.get_is(n):
         bd = data.bond_factory.get(n)
@@ -72,21 +110,23 @@ def _create_atoms(n, model, data):
         model.add_bond(b)
     if not child and data.particle_factory.get_is(n):
         pd = data.particle_factory.get(n)
-        element = ""
+        element = 0
         if data.atom_factory.get_is(n):
             element = data.atom_factory.get(n).get_element()
 
         coords = [x for x in pd.get_coordinates()]
-
+        coords[0] = coords[0] + data.state * data.diameter
         at = chempy.Atom()
         at.index = n.get_id().get_index()
         at.name = n.get_name()
-        at.resn = data.residue_type
-        at.resi = data.residue_index
+        if data.residue_index is not None:
+            at.resn = data.residue_type
+            at.resi = data.residue_index
+        if data.color_name is not None:
+            at.color = data.color_name
         at.chain = data.chain_id
-        at.coord = coords
+        at.coord = data.coordinate_transformer.get_global_coordinates(coords)
         at.segi = data.segment
-        # fix later
         at.symbol = periodic_table[element]
         model.add_atom(at)
         index = model.index_atom(at)
@@ -95,20 +135,27 @@ def _create_atoms(n, model, data):
     return child
 
 
-def _get_molecule_name(name):
+def _get_molecule_name(name, res):
+    name = name.replace(":", "").replace(" ", "").replace(".", "_")
     if name.find("/") != -1:
-        return name.split("/")[-1].replace(":", "").replace(" ", "")
-    else:
-        return name.replace(":", "").replace(" ", "")
+        name = name.split("/")[-1]
+    if res != -1:
+        name = name + "-" + str(res)
+    return name
 
 
 def _create_molecules(n, data):
     if n.get_type() == RMF.REPRESENTATION:
         model = models.Indexed()
-        name = _get_molecule_name(n.get_name())
+        name = _get_molecule_name(n.get_name(), data.resolution)
         print "creating molecule", name
-        _create_atoms(n, model, data.recurse(molecule_name=name))
-        cmd.load_model(model, name)
+        cgol = []
+        _create_atoms(n, model, cgol, data.recurse(molecule_name=name))
+        frame = n.get_file().get_current_frame().get_index() + 1
+        cmd.load_model(model, name, frame)
+        if len(cgol) > 0:
+            print cgol
+            cmd.load_cgo(cgol, name + "-graphics", frame)
     else:
         for c in n.get_children():
             _create_molecules(c, data)
@@ -116,9 +163,15 @@ def _create_molecules(n, data):
 
 def _open_rmf(path):
     fh = RMF.open_rmf_file_read_only(path)
+    res = RMF.get_resolutions(fh.get_root_node(), RMF.PARTICLE, .1)
+    if len(res) == 1:
+        res = [-1]
+    fh.set_current_frame(RMF.FrameID(0))
     data = RecurseData(fh)
     for f in fh.get_frames():
         fh.set_current_frame(f)
-        _create_molecules(fh.get_root_node(), data)
+        for r in res:
+            data.resolution = r
+            _create_molecules(fh.get_root_node(), data)
 
 cmd.extend('rmf', _open_rmf)
