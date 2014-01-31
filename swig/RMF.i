@@ -1,53 +1,33 @@
 %module "RMF"
 %feature("autodoc", 1);
-// turn off the warning as it mostly triggers on methods (and lots of them)
-%warnfilter(321);
+
+
+%include "typemaps.i"
+%include "std_vector.i"
+%include "std_string.i"
+%include "std_pair.i"
+
+%include "RMF.warnings.i"
 
 %{
-#include <RMF/compiler_macros.h>
-
-RMF_PUSH_WARNINGS
-RMF_GCC_PRAGMA(diagnostic ignored "-Wunused-but-set-variable")
-RMF_GCC_PRAGMA(diagnostic ignored "-Wunused-value")
-RMF_GCC_PRAGMA(diagnostic ignored "-Wmissing-declarations")
-RMF_GCC_PRAGMA(diagnostic ignored "-Wunused-but-set-variable")
-RMF_CLANG_PRAGMA(diagnostic ignored "-Wunused-parameter")
-RMF_CLANG_PRAGMA(diagnostic ignored "-Wused-but-marked-unused")
-RMF_CLANG_PRAGMA(diagnostic ignored "-Wunused-function")
-
-/* SWIG generates long class names with wrappers that use certain Boost classes,
-   longer than the 255 character name length for MSVC. This shouldn't affect
-   the code, but does result in a lot of warning output, so disable this warning
-   for clarity. */
-RMF_VC_PRAGMA( warning( disable: 4503 ) )
-
 #include <boost/version.hpp>
 #include <boost/exception/exception.hpp>
 
-#include <boost/type_traits/is_convertible.hpp>
-#include <boost/utility/enable_if.hpp>
 #include <exception>
 
 #include "RMF/internal/swig_helpers.h"
 #include "RMF.h"
 
 %}
-%include "std_vector.i"
-%include "std_string.i"
-%include "std_pair.i"
 
 %include "RMF/config.h"
 
 %pythoncode %{
 _value_types=[]
-_object_types=[]
-_raii_types=[]
 _plural_types=[]
 %}
 
 
-
-%include "typemaps.i"
 
 %include "RMF.types.i"
 %include "RMF.exceptions.i"
