@@ -28,7 +28,6 @@
 #include "RMF/utility.h"
 #include "internal/clone_shared_data.h"
 #include "internal/shared_data_equality.h"
-#include <boost/range/algorithm/max_element.hpp>
 #include <limits>
 
 RMF_ENABLE_WARNINGS
@@ -115,8 +114,8 @@ void handle_vector(const CoordinateTransformer &tr, const Vector3 &v, float r,
                    boost::array<RMF::Vector3, 2> &bb) {
   Vector3 trv = tr.get_global_coordinates(v);
   for (unsigned int i = 0; i < 3; ++i) {
-    bb[0][i] = std::min(v[i] - r, bb[0][i]);
-    bb[1][i] = std::max(v[i] + r, bb[1][i]);
+    bb[0][i] = std::min(trv[i] - r, bb[0][i]);
+    bb[1][i] = std::max(trv[i] + r, bb[1][i]);
   }
 }
 void get_bounding_box_impl(NodeConstHandle root, CoordinateTransformer tr,
@@ -137,8 +136,9 @@ void get_bounding_box_impl(NodeConstHandle root, CoordinateTransformer tr,
     handle_vector(tr, c, r, bb);
   }
   if (gpf.get_is(root)) {
+    Vector3 var = gpf.get(root).get_variances();
     handle_vector(tr, Vector3(0, 0, 0),
-                  *boost::max_element(gpf.get(root).get_variances()) * 5, bb);
+                  *std::max_element(var.begin(), var.end()) * 5, bb);
   }
   if (bf.get_is(root)) {
     handle_vector(tr, bf.get(root).get_coordinates(), bf.get(root).get_radius(),
