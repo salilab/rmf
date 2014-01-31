@@ -102,9 +102,7 @@ _traits_list.append(lcname##_traits)
 %define RMF_SHADOW_NULLABLE(Class, function)
 %feature("shadow") Class::function const %{
     def function(self, *args):
-        v = $action(self, *args)
-        if v.get_is_null(): return None
-        else: return v.get()
+        return $action(self, *args).get_ptr()
 %}
 %enddef
 

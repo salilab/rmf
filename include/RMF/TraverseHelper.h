@@ -21,6 +21,9 @@ RMF_ENABLE_WARNINGS
 
 namespace RMF {
 
+class TraverseHelper;
+typedef std::vector<TraverseHelper> TraverseHelpers;
+
 /** This class tracks common data that one needs to keep as one traverses the
     hierarchy.
 
@@ -29,11 +32,6 @@ namespace RMF {
     \note In the case of non-default resolution with alternatives nodes, the
     node this inherits from may not be the one you visited. So you should just
     pass this object when you need to access the node.
-
-TODO
-
-provide a get_children() method than handles alternatives and states itself and
-returns a list of TraverseHelpers.
 
 */
 class RMFEXPORT TraverseHelper : public NodeConstHandle {
@@ -56,17 +54,16 @@ class RMFEXPORT TraverseHelper : public NodeConstHandle {
   unsigned int state_;
   int copy_index_;
   double resolution_;
-  bool done_;
 
   void visit_impl(NodeConstHandle n);
+
+ /** Return an updated TraverseHelper after inspecting the passed
+      node. */
+  TraverseHelper visit(NodeConstHandle n) const;
+
  public:
   TraverseHelper(NodeConstHandle root, std::string molecule_name,
                  double resolution = 10000, int state_filter = -1);
-  /** Return an updated TraverseHelper after inspecting the passed
-      node. */
-  TraverseHelper visit(NodeConstHandle n) const;
-  /** Make this nicer later. */
-  bool get_is_done() const { return done_; }
 
   /** Get the current chain id or None. */
   Nullable<StringTraits> get_chain_id() const {
@@ -81,9 +78,7 @@ class RMFEXPORT TraverseHelper : public NodeConstHandle {
     return Nullable<StringTraits>(residue_type_);
   }
   /** Get the current molecule name or None. */
-  std::string get_molecule_name() const {
-    return molecule_name_;
-  }
+  std::string get_molecule_name() const { return molecule_name_; }
   /** Get the current color or None. */
   Nullable<Vector3Traits> get_rgb_color() const {
     return Nullable<Vector3Traits>(color_);
@@ -100,13 +95,15 @@ class RMFEXPORT TraverseHelper : public NodeConstHandle {
   /** Set that the current node is dispayed and return its index. */
   unsigned int set_is_displayed();
 
-  bool get_is_displayed(NodeID n) {
-    return active_->find(n) != active_->end();
-  }
+  bool get_is_displayed(NodeID n) { return active_->find(n) != active_->end(); }
 
   /** Return a unique id for the current particle. */
   unsigned int get_index(NodeID n) const;
+
+  /** Return other nodes to traverse.*/
+  TraverseHelpers get_children() const;
 };
+
 
 } /* namespace RMF */
 

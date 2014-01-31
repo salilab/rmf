@@ -29,18 +29,13 @@ TraverseHelper::TraverseHelper(NodeConstHandle root, std::string molecule_name,
       molecule_name_(molecule_name),
       state_(0),
       copy_index_(IntTraits::get_null_value()),
-      resolution_(resolution),
-      done_(false) {
+      resolution_(resolution) {
   visit_impl(root);
 }
 
 void TraverseHelper::visit_impl(NodeConstHandle n) {
   if (state_factory_.get_is(n)) {
     int state = state_factory_.get(n).get_state_index();
-    if (state_filter_ >= 0 && state != state_filter_) {
-      done_ = true;
-      return;
-    }
     state_ = state;
   }
   if (alternatives_factory_.get_is(n)) {
@@ -84,6 +79,18 @@ unsigned int TraverseHelper::set_is_displayed() {
 
 unsigned int TraverseHelper::get_index(NodeID n) const {
   return active_->find(n)->second;
+}
+
+std::vector<TraverseHelper> TraverseHelper::get_children() const {
+  std::vector<TraverseHelper> ret;
+  // handle alternatives later
+  RMF_FOREACH(NodeConstHandle ch, NodeConstHandle::get_children()) {
+    if (state_filter_ != -1 && state_factory_.get_is(ch) &&
+        state_factory_.get(ch).get_state_index() != state_filter_)
+      continue;
+    ret.push_back(visit(ch));
+  }
+  return ret;
 }
 
 } /* namespace RMF */

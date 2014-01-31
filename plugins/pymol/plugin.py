@@ -31,6 +31,30 @@ class MyData:
         self.diameter = diameter * 1.5
 
 
+def _handle_atom_color(c, at):
+    ck = tuple((int(255. * x) for x in c))
+    if ck not in colors:
+        name = "rmf" + str(len(colors))
+        print "color", name, c, ck
+        cmd.set_color(name, list(c))
+        colors[ck] = name
+        at.color = name
+    else:
+        at.color = colors[ck]
+
+
+def _handle_atom_coords(helper, mydata, model, cgol, pd, at):
+    coords = [
+        x for x in helper.get_global_coordinates(pd.get_coordinates())]
+    coords[0] = coords[0] + helper.get_state_index() * mydata.diameter
+    at.coord = coords
+
+
+def _handle_atom_element(helper, mydata, model, cgol, at):
+    element = mydata.atom_factory.get(helper).get_element()
+    at.symbol = periodic_table[element]
+
+
 def _handle_atom(helper, mydata, model, cgol):
     pd = mydata.particle_factory.get(helper)
 
@@ -38,31 +62,21 @@ def _handle_atom(helper, mydata, model, cgol):
     at.index = helper.set_is_displayed()
     at.name = helper.get_name()
     ri = helper.get_residue_index()
-    if ri is not None:
-        at.resn = helper.get_residue_type()
+    if ri:
         at.resi = ri
+    rn = helper.get_residue_type()
+    if rn:
+        at.resn = rn
     c = helper.get_rgb_color()
     if c:
-        ck = tuple((int(255. * x) for x in c))
-        if ck not in colors:
-            name = "rmf" + str(len(colors))
-            print "color", name, c, ck
-            cmd.set_color(name, list(c))
-            colors[ck] = name
-        at.color = colors[ck]
-
+        _handle_atom_color(c, at)
     cid = helper.get_chain_id()
     if cid:
         at.chain = cid
-    coords = [
-        x for x in helper.get_global_coordinates(pd.get_coordinates())]
-    coords[0] = coords[0] + helper.get_state_index() * mydata.diameter
-
-    at.coord = coords
+    _handle_atom_coords(helper, mydata, model, cgol, pd, at)
     at.segi = ""
     if mydata.atom_factory.get_is(helper):
-        element = mydata.atom_factory.get(helper).get_element()
-        at.symbol = periodic_table[element]
+        _handle_element(helper, mydata, model, cgol, at)
     model.add_atom(at)
 
 
@@ -78,31 +92,31 @@ def _handle_bond(helper, mydata, model, cgol):
 
 
 def _create_atoms(helper, mydata, model, cgol):
-    if helper.get_is_done():
-        return
     child = False
     for ch in helper.get_children():
-        if _create_atoms(helper.visit(ch), mydata, model, cgol):
+        if _create_atoms(ch, mydata, model, cgol):
             child = True
-    if mydata.ball_factory.get_is(helper):
-        d = mydata.ball_factory.get(helper)
-        c = helper.get_rgb_color()
-        if c:
-            cgol.extend([cgo.COLOR] + helper.get_color())
-        cgol.extend(
-            [cgo.SPHERE] + d.get_coordinates() + [d.get_radius()])
-    elif mydata.cylinder_factory.get_is(helper):
-        d = mydata.cylinder_factory.get(helper)
-
-    elif mydata.segment_factory.get_is(helper):
-        pass
-
-    elif mydata.bond_factory.get_is(helper):
-        _handle_bond(helper, mydata, model, cgol)
-    elif not child and mydata.particle_factory.get_is(helper):
+    tp = helper.get_type()
+    if tp == RMF.REPRESENTATION and not child and mydata.particle_factory.get_is(helper):
         _handle_atom(helper, mydata, model, cgol)
         child = True
-    return child
+    elif tp == RMF.GEOMETRY:
+        if mydata.ball_factory.get_is(helper):
+            d = mydata.ball_factory.get(helper)
+            c = helper.get_rgb_color()
+            if c:
+                cgol.extend([cgo.COLOR] + helper.get_color())
+            cgol.extend(
+                [cgo.SPHERE] + d.get_coordinates() + [d.get_radius()])
+        elif mydata.cylinder_factory.get_is(helper):
+            d = mydata.cylinder_factory.get(helper)
+
+        elif mydata.segment_factory.get_is(helper):
+            pass
+    elif tp == RMF.BOND and mydata.bond_factory.get_is(helper):
+        _handle_bond(helper, mydata, model, cgol)
+
+    return False
 
 
 def _get_molecule_name(name, res):

@@ -46,13 +46,14 @@ class Nullable {
     RMF_USAGE_CHECK(!get_is_null(), "Can't convert null value.");
     return v_;
   }
-#else
-  // otherwise SWIG gets confused by it being, eg, a pointer to an int
-  typename Traits::Type get() const {
-    RMF_USAGE_CHECK(!get_is_null(), "Can't convert null value.");
-    return v_;
-  }
 #endif
+ /** For python since it nicely becomes None. */
+  const typename Traits::Type* get_ptr() const {
+    if (get_is_null())
+      return NULL;
+    else
+      return &v_;
+  }
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
   void show(std::ostream& out) const { out << get_string(); }
 #endif

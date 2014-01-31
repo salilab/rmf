@@ -118,9 +118,9 @@ RMF_VALUE(Namespace, Name##Const, Name##Consts);
 %typemap(in) Namespace::PluralName* {
   collections_like_##PluralName##_must_be_passed_by_value_or_const_ref;
  }
-%typemap(out) Namespace::PluralName* {
+/*%typemap(out) Namespace::PluralName* {
   collections_like_##PluralName##_must_be_returned_by_value_or_const_ref;
- }
+  }*/
 %typemap(in) Namespace::PluralName& {
   collections_like_##PluralName##_must_be_passed_by_value_or_const_ref;
  }
@@ -163,9 +163,9 @@ RMF_VALUE(Namespace, Name##Const, Name##Consts);
 %typemap(in) PluralName* {
   collections_like_##PluralName##_must_be_passed_by_value_or_const_ref;
  }
-%typemap(out) PluralName* {
+/*%typemap(out) PluralName* {
   collections_like_##PluralName##_must_be_returned_by_value_or_const_ref;
- }
+  }*/
 %typemap(in) PluralName& {
   collections_like_##PluralName##_must_be_passed_by_value_or_const_ref;
  }
@@ -201,15 +201,15 @@ RMF_VALUE(Namespace, Name##Const, Name##Consts);
 
 
 //%typemap(out) Namespace::Name const& = SWIGTYPE const &;
-%typemap(out) Namespace::Name & {
+/*%typemap(out) Namespace::Name & {
   values_like_##Name##_must_be_returned_by_value_or_const_ref_not_non_const_ref;
-}
+  }*/
 
 %typemap(out) Namespace::Name *self = Type *;
 %typemap(out) Namespace::Name *Namespace::Name = Type *;
-%typemap(out) Namespace::Name * {
+/*%typemap(out) Namespace::Name * {
   values_like_##Name##_must_be_returned_by_value_or_const_ref_not_pointer;
-}
+  }*/
 
 
 %typemap(directorout) Namespace::Name & {
@@ -291,15 +291,15 @@ RMF_SWIG_VALUE_IMPL(Namespace, Name, TemplateName, PluralName, PluralName);
   values_like_##Name##_must_be_returned_by_value_or_const_ref_not_non_const_ref;
 }
 
-%typemap(out) Namespace::Name * {
+/*%typemap(out) Namespace::Name * {
   values_like_##Name##_must_be_returned_by_value_or_const_ref_not_pointer;
-}
+  }*/
 %typemap(directorout) Namespace::Name & {
   values_like_##Name##_must_be_returned_by_value_or_const_ref_not_non_const_ref;
 }
-%typemap(directorout) Namespace::Name * {
+/*%typemap(directorout) Namespace::Name * {
   values_like_##Name##_must_be_returned_by_value_or_const_ref_not_pointer;
-}
+  }*/
 RMF_SWIG_VALUE_IMPL(Namespace, Name, TemplateName, PluralName, PluralName);
 %enddef
 
@@ -336,15 +336,15 @@ RMF_SWIG_SHOWABLE(Namespace, Name);
 /*%typemap(out) Name & {
   values_like_##Name##_must_be_returned_by_value_or_const_ref_not_non_const_ref;
   }*/
-%typemap(out) Name * {
+/*%typemap(out) Name * {
   values_like_##Name##_must_be_returned_by_value_or_const_ref_not_pointer;
-}
+  }*/
 %typemap(directorout) Name & {
   values_like_##Name##_must_be_returned_by_value_or_const_ref_not_non_const_ref;
 }
-%typemap(directorout) Name * {
+/*%typemap(directorout) Name * {
   values_like_##Name##_must_be_returned_by_value_or_const_ref_not_pointer;
-}
+  }*/
 %typemap(in) std::vector< Name > const& {
   try {
     // hack to get around swig's value wrapper being randomly used
