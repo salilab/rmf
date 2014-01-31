@@ -57,8 +57,8 @@ class RMFEXPORT TraverseHelper : public NodeConstHandle {
 
   void visit_impl(NodeConstHandle n);
 
- /** Return an updated TraverseHelper after inspecting the passed
-      node. */
+  /** Return an updated TraverseHelper after inspecting the passed
+       node. */
   TraverseHelper visit(NodeConstHandle n) const;
 
  public:
@@ -103,7 +103,6 @@ class RMFEXPORT TraverseHelper : public NodeConstHandle {
   /** Return other nodes to traverse.*/
   TraverseHelpers get_children() const;
 };
-
 
 } /* namespace RMF */
 

@@ -47,7 +47,7 @@ class Nullable {
     return v_;
   }
 #endif
- /** For python since it nicely becomes None. */
+  /** For python since it nicely becomes None. */
   const typename Traits::Type* get_ptr() const {
     if (get_is_null())
       return NULL;
