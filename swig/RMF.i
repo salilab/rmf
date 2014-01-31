@@ -99,61 +99,52 @@ _traits_list.append(lcname##_traits)
 %template(_##Ucname##Nullable) RMF::Nullable<RMF::Ucname##Traits>;
 %enddef
 
-%feature("shadow") RMF::NodeConstHandle::get_value const %{
-    def get_value(self, *args):
+%define RMF_SHADOW_NULLABLE(Class, function)
+%feature("shadow") Class::function const %{
+    def function(self, *args):
         v = $action(self, *args)
         if v.get_is_null(): return None
         else: return v.get()
 %}
-%feature("shadow") RMF::NodeConstHandle::get_static_value const %{
-    def get_static_value(self, *args):
-        v = $action(self, *args)
-        if v.get_is_null(): return None
-        else: return v.get()
-%}
-%feature("shadow") RMF::NodeConstHandle::get_frame_value const %{
-    def get_frame_value(self, *args):
-        v = $action(self, *args)
-        if v.get_is_null(): return None
-        else: return v.get()
+%enddef
 
-%}
+RMF_SHADOW_NULLABLE(RMF::NodeConstHandle, get_value)
+RMF_SHADOW_NULLABLE(RMF::NodeConstHandle, get_static_value)
+RMF_SHADOW_NULLABLE(RMF::NodeConstHandle, get_frame_value)
 
 
-RMF_SWIG_VALUE_INSTANCE(RMF, NodeID, ID<NodeTag>, NodeIDs);
-RMF_SWIG_VALUE_INSTANCE(RMF, Category, ID<CategoryTag>, Categories);
-RMF_SWIG_VALUE_INSTANCE(RMF, FrameID, ID<FrameTag>, FrameIDs);
-RMF_SWIG_VALUE_INSTANCE(RMF, Vector3, Vector<3>, Vector3s);
-RMF_SWIG_VALUE_INSTANCE(RMF, Vector4, Vector<4>, Vector4s);
-RMF_SWIG_VALUE_INSTANCE(RMF, NodeType, RMF::Enum< RMF::NodeTypeTag> , NodeTypes);
-RMF_SWIG_VALUE_INSTANCE(RMF, FrameType, RMF::Enum< RMF::FrameTypeTag >, FrameTypes);
-RMF_SWIG_VALUE_INSTANCE(RMF, RepresentationType, RMF::Enum< RMF::RepresentationTypeTag >, RepresentationTypes);
+RMF_SWIG_GRAPH(RMF, NodeTree, NodeTree, RMF::NodeHandle);
+RMF_SWIG_NATIVE_VALUE(double);
+RMF_SWIG_NATIVE_VALUE(float);
+RMF_SWIG_NATIVE_VALUE(int);
+RMF_SWIG_NATIVE_VALUE(std::string);
 RMF_SWIG_NATIVE_VALUES_LIST(RMF, double, Floats, FloatsList);
 RMF_SWIG_NATIVE_VALUES_LIST(RMF, int, Ints, IntsList);
 RMF_SWIG_NATIVE_VALUES_LIST(RMF, std::string, Strings, StringsList);
+RMF_SWIG_PAIR(RMF, Index, IndexRange, IndexRanges)
+RMF_SWIG_PAIR(RMF, Int, IntRange, IntRanges)
+RMF_SWIG_VALUE(RMF, BufferConstHandle, BufferConstHandles);
+RMF_SWIG_VALUE(RMF, BufferHandle, BufferHandles);
+RMF_SWIG_VALUE(RMF, FileConstHandle, FileConstHandles);
+RMF_SWIG_VALUE(RMF, FileHandle, FileHandles);
+RMF_SWIG_VALUE(RMF, NodeConstHandle, NodeConstHandles);
+RMF_SWIG_VALUE(RMF, NodeHandle, NodeHandles);
+RMF_SWIG_VALUE(RMF, SetCurrentFrame, SetCurrentFrames);
+RMF_SWIG_VALUE(RMF, TraverseHelper, TraverseHelpers);
+RMF_SWIG_VALUE(RMF::decorator, ReferenceFrame, ReferenceFrames);
 RMF_SWIG_VALUE_BUILTIN(RMF, Float, Floats, double);
 RMF_SWIG_VALUE_BUILTIN(RMF, Int, Ints, int);
 RMF_SWIG_VALUE_BUILTIN(RMF, String, Strings, std::string);
-RMF_SWIG_NATIVE_VALUE(float);
-RMF_SWIG_NATIVE_VALUE(double);
-RMF_SWIG_NATIVE_VALUE(int);
-RMF_SWIG_NATIVE_VALUE(std::string);
-
-RMF_SWIG_VALUE(RMF, BufferHandle, BufferHandles);
-RMF_SWIG_VALUE(RMF, BufferConstHandle, BufferConstHandles);
-
-RMF_SWIG_GRAPH(RMF, NodeTree, NodeTree, RMF::NodeHandle);
-RMF_SWIG_VALUE(RMF, NodeConstHandle, NodeConstHandles);
-RMF_SWIG_VALUE(RMF, FileConstHandle, FileConstHandles);
-RMF_SWIG_VALUE(RMF, NodeHandle, NodeHandles);
-RMF_SWIG_VALUE(RMF, FileHandle, FileHandles);
-RMF_SWIG_VALUE(RMF, SetCurrentFrame, SetCurrentFrames);
-RMF_SWIG_VALUE_TEMPLATE(RMF, ID);
+RMF_SWIG_VALUE_INSTANCE(RMF, Category, ID<CategoryTag>, Categories);
+RMF_SWIG_VALUE_INSTANCE(RMF, FrameID, ID<FrameTag>, FrameIDs);
+RMF_SWIG_VALUE_INSTANCE(RMF, FrameType, RMF::Enum< RMF::FrameTypeTag >, FrameTypes);
+RMF_SWIG_VALUE_INSTANCE(RMF, NodeID, ID<NodeTag>, NodeIDs);
+RMF_SWIG_VALUE_INSTANCE(RMF, NodeType, RMF::Enum< RMF::NodeTypeTag> , NodeTypes);
+RMF_SWIG_VALUE_INSTANCE(RMF, RepresentationType, RMF::Enum< RMF::RepresentationTypeTag >, RepresentationTypes);
+RMF_SWIG_VALUE_INSTANCE(RMF, Vector3, Vector<3>, Vector3s);
+RMF_SWIG_VALUE_INSTANCE(RMF, Vector4, Vector<4>, Vector4s);
 RMF_SWIG_VALUE_TEMPLATE(RMF, Enum);
-RMF_SWIG_PAIR(RMF, Index, IndexRange, IndexRanges)
-RMF_SWIG_PAIR(RMF, Int, IntRange, IntRanges)
-
-RMF_SWIG_VALUE(RMF::decorator, ReferenceFrame, ReferenceFrames);
+RMF_SWIG_VALUE_TEMPLATE(RMF, ID);
 
 
 RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DECLARE_TYPE);
@@ -310,6 +301,15 @@ RMF_DECORATOR(RMF::decorator, Alternatives);
 %include "RMF/CoordinateTransformer.h"
 %include "RMF/log.h"
 %include "RMF/show_hierarchy.h"
+
+RMF_SHADOW_NULLABLE(RMF::TraverseHelper, get_chain_id);
+RMF_SHADOW_NULLABLE(RMF::TraverseHelper, get_residue_index);
+RMF_SHADOW_NULLABLE(RMF::TraverseHelper, get_residue_type);
+RMF_SHADOW_NULLABLE(RMF::TraverseHelper, get_molecule_name);
+RMF_SHADOW_NULLABLE(RMF::TraverseHelper, get_rgb_color);
+RMF_SHADOW_NULLABLE(RMF::TraverseHelper, get_copy_index);
+
+%include "RMF/TraverseHelper.h"
 
 %pythoncode %{
 _tmpdir=None
