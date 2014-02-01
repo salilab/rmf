@@ -170,7 +170,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
     template <VectorDimension D, class SDB, class H>
     void load_vector(SDB *sdb, Category category_b, H) {
-      typedef ID<VectorTraits<D> > Key;
+      typedef ID<Traits<Vector<D> > > Key;
       typedef boost::tuple<Key, int> Data;
       RMF_LARGE_UNORDERED_MAP<FloatKey, Data> map;
       RMF_FOREACH(std::string key_name,
@@ -181,7 +181,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
           FloatKey cur_key =
               sdb->get_key(category_b, subkey_names[i], FloatTraits());
           map[cur_key].template get<0>() =
-              sdb->get_key(category_b, key_name, VectorTraits<D>());
+            sdb->get_key(category_b, key_name, Traits<Vector<D> >());
           map[cur_key].template get<1>() = i;
         }
       }
@@ -201,9 +201,9 @@ RMF_ENABLE_WARNINGS namespace RMF {
     template <VectorDimension D, class SDA, class SDB, class H>
     void save_vector(SDA *sda, Category category_a, SDB *sdb,
                      Category category_b, H) {
-      typedef ID<VectorTraits<D> > VectorKey;
+      typedef ID<Traits<Vector<D> > > VectorKey;
       std::vector<VectorKey> keys =
-          sda->get_keys(category_a, VectorTraits<D>());
+        sda->get_keys(category_a, Traits<Vector<D> >());
       typedef boost::array<ID<FloatTraits>, D> Data;
       RMF_LARGE_UNORDERED_MAP<VectorKey, Data> map;
       Strings key_names;
@@ -228,7 +228,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       RMF_FOREACH(KP kp, map) {
         RMF_FOREACH(NodeID n, internal::get_nodes(sda)) {
           RMF_VECTOR<D> v = H::get(sda, n, kp.first);
-          if (!VectorTraits<D>::get_is_null_value(v)) {
+          if (!Traits<Vector<D> >::get_is_null_value(v)) {
             for (unsigned int i = 0; i < D; ++i) {
               H::set(sdb, n, kp.second[i], v[i]);
             }

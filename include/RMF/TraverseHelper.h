@@ -66,28 +66,28 @@ class RMFEXPORT TraverseHelper : public NodeConstHandle {
                  double resolution = 10000, int state_filter = -1);
 
   /** Get the current chain id or None. */
-  Nullable<StringTraits> get_chain_id() const {
-    return Nullable<StringTraits>(chain_id_);
+  Nullable<String> get_chain_id() const {
+    return Nullable<String>(chain_id_);
   }
   /** Get the current residue index or None. */
-  Nullable<IntTraits> get_residue_index() const {
-    return Nullable<IntTraits>(residue_index_);
+  Nullable<Int> get_residue_index() const {
+    return Nullable<Int>(residue_index_);
   }
   /** Get the current residue type or None. */
-  Nullable<StringTraits> get_residue_type() const {
-    return Nullable<StringTraits>(residue_type_);
+  Nullable<String> get_residue_type() const {
+    return Nullable<String>(residue_type_);
   }
   /** Get the current molecule name or None. */
   std::string get_molecule_name() const { return molecule_name_; }
   /** Get the current color or None. */
-  Nullable<Vector3Traits> get_rgb_color() const {
-    return Nullable<Vector3Traits>(color_);
+  Nullable<Vector3> get_rgb_color() const {
+    return Nullable<Vector3>(color_);
   }
   /** Get the current state or 0. */
   unsigned int get_state_index() const { return state_; }
   /** Get the current copy inde or None. */
-  Nullable<IntTraits> get_copy_index() const {
-    return Nullable<IntTraits>(copy_index_);
+  Nullable<Int> get_copy_index() const {
+    return Nullable<Int>(copy_index_);
   }
   Vector3 get_global_coordinates(const Vector3 &v) {
     return coordinate_transformer_.get_global_coordinates(v);

@@ -49,7 +49,7 @@ void show_data(NodeConstHandle n, std::ostream& out,
       out << std::endl << prefix << n.get_file().get_name(k) << ": "
           << Showable(n.get_frame_value(k));
     } else {
-      Nullable<Traits> ts = n.get_static_value(k);
+      Nullable<typename Traits::Type> ts = n.get_static_value(k);
       if (!ts.get_is_null()) {
         out << std::endl << prefix << f.get_name(k) << " ("
             << f.get_name(f.get_category(k)) << ")"

@@ -22,7 +22,11 @@ RMF_ENABLE_WARNINGS
 
 namespace RMF {
 
-struct IntTraits {
+template <class T>
+struct Traits {};
+
+template <>
+struct Traits<Int> {
   typedef Int Type;
   typedef Ints Types;
   typedef Type ReturnType;
@@ -37,7 +41,11 @@ struct IntTraits {
   static std::string get_tag() { return "ki"; }
   static std::string get_name() { return "int"; }
 };
-struct FloatTraits {
+
+typedef Traits<Int> IntTraits;
+
+template <>
+struct Traits<Float> {
   typedef Float Type;
   typedef Floats Types;
   typedef Type ReturnType;
@@ -56,7 +64,10 @@ struct FloatTraits {
   static std::string get_tag() { return "kf"; }
   static std::string get_name() { return "float"; }
 };
-struct StringTraits {
+typedef Traits<Float> FloatTraits;
+
+template <>
+struct Traits<String> {
   typedef String Type;
   typedef Strings Types;
   typedef Type ReturnType;
@@ -72,7 +83,10 @@ struct StringTraits {
   static std::string get_tag() { return "ks"; }
   static std::string get_name() { return "string"; }
 };
-struct IntsTraits {
+typedef Traits<String> StringTraits;
+
+template <>
+struct Traits<Ints> {
   typedef Ints Type;
   typedef IntsList Types;
   typedef const Type& ReturnType;
@@ -94,7 +108,10 @@ struct IntsTraits {
   static std::string get_tag() { return "kis"; }
   static std::string get_name() { return "ints"; }
 };
-struct FloatsTraits {
+typedef Traits<Ints> IntsTraits;
+
+template <>
+struct Traits<Floats> {
   typedef Floats Type;
   typedef FloatsList Types;
   typedef const Type& ReturnType;
@@ -116,7 +133,10 @@ struct FloatsTraits {
   static std::string get_tag() { return "kfs"; }
   static std::string get_name() { return "floats"; }
 };
-struct StringsTraits {
+typedef Traits<Floats> FloatsTraits;
+
+template <>
+struct Traits<Strings> {
   typedef Strings Type;
   typedef StringsList Types;
   typedef const Type& ReturnType;
@@ -138,11 +158,12 @@ struct StringsTraits {
   static std::string get_tag() { return "kss"; }
   static std::string get_name() { return "strings"; }
 };
+typedef Traits<Strings> StringsTraits;
 
-#if !defined(SWIG)
+
 // swig gets confused
 template <unsigned int D>
-class VectorTraits {
+class Traits<Vector<D> > {
   static std::string make_tag() {
     std::ostringstream oss;
     oss << "v" << D;
@@ -185,35 +206,11 @@ class VectorTraits {
   }
 };
 
-typedef VectorTraits<3> Vector3Traits;
-typedef VectorTraits<4> Vector4Traits;
-#else
-struct Vector3Traits {
-  typedef Vector3 Type;
-  typedef Vector3s Types;
-  typedef const Type& ReturnType;
-  typedef const Type& ArgumentType;
-  static bool get_is_null_value(const Type& t);
-  static ReturnType get_null_value();
-  typedef boost::int32_t AvroType;
-  static bool get_are_equal(ArgumentType a, ArgumentType b);
-  static std::string get_tag();
-};
-struct Vector4Traits {
-  typedef Vector4 Type;
-  typedef Vector4s Types;
-  typedef const Type& ReturnType;
-  typedef const Type& ArgumentType;
-  static bool get_is_null_value(const Type& t);
-  static ReturnType get_null_value();
-  typedef boost::int32_t AvroType;
-  static bool get_are_equal(ArgumentType a, ArgumentType b);
-  static std::string get_tag();
-};
-#endif
+typedef Traits<Vector<3> > Vector3Traits;
+typedef Traits<Vector<4> > Vector4Traits;
 
-// template <unsigned int D>
-struct Vector3sTraits {
+template <unsigned int D>
+struct Traits<std::vector<Vector<D> > > {
   typedef Vector3s Type;
   typedef std::vector<std::vector<RMF_VECTOR<3> > > Types;
   typedef const Type& ReturnType;
@@ -227,7 +224,7 @@ struct Vector3sTraits {
   static bool get_are_equal(ArgumentType a, ArgumentType b) {
     if (a.size() != b.size()) return false;
     for (unsigned int i = 0; i < a.size(); ++i) {
-      if (!VectorTraits<3>::get_are_equal(a[i], b[i])) return false;
+      if (!Traits<Vector<3> >::get_are_equal(a[i], b[i])) return false;
     }
     return true;
   }
@@ -239,32 +236,8 @@ struct Vector3sTraits {
   static std::string get_name() { return "vector3s"; }
 };
 
-// template <unsigned int D>
-struct Vector4sTraits {
-  typedef Vector4s Type;
-  typedef std::vector<std::vector<RMF_VECTOR<4> > > Types;
-  typedef const Type& ReturnType;
-  typedef const Type& ArgumentType;
-  static bool get_is_null_value(const Type& t) { return t.empty(); }
-  static ReturnType get_null_value() {
-    static const Type null;
-    return null;
-  }
-  typedef boost::int32_t AvroType;
-  static bool get_are_equal(ArgumentType a, ArgumentType b) {
-    if (a.size() != b.size()) return false;
-    for (unsigned int i = 0; i < a.size(); ++i) {
-      if (!VectorTraits<4>::get_are_equal(a[i], b[i])) return false;
-    }
-    return true;
-  }
-  static std::string get_tag() {
-    std::ostringstream oss;
-    oss << "vs" << 4;
-    return oss.str();
-  }
-  static std::string get_name() { return "vector4s"; }
-};
+typedef Traits<std::vector<Vector<3> > > Vector3sTraits;
+typedef Traits<std::vector<Vector<4> > > Vector4sTraits;
 
 } /* namespace RMF */
 

@@ -60,7 +60,7 @@ NodeID AlternativesConst::get_alternative_impl(RepresentationType type,
 
   double closest_resolution = get_resolution(get_node());
   int closest_index = -1;
-  Nullable<IntsTraits> types = get_node().get_value(types_key_);
+  Nullable<Ints> types = get_node().get_value(types_key_);
   if (!types.get_is_null()) {
     Ints roots = get_node().get_value(roots_key_);
     for (unsigned int i = 0; i < types.get().size(); ++i) {

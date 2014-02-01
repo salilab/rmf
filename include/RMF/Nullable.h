@@ -10,6 +10,7 @@
 #define RMF_NULLABLE_H
 
 #include "RMF/config.h"
+#include "traits.h"
 #include "infrastructure_macros.h"
 #include "exceptions.h"
 #include <limits>
@@ -22,9 +23,9 @@ namespace RMF {
   is the null value. These get converted to plain values or `None` in python.
   \note they should never be stored.
 */
-template <class Traits>
+template <class T>
 class Nullable {
-  typename Traits::ReturnType v_;
+  typename Traits<T>::ReturnType v_;
   std::string get_string() const {
     if (get_is_null())
       return "<null>";
@@ -37,22 +38,22 @@ class Nullable {
 
  public:
   Nullable(const Nullable& o) : v_(o.v_) {}
-  Nullable(typename Traits::ReturnType v) : v_(v) {}
 #ifndef SWIG
+  Nullable(typename Traits<T>::ReturnType v) : v_(v) {}
   /** \pre !get_is_null() */
-  operator const typename Traits::Type&() const { return get(); }
+  operator const typename Traits<T>::ReturnType&() const { return get(); }
   /** \pre !get_is_null() */
-  const typename Traits::Type& get() const {
+  const typename Traits<T>::ReturnType& get() const {
     RMF_USAGE_CHECK(!get_is_null(), "Can't convert null value.");
     return v_;
   }
 #else
-  Traits::Type get() const;
+  T get() const;
 #endif
 
 #ifndef IMP_DOXYGEN
   /** For python since it nicely becomes None. */
-  const typename Traits::Type* get_ptr() const {
+  const T* get_ptr() const {
     if (get_is_null())
       return NULL;
     else
@@ -63,7 +64,7 @@ class Nullable {
   void show(std::ostream& out) const { out << get_string(); }
 #endif
 
-  bool get_is_null() const { return Traits::get_is_null_value(v_); }
+  bool get_is_null() const { return Traits<T>::get_is_null_value(v_); }
 };
 
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)

@@ -64,7 +64,7 @@ def _handle_nullable(n):
 
 /* Declare the needed things for each type */
 %define RMF_SWIG_DECLARE_TYPE(lcname, Ucname)
-%rename(_##Ucname##Traits) RMF::Ucname##Traits;
+%template(_##Ucname##Traits) RMF::Traits<Ucname>;
 RMF_SWIG_VALUE_INSTANCE(RMF, Ucname##Key, Ucname##Key, Ucname##Keys);
 %enddef
 

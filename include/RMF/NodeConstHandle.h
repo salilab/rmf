@@ -54,18 +54,18 @@ RMF_ENABLE_WARNINGS
   /** \brief get the value of the attribute k from this node or null if it \
    * doesn't have a value.                                                 \
   */                                                                       \
-  Nullable<Traits> get_value(UCName##Key k) const { return get_value_impl( \
+  Nullable<UCName> get_value(UCName##Key k) const { return get_value_impl( \
       k); }                                                                \
   bool get_has_value(UCName##Key k) const {                                \
     return !get_value(k).get_is_null();                                    \
   }                                                                        \
-  Nullable<Traits> get_frame_value(UCName##Key k) const {                  \
+  Nullable<UCName> get_frame_value(UCName##Key k) const {                  \
     RMF_USAGE_CHECK(                                                       \
         shared_->get_loaded_frame() != FrameID(),                          \
         "Need to set a current frame before getting frame values.");       \
     return shared_->get_loaded_value(node_, k);                            \
   }                                                                        \
-  Nullable<Traits> get_static_value(UCName##Key k) const {                 \
+  Nullable<UCName> get_static_value(UCName##Key k) const {                 \
     return shared_->get_static_value(node_, k);                            \
   }                                                                        \
                                                                            \
@@ -114,10 +114,10 @@ class RMFEXPORT NodeConstHandle
   }
 
   // hopefully get_value will be inlined...
-  template <class Traits>
-  Nullable<Traits> get_value_impl(ID<Traits> k) const {
+  template <class T>
+  Nullable<T> get_value_impl(ID<Traits<T> > k) const {
     if (shared_->get_loaded_frame() != FrameID()) {
-      Nullable<Traits> ret = get_frame_value(k);
+      Nullable<T> ret = get_frame_value(k);
       if (!ret.get_is_null()) return ret;
     }
     return get_static_value(k);
