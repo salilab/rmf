@@ -3,6 +3,7 @@
 
 
 %include "typemaps.i"
+
 %include "std_vector.i"
 %include "std_string.i"
 %include "std_pair.i"
@@ -41,6 +42,10 @@ def get_data_types():
    return _types_list
 def get_data_traits():
    return _traits_list
+
+def _handle_nullable(n):
+   if n.get_is_null(): return None
+   else: return n.get()
 %}
 
 
@@ -82,7 +87,7 @@ _traits_list.append(lcname##_traits)
 %define RMF_SHADOW_NULLABLE(Class, function)
 %feature("shadow") Class::function const %{
     def function(self, *args):
-        return $action(self, *args).get_ptr()
+        return _handle_nullable( $action(self, *args))
 %}
 %enddef
 
@@ -109,7 +114,6 @@ RMF_SWIG_VALUE(RMF, NodeConstHandle, NodeConstHandles);
 RMF_SWIG_VALUE(RMF, NodeHandle, NodeHandles);
 RMF_SWIG_VALUE(RMF, SetCurrentFrame, SetCurrentFrames);
 RMF_SWIG_VALUE(RMF, TraverseHelper, TraverseHelpers);
-RMF_SWIG_VALUE(RMF::decorator, ReferenceFrame, ReferenceFrames);
 RMF_SWIG_VALUE_BUILTIN(RMF, Float, Floats, double);
 RMF_SWIG_VALUE_BUILTIN(RMF, Int, Ints, int);
 RMF_SWIG_VALUE_BUILTIN(RMF, String, Strings, std::string);
@@ -229,48 +233,8 @@ namespace RMF {
 %include "RMF/FileHandle.h"
 %include "RMF/validate.h"
 %include "RMF/Decorator.h"
+%include "RMF.decorator.i"
 
-RMF_DECORATOR(RMF::decorator, Particle);
-RMF_DECORATOR(RMF::decorator, IntermediateParticle);
-RMF_DECORATOR(RMF::decorator, StaticParticle);
-RMF_DECORATOR(RMF::decorator, StaticIntermediateParticle);
-RMF_DECORATOR(RMF::decorator, External);
-RMF_DECORATOR(RMF::decorator, JournalArticle);
-RMF_DECORATOR(RMF::decorator, Colored);
-RMF_DECORATOR(RMF::decorator, Ball);
-RMF_DECORATOR(RMF::decorator, Cylinder);
-RMF_DECORATOR(RMF::decorator, Segment);
-RMF_DECORATOR(RMF::decorator, StaticColored);
-RMF_DECORATOR(RMF::decorator, StaticBall);
-RMF_DECORATOR(RMF::decorator, StaticCylinder);
-RMF_DECORATOR(RMF::decorator, StaticSegment);
-RMF_DECORATOR(RMF::decorator, Score);
-RMF_DECORATOR(RMF::decorator, RigidParticle);
-RMF_DECORATOR(RMF::decorator, ReferenceFrame);
-RMF_DECORATOR(RMF::decorator, StaticReferenceFrame);
-RMF_DECORATOR(RMF::decorator, Residue);
-RMF_DECORATOR(RMF::decorator, Atom);
-RMF_DECORATOR(RMF::decorator, Alias);
-RMF_DECORATOR(RMF::decorator, Bond);
-RMF_DECORATOR(RMF::decorator, Chain);
-RMF_DECORATOR(RMF::decorator, Domain);
-RMF_DECORATOR(RMF::decorator, Copy);
-RMF_DECORATOR(RMF::decorator, Diffuser);
-RMF_DECORATOR(RMF::decorator, Typed);
-RMF_DECORATOR(RMF::decorator, Force);
-RMF_DECORATOR(RMF::decorator, Torque);
-RMF_DECORATOR(RMF::decorator, Alternatives);
-
-%include "RMF/decorator/physics.h"
-%include "RMF/decorator/sequence.h"
-%include "RMF/decorator/shape.h"
-%include "RMF/decorator/external.h"
-%include "RMF/decorator/feature.h"
-%include "RMF/decorator/alias.h"
-%include "RMF/decorator/publication.h"
-%include "RMF/decorator/alternatives.h"
-%include "RMF/decorator/representation.h"
-%include "RMF/decorator/bond.h"
 %include "RMF/utility.h"
 %include "RMF/signature.h"
 %include "RMF/info.h"

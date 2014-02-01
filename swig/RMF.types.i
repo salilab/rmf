@@ -60,12 +60,6 @@
   BOOST_STATIC_ASSERT(Convert<IMP::internal::_TrivialDecorator>::converter ==3);
   %}*/
 
-%define RMF_DECORATOR(Namespace, Name)
-RMF_VALUE(Namespace, Name, Name##s);
-RMF_VALUE(Namespace, Name##Const, Name##Consts);
-%enddef
-
-
 %define RMF_SWIG_SHOWSTUFF(Name)
   std::string __str__() const {
   std::ostringstream out;
