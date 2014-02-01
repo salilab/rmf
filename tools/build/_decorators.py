@@ -115,7 +115,7 @@ class Attribute(Base):
   }
 """ % (function_name, function_name, function_name)
         self.check = "!nh.GET(NAME_).get_is_null()"
-        self.data_initialize = "fh.get_key<TYPETraits>(cat_, \"%s\")" % name
+        self.data_initialize = "fh.get_key<TYPETag>(cat_, \"%s\")" % name
 
 
 class NodeAttribute(Attribute):
@@ -176,8 +176,8 @@ class AttributePair(Base):
                       data_type, return_type)
         self.helpers = """  template <class H> DATA get_NAME_keys(H fh) const {
      DATA ret;
-     ret[0] = fh.template get_key<%sTraits>(cat_, "%s");
-     ret[1] = fh.template get_key<%sTraits>(cat_, "%s");
+     ret[0] = fh.template get_key<%sTag>(cat_, "%s");
+     ret[1] = fh.template get_key<%sTag>(cat_, "%s");
      return ret;
     }
 """ % (data_type, begin, data_type, end)

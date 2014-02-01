@@ -22,34 +22,43 @@ RMF_ENABLE_WARNINGS
 
 namespace RMF {
 
+#ifndef SWIG
+
+/** Traits classes that describe how types are handled. */
 template <class T>
 struct Traits {};
 
+template <class T>
+struct ValueTraitsBase {
+  typedef T Type;
+  typedef std::vector<T> Types;
+  typedef T ArgumentType;
+  typedef T ReturnType;
+  static bool get_are_equal(T a, T b) { return a == b; }
+};
+
+template <class T>
+struct ReferenceTraitsBase {
+  typedef T Type;
+  typedef std::vector<T> Types;
+  typedef const T& ArgumentType;
+  typedef const T& ReturnType;
+};
+
 template <>
-struct Traits<Int> {
-  typedef Int Type;
-  typedef Ints Types;
-  typedef Type ReturnType;
-  typedef Type ArgumentType;
+struct Traits<Int> : public ValueTraitsBase<Int> {
   static bool get_is_null_value(const Type& t) { return t == get_null_value(); }
   static ReturnType get_null_value() {
     return std::numeric_limits<Type>::max();
   }
   typedef HDF5::IntTraits HDF5Traits;
   typedef boost::int32_t AvroType;
-  static bool get_are_equal(ArgumentType a, ArgumentType b) { return a == b; }
   static std::string get_tag() { return "ki"; }
   static std::string get_name() { return "int"; }
 };
 
-typedef Traits<Int> IntTraits;
-
 template <>
-struct Traits<Float> {
-  typedef Float Type;
-  typedef Floats Types;
-  typedef Type ReturnType;
-  typedef Type ArgumentType;
+struct Traits<Float> : public ValueTraitsBase<Float> {
   static bool get_is_null_value(const Type& t) {
     return t >= std::numeric_limits<Float>::max();
   }
@@ -64,14 +73,9 @@ struct Traits<Float> {
   static std::string get_tag() { return "kf"; }
   static std::string get_name() { return "float"; }
 };
-typedef Traits<Float> FloatTraits;
 
 template <>
-struct Traits<String> {
-  typedef String Type;
-  typedef Strings Types;
-  typedef Type ReturnType;
-  typedef const Type& ArgumentType;
+struct Traits<String> : public ValueTraitsBase<String> {
   static bool get_is_null_value(const Type& t) { return t.empty(); }
   static ReturnType get_null_value() {
     static Type r;
@@ -79,91 +83,53 @@ struct Traits<String> {
   }
   typedef HDF5::StringTraits HDF5Traits;
   typedef Type AvroType;
-  static bool get_are_equal(ArgumentType a, ArgumentType b) { return a == b; }
   static std::string get_tag() { return "ks"; }
   static std::string get_name() { return "string"; }
 };
-typedef Traits<String> StringTraits;
 
-template <>
-struct Traits<Ints> {
-  typedef Ints Type;
-  typedef IntsList Types;
-  typedef const Type& ReturnType;
+template <class T>
+struct SequenceTraitsBase {
+  typedef std::vector<T> Type;
+  typedef std::vector<Type> Types;
+  typedef Type ReturnType;
   typedef const Type& ArgumentType;
   static bool get_is_null_value(const Type& t) { return t.empty(); }
   static ReturnType get_null_value() {
     static Type r;
     return r;
   }
-  typedef HDF5::IntsTraits HDF5Traits;
-  typedef std::vector<IntTraits::AvroType> AvroType;
   static bool get_are_equal(ArgumentType a, ArgumentType b) {
     if (a.size() != b.size()) return false;
     for (unsigned int i = 0; i < a.size(); ++i) {
-      if (!IntTraits::get_are_equal(a[i], b[i])) return false;
+      if (!Traits<T>::get_are_equal(a[i], b[i])) return false;
     }
     return true;
   }
-  static std::string get_tag() { return "kis"; }
-  static std::string get_name() { return "ints"; }
+  static std::string get_tag() { return Traits<T>::get_tag() + "s"; }
+  static std::string get_name() { return Traits<T>::get_name() + "s"; }
 };
-typedef Traits<Ints> IntsTraits;
 
 template <>
-struct Traits<Floats> {
-  typedef Floats Type;
-  typedef FloatsList Types;
-  typedef const Type& ReturnType;
-  typedef const Type& ArgumentType;
-  static bool get_is_null_value(const Type& t) { return t.empty(); }
-  static ReturnType get_null_value() {
-    static Type r;
-    return r;
-  }
+struct Traits<Ints> : public SequenceTraitsBase<Int> {
+  typedef HDF5::IntsTraits HDF5Traits;
+  typedef std::vector<Traits<Int>::AvroType> AvroType;
+};
+
+template <>
+struct Traits<Floats> : public SequenceTraitsBase<Float> {
   typedef HDF5::FloatsTraits HDF5Traits;
   typedef std::vector<double> AvroType;
-  static bool get_are_equal(ArgumentType a, ArgumentType b) {
-    if (a.size() != b.size()) return false;
-    for (unsigned int i = 0; i < a.size(); ++i) {
-      if (!FloatTraits::get_are_equal(a[i], b[i])) return false;
-    }
-    return true;
-  }
-  static std::string get_tag() { return "kfs"; }
-  static std::string get_name() { return "floats"; }
 };
-typedef Traits<Floats> FloatsTraits;
 
 template <>
-struct Traits<Strings> {
-  typedef Strings Type;
-  typedef StringsList Types;
-  typedef const Type& ReturnType;
-  typedef const Type& ArgumentType;
-  static bool get_is_null_value(const Type& t) { return t.empty(); }
-  static ReturnType get_null_value() {
-    static Type r;
-    return r;
-  }
+struct Traits<Strings> : public SequenceTraitsBase<String> {
   typedef HDF5::StringsTraits HDF5Traits;
   typedef Type AvroType;
-  static bool get_are_equal(ArgumentType a, ArgumentType b) {
-    if (a.size() != b.size()) return false;
-    for (unsigned int i = 0; i < a.size(); ++i) {
-      if (!StringTraits::get_are_equal(a[i], b[i])) return false;
-    }
-    return true;
-  }
-  static std::string get_tag() { return "kss"; }
-  static std::string get_name() { return "strings"; }
 };
-typedef Traits<Strings> StringsTraits;
-
 
 // swig gets confused
 template <unsigned int D>
-class Traits<Vector<D> > {
+class Traits<Vector<D> > : public ReferenceTraitsBase<Vector<D> > {
   static std::string make_tag() {
     std::ostringstream oss;
     oss << "v" << D;
@@ -176,22 +142,17 @@ class Traits<Vector<D> > {
   }
 
  public:
-  typedef RMF_VECTOR<D> Type;
-  typedef std::vector<RMF_VECTOR<D> > Types;
-  typedef const Type& ReturnType;
-  typedef const Type& ArgumentType;
-  static bool get_is_null_value(const Type& t) {
+  static bool get_is_null_value(const RMF_VECTOR<D>& t) {
     return t[0] > std::numeric_limits<double>::max();
   }
-  static ReturnType get_null_value() {
-    static const RMF_VECTOR<D> null(
-        Floats(D, std::numeric_limits<typename FloatTraits::Type>::infinity()));
+  static const RMF_VECTOR<D>& get_null_value() {
+    static const RMF_VECTOR<D> null(Floats(
+        D, std::numeric_limits<typename Traits<Float>::Type>::infinity()));
     return null;
   }
-  typedef boost::int32_t AvroType;
-  static bool get_are_equal(ArgumentType a, ArgumentType b) {
+  static bool get_are_equal(const RMF_VECTOR<D>& a, const RMF_VECTOR<D>& b) {
     for (unsigned int i = 0; i < D; ++i) {
-      if (!FloatTraits::get_are_equal(a[i], b[i])) return false;
+      if (!Traits<Float>::get_are_equal(a[i], b[i])) return false;
     }
     return true;
   }
@@ -199,45 +160,60 @@ class Traits<Vector<D> > {
     static std::string tag = make_tag();
     return tag;
   }
-
   static std::string get_name() {
     static std::string name = make_name();
     return name;
   }
 };
 
+template <unsigned int D>
+struct Traits<std::vector<Vector<D> > > : public SequenceTraitsBase<
+                                              Vector<D> > {};
+
+typedef Traits<Int> IntTraits;
+typedef Traits<Float> FloatTraits;
+typedef Traits<String> StringTraits;
+typedef Traits<Ints> IntsTraits;
+typedef Traits<Floats> FloatsTraits;
+typedef Traits<Strings> StringsTraits;
 typedef Traits<Vector<3> > Vector3Traits;
 typedef Traits<Vector<4> > Vector4Traits;
-
-template <unsigned int D>
-struct Traits<std::vector<Vector<D> > > {
-  typedef Vector3s Type;
-  typedef std::vector<std::vector<RMF_VECTOR<3> > > Types;
-  typedef const Type& ReturnType;
-  typedef const Type& ArgumentType;
-  static bool get_is_null_value(const Type& t) { return t.empty(); }
-  static ReturnType get_null_value() {
-    static const Type null;
-    return null;
-  }
-  typedef boost::int32_t AvroType;
-  static bool get_are_equal(ArgumentType a, ArgumentType b) {
-    if (a.size() != b.size()) return false;
-    for (unsigned int i = 0; i < a.size(); ++i) {
-      if (!Traits<Vector<3> >::get_are_equal(a[i], b[i])) return false;
-    }
-    return true;
-  }
-  static std::string get_tag() {
-    std::ostringstream oss;
-    oss << "vs" << 3;
-    return oss.str();
-  }
-  static std::string get_name() { return "vector3s"; }
-};
-
 typedef Traits<std::vector<Vector<3> > > Vector3sTraits;
 typedef Traits<std::vector<Vector<4> > > Vector4sTraits;
+
+/*struct IntTag : public IntTraits {};
+struct FloatTag : public FloatTraits {};
+struct StringTag : public StringTraits {};
+struct Vector3Tag : public Vector3Traits {};
+struct Vector4Tag : public Vector4Traits {};
+struct IntsTag : public IntsTraits {};
+struct FloatsTag : public FloatsTraits {};
+struct StringsTag : public StringsTraits {};
+struct Vector3sTag : public Vector3sTag {};
+struct Vector4sTag : public Vector4sTraits {};*/
+typedef IntTraits IntTag;
+typedef FloatTraits FloatTag;
+typedef StringTraits StringTag;
+typedef Vector3Traits Vector3Tag;
+typedef Vector4Traits Vector4Tag;
+typedef IntsTraits IntsTag;
+typedef FloatsTraits FloatsTag;
+typedef StringsTraits StringsTag;
+typedef Vector3sTraits Vector3sTag;
+typedef Vector4sTraits Vector4sTag;
+
+#else
+struct IntTag {};
+struct FloatTag {};
+struct StringTag {};
+struct Vector3Tag {};
+struct Vector4Tag {};
+struct IntsTag {};
+struct FloatsTag {};
+struct StringsTag {};
+struct Vector3sTag {};
+struct Vector4sTag {};
+#endif
 
 } /* namespace RMF */
 

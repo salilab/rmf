@@ -225,12 +225,12 @@ class BondFactory : public Factory {
  public:
   BondFactory(FileConstHandle fh)
       : cat_(fh.get_category("physics")),
-        bonded_0_(fh.get_key<IntTraits>(cat_, "bonded 0")),
-        bonded_1_(fh.get_key<IntTraits>(cat_, "bonded 1")) {}
+        bonded_0_(fh.get_key<IntTag>(cat_, "bonded 0")),
+        bonded_1_(fh.get_key<IntTag>(cat_, "bonded 1")) {}
   BondFactory(FileHandle fh)
       : cat_(fh.get_category("physics")),
-        bonded_0_(fh.get_key<IntTraits>(cat_, "bonded 0")),
-        bonded_1_(fh.get_key<IntTraits>(cat_, "bonded 1")) {}
+        bonded_0_(fh.get_key<IntTag>(cat_, "bonded 0")),
+        bonded_1_(fh.get_key<IntTag>(cat_, "bonded 1")) {}
   /** Get a BondConst for nh.*/
   BondConst get(NodeConstHandle nh) const {
     RMF_USAGE_CHECK((nh.get_type() == RMF::BOND),

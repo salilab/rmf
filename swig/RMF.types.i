@@ -470,3 +470,37 @@ RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Name, Namespace::PluralName, Namespace::PluralL
     return (a,b)
 %}
 %enddef
+
+
+
+
+/* Apply the passed macro to each type used in RMF */
+%define RMF_SWIG_FOREACH_TYPE(macroname)
+  macroname(int, Int);
+  macroname(ints, Ints);
+  macroname(float, Float);
+  macroname(floats, Floats);
+  macroname(string, String);
+  macroname(strings, Strings);
+  macroname(vector3, Vector3);
+  macroname(vector4, Vector4);
+  macroname(vector3s, Vector3s);
+%enddef
+
+/* Declare the needed things for each type */
+%define RMF_SWIG_DECLARE_TYPE(lcname, Ucname)
+RMF_SWIG_VALUE_INSTANCE(RMF, Ucname##Key, Ucname##Key, Ucname##Keys);
+%enddef
+
+%define RMF_SWIG_DEFINE_TYPE(lcname, Ucname)
+%template(_##Ucname##Traits) RMF::Traits<RMF::Ucname>;
+%template(Ucname##Key) RMF::ID<RMF::Ucname##Traits>;
+%enddef
+
+
+%define RMF_SHADOW_NULLABLE(Class, function)
+%feature("shadow") Class::function const %{
+    def function(self, *args):
+        return _handle_nullable( $action(self, *args))
+%}
+%enddef

@@ -4,7 +4,6 @@ RMF_VALUE(RMF::decorator, Name, Name##s);
 RMF_VALUE(RMF::decorator, Name##Const, Name##Consts);
 %enddef
 
-
 RMF_DECORATOR(Particle);
 RMF_DECORATOR(IntermediateParticle);
 RMF_DECORATOR(StaticParticle);

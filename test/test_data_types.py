@@ -10,14 +10,14 @@ class GenericTest(unittest.TestCase):
             nh = f.get_root_node().add_child("testn", RMF.REPRESENTATION)
         else:
             nh = f.get_root_node().get_children()[0]
-        lst = [(RMF.int_traits, 4),
-               (RMF.float_traits, 3.25),
-               (RMF.string_traits, "there"),
-               (RMF.strings_traits, ["here", "there", "everywhere"]),
-               (RMF.vector3_traits, RMF.Vector3(1, 2, 3)),
-               (RMF.vector4_traits, RMF.Vector4(1, 2, 3, 4)),
-               (RMF.vector3s_traits, [RMF.Vector3(1, 2, 3)]),
-               (RMF.ints_traits, [3, 4, 5, 6]), ]
+        lst = [(RMF.int_tag, 4),
+               (RMF.float_tag, 3.25),
+               (RMF.string_tag, "there"),
+               (RMF.strings_tag, ["here", "there", "everywhere"]),
+               (RMF.vector3_tag, RMF.Vector3(1, 2, 3)),
+               (RMF.vector4_tag, RMF.Vector4(1, 2, 3, 4)),
+               (RMF.vector3s_tag, [RMF.Vector3(1, 2, 3)]),
+               (RMF.ints_tag, [3, 4, 5, 6]), ]
         #      (f.get_vector4_key, RMF.Vector4(1,2,3,4))]
         #self.assertEqual(len(lst), len(RMF.get_data_types()) - 3)
         return lst

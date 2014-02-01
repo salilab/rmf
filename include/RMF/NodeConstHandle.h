@@ -49,31 +49,16 @@ RMF_ENABLE_WARNINGS
   RMF_NODE_CATCH(<< Key(get_name(k))      \
                  << Category(get_category_name(k)) extra_info)
 
-#define RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DECL(Traits, UCName)          \
- public:                                                                   \
-  /** \brief get the value of the attribute k from this node or null if it \
-   * doesn't have a value.                                                 \
-  */                                                                       \
-  Nullable<UCName> get_value(UCName##Key k) const { return get_value_impl( \
-      k); }                                                                \
-  bool get_has_value(UCName##Key k) const {                                \
-    return !get_value(k).get_is_null();                                    \
-  }                                                                        \
-  Nullable<UCName> get_frame_value(UCName##Key k) const {                  \
-    RMF_USAGE_CHECK(                                                       \
-        shared_->get_loaded_frame() != FrameID(),                          \
-        "Need to set a current frame before getting frame values.");       \
-    return shared_->get_loaded_value(node_, k);                            \
-  }                                                                        \
-  Nullable<UCName> get_static_value(UCName##Key k) const {                 \
-    return shared_->get_static_value(node_, k);                            \
-  }                                                                        \
-                                                                           \
- protected:                                                                \
-  std::string get_category_name(UCName##Key k) const;                      \
-  std::string get_name(UCName##Key k) const;                               \
-                                                                           \
- public:
+#ifndef SWIG
+#define RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DECL(Traits, UCName)
+#else
+#define RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DECL(Traits, UCName) \
+ public:                                                          \
+  Nullable<UCName> get_value(UCName##Key k) const;                \
+  bool get_has_value(UCName##Key k) const;                        \
+  Nullable<UCName> get_frame_value(UCName##Key k) const;          \
+  Nullable<UCName> get_static_value(UCName##Key k) const;
+#endif
 namespace RMF {
 
 class FileConstHandle;
@@ -95,7 +80,7 @@ typedef std::vector<NodeConstHandle> NodeConstHandles;
  */
 class RMFEXPORT NodeConstHandle
 #ifdef SWIG
-// get conversions right
+    // get conversions right
     : public NodeID
 #endif
       {
@@ -114,10 +99,10 @@ class RMFEXPORT NodeConstHandle
   }
 
   // hopefully get_value will be inlined...
-  template <class T>
-  Nullable<T> get_value_impl(ID<Traits<T> > k) const {
+  template <class Tag>
+  Nullable<typename Tag::Traits::Type> get_value_impl(ID<Tag> k) const {
     if (shared_->get_loaded_frame() != FrameID()) {
-      Nullable<T> ret = get_frame_value(k);
+      Nullable<typename Tag::Traits::Type> ret = get_frame_value(k);
       if (!ret.get_is_null()) return ret;
     }
     return get_static_value(k);
@@ -130,6 +115,7 @@ class RMFEXPORT NodeConstHandle
   std::string get_file_name() const;
   // for error messages
   FrameID get_current_frame_id() const;
+
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
  public:
   NodeConstHandle(NodeID node, boost::shared_ptr<internal::SharedData> shared);
@@ -153,6 +139,25 @@ class RMFEXPORT NodeConstHandle
   //! Return the number of child nodes
   std::string get_name() const { return shared_->get_name(node_); }
   NodeConstHandles get_children() const;
+
+  template <class Tag>
+  Nullable<typename Tag::Type> get_value(ID<Tag> k) const {
+    return get_value_impl(k);
+  }
+  template <class Tag>
+  bool get_has_value(ID<Tag> k) const {
+    return !get_value(k).get_is_null();
+  }
+  template <class Tag>
+  Nullable<typename Tag::Type> get_frame_value(ID<Tag> k) const {
+    RMF_USAGE_CHECK(shared_->get_loaded_frame() != FrameID(),
+                    "Need to set a current frame before getting frame values.");
+    return shared_->get_loaded_value(node_, k);
+  }
+  template <class Tag>
+  Nullable<typename Tag::Type> get_static_value(ID<Tag> k) const {
+    return shared_->get_static_value(node_, k);
+  }
 
 #ifndef SWIG
   /** Each node can be associated at runtime with an

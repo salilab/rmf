@@ -4,7 +4,7 @@ for suffix in RMF.suffixes:
     f = RMF.create_rmf_file(path)
     f0 = f.add_frame("frame", RMF.FRAME)
     cat = f.get_category("cat")
-    k = f.get_key(cat, "key", RMF.int_traits)
+    k = f.get_key(cat, "key", RMF.int_tag)
     n = f.get_root_node()
     n.set_static_value(k, 1)
     del f

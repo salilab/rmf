@@ -30,30 +30,16 @@ class NodeHandle;
 
 RMF_ENABLE_WARNINGS
 
-#define RMF_HDF5_NODE_KEY_TYPE_METHODS(Traits, UCName)                      \
-  /** \brief  set the value of the attribute k for this node on the         \
-      current frame.                                                        \
-  */                                                                        \
-  void set_frame_value(UCName##Key k, Traits::ArgumentType v) const {       \
-    RMF_USAGE_CHECK(shared_->get_loaded_frame() != FrameID(),               \
-                    "Need to set a current frame before setting values.");  \
-    shared_->set_loaded_value(node_, k, v);                                 \
-  }                                                                         \
-  /** Set the value                                                         \
-      - if the attribute has a static value and it is equal the current one \
-        do nothing.                                                         \
-      - if the attribute doesn't have a static value, set it,               \
-      - otherwise set the frame value.                                      \
-  */                                                                        \
-  void set_value(UCName##Key k, Traits::ArgumentType v) const {             \
-    set_value_impl(k, v);                                                   \
-  }                                                                         \
-  /** \brief  set the value of the attribute k for all frames.              \
-   *                                                                        \
-  */                                                                        \
-  void set_static_value(UCName##Key k, Traits::ArgumentType v) const {      \
-    shared_->set_static_value(node_, k, v);                                 \
-  }
+#ifndef SWIG
+#define RMF_HDF5_NODE_KEY_TYPE_METHODS(Traits, UCName)
+#else
+// otherwise swig gets confused
+#define RMF_HDF5_NODE_KEY_TYPE_METHODS(Traits, UCName) \
+  void set_frame_value(UCName##Key k, UCName v) const; \
+  void set_value(UCName##Key k, UCName v) const;       \
+  void set_static_value(UCName##Key k, UCName v) const;
+
+#endif
 
 namespace RMF {
 
@@ -73,14 +59,14 @@ class FileHandle;
  */
 class RMFEXPORT NodeHandle : public NodeConstHandle {
   friend class FileHandle;
-  template <class Traits>
-  void set_value_impl(ID<Traits> k, typename Traits::ArgumentType v) const {
-    Nullable<typename Traits::Type> sv = get_static_value(k);
+  template <class Tag>
+  void set_value_impl(ID<Tag> k, typename Tag::ArgumentType v) const {
+    Nullable<typename Tag::Traits::Type> sv = get_static_value(k);
     if (sv.get_is_null()) {
       set_static_value(k, v);
       return;
     }
-    if (Traits::get_are_equal(sv.get(), v)) return;
+    if (Tag::Traits::get_are_equal(sv.get(), v)) return;
     set_frame_value(k, v);
   }
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
@@ -103,6 +89,34 @@ class RMFEXPORT NodeHandle : public NodeConstHandle {
 
       @{
    */
+
+  /** \brief  set the value of the attribute k for this node on the
+      current frame.
+  */
+  template <class Tag>
+  void set_frame_value(ID<Tag> k, typename Tag::ArgumentType v) const {
+    RMF_USAGE_CHECK(shared_->get_loaded_frame() != FrameID(),
+                    "Need to set a current frame before setting values.");
+    shared_->set_loaded_value(node_, k, v);
+  }
+  /** Set the value
+      - if the attribute has a static value and it is equal the current one
+        do nothing.
+      - if the attribute doesn't have a static value, set it,
+      - otherwise set the frame value.
+  */
+  template <class Tag>
+  void set_value(ID<Tag> k, typename Tag::ArgumentType v) const {
+    set_value_impl(k, v);
+  }
+  /** \brief  set the value of the attribute k for all frames.
+   *
+  */
+  template <class Tag>
+  void set_static_value(ID<Tag> k, typename Tag::ArgumentType v) const {
+    shared_->set_static_value(node_, k, v);
+  }
+
   RMF_FOREACH_TYPE(RMF_HDF5_NODE_KEY_TYPE_METHODS);
   /** @} */
 

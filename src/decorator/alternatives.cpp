@@ -46,13 +46,13 @@ std::pair<double, double> get_resolution_impl(NodeConstHandle root,
 
 AlternativesFactory::AlternativesFactory(FileHandle fh)
     : cat_(fh.get_category("alternatives")),
-      types_key_(fh.get_key<IntsTraits>(cat_, "types")),
-      roots_key_(fh.get_key<IntsTraits>(cat_, "roots")) {}
+      types_key_(fh.get_key<IntsTag>(cat_, "types")),
+      roots_key_(fh.get_key<IntsTag>(cat_, "roots")) {}
 
 AlternativesFactory::AlternativesFactory(FileConstHandle fh)
     : cat_(fh.get_category("alternatives")),
-      types_key_(fh.get_key<IntsTraits>(cat_, "types")),
-      roots_key_(fh.get_key<IntsTraits>(cat_, "roots")) {}
+      types_key_(fh.get_key<IntsTag>(cat_, "types")),
+      roots_key_(fh.get_key<IntsTag>(cat_, "roots")) {}
 
 NodeID AlternativesConst::get_alternative_impl(RepresentationType type,
                                                float resolution) const {

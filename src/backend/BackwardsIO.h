@@ -55,7 +55,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
     return vectors_3_names_map;
   }
 
-  template <class SD> struct BackwardsIO : public IO {
+  template <class SD>
+  struct BackwardsIO : public IO {
     boost::scoped_ptr<SD> sd_;
     std::string name_;
 
@@ -181,7 +182,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
           FloatKey cur_key =
               sdb->get_key(category_b, subkey_names[i], FloatTraits());
           map[cur_key].template get<0>() =
-            sdb->get_key(category_b, key_name, Traits<Vector<D> >());
+              sdb->get_key(category_b, key_name, Traits<Vector<D> >());
           map[cur_key].template get<1>() = i;
         }
       }
@@ -203,7 +204,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
                      Category category_b, H) {
       typedef ID<Traits<Vector<D> > > VectorKey;
       std::vector<VectorKey> keys =
-        sda->get_keys(category_a, Traits<Vector<D> >());
+          sda->get_keys(category_a, Traits<Vector<D> >());
       typedef boost::array<ID<FloatTraits>, D> Data;
       RMF_LARGE_UNORDERED_MAP<VectorKey, Data> map;
       Strings key_names;
@@ -334,7 +335,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
       return alias_key;
     }
 
-    template <class SDA, class SDB> void load_restraints(const SDA *a, SDB *b) {
+    template <class SDA, class SDB>
+    void load_restraints(const SDA *a, SDB *b) {
       ID<backward_types::NodeIDTraits> alias_key = get_alias_key(a);
       if (alias_key == ID<backward_types::NodeIDTraits>()) {
         RMF_INFO("No alias key found, skipping restraint processing");
@@ -365,7 +367,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
       }
     }
 
-    template <class SDA, class SDB> void load_bonds(const SDA *a, SDB *b) {
+    template <class SDA, class SDB>
+    void load_bonds(const SDA *a, SDB *b) {
 
       ID<backward_types::NodeIDTraits> alias_key = get_alias_key(a);
       if (alias_key == ID<backward_types::NodeIDTraits>()) return;
@@ -593,7 +596,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   };
 
   }  // namespace internal
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

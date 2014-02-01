@@ -50,6 +50,7 @@ class Nullable {
 #else
   T get() const;
 #endif
+  bool get_is_null() const { return Traits<T>::get_is_null_value(v_); }
 
 #ifndef IMP_DOXYGEN
   /** For python since it nicely becomes None. */
@@ -63,8 +64,6 @@ class Nullable {
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
   void show(std::ostream& out) const { out << get_string(); }
 #endif
-
-  bool get_is_null() const { return Traits<T>::get_is_null_value(v_); }
 };
 
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)

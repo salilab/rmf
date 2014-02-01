@@ -47,24 +47,18 @@ RMF_ENABLE_WARNINGS
         e);                                                               \
   }
 
-#define RMF_HDF5_ROOT_CONST_KEY_TYPE_METHODS(Traits, UCName)                \
-  UCName##Key get_key(Category category_id, std::string nm, Traits) const { \
-    return get_key<Traits>(category_id, nm);                                \
-  }                                                                         \
-  std::string get_name(UCName##Key k) const {                               \
-    try {                                                                   \
-      return shared_->get_name(k);                                          \
-    }                                                                       \
-    RMF_FILE_CATCH();                                                       \
-  }                                                                         \
-  Category get_category(UCName##Key k) const {                              \
-    return shared_->get_category(k);                                        \
-  }                                                                         \
-  /** This returns all the keys that are used in the current frame.         \
-      Other frames may have different ones.*/                               \
-  UCName##Key##s get_keys(Category category_id, Traits) {                   \
-    return get_keys<Traits>(category_id);                                   \
-  }
+#ifndef SWIG
+#define RMF_HDF5_ROOT_CONST_KEY_TYPE_METHODS(Traits, UCName)
+#else
+#define RMF_HDF5_ROOT_CONST_KEY_TYPE_METHODS(Traits, UCName)        \
+  UCName##Key get_key(Category category_id, std::string nm,         \
+                      UCName##Tag) const;                           \
+  std::string get_name(UCName##Key k) const;                        \
+  Category get_category(UCName##Key k) const;                       \
+  /** This returns all the keys that are used in the current frame. \
+      Other frames may have different ones.*/                       \
+  UCName##Key##s get_keys(Category category_id, UCName##Tag);
+#endif
 
 namespace RMF {
 
@@ -135,21 +129,22 @@ class RMFEXPORT FileConstHandle {
   /** Get an existing key that has the given name of the
       given type or Key() if the key is not found.
    */
-  template <class TypeT>
-  ID<TypeT> get_key(Category category, std::string name) const {
+  template <class Tag>
+  ID<Tag> get_key(Category category, std::string name) const {
     try {
-      return shared_->get_key(category, name, TypeT());
+      return shared_->get_key(category, name, Tag());
     }
     RMF_FILE_CATCH(<< Category(get_name(category)) << Key(name));
   }
-  template <class TypeT>
-  std::vector<ID<TypeT> > get_keys(Category category_id,
-                                   const Strings& names) const {
+
+  template <class Tag>
+  std::vector<ID<Tag> > get_keys(Category category_id,
+                                 const Strings& names) const {
     try {
-      std::vector<ID<TypeT> > ret(names.size());
+      std::vector<ID<Tag> > ret(names.size());
       for (unsigned int i = 0; i < names.size(); ++i) {
-        ret[i] = get_key<TypeT>(category_id, names[i]);
-        if (ret[i] == ID<TypeT>()) {
+        ret[i] = get_key<Tag>(category_id, names[i]);
+        if (ret[i] == ID<Tag>()) {
           ret.clear();
           return ret;
         }
@@ -158,16 +153,40 @@ class RMFEXPORT FileConstHandle {
     }
     RMF_FILE_CATCH(<< Category(get_name(category_id)));
   }
+
   /** Get a list of all keys of the given type,
    */
-  template <class TypeT>
-  std::vector<ID<TypeT> > get_keys(Category category) const {
+  template <class Tag>
+  std::vector<ID<Tag> > get_keys(Category category) const {
     try {
-      if (category == Category()) return std::vector<ID<TypeT> >();
-      return shared_->get_keys(category, TypeT());
+      if (category == Category()) return std::vector<ID<Tag> >();
+      return shared_->get_keys(category, Tag());
     }
     RMF_FILE_CATCH(<< Category(get_name(category)));
   }
+
+  template <class Tag>
+  ID<Tag> get_key(Category category_id, std::string nm, Tag) const {
+    return get_key<Tag>(category_id, nm);
+  }
+  template <class Tag>
+  std::string get_name(ID<Tag> k) const {
+    try {
+      return shared_->get_name(k);
+    }
+    RMF_FILE_CATCH();
+  }
+  template <class Tag>
+  Category get_category(ID<Tag> k) const {
+    return shared_->get_category(k);
+  }
+  /** This returns all the keys that are used in the current frame. \
+      Other frames may have different ones.*/
+  template <class Tag>
+  std::vector<ID<Tag> > get_keys(Category category_id, Tag) {
+    return get_keys<Tag>(category_id);
+  }
+
   /** @} */
 
   /** The file always has a single frame that is currently active at any given

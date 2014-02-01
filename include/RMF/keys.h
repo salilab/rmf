@@ -18,17 +18,17 @@ RMF_ENABLE_WARNINGS
 
 namespace RMF {
 
-#define RMF_DECLARE_KEY(Traits, UCName)      \
+#define RMF_DECLARE_KEY(TT, UCName)          \
   /** Identify a value stored for a node. */ \
-  typedef ID<Traits> UCName##Key;            \
+  typedef ID<UCName##Tag> UCName##Key;       \
   /** A list of identifiers. */              \
   typedef std::vector<UCName##Key> UCName##Keys;
 
 /** \name Key types
     RMF files support storing a variety of different types of data. These
     include
-    - IntKey: store an arbitrary integher as a 64 bit integer
-    - FloatKey: store an arbitrary floating point number as a double
+    - IntKey: store an arbitrary integer as a 64 bit integer
+    - FloatKey: store an arbitrary floating point number as a `float`
     - StringKey: store an arbitrary length string
     - IndexKey: store non-negative indexes as 64 bit integers
     - NodeIDKey: store the ID of a node in the hierarchy

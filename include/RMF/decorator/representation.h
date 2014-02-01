@@ -84,7 +84,7 @@ class Representation : public RepresentationConst {
   Ints set_it(const NodeIDs &in) {
     Ints ret;
     ret.reserve(in.size());
-    RMF_FOREACH(NodeID n, in) {ret.push_back(n.get_index());}
+    RMF_FOREACH(NodeID n, in) { ret.push_back(n.get_index()); }
     return ret;
   }
 
@@ -110,7 +110,7 @@ class Representation : public RepresentationConst {
   }
 #endif
 
-  void set_representation(const NodeConstHandles& v) {
+  void set_representation(const NodeConstHandles &v) {
     try {
       set_representation(set_it(v));
     }
@@ -158,7 +158,7 @@ class Representation : public RepresentationConst {
     }
     RMF_DECORATOR_CATCH();
   }
-  void set_static_representation(const NodeIDs&v) {
+  void set_static_representation(const NodeIDs &v) {
     try {
       set_static_representation(set_it(v));
     }
@@ -173,15 +173,13 @@ class Representation : public RepresentationConst {
   }
   NodeHandles get_frame_representation() const {
     try {
-      return get_it<NodeHandle>(
-          get_node().get_frame_value(representation_));
+      return get_it<NodeHandle>(get_node().get_frame_value(representation_));
     }
     RMF_DECORATOR_CATCH();
   }
   NodeHandles get_static_representation() const {
     try {
-      return get_it<NodeHandle>(
-          get_node().get_static_value(representation_));
+      return get_it<NodeHandle>(get_node().get_static_value(representation_));
     }
     RMF_DECORATOR_CATCH();
   }
@@ -198,10 +196,10 @@ class RepresentationFactory : public Factory {
  public:
   RepresentationFactory(FileConstHandle fh)
       : cat_(fh.get_category("feature")),
-        representation_(fh.get_key<IntsTraits>(cat_, "representation")) {}
+        representation_(fh.get_key<IntsTag>(cat_, "representation")) {}
   RepresentationFactory(FileHandle fh)
       : cat_(fh.get_category("feature")),
-        representation_(fh.get_key<IntsTraits>(cat_, "representation")) {}
+        representation_(fh.get_key<IntsTag>(cat_, "representation")) {}
   /** Get a RepresentationConst for nh.*/
   RepresentationConst get(NodeConstHandle nh) const {
     RMF_USAGE_CHECK((nh.get_type() == RMF::FEATURE),

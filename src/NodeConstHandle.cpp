@@ -40,16 +40,6 @@ FrameID NodeConstHandle::get_current_frame_id() const {
   return get_file().get_current_frame();
 }
 
-#define RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DEF(Traits, UCName)        \
-  std::string NodeConstHandle::get_category_name(UCName##Key k) const { \
-    return get_file().get_name(get_file().get_category(k));             \
-  }                                                                     \
-  std::string NodeConstHandle::get_name(UCName##Key k) const {          \
-    return get_file().get_name(k);                                      \
-  }
-
-RMF_FOREACH_TYPE(RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DEF);
-
 std::vector<NodeConstHandle> NodeConstHandle::get_children() const {
   try {
     NodeIDs children = shared_->get_children(node_);

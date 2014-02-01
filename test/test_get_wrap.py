@@ -11,7 +11,7 @@ class Tests(unittest.TestCase):
         fh = RMF.create_rmf_file(name)
         rt = fh.get_root_node()
         cat = fh.get_category("testcat")
-        key = fh.get_key(cat, "testkey", RMF.int_traits)
+        key = fh.get_key(cat, "testkey", RMF.int_tag)
         fh.add_frame("frame")
         self.assertEqual(rt.get_value(key), None)
         self.assertEqual(rt.get_static_value(key), None)

@@ -20,7 +20,7 @@ class Tests(unittest.TestCase):
             r = f.get_root_node()
             print r.get_type()
             sc = f.get_category("sequence")
-            ik = f.get_key(sc, "ik0", RMF.int_traits)
+            ik = f.get_key(sc, "ik0", RMF.int_tag)
             f.add_frame("0", RMF.FRAME)
             r.set_value(ik, 1)
             del r
@@ -42,7 +42,7 @@ class Tests(unittest.TestCase):
             r = f.get_root_node()
             print r.get_type()
             sc = f.get_category("sequence")
-            ik = f.get_key(sc, "ik0", RMF.int_traits)
+            ik = f.get_key(sc, "ik0", RMF.int_tag)
             r.set_value(ik, 1)
             del f
             del r
@@ -52,7 +52,7 @@ class Tests(unittest.TestCase):
             r = f.get_root_node()
             print r.get_type()
             sc = f.get_category("sequence")
-            ik = f.get_key(sc, "ik0", RMF.int_traits)
+            ik = f.get_key(sc, "ik0", RMF.int_tag)
             f.set_current_frame(RMF.FrameID(0))
             self.assertEqual(r.get_value(ik), 1)
 

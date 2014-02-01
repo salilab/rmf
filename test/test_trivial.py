@@ -17,7 +17,7 @@ class GenericTest(unittest.TestCase):
             fh.add_frame("root", RMF.FRAME)
             print "keys"
             cat = fh.get_category("MyCat")
-            key = fh.get_key(cat, "MyKey", RMF.int_traits)
+            key = fh.get_key(cat, "MyKey", RMF.int_tag)
             print "set"
             fh.get_root_node().set_static_value(key, 1)
             self.assertEqual(fh.get_root_node().get_value(key), 1)
@@ -30,7 +30,7 @@ class GenericTest(unittest.TestCase):
             print "keys"
             RMF.show_hierarchy_with_values(fh.get_root_node())
             cat = fh.get_category("MyCat")
-            key = fh.get_key(cat, "MyKey", RMF.int_traits)
+            key = fh.get_key(cat, "MyKey", RMF.int_tag)
             print "get value"
             v = fh.get_root_node().get_value(key)
             self.assertEqual(v, 1)
