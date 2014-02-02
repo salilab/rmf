@@ -34,8 +34,8 @@ for i in range(0, 3):
 
 frame = rh.add_child("frame", RMF.REPRESENTATION)
 rbo = reference_frame_factory.get(frame)
-rbo.set_translation([5, 0, 0])
-rbo.set_rotation([1, 0, 0, 0])
+rbo.set_translation(RMF.Vector3(5, 0, 0))
+rbo.set_rotation(RMF.Vector4(1, 0, 0, 0))
 pd = particle_factory.get(frame)
 pd.set_radius(5)
 pd.set_mass(2)

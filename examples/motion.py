@@ -110,8 +110,7 @@ for i in range(4):
         continue
     f = fn.add_child("r", RMF.FEATURE)
     rd = rf.get(f)
-    rd.set_representation([f0.get_id().get_index(),
-                           f1.get_id().get_index()])
+    rd.set_representation([f0, f1])
     features.append((particles.index(f0), particles.index(f1)))
     feature_nodes.append(f)
 

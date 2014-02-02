@@ -14,7 +14,7 @@ class GenericTest(unittest.TestCase):
                 for i in range(0, 5)]
         for i, r in enumerate(reps):
             pd = pf.get(r)
-            pd.set_coordinates([0, i, 0])
+            pd.set_coordinates(RMF.Vector3(0, i, 0))
             pd.set_mass(1)
             pd.set_radius(.5)
         sf = RMF.ScoreFactory(fh)
@@ -40,7 +40,9 @@ class GenericTest(unittest.TestCase):
         print reps
         print rd.get_representation()
         self.assert_(sd.get_score() == 10)
-        self.assert_(rd.get_representation() == reps)
+        for r0, r1 in zip(rd.get_representation(), reps):
+            self.assertEqual(r0, r1)
+            #self.assert_(rd.get_representation() == reps)
 
     def test_multiparent(self):
         """Test that feature nodes work right"""

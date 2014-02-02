@@ -17,7 +17,7 @@ sf = RMF.SegmentFactory(f)
 
 b = bf.get(r.add_child("ball", RMF.GEOMETRY))
 b.set_radius(1)
-b.set_coordinates([0, 0, 0])
+b.set_coordinates(RMF.Vector3(0, 0, 0))
 
 c = cf.get(r.add_child("cylinder", RMF.GEOMETRY))
 c.set_radius(.5)

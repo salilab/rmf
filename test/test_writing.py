@@ -12,7 +12,7 @@ ff = RMF.FragmentFactory(fh)
 
 pf.get(fn).set_radius(1.0)
 pf.get(fn).set_mass(2.0)
-pf.get(fn).set_coordinates([1, 2, 3])
+pf.get(fn).set_coordinates(RMF.Vector3(1, 2, 3))
 ff.get(fn).set_indexes([1, 2, 3, 4])
 print "closing"
 del fn

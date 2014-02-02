@@ -1,4 +1,4 @@
-## \example alias.py
+# \example alias.py
 # Show using aliases to provide two different organization schemes
 # for manipulating a hierarchy.
 import RMF
@@ -28,18 +28,18 @@ for i in range(0, 10):
     for j in range(0, 10):
         curh = curph.add_child("atom" + str(j), RMF.REPRESENTATION)
         p = pf.get(curh)
-        p.set_coordinates([3 * i, 3 * j, 0])
+        p.set_coordinates(RMF.Vector3(3 * i, 3 * j, 0))
         p.set_mass(1)
         p.set_radius(1)
         c = cf.get(curh)
         if j % 3 == 0:
-            c.set_rgb_color([1, 0, 0])
+            c.set_rgb_color(RMF.Vector3(1, 0, 0))
             red.append(curh)
         elif j % 3 == 1:
-            c.set_rgb_color([0, 1, 0])
+            c.set_rgb_color(RMF.Vector3(0, 1, 0))
             green.append(curh)
         else:
-            c.set_rgb_color([0, 0, 1])
+            c.set_rgb_color(RMF.Vector3(0, 0, 1))
             blue.append(curh)
 
 # add a second organization scheme by color
