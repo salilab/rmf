@@ -21,6 +21,7 @@
 #include "RMF/decorator/bond.h"
 #include "RMF/decorator/representation.h"
 #include "RMF/decorator/alternatives.h"
+#include "RMF/decorator/labels.h"
 
 /** \namespace RMF::decorator
 

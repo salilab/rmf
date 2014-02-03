@@ -120,6 +120,8 @@ RMF_SWIG_VECTOR(RMF, NodeHandle)
 
 %include "RMF/Decorator.h"
 
+%include "RMF/Label.h"
+
 %include "RMF.decorator.i"
 
 %include "RMF/SetCurrentFrame.h"
