@@ -13,6 +13,10 @@ class GenericTest(unittest.TestCase):
 
     def test_backwards_0(self):
         """Test opening pre-category change files"""
+        try:
+            import RMF_HDF5
+        except:
+            return
         ifn = RMF._get_test_input_file_path("backwards.rmf")
         f = RMF.open_rmf_file_read_only(ifn)
         pc = f.get_category("physics")

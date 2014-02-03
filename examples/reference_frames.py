@@ -36,7 +36,7 @@ def visit(node, reference_frame, reference_frame_factory, particle_factory,
         visit(c, reference_frame, reference_frame_factory, particle_factory,
               segment_factory, ball_factory)
 
-fh = RMF.open_rmf_file_read_only(RMF.get_example_path("reference_frames.rmf"))
+fh = RMF.open_rmf_file_read_only(RMF.get_example_path("reference_frames.rmf3"))
 
 
 visit(fh.get_root_node(), RMF.CoordinateTransformer(),

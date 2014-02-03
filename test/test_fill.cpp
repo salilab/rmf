@@ -101,5 +101,5 @@ int main(int argc, char* argv[]) {
 }
 
 #else
-int main(int, char * []) { return 1; }
+int main(int, char * []) { return 0; }
 #endif
