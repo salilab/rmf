@@ -1,16 +1,19 @@
 language: cpp
 branches:
   only:
-#    - master
+    - master
     - develop
 compiler:
   - gcc
-#  - clang
+  - clang
 git:
   submodules: false
-# Change this to your needs
 before_install:
   - sudo apt-get update && sudo apt-get install libboost-all-dev swig && git submodule update --init --recursive
 script:
   - mkdir build && cd build && cmake -DRMF_DEPRECATED_BACKENDS=0 .. && make && ctest
-#  - sudo apt-get install hdf5-serial-dev && mkdir build && cd build && cmake -DRMF_DEPRECATED_BACKENDS=1 .. && make && ctest
+#  - mkdir build && cd build && cmake -DRMF_DEPRECATED_BACKENDS=0 -DCMAKE_CXX_FLAGS=$CXXFLAGS .. && make && ctest
+  - sudo apt-get install hdf5-serial-dev && mkdir build && cd build && cmake .. && make && ctest
+
+# sanitize :-) -fsanitize=address -fno-omit-frame-pointer
+# -fsanitize=undefined
