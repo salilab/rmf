@@ -5,15 +5,14 @@ branches:
     - develop
 compiler:
   - gcc
-  - clang
+#  - clang
+env:
+  - PRECMD="sudo apt-get install hdf5-dev && deprecated=1"
+  - PRECMD="deprecated=0"
 git:
   submodules: false
-before_install:
-  - sudo apt-get update && sudo apt-get install libboost-all-dev swig && git submodule update --init --recursive
-script:
-  - mkdir build && cd build && cmake -DRMF_DEPRECATED_BACKENDS=0 .. && make && ctest
-#  - mkdir build && cd build && cmake -DRMF_DEPRECATED_BACKENDS=0 -DCMAKE_CXX_FLAGS=$CXXFLAGS .. && make && ctest
-  - sudo apt-get install hdf5-serial-dev && mkdir build && cd build && cmake .. && make && ctest
+before_install: sudo apt-get update && sudo apt-get install libboost-all-dev swig && git submodule update --init --recursive
+script: $PRECMD && mkdir build && cd build && cmake -DRMF_DEPRECATED_BACKENDS=$deprecated .. && make -j 2 && ctest -j 2
 
 # sanitize :-) -fsanitize=address -fno-omit-frame-pointer
 # -fsanitize=undefined
