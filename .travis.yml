@@ -4,7 +4,7 @@ compiler:
   - clang
 # Change this to your needs
 before_install:
-  - sudo apt-get install libboost-dev
+  - sudo apt-get install libboost-all-dev
 script:
   - git submodule init
   - git submodule update
