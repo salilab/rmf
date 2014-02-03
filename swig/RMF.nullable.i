@@ -5,6 +5,8 @@ def _handle_nullable(n):
    else: return n.get()
 %}
 
+RMF_SWIG_SHOWABLE(RMF, Nullable);
+
 %include "RMF/Nullable.h"
 
 %template(_NullableInt) RMF::Nullable<RMF::Int>;

@@ -29,7 +29,9 @@ class GenericTest(unittest.TestCase):
         nh = f.get_root_node().get_children()[0]
         cat = f.get_category("mine")
         for i, p in enumerate(lst):
+            print i
             k = f.get_key(cat, "hi" + str(i), p[0])
+            print k, p[1]
             nh.set_value(k, p[1])
 
     def _test_read(self, name):
@@ -45,7 +47,9 @@ class GenericTest(unittest.TestCase):
             self.assertEqual(v, p[1])
 
     def _do_test_types(self, name):
+        print "write"
         self._test_write(name)
+        print "read"
         self._test_read(name)
 
     def test_data_types(self):

@@ -22,7 +22,7 @@ RMF_SWIG_VALUE_INSTANCE(RMF, Vector4, Vector<4>, Vector4s);
   %}
  }
 
-%implicitconv RMF::Vector;
+//%implicitconv RMF::Vector;
 %include "RMF/Vector.h"
 %template(Vector3) RMF::Vector<3>;
 %template(Vector4) RMF::Vector<4>;

@@ -81,6 +81,7 @@ class BondConst : public Decorator {
   }
 
   static std::string get_decorator_type_name() { return "BondConst"; }
+  RMF_SHOWABLE(BondConst, "Bond: " << get_node());
 };
 /** See also BondFactory.
  */
@@ -258,6 +259,7 @@ class BondFactory : public Factory {
            !nh.get_static_value(bonded_0_).get_is_null() &&
            !nh.get_static_value(bonded_1_).get_is_null();
   }
+  RMF_SHOWABLE(BondFactory, "BondFactory");
 };
 #ifndef RMF_DOXYGEN
 struct BondConstFactory : public BondFactory {

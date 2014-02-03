@@ -63,12 +63,12 @@
 %define RMF_SWIG_SHOWSTUFF(Name)
   std::string __str__() const {
   std::ostringstream out;
-  out << *self;
+  self->show(out);
     return out.str();
   }
   std::string __repr__() const {
     std::ostringstream out;
-    out << *self;
+    self->show(out);
     return out.str();
   }
 %enddef
@@ -455,22 +455,6 @@ RMF_SWIG_VALUE_CHECKS(Namespace, PluralListName, SWIGTYPE);
 RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Name, Namespace::PluralName, Namespace::PluralListName, const&);
 RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Name, Namespace::PluralName, Namespace::PluralListName,);
 %enddef
-
-%define RMF_SWIG_SEQUENCE_PAIR(Namespace, Name0, Name1, PairName)
-%typemap(out) Namespace::PairName {
-  PyObject *first=ConvertSequence<Namespace::PairName::first_type, Convert< Namespace::PairName::first_type::value_type> >::create_python_object(ValueOrObject<Namespace::PairName::first_type >::get($1.first), $descriptor(Name0), SWIG_POINTER_OWN);
-  PyObject *second=ConvertSequence<Namespace::PairName::second_type, Convert< Namespace::PairName::second_type::value_type> >::create_python_object(ValueOrObject<Namespace::PairName::second_type >::get($1.second), $descriptor(Name1), SWIG_POINTER_OWN);
-
-  $result=PyTuple_New(2);
-  PyTuple_SetItem($result,0,first);
-  PyTuple_SetItem($result,1,second);
- }
-%pythoncode %{
-  def PairName(a,b):
-    return (a,b)
-%}
-%enddef
-
 
 
 

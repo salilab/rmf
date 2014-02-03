@@ -52,7 +52,7 @@ std::string description("Generate a new file that interpolates an old one.");
   {                                                                         \
     RMF::Vector3s c0 = factory##cf0.get(input0).get_##attribute();          \
     RMF::Vector3s c1 = factory##cf1.get(input1).get_##attribute();          \
-    RMF::Vector3s result(3, RMF::Floats(c0.size()));                        \
+    RMF::Vector3s result(3, RMF::Vector3());                                \
     for (unsigned int i = 0; i < c0.size(); ++i) {                          \
       for (unsigned int j = 0; j < 3; ++j) {                                \
         result[i][j] = (1.0 - frac) * c0[i][j] + frac * c1[i][j] + noise(); \

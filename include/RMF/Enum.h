@@ -72,8 +72,8 @@ class Enum {
   }
   RMF_COMPARISONS(Enum);
   RMF_HASHABLE(Enum, return i_);
+  RMF_SHOWABLE(Enum, get_string());
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
-  void show(std::ostream& out) const { out << get_string(); }
   operator int() const { return i_; }
 #endif
 };

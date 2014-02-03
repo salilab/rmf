@@ -1,7 +1,36 @@
 %module "RMF"
 %feature("autodoc", 1);
 
+
+%extend std::vector {
+  std::string __str__() const {
+    std::ostringstream out;
+    out << RMF::Showable(*self);
+    return out.str();
+  }
+  std::string __repr__() const {
+    std::ostringstream out;
+    out << RMF::Showable(*self);
+    return out.str();
+  }
+  /*bool __eq__(const std::vector<T> &o) const {
+    if (self->size() != o.size()) return false;
+    for (unsigned int i= 0; i < self->size(); ++i) {
+      if (self->operator[](i) != o[i]) return false;
+    }
+    return true;
+  }
+  bool __ne__(const std::vector<T> &o) const {
+    if (self->size() != o.size()) return true;
+    for (unsigned int i= 0; i < self->size(); ++i) {
+      if (self->operator[](i) != o[i]) return true;
+    }
+    return false;
+    }*/
+}
+
 %{
+#define RMF_SWIG_WRAPPER
 #include <boost/version.hpp>
 #include <boost/exception/exception.hpp>
 
@@ -25,8 +54,23 @@
 %include "RMF/compiler_macros.h"
 %include "RMF/infrastructure_macros.h"
 
- // see if we need this
- //%implicitconv;
+
+%define RMF_SWIG_VECTOR(NAMESPACE, TYPE)
+ %typemap(out) NAMESPACE::TYPE & front {
+        $result = SWIG_NewPointerObj(%new_copy(*$1, $*ltype), $descriptor,
+        SWIG_POINTER_OWN | %newpointer_flags);
+  }
+%typemap(out) NAMESPACE::TYPE & back {
+        $result = SWIG_NewPointerObj(%new_copy(*$1, $*ltype), $descriptor,
+        SWIG_POINTER_OWN | %newpointer_flags);
+        }
+%typemap(out) NAMESPACE::TYPE & __getitem__ {
+        $result = SWIG_NewPointerObj(%new_copy(*$1, $*ltype), $descriptor,
+        SWIG_POINTER_OWN | %newpointer_flags);
+        }
+%template(TYPE##s) std::vector<NAMESPACE::TYPE>;
+%enddef
+
 
 %pythoncode %{
 _value_types=[]
@@ -35,31 +79,16 @@ _plural_types=[]
 
 
 
-
-
-RMF_SWIG_NATIVE_VALUE(double);
-RMF_SWIG_NATIVE_VALUE(float);
-RMF_SWIG_NATIVE_VALUE(int);
-RMF_SWIG_NATIVE_VALUE(std::string);
-RMF_SWIG_NATIVE_VALUES_LIST(RMF, double, Floats, FloatsList);
-RMF_SWIG_NATIVE_VALUES_LIST(RMF, int, Ints, IntsList);
-RMF_SWIG_NATIVE_VALUES_LIST(RMF, std::string, Strings, StringsList);
 RMF_SWIG_PAIR(RMF, Index, IndexRange, IndexRanges)
 RMF_SWIG_PAIR(RMF, Int, IntRange, IntRanges)
-RMF_SWIG_VALUE(RMF, TraverseHelper, TraverseHelpers);
-RMF_SWIG_VALUE_BUILTIN(RMF, Float, Floats, double);
-RMF_SWIG_VALUE_BUILTIN(RMF, Int, Ints, int);
-RMF_SWIG_VALUE_BUILTIN(RMF, String, Strings, std::string);
 
-
-RMF_SWIG_VALUE_INSTANCE(RMF, Category, ID<CategoryTag>, Categories);
-RMF_SWIG_VALUE_INSTANCE(RMF, FrameID, ID<FrameTag>, FrameIDs);
-RMF_SWIG_VALUE_INSTANCE(RMF, NodeID, ID<NodeTag>, NodeIDs);
-RMF_SWIG_VALUE_TEMPLATE(RMF, ID);
 %include "RMF/ID.h"
 %template(FrameID) RMF::ID<RMF::FrameTag>;
 %template(NodeID) RMF::ID<RMF::NodeTag>;
 %template(Category) RMF::ID<RMF::CategoryTag>;
+%template(FrameIDs) std::vector<RMF::ID<RMF::FrameTag> >;
+%template(NodeIDs) std::vector<RMF::ID<RMF::NodeTag> >;
+%template(Categories) std::vector<RMF::ID<RMF::CategoryTag> >;
 
 RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DECLARE_TYPE);
 
@@ -73,11 +102,17 @@ RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DECLARE_TYPE);
 
 // old swig doesn't handle expanding the macro properly
 %include "RMF/default_types.h"
- /*%template(IntsV) std::vector<RMF::Int>;
-%template(FloatsV) std::vector<RMF::Float>;
-%template(StringsV) std::vector<RMF::String>;
-%template(Vector3sV) std::vector<RMF::Vector3>;
-%template(Vector4sV) std::vector<RMF::Vector4>;*/
+ // have to be the real type due to https://github.com/swig/swig/issues/73
+%template(Ints) std::vector<int>;
+%template(Floats) std::vector<float>;
+%template(Strings) std::vector<std::string>;
+%template(Vector3s) std::vector<RMF::Vector<3> >;
+%template(Vector4s) std::vector<RMF::Vector<4> >;
+%template(IntsList) std::vector<std::vector<int> >;
+%template(FloatsList) std::vector<std::vector<float> >;
+%template(StringsList) std::vector<std::vector<std::string> >;
+%template(Vector3sList) std::vector<std::vector<RMF::Vector<3> > >;
+
 
 %include "RMF.traits.i"
 %include "RMF.keys.i"
@@ -85,10 +120,6 @@ RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DECLARE_TYPE);
 %include "RMF.nullable.i"
 
 
-RMF_SWIG_VALUE_TEMPLATE(RMF, Enum);
-RMF_SWIG_VALUE_INSTANCE(RMF, NodeType, RMF::Enum< RMF::NodeTypeTag> , NodeTypes);
-RMF_SWIG_VALUE_INSTANCE(RMF, RepresentationType, RMF::Enum< RMF::RepresentationTypeTag >, RepresentationTypes);
-RMF_SWIG_VALUE_INSTANCE(RMF, FrameType, RMF::Enum< RMF::FrameTypeTag >, FrameTypes);
 %include "RMF/Enum.h"
 namespace RMF {
   %template(NodeType) Enum<NodeTypeTag>;
@@ -100,35 +131,28 @@ namespace RMF {
 RMF_SHADOW_NULLABLE(RMF::NodeConstHandle, get_value)
 RMF_SHADOW_NULLABLE(RMF::NodeConstHandle, get_static_value)
 RMF_SHADOW_NULLABLE(RMF::NodeConstHandle, get_frame_value)
-RMF_SWIG_VALUE(RMF, NodeConstHandle, NodeConstHandles);
 %include "RMF/NodeConstHandle.h"
+RMF_SWIG_VECTOR(RMF, NodeConstHandle)
 
-RMF_SWIG_VALUE(RMF, NodeHandle, NodeHandles);
 %include "RMF/NodeHandle.h"
+RMF_SWIG_VECTOR(RMF, NodeHandle)
 
-RMF_SWIG_VALUE(RMF, BufferConstHandle, BufferConstHandles);
 %include "RMF/BufferConstHandle.h"
-RMF_SWIG_VALUE(RMF, BufferHandle, BufferHandles);
 %include "RMF/BufferHandle.h"
 
 
 %include "RMF.FileConstHandle.i"
 
-RMF_SWIG_VALUE(RMF, FileHandle, FileHandles);
 %include "RMF/FileHandle.h"
 
-RMF_SWIG_VALUE(RMF, Decorator, Decorators);
 %include "RMF/Decorator.h"
 
 %include "RMF.decorator.i"
 
-RMF_SWIG_VALUE(RMF, SetCurrentFrame, SetCurrentFrames);
 %include "RMF/SetCurrentFrame.h"
 
-RMF_SWIG_VALUE(RMF, RestoreCurrentFrame, RestoreCurrentFrames);
 %include "RMF/RestoreCurrentFrame.h"
 
-RMF_SWIG_VALUE(RMF, CoordinateTransformer, CoordinateTransformers);
 %include "RMF/CoordinateTransformer.h"
 
 RMF_SHADOW_NULLABLE(RMF::TraverseHelper, get_chain_id);
@@ -138,7 +162,7 @@ RMF_SHADOW_NULLABLE(RMF::TraverseHelper, get_molecule_name);
 RMF_SHADOW_NULLABLE(RMF::TraverseHelper, get_rgb_color);
 RMF_SHADOW_NULLABLE(RMF::TraverseHelper, get_copy_index);
 %include "RMF/TraverseHelper.h"
-
+RMF_SWIG_VECTOR(RMF, TraverseHelper)
 
  // Do not declare types, so order doesn't matter
 %include "RMF/constants.h"

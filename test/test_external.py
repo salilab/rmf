@@ -33,8 +33,18 @@ class GenericTest(unittest.TestCase):
     def _read(self, name):
         rmf = RMF.open_rmf_file_read_only(name)
         rt = rmf.get_root_node()
-        ref0 = rt.get_children()[0].get_children()[0]
+        print "children", rt.get_children()
+        c = rt.get_children()
+        print -1, c
+        c0 = c[0]
+        print 0, c0.get_children()
+        ref0 = c0.get_children()[0]
+        print "r0", ref0
+        print 1, c0.get_children(), ref0
+        print rt.get_children()[0].get_children()
+        print 2
         ref1 = rt.get_children()[1].get_children()[0]
+        print "factory"
         ef = RMF.ExternalFactory(rmf)
 
         ref0d = ef.get(ref0)
@@ -60,8 +70,10 @@ class GenericTest(unittest.TestCase):
             tdir = os.path.split(name)[0]
             sfile = os.path.join(tdir, "simple.pdb")
             open(sfile, "w").write(inputpdb)
-
+            print "create"
             self._create(name)
+            print "read"
             self._read(name)
+            print "done"
 if __name__ == '__main__':
     unittest.main()

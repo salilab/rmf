@@ -14,6 +14,9 @@
 #include "exceptions.h"
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
+#include <boost/type_traits/is_convertible.hpp>
+#include <boost/mpl/not.hpp>
+#include <boost/array.hpp>
 #include <algorithm>
 
 RMF_ENABLE_WARNINGS
@@ -23,64 +26,64 @@ namespace RMF {
 /** Represent a point.
  */
 template <unsigned int D>
-class Vector {
-  float data_[D];
+class Vector
+#ifndef SWIG
+    : public boost::array<float, D>
+#endif
+      {
+  typedef boost::array<float, D> P;
+  // work around swig
+  template <class R, class Enabled = void>
+  struct Convert {};
+
+  template <class R>
+  struct Convert<R, typename boost::enable_if<boost::is_convertible<
+                        R, boost::array<float, D> > >::type> {
+    static void convert(const R& r, boost::array<float, D>& d) { d = r; }
+  };
+
+  template <class R>
+  struct Convert<
+      R, typename boost::enable_if<boost::mpl::not_<
+             boost::is_convertible<R, boost::array<float, D> > > >::type> {
+    static void convert(const R& r, boost::array<float, D>& d) {
+      std::copy(boost::begin(r), boost::end(r), d.begin());
+    }
+  };
 
  public:
   Vector() {}
+  //#ifndef RMF_SWIG_WRAPPER
   template <class Range>
   explicit Vector(Range r) {
-    RMF_USAGE_CHECK(std::distance(boost::begin(r), boost::end(r)) == D,
-                    "sizes don't match");
-    std::copy(boost::begin(r), boost::end(r), data_);
+    Convert<Range>::convert(r, *this);
   }
+  Vector(const Vector<D>& o) : P(o) {};
+#if 0
+  //defined(SWIG) || defined(RMF_SWIG_WRAPPER)
   Vector(const std::vector<float>& input) {
     RMF_USAGE_CHECK(input.size() == D, "sizes don't match");
     std::copy(input.begin(), input.end(), data_);
   }
+#endif
   Vector(float x, float y, float z) {
     RMF_USAGE_CHECK(D == 3, "3 args to non-3D constructor");
-    data_[0] = x;
-    data_[1] = y;
-    data_[2] = z;
+    P::operator[](0) = x;
+    P::operator[](1) = y;
+    P::operator[](2) = z;
   }
   Vector(float x, float y, float z, float q) {
     RMF_USAGE_CHECK(D == 4, "4 args to non-4D constructor");
-    data_[0] = x;
-    data_[1] = y;
-    data_[2] = z;
-    data_[3] = q;
+    P::operator[](0) = x;
+    P::operator[](1) = y;
+    P::operator[](2) = z;
+    P::operator[](3) = q;
   }
-  RMF_SHOWABLE(Vector, std::vector<float>(data_, data_ + D));
-#ifndef SWIG
-  float operator[](unsigned int i) const {
-    RMF_USAGE_CHECK(i < D, "Out of range");
-    return data_[i];
-  }
-  typedef const float* const_iterator;
-  typedef float* iterator;
-  const_iterator begin() const { return data_; }
-  const_iterator end() const { return data_ + D; }
-  iterator begin() { return data_; }
-  iterator end() { return data_ + D; }
-#endif
+  RMF_SHOWABLE(Vector, std::vector<float>(P::begin(), P::end()));
 #if !defined(RMF_DOXYGEN)
-#ifndef SWIG
-  typedef float value_type;
-  typedef std::random_access_iterator_tag iterator_category;
-  typedef std::ptrdiff_t difference_type;
-  typedef float* pointer;
-  typedef float& reference;
-  Vector(unsigned int s) { RMF_USAGE_CHECK(s == D, "Sizes don't match."); }
-  void resize(unsigned int s) { RMF_USAGE_CHECK(s == D, "Sizes don't match."); }
-  float& operator[](unsigned int i) {
-    RMF_USAGE_CHECK(i < D, "Out of range");
-    return data_[i];
-  }
-#endif
   float __getitem__(unsigned int i) const {
     if (i >= D) throw IndexException();
-    return data_[i];
+    return P::operator[](i);
   }
   unsigned int __len__() const { return D; }
 #endif

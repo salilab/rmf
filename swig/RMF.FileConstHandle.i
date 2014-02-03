@@ -1,5 +1,3 @@
-RMF_SWIG_VALUE(RMF, FileConstHandle, FileConstHandles);
-
 namespace RMF {
 %rename(_get_keys) FileConstHandle::get_keys;
 }

@@ -93,16 +93,40 @@ RMF_ENABLE_WARNINGS
 
 /** @} */
 
-#ifndef SWIG
-#define RMF_SHOWABLE(Name, streamed)                 \
-  operator Showable() const {                        \
-    std::ostringstream oss;                          \
-    oss << streamed;                                 \
-    return Showable(oss.str(), Showable::Special()); \
-  }                                                  \
-  void show(std::ostream& out) const { out << streamed; }
-#else
+#ifdef SWIG
+#define RMF_SHOWABLE(Name, streamed) \
+  std::string __str__() const {      \
+    std::ostringstream out;          \
+    show(out);                       \
+    return out.str();                \
+  }                                  \
+  std::string __repr__() const {     \
+    std::ostringstream out;          \
+    show(out);                       \
+    return out.str();                \
+  }
+
+#elif defined(RMF_DOXYGEN)
 #define RMF_SHOWABLE(Name, streamed)
+
+#else
+#define RMF_SHOWABLE(Name, streamed)                      \
+  operator Showable() const {                             \
+    std::ostringstream oss;                               \
+    oss << streamed;                                      \
+    return Showable(oss.str(), Showable::Special());      \
+  }                                                       \
+  void show(std::ostream& out) const { out << streamed; } \
+  std::string __str__() const {                           \
+    std::ostringstream out;                               \
+    show(out);                                            \
+    return out.str();                                     \
+  }                                                       \
+  std::string __repr__() const {                          \
+    std::ostringstream out;                               \
+    show(out);                                            \
+    return out.str();                                     \
+  }
 #endif
 
 #define RMF_UNUSED(variable) RMF::internal::use(variable);

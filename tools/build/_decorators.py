@@ -293,6 +293,7 @@ decorator = """
     static std::string get_decorator_type_name() {
          return "NAMEConst";
     }
+    RMF_SHOWABLE(NAMEConst, "NAME: " << get_node());
   };
    /** See also NAMEFactory.
     */
@@ -346,6 +347,7 @@ HELPERS
     bool get_is_static(NodeConstHandle nh) const {
       return STATIC_CHECKS;
     }
+    RMF_SHOWABLE(NAMEFactory, "NAMEFactory");
   };
   #ifndef RMF_DOXYGEN
 struct NAMEConstFactory: public NAMEFactory {

@@ -7,14 +7,14 @@
  */
 
 #include "RMF/TraverseHelper.h"
+#include <boost/make_shared.hpp>
 
 RMF_ENABLE_WARNINGS
 
 namespace RMF {
-TraverseHelper::TraverseHelper(NodeConstHandle root, std::string molecule_name,
-                               double resolution, int state_filter)
-    : active_(boost::make_shared<Index>()),
-      chain_factory_(root.get_file()),
+TraverseHelper::Data::Data(NodeConstHandle root, std::string molecule_name,
+                           double resolution, int state_filter)
+    : chain_factory_(root.get_file()),
       residue_factory_(root.get_file()),
       reference_frame_factory_(root.get_file()),
       colored_factory_(root.get_file()),
@@ -29,44 +29,55 @@ TraverseHelper::TraverseHelper(NodeConstHandle root, std::string molecule_name,
       molecule_name_(molecule_name),
       state_(0),
       copy_index_(IntTraits::get_null_value()),
-      resolution_(resolution) {
+      resolution_(resolution) {}
+
+TraverseHelper::TraverseHelper(NodeConstHandle root, std::string molecule_name,
+                               double resolution, int state_filter)
+    : active_(boost::make_shared<Index>()),
+      data_(boost::make_shared<Data>(root, molecule_name, resolution,
+                                     state_filter)) {
   visit_impl(root);
 }
 
 void TraverseHelper::visit_impl(NodeConstHandle n) {
-  if (state_factory_.get_is(n)) {
-    int state = state_factory_.get(n).get_state_index();
-    state_ = state;
+  if (data_->state_factory_.get_is(n)) {
+    int state = data_->state_factory_.get(n).get_state_index();
+    data_->state_ = state;
   }
-  if (alternatives_factory_.get_is(n)) {
-    NodeConstHandle nh =
-        alternatives_factory_.get(n).get_alternative(PARTICLE, resolution_);
+  if (data_->alternatives_factory_.get_is(n)) {
+    NodeConstHandle nh = data_->alternatives_factory_.get(n)
+                             .get_alternative(PARTICLE, data_->resolution_);
     static_cast<NodeConstHandle&>(*this) = nh;
   } else {
     static_cast<NodeConstHandle&>(*this) = n;
   }
 
-  if (reference_frame_factory_.get_is(*this)) {
-    coordinate_transformer_ = CoordinateTransformer(
-        coordinate_transformer_, reference_frame_factory_.get(*this));
+  if (data_->reference_frame_factory_.get_is(*this)) {
+    data_->coordinate_transformer_ =
+        CoordinateTransformer(data_->coordinate_transformer_,
+                              data_->reference_frame_factory_.get(*this));
   }
-  if (colored_factory_.get_is(*this)) {
-    color_ = colored_factory_.get(*this).get_rgb_color();
+  if (data_->colored_factory_.get_is(*this)) {
+    data_->color_ = data_->colored_factory_.get(*this).get_rgb_color();
   }
-  if (residue_factory_.get_is(*this)) {
-    residue_index_ = residue_factory_.get(*this).get_residue_index();
-    residue_type_ = residue_factory_.get(*this).get_residue_type();
+  if (data_->residue_factory_.get_is(*this)) {
+    data_->residue_index_ =
+        data_->residue_factory_.get(*this).get_residue_index();
+    data_->residue_type_ =
+        data_->residue_factory_.get(*this).get_residue_type();
   }
-  if (chain_factory_.get_is(*this)) {
-    chain_id_ = chain_factory_.get(*this).get_chain_id();
+  if (data_->chain_factory_.get_is(*this)) {
+    data_->chain_id_ = data_->chain_factory_.get(*this).get_chain_id();
   }
-  if (copy_factory_.get_is(*this)) {
-    copy_index_ = copy_factory_.get(*this).get_copy_index();
+  if (data_->copy_factory_.get_is(*this)) {
+    data_->copy_index_ = data_->copy_factory_.get(*this).get_copy_index();
   }
 }
 
 TraverseHelper TraverseHelper::visit(NodeConstHandle n) const {
-  TraverseHelper ret = *this;
+  TraverseHelper ret;
+  ret.data_ = boost::make_shared<Data>(*data_);
+  ret.active_ = active_;
   ret.visit_impl(n);
   return ret;
 }
@@ -85,8 +96,8 @@ std::vector<TraverseHelper> TraverseHelper::get_children() const {
   std::vector<TraverseHelper> ret;
   // handle alternatives later
   RMF_FOREACH(NodeConstHandle ch, NodeConstHandle::get_children()) {
-    if (state_filter_ != -1 && state_factory_.get_is(ch) &&
-        state_factory_.get(ch).get_state_index() != state_filter_)
+    if (data_->state_filter_ != -1 && data_->state_factory_.get_is(ch) &&
+        data_->state_factory_.get(ch).get_state_index() != data_->state_filter_)
       continue;
     ret.push_back(visit(ch));
   }

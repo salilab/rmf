@@ -57,6 +57,7 @@ class RMFEXPORT AlternativesConst : public Decorator {
   NodeConstHandles get_alternatives(RepresentationType type) const;
 
   static std::string get_decorator_type_name() { return "AlternativesConst"; }
+  RMF_SHOWABLE(AlternativesConst, "Alternatives: " << get_node());
 };
 
 /** See also AlternativesConst and AlternativesFactory.
@@ -94,6 +95,7 @@ class RMFEXPORT AlternativesFactory : public Factory {
   bool get_is_static(NodeConstHandle nh) const {
     return nh.get_has_value(types_key_);
   }
+  RMF_SHOWABLE(AlternativesFactory, "AlternativesFactory");
 };
 
 #ifndef RMF_DOXYGEN

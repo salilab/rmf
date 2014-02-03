@@ -89,7 +89,7 @@ class Representation : public RepresentationConst {
   }
 
  public:
-#ifndef IMP_DOXYGEN
+#if !defined(SWIG) && !defined(IMP_DOXYGEN)
   void set_representation(Ints v) {
     try {
       get_node().set_value(representation_, v);
