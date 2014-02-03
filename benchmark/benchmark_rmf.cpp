@@ -22,7 +22,6 @@
 #include "RMF/Vector.h"
 #include "RMF/decorator/physics.h"
 #include "RMF/decorator/sequence.h"
-#include "RMF/HDF5/ConstFile.h"
 #include "RMF/enums.h"
 #include "RMF/infrastructure_macros.h"
 #include "RMF/log.h"
@@ -231,22 +230,22 @@ int main(int, char**) {
     std::cout << name_base << std::endl;
 #endif
     {
-      const std::string name = name_base + ".rmf3";
+      const std::string name = name_base + ".rmf";
       {
         RMF::FileHandle fh = RMF::create_rmf_file(name);
         std::pair<std::size_t, std::size_t> sizes =
-            benchmark_create(fh, "rmf3");
+            benchmark_create(fh, "rmf");
         std::cout << "raw, total, " << show_size(sizes.first + sizes.second)
                   << ", " << (sizes.first + sizes.second) << std::endl;
         std::cout << "raw, frame, " << show_size(sizes.second) << ", "
                   << sizes.second << std::endl;
       }
       {
-        RMF::FileConstHandle fh = benchmark_open(name, "rmf3");
-        benchmark_traverse(fh, "rmf3");
-        benchmark_load(fh, "rmf3");
+        RMF::FileConstHandle fh = benchmark_open(name, "rmf");
+        benchmark_traverse(fh, "rmf");
+        benchmark_load(fh, "rmf");
       }
-      benchmark_size(name, "rmf3");
+      benchmark_size(name, "rmf");
     }
     {
       const std::string name = name_base + ".rmfz";
@@ -262,19 +261,6 @@ int main(int, char**) {
       benchmark_size(name, "rmfz");
     }
     {
-      const std::string name = name_base + ".rmf";
-      {
-        RMF::FileHandle fh = RMF::create_rmf_file(name);
-        benchmark_create(fh, "rmf");
-      }
-      {
-        RMF::FileConstHandle fh = benchmark_open(name, "rmf");
-        benchmark_traverse(fh, "rmf");
-        benchmark_load(fh, "rmf");
-      }
-      benchmark_size(name, "rmf");
-    }
-    {
       RMF::BufferHandle buffer;
       {
         RMF::FileHandle fh = RMF::create_rmf_buffer(buffer);
@@ -285,32 +271,6 @@ int main(int, char**) {
         benchmark_traverse(fh, "buffer");
         benchmark_load(fh, "buffer");
       }
-    }
-    {
-      const std::string name = name_base + ".rmf2";
-      {
-        RMF::FileHandle fh = RMF::create_rmf_file(name);
-        benchmark_create(fh, "rmf2");
-      }
-      {
-        RMF::FileConstHandle fh = RMF::open_rmf_file_read_only(name);
-        benchmark_traverse(fh, "rmf2");
-        benchmark_load(fh, "rmf2");
-      }
-      benchmark_size(name, "rmf2");
-    }
-    {
-      const std::string name = name_base + ".rmfa";
-      {
-        RMF::FileHandle fh = RMF::create_rmf_file(name);
-        benchmark_create(fh, "rmfa");
-      }
-      {
-        RMF::FileConstHandle fh = RMF::open_rmf_file_read_only(name);
-        benchmark_traverse(fh, "rmfa");
-        benchmark_load(fh, "rmfa");
-      }
-      benchmark_size(name, "rmfa");
     }
   }
   catch (const std::exception& e) {
