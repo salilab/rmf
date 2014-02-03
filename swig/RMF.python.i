@@ -38,11 +38,6 @@ def get_example_path(name):
    dir.append(name)
    return os.path.join(*dir)
 
-suffixes=["rmf", "rmfz", "rmf-avro", "rmf3", "rmf-hdf5", "_rmf_test_buffer"]
-
-import RMF_HDF5
-HDF5=RMF_HDF5
-
 def _assert_signatures_equal(sa, sb):
   if sa == sb:
      return
@@ -52,4 +47,19 @@ def _assert_signatures_equal(sa, sb):
         stl = str(l)
         print stl
      raise RuntimeError("not equal")
+
+suffixes=["rmf", "rmfz"]
+
+try:
+  import RMF_HDF5
+  HDF5=RMF_HDF5
+except:
+  pass
+
+
 %}
+#if RMF_HAS_DEPRECATED_BACKENDS
+%pythoncode %{
+suffixes.extend(["rmf-avro", "rmf3", "rmf-hdf5", "_rmf_test_buffer"])
+%}
+#endif

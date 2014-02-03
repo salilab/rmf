@@ -10,8 +10,8 @@
 #define RMF_INTERNAL_SINGLE_AVRO_FILE_WRITER_H
 
 #include "avrocpp/api/DataFile.hh"
-#include "backend/avro/AllJSON.h"
-#include "backend/avro/FrameJSON.h"
+#include "AllJSON.h"
+#include "FrameJSON.h"
 #include <boost/shared_ptr.hpp>
 #include <string>
 #include <vector>
@@ -24,7 +24,7 @@
 #include "RMF/exceptions.h"
 #include "RMF/infrastructure_macros.h"
 #include "RMF/internal/SharedData.h"
-#include "backend/avro/AvroKeysAndCategories.h"
+#include "AvroKeysAndCategories.h"
 
 namespace internal_avro {
 template <typename T>

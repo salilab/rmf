@@ -17,9 +17,9 @@
 #include "RMF/HDF5/infrastructure_macros.h"
 #include "RMF/HDF5/types.h"
 #include "RMF/log.h"
-#include "backend/hdf5/HDF5DataSetCache1D.h"
-#include "backend/hdf5/HDF5DataSetCache2D.h"
-#include "backend/hdf5/names.h"
+#include "HDF5DataSetCache1D.h"
+#include "HDF5DataSetCache2D.h"
+#include "names.h"
 
 RMF_ENABLE_WARNINGS
 

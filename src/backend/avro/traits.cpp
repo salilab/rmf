@@ -492,7 +492,7 @@ BufferConstHandle try_convert(BufferConstHandle buffer, std::string message) {
   boost::shared_ptr<internal_avro::DataFileWriterBase> writer =
       boost::make_shared<internal_avro::DataFileWriterBase>(
           out_stream, internal_avro::compileJsonSchemaFromString(
-                          RMF::data_avro2::frame_json),
+                          RMF::data_avro::frame_json),
           16 * 1024, internal_avro::DEFLATE_CODEC);
 
   BackwardsFrame bf;

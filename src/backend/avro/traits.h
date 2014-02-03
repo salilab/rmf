@@ -27,7 +27,7 @@ namespace avro2 {
 namespace {
 internal_avro::ValidSchema get_schema() {
   static internal_avro::ValidSchema s =
-      internal_avro::compileJsonSchemaFromString(data_avro2::frame_json);
+      internal_avro::compileJsonSchemaFromString(data_avro::frame_json);
   return s;
 }
 }
@@ -106,7 +106,7 @@ struct FileWriterTraits : public FileWriterTraitsBase {
   FileWriterTraits(std::string path) : FileWriterTraitsBase(path) {
     writer_.reset(new internal_avro::DataFileWriterBase(
         path_.c_str(),
-        internal_avro::compileJsonSchemaFromString(RMF::data_avro2::frame_json),
+        internal_avro::compileJsonSchemaFromString(RMF::data_avro::frame_json),
         16 * 1024,
         ZIP ? internal_avro::DEFLATE_CODEC : internal_avro::NULL_CODEC));
   }
@@ -135,7 +135,7 @@ struct BufferWriterTraits {
     stream_ = internal_avro::memoryOutputStream();
     writer_.reset(new internal_avro::DataFileWriterBase(
         stream_,
-        internal_avro::compileJsonSchemaFromString(RMF::data_avro2::frame_json),
+        internal_avro::compileJsonSchemaFromString(RMF::data_avro::frame_json),
         16 * 1024, internal_avro::DEFLATE_CODEC));
   }
   template <class T>

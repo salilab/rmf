@@ -32,6 +32,8 @@
 
 #define RMF_TYPES_HEADER @RMF_TYPES_HEADER@
 
+#define RMF_HAS_DEPRECATED_BACKENDS @RMF_DEPRECATED_BACKENDS@
+
 #ifdef _MSC_VER
 #pragma warning(disable: 4003)
 #endif

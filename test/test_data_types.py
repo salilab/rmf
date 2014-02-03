@@ -58,7 +58,6 @@ class GenericTest(unittest.TestCase):
         """Test that the various data types work"""
         print "testing types"
         RMF.set_log_level("trace")
-        RMF.HDF5.set_show_errors(True)
         for suffix in RMF.suffixes:
             name = RMF._get_temporary_file_path("test_data_types." + suffix)
             #f= RMF.create_rmf_file(name)

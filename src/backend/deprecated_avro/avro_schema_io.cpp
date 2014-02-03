@@ -13,7 +13,7 @@
 
 #include "ValidSchema.hh"
 #include "avro_schema_io.h"
-#include "backend/avro/AllJSON.h"
+#include "AllJSON.h"
 
 RMF_ENABLE_WARNINGS
 
@@ -23,8 +23,9 @@ namespace avro_backend {
 void show(const RMF_avro_backend::Data& data, std::ostream& out) {
   boost::shared_ptr< ::internal_avro::OutputStream> os =
       internal_avro::ostreamOutputStream(out);
-  ::internal_avro::EncoderPtr encoder = internal_avro::jsonEncoder(
-      internal_avro::compileJsonSchemaFromString(data_avro::data_json));
+  ::internal_avro::EncoderPtr encoder =
+      internal_avro::jsonEncoder(internal_avro::compileJsonSchemaFromString(
+          data_deprecated_avro::data_json));
   encoder->init(*os);
   ::internal_avro::codec_traits<RMF_avro_backend::Data>::encode(*encoder, data);
   os->flush();

@@ -14,6 +14,10 @@ class GenericTest(unittest.TestCase):
     def test_perturbed(self):
         """Test filling a data set"""
         fn = RMF._get_temporary_file_path("fill.hdf5")
+        try:
+            import RMF_HDF5
+        except:
+            return
         f = RMF.HDF5.create_file(fn)
         ds = f.add_child_float_data_set_2d("test")
         ds.set_size([1, 3])

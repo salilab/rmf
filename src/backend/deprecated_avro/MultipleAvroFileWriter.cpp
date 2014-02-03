@@ -20,9 +20,9 @@
 #include "avrocpp/api/Compiler.hh"
 #include "avrocpp/api/DataFile.hh"
 #include "avrocpp/api/ValidSchema.hh"
-#include "backend/avro/AllJSON.h"
-#include "backend/avro/FrameJSON.h"
-#include "backend/avro/MultipleAvroFileBase.h"
+#include "AllJSON.h"
+#include "FrameJSON.h"
+#include "MultipleAvroFileBase.h"
 #include "generated/embed_jsons.h"
 
 RMF_ENABLE_WARNINGS
@@ -66,7 +66,7 @@ MultipleAvroFileWriter::~MultipleAvroFileWriter() { commit(); }
 #define RMF_COMMIT(UCName, lcname)                               \
   if (lcname##_dirty_) {                                         \
     write(lcname##_, internal_avro::compileJsonSchemaFromString( \
-                         data_avro::lcname##_json),              \
+                         data_deprecated_avro::lcname##_json),   \
           get_##lcname##_file_path());                           \
   }
 
@@ -80,7 +80,7 @@ void MultipleAvroFileWriter::commit() {
           categories_[i].writer.reset(
               new internal_avro::DataFileWriter<RMF_avro_backend::Data>(
                   name.c_str(), internal_avro::compileJsonSchemaFromString(
-                                    data_avro::data_json)));
+                                    data_deprecated_avro::data_json)));
         }
         catch (const std::exception& e) {
           RMF_THROW(Message(e.what()) << Component(name), IOException);
@@ -101,8 +101,8 @@ void MultipleAvroFileWriter::commit() {
       std::string name = get_category_static_file_path(Category(i));
       try {
         internal_avro::DataFileWriter<RMF_avro_backend::Data> writer(
-            name.c_str(),
-            internal_avro::compileJsonSchemaFromString(data_avro::data_json));
+            name.c_str(), internal_avro::compileJsonSchemaFromString(
+                              data_deprecated_avro::data_json));
         writer.write(static_categories_[i]);
         writer.flush();
       }
@@ -123,7 +123,7 @@ void MultipleAvroFileWriter::commit() {
           new internal_avro::DataFileWriter<RMF_avro_backend::Frame>(
               get_frames_file_path().c_str(),
               internal_avro::compileJsonSchemaFromString(
-                  data_avro::frame_json)));
+                  data_deprecated_avro::frame_json)));
     }
     frame_writer_->write(frame_);
     frames_dirty_ = false;

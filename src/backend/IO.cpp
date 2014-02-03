@@ -17,10 +17,12 @@
 #include "RMF/log.h"
 #include "RMF/infrastructure_macros.h"
 #include "avro/factory.h"
-#include "avro2/factory.h"
 #include "backend/IO.h"
 #include "backend/IOFactory.h"
-#include "hdf5/factory.h"
+#if RMF_HAS_DEPRECATED_BACKENDS
+#include "deprecated_avro/factory.h"
+#include "deprecated_hdf5/factory.h"
+#endif
 
 RMF_ENABLE_WARNINGS
 
@@ -32,12 +34,15 @@ struct GetFactories : public std::vector<boost::shared_ptr<IOFactory> > {
   GetFactories() {
     std::vector<boost::shared_ptr<IOFactory> > favro2 = avro2::get_factories();
     insert(end(), favro2.begin(), favro2.end());
+
+#if RMF_HAS_DEPRECATED_BACKENDS
     std::vector<boost::shared_ptr<IOFactory> > fhdf5 =
         hdf5_backend::get_factories();
     insert(end(), fhdf5.begin(), fhdf5.end());
     std::vector<boost::shared_ptr<IOFactory> > favro =
         avro_backend::get_factories();
     insert(end(), favro.begin(), favro.end());
+#endif
   }
 } factories;
 }

@@ -14,7 +14,7 @@
 #include "RMF/BufferHandle.h"
 #include "RMF/config.h"
 #include "backend/IOFactory.h"
-#include "backend/avro2/traits.h"
+#include "traits.h"
 #include "factory.h"
 #include "io.h"
 

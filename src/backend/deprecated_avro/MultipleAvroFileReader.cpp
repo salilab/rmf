@@ -24,9 +24,9 @@
 #include "avrocpp/api/Compiler.hh"
 #include "avrocpp/api/DataFile.hh"
 #include "avrocpp/api/ValidSchema.hh"
-#include "backend/avro/AllJSON.h"
-#include "backend/avro/FrameJSON.h"
-#include "backend/avro/MultipleAvroFileBase.h"
+#include "AllJSON.h"
+#include "FrameJSON.h"
+#include "MultipleAvroFileBase.h"
 #include "generated/embed_jsons.h"
 
 RMF_ENABLE_WARNINGS
@@ -58,7 +58,7 @@ void MultipleAvroFileReader::set_loaded_frame(FrameID frame) {
         categories_[i].reader.reset(
             new internal_avro::DataFileReader<RMF_avro_backend::Data>(
                 name.c_str(), ::internal_avro::compileJsonSchemaFromString(
-                                  data_avro::data_json)));
+                                  data_deprecated_avro::data_json)));
       }
       catch (const std::exception& e) {
         RMF_THROW(Message(e.what()) << Component(name), IOException);
@@ -137,7 +137,7 @@ void MultipleAvroFileReader::initialize_categories() {
       internal_avro::DataFileReader<UCName> re(                             \
           get_##lcname##_file_path().c_str(),                               \
           internal_avro::compileJsonSchemaFromString(                       \
-              data_avro::lcname##_json));                                   \
+              data_deprecated_avro::lcname##_json));                        \
       success = re.read(lcname##_);                                         \
     }                                                                       \
     catch (const std::exception& e) {                                       \
@@ -159,7 +159,8 @@ void MultipleAvroFileReader::reload() {
     try {
       internal_avro::DataFileReader<RMF_avro_backend::Frame> re(
           get_frames_file_path().c_str(),
-          internal_avro::compileJsonSchemaFromString(data_avro::frame_json));
+          internal_avro::compileJsonSchemaFromString(
+              data_deprecated_avro::frame_json));
       do {
         RMF_avro_backend::Frame frame;
         if (!re.read(frame)) break;
@@ -203,7 +204,7 @@ void MultipleAvroFileReader::add_category_data(Category cat) {
       categories_[cat.get_index()].reader.reset(
           new internal_avro::DataFileReader<RMF_avro_backend::Data>(
               dynamic_path.c_str(), internal_avro::compileJsonSchemaFromString(
-                                        data_avro::data_json)));
+                                        data_deprecated_avro::data_json)));
     }
     catch (const std::exception& e) {
       RMF_THROW(Message(e.what()) << Component(dynamic_path), IOException);
@@ -226,8 +227,8 @@ void MultipleAvroFileReader::add_category_data(Category cat) {
     bool success;
     try {
       internal_avro::DataFileReader<RMF_avro_backend::Data> reader(
-          static_path.c_str(),
-          internal_avro::compileJsonSchemaFromString(data_avro::data_json));
+          static_path.c_str(), internal_avro::compileJsonSchemaFromString(
+                                   data_deprecated_avro::data_json));
       success = reader.read(static_categories_[cat.get_index()]);
     }
     catch (const std::exception& e) {

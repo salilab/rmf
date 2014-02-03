@@ -28,7 +28,7 @@
 #include "avrocpp/api/Specific.hh"
 #include "avrocpp/api/Stream.hh"
 #include "avrocpp/api/ValidSchema.hh"
-#include "backend/avro/AvroKeysAndCategories.h"
+#include "AvroKeysAndCategories.h"
 #include "generated/embed_jsons.h"
 
 RMF_ENABLE_WARNINGS
@@ -93,13 +93,13 @@ void SingleAvroFile::flush() {
   if (!dirty_) return;
   if (!buffer_) {
     if (!text_) {
-      write(all_,
-            internal_avro::compileJsonSchemaFromString(data_avro::all_json),
+      write(all_, internal_avro::compileJsonSchemaFromString(
+                      data_deprecated_avro::all_json),
             get_file_path());
     } else {
-      write_text(
-          all_, internal_avro::compileJsonSchemaFromString(data_avro::all_json),
-          get_file_path());
+      write_text(all_, internal_avro::compileJsonSchemaFromString(
+                           data_deprecated_avro::all_json),
+                 get_file_path());
     }
   } else {
     buffer_->clear();
@@ -124,8 +124,8 @@ void SingleAvroFile::reload() {
     bool success;
     try {
       internal_avro::DataFileReader<RMF_avro_backend::All> rd(
-          get_file_path().c_str(),
-          internal_avro::compileJsonSchemaFromString(data_avro::all_json));
+          get_file_path().c_str(), internal_avro::compileJsonSchemaFromString(
+                                       data_deprecated_avro::all_json));
       success = rd.read(all_);
     }
     catch (std::exception& e) {
@@ -136,8 +136,8 @@ void SingleAvroFile::reload() {
     }
   } else if (!buffer_ && text_) {
     boost::shared_ptr<internal_avro::Decoder> decoder =
-        internal_avro::jsonDecoder(
-            internal_avro::compileJsonSchemaFromString(data_avro::all_json));
+        internal_avro::jsonDecoder(internal_avro::compileJsonSchemaFromString(
+            data_deprecated_avro::all_json));
     boost::shared_ptr<internal_avro::InputStream> stream =
         internal_avro::fileInputStream(get_file_path().c_str());
     decoder->init(*stream);

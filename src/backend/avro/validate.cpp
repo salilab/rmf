@@ -21,8 +21,8 @@
 #include "avrocpp/api/Specific.hh"
 #include "avrocpp/api/Stream.hh"
 #include "avrocpp/api/ValidSchema.hh"
-#include "backend/avro2/raw_frame.h"
-#include "backend/avro2/types.h"
+#include "raw_frame.h"
+#include "types.h"
 #include "types_encode_decode.h"  // IWYU pragma: keep
 #include "validate.h"
 
@@ -58,7 +58,7 @@ void validate_one(Tout fr, Tin) {
     internal_avro::EncoderPtr encoder = internal_avro::binaryEncoder();
     encoder->init(*out_stream);
     internal_avro::EncoderPtr ve = internal_avro::validatingEncoder(
-        internal_avro::compileJsonSchemaFromString(data_avro2::frame_json),
+        internal_avro::compileJsonSchemaFromString(data_avro::frame_json),
         encoder);
     internal_avro::encode(*ve, fr);
   }
@@ -68,7 +68,7 @@ void validate_one(Tout fr, Tin) {
     internal_avro::DecoderPtr decoder = internal_avro::binaryDecoder();
     decoder->init(*in_stream);
     internal_avro::DecoderPtr ve = internal_avro::validatingDecoder(
-        internal_avro::compileJsonSchemaFromString(data_avro2::frame_json),
+        internal_avro::compileJsonSchemaFromString(data_avro::frame_json),
         decoder);
     Tin fd;
     internal_avro::decode(*ve, fd);
@@ -82,7 +82,7 @@ void validate_raw(T fr) {
     internal_avro::EncoderPtr encoder = internal_avro::binaryEncoder();
     encoder->init(*out_stream);
     internal_avro::EncoderPtr ve = internal_avro::validatingEncoder(
-        internal_avro::compileJsonSchemaFromString(data_avro2::frame_json),
+        internal_avro::compileJsonSchemaFromString(data_avro::frame_json),
         encoder);
     internal_avro::encode(*ve, fr);
   }
@@ -92,7 +92,7 @@ void validate_raw(T fr) {
     internal_avro::DecoderPtr decoder = internal_avro::binaryDecoder();
     decoder->init(*in_stream);
     internal_avro::DecoderPtr ve = internal_avro::validatingDecoder(
-        internal_avro::compileJsonSchemaFromString(data_avro2::frame_json),
+        internal_avro::compileJsonSchemaFromString(data_avro::frame_json),
         decoder);
     rmf_raw_avro2::Frame fd;
     internal_avro::decode(*ve, fd);

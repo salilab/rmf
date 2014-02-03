@@ -27,7 +27,11 @@ class Tests(unittest.TestCase):
             del f
             del ik
             del sc
-            names = RMF.HDF5.get_open_handle_names()
+            try:
+                import RMF_HDF5
+            except:
+                continue
+            names = RMF_HDF5.get_open_handle_names()
             print names
             self.assertEqual(len(names), 0)
 

@@ -5,6 +5,7 @@
 
 #ifndef RMF_COMMON_H
 #define RMF_COMMON_H
+#include <RMF/config.h>
 #include <boost/program_options.hpp>                      // IWYU pragma: export
 #include <boost/program_options/options_description.hpp>  // IWYU pragma: export
 #include <boost/program_options/parsers.hpp>              // IWYU pragma: export
@@ -15,10 +16,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+#if RMF_HAS_DEPRECATED_BACKENDS
 #include "RMF/HDF5/ConstFile.h"  // IWYU pragma: export
-#include "RMF/log.h"             // IWYU pragma: export
-#include "RMF/utility.h"         // IWYU pragma: export
+#endif
+#include "RMF/log.h"      // IWYU pragma: export
+#include "RMF/utility.h"  // IWYU pragma: export
 
 namespace {
 extern std::string description;
@@ -45,9 +47,12 @@ boost::program_options::variables_map process_options(int argc, char* argv[]) {
   boost::program_options::options_description all;
   std::string log_level("Off");
   options.add_options()("help,h", "Get help on command line arguments.")(
-      "verbose,v", "Produce more output.")("hdf5-errors", "Show hdf5 errors.")(
-      "log-level", boost::program_options::value<std::string>(&log_level),
-      "What log level to use: Trace, Info, Warn, Error, Off");
+      "verbose,v", "Produce more output.")
+#if RMF_HAS_DEPRECATED_BACKENDS
+      ("hdf5-errors", "Show hdf5 errors.")
+#endif
+      ("log-level", boost::program_options::value<std::string>(&log_level),
+       "What log level to use: Trace, Info, Warn, Error, Off");
   all.add(positional_options).add(options);
   boost::program_options::store(
       boost::program_options::command_line_parser(argc, argv)
@@ -62,9 +67,11 @@ boost::program_options::variables_map process_options(int argc, char* argv[]) {
   if (variables_map.count("verbose")) {
     verbose = true;
   }
+#if RMF_HAS_DEPRECATED_BACKENDS
   if (variables_map.count("hdf5-errors")) {
     RMF::HDF5::set_show_errors(true);
   }
+#endif
   RMF::set_log_level(log_level);
   return variables_map;
 }

@@ -9,7 +9,7 @@
 #ifndef RMF_INTERNAL_SINGLE_AVRO_FILE_BASE_H
 #define RMF_INTERNAL_SINGLE_AVRO_FILE_BASE_H
 
-#include "backend/avro/AllJSON.h"
+#include "AllJSON.h"
 #include <string>
 #include <vector>
 

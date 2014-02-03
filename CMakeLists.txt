@@ -11,10 +11,20 @@ include(cmake_modules/FindLog4CXX.cmake)
 include(cmake_modules/IMPFindC++11.cmake)
 include(cmake_modules/IMPFindCompilerFlags.cmake)
 
-imp_execute_process("Making RMF.h" ${PROJECT_SOURCE_DIR}
-  COMMAND "python" "${PROJECT_SOURCE_DIR}/tools/developer_tools/make_all_header.py" ${PROJECT_BINARY_DIR}/include/RMF.h RMF ${PROJECT_SOURCE_DIR}/include/RMF)
+if(NOT DEFINED RMF_DEPRECATED_BACKENDS)
+set(RMF_DEPRECATED_BACKENDS 1 CACHE BOOL "Whether to build deprecated backends.")
+endif()
+
+if(RMF_DEPRECATED_BACKENDS)
+include(FindHDF5)
+find_package(HDF5 REQUIRED)
+
 imp_execute_process("Making RMF/HDF5.h" ${PROJECT_SOURCE_DIR}
   COMMAND "python" "${PROJECT_SOURCE_DIR}/tools/developer_tools/make_all_header.py" ${PROJECT_BINARY_DIR}/include/RMF/HDF5.h RMF/HDF5 ${PROJECT_SOURCE_DIR}/include/RMF/HDF5)
+endif()
+
+imp_execute_process("Making RMF.h" ${PROJECT_SOURCE_DIR}
+  COMMAND "python" "${PROJECT_SOURCE_DIR}/tools/developer_tools/make_all_header.py" ${PROJECT_BINARY_DIR}/include/RMF.h RMF ${PROJECT_SOURCE_DIR}/include/RMF)
 
 
 message(STATUS "Running setup_cmake.py")
@@ -66,8 +76,6 @@ find_package(Boost COMPONENTS system filesystem thread program_options iostreams
 
 include(GNUInstallDirs)
 
-include(FindHDF5)
-find_package(HDF5 REQUIRED)
 
 include_directories(${HDF5_INCLUDE_DIRS})
 set(RMF_INCLUDE_PATH ${RMF_INCLUDE_PATH} ${HDF5_INCLUDE_DIRS}

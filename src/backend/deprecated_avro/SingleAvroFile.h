@@ -9,7 +9,7 @@
 #ifndef RMF_INTERNAL_SINGLE_AVRO_FILE_H
 #define RMF_INTERNAL_SINGLE_AVRO_FILE_H
 
-#include "backend/avro/AllJSON.h"
+#include "AllJSON.h"
 #include <boost/shared_ptr.hpp>
 #include <string>
 #include <utility>

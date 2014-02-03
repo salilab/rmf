@@ -14,7 +14,7 @@
 #include "avrocpp/api/Specific.hh"
 #include "avrocpp/api/Stream.hh"
 #include "avrocpp/api/ValidSchema.hh"
-#include "backend/avro2/raw_frame.h"
+#include "backend/avro/raw_frame.h"
 #include "common.h"
 #include "generated/embed_jsons.h"
 
@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
     RMF_ADD_INPUT_FILE("rmf");
     process_options(argc, argv);
     internal_avro::ValidSchema schema =
-        internal_avro::compileJsonSchemaFromString(RMF::data_avro2::frame_json);
+        internal_avro::compileJsonSchemaFromString(RMF::data_avro::frame_json);
     internal_avro::DataFileReader<rmf_raw_avro2::Frame> reader(input.c_str(),
                                                                schema);
     rmf_raw_avro2::Frame frame;

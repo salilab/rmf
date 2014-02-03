@@ -10,8 +10,8 @@
 
 #include "MultipleAvroFileBase.h"
 #include "RMF/internal/paths.h"
-#include "backend/avro/AllJSON.h"
-#include "backend/avro/AvroKeysAndCategories.h"
+#include "AllJSON.h"
+#include "AvroKeysAndCategories.h"
 
 RMF_ENABLE_WARNINGS
 

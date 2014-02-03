@@ -11,7 +11,7 @@ class GenericTest(unittest.TestCase):
             print i, g.get_child_name(i), g.get_child_is_group(i)
 
     def _copy_to(self, suffix):
-        nm = RMF._get_test_input_file_path("sink.rmf")
+        nm = RMF._get_test_input_file_path("sink.rmf3")
         onm = RMF._get_temporary_file_path("sink_out." + suffix)
         print nm, onm
         f = RMF.open_rmf_file_read_only(nm)
@@ -56,7 +56,6 @@ class GenericTest(unittest.TestCase):
 
     def test_perturbed(self):
         """Test copying an rmf file"""
-        RMF.HDF5.set_show_errors(True)
         for suffix in RMF.suffixes:
             print suffix
             self._copy_to(suffix)

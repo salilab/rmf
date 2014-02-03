@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <avrocpp/api/Compiler.hh>
 #include <avrocpp/api/DataFile.hh>
-#include <backend/avro2/raw_frame.h>
+#include <backend/avro/raw_frame.h>
 #include <boost/shared_ptr.hpp>
 #include <generated/embed_jsons.h>
 #include <iostream>
@@ -13,14 +13,14 @@
 #include "avrocpp/api/Specific.hh"
 #include "avrocpp/api/Stream.hh"
 #include "avrocpp/api/ValidSchema.hh"
-#include "backend/avro2/data_file.h"
-#include "backend/avro2/types.h"
+#include "backend/avro/data_file.h"
+#include "backend/avro/types.h"
 
 namespace {
 void write(std::string name) {
   internal_avro::DataFileWriterBase writer(
       name.c_str(),
-      internal_avro::compileJsonSchemaFromString(RMF::data_avro2::frame_json),
+      internal_avro::compileJsonSchemaFromString(RMF::data_avro::frame_json),
       16 * 1024);
   RMF::avro2::FileDataChanges file_data;
   RMF::avro2::Frame frame;
@@ -38,14 +38,14 @@ void write(std::string name) {
 void read(std::string name) {
   internal_avro::DataFileReader<RMF::avro2::FileData> reader(
       name.c_str(),
-      internal_avro::compileJsonSchemaFromString(RMF::data_avro2::frame_json));
+      internal_avro::compileJsonSchemaFromString(RMF::data_avro::frame_json));
   RMF::avro2::FileData file_data;
   RMF::avro2::load_file_data(reader, file_data);
   assert(file_data.description == "description1");
   assert(file_data.max_id.get_index() == 2);
   internal_avro::DataFileReader<RMF::avro2::Frame> frame_reader(
       name.c_str(),
-      internal_avro::compileJsonSchemaFromString(RMF::data_avro2::frame_json));
+      internal_avro::compileJsonSchemaFromString(RMF::data_avro::frame_json));
   for (unsigned int i = 0; i <= file_data.max_id.get_index(); ++i) {
     RMF::avro2::Frame frame;
     load_frame(RMF::FrameID(i), frame_reader, frame);
@@ -53,7 +53,7 @@ void read(std::string name) {
 }
 void read_raw(std::string name) {
   internal_avro::ValidSchema schema =
-      internal_avro::compileJsonSchemaFromString(RMF::data_avro2::frame_json);
+      internal_avro::compileJsonSchemaFromString(RMF::data_avro::frame_json);
   internal_avro::DataFileReader<rmf_raw_avro2::Frame> reader(name.c_str(),
                                                              schema);
   rmf_raw_avro2::Frame frame;

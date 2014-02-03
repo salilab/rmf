@@ -26,7 +26,7 @@
 #include "RMF/internal/SharedData.h"
 #include "RMF/internal/large_set_map.h"
 #include "RMF/types.h"
-#include "backend/avro/AvroKeysAndCategories.h"
+#include "AvroKeysAndCategories.h"
 
 namespace RMF_avro_backend {
 struct Frame;

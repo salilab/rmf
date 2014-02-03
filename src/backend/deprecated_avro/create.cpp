@@ -23,7 +23,7 @@
 #include "RMF/compiler_macros.h"
 #include "SingleAvroFile.h"
 #include "backend/IOFactory.h"
-#include "backend/avro/AvroSharedData.impl.h"
+#include "AvroSharedData.impl.h"
 
 namespace RMF {
 namespace backends {

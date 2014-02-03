@@ -6,6 +6,8 @@
  *
  */
 
+#include <RMF/config.h>
+#if RMF_HAS_DEPRECATED_BACKENDS
 #include <H5Dpublic.h>
 #include <H5Fpublic.h>
 #include <H5Ipublic.h>
@@ -97,3 +99,7 @@ int main(int argc, char* argv[]) {
   set_size(ds, 3, 4);
   return 0;
 }
+
+#else
+int main(int, char * []) { return 1; }
+#endif

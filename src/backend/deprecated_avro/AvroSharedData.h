@@ -23,17 +23,20 @@
 RMF_ENABLE_WARNINGS namespace RMF {
   namespace avro_backend {
 
-  template <class OutType, class InType> inline OutType get_as(InType in) {
+  template <class OutType, class InType>
+  inline OutType get_as(InType in) {
     return OutType(in);
   }
-  template <class Out> inline Out get_as(NodeID ni) {
+  template <class Out>
+  inline Out get_as(NodeID ni) {
     if (ni == NodeID())
       return Out(-1);
     else
       return Out(ni.get_index());
   }
 
-  template <> inline NodeID get_as(int i) {
+  template <>
+  inline NodeID get_as(int i) {
     if (i == -1)
       return NodeID();
     else
@@ -51,7 +54,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
   using namespace RMF::backward_types;
 
-  template <class Base> class AvroSharedData : public Base {
+  template <class Base>
+  class AvroSharedData : public Base {
     typedef Base P;
 
     typedef std::map<std::string, int32_t> KeyIndex;
@@ -212,7 +216,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   };
 
   }  // namespace avro_backend
-}    /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 

@@ -11,6 +11,16 @@ foreach (jf ${jsonfiles})
 set(jsonfiles_expanded ${jsonfiles_expanded} ${PROJECT_SOURCE_DIR}/src/${jf})
 endforeach()
 
+if(NOT RMF_DEPRECATED_BACKENDS)
+list(REMOVE_ITEM cppfiles hdf5_wrapper.cpp)
+foreach(f ${cppfiles})
+if(${f} MATCHES .*deprecated.*)
+message(STATUS "removing ${f}")
+list(REMOVE_ITEM cppfiles ${f})
+endif()
+endforeach()
+endif()
+
 add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/generated/embed_json.h" "${PROJECT_BINARY_DIR}/src/generated/embed_json.cpp"
    COMMAND python "${PROJECT_SOURCE_DIR}/tools/build/make-embed.py"
               "${PROJECT_BINARY_DIR}/src/generated/" ${jsonfiles_expanded}
