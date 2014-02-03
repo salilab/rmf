@@ -9,4 +9,4 @@ script:
   - git submodule init
   - git submodule update
   - mkdir build
-  - cd build && cmake .. && make && ctest
+  - cd build && cmake -DRMF_DEPRECATED_BACKENDS=0 .. && make && ctest
