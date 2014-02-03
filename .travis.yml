@@ -5,10 +5,10 @@ branches:
     - develop
 compiler:
   - gcc
-#  - clang
+  - clang
 env:
-  - PRECMD="sudo apt-get install hdf5-dev && deprecated=1"
-  - PRECMD="deprecated=0"
+  - PRECMD="sudo apt-get install hdf5-dev && export deprecated=1"
+  - PRECMD="export deprecated=0"
 git:
   submodules: false
 before_install: sudo apt-get update && sudo apt-get install libboost-all-dev swig && git submodule update --init --recursive
