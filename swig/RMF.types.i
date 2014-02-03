@@ -54,34 +54,6 @@
 
 
 
-
-/*%{
-  BOOST_STATIC_ASSERT(Convert<IMP::Particle>::converter ==2);
-  BOOST_STATIC_ASSERT(Convert<IMP::internal::_TrivialDecorator>::converter ==3);
-  %}*/
-
-%define RMF_SWIG_SHOWSTUFF(Name)
-  std::string __str__() const {
-  std::ostringstream out;
-  self->show(out);
-    return out.str();
-  }
-  std::string __repr__() const {
-    std::ostringstream out;
-    self->show(out);
-    return out.str();
-  }
-%enddef
-
-%define RMF_SWIG_SHOWABLE(Namespace, Name)
-     %extend Namespace::Name {
-  RMF_SWIG_SHOWSTUFF(Name);
- }
-%enddef
-
-
-
-
 %define RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Name, PluralName, CONSTREF)
   %typemap(in) Namespace::PluralName CONSTREF {
   try {
@@ -154,18 +126,7 @@
 %typemap(directorin) PluralName CONSTREF {
   $input = ConvertSequence<PluralName, ConvertSequence< IntermediateName, Convert< Name > > >::create_python_object($1_name, $descriptor(Name*), SWIG_POINTER_OWN);
  }
-%typemap(in) PluralName* {
-  collections_like_##PluralName##_must_be_passed_by_value_or_const_ref;
- }
-/*%typemap(out) PluralName* {
-  collections_like_##PluralName##_must_be_returned_by_value_or_const_ref;
-  }*/
-%typemap(in) PluralName& {
-  collections_like_##PluralName##_must_be_passed_by_value_or_const_ref;
- }
-%typemap(out) PluralName& {
-  collections_like_##PluralName##_must_be_returned_by_value_or_const_ref;
- }
+
 %enddef
 
 
@@ -179,39 +140,12 @@
 %define RMF_SWIG_VALUE_CHECKS(Namespace, Name, Type)
 %typemap(in) Namespace::Name const& = Type const &;
 %typecheck(SWIG_TYPECHECK_POINTER) Namespace::Name const& = Type const &;
-%typemap(in) Namespace::Name & {
-  values_like_##Name##_must_be_passed_by_value_or_const_ref_not_non_const_ref;
-}
 
 %typemap(in) Namespace::Name *self = Type *;
 %typecheck(SWIG_TYPECHECK_POINTER) Namespace::Name *self = Type *;
-%typemap(in) Namespace::Name * {
-  values_like_##Name##_must_be_passed_by_value_or_const_ref_not_non_const_ref;
-}
-%typemap(directorin) Namespace::Name * {
-  values_like_##Name##_must_be_passed_by_value_or_const_ref_not_non_const_ref;
-  }
-
-
-
-//%typemap(out) Namespace::Name const& = SWIGTYPE const &;
-/*%typemap(out) Namespace::Name & {
-  values_like_##Name##_must_be_returned_by_value_or_const_ref_not_non_const_ref;
-  }*/
 
 %typemap(out) Namespace::Name *self = Type *;
 %typemap(out) Namespace::Name *Namespace::Name = Type *;
-/*%typemap(out) Namespace::Name * {
-  values_like_##Name##_must_be_returned_by_value_or_const_ref_not_pointer;
-  }*/
-
-
-%typemap(directorout) Namespace::Name & {
-  values_like_##Name##_must_be_returned_by_value_or_const_ref_not_non_const_ref;
-}
-%typemap(directorout) Namespace::Name * {
-  values_like_##Name##_must_be_returned_by_value_or_const_ref_not_pointer;
-}
 // for newer swig
 %typemap(out) Namespace::Name *Namespace::Name::Name = Type *;
 
@@ -226,10 +160,6 @@ RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(IMP::ParticleIndex, Namespace::Name, Namespace:
 RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, IMP::ParticleIndex, Name, const&);
 RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, IMP::ParticleIndex, Name,);
 %pythoncode %{
-PluralName=list
-_plural_types.append(#PluralName)
-_value_types.append(#Name)
-%}
 %feature("valuewrapper") PluralName;
 %enddef
  //SWIGTYPE_p_##SwigNamespace##Name
@@ -253,11 +183,6 @@ RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Namespace::Name, PluralName,);
 %typemap(directorin) Namespace::Name const& {
   $input = SWIG_NewPointerObj(new Namespace::Name($1_name), $descriptor(Namespace::Name*), SWIG_POINTER_OWN | %newpointer_flags);
  }
-%pythoncode %{
-PluralName=list
-_plural_types.append(#PluralName)
-_value_types.append(#Name)
-%}
 %feature("valuewrapper") PluralName;
 %enddef
 
@@ -271,45 +196,20 @@ RMF_SWIG_VALUE_IMPL(Namespace, Name, TemplateName, PluralName, PluralName);
 %define RMF_SWIG_VALUE_BUILTIN(Namespace, Name, PluralName, Type)
 %typemap(in) Namespace::Name const& = Type const &;
 %typecheck(SWIG_TYPECHECK_POINTER) Namespace::Name const& = Type const &;
-%typemap(in) Namespace::Name & {
-  values_like_##Name##_must_be_passed_by_value_or_const_ref_not_non_const_ref;
-}
-%typemap(in) Namespace::Name * {
-  values_like_##Name##_must_be_passed_by_value_or_const_ref_not_non_const_ref;
-}
-%typemap(directorin) Namespace::Name * {
-  values_like_##Name##_must_be_passed_by_value_or_const_ref_not_non_const_ref;
-  }
-//%typemap(out) Namespace::Name const& = SWIGTYPE const &;
-%typemap(out) Namespace::Name & {
-  values_like_##Name##_must_be_returned_by_value_or_const_ref_not_non_const_ref;
-}
 
-/*%typemap(out) Namespace::Name * {
-  values_like_##Name##_must_be_returned_by_value_or_const_ref_not_pointer;
-  }*/
-%typemap(directorout) Namespace::Name & {
-  values_like_##Name##_must_be_returned_by_value_or_const_ref_not_non_const_ref;
-}
-/*%typemap(directorout) Namespace::Name * {
-  values_like_##Name##_must_be_returned_by_value_or_const_ref_not_pointer;
-  }*/
 RMF_SWIG_VALUE_IMPL(Namespace, Name, TemplateName, PluralName, PluralName);
 %enddef
 
 %define RMF_SWIG_VALUE(Namespace, Name, PluralName)
 RMF_SWIG_VALUE_INSTANCE(Namespace, Name, Name, PluralName)
-RMF_SWIG_SHOWABLE(Namespace, Name);
 %enddef
 
  // a value that has implicit constructors
 %define RMF_SWIG_VALUE_IMPLICIT(Namespace, Name, PluralName)
 RMF_SWIG_VALUE_IMPL(Namespace, Name, Name, PluralName, PluralName);
-RMF_SWIG_SHOWABLE(Namespace, Name);
 %enddef
 
 %define RMF_SWIG_VALUE_TEMPLATE(Namespace, Name)
-RMF_SWIG_SHOWABLE(Namespace, Name);
 %enddef
 
 
@@ -317,28 +217,6 @@ RMF_SWIG_SHOWABLE(Namespace, Name);
 
 %define RMF_SWIG_NATIVE_VALUE(Name)
 
-%typemap(in) Name & {
-  values_like_##Name##_must_be_passed_by_value_or_const_ref_not_non_const_ref;
-}
-%typemap(in) Name * {
-  values_like_##Name##_must_be_passed_by_value_or_const_ref_not_non_const_ref;
-}
-%typemap(directorin) Name * {
-  values_like_##Name##_must_be_passed_by_value_or_const_ref_not_non_const_ref;
-  }
-//%typemap(out) Namespace::Name const& = SWIGTYPE const &;
-/*%typemap(out) Name & {
-  values_like_##Name##_must_be_returned_by_value_or_const_ref_not_non_const_ref;
-  }*/
-/*%typemap(out) Name * {
-  values_like_##Name##_must_be_returned_by_value_or_const_ref_not_pointer;
-  }*/
-%typemap(directorout) Name & {
-  values_like_##Name##_must_be_returned_by_value_or_const_ref_not_non_const_ref;
-}
-/*%typemap(directorout) Name * {
-  values_like_##Name##_must_be_returned_by_value_or_const_ref_not_pointer;
-  }*/
 %typemap(in) std::vector< Name > const& {
   try {
     // hack to get around swig's value wrapper being randomly used
@@ -457,28 +335,9 @@ RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Name, Namespace::PluralName, Namespace::PluralL
 %enddef
 
 
-
-/* Apply the passed macro to each type used in RMF */
-%define RMF_SWIG_FOREACH_TYPE(macroname)
-  macroname(int, Int);
-  macroname(ints, Ints);
-  macroname(float, Float);
-  macroname(floats, Floats);
-  macroname(string, String);
-  macroname(strings, Strings);
-  macroname(vector3, Vector3);
-  macroname(vector4, Vector4);
-  macroname(vector3s, Vector3s);
-%enddef
-
 /* Declare the needed things for each type */
 %define RMF_SWIG_DECLARE_TYPE(lcname, Ucname)
 RMF_SWIG_VALUE_INSTANCE(RMF, Ucname##Key, Ucname##Key, Ucname##Keys);
-%enddef
-
-%define RMF_SWIG_DEFINE_TYPE(lcname, Ucname)
-%template(_##Ucname##Traits) RMF::Traits<RMF::Ucname>;
-%template(Ucname##Key) RMF::ID<RMF::Ucname##Traits>;
 %enddef
 
 
@@ -487,4 +346,21 @@ RMF_SWIG_VALUE_INSTANCE(RMF, Ucname##Key, Ucname##Key, Ucname##Keys);
     def function(self, *args):
         return _handle_nullable( $action(self, *args))
 %}
+%enddef
+
+
+%define RMF_SWIG_VECTOR(NAMESPACE, TYPE)
+ %typemap(out) NAMESPACE::TYPE & front {
+        $result = SWIG_NewPointerObj(%new_copy(*$1, $*ltype), $descriptor,
+        SWIG_POINTER_OWN | %newpointer_flags);
+  }
+%typemap(out) NAMESPACE::TYPE & back {
+        $result = SWIG_NewPointerObj(%new_copy(*$1, $*ltype), $descriptor,
+        SWIG_POINTER_OWN | %newpointer_flags);
+        }
+%typemap(out) NAMESPACE::TYPE & __getitem__ {
+        $result = SWIG_NewPointerObj(%new_copy(*$1, $*ltype), $descriptor,
+        SWIG_POINTER_OWN | %newpointer_flags);
+        }
+%template(TYPE##s) std::vector<NAMESPACE::TYPE>;
 %enddef

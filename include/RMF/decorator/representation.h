@@ -108,7 +108,6 @@ class Representation : public RepresentationConst {
     }
     RMF_DECORATOR_CATCH();
   }
-#endif
 
   void set_representation(const NodeConstHandles &v) {
     try {
@@ -146,6 +145,7 @@ class Representation : public RepresentationConst {
     }
     RMF_DECORATOR_CATCH();
   }
+#endif
   void set_representation(const NodeIDs &v) {
     try {
       set_representation(set_it(v));

@@ -1,17 +1,10 @@
 %module "RMF_HDF5"
 %feature("autodoc", 1);
-// turn off the warning as it mostly triggers on methods (and lots of them)
-%warnfilter(321);
+
+%include "RMF.warnings.i"
 
 %{
 #include <RMF/compiler_macros.h>
-
-// needs to go beyond the POP
-RMF_GCC_PRAGMA( diagnostic ignored "-Wmissing-declarations")
-RMF_GCC_PRAGMA( diagnostic ignored "-Wunused-but-set-variable")
-RMF_PUSH_WARNINGS
-RMF_GCC_PRAGMA( diagnostic ignored "-Wunused-value")
-
 /* SWIG generates long class names with wrappers that use certain Boost classes,
    longer than the 255 character name length for MSVC. This shouldn't affect
    the code, but does result in a lot of warning output, so disable this warning
@@ -34,13 +27,6 @@ RMF_VC_PRAGMA(warning( disable: 4503 ))
 %include "std_pair.i"
 
 %include "RMF/config.h"
-
-%pythoncode %{
-_value_types=[]
-_object_types=[]
-_raii_types=[]
-_plural_types=[]
-%}
 
 
 
@@ -127,15 +113,12 @@ RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##ConstDataSet3D, Ucname##ConstDataSet3
 %enddef
 
 RMF_SWIG_VALUE(RMF::HDF5, Object, Objects);
-RMF_SWIG_VALUE_TEMPLATE(RMF::HDF5, ConstAttributes);
 RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, ConstGroupAttributes,ConstGroupAttributes, ConstGroupAttributesList);
 RMF_SWIG_VALUE(RMF::HDF5, ConstGroup, ConstGroups);
 RMF_SWIG_VALUE(RMF::HDF5, ConstFile, ConstFiles);
-RMF_SWIG_VALUE_TEMPLATE(RMF::HDF5, MutableAttributes);
 RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, GroupAttributes,GroupAttributes, GroupAttributesList);
 RMF_SWIG_VALUE(RMF::HDF5, Group, Groups);
 RMF_SWIG_VALUE(RMF::HDF5, File, Files);
-RMF_SWIG_VALUE_TEMPLATE(RMF::HDF5, DataSetD);
 RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, DataSetIndex1D, DataSetIndex1D, DataSetIndex1Ds);
 RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, DataSetIndex2D, DataSetIndex2D, DataSetIndex2Ds);
 RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, DataSetIndex3D, DataSetIndex3D, DataSetIndex3Ds);

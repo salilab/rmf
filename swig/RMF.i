@@ -55,29 +55,6 @@
 %include "RMF/infrastructure_macros.h"
 
 
-%define RMF_SWIG_VECTOR(NAMESPACE, TYPE)
- %typemap(out) NAMESPACE::TYPE & front {
-        $result = SWIG_NewPointerObj(%new_copy(*$1, $*ltype), $descriptor,
-        SWIG_POINTER_OWN | %newpointer_flags);
-  }
-%typemap(out) NAMESPACE::TYPE & back {
-        $result = SWIG_NewPointerObj(%new_copy(*$1, $*ltype), $descriptor,
-        SWIG_POINTER_OWN | %newpointer_flags);
-        }
-%typemap(out) NAMESPACE::TYPE & __getitem__ {
-        $result = SWIG_NewPointerObj(%new_copy(*$1, $*ltype), $descriptor,
-        SWIG_POINTER_OWN | %newpointer_flags);
-        }
-%template(TYPE##s) std::vector<NAMESPACE::TYPE>;
-%enddef
-
-
-%pythoncode %{
-_value_types=[]
-_plural_types=[]
-%}
-
-
 
 RMF_SWIG_PAIR(RMF, Index, IndexRange, IndexRanges)
 RMF_SWIG_PAIR(RMF, Int, IntRange, IntRanges)
@@ -89,8 +66,6 @@ RMF_SWIG_PAIR(RMF, Int, IntRange, IntRanges)
 %template(FrameIDs) std::vector<RMF::ID<RMF::FrameTag> >;
 %template(NodeIDs) std::vector<RMF::ID<RMF::NodeTag> >;
 %template(Categories) std::vector<RMF::ID<RMF::CategoryTag> >;
-
-RMF_SWIG_FOREACH_TYPE(RMF_SWIG_DECLARE_TYPE);
 
 %include "RMF.Vector.i"
 
