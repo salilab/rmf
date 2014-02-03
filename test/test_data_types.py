@@ -44,7 +44,9 @@ class GenericTest(unittest.TestCase):
             k = f.get_key(cat, "hi" + str(i), p[0])
             v = nh.get_value(k)
             print v, p[1]
-            self.assertEqual(v, p[1])
+            # to handle list comparisons
+            t = type(p[1])
+            self.assertEqual(p[1], t(v))
 
     def _do_test_types(self, name):
         print "write"
