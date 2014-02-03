@@ -32,6 +32,7 @@ class MyData:
 
 
 def _handle_atom_color(c, at):
+    return
     ck = tuple((int(255. * x) for x in c))
     if ck not in colors:
         name = "rmf" + str(len(colors))
@@ -130,22 +131,27 @@ def _get_molecule_name(name, res):
     return name
 
 
+def _create_molecule(n, mydata, resolution, created):
+    model = models.Indexed()
+    name = _get_molecule_name(n.get_name(), resolution)
+    if name in created:
+        name = name + "-2"
+    print n, name, resolution
+    th = RMF.TraverseHelper(n, name, resolution)
+    created[name] = (th, model)
+    print "creating molecule", name
+    cgol = []
+    _create_atoms(th, mydata, model, cgol, created)
+    frame = n.get_file().get_current_frame().get_index() + 1
+
+    if len(cgol) > 0:
+        print cgol
+        cmd.load_cgo(cgol, name + "-graphics", frame)
+
+
 def _create_molecules(n, mf, cf, mydata, resolution, created):
     if mf.get_is(n) or cf.get_is(n):
-        model = models.Indexed()
-        name = _get_molecule_name(n.get_name(), resolution)
-        if name in created:
-            name = name + "-2"
-        th = RMF.TraverseHelper(n, name, resolution)
-        created[name] = (th, model)
-        print "creating molecule", name
-        cgol = []
-        _create_atoms(th, mydata, model, cgol, created)
-        frame = n.get_file().get_current_frame().get_index() + 1
-
-        if len(cgol) > 0:
-            print cgol
-            cmd.load_cgo(cgol, name + "-graphics", frame)
+        _create_molecule(n, mydata, resolution, created)
     elif n.get_type() == RMF.BOND and mydata.bond_factory.get_is(n):
         _handle_bond(n, created, mydata)
     else:
@@ -154,29 +160,32 @@ def _create_molecules(n, mf, cf, mydata, resolution, created):
 
 
 def _do_it(path):
-        fh = RMF.open_rmf_file_read_only(path)
-        mf = RMF.Molecule(fh)
-        cf = RMF.ChainFactory(fh)
+    fh = RMF.open_rmf_file_read_only(path)
+    mf = RMF.Molecule(fh)
+    cf = RMF.ChainFactory(fh)
 
-        res = RMF.get_resolutions(fh.get_root_node(), RMF.PARTICLE, .1)
-        if len(res) == 1:
-            res = [-1]
-        fh.set_current_frame(RMF.FrameID(0))
-        diameter = RMF.get_diameter(fh.get_root_node())
-        mydata = MyData(fh, diameter)
-        for f in fh.get_frames():
-            created = {}
-            fh.set_current_frame(f)
-            for r in res:
-                _create_molecules(
-                    fh.get_root_node(),
-                    mf,
-                    cf,
-                    mydata,
-                    r,
-                    created)
-            for c in created:
-                cmd.load_model(created[c][1], c, f.get_index())
+    res = RMF.get_resolutions(fh.get_root_node(), RMF.PARTICLE, .1)
+    if len(res) == 1:
+        res = [-1]
+    fh.set_current_frame(RMF.FrameID(0))
+    diameter = RMF.get_diameter(fh.get_root_node())
+    mydata = MyData(fh, diameter)
+    for f in fh.get_frames():
+        created = {}
+        fh.set_current_frame(f)
+        for r in res:
+            _create_molecules(
+                fh.get_root_node(),
+                mf,
+                cf,
+                mydata,
+                r,
+                created)
+            if len(created) == 0:
+                # fall back
+                _create_molecule(fh.get_root_node(), mydata, r, created)
+        for c in created:
+            cmd.load_model(created[c][1], c, f.get_index() + 1)
 
 
 def _open_rmf(path):

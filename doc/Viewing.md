@@ -15,7 +15,7 @@ supports
 - geometry
 
 
-# VMD # {#vmdplugin}
+# VMD # {#vmd}
 
 We provide a plugin for
 [VMD](http://www.ks.uiuc.edu/Research/vmd/). Instructions for how to
@@ -26,3 +26,10 @@ plugin supports
 - fast loading
 - displaying restraints as bonds
 - static geometry
+
+# Pymol # {#pymol}
+
+We provide a plugin for Pymol. Instruction can be found at the
+[Pymol plugin page](\ref pymolplugin). The plugin supports creating
+multiple molecules from one RMF based on chains or RMF::decorator::Molecule
+labels as well as dynamics geometry.
