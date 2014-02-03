@@ -1,4 +1,8 @@
 language: cpp
+branches:
+  only:
+    - master
+    - develop
 compiler:
   - gcc
 #  - clang
@@ -6,7 +10,7 @@ git:
   submodules: false
 # Change this to your needs
 before_install:
-  - sudo apt-get install libboost1.55-all-dev swig && git submodule update --init --recursive
+  - sudo apt-get install libboost-all-dev swig && git submodule update --init --recursive
 #  - sudo apt-get install libboost1.48-all-dev swig && git submodule update --init --recursive
 script:
   - mkdir build && cd build && cmake -DRMF_DEPRECATED_BACKENDS=0 .. && make && ctest
