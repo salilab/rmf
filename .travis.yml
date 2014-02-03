@@ -2,11 +2,12 @@ language: cpp
 compiler:
   - gcc
   - clang
+git:
+  submodules: false
 # Change this to your needs
 before_install:
-  - sudo apt-get install libboost-all-dev
+  - sudo apt-get install libboost-all-dev swig
+    git submodule update --init --recursive
 script:
-  - git submodule init
-  - git submodule update
   - mkdir build
-  - cd build && cmake -DRMF_DEPRECATED_BACKENDS=0 .. && make && ctest
+    cd build && cmake -DRMF_DEPRECATED_BACKENDS=0 .. && make && ctest
