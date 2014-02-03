@@ -15,7 +15,7 @@ namespace RMF_vmd {
 namespace {
 template <class R, class OIt>
 void my_copy_n(const R &range, std::size_t n, OIt out) {
-  if (boost::distance(range) <= n) {
+  if (static_cast<std::size_t>(boost::distance(range)) <= n) {
     // older boost doesn't have range copy
     std::copy(range.begin(), range.end(), out);
   } else {
@@ -53,10 +53,10 @@ Data::Data(std::string name, int *num_atoms)
 
   bodies_.push_back(Body());
 
-  boost::array<char, 2> default_chain = {0};
-  boost::array<char, 8> default_resname = {0};
-  boost::array<char, 2> default_altid = {0};
-  boost::array<char, 8> default_segment = {0};
+  boost::array<char, 2> default_chain = {{0}};
+  boost::array<char, 8> default_resname = {{0}};
+  boost::array<char, 2> default_altid = {{0}};
+  boost::array<char, 8> default_segment = {{0}};
   boost::array<int, 2> na =
       fill_bodies(file_.get_root_node(), 0, default_chain, -1, default_resname,
                   default_altid, default_segment, resolution_);
