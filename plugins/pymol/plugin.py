@@ -76,25 +76,27 @@ def _handle_atom(helper, mydata, model, cgol):
     _handle_atom_coords(helper, mydata, model, cgol, pd, at)
     at.segi = ""
     if mydata.atom_factory.get_is(helper):
-        _handle_element(helper, mydata, model, cgol, at)
+        _handle_atom_element(helper, mydata, model, cgol, at)
     model.add_atom(at)
 
 
-def _handle_bond(helper, mydata, model, cgol):
-    bd = mydata.bond_factory.get(helper)
+def _handle_bond(n, created, mydata):
+    bd = mydata.bond_factory.get(n)
     b = chempy.Bond()
     bd0 = bd.get_bonded_0()
     bd1 = bd.get_bonded_1()
-    if helper.get_is_displayed(bd0) and helper.get_is_displayed(bd1):
-        b.index = [helper.get_index(bd0),
-                   helper.get_index(bd1)]
-        model.add_bond(b)
+    for helpern in created:
+        hp = created[helpern]
+        if hp[0].get_is_displayed(bd0) and hp[0].get_is_displayed(bd1):
+            b.index = [hp[0].get_index(bd0),
+                       hp[0].get_index(bd1)]
+            hp[1].add_bond(b)
 
 
-def _create_atoms(helper, mydata, model, cgol):
+def _create_atoms(helper, mydata, model, cgol, created):
     child = False
     for ch in helper.get_children():
-        if _create_atoms(ch, mydata, model, cgol):
+        if _create_atoms(ch, mydata, model, cgol, created):
             child = True
     tp = helper.get_type()
     if tp == RMF.REPRESENTATION and not child and mydata.particle_factory.get_is(helper):
@@ -114,7 +116,7 @@ def _create_atoms(helper, mydata, model, cgol):
         elif mydata.segment_factory.get_is(helper):
             pass
     elif tp == RMF.BOND and mydata.bond_factory.get_is(helper):
-        _handle_bond(helper, mydata, model, cgol)
+        _handle_bond(helper, created, mydata)
 
     return False
 
@@ -128,29 +130,34 @@ def _get_molecule_name(name, res):
     return name
 
 
-def _create_molecules(n, mydata, resolution):
-    if n.get_type() == RMF.REPRESENTATION:
+def _create_molecules(n, mf, cf, mydata, resolution, created):
+    if mf.get_is(n) or cf.get_is(n):
         model = models.Indexed()
         name = _get_molecule_name(n.get_name(), resolution)
+        if name in created:
+            name = name + "-2"
+        th = RMF.TraverseHelper(n, name, resolution)
+        created[name] = (th, model)
         print "creating molecule", name
         cgol = []
-        _create_atoms(
-            RMF.TraverseHelper(n, name, resolution),
-            mydata,
-            model,
-            cgol)
+        _create_atoms(th, mydata, model, cgol, created)
         frame = n.get_file().get_current_frame().get_index() + 1
-        cmd.load_model(model, name, frame)
+
         if len(cgol) > 0:
             print cgol
             cmd.load_cgo(cgol, name + "-graphics", frame)
+    elif n.get_type() == RMF.BOND and mydata.bond_factory.get_is(n):
+        _handle_bond(n, created, mydata)
     else:
         for c in n.get_children():
-            _create_molecules(c, mydata, resolution)
+            _create_molecules(c, mf, cf, mydata, resolution, created)
 
 
 def _do_it(path):
         fh = RMF.open_rmf_file_read_only(path)
+        mf = RMF.Molecule(fh)
+        cf = RMF.ChainFactory(fh)
+
         res = RMF.get_resolutions(fh.get_root_node(), RMF.PARTICLE, .1)
         if len(res) == 1:
             res = [-1]
@@ -158,9 +165,18 @@ def _do_it(path):
         diameter = RMF.get_diameter(fh.get_root_node())
         mydata = MyData(fh, diameter)
         for f in fh.get_frames():
+            created = {}
             fh.set_current_frame(f)
             for r in res:
-                _create_molecules(fh.get_root_node(), mydata, r)
+                _create_molecules(
+                    fh.get_root_node(),
+                    mf,
+                    cf,
+                    mydata,
+                    r,
+                    created)
+            for c in created:
+                cmd.load_model(created[c][1], c, f.get_index())
 
 
 def _open_rmf(path):

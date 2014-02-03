@@ -21,6 +21,7 @@ namespace RMF {
 class Label {
   IntKey k_;
   std::string name_;
+
  protected:
   template <class FH>
   Label(FH fh, std::string category, std::string name)
@@ -31,12 +32,8 @@ class Label {
 
  public:
   Label() {}
-  bool get_is(NodeConstHandle nh) const {
-    return nh.get_has_value(k_);
-  }
-  void set_is(NodeHandle nh) const {
-    nh.set_value(k_, 1);
-  }
+  bool get_is(NodeConstHandle nh) const { return nh.get_has_value(k_); }
+  void set_is(NodeHandle nh) const { nh.set_value(k_, 1); }
   RMF_SHOWABLE(Label, name_);
 };
 
