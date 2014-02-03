@@ -13,6 +13,7 @@ endforeach()
 
 if(NOT RMF_DEPRECATED_BACKENDS)
 list(REMOVE_ITEM cppfiles hdf5_wrapper.cpp)
+list(REMOVE_ITEM cppfiles backend/BackwardsIO.cpp)
 foreach(f ${cppfiles})
 if(${f} MATCHES .*deprecated.*)
 message(STATUS "removing ${f}")

@@ -11,12 +11,12 @@
 
 #include "RMF/config.h"
 #include "RMF/types.h"
-#include "RMF/HDF5/types.h"
-#include <boost/array.hpp>
 #include <boost/cstdint.hpp>
-#include <cmath>
-#include <cstdlib>
 #include <limits>
+#include <cmath>
+#if RMF_HAS_DEPRECATED_BACKENDS
+#include "RMF/HDF5/types.h"
+#endif
 
 RMF_ENABLE_WARNINGS
 
@@ -51,8 +51,10 @@ struct Traits<Int> : public ValueTraitsBase<Int> {
   static ReturnType get_null_value() {
     return std::numeric_limits<Type>::max();
   }
+#if RMF_HAS_DEPRECATED_BACKENDS
   typedef HDF5::IntTraits HDF5Traits;
   typedef boost::int32_t AvroType;
+#endif
   static std::string get_tag() { return "ki"; }
   static std::string get_name() { return "int"; }
 };
@@ -65,8 +67,10 @@ struct Traits<Float> : public ValueTraitsBase<Float> {
   static ReturnType get_null_value() {
     return std::numeric_limits<Type>::infinity();
   }
+#if RMF_HAS_DEPRECATED_BACKENDS
   typedef HDF5::FloatTraits HDF5Traits;
   typedef double AvroType;
+#endif
   static bool get_are_equal(ArgumentType a, ArgumentType b) {
     return std::abs(a - b) < .0000001 * std::abs(a + b) + .000000001;
   }
@@ -81,8 +85,10 @@ struct Traits<String> : public ValueTraitsBase<String> {
     static Type r;
     return r;
   }
+#if RMF_HAS_DEPRECATED_BACKENDS
   typedef HDF5::StringTraits HDF5Traits;
   typedef Type AvroType;
+#endif
   static std::string get_tag() { return "ks"; }
   static std::string get_name() { return "string"; }
 };
@@ -111,23 +117,28 @@ struct SequenceTraitsBase {
 
 template <>
 struct Traits<Ints> : public SequenceTraitsBase<Int> {
+#if RMF_HAS_DEPRECATED_BACKENDS
   typedef HDF5::IntsTraits HDF5Traits;
   typedef std::vector<Traits<Int>::AvroType> AvroType;
+#endif
 };
 
 template <>
 struct Traits<Floats> : public SequenceTraitsBase<Float> {
+#if RMF_HAS_DEPRECATED_BACKENDS
   typedef HDF5::FloatsTraits HDF5Traits;
   typedef std::vector<double> AvroType;
+#endif
 };
 
 template <>
 struct Traits<Strings> : public SequenceTraitsBase<String> {
+#if RMF_HAS_DEPRECATED_BACKENDS
   typedef HDF5::StringsTraits HDF5Traits;
   typedef Type AvroType;
+#endif
 };
 
-// swig gets confused
 template <unsigned int D>
 class Traits<Vector<D> > : public ReferenceTraitsBase<Vector<D> > {
   static std::string make_tag() {
