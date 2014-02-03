@@ -39,7 +39,7 @@ class GenericTest(unittest.TestCase):
         """touch all types so all static hids are created"""
         print "touching"
         f = RMF.HDF5.create_file(
-            RMF.HDF5._get_temporary_file_path(nm + "_types.hdf5"))
+            RMF._get_temporary_file_path(nm + "_types.hdf5"))
         self._do_touch_types(f, False)
         print "done touching"
 

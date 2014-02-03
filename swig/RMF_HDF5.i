@@ -185,31 +185,3 @@ RMF_SWIG_FOREACH_HDF5_TYPE(RMF_SWIG_DEFINE_HDF5_TYPE);
 %include "RMF/HDF5/ConstFile.h"
 %include "RMF/HDF5/Group.h"
 %include "RMF/HDF5/File.h"
-
-%pythoncode %{
-_tmpdir=None
-
-def _get_temporary_file_path(name):
-   global _tmpdir
-   if not _tmpdir:
-       import tempfile
-       _tmpdir = tempfile.mkdtemp()
-   import os.path
-   return os.path.join(_tmpdir, name)
-
-def _get_test_input_file_path(name):
-   import sys
-   import os.path
-   dir= os.path.split(sys.argv[0])[0]
-   return os.path.join(dir, "input", name)
-
-def get_example_path(name):
-   import sys
-   import os.path
-   dir= os.path.split(sys.argv[0])[0]
-   return os.path.join(dir, name)
-%}
-
-%{
-RMF_POP_WARNINGS
-%}

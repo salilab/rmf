@@ -55,9 +55,7 @@
 %include "RMF/infrastructure_macros.h"
 
 
-
-RMF_SWIG_PAIR(RMF, Index, IndexRange, IndexRanges)
-RMF_SWIG_PAIR(RMF, Int, IntRange, IntRanges)
+%template(IntRange) std::pair<int,int>;
 
 %include "RMF/ID.h"
 %template(FrameID) RMF::ID<RMF::FrameTag>;

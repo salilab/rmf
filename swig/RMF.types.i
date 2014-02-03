@@ -301,32 +301,7 @@ try {
 %enddef
 
 
-%define RMF_SWIG_RAII(Namespace, Name)
-RMF_SWIG_RAII_INSTANCE(Namespace, Name, Name)
-RMF_SWIG_SHOWABLE(Namespace, Name);
-%enddef
 
-%define RMF_SWIG_RAII_TEMPLATE(Namespace, Name)
-RMF_SWIG_SHOWABLE(Namespace, Name);
-%enddef
-
-
-
-%define RMF_SWIG_PAIR(Namespace, Name, PairName, PluralName)
-RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Namespace::Name, PairName, const&);
-RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Namespace::Name, PairName,);
-RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Namespace::Name, Namespace::PairName, Namespace::PluralName, const&);
-RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Namespace::Name, Namespace::PairName, Namespace::PluralName,);
-%feature("valuewrapper") PluralName;
-%enddef
-
-%define RMF_SWIG_NATIVE_PAIR(Namespace, Name, PairName, PluralName)
-RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Name, PairName, const&);
-RMF_SWIG_SEQUENCE_TYPEMAP(Namespace, Name, PairName,);
-RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Name, Namespace::PairName, Namespace::PluralName, const&);
-RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Name, Namespace::PairName, Namespace::PluralName,);
-%feature("valuewrapper") PluralName;
-%enddef
 
 %define RMF_SWIG_NATIVE_VALUES_LIST(Namespace, Name, PluralName, PluralListName)
 RMF_SWIG_VALUE_CHECKS(Namespace, PluralListName, SWIGTYPE);
@@ -335,10 +310,10 @@ RMF_SWIG_NESTED_SEQUENCE_TYPEMAP(Name, Namespace::PluralName, Namespace::PluralL
 %enddef
 
 
-/* Declare the needed things for each type */
-%define RMF_SWIG_DECLARE_TYPE(lcname, Ucname)
-RMF_SWIG_VALUE_INSTANCE(RMF, Ucname##Key, Ucname##Key, Ucname##Keys);
-%enddef
+
+
+
+
 
 
 %define RMF_SHADOW_NULLABLE(Class, function)
