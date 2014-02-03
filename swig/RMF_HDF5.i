@@ -44,10 +44,20 @@ def get_data_types():
    return _types_list
 %}
 
+%template(Ints) std::vector<int>;
+%template(Floats) std::vector<float>;
+%template(Strings) std::vector<std::string>;
+%template(Doubles) std::vector<double>;
+%template(IntsList) std::vector<std::vector<int> >;
+%template(FloatsList) std::vector<std::vector<float> >;
+%template(StringsList) std::vector<std::vector<std::string> >;
+%template(DoublesList) std::vector<std::vector<double> >;
+
+
 /* Apply the passed macro to each type used in RMF */
 %define RMF_SWIG_FOREACH_HDF5_TYPE(macroname)
   macroname(int, Int, Ints, int);
-macroname(ints, Ints, IntsList, RMF::HDF5::Ints);
+  macroname(ints, Ints, IntsList, RMF::HDF5::Ints);
   macroname(float, Float, Floats, double);
   macroname(floats, Floats, FloatsList, RMF::HDF5::Floats);
   macroname(index, Index, Indexes, int);
@@ -56,17 +66,6 @@ macroname(ints, Ints, IntsList, RMF::HDF5::Ints);
   macroname(strings, Strings, StringsList, RMF::HDF5::Strings);
 %enddef
 
-
-RMF_SWIG_NATIVE_VALUES_LIST(RMF::HDF5, double, Floats, FloatsList);
-RMF_SWIG_NATIVE_VALUES_LIST(RMF::HDF5, int, Ints, IntsList);
-RMF_SWIG_NATIVE_VALUES_LIST(RMF::HDF5, std::string, Strings, StringsList);
-RMF_SWIG_VALUE_BUILTIN(RMF::HDF5, Float, Floats, double);
-RMF_SWIG_VALUE_BUILTIN(RMF::HDF5, Int, Ints, int);
-RMF_SWIG_VALUE_BUILTIN(RMF::HDF5, String, Strings, std::string);
-RMF_SWIG_NATIVE_VALUE(float);
-RMF_SWIG_NATIVE_VALUE(double);
-RMF_SWIG_NATIVE_VALUE(int);
-RMF_SWIG_NATIVE_VALUE(std::string);
 
 /* Declare the needed things for each type */
 %define RMF_SWIG_DECLARE_HDF5_TYPE(lcname, Ucname, Ucnames, Type)
@@ -85,15 +84,6 @@ namespace RMF {
 %pythoncode %{
 _types_list.append(#lcname)
 %}
-RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##DataSet1D, Ucname##DataSet1D, Ucname##DataSet1Ds);
-RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##DataSet2D, Ucname##DataSet2D, Ucname##DataSet2Ds);
-RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##DataSet3D, Ucname##DataSet3D, Ucname##DataSet3Ds);
-RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##DataSet1DAttributes, Ucname##DataSet1DAttributes, Ucname##DataSet1DAttributesList);
-RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##DataSet2DAttributes, Ucname##DataSet2DAttributes, Ucname##DataSet2DAttributesList);
-RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##DataSet3DAttributes, Ucname##DataSet3DAttributes, Ucname##DataSet3DAttributesList);
-RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##ConstDataSet1D, Ucname##ConstDataSet1D, Ucname##ConstDataSet1Ds);
-RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##ConstDataSet2D, Ucname##ConstDataSet2D, Ucname##ConstDataSet2Ds);
-RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##ConstDataSet3D, Ucname##ConstDataSet3D, Ucname##ConstDataSet3Ds);
 %enddef
 
 
@@ -112,16 +102,6 @@ RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##ConstDataSet3D, Ucname##ConstDataSet3
 %template(Ucname##DataSet3D) RMF::HDF5::DataSetD<RMF::HDF5::Ucname##Traits, 3>;
 %enddef
 
-RMF_SWIG_VALUE(RMF::HDF5, Object, Objects);
-RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, ConstGroupAttributes,ConstGroupAttributes, ConstGroupAttributesList);
-RMF_SWIG_VALUE(RMF::HDF5, ConstGroup, ConstGroups);
-RMF_SWIG_VALUE(RMF::HDF5, ConstFile, ConstFiles);
-RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, GroupAttributes,GroupAttributes, GroupAttributesList);
-RMF_SWIG_VALUE(RMF::HDF5, Group, Groups);
-RMF_SWIG_VALUE(RMF::HDF5, File, Files);
-RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, DataSetIndex1D, DataSetIndex1D, DataSetIndex1Ds);
-RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, DataSetIndex2D, DataSetIndex2D, DataSetIndex2Ds);
-RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, DataSetIndex3D, DataSetIndex3D, DataSetIndex3Ds);
 
 RMF_SWIG_FOREACH_HDF5_TYPE(RMF_SWIG_DECLARE_HDF5_TYPE);
 

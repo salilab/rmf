@@ -33,7 +33,8 @@ class GenericTest(unittest.TestCase):
             mds.set_size([1])
             mds.set_value([0], p[1])
             vo = mds.get_value([0])
-            self.assertEqual(vo, p[1])
+            t = type(p[1])
+            self.assertEqual(t(vo), p[1])
 
     def _touch_all_types(self, nm):
         """touch all types so all static hids are created"""
@@ -120,7 +121,7 @@ class GenericTest(unittest.TestCase):
         ds.set_size(I3(10, 10, 10))
         ds.set_block(I3(2, 3, 4), I3(3, 4, 5), range(0, 3 * 4 * 5))
         got = ds.get_block(I3(2, 3, 4), I3(3, 4, 5))
-        self.assertEqual(got, range(0, 3 * 4 * 5))
+        self.assertEqual(list(got), range(0, 3 * 4 * 5))
         del g
         del f
         del ds
@@ -181,7 +182,7 @@ class GenericTest(unittest.TestCase):
         out = ds.get_value([0, 0])
         print out
         print ds.get_value([0, 1])
-        self.assertEqual(ind, out)
+        self.assertEqual(ind, list(out))
 
         del ds
         del f
@@ -191,7 +192,7 @@ class GenericTest(unittest.TestCase):
         in2 = ds.get_value([0, 0])
         in3 = ds.get_value([1, 1])
         self.assertEqual(in2, out)
-        self.assertEqual(in3, [])
+        self.assertEqual(list(in3), [])
 
     def test_arrays_strings(self):
         """Test strings data set 2d"""
@@ -270,7 +271,7 @@ class GenericTest(unittest.TestCase):
         print f.get_float_attribute("at")
         self.assertEqual(
             RMF.HDF5.get_number_of_open_handles(), num_base_handles + 2)
-        self.assertEqual(f.get_float_attribute("at"), [2.0])
+        self.assertEqual(list(f.get_float_attribute("at")), [2.0])
         self.assertEqual(
             RMF.HDF5.get_number_of_open_handles(), num_base_handles + 2)
         print "string"
