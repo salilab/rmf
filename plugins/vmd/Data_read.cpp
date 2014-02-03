@@ -95,6 +95,7 @@ int Data::read_bonds(int *nbonds, int **fromptr, int **toptr,
 
   RMF_FOREACH(int bt,
               boost::make_iterator_range(*bondtype, *bondtype + *nbonds)) {
+    RMF_UNUSED(bt);
     RMF_INTERNAL_CHECK(bt >= 0 && bt < *nbondtypes, "Invalid bond type ");
   }
   return VMDPLUGIN_SUCCESS;

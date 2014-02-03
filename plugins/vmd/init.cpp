@@ -16,6 +16,7 @@ molfile_plugin_t pluginz;
 
 template <class M>
 int catch_exceptions(std::string name, void *mydata, M m) {
+  RMF_UNUSED(name);
   RMF_TRACE(name);
   try {
     RMF_vmd::Data *data = reinterpret_cast<RMF_vmd::Data *>(mydata);
