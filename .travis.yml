@@ -1,0 +1,12 @@
+language: cpp
+compiler:
+  - gcc
+  - clang
+# Change this to your needs
+before_install:
+  - sudo apt-get install libboost-dev
+script:
+  - git submodule init
+  - git submodule update
+  - mkdir build
+  - cd build && cmake .. && make && ctest
