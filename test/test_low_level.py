@@ -50,7 +50,7 @@ class GenericTest(unittest.TestCase):
         self._touch_all_types("pert")
         num_base_handles = RMF.HDF5.get_number_of_open_handles()
         f = RMF.HDF5.create_file(
-            RMF.HDF5._get_temporary_file_path("test.hdf5"))
+            RMF._get_temporary_file_path("test.hdf5"))
         self._show(f)
         print "adding"
         g = f.add_child_group("hi")
@@ -62,7 +62,7 @@ class GenericTest(unittest.TestCase):
         del ff
         self.assertEqual(
             RMF.HDF5.get_number_of_open_handles(), num_base_handles)
-        f = RMF.HDF5.open_file(RMF.HDF5._get_temporary_file_path("test.hdf5"))
+        f = RMF.HDF5.open_file(RMF._get_temporary_file_path("test.hdf5"))
         print "showing"
         self._show(f)
         del f
@@ -74,7 +74,7 @@ class GenericTest(unittest.TestCase):
         self._touch_all_types("datasets")
         num_base_handles = RMF.HDF5.get_number_of_open_handles()
         f = RMF.HDF5.create_file(
-            RMF.HDF5._get_temporary_file_path("testd.hdf5"))
+            RMF._get_temporary_file_path("testd.hdf5"))
         self._show(f)
         print "adding"
         g = f.add_child_group("hi")
@@ -109,7 +109,7 @@ class GenericTest(unittest.TestCase):
         self._touch_all_types("block_datasets")
         num_base_handles = RMF.HDF5.get_number_of_open_handles()
         f = RMF.HDF5.create_file(
-            RMF.HDF5._get_temporary_file_path("testdb.hdf5"))
+            RMF._get_temporary_file_path("testdb.hdf5"))
         self._show(f)
         print "adding"
         g = f.add_child_group("hi")
@@ -132,7 +132,7 @@ class GenericTest(unittest.TestCase):
         self._touch_all_types("growing_datasets")
         num_base_handles = RMF.HDF5.get_number_of_open_handles()
         f = RMF.HDF5.create_file(
-            RMF.HDF5._get_temporary_file_path("testdg.hdf5"))
+            RMF._get_temporary_file_path("testdg.hdf5"))
         self._show(f)
         print "adding"
         g = f.add_child_group("hi")
@@ -168,7 +168,7 @@ class GenericTest(unittest.TestCase):
     def test_arrays(self):
         """Test arrays of integers"""
         f = RMF.HDF5.create_file(
-            RMF.HDF5._get_temporary_file_path("testadg.hdf5"))
+            RMF._get_temporary_file_path("testadg.hdf5"))
         self._show(f)
         print "adding"
         ds = f.add_child_ints_data_set_2d("coords")
@@ -186,7 +186,7 @@ class GenericTest(unittest.TestCase):
         del ds
         del f
         f = RMF.HDF5.open_file(
-            RMF.HDF5._get_temporary_file_path("testadg.hdf5"))
+            RMF._get_temporary_file_path("testadg.hdf5"))
         ds = f.get_child_ints_data_set_2d("coords")
         in2 = ds.get_value([0, 0])
         in3 = ds.get_value([1, 1])
@@ -196,7 +196,7 @@ class GenericTest(unittest.TestCase):
     def test_arrays_strings(self):
         """Test strings data set 2d"""
         f = RMF.HDF5.create_file(
-            RMF.HDF5._get_temporary_file_path("testadgs.hdf5"))
+            RMF._get_temporary_file_path("testadgs.hdf5"))
         self._show(f)
         print "adding"
         ds = f.add_child_string_data_set_2d("strings")
@@ -214,7 +214,7 @@ class GenericTest(unittest.TestCase):
         del ds
         del f
         f = RMF.HDF5.open_file(
-            RMF.HDF5._get_temporary_file_path("testadgs.hdf5"))
+            RMF._get_temporary_file_path("testadgs.hdf5"))
         ds = f.get_child_string_data_set_2d("strings")
         in2 = ds.get_value([0, 0])
         in3 = ds.get_value([1, 1])
@@ -224,7 +224,7 @@ class GenericTest(unittest.TestCase):
     def test_arrays_strings_1d(self):
         """Test strings data set 1d"""
         f = RMF.HDF5.create_file(
-            RMF.HDF5._get_temporary_file_path("testadgs1.hdf5"))
+            RMF._get_temporary_file_path("testadgs1.hdf5"))
         self._show(f)
         print "adding"
         ds = f.add_child_string_data_set_1d("strings")
@@ -243,7 +243,7 @@ class GenericTest(unittest.TestCase):
         del ds
         del f
         f = RMF.HDF5.open_file(
-            RMF.HDF5._get_temporary_file_path("testadgs1.hdf5"))
+            RMF._get_temporary_file_path("testadgs1.hdf5"))
         ds = f.get_child_string_data_set_1d("strings")
         in2 = ds.get_value([0])
         in3 = ds.get_value([1])
@@ -255,7 +255,7 @@ class GenericTest(unittest.TestCase):
         self._touch_all_types("attributes")
         num_base_handles = RMF.HDF5.get_number_of_open_handles()
         f = RMF.HDF5.create_file(
-            RMF.HDF5._get_temporary_file_path("testa.hdf5"))
+            RMF._get_temporary_file_path("testa.hdf5"))
         self.assertEqual(
             RMF.HDF5.get_number_of_open_handles(), num_base_handles + 1)
         self._show(f)
@@ -289,7 +289,7 @@ class GenericTest(unittest.TestCase):
     def test_get_groups(self):
         """Test getting of child groups"""
         f = RMF.HDF5.create_file(
-            RMF.HDF5._get_temporary_file_path("test_get_groups.hdf5"))
+            RMF._get_temporary_file_path("test_get_groups.hdf5"))
         ch = f.add_child_group("hi")
         chb = f.get_child_group(0)
         self.assertEqual(ch.get_name(), chb.get_name())
