@@ -117,23 +117,23 @@ $(document).ready(function(){initNavTree('make__reference__frames_8py_source.htm
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment"># first make a copy at the origin</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;origin = rh.add_child(<span class="stringliteral">&quot;origin&quot;</span>, RMF.REPRESENTATION)</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;rbo = reference_frame_factory.get(origin)</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;rbo.set_translation([0, 0, 0])</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;rbo.set_rotation([1, 0, 0, 0])</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;rbo.set_translation(<a class="code" href="classRMF_1_1Vector.html">RMF.Vector3</a>(0, 0, 0))</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;rbo.set_rotation(<a class="code" href="classRMF_1_1Vector.html">RMF.Vector4</a>(1, 0, 0, 0))</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;x = origin.add_child(<span class="stringliteral">&quot;x&quot;</span>, RMF.GEOMETRY)</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;sx = segment_factory.get(x)</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;sx.set_coordinates_list([<a class="code" href="classRMF_1_1Vector.html">RMF.Vector3</a>(0, 0, 0), <a class="code" href="classRMF_1_1Vector.html">RMF.Vector3</a>(1, 0, 0)])</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;cx = color_factory.get(x)</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;cx.set_rgb_color([1, 0, 0])</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;cx.set_rgb_color(<a class="code" href="classRMF_1_1Vector.html">RMF.Vector3</a>(1, 0, 0))</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;y = origin.add_child(<span class="stringliteral">&quot;y&quot;</span>, RMF.GEOMETRY)</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;sy = segment_factory.get(y)</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;sy.set_coordinates_list([<a class="code" href="classRMF_1_1Vector.html">RMF.Vector3</a>(0, 0, 0), <a class="code" href="classRMF_1_1Vector.html">RMF.Vector3</a>(0, 1, 0)])</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;cy = color_factory.get(y)</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;cy.set_rgb_color([0, 1, 0])</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;cy.set_rgb_color(<a class="code" href="classRMF_1_1Vector.html">RMF.Vector3</a>(0, 1, 0))</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;z = origin.add_child(<span class="stringliteral">&quot;z&quot;</span>, RMF.GEOMETRY)</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;sz = segment_factory.get(z)</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;sz.set_coordinates_list([<a class="code" href="classRMF_1_1Vector.html">RMF.Vector3</a>(0, 0, 0), <a class="code" href="classRMF_1_1Vector.html">RMF.Vector3</a>(0, 0, 1)])</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;cz = color_factory.get(z)</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;cz.set_rgb_color([0, 0, 1])</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;cz.set_rgb_color(<a class="code" href="classRMF_1_1Vector.html">RMF.Vector3</a>(0, 0, 1))</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"># now we add another copy</span></div>
@@ -145,7 +145,7 @@ $(document).ready(function(){initNavTree('make__reference__frames_8py_source.htm
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;remote.add_child(x)</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;remote.add_child(y)</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;remote.add_child(z)</div>
-<div class="ttc" id="classRMF_1_1Vector_html"><div class="ttname"><a href="classRMF_1_1Vector.html">RMF::Vector</a></div><div class="ttdef"><b>Definition:</b> <a href="Vector_8h_source.html#l00026">Vector.h:26</a></div></div>
+<div class="ttc" id="classRMF_1_1Vector_html"><div class="ttname"><a href="classRMF_1_1Vector.html">RMF::Vector&lt; 3 &gt;</a></div></div>
 <div class="ttc" id="namespaceRMF_html_ab8681fee96c0b5e2cb33cd723e99b1b0"><div class="ttname"><a href="namespaceRMF.html#ab8681fee96c0b5e2cb33cd723e99b1b0">RMF::create_rmf_file</a></div><div class="ttdeci">FileHandle create_rmf_file(std::string path)</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

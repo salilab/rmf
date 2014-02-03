@@ -129,8 +129,8 @@ $(document).ready(function(){initNavTree('reference_frame_particle_8py-example.h
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;frame = rh.add_child(<span class="stringliteral">&quot;frame&quot;</span>, RMF.REPRESENTATION)</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;rbo = reference_frame_factory.get(frame)</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;rbo.set_translation([5, 0, 0])</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;rbo.set_rotation([1, 0, 0, 0])</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;rbo.set_translation(<a class="code" href="classRMF_1_1Vector.html">RMF.Vector3</a>(5, 0, 0))</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;rbo.set_rotation(<a class="code" href="classRMF_1_1Vector.html">RMF.Vector4</a>(1, 0, 0, 0))</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;pd = particle_factory.get(frame)</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;pd.set_radius(5)</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;pd.set_mass(2)</div>

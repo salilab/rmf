@@ -123,18 +123,18 @@ $(document).ready(function(){initNavTree('alias_8py-example.html','');});
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordflow">for</span> j <span class="keywordflow">in</span> range(0, 10):</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        curh = curph.add_child(<span class="stringliteral">&quot;atom&quot;</span> + str(j), RMF.REPRESENTATION)</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        p = pf.get(curh)</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        p.set_coordinates([3 * i, 3 * j, 0])</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        p.set_coordinates(<a class="code" href="classRMF_1_1Vector.html">RMF.Vector3</a>(3 * i, 3 * j, 0))</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        p.set_mass(1)</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        p.set_radius(1)</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        c = cf.get(curh)</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordflow">if</span> j % 3 == 0:</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            c.set_rgb_color([1, 0, 0])</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            c.set_rgb_color(<a class="code" href="classRMF_1_1Vector.html">RMF.Vector3</a>(1, 0, 0))</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            red.append(curh)</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keywordflow">elif</span> j % 3 == 1:</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            c.set_rgb_color([0, 1, 0])</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            c.set_rgb_color(<a class="code" href="classRMF_1_1Vector.html">RMF.Vector3</a>(0, 1, 0))</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            green.append(curh)</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordflow">else</span>:</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            c.set_rgb_color([0, 0, 1])</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            c.set_rgb_color(<a class="code" href="classRMF_1_1Vector.html">RMF.Vector3</a>(0, 0, 1))</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            blue.append(curh)</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment"># add a second organization scheme by color</span></div>

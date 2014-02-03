@@ -64,13 +64,17 @@ var NAVTREE =
     [ "Mapping Data", "md__Users_drussel_src_rmf_rmf_doc_MappingToRMF.html", [
       [ "Mapping data to RMF files", "md__Users_drussel_src_rmf_rmf_doc_MappingToRMF.html#mapping", null ]
     ] ],
+    [ "VMD Plugin", "md__Users_drussel_src_rmf_rmf_doc_PymolPlugin.html", [
+      [ "Using the plugin", "md__Users_drussel_src_rmf_rmf_doc_PymolPlugin.html#pymolplugin", null ]
+    ] ],
     [ "Viewing", "md__Users_drussel_src_rmf_rmf_doc_Viewing.html", [
       [ "Overview", "md__Users_drussel_src_rmf_rmf_doc_Viewing.html#viewers", null ],
       [ "Chimera", "md__Users_drussel_src_rmf_rmf_doc_Viewing.html#chimera", null ],
-      [ "VMD", "md__Users_drussel_src_rmf_rmf_doc_Viewing.html#vmdplugin", null ]
+      [ "VMD", "md__Users_drussel_src_rmf_rmf_doc_Viewing.html#vmd", null ],
+      [ "Pymol", "md__Users_drussel_src_rmf_rmf_doc_Viewing.html#pymol", null ]
     ] ],
     [ "VMD Plugin", "md__Users_drussel_src_rmf_rmf_doc_VMDPlugin.html", [
-      [ "VMD", "md__Users_drussel_src_rmf_rmf_doc_VMDPlugin.html#vmdplugin", null ]
+      [ "Building and installing", "md__Users_drussel_src_rmf_rmf_doc_VMDPlugin.html#vmdplugin", null ]
     ] ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
@@ -106,12 +110,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "BufferConstHandle_8h.html",
-"classRMF_1_1FileConstHandle.html#abf58d79023920c982fb5361162c1ebc0",
-"classRMF_1_1NodeConstHandle.html#a68e666ea297db2f4656023d1912d9f8c",
-"classRMF_1_1decorator_1_1ChainFactory.html#a830bcbee721d2deef3af7d2b76055d58",
-"classRMF_1_1decorator_1_1JournalArticleConst.html#a11beff984e2097beda304745c1265abd",
-"compiler__macros_8h.html#a22494211e042f7411b904073206b74de",
-"structRMF_1_1HDF5_1_1DataSetCreationPropertiesD.html"
+"classRMF_1_1HDF5_1_1ConstAttributes.html#aa6749a47c3f6c41807baf12e63526984",
+"classRMF_1_1decorator_1_1Alternatives.html",
+"classRMF_1_1decorator_1_1Ellipsoid.html#a4ee5f1d5c2f06458d639a13fd26622a9",
+"classRMF_1_1decorator_1_1RepresentationFactory.html#adb9539e4a9311f870c4cd22df7ba5e75",
+"keys_8h.html#a2a730542d3432e8f8df4c0566956d7dd"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

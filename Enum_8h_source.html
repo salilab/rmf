@@ -172,9 +172,9 @@ $(document).ready(function(){initNavTree('Enum_8h_source.html','');});
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  }</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <a class="code" href="infrastructure__macros_8h.html#ab5da9218e73c7e6277710a0d70c05175">RMF_COMPARISONS</a>(<a class="code" href="classRMF_1_1Enum.html">Enum</a>);</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <a class="code" href="infrastructure__macros_8h.html#a77097a6a431974623cc6f0a30717c388">RMF_HASHABLE</a>(<a class="code" href="classRMF_1_1Enum.html">Enum</a>, <span class="keywordflow">return</span> i_);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#if !defined(RMF_DOXYGEN) &amp;&amp; !defined(SWIG)</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor"></span>  <span class="keywordtype">void</span> show(std::ostream&amp; out)<span class="keyword"> const </span>{ out &lt;&lt; get_string(); }</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keyword">operator</span> int()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> i_; }</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  RMF_SHOWABLE(<a class="code" href="classRMF_1_1Enum.html">Enum</a>, get_string());</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#if !defined(RMF_DOXYGEN) &amp;&amp; !defined(SWIG)</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor"></span>  <span class="keyword">operator</span> int()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> i_; }</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor"></span>};</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>

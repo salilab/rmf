@@ -111,16 +111,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a141ae92538989a8acf5f5342edb25ab7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a141ae92538989a8acf5f5342edb25ab7"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Nullable</b> (const <a class="el" href="classRMF_1_1Nullable.html">Nullable</a> &amp;o)</td></tr>
 <tr class="separator:a141ae92538989a8acf5f5342edb25ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35a2ba26e4ce0b32b08a36c3ffb2347e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a35a2ba26e4ce0b32b08a36c3ffb2347e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Nullable</b> (typename Traits::ReturnType v)</td></tr>
-<tr class="separator:a35a2ba26e4ce0b32b08a36c3ffb2347e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d8c4fc58640c52080daf51078a3cf9b"><td class="memItemLeft" align="right" valign="top">const Traits::Type &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRMF_1_1Nullable.html#a1d8c4fc58640c52080daf51078a3cf9b">get</a> () const </td></tr>
-<tr class="separator:a1d8c4fc58640c52080daf51078a3cf9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66a37ab04783adeb8d238f917a31c3c8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a66a37ab04783adeb8d238f917a31c3c8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Nullable</b> (typename <a class="el" href="structRMF_1_1Traits.html">Traits</a>&lt; T &gt;::ReturnType v)</td></tr>
+<tr class="separator:a66a37ab04783adeb8d238f917a31c3c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af683636e291c401325a3d057b78647b8"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structRMF_1_1Traits.html">Traits</a>&lt; T &gt;::ReturnType &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRMF_1_1Nullable.html#af683636e291c401325a3d057b78647b8">get</a> () const </td></tr>
+<tr class="separator:af683636e291c401325a3d057b78647b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39bcc975e21411935965ddc51819a459"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a39bcc975e21411935965ddc51819a459"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>get_is_null</b> () const </td></tr>
 <tr class="separator:a39bcc975e21411935965ddc51819a459"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e1b84bcca579eb203b744c962800e6e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRMF_1_1Nullable.html#a4e1b84bcca579eb203b744c962800e6e">operator const typename Traits::Type &amp;</a> () const </td></tr>
-<tr class="separator:a4e1b84bcca579eb203b744c962800e6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1878e35d8c302b54cec8dffaa554452"><td class="memItemLeft" align="right" valign="top">const T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRMF_1_1Nullable.html#ad1878e35d8c302b54cec8dffaa554452">get_ptr</a> () const </td></tr>
+<tr class="separator:ad1878e35d8c302b54cec8dffaa554452"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41b1fc5e7d5f868995d26591f62e69a5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRMF_1_1Nullable.html#a41b1fc5e7d5f868995d26591f62e69a5">operator const typename Traits&lt; T &gt;::ReturnType &amp;</a> () const </td></tr>
+<tr class="separator:a41b1fc5e7d5f868995d26591f62e69a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;class Tr&gt;<br/>
@@ -129,16 +131,16 @@ class RMF::Nullable&lt; Tr &gt;</h3>
 <p>Store a value as returned by <a class="el" href="namespaceRMF.html">RMF</a> with the additional ability to check if it is the null value. These get converted to plain values or <code>None</code> in python. </p>
 <dl class="section note"><dt>Note</dt><dd>they should never be stored. </dd></dl>
 
-<p>Definition at line <a class="el" href="infrastructure__macros_8h_source.html#l00151">151</a> of file <a class="el" href="infrastructure__macros_8h_source.html">infrastructure_macros.h</a>.</p>
+<p>Definition at line <a class="el" href="infrastructure__macros_8h_source.html#l00175">175</a> of file <a class="el" href="infrastructure__macros_8h_source.html">infrastructure_macros.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a1d8c4fc58640c52080daf51078a3cf9b"></a>
+<a class="anchor" id="af683636e291c401325a3d057b78647b8"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class Tr&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const Traits::Type&amp; <a class="el" href="classRMF_1_1Nullable.html">RMF::Nullable</a>&lt; Tr &gt;::get </td>
+          <td class="memname">const <a class="el" href="structRMF_1_1Traits.html">Traits</a>&lt;T&gt;::ReturnType&amp; <a class="el" href="classRMF_1_1Nullable.html">RMF::Nullable</a>&lt; Tr &gt;::get </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -147,18 +149,38 @@ template&lt;class Tr&gt; </div>
 </div><div class="memdoc">
 <dl class="section pre"><dt>Precondition</dt><dd>!get_is_null() </dd></dl>
 
-<p>Definition at line <a class="el" href="Nullable_8h_source.html#l00045">45</a> of file <a class="el" href="Nullable_8h_source.html">Nullable.h</a>.</p>
+<p>Definition at line <a class="el" href="Nullable_8h_source.html#l00046">46</a> of file <a class="el" href="Nullable_8h_source.html">Nullable.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4e1b84bcca579eb203b744c962800e6e"></a>
+<a class="anchor" id="ad1878e35d8c302b54cec8dffaa554452"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class Tr&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classRMF_1_1Nullable.html">RMF::Nullable</a>&lt; Tr &gt;::operator const typename Traits::Type &amp; </td>
+          <td class="memname">const T* <a class="el" href="classRMF_1_1Nullable.html">RMF::Nullable</a>&lt; Tr &gt;::get_ptr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>For python since it nicely becomes None. </p>
+
+<p>Definition at line <a class="el" href="Nullable_8h_source.html#l00057">57</a> of file <a class="el" href="Nullable_8h_source.html">Nullable.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a41b1fc5e7d5f868995d26591f62e69a5"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Tr&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classRMF_1_1Nullable.html">RMF::Nullable</a>&lt; Tr &gt;::operator const typename <a class="el" href="structRMF_1_1Traits.html">Traits</a>&lt; T &gt;::ReturnType &amp; </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -167,7 +189,7 @@ template&lt;class Tr&gt; </div>
 </div><div class="memdoc">
 <dl class="section pre"><dt>Precondition</dt><dd>!get_is_null() </dd></dl>
 
-<p>Definition at line <a class="el" href="Nullable_8h_source.html#l00043">43</a> of file <a class="el" href="Nullable_8h_source.html">Nullable.h</a>.</p>
+<p>Definition at line <a class="el" href="Nullable_8h_source.html#l00044">44</a> of file <a class="el" href="Nullable_8h_source.html">Nullable.h</a>.</p>
 
 </div>
 </div>

@@ -130,105 +130,123 @@ $(document).ready(function(){initNavTree('NodeHandle_8h_source.html','');});
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;RMF_ENABLE_WARNINGS</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#define RMF_HDF5_NODE_KEY_TYPE_METHODS(Traits, UCName)                      \</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor"></span><span class="comment">  /** \brief  set the value of the attribute k for this node on the         \</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">      current frame.                                                        \</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">  */</span><span class="preprocessor">                                                                        \</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">  void set_frame_value(UCName##Key k, Traits::ArgumentType v) const {       \</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">    RMF_USAGE_CHECK(shared_-&gt;get_loaded_frame() != FrameID(),               \</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">                    &quot;Need to set a current frame before setting values.&quot;);  \</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">    shared_-&gt;set_loaded_value(node_, k, v);                                 \</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">  }                                                                         \</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor"></span><span class="comment">  /** Set the value                                                         \</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">      - if the attribute has a static value and it is equal the current one \</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">        do nothing.                                                         \</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">      - if the attribute doesn&#39;t have a static value, set it,               \</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">      - otherwise set the frame value.                                      \</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">  */</span><span class="preprocessor">                                                                        \</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">  void set_value(UCName##Key k, Traits::ArgumentType v) const {             \</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">    set_value_impl(k, v);                                                   \</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">  }                                                                         \</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor"></span><span class="comment">  /** \brief  set the value of the attribute k for all frames.              \</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment">   *                                                                        \</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment">  */</span><span class="preprocessor">                                                                        \</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">  void set_static_value(UCName##Key k, Traits::ArgumentType v) const {      \</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">    shared_-&gt;set_static_value(node_, k, v);                                 \</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">  }</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">namespace </span>RMF {</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="namespaceRMF.html#abd05be25082f29c2e8b33b83353f5c6f">   60</a></span>&#160;<span class="keyword">class </span><a class="code" href="classRMF_1_1NodeHandle.html">NodeHandle</a>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">//! Pass a list of them</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment"></span><span class="keyword">typedef</span> std::vector&lt;NodeHandle&gt; <a class="code" href="namespaceRMF.html#abd05be25082f29c2e8b33b83353f5c6f">NodeHandles</a>;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">class </span><a class="code" href="classRMF_1_1FileHandle.html">FileHandle</a>;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment">//! A handle for a particular node in the hierarchy.</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment"></span><span class="comment">/** Use these handles to access and modify parts of the</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">    hierarchy.</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">    Make sure to check out the base class for the const</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="comment">    methods.</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classRMF_1_1NodeHandle.html">   74</a></span>&#160;<span class="keyword">class </span>RMFEXPORT <a class="code" href="classRMF_1_1NodeHandle.html">NodeHandle</a> : <span class="keyword">public</span> <a class="code" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> {</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classRMF_1_1FileHandle.html">FileHandle</a>;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Traits&gt;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keywordtype">void</span> set_value_impl(<a class="code" href="classRMF_1_1ID.html">ID&lt;Traits&gt;</a> k, <span class="keyword">typename</span> Traits::ArgumentType v)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <a class="code" href="classRMF_1_1Nullable.html">Nullable&lt;Traits&gt;</a> sv = get_static_value(k);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordflow">if</span> (sv.get_is_null()) {</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;      set_static_value(k, v);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    }</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordflow">if</span> (Traits::get_are_equal(sv.<a class="code" href="classRMF_1_1Nullable.html#a1d8c4fc58640c52080daf51078a3cf9b">get</a>(), v)) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    set_frame_value(k, v);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  }</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#if !defined(SWIG) &amp;&amp; !defined(RMF_DOXYGEN)</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor"></span> <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <a class="code" href="classRMF_1_1NodeHandle.html">NodeHandle</a>(<a class="code" href="classRMF_1_1ID.html">NodeID</a> node, boost::shared_ptr&lt;internal::SharedData&gt; shared);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <a class="code" href="classRMF_1_1NodeHandle.html">NodeHandle</a>() {}<span class="comment"></span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment">  /** Create a new node as a child of this one.</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <a class="code" href="classRMF_1_1NodeHandle.html">NodeHandle</a> add_child(std::string name, <a class="code" href="classRMF_1_1Enum.html">NodeType</a> t) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="comment">  /** Add an existing node as a child.*/</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="keywordtype">void</span> add_child(<a class="code" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> nh) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <a class="code" href="namespaceRMF.html#abd05be25082f29c2e8b33b83353f5c6f">NodeHandles</a> get_children() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="comment">  /** \name Functions to access attributes</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="comment">      @{</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="classRMF_1_1NodeHandle.html#aba42636e8fbdb33d60c5b7b7150e53a8">  106</a></span>&#160;  <a class="code" href="infrastructure__macros_8h.html#add4dc0dd6e232a39c967f143ce2c7993">RMF_FOREACH_TYPE</a>(RMF_HDF5_NODE_KEY_TYPE_METHODS);<span class="comment"></span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment">  /** @} */</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <a class="code" href="classRMF_1_1FileHandle.html">FileHandle</a> get_file() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;};</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;} <span class="comment">/* namespace RMF */</span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;RMF_DISABLE_WARNINGS</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RMF_NODE_HANDLE_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#ifndef SWIG</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define RMF_HDF5_NODE_KEY_TYPE_METHODS(Traits, UCName)</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor"></span><span class="comment">// otherwise swig gets confused</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#define RMF_HDF5_NODE_KEY_TYPE_METHODS(Traits, UCName) \</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">  void set_frame_value(UCName##Key k, UCName v) const; \</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">  void set_value(UCName##Key k, UCName v) const;       \</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">  void set_static_value(UCName##Key k, UCName v) const;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">namespace </span>RMF {</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="namespaceRMF.html#abd05be25082f29c2e8b33b83353f5c6f">   46</a></span>&#160;<span class="keyword">class </span><a class="code" href="classRMF_1_1NodeHandle.html">NodeHandle</a>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment">//! Pass a list of them</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment"></span><span class="keyword">typedef</span> std::vector&lt;NodeHandle&gt; <a class="code" href="namespaceRMF.html#abd05be25082f29c2e8b33b83353f5c6f">NodeHandles</a>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">class </span><a class="code" href="classRMF_1_1FileHandle.html">FileHandle</a>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment">//! A handle for a particular node in the hierarchy.</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment"></span><span class="comment">/** Use these handles to access and modify parts of the</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">    hierarchy.</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">    Make sure to check out the base class for the const</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">    methods.</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="classRMF_1_1NodeHandle.html">   60</a></span>&#160;<span class="keyword">class </span>RMFEXPORT <a class="code" href="classRMF_1_1NodeHandle.html">NodeHandle</a> : <span class="keyword">public</span> <a class="code" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> {</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classRMF_1_1FileHandle.html">FileHandle</a>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Tag&gt;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keywordtype">void</span> set_value_impl(<a class="code" href="classRMF_1_1ID.html">ID&lt;Tag&gt;</a> k, <span class="keyword">typename</span> Tag::ArgumentType v)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <a class="code" href="classRMF_1_1Nullable.html">Nullable&lt;typename Tag::Traits::Type&gt;</a> sv = get_static_value(k);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">if</span> (sv.get_is_null()) {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      set_static_value(k, v);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordflow">if</span> (Tag::Traits::get_are_equal(sv.<a class="code" href="classRMF_1_1Nullable.html#af683636e291c401325a3d057b78647b8">get</a>(), v)) <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    set_frame_value(k, v);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  }</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#if !defined(SWIG) &amp;&amp; !defined(RMF_DOXYGEN)</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor"></span> <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <a class="code" href="classRMF_1_1NodeHandle.html">NodeHandle</a>(<a class="code" href="classRMF_1_1ID.html">NodeID</a> node, boost::shared_ptr&lt;internal::SharedData&gt; shared);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <a class="code" href="classRMF_1_1NodeHandle.html">NodeHandle</a>() {}<span class="comment"></span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment">  /** Create a new node as a child of this one.</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <a class="code" href="classRMF_1_1NodeHandle.html">NodeHandle</a> add_child(std::string name, <a class="code" href="classRMF_1_1Enum.html">NodeType</a> t) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="comment">  /** Add an existing node as a child.*/</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keywordtype">void</span> add_child(<a class="code" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> nh) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <a class="code" href="namespaceRMF.html#abd05be25082f29c2e8b33b83353f5c6f">NodeHandles</a> get_children() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">  /** \name Functions to access attributes</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">      @{</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">   */</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment">  /** \brief  set the value of the attribute k for this node on the</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">      current frame.</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="comment">  */</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Tag&gt;</div>
+<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="classRMF_1_1NodeHandle.html#ac828f9174306779fc7ce3c2a7e4fad1f">   97</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classRMF_1_1NodeHandle.html#ac828f9174306779fc7ce3c2a7e4fad1f">set_frame_value</a>(<a class="code" href="classRMF_1_1ID.html">ID&lt;Tag&gt;</a> k, <span class="keyword">typename</span> Tag::ArgumentType v)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    RMF_USAGE_CHECK(shared_-&gt;get_loaded_frame() != <a class="code" href="namespaceRMF.html#a6c5e5bfc6005ee3a42a6822b58c01636">FrameID</a>(),</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                    <span class="stringliteral">&quot;Need to set a current frame before setting values.&quot;</span>);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    shared_-&gt;set_loaded_value(node_, k, v);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  }<span class="comment"></span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="comment">  /** Set the value</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment">      - if the attribute has a static value and it is equal the current one</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="comment">        do nothing.</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="comment">      - if the attribute doesn&#39;t have a static value, set it,</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="comment">      - otherwise set the frame value.</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment">  */</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Tag&gt;</div>
+<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="classRMF_1_1NodeHandle.html#a102f9a69e6c37bded80a097bd5846225">  109</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classRMF_1_1NodeHandle.html#a102f9a69e6c37bded80a097bd5846225">set_value</a>(<a class="code" href="classRMF_1_1ID.html">ID&lt;Tag&gt;</a> k, <span class="keyword">typename</span> Tag::ArgumentType v)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    set_value_impl(k, v);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  }<span class="comment"></span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment">  /** \brief  set the value of the attribute k for all frames.</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment">   *</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment">  */</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Tag&gt;</div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="classRMF_1_1NodeHandle.html#aa7d1ab7d1e7e55ca5d099f50a74400f2">  116</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classRMF_1_1NodeHandle.html#aa7d1ab7d1e7e55ca5d099f50a74400f2">set_static_value</a>(<a class="code" href="classRMF_1_1ID.html">ID&lt;Tag&gt;</a> k, <span class="keyword">typename</span> Tag::ArgumentType v)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    shared_-&gt;set_static_value(node_, k, v);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  }</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <a class="code" href="infrastructure__macros_8h.html#add4dc0dd6e232a39c967f143ce2c7993">RMF_FOREACH_TYPE</a>(RMF_HDF5_NODE_KEY_TYPE_METHODS);<span class="comment"></span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="comment">  /** @} */</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  <a class="code" href="classRMF_1_1FileHandle.html">FileHandle</a> get_file() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;};</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;} <span class="comment">/* namespace RMF */</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;RMF_DISABLE_WARNINGS</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RMF_NODE_HANDLE_H */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="ID_8h_html"><div class="ttname"><a href="ID_8h.html">ID.h</a></div><div class="ttdoc">Handle read/write of Model data from/to files. </div></div>
 <div class="ttc" id="types_8h_html"><div class="ttname"><a href="types_8h.html">types.h</a></div></div>
-<div class="ttc" id="classRMF_1_1NodeHandle_html"><div class="ttname"><a href="classRMF_1_1NodeHandle.html">RMF::NodeHandle</a></div><div class="ttdoc">A handle for a particular node in the hierarchy. </div><div class="ttdef"><b>Definition:</b> <a href="NodeHandle_8h_source.html#l00074">NodeHandle.h:74</a></div></div>
-<div class="ttc" id="classRMF_1_1NodeConstHandle_html"><div class="ttname"><a href="classRMF_1_1NodeConstHandle.html">RMF::NodeConstHandle</a></div><div class="ttdoc">A handle for a particular node in a read-only hierarchy. </div><div class="ttdef"><b>Definition:</b> <a href="NodeConstHandle_8h_source.html#l00096">NodeConstHandle.h:96</a></div></div>
-<div class="ttc" id="namespaceRMF_html_abd05be25082f29c2e8b33b83353f5c6f"><div class="ttname"><a href="namespaceRMF.html#abd05be25082f29c2e8b33b83353f5c6f">RMF::NodeHandles</a></div><div class="ttdeci">std::vector&lt; NodeHandle &gt; NodeHandles</div><div class="ttdoc">Pass a list of them. </div><div class="ttdef"><b>Definition:</b> <a href="NodeHandle_8h_source.html#l00060">NodeHandle.h:60</a></div></div>
-<div class="ttc" id="classRMF_1_1Nullable_html"><div class="ttname"><a href="classRMF_1_1Nullable.html">RMF::Nullable</a></div><div class="ttdef"><b>Definition:</b> <a href="infrastructure__macros_8h_source.html#l00151">infrastructure_macros.h:151</a></div></div>
+<div class="ttc" id="classRMF_1_1NodeHandle_html"><div class="ttname"><a href="classRMF_1_1NodeHandle.html">RMF::NodeHandle</a></div><div class="ttdoc">A handle for a particular node in the hierarchy. </div><div class="ttdef"><b>Definition:</b> <a href="NodeHandle_8h_source.html#l00060">NodeHandle.h:60</a></div></div>
+<div class="ttc" id="classRMF_1_1NodeConstHandle_html"><div class="ttname"><a href="classRMF_1_1NodeConstHandle.html">RMF::NodeConstHandle</a></div><div class="ttdoc">A handle for a particular node in a read-only hierarchy. </div><div class="ttdef"><b>Definition:</b> <a href="NodeConstHandle_8h_source.html#l00081">NodeConstHandle.h:81</a></div></div>
+<div class="ttc" id="namespaceRMF_html_abd05be25082f29c2e8b33b83353f5c6f"><div class="ttname"><a href="namespaceRMF.html#abd05be25082f29c2e8b33b83353f5c6f">RMF::NodeHandles</a></div><div class="ttdeci">std::vector&lt; NodeHandle &gt; NodeHandles</div><div class="ttdoc">Pass a list of them. </div><div class="ttdef"><b>Definition:</b> <a href="NodeHandle_8h_source.html#l00046">NodeHandle.h:46</a></div></div>
+<div class="ttc" id="namespaceRMF_html_a6c5e5bfc6005ee3a42a6822b58c01636"><div class="ttname"><a href="namespaceRMF.html#a6c5e5bfc6005ee3a42a6822b58c01636">RMF::FrameID</a></div><div class="ttdeci">ID&lt; FrameTag &gt; FrameID</div><div class="ttdef"><b>Definition:</b> <a href="ID_8h_source.html#l00098">ID.h:98</a></div></div>
+<div class="ttc" id="classRMF_1_1Nullable_html"><div class="ttname"><a href="classRMF_1_1Nullable.html">RMF::Nullable</a></div><div class="ttdef"><b>Definition:</b> <a href="infrastructure__macros_8h_source.html#l00175">infrastructure_macros.h:175</a></div></div>
 <div class="ttc" id="classRMF_1_1ID_html"><div class="ttname"><a href="classRMF_1_1ID.html">RMF::ID</a></div><div class="ttdef"><b>Definition:</b> <a href="ID_8h_source.html#l00033">ID.h:33</a></div></div>
-<div class="ttc" id="classRMF_1_1Nullable_html_a1d8c4fc58640c52080daf51078a3cf9b"><div class="ttname"><a href="classRMF_1_1Nullable.html#a1d8c4fc58640c52080daf51078a3cf9b">RMF::Nullable::get</a></div><div class="ttdeci">const Traits::Type &amp; get() const </div><div class="ttdef"><b>Definition:</b> <a href="Nullable_8h_source.html#l00045">Nullable.h:45</a></div></div>
 <div class="ttc" id="exceptions_8h_html"><div class="ttname"><a href="exceptions_8h.html">exceptions.h</a></div><div class="ttdoc">Various general useful macros for IMP. </div></div>
+<div class="ttc" id="classRMF_1_1NodeHandle_html_a102f9a69e6c37bded80a097bd5846225"><div class="ttname"><a href="classRMF_1_1NodeHandle.html#a102f9a69e6c37bded80a097bd5846225">RMF::NodeHandle::set_value</a></div><div class="ttdeci">void set_value(ID&lt; Tag &gt; k, typename Tag::ArgumentType v) const </div><div class="ttdef"><b>Definition:</b> <a href="NodeHandle_8h_source.html#l00109">NodeHandle.h:109</a></div></div>
 <div class="ttc" id="classRMF_1_1FileHandle_html"><div class="ttname"><a href="classRMF_1_1FileHandle.html">RMF::FileHandle</a></div><div class="ttdoc">A handle for an RMF file. </div><div class="ttdef"><b>Definition:</b> <a href="FileHandle_8h_source.html#l00055">FileHandle.h:55</a></div></div>
 <div class="ttc" id="NodeConstHandle_8h_html"><div class="ttname"><a href="NodeConstHandle_8h.html">NodeConstHandle.h</a></div><div class="ttdoc">Handle read/write of Model data from/to files. </div></div>
 <div class="ttc" id="classRMF_1_1Enum_html"><div class="ttname"><a href="classRMF_1_1Enum.html">RMF::Enum</a></div><div class="ttdef"><b>Definition:</b> <a href="Enum_8h_source.html#l00045">Enum.h:45</a></div></div>
 <div class="ttc" id="enums_8h_html"><div class="ttname"><a href="enums_8h.html">enums.h</a></div><div class="ttdoc">Handle read/write of Model data from/to files. </div></div>
-<div class="ttc" id="infrastructure__macros_8h_html_add4dc0dd6e232a39c967f143ce2c7993"><div class="ttname"><a href="infrastructure__macros_8h.html#add4dc0dd6e232a39c967f143ce2c7993">RMF_FOREACH_TYPE</a></div><div class="ttdeci">#define RMF_FOREACH_TYPE(macroname)</div><div class="ttdef"><b>Definition:</b> <a href="infrastructure__macros_8h_source.html#l00131">infrastructure_macros.h:131</a></div></div>
+<div class="ttc" id="classRMF_1_1NodeHandle_html_aa7d1ab7d1e7e55ca5d099f50a74400f2"><div class="ttname"><a href="classRMF_1_1NodeHandle.html#aa7d1ab7d1e7e55ca5d099f50a74400f2">RMF::NodeHandle::set_static_value</a></div><div class="ttdeci">void set_static_value(ID&lt; Tag &gt; k, typename Tag::ArgumentType v) const </div><div class="ttdoc">set the value of the attribute k for all frames. </div><div class="ttdef"><b>Definition:</b> <a href="NodeHandle_8h_source.html#l00116">NodeHandle.h:116</a></div></div>
+<div class="ttc" id="infrastructure__macros_8h_html_add4dc0dd6e232a39c967f143ce2c7993"><div class="ttname"><a href="infrastructure__macros_8h.html#add4dc0dd6e232a39c967f143ce2c7993">RMF_FOREACH_TYPE</a></div><div class="ttdeci">#define RMF_FOREACH_TYPE(macroname)</div><div class="ttdef"><b>Definition:</b> <a href="infrastructure__macros_8h_source.html#l00155">infrastructure_macros.h:155</a></div></div>
 <div class="ttc" id="Nullable_8h_html"><div class="ttname"><a href="Nullable_8h.html">Nullable.h</a></div><div class="ttdoc">Handle read/write of Model data from/to files. </div></div>
+<div class="ttc" id="classRMF_1_1Nullable_html_af683636e291c401325a3d057b78647b8"><div class="ttname"><a href="classRMF_1_1Nullable.html#af683636e291c401325a3d057b78647b8">RMF::Nullable::get</a></div><div class="ttdeci">const Traits&lt; T &gt;::ReturnType &amp; get() const </div><div class="ttdef"><b>Definition:</b> <a href="Nullable_8h_source.html#l00046">Nullable.h:46</a></div></div>
 <div class="ttc" id="infrastructure__macros_8h_html"><div class="ttname"><a href="infrastructure__macros_8h.html">infrastructure_macros.h</a></div><div class="ttdoc">Various general useful macros for IMP. </div></div>
+<div class="ttc" id="classRMF_1_1NodeHandle_html_ac828f9174306779fc7ce3c2a7e4fad1f"><div class="ttname"><a href="classRMF_1_1NodeHandle.html#ac828f9174306779fc7ce3c2a7e4fad1f">RMF::NodeHandle::set_frame_value</a></div><div class="ttdeci">void set_frame_value(ID&lt; Tag &gt; k, typename Tag::ArgumentType v) const </div><div class="ttdoc">set the value of the attribute k for this node on the current frame. </div><div class="ttdef"><b>Definition:</b> <a href="NodeHandle_8h_source.html#l00097">NodeHandle.h:97</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

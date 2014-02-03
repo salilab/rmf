@@ -17,7 +17,5 @@ var classRMF_1_1HDF5_1_1ConstDataSetD =
     [ "get_size", "classRMF_1_1HDF5_1_1ConstDataSetD.html#a68cead93bac393400efaf1263f6fc4f8", null ],
     [ "get_value", "classRMF_1_1HDF5_1_1ConstDataSetD.html#ac02e41e56e78256eb48165a769fa1213", null ],
     [ "initialize_handles", "classRMF_1_1HDF5_1_1ConstDataSetD.html#ae2c994fe37a14b6bef029f3be3b4d7d9", null ],
-    [ "operator Showable", "classRMF_1_1HDF5_1_1ConstDataSetD.html#a979e3387430c328b0e8035cea97a401a", null ],
-    [ "show", "classRMF_1_1HDF5_1_1ConstDataSetD.html#ac5d2a2a18bee3f2b1087a29a5af1bd28", null ],
     [ "ConstGroup", "classRMF_1_1HDF5_1_1ConstDataSetD.html#a1c94831677cf67057966421628b1939f", null ]
 ];

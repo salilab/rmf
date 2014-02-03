@@ -74,6 +74,13 @@ var files =
     [ "infrastructure_macros.h", "infrastructure__macros_8h.html", "infrastructure__macros_8h" ],
     [ "HDF5/infrastructure_macros.h", "HDF5_2infrastructure__macros_8h.html", "HDF5_2infrastructure__macros_8h" ],
     [ "keys.h", "keys_8h.html", "keys_8h" ],
+    [ "Label.h", "Label_8h.html", [
+      [ "Label", "classRMF_1_1Label.html", "classRMF_1_1Label" ]
+    ] ],
+    [ "labels.h", "labels_8h.html", [
+      [ "Assembly", "classRMF_1_1decorator_1_1Assembly.html", "classRMF_1_1decorator_1_1Assembly" ],
+      [ "Molecule", "classRMF_1_1decorator_1_1Molecule.html", "classRMF_1_1decorator_1_1Molecule" ]
+    ] ],
     [ "log.h", "log_8h.html", "log_8h" ],
     [ "make_reference_frames.py", "make__reference__frames_8py_source.html", null ],
     [ "motion.py", "motion_8py_source.html", null ],
@@ -175,6 +182,7 @@ var files =
     [ "show_hierarchy.h", "show__hierarchy_8h.html", "show__hierarchy_8h" ],
     [ "signature.h", "signature_8h.html", "signature_8h" ],
     [ "traits.h", "traits_8h.html", "traits_8h" ],
+    [ "TraverseHelper.h", "TraverseHelper_8h.html", "TraverseHelper_8h" ],
     [ "types.h", "types_8h.html", null ],
     [ "HDF5/types.h", "HDF5_2types_8h.html", "HDF5_2types_8h" ],
     [ "utility.h", "utility_8h.html", "utility_8h" ],

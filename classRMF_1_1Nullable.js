@@ -1,8 +1,9 @@
 var classRMF_1_1Nullable =
 [
     [ "Nullable", "classRMF_1_1Nullable.html#a141ae92538989a8acf5f5342edb25ab7", null ],
-    [ "Nullable", "classRMF_1_1Nullable.html#a35a2ba26e4ce0b32b08a36c3ffb2347e", null ],
-    [ "get", "classRMF_1_1Nullable.html#a1d8c4fc58640c52080daf51078a3cf9b", null ],
+    [ "Nullable", "classRMF_1_1Nullable.html#a66a37ab04783adeb8d238f917a31c3c8", null ],
+    [ "get", "classRMF_1_1Nullable.html#af683636e291c401325a3d057b78647b8", null ],
     [ "get_is_null", "classRMF_1_1Nullable.html#a39bcc975e21411935965ddc51819a459", null ],
-    [ "operator const typename Traits::Type &", "classRMF_1_1Nullable.html#a4e1b84bcca579eb203b744c962800e6e", null ]
+    [ "get_ptr", "classRMF_1_1Nullable.html#ad1878e35d8c302b54cec8dffaa554452", null ],
+    [ "operator const typename Traits< T >::ReturnType &", "classRMF_1_1Nullable.html#a41b1fc5e7d5f868995d26591f62e69a5", null ]
 ];

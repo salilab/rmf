@@ -118,17 +118,17 @@ $(document).ready(function(){initNavTree('keys_8h_source.html','');});
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">namespace </span>RMF {</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define RMF_DECLARE_KEY(Traits, UCName)      \</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define RMF_DECLARE_KEY(TT, UCName)          \</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor"></span><span class="comment">  /** Identify a value stored for a node. */</span><span class="preprocessor"> \</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">  typedef ID&lt;Traits&gt; UCName##Key;            \</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">  typedef ID&lt;UCName##Tag&gt; UCName##Key;       \</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor"></span><span class="comment">  /** A list of identifiers. */</span><span class="preprocessor">              \</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">  typedef std::vector&lt;UCName##Key&gt; UCName##Keys;</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor"></span><span class="comment"></span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">/** \name Key types</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">    RMF files support storing a variety of different types of data. These</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">    include</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">    - IntKey: store an arbitrary integher as a 64 bit integer</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">    - FloatKey: store an arbitrary floating point number as a double</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">    - IntKey: store an arbitrary integer as a 64 bit integer</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">    - FloatKey: store an arbitrary floating point number as a `float`</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">    - StringKey: store an arbitrary length string</span></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">    - IndexKey: store non-negative indexes as 64 bit integers</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">    - NodeIDKey: store the ID of a node in the hierarchy</span></div>
@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('keys_8h_source.html','');});
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RMF_KEYS_H */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="ID_8h_html"><div class="ttname"><a href="ID_8h.html">ID.h</a></div><div class="ttdoc">Handle read/write of Model data from/to files. </div></div>
 <div class="ttc" id="traits_8h_html"><div class="ttname"><a href="traits_8h.html">traits.h</a></div><div class="ttdoc">Handle read/write of Model data from/to files. </div></div>
-<div class="ttc" id="infrastructure__macros_8h_html_add4dc0dd6e232a39c967f143ce2c7993"><div class="ttname"><a href="infrastructure__macros_8h.html#add4dc0dd6e232a39c967f143ce2c7993">RMF_FOREACH_TYPE</a></div><div class="ttdeci">#define RMF_FOREACH_TYPE(macroname)</div><div class="ttdef"><b>Definition:</b> <a href="infrastructure__macros_8h_source.html#l00131">infrastructure_macros.h:131</a></div></div>
+<div class="ttc" id="infrastructure__macros_8h_html_add4dc0dd6e232a39c967f143ce2c7993"><div class="ttname"><a href="infrastructure__macros_8h.html#add4dc0dd6e232a39c967f143ce2c7993">RMF_FOREACH_TYPE</a></div><div class="ttdeci">#define RMF_FOREACH_TYPE(macroname)</div><div class="ttdef"><b>Definition:</b> <a href="infrastructure__macros_8h_source.html#l00155">infrastructure_macros.h:155</a></div></div>
 <div class="ttc" id="infrastructure__macros_8h_html"><div class="ttname"><a href="infrastructure__macros_8h.html">infrastructure_macros.h</a></div><div class="ttdoc">Various general useful macros for IMP. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

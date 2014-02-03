@@ -276,6 +276,17 @@
         </Subnodes>
        </Node>
        <Node>
+        <Name>VMD Plugin</Name>
+        <Path>md__Users_drussel_src_rmf_rmf_doc_PymolPlugin.html</Path>
+        <Subnodes>
+         <Node>
+          <Name>Using the plugin</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_PymolPlugin.html</Path>
+          <Anchor>pymolplugin</Anchor>
+         </Node>
+        </Subnodes>
+       </Node>
+       <Node>
         <Name>Viewing</Name>
         <Path>md__Users_drussel_src_rmf_rmf_doc_Viewing.html</Path>
         <Subnodes>
@@ -292,7 +303,12 @@
          <Node>
           <Name>VMD</Name>
           <Path>md__Users_drussel_src_rmf_rmf_doc_Viewing.html</Path>
-          <Anchor>vmdplugin</Anchor>
+          <Anchor>vmd</Anchor>
+         </Node>
+         <Node>
+          <Name>Pymol</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_Viewing.html</Path>
+          <Anchor>pymol</Anchor>
          </Node>
         </Subnodes>
        </Node>
@@ -301,7 +317,7 @@
         <Path>md__Users_drussel_src_rmf_rmf_doc_VMDPlugin.html</Path>
         <Subnodes>
          <Node>
-          <Name>VMD</Name>
+          <Name>Building and installing</Name>
           <Path>md__Users_drussel_src_rmf_rmf_doc_VMDPlugin.html</Path>
           <Anchor>vmdplugin</Anchor>
          </Node>
@@ -553,6 +569,22 @@
                   <Name>get_is_static</Name>
                   <Path>classRMF_1_1decorator_1_1AlternativesFactory.html</Path>
                   <Anchor>a85f05f797e05b36c09bbadecaa3b1948</Anchor>
+                 </Node>
+                </Subnodes>
+               </Node>
+               <Node>
+                <Name>Assembly</Name>
+                <Path>classRMF_1_1decorator_1_1Assembly.html</Path>
+                <Subnodes>
+                 <Node>
+                  <Name>Assembly</Name>
+                  <Path>classRMF_1_1decorator_1_1Assembly.html</Path>
+                  <Anchor>af1b6d1b8bd34606373d4cd96205f2933</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>Assembly</Name>
+                  <Path>classRMF_1_1decorator_1_1Assembly.html</Path>
+                  <Anchor>a736a787d8f98f9ff8529778563f91a06</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -2532,6 +2564,22 @@
                 </Subnodes>
                </Node>
                <Node>
+                <Name>Molecule</Name>
+                <Path>classRMF_1_1decorator_1_1Molecule.html</Path>
+                <Subnodes>
+                 <Node>
+                  <Name>Molecule</Name>
+                  <Path>classRMF_1_1decorator_1_1Molecule.html</Path>
+                  <Anchor>af097cc3ec81c9d48f2d2bdd8836ead1b</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>Molecule</Name>
+                  <Path>classRMF_1_1decorator_1_1Molecule.html</Path>
+                  <Anchor>af5d5476177736d67058bf7f5ff05b062</Anchor>
+                 </Node>
+                </Subnodes>
+               </Node>
+               <Node>
                 <Name>Particle</Name>
                 <Path>classRMF_1_1decorator_1_1Particle.html</Path>
                 <Subnodes>
@@ -3815,16 +3863,6 @@
                   <Anchor>ae2c994fe37a14b6bef029f3be3b4d7d9</Anchor>
                  </Node>
                  <Node>
-                  <Name>operator Showable</Name>
-                  <Path>classRMF_1_1HDF5_1_1ConstDataSetD.html</Path>
-                  <Anchor>a979e3387430c328b0e8035cea97a401a</Anchor>
-                 </Node>
-                 <Node>
-                  <Name>show</Name>
-                  <Path>classRMF_1_1HDF5_1_1ConstDataSetD.html</Path>
-                  <Anchor>ac5d2a2a18bee3f2b1087a29a5af1bd28</Anchor>
-                 </Node>
-                 <Node>
                   <Name>ConstGroup</Name>
                   <Path>classRMF_1_1HDF5_1_1ConstDataSetD.html</Path>
                   <Anchor>a1c94831677cf67057966421628b1939f</Anchor>
@@ -3854,16 +3892,6 @@
                   <Name>get_name</Name>
                   <Path>classRMF_1_1HDF5_1_1ConstFile.html</Path>
                   <Anchor>a51d6bf27b79bea278d5d6569ba88ba5e</Anchor>
-                 </Node>
-                 <Node>
-                  <Name>operator Showable</Name>
-                  <Path>classRMF_1_1HDF5_1_1ConstFile.html</Path>
-                  <Anchor>a72b484ce3a3563f6bf7639551b14035a</Anchor>
-                 </Node>
-                 <Node>
-                  <Name>show</Name>
-                  <Path>classRMF_1_1HDF5_1_1ConstFile.html</Path>
-                  <Anchor>a75287b0e4570799bee58f073c24bd01e</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -3919,22 +3947,22 @@
                  <Node>
                   <Name>get_child_type_data_set_1d</Name>
                   <Path>classRMF_1_1HDF5_1_1ConstGroup.html</Path>
-                  <Anchor>a5d72f3f6707b33f3dd1991141c0237cc</Anchor>
+                  <Anchor>a6375700a91e3274156c9d10c45c8b0c5</Anchor>
                  </Node>
                  <Node>
                   <Name>get_child_type_data_set_1d</Name>
                   <Path>classRMF_1_1HDF5_1_1ConstGroup.html</Path>
-                  <Anchor>a6375700a91e3274156c9d10c45c8b0c5</Anchor>
-                 </Node>
-                 <Node>
-                  <Name>get_child_type_data_set_2d</Name>
-                  <Path>classRMF_1_1HDF5_1_1ConstGroup.html</Path>
-                  <Anchor>aace8c4a3c050fed7c7a7139cebb359dd</Anchor>
+                  <Anchor>a5d72f3f6707b33f3dd1991141c0237cc</Anchor>
                  </Node>
                  <Node>
                   <Name>get_child_type_data_set_2d</Name>
                   <Path>classRMF_1_1HDF5_1_1ConstGroup.html</Path>
                   <Anchor>a3e5db18e84b8c31406d8665e8dfae0f8</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>get_child_type_data_set_2d</Name>
+                  <Path>classRMF_1_1HDF5_1_1ConstGroup.html</Path>
+                  <Anchor>aace8c4a3c050fed7c7a7139cebb359dd</Anchor>
                  </Node>
                  <Node>
                   <Name>get_child_type_data_set_3d</Name>
@@ -3955,16 +3983,6 @@
                   <Name>get_number_of_children</Name>
                   <Path>classRMF_1_1HDF5_1_1ConstGroup.html</Path>
                   <Anchor>a32721ed4f87e859ab864e4d343cb8600</Anchor>
-                 </Node>
-                 <Node>
-                  <Name>operator Showable</Name>
-                  <Path>classRMF_1_1HDF5_1_1ConstGroup.html</Path>
-                  <Anchor>afc0c62f57682f9023f5b20a6ba67fb63</Anchor>
-                 </Node>
-                 <Node>
-                  <Name>show</Name>
-                  <Path>classRMF_1_1HDF5_1_1ConstGroup.html</Path>
-                  <Anchor>acaea454c8834af3a374f93a4565d6ef2</Anchor>
                  </Node>
                  <Node>
                   <Name>ConstFile</Name>
@@ -4060,11 +4078,6 @@
                   <Anchor>a088fdee334f97f79fcb91ed45fe152f8</Anchor>
                  </Node>
                  <Node>
-                  <Name>operator Showable</Name>
-                  <Path>classRMF_1_1HDF5_1_1DataSetD.html</Path>
-                  <Anchor>a8966b14a6c9b23bb2952f7a4a34908dc</Anchor>
-                 </Node>
-                 <Node>
                   <Name>set_block</Name>
                   <Path>classRMF_1_1HDF5_1_1DataSetD.html</Path>
                   <Anchor>a8751104929f9e7d7cc1816d5819f441b</Anchor>
@@ -4083,11 +4096,6 @@
                   <Name>set_value</Name>
                   <Path>classRMF_1_1HDF5_1_1DataSetD.html</Path>
                   <Anchor>a3935258ff4cea42cb80f80ec733a15ed</Anchor>
-                 </Node>
-                 <Node>
-                  <Name>show</Name>
-                  <Path>classRMF_1_1HDF5_1_1DataSetD.html</Path>
-                  <Anchor>a933f392af1f2d88b4d42102248b66282</Anchor>
                  </Node>
                  <Node>
                   <Name>Group</Name>
@@ -4171,11 +4179,6 @@
                   <Anchor>a9f81a0cffcbf07983559c09e91378ef0</Anchor>
                  </Node>
                  <Node>
-                  <Name>operator Showable</Name>
-                  <Path>classRMF_1_1HDF5_1_1DataSetIndexD.html</Path>
-                  <Anchor>a1d8225e419d440c11990509dc79e8b5e</Anchor>
-                 </Node>
-                 <Node>
                   <Name>operator[]</Name>
                   <Path>classRMF_1_1HDF5_1_1DataSetIndexD.html</Path>
                   <Anchor>a2e9457c3acf202e833e0ffa7e49c783f</Anchor>
@@ -4184,11 +4187,6 @@
                   <Name>operator[]</Name>
                   <Path>classRMF_1_1HDF5_1_1DataSetIndexD.html</Path>
                   <Anchor>a4e58a38ec88cbf77d925fd57e917bd72</Anchor>
-                 </Node>
-                 <Node>
-                  <Name>show</Name>
-                  <Path>classRMF_1_1HDF5_1_1DataSetIndexD.html</Path>
-                  <Anchor>afb9f9d2958dcf2ee97337634b3393c92</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -4215,16 +4213,6 @@
                   <Name>get_name</Name>
                   <Path>classRMF_1_1HDF5_1_1File.html</Path>
                   <Anchor>a6a03833c9cf9b902cf9efd8251fcee7c</Anchor>
-                 </Node>
-                 <Node>
-                  <Name>operator Showable</Name>
-                  <Path>classRMF_1_1HDF5_1_1File.html</Path>
-                  <Anchor>aedf054d4e89dd34165eae75b1b821e3c</Anchor>
-                 </Node>
-                 <Node>
-                  <Name>show</Name>
-                  <Path>classRMF_1_1HDF5_1_1File.html</Path>
-                  <Anchor>a67c02b91c837be5d5a7dc884504d42d0</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -4265,12 +4253,12 @@
                  <Node>
                   <Name>add_child_type_data_set_1d</Name>
                   <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                  <Anchor>a24f976a977ddff3f6e7519522bd2705b</Anchor>
+                  <Anchor>a0357357533e970d646f40f66ad66678a</Anchor>
                  </Node>
                  <Node>
                   <Name>add_child_type_data_set_1d</Name>
                   <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                  <Anchor>a0357357533e970d646f40f66ad66678a</Anchor>
+                  <Anchor>a24f976a977ddff3f6e7519522bd2705b</Anchor>
                  </Node>
                  <Node>
                   <Name>add_child_type_data_set_2d</Name>
@@ -4285,12 +4273,12 @@
                  <Node>
                   <Name>add_child_type_data_set_3d</Name>
                   <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                  <Anchor>af77a8a4d6e1e82ebfddd6e2635cbac1f</Anchor>
+                  <Anchor>a37066efe55fb117e6fb1d72b869e904c</Anchor>
                  </Node>
                  <Node>
                   <Name>add_child_type_data_set_3d</Name>
                   <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                  <Anchor>a37066efe55fb117e6fb1d72b869e904c</Anchor>
+                  <Anchor>af77a8a4d6e1e82ebfddd6e2635cbac1f</Anchor>
                  </Node>
                  <Node>
                   <Name>get_child_data_set</Name>
@@ -4310,17 +4298,12 @@
                  <Node>
                   <Name>get_child_type_data_set_1d</Name>
                   <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                  <Anchor>aa72d744be1ef751d4ab91c629ac9bd2d</Anchor>
+                  <Anchor>acaa0ef76563b2daf525aa321f0c6960f</Anchor>
                  </Node>
                  <Node>
                   <Name>get_child_type_data_set_1d</Name>
                   <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                  <Anchor>acaa0ef76563b2daf525aa321f0c6960f</Anchor>
-                 </Node>
-                 <Node>
-                  <Name>get_child_type_data_set_2d</Name>
-                  <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                  <Anchor>ad3dec5001efd159236103797ce5328f6</Anchor>
+                  <Anchor>aa72d744be1ef751d4ab91c629ac9bd2d</Anchor>
                  </Node>
                  <Node>
                   <Name>get_child_type_data_set_2d</Name>
@@ -4328,9 +4311,9 @@
                   <Anchor>ae0a4056d0bef5e326e90fa4f6f59b7a0</Anchor>
                  </Node>
                  <Node>
-                  <Name>get_child_type_data_set_3d</Name>
+                  <Name>get_child_type_data_set_2d</Name>
                   <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                  <Anchor>acd40e9cf25371e111fdac216e5e3d93f</Anchor>
+                  <Anchor>ad3dec5001efd159236103797ce5328f6</Anchor>
                  </Node>
                  <Node>
                   <Name>get_child_type_data_set_3d</Name>
@@ -4338,14 +4321,9 @@
                   <Anchor>a65e1da993efa7229bdfd4128fb81315c</Anchor>
                  </Node>
                  <Node>
-                  <Name>operator Showable</Name>
+                  <Name>get_child_type_data_set_3d</Name>
                   <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                  <Anchor>a9b755d06c0c0f873830255d77d94c2fb</Anchor>
-                 </Node>
-                 <Node>
-                  <Name>show</Name>
-                  <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                  <Anchor>a55e91ac42eb309152c58d0c0371073d8</Anchor>
+                  <Anchor>acd40e9cf25371e111fdac216e5e3d93f</Anchor>
                  </Node>
                  <Node>
                   <Name>File</Name>
@@ -4496,16 +4474,6 @@
                   <Anchor>a56275688c2bcce2503c2fb461b6d1981</Anchor>
                  </Node>
                  <Node>
-                  <Name>operator Showable</Name>
-                  <Path>classRMF_1_1HDF5_1_1Object.html</Path>
-                  <Anchor>a6fe091c69eafd794837d40dd34dd6285</Anchor>
-                 </Node>
-                 <Node>
-                  <Name>show</Name>
-                  <Path>classRMF_1_1HDF5_1_1Object.html</Path>
-                  <Anchor>aca23b309f3b95d39fb982f4d05c06f56</Anchor>
-                 </Node>
-                 <Node>
                   <Name>Group</Name>
                   <Path>classRMF_1_1HDF5_1_1Object.html</Path>
                   <Anchor>a2697825715974a353728f0d4d5658112</Anchor>
@@ -4575,16 +4543,6 @@
                 <Anchor>a5cba032770f21ccb9dbc7e350c639a9f</Anchor>
                </Node>
                <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1BufferConstHandle.html</Path>
-                <Anchor>a685dda73149c34197630316375d08b0d</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1BufferConstHandle.html</Path>
-                <Anchor>a2fa808250aee1a1d5917a0df82c642da</Anchor>
-               </Node>
-               <Node>
                 <Name>data_</Name>
                 <Path>classRMF_1_1BufferConstHandle.html</Path>
                 <Anchor>a73e8bb4bc4b944a2d796d8db47a00b14</Anchor>
@@ -4636,16 +4594,6 @@
                 <Path>classRMF_1_1CoordinateTransformer.html</Path>
                 <Anchor>a997a9112708b62f08c5ae30660d1bf80</Anchor>
                </Node>
-               <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1CoordinateTransformer.html</Path>
-                <Anchor>afbff4b1f22f23044fcb1fa548dee1de1</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1CoordinateTransformer.html</Path>
-                <Anchor>ae0cf013b9764904f00edab0e0abefdc0</Anchor>
-               </Node>
               </Subnodes>
              </Node>
              <Node>
@@ -4661,16 +4609,6 @@
                 <Name>get_node</Name>
                 <Path>classRMF_1_1Decorator.html</Path>
                 <Anchor>ac28a24c28eca50d8e8d4cd655078eed6</Anchor>
-               </Node>
-               <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1Decorator.html</Path>
-                <Anchor>a5d7e89510848e2baadbc96bb5dd09a2c</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1Decorator.html</Path>
-                <Anchor>a45c83ab0b3b8dee075b339cb097544db</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -4757,47 +4695,7 @@
                <Node>
                 <Name>get_category</Name>
                 <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a712afa619c3524f8578038a5080cfda5</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a18e3ee8fa3f28893143b4439a7add69a</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a4529a23312bdde2da9444747f2247544</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a9c59bbf26faa4c8972597ad6d144338f</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>aaa8d24d88bde75b6389a88a3d6a478e0</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>ab025f958e938cdeed253e9174c669ea0</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>af8907729e19b8c25a7ac64a441e0a967</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>aad22b7d8eb4b887442977b1ddbf916e2</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a584dd8842d7de3e35e269fc25881087b</Anchor>
+                <Anchor>a0646bba12eabd547f4f048b4f1762a65</Anchor>
                </Node>
                <Node>
                 <Name>get_category</Name>
@@ -4837,107 +4735,27 @@
                <Node>
                 <Name>get_key</Name>
                 <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>aac52114cdf1d9cc9ca23160eb9299449</Anchor>
+                <Anchor>a7b5d18865ecb3b778dd08dab8e775d05</Anchor>
                </Node>
                <Node>
                 <Name>get_key</Name>
                 <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a8dd203ddbfbf147149f5e68bba155f65</Anchor>
-               </Node>
-               <Node>
-                <Name>get_key</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>abcbc8351e7f3a8089bdb563d28c1731c</Anchor>
-               </Node>
-               <Node>
-                <Name>get_key</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>aedebc4f4f5ae7ba24e3886cbd2f5c532</Anchor>
-               </Node>
-               <Node>
-                <Name>get_key</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a68e135db5294e841380fb7218c8219d6</Anchor>
-               </Node>
-               <Node>
-                <Name>get_key</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a47354e5d87b951385ba5ed174e6690fc</Anchor>
-               </Node>
-               <Node>
-                <Name>get_key</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>ae3b8cca37f9f155ff43430c9f85556b2</Anchor>
-               </Node>
-               <Node>
-                <Name>get_key</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a5af751bf4d3cd7b465465ab9de48ca74</Anchor>
-               </Node>
-               <Node>
-                <Name>get_key</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>aaa0bc0ed1379ccbc901f50093ef57e01</Anchor>
-               </Node>
-               <Node>
-                <Name>get_key</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>aa7761449a2b65c68c9ce10e99b233e40</Anchor>
+                <Anchor>a550f15f1fa9cba2491c231e7fd282672</Anchor>
                </Node>
                <Node>
                 <Name>get_keys</Name>
                 <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>ae0710bf83a512acb6824749e0f124e9e</Anchor>
+                <Anchor>a8f21a1acaef55bd6252bd3ec900976ad</Anchor>
                </Node>
                <Node>
                 <Name>get_keys</Name>
                 <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a94d0d5b275bb3db8a4791add07a3cef3</Anchor>
+                <Anchor>a3b5ebcfcaa30c2b99056063e6641ed42</Anchor>
                </Node>
                <Node>
                 <Name>get_keys</Name>
                 <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a9a3a3afa282dd794215003e5b254903b</Anchor>
-               </Node>
-               <Node>
-                <Name>get_keys</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a7e2da2f2f0efc6e28fbb2689d76f806e</Anchor>
-               </Node>
-               <Node>
-                <Name>get_keys</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a27782d5f55db7ddb2fc117554aaea338</Anchor>
-               </Node>
-               <Node>
-                <Name>get_keys</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a00fd58dbfa35a737992ae54d61c67fe9</Anchor>
-               </Node>
-               <Node>
-                <Name>get_keys</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>adc16a065cdb82e768b55ceae754b06f3</Anchor>
-               </Node>
-               <Node>
-                <Name>get_keys</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>ae1237e666d7c72dc8b771123aa67cb4d</Anchor>
-               </Node>
-               <Node>
-                <Name>get_keys</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a8c3919f58d5770311bb692715c6d41ca</Anchor>
-               </Node>
-               <Node>
-                <Name>get_keys</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a4ca01fdf4c4bead163252cf7447de626</Anchor>
-               </Node>
-               <Node>
-                <Name>get_keys</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a20ab85ba27dea2dd8109e6d86a910fd0</Anchor>
+                <Anchor>a37879ca2cd4dc4384dd74e33277089b0</Anchor>
                </Node>
                <Node>
                 <Name>get_keys</Name>
@@ -4952,52 +4770,12 @@
                <Node>
                 <Name>get_name</Name>
                 <Path>classRMF_1_1FileConstHandle.html</Path>
+                <Anchor>ac4f8516ae3c7f3239075b60d66581e9d</Anchor>
+               </Node>
+               <Node>
+                <Name>get_name</Name>
+                <Path>classRMF_1_1FileConstHandle.html</Path>
                 <Anchor>a1d5d99228aea96caf132ecadd7e402e8</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a018e1a37bac3bf2d759933a006fe2dcb</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a717f2d57a0b0e561c34bb3f634ffe2dd</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>abf58d79023920c982fb5361162c1ebc0</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>ae1f38f1806413eab7cab509985636f87</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>ae05769a48810f31133ca32d9c698cbec</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a32874cb4c299c43e17f14be81a512594</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a1df97f35365f78c9299bf0982c7e72b5</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a8fc9eeb5c8848c4436fcf7cb12d66363</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a984b089525a1b3dd79d58f6e2ad47e0a</Anchor>
                </Node>
                <Node>
                 <Name>get_name</Name>
@@ -5060,11 +4838,6 @@
                 <Anchor>af67f261179908fd764fcce41f775de0d</Anchor>
                </Node>
                <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>af0d13f286d861609e4a1cca72557ca6d</Anchor>
-               </Node>
-               <Node>
                 <Name>reload</Name>
                 <Path>classRMF_1_1FileConstHandle.html</Path>
                 <Anchor>a53d5a0bc1c21fd716e3f7db3b82b4f9b</Anchor>
@@ -5073,11 +4846,6 @@
                 <Name>set_current_frame</Name>
                 <Path>classRMF_1_1FileConstHandle.html</Path>
                 <Anchor>a5b682b77e30419e080cdd548ff9d8b82</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>aa233fe8c229883992d080e8c58cf9bdb</Anchor>
                </Node>
                <Node>
                 <Name>clone_file_info</Name>
@@ -5272,6 +5040,32 @@
               </Subnodes>
              </Node>
              <Node>
+              <Name>Label</Name>
+              <Path>classRMF_1_1Label.html</Path>
+              <Subnodes>
+               <Node>
+                <Name>Label</Name>
+                <Path>classRMF_1_1Label.html</Path>
+                <Anchor>ae622cff4e9634dd4e554ff7f10a7dec8</Anchor>
+               </Node>
+               <Node>
+                <Name>Label</Name>
+                <Path>classRMF_1_1Label.html</Path>
+                <Anchor>a4a88402ba3b91a2240701eb11114780f</Anchor>
+               </Node>
+               <Node>
+                <Name>get_is</Name>
+                <Path>classRMF_1_1Label.html</Path>
+                <Anchor>ad1ac384eef4dc18b10486687f80209e7</Anchor>
+               </Node>
+               <Node>
+                <Name>set_is</Name>
+                <Path>classRMF_1_1Label.html</Path>
+                <Anchor>ad9465a8ee7f3e7787582ebd0121bb622</Anchor>
+               </Node>
+              </Subnodes>
+             </Node>
+             <Node>
               <Name>NodeConstHandle</Name>
               <Path>classRMF_1_1NodeConstHandle.html</Path>
               <Subnodes>
@@ -5284,51 +5078,6 @@
                 <Name>get_association</Name>
                 <Path>classRMF_1_1NodeConstHandle.html</Path>
                 <Anchor>a818993f7d4784770cc3c21d26488fd01</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a01fce429416f43e7fc31d7d50aef7cb4</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a4a62805c50a68c0f78da9382fcfe4ae6</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>ad32a4d4a20234e2d79b8fb4404a054d7</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a8b1b434a3ef6908b079394458ea79890</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>ae638dc450e28c0cf26a1c50c5a3edf34</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a9f6dcee74dd8013b79e37c25011b514d</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a3836445245d304208f2c33244f98febf</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a8b434a2bc54f25a14649aa29cc3ada88</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a04d24afd3f58a10fee910188b6a2473e</Anchor>
                </Node>
                <Node>
                 <Name>get_children</Name>
@@ -5353,47 +5102,7 @@
                <Node>
                 <Name>get_frame_value</Name>
                 <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a1a6b6695e9c96c10a2a7e6bd97f769e3</Anchor>
-               </Node>
-               <Node>
-                <Name>get_frame_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a68e666ea297db2f4656023d1912d9f8c</Anchor>
-               </Node>
-               <Node>
-                <Name>get_frame_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a288df809bea6eb1a16b86079713c4597</Anchor>
-               </Node>
-               <Node>
-                <Name>get_frame_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a82504a5193784c9ad067afb1c6f558ab</Anchor>
-               </Node>
-               <Node>
-                <Name>get_frame_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a570b556f37d7381f0e006af2b962b878</Anchor>
-               </Node>
-               <Node>
-                <Name>get_frame_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a09d887096a3cf7011f4dd3a69c5c589d</Anchor>
-               </Node>
-               <Node>
-                <Name>get_frame_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a050f834a2815d6db9f6229bc91032586</Anchor>
-               </Node>
-               <Node>
-                <Name>get_frame_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a94a0ad918717a25faeef3a0a49b79d76</Anchor>
-               </Node>
-               <Node>
-                <Name>get_frame_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>ad8d0fef182ed6cd94634c553e54a43a7</Anchor>
+                <Anchor>a48949d344d135a9c1bd41e0874c8e17e</Anchor>
                </Node>
                <Node>
                 <Name>get_has_association</Name>
@@ -5403,47 +5112,7 @@
                <Node>
                 <Name>get_has_value</Name>
                 <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a278ed2a6caadbceca8982232bd093855</Anchor>
-               </Node>
-               <Node>
-                <Name>get_has_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>adb8fef4d47bf5a5e7b3ab0212bd6ae21</Anchor>
-               </Node>
-               <Node>
-                <Name>get_has_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a22c555b78e2d800c365020fb0d159752</Anchor>
-               </Node>
-               <Node>
-                <Name>get_has_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a506e5e24b4e2144336c0de08c9cc2d00</Anchor>
-               </Node>
-               <Node>
-                <Name>get_has_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>ab8e74d5883e83922b2bc58ebf00ccdf7</Anchor>
-               </Node>
-               <Node>
-                <Name>get_has_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a114a04b5588d300d7d345e604de97a1c</Anchor>
-               </Node>
-               <Node>
-                <Name>get_has_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a758cb57d3281b6747d34ed8504f9415e</Anchor>
-               </Node>
-               <Node>
-                <Name>get_has_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>acd387321611cfc28a296e76a7f9fe45d</Anchor>
-               </Node>
-               <Node>
-                <Name>get_has_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a6b99aecbca3e974a31dafda53ca15031</Anchor>
+                <Anchor>ac9b0e03981b5c2022ebafcb5fa0257af</Anchor>
                </Node>
                <Node>
                 <Name>get_id</Name>
@@ -5456,94 +5125,9 @@
                 <Anchor>a8be49bdea07c4807a6b55f066ca74ad7</Anchor>
                </Node>
                <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>afca5b9072795e3a9d91bb625ee529699</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a1b97c1ed73773b176e591e9a015bd5ff</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a5e7bc5332e792706102a1bec96b7888d</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a40be4630896c3657339b02b8ca1b3388</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a81c90feb947eea49c0eb5ba5552249c8</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a27d1a40859e4be49e5deb4bc863c24a4</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a596fc095b20c967b66fa88bd26e127e1</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>ad6ee51273d6a0b28656ee5a14ba1afa0</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>aa83680da79f436f94431ff4f26c30946</Anchor>
-               </Node>
-               <Node>
                 <Name>get_static_value</Name>
                 <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a8db5c1b4004cb197bbdfda30e62ec74d</Anchor>
-               </Node>
-               <Node>
-                <Name>get_static_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>adc675482004c2bfb279eab29e7d39881</Anchor>
-               </Node>
-               <Node>
-                <Name>get_static_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a06c5d55737b4db8f22868d700249799b</Anchor>
-               </Node>
-               <Node>
-                <Name>get_static_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a604c264cfcbe0b04ffc8c78441d06ab1</Anchor>
-               </Node>
-               <Node>
-                <Name>get_static_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a3ae8159c79ef75b566ded3570d40cb7f</Anchor>
-               </Node>
-               <Node>
-                <Name>get_static_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>aa45020cecc56abcf71744591c2256a57</Anchor>
-               </Node>
-               <Node>
-                <Name>get_static_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a287c6206e37eb350de0ee214829d4205</Anchor>
-               </Node>
-               <Node>
-                <Name>get_static_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a4c48c996b933d0d97b89e2183134d606</Anchor>
-               </Node>
-               <Node>
-                <Name>get_static_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a6ee91666b4a5e476883aa65ebd030c6f</Anchor>
+                <Anchor>a6121c60e5e9f1f762b4b18fab7cd65e8</Anchor>
                </Node>
                <Node>
                 <Name>get_type</Name>
@@ -5553,47 +5137,7 @@
                <Node>
                 <Name>get_value</Name>
                 <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a6c5fe436d4565f3604d08362cd3951b0</Anchor>
-               </Node>
-               <Node>
-                <Name>get_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a2cc2710b20577350688d8b78a3e21001</Anchor>
-               </Node>
-               <Node>
-                <Name>get_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a85541fdc35dcba7127f3b3033e8320c8</Anchor>
-               </Node>
-               <Node>
-                <Name>get_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a0389cd90a52325c02a060311de0e3aef</Anchor>
-               </Node>
-               <Node>
-                <Name>get_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>abf2659ff155764b23c6aa965811e318d</Anchor>
-               </Node>
-               <Node>
-                <Name>get_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a87bfbc1eacb5c114189d1813f03e14ee</Anchor>
-               </Node>
-               <Node>
-                <Name>get_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a64c7a03a8b08f0136b6740b47b7717a1</Anchor>
-               </Node>
-               <Node>
-                <Name>get_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a3c66e867eebc4b77654fde73b0b4622e</Anchor>
-               </Node>
-               <Node>
-                <Name>get_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>af218a88455fc0621cd4f40d25d3757ed</Anchor>
+                <Anchor>a731367cb3fa38915cdb573a6d2fecf35</Anchor>
                </Node>
                <Node>
                 <Name>operator NodeID</Name>
@@ -5601,19 +5145,9 @@
                 <Anchor>a14d10c911f99d4e9755a5a2124501e80</Anchor>
                </Node>
                <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a6dd34191d4a1ce9d93a8e10534fca48a</Anchor>
-               </Node>
-               <Node>
                 <Name>set_association</Name>
                 <Path>classRMF_1_1NodeConstHandle.html</Path>
                 <Anchor>a1ca46f397a06e16561a78006b5340727</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a2594af1f6f219416e4af895075501bf4</Anchor>
                </Node>
                <Node>
                 <Name>FileHandle</Name>
@@ -5664,137 +5198,17 @@
                <Node>
                 <Name>set_frame_value</Name>
                 <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>aa06bfc8afa9c673ed1eacf8ec62d6183</Anchor>
-               </Node>
-               <Node>
-                <Name>set_frame_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>aecbd87b88e0d572e1b9e04007ec04374</Anchor>
-               </Node>
-               <Node>
-                <Name>set_frame_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a336920d27e8d78c18066eaf7e0be8d08</Anchor>
-               </Node>
-               <Node>
-                <Name>set_frame_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a002decd6ff98a3854db1459a8cc4bc99</Anchor>
-               </Node>
-               <Node>
-                <Name>set_frame_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a68dcc734cfa936a4720ff86a41289639</Anchor>
-               </Node>
-               <Node>
-                <Name>set_frame_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a0153ef910eef7cca6ace2cdbeffd45e5</Anchor>
-               </Node>
-               <Node>
-                <Name>set_frame_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a317289d6ae2555b20229e71ab169d030</Anchor>
-               </Node>
-               <Node>
-                <Name>set_frame_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a790e897ad0cca1b4ad5bdab37fb378e0</Anchor>
-               </Node>
-               <Node>
-                <Name>set_frame_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a308acbb48425ab1809ea4cc732597ef0</Anchor>
+                <Anchor>ac828f9174306779fc7ce3c2a7e4fad1f</Anchor>
                </Node>
                <Node>
                 <Name>set_static_value</Name>
                 <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a52790b200068929a6324f4d78590ee12</Anchor>
-               </Node>
-               <Node>
-                <Name>set_static_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>aabe1b34c1417ccb5d1af71c3fbabd320</Anchor>
-               </Node>
-               <Node>
-                <Name>set_static_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a40d22405c60b3ed8de4c66f483ac6f83</Anchor>
-               </Node>
-               <Node>
-                <Name>set_static_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a0d24357df3732d71edf9df9ef5291a41</Anchor>
-               </Node>
-               <Node>
-                <Name>set_static_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>ab98c2cd181cb5bc6f80121cea6d9164a</Anchor>
-               </Node>
-               <Node>
-                <Name>set_static_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a5e6911ddcba650b5e19c6fe3f3f851eb</Anchor>
-               </Node>
-               <Node>
-                <Name>set_static_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a148fe4bb345bd0cf38f0ecc458315d6a</Anchor>
-               </Node>
-               <Node>
-                <Name>set_static_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a3248d9367d175d20a26f7fe58fa15f68</Anchor>
-               </Node>
-               <Node>
-                <Name>set_static_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>aa597098dd355e25a5b2f167789209e86</Anchor>
+                <Anchor>aa7d1ab7d1e7e55ca5d099f50a74400f2</Anchor>
                </Node>
                <Node>
                 <Name>set_value</Name>
                 <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a9491fd9bd0a41e2601c24743d02c66dd</Anchor>
-               </Node>
-               <Node>
-                <Name>set_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a8a0fac9e4cd51a0b3fd048470ec8a4cc</Anchor>
-               </Node>
-               <Node>
-                <Name>set_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>aba42636e8fbdb33d60c5b7b7150e53a8</Anchor>
-               </Node>
-               <Node>
-                <Name>set_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>ae9c979401e612dba25ad4f8c7d4d84d7</Anchor>
-               </Node>
-               <Node>
-                <Name>set_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>aa307789914ad8acb7fa57aae29aa1fa5</Anchor>
-               </Node>
-               <Node>
-                <Name>set_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>aae4450d37f5edbaa72cdde609b0b561a</Anchor>
-               </Node>
-               <Node>
-                <Name>set_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a4196c2257f4397d2abc9ff25a531c7ff</Anchor>
-               </Node>
-               <Node>
-                <Name>set_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a44ba44aee41eff92ed3bc1848e5a17b8</Anchor>
-               </Node>
-               <Node>
-                <Name>set_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a4a3ac0a646a7de5332c97b337830ad3c</Anchor>
+                <Anchor>a102f9a69e6c37bded80a097bd5846225</Anchor>
                </Node>
                <Node>
                 <Name>FileHandle</Name>
@@ -5815,12 +5229,12 @@
                <Node>
                 <Name>Nullable</Name>
                 <Path>classRMF_1_1Nullable.html</Path>
-                <Anchor>a35a2ba26e4ce0b32b08a36c3ffb2347e</Anchor>
+                <Anchor>a66a37ab04783adeb8d238f917a31c3c8</Anchor>
                </Node>
                <Node>
                 <Name>get</Name>
                 <Path>classRMF_1_1Nullable.html</Path>
-                <Anchor>a1d8c4fc58640c52080daf51078a3cf9b</Anchor>
+                <Anchor>af683636e291c401325a3d057b78647b8</Anchor>
                </Node>
                <Node>
                 <Name>get_is_null</Name>
@@ -5828,9 +5242,14 @@
                 <Anchor>a39bcc975e21411935965ddc51819a459</Anchor>
                </Node>
                <Node>
-                <Name>operator const typename Traits::Type &amp;</Name>
+                <Name>get_ptr</Name>
                 <Path>classRMF_1_1Nullable.html</Path>
-                <Anchor>a4e1b84bcca579eb203b744c962800e6e</Anchor>
+                <Anchor>ad1878e35d8c302b54cec8dffaa554452</Anchor>
+               </Node>
+               <Node>
+                <Name>operator const typename Traits&lt; T &gt;::ReturnType &amp;</Name>
+                <Path>classRMF_1_1Nullable.html</Path>
+                <Anchor>a41b1fc5e7d5f868995d26591f62e69a5</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -5848,16 +5267,6 @@
                 <Path>classRMF_1_1RestoreCurrentFrame.html</Path>
                 <Anchor>a0b43a1c90978ee700618d3793082c74c</Anchor>
                </Node>
-               <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1RestoreCurrentFrame.html</Path>
-                <Anchor>a9513c046531d3312ada32eb0047b1e4c</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1RestoreCurrentFrame.html</Path>
-                <Anchor>a0dd1934dcf375df7e3cf853efda2f0c8</Anchor>
-               </Node>
               </Subnodes>
              </Node>
              <Node>
@@ -5874,15 +5283,85 @@
                 <Path>classRMF_1_1SetCurrentFrame.html</Path>
                 <Anchor>a475bf6300f0df746107f548aba31235f</Anchor>
                </Node>
+              </Subnodes>
+             </Node>
+             <Node>
+              <Name>Traits</Name>
+              <Path>structRMF_1_1Traits.html</Path>
+             </Node>
+             <Node>
+              <Name>TraverseHelper</Name>
+              <Path>classRMF_1_1TraverseHelper.html</Path>
+              <Subnodes>
                <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1SetCurrentFrame.html</Path>
-                <Anchor>a6a7a0481d7d455ff2797ca778fe98654</Anchor>
+                <Name>TraverseHelper</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>af5f4eaf31557fd1f0a8c17018fe528f9</Anchor>
                </Node>
                <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1SetCurrentFrame.html</Path>
-                <Anchor>a7bc6c6d7b80f56d3983b6edc57a33226</Anchor>
+                <Name>TraverseHelper</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a28c8700854fa0d6de692db649c906719</Anchor>
+               </Node>
+               <Node>
+                <Name>get_chain_id</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a1731bab253084b4e0e20e377601b83c9</Anchor>
+               </Node>
+               <Node>
+                <Name>get_children</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a0f8eb0b6563036cb3420b753c4be98aa</Anchor>
+               </Node>
+               <Node>
+                <Name>get_copy_index</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a6a3863bb3b2856ddd4a495602ecd332d</Anchor>
+               </Node>
+               <Node>
+                <Name>get_global_coordinates</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a59e3905aba87d9ca8d75b4762e6043ab</Anchor>
+               </Node>
+               <Node>
+                <Name>get_index</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a4e98a8b404875246c679940982c9ba00</Anchor>
+               </Node>
+               <Node>
+                <Name>get_is_displayed</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a327287eb0b0d97114195e8d09075dd6c</Anchor>
+               </Node>
+               <Node>
+                <Name>get_molecule_name</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>ac1ec42bd660cf8c8c223645cfe48a26e</Anchor>
+               </Node>
+               <Node>
+                <Name>get_residue_index</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a2a9997b71fae045d49751918e6bb86af</Anchor>
+               </Node>
+               <Node>
+                <Name>get_residue_type</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>affec529948d8af3e85bcf4603909333d</Anchor>
+               </Node>
+               <Node>
+                <Name>get_rgb_color</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a5f9fe3aa0871b3eee5048ac236b376f2</Anchor>
+               </Node>
+               <Node>
+                <Name>get_state_index</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a2304df6fe5b5bcfeb57868311d19fd34</Anchor>
+               </Node>
+               <Node>
+                <Name>set_is_displayed</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a8d655a44212f594647d83c46a5375228</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -5907,16 +5386,6 @@
               <Path>classRMF_1_1Vector.html</Path>
               <Subnodes>
                <Node>
-                <Name>const_iterator</Name>
-                <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>a5eac6ca1030f18f2c30ea547b7846994</Anchor>
-               </Node>
-               <Node>
-                <Name>iterator</Name>
-                <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>a9873891ecdd6166c1cffa50684f02da6</Anchor>
-               </Node>
-               <Node>
                 <Name>Vector</Name>
                 <Path>classRMF_1_1Vector.html</Path>
                 <Anchor>a779017dbeee8296bc13d72ef42c62f86</Anchor>
@@ -5929,7 +5398,7 @@
                <Node>
                 <Name>Vector</Name>
                 <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>a87d0baa85a335f3a146a2e61a4e3a1c5</Anchor>
+                <Anchor>a1a116cd4d7cb7dba6ed38db1001ecc36</Anchor>
                </Node>
                <Node>
                 <Name>Vector</Name>
@@ -5942,44 +5411,9 @@
                 <Anchor>a9143f0d4b8147b026ab0466ba44c90e1</Anchor>
                </Node>
                <Node>
-                <Name>begin</Name>
-                <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>adb473c35264d57cd8538d4292864dc0d</Anchor>
-               </Node>
-               <Node>
-                <Name>begin</Name>
-                <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>af7846aa5d25236c0c9cc9820f31ec1df</Anchor>
-               </Node>
-               <Node>
-                <Name>end</Name>
-                <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>a30e4f3a7b5c96a62c1f1aae61f47cd0e</Anchor>
-               </Node>
-               <Node>
-                <Name>end</Name>
-                <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>a11ad67ba190c16fd19967a5dbc0bbd6d</Anchor>
-               </Node>
-               <Node>
                 <Name>get_dimension</Name>
                 <Path>classRMF_1_1Vector.html</Path>
                 <Anchor>abb293647e206ed8d969d026f85a60352</Anchor>
-               </Node>
-               <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>a01a21a2893ab6029d6e78d6ed3e55bc0</Anchor>
-               </Node>
-               <Node>
-                <Name>operator[]</Name>
-                <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>af791d2d0b20247de05a554399edab91d</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>a9143465d07c2ef153ae204e610266937</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -6464,7 +5898,19 @@
             <Path>classRMF_1_1ID.html</Path>
            </Node>
            <Node>
+            <Name>RMF::ID&lt; FloatTag &gt;</Name>
+            <Path>classRMF_1_1ID.html</Path>
+           </Node>
+           <Node>
             <Name>RMF::ID&lt; FrameTag &gt;</Name>
+            <Path>classRMF_1_1ID.html</Path>
+           </Node>
+           <Node>
+            <Name>RMF::ID&lt; IntsTag &gt;</Name>
+            <Path>classRMF_1_1ID.html</Path>
+           </Node>
+           <Node>
+            <Name>RMF::ID&lt; IntTag &gt;</Name>
             <Path>classRMF_1_1ID.html</Path>
            </Node>
            <Node>
@@ -6472,36 +5918,38 @@
             <Path>classRMF_1_1ID.html</Path>
            </Node>
            <Node>
-            <Name>RMF::ID&lt; RMF::FloatTraits &gt;</Name>
+            <Name>RMF::ID&lt; StringsTag &gt;</Name>
             <Path>classRMF_1_1ID.html</Path>
            </Node>
            <Node>
-            <Name>RMF::ID&lt; RMF::IntsTraits &gt;</Name>
+            <Name>RMF::ID&lt; StringTag &gt;</Name>
             <Path>classRMF_1_1ID.html</Path>
            </Node>
            <Node>
-            <Name>RMF::ID&lt; RMF::IntTraits &gt;</Name>
+            <Name>RMF::ID&lt; Vector3sTag &gt;</Name>
             <Path>classRMF_1_1ID.html</Path>
            </Node>
            <Node>
-            <Name>RMF::ID&lt; RMF::StringsTraits &gt;</Name>
+            <Name>RMF::ID&lt; Vector3Tag &gt;</Name>
             <Path>classRMF_1_1ID.html</Path>
            </Node>
            <Node>
-            <Name>RMF::ID&lt; RMF::StringTraits &gt;</Name>
+            <Name>RMF::ID&lt; Vector4Tag &gt;</Name>
             <Path>classRMF_1_1ID.html</Path>
            </Node>
            <Node>
-            <Name>RMF::ID&lt; RMF::Vector3sTraits &gt;</Name>
-            <Path>classRMF_1_1ID.html</Path>
-           </Node>
-           <Node>
-            <Name>RMF::ID&lt; RMF::Vector3Traits &gt;</Name>
-            <Path>classRMF_1_1ID.html</Path>
-           </Node>
-           <Node>
-            <Name>RMF::ID&lt; RMF::Vector4Traits &gt;</Name>
-            <Path>classRMF_1_1ID.html</Path>
+            <Name>RMF::Label</Name>
+            <Path>classRMF_1_1Label.html</Path>
+            <Subnodes>
+             <Node>
+              <Name>RMF::decorator::Assembly</Name>
+              <Path>classRMF_1_1decorator_1_1Assembly.html</Path>
+             </Node>
+             <Node>
+              <Name>RMF::decorator::Molecule</Name>
+              <Path>classRMF_1_1decorator_1_1Molecule.html</Path>
+             </Node>
+            </Subnodes>
            </Node>
            <Node>
             <Name>RMF::HDF5::MutableAttributes&lt; Base &gt;</Name>
@@ -6514,6 +5962,10 @@
              <Node>
               <Name>RMF::NodeHandle</Name>
               <Path>classRMF_1_1NodeHandle.html</Path>
+             </Node>
+             <Node>
+              <Name>RMF::TraverseHelper</Name>
+              <Path>classRMF_1_1TraverseHelper.html</Path>
              </Node>
             </Subnodes>
            </Node>
@@ -6584,7 +6036,15 @@
             <Path>classRMF_1_1SetCurrentFrame.html</Path>
            </Node>
            <Node>
+            <Name>RMF::Traits&lt; T &gt;</Name>
+            <Path>structRMF_1_1Traits.html</Path>
+           </Node>
+           <Node>
             <Name>RMF::Vector&lt; D &gt;</Name>
+            <Path>classRMF_1_1Vector.html</Path>
+           </Node>
+           <Node>
+            <Name>RMF::Vector&lt; 3 &gt;</Name>
             <Path>classRMF_1_1Vector.html</Path>
            </Node>
           </Subnodes>
@@ -7071,16 +6531,6 @@
                 <Anchor>a5cba032770f21ccb9dbc7e350c639a9f</Anchor>
                </Node>
                <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1BufferConstHandle.html</Path>
-                <Anchor>a685dda73149c34197630316375d08b0d</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1BufferConstHandle.html</Path>
-                <Anchor>a2fa808250aee1a1d5917a0df82c642da</Anchor>
-               </Node>
-               <Node>
                 <Name>data_</Name>
                 <Path>classRMF_1_1BufferConstHandle.html</Path>
                 <Anchor>a73e8bb4bc4b944a2d796d8db47a00b14</Anchor>
@@ -7387,16 +6837,6 @@
                 <Anchor>ae2c994fe37a14b6bef029f3be3b4d7d9</Anchor>
                </Node>
                <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1HDF5_1_1ConstDataSetD.html</Path>
-                <Anchor>a979e3387430c328b0e8035cea97a401a</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1HDF5_1_1ConstDataSetD.html</Path>
-                <Anchor>ac5d2a2a18bee3f2b1087a29a5af1bd28</Anchor>
-               </Node>
-               <Node>
                 <Name>ConstGroup</Name>
                 <Path>classRMF_1_1HDF5_1_1ConstDataSetD.html</Path>
                 <Anchor>a1c94831677cf67057966421628b1939f</Anchor>
@@ -7437,16 +6877,6 @@
                 <Name>get_name</Name>
                 <Path>classRMF_1_1HDF5_1_1ConstFile.html</Path>
                 <Anchor>a51d6bf27b79bea278d5d6569ba88ba5e</Anchor>
-               </Node>
-               <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1HDF5_1_1ConstFile.html</Path>
-                <Anchor>a72b484ce3a3563f6bf7639551b14035a</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1HDF5_1_1ConstFile.html</Path>
-                <Anchor>a75287b0e4570799bee58f073c24bd01e</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -7538,22 +6968,22 @@
                <Node>
                 <Name>get_child_type_data_set_1d</Name>
                 <Path>classRMF_1_1HDF5_1_1ConstGroup.html</Path>
-                <Anchor>a5d72f3f6707b33f3dd1991141c0237cc</Anchor>
+                <Anchor>a6375700a91e3274156c9d10c45c8b0c5</Anchor>
                </Node>
                <Node>
                 <Name>get_child_type_data_set_1d</Name>
                 <Path>classRMF_1_1HDF5_1_1ConstGroup.html</Path>
-                <Anchor>a6375700a91e3274156c9d10c45c8b0c5</Anchor>
-               </Node>
-               <Node>
-                <Name>get_child_type_data_set_2d</Name>
-                <Path>classRMF_1_1HDF5_1_1ConstGroup.html</Path>
-                <Anchor>aace8c4a3c050fed7c7a7139cebb359dd</Anchor>
+                <Anchor>a5d72f3f6707b33f3dd1991141c0237cc</Anchor>
                </Node>
                <Node>
                 <Name>get_child_type_data_set_2d</Name>
                 <Path>classRMF_1_1HDF5_1_1ConstGroup.html</Path>
                 <Anchor>a3e5db18e84b8c31406d8665e8dfae0f8</Anchor>
+               </Node>
+               <Node>
+                <Name>get_child_type_data_set_2d</Name>
+                <Path>classRMF_1_1HDF5_1_1ConstGroup.html</Path>
+                <Anchor>aace8c4a3c050fed7c7a7139cebb359dd</Anchor>
                </Node>
                <Node>
                 <Name>get_child_type_data_set_3d</Name>
@@ -7574,16 +7004,6 @@
                 <Name>get_number_of_children</Name>
                 <Path>classRMF_1_1HDF5_1_1ConstGroup.html</Path>
                 <Anchor>a32721ed4f87e859ab864e4d343cb8600</Anchor>
-               </Node>
-               <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1HDF5_1_1ConstGroup.html</Path>
-                <Anchor>afc0c62f57682f9023f5b20a6ba67fb63</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1HDF5_1_1ConstGroup.html</Path>
-                <Anchor>acaea454c8834af3a374f93a4565d6ef2</Anchor>
                </Node>
                <Node>
                 <Name>ConstFile</Name>
@@ -7645,16 +7065,6 @@
                 <Name>get_translation</Name>
                 <Path>classRMF_1_1CoordinateTransformer.html</Path>
                 <Anchor>a997a9112708b62f08c5ae30660d1bf80</Anchor>
-               </Node>
-               <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1CoordinateTransformer.html</Path>
-                <Anchor>afbff4b1f22f23044fcb1fa548dee1de1</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1CoordinateTransformer.html</Path>
-                <Anchor>ae0cf013b9764904f00edab0e0abefdc0</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -7790,11 +7200,6 @@
                 <Anchor>a088fdee334f97f79fcb91ed45fe152f8</Anchor>
                </Node>
                <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1HDF5_1_1DataSetD.html</Path>
-                <Anchor>a8966b14a6c9b23bb2952f7a4a34908dc</Anchor>
-               </Node>
-               <Node>
                 <Name>set_block</Name>
                 <Path>classRMF_1_1HDF5_1_1DataSetD.html</Path>
                 <Anchor>a8751104929f9e7d7cc1816d5819f441b</Anchor>
@@ -7813,11 +7218,6 @@
                 <Name>set_value</Name>
                 <Path>classRMF_1_1HDF5_1_1DataSetD.html</Path>
                 <Anchor>a3935258ff4cea42cb80f80ec733a15ed</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1HDF5_1_1DataSetD.html</Path>
-                <Anchor>a933f392af1f2d88b4d42102248b66282</Anchor>
                </Node>
                <Node>
                 <Name>Group</Name>
@@ -7907,11 +7307,6 @@
                 <Anchor>a9f81a0cffcbf07983559c09e91378ef0</Anchor>
                </Node>
                <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1HDF5_1_1DataSetIndexD.html</Path>
-                <Anchor>a1d8225e419d440c11990509dc79e8b5e</Anchor>
-               </Node>
-               <Node>
                 <Name>operator[]</Name>
                 <Path>classRMF_1_1HDF5_1_1DataSetIndexD.html</Path>
                 <Anchor>a2e9457c3acf202e833e0ffa7e49c783f</Anchor>
@@ -7920,11 +7315,6 @@
                 <Name>operator[]</Name>
                 <Path>classRMF_1_1HDF5_1_1DataSetIndexD.html</Path>
                 <Anchor>a4e58a38ec88cbf77d925fd57e917bd72</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1HDF5_1_1DataSetIndexD.html</Path>
-                <Anchor>afb9f9d2958dcf2ee97337634b3393c92</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -7947,16 +7337,6 @@
                 <Name>get_node</Name>
                 <Path>classRMF_1_1Decorator.html</Path>
                 <Anchor>ac28a24c28eca50d8e8d4cd655078eed6</Anchor>
-               </Node>
-               <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1Decorator.html</Path>
-                <Anchor>a5d7e89510848e2baadbc96bb5dd09a2c</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1Decorator.html</Path>
-                <Anchor>a45c83ab0b3b8dee075b339cb097544db</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -8575,16 +7955,6 @@
                 <Path>classRMF_1_1HDF5_1_1File.html</Path>
                 <Anchor>a6a03833c9cf9b902cf9efd8251fcee7c</Anchor>
                </Node>
-               <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1HDF5_1_1File.html</Path>
-                <Anchor>aedf054d4e89dd34165eae75b1b821e3c</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1HDF5_1_1File.html</Path>
-                <Anchor>a67c02b91c837be5d5a7dc884504d42d0</Anchor>
-               </Node>
               </Subnodes>
              </Node>
              <Node>
@@ -8640,47 +8010,7 @@
                <Node>
                 <Name>get_category</Name>
                 <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a712afa619c3524f8578038a5080cfda5</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a18e3ee8fa3f28893143b4439a7add69a</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a4529a23312bdde2da9444747f2247544</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a9c59bbf26faa4c8972597ad6d144338f</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>aaa8d24d88bde75b6389a88a3d6a478e0</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>ab025f958e938cdeed253e9174c669ea0</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>af8907729e19b8c25a7ac64a441e0a967</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>aad22b7d8eb4b887442977b1ddbf916e2</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a584dd8842d7de3e35e269fc25881087b</Anchor>
+                <Anchor>a0646bba12eabd547f4f048b4f1762a65</Anchor>
                </Node>
                <Node>
                 <Name>get_category</Name>
@@ -8720,107 +8050,27 @@
                <Node>
                 <Name>get_key</Name>
                 <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>aac52114cdf1d9cc9ca23160eb9299449</Anchor>
+                <Anchor>a7b5d18865ecb3b778dd08dab8e775d05</Anchor>
                </Node>
                <Node>
                 <Name>get_key</Name>
                 <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a8dd203ddbfbf147149f5e68bba155f65</Anchor>
-               </Node>
-               <Node>
-                <Name>get_key</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>abcbc8351e7f3a8089bdb563d28c1731c</Anchor>
-               </Node>
-               <Node>
-                <Name>get_key</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>aedebc4f4f5ae7ba24e3886cbd2f5c532</Anchor>
-               </Node>
-               <Node>
-                <Name>get_key</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a68e135db5294e841380fb7218c8219d6</Anchor>
-               </Node>
-               <Node>
-                <Name>get_key</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a47354e5d87b951385ba5ed174e6690fc</Anchor>
-               </Node>
-               <Node>
-                <Name>get_key</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>ae3b8cca37f9f155ff43430c9f85556b2</Anchor>
-               </Node>
-               <Node>
-                <Name>get_key</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a5af751bf4d3cd7b465465ab9de48ca74</Anchor>
-               </Node>
-               <Node>
-                <Name>get_key</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>aaa0bc0ed1379ccbc901f50093ef57e01</Anchor>
-               </Node>
-               <Node>
-                <Name>get_key</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>aa7761449a2b65c68c9ce10e99b233e40</Anchor>
+                <Anchor>a550f15f1fa9cba2491c231e7fd282672</Anchor>
                </Node>
                <Node>
                 <Name>get_keys</Name>
                 <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>ae0710bf83a512acb6824749e0f124e9e</Anchor>
+                <Anchor>a8f21a1acaef55bd6252bd3ec900976ad</Anchor>
                </Node>
                <Node>
                 <Name>get_keys</Name>
                 <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a94d0d5b275bb3db8a4791add07a3cef3</Anchor>
+                <Anchor>a3b5ebcfcaa30c2b99056063e6641ed42</Anchor>
                </Node>
                <Node>
                 <Name>get_keys</Name>
                 <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a9a3a3afa282dd794215003e5b254903b</Anchor>
-               </Node>
-               <Node>
-                <Name>get_keys</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a7e2da2f2f0efc6e28fbb2689d76f806e</Anchor>
-               </Node>
-               <Node>
-                <Name>get_keys</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a27782d5f55db7ddb2fc117554aaea338</Anchor>
-               </Node>
-               <Node>
-                <Name>get_keys</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a00fd58dbfa35a737992ae54d61c67fe9</Anchor>
-               </Node>
-               <Node>
-                <Name>get_keys</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>adc16a065cdb82e768b55ceae754b06f3</Anchor>
-               </Node>
-               <Node>
-                <Name>get_keys</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>ae1237e666d7c72dc8b771123aa67cb4d</Anchor>
-               </Node>
-               <Node>
-                <Name>get_keys</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a8c3919f58d5770311bb692715c6d41ca</Anchor>
-               </Node>
-               <Node>
-                <Name>get_keys</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a4ca01fdf4c4bead163252cf7447de626</Anchor>
-               </Node>
-               <Node>
-                <Name>get_keys</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a20ab85ba27dea2dd8109e6d86a910fd0</Anchor>
+                <Anchor>a37879ca2cd4dc4384dd74e33277089b0</Anchor>
                </Node>
                <Node>
                 <Name>get_keys</Name>
@@ -8835,52 +8085,12 @@
                <Node>
                 <Name>get_name</Name>
                 <Path>classRMF_1_1FileConstHandle.html</Path>
+                <Anchor>ac4f8516ae3c7f3239075b60d66581e9d</Anchor>
+               </Node>
+               <Node>
+                <Name>get_name</Name>
+                <Path>classRMF_1_1FileConstHandle.html</Path>
                 <Anchor>a1d5d99228aea96caf132ecadd7e402e8</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a018e1a37bac3bf2d759933a006fe2dcb</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a717f2d57a0b0e561c34bb3f634ffe2dd</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>abf58d79023920c982fb5361162c1ebc0</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>ae1f38f1806413eab7cab509985636f87</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>ae05769a48810f31133ca32d9c698cbec</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a32874cb4c299c43e17f14be81a512594</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a1df97f35365f78c9299bf0982c7e72b5</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a8fc9eeb5c8848c4436fcf7cb12d66363</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>a984b089525a1b3dd79d58f6e2ad47e0a</Anchor>
                </Node>
                <Node>
                 <Name>get_name</Name>
@@ -8943,11 +8153,6 @@
                 <Anchor>af67f261179908fd764fcce41f775de0d</Anchor>
                </Node>
                <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>af0d13f286d861609e4a1cca72557ca6d</Anchor>
-               </Node>
-               <Node>
                 <Name>reload</Name>
                 <Path>classRMF_1_1FileConstHandle.html</Path>
                 <Anchor>a53d5a0bc1c21fd716e3f7db3b82b4f9b</Anchor>
@@ -8956,11 +8161,6 @@
                 <Name>set_current_frame</Name>
                 <Path>classRMF_1_1FileConstHandle.html</Path>
                 <Anchor>a5b682b77e30419e080cdd548ff9d8b82</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1FileConstHandle.html</Path>
-                <Anchor>aa233fe8c229883992d080e8c58cf9bdb</Anchor>
                </Node>
                <Node>
                 <Name>clone_file_info</Name>
@@ -9168,12 +8368,12 @@
                <Node>
                 <Name>add_child_type_data_set_1d</Name>
                 <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                <Anchor>a24f976a977ddff3f6e7519522bd2705b</Anchor>
+                <Anchor>a0357357533e970d646f40f66ad66678a</Anchor>
                </Node>
                <Node>
                 <Name>add_child_type_data_set_1d</Name>
                 <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                <Anchor>a0357357533e970d646f40f66ad66678a</Anchor>
+                <Anchor>a24f976a977ddff3f6e7519522bd2705b</Anchor>
                </Node>
                <Node>
                 <Name>add_child_type_data_set_2d</Name>
@@ -9188,12 +8388,12 @@
                <Node>
                 <Name>add_child_type_data_set_3d</Name>
                 <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                <Anchor>af77a8a4d6e1e82ebfddd6e2635cbac1f</Anchor>
+                <Anchor>a37066efe55fb117e6fb1d72b869e904c</Anchor>
                </Node>
                <Node>
                 <Name>add_child_type_data_set_3d</Name>
                 <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                <Anchor>a37066efe55fb117e6fb1d72b869e904c</Anchor>
+                <Anchor>af77a8a4d6e1e82ebfddd6e2635cbac1f</Anchor>
                </Node>
                <Node>
                 <Name>get_child_data_set</Name>
@@ -9213,17 +8413,12 @@
                <Node>
                 <Name>get_child_type_data_set_1d</Name>
                 <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                <Anchor>aa72d744be1ef751d4ab91c629ac9bd2d</Anchor>
+                <Anchor>acaa0ef76563b2daf525aa321f0c6960f</Anchor>
                </Node>
                <Node>
                 <Name>get_child_type_data_set_1d</Name>
                 <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                <Anchor>acaa0ef76563b2daf525aa321f0c6960f</Anchor>
-               </Node>
-               <Node>
-                <Name>get_child_type_data_set_2d</Name>
-                <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                <Anchor>ad3dec5001efd159236103797ce5328f6</Anchor>
+                <Anchor>aa72d744be1ef751d4ab91c629ac9bd2d</Anchor>
                </Node>
                <Node>
                 <Name>get_child_type_data_set_2d</Name>
@@ -9231,9 +8426,9 @@
                 <Anchor>ae0a4056d0bef5e326e90fa4f6f59b7a0</Anchor>
                </Node>
                <Node>
-                <Name>get_child_type_data_set_3d</Name>
+                <Name>get_child_type_data_set_2d</Name>
                 <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                <Anchor>acd40e9cf25371e111fdac216e5e3d93f</Anchor>
+                <Anchor>ad3dec5001efd159236103797ce5328f6</Anchor>
                </Node>
                <Node>
                 <Name>get_child_type_data_set_3d</Name>
@@ -9241,14 +8436,9 @@
                 <Anchor>a65e1da993efa7229bdfd4128fb81315c</Anchor>
                </Node>
                <Node>
-                <Name>operator Showable</Name>
+                <Name>get_child_type_data_set_3d</Name>
                 <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                <Anchor>a9b755d06c0c0f873830255d77d94c2fb</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-                <Anchor>a55e91ac42eb309152c58d0c0371073d8</Anchor>
+                <Anchor>acd40e9cf25371e111fdac216e5e3d93f</Anchor>
                </Node>
                <Node>
                 <Name>File</Name>
@@ -9445,12 +8635,12 @@
                <Node>
                 <Name>Nullable</Name>
                 <Path>classRMF_1_1Nullable.html</Path>
-                <Anchor>a35a2ba26e4ce0b32b08a36c3ffb2347e</Anchor>
+                <Anchor>a66a37ab04783adeb8d238f917a31c3c8</Anchor>
                </Node>
                <Node>
                 <Name>get</Name>
                 <Path>classRMF_1_1Nullable.html</Path>
-                <Anchor>a1d8c4fc58640c52080daf51078a3cf9b</Anchor>
+                <Anchor>af683636e291c401325a3d057b78647b8</Anchor>
                </Node>
                <Node>
                 <Name>get_is_null</Name>
@@ -9458,9 +8648,14 @@
                 <Anchor>a39bcc975e21411935965ddc51819a459</Anchor>
                </Node>
                <Node>
-                <Name>operator const typename Traits::Type &amp;</Name>
+                <Name>get_ptr</Name>
                 <Path>classRMF_1_1Nullable.html</Path>
-                <Anchor>a4e1b84bcca579eb203b744c962800e6e</Anchor>
+                <Anchor>ad1878e35d8c302b54cec8dffaa554452</Anchor>
+               </Node>
+               <Node>
+                <Name>operator const typename Traits&lt; T &gt;::ReturnType &amp;</Name>
+                <Path>classRMF_1_1Nullable.html</Path>
+                <Anchor>a41b1fc5e7d5f868995d26591f62e69a5</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -9549,12 +8744,12 @@
              <Node>
               <Name>RMF_DECLARE_KEY</Name>
               <Path>keys_8h.html</Path>
-              <Anchor>a7d3030125cbd053eeee905816b08a686</Anchor>
+              <Anchor>a75c77525d155d6be875372666bbe5310</Anchor>
              </Node>
              <Node>
               <Name>FloatKey</Name>
               <Path>keys_8h.html</Path>
-              <Anchor>a8b4256d0c7b3bd6453219a6509e1a6ff</Anchor>
+              <Anchor>a403d28d7d395a6ec19a004a61cb592f7</Anchor>
              </Node>
              <Node>
               <Name>FloatKeys</Name>
@@ -9564,7 +8759,7 @@
              <Node>
               <Name>FloatsKey</Name>
               <Path>keys_8h.html</Path>
-              <Anchor>a17ff24c63eaec730bcd09c6bdee5fb3e</Anchor>
+              <Anchor>a72cf70a79da88403bd9bb0a48982ebce</Anchor>
              </Node>
              <Node>
               <Name>FloatsKeys</Name>
@@ -9574,7 +8769,7 @@
              <Node>
               <Name>IntKey</Name>
               <Path>keys_8h.html</Path>
-              <Anchor>ad1e562dec88d615952f999d8c46de0ad</Anchor>
+              <Anchor>a260d67e37197e618435696abbb3a37ce</Anchor>
              </Node>
              <Node>
               <Name>IntKeys</Name>
@@ -9584,7 +8779,7 @@
              <Node>
               <Name>IntsKey</Name>
               <Path>keys_8h.html</Path>
-              <Anchor>a2ab66529018eaa323926fccae71dee0f</Anchor>
+              <Anchor>af9aad421ae28666b3bab0cb288cbd16c</Anchor>
              </Node>
              <Node>
               <Name>IntsKeys</Name>
@@ -9594,7 +8789,7 @@
              <Node>
               <Name>StringKey</Name>
               <Path>keys_8h.html</Path>
-              <Anchor>aba854a2ed7f6ab32ab3dfeb9816af525</Anchor>
+              <Anchor>a55a3abddd6d5b8fb147ec999731d7d3f</Anchor>
              </Node>
              <Node>
               <Name>StringKeys</Name>
@@ -9604,7 +8799,7 @@
              <Node>
               <Name>StringsKey</Name>
               <Path>keys_8h.html</Path>
-              <Anchor>aacb42e7f0502d1637dc1bdfa8f7e0e23</Anchor>
+              <Anchor>a4b9fb6bbf0130437d91648b318a281df</Anchor>
              </Node>
              <Node>
               <Name>StringsKeys</Name>
@@ -9614,7 +8809,7 @@
              <Node>
               <Name>Vector3Key</Name>
               <Path>keys_8h.html</Path>
-              <Anchor>a83b0499250fb299416999f0389621e3d</Anchor>
+              <Anchor>a398fc67608868aa08c28d976d36b2a64</Anchor>
              </Node>
              <Node>
               <Name>Vector3Keys</Name>
@@ -9624,7 +8819,7 @@
              <Node>
               <Name>Vector3sKey</Name>
               <Path>keys_8h.html</Path>
-              <Anchor>aa0343d861142550c89e1762ebbbc2a82</Anchor>
+              <Anchor>af25e560de6639a87308bbf264927c6c7</Anchor>
              </Node>
              <Node>
               <Name>Vector3sKeys</Name>
@@ -9634,12 +8829,82 @@
              <Node>
               <Name>Vector4Key</Name>
               <Path>keys_8h.html</Path>
-              <Anchor>ad057ba6a1aed93b88aee6137ebc225d5</Anchor>
+              <Anchor>a579d9f981ee644debcc0a8505e340170</Anchor>
              </Node>
              <Node>
               <Name>Vector4Keys</Name>
               <Path>keys_8h.html</Path>
               <Anchor>a2a730542d3432e8f8df4c0566956d7dd</Anchor>
+             </Node>
+            </Subnodes>
+           </Node>
+           <Node>
+            <Name>Label.h</Name>
+            <Path>Label_8h.html</Path>
+            <Subnodes>
+             <Node>
+              <Name>Label</Name>
+              <Path>classRMF_1_1Label.html</Path>
+              <Subnodes>
+               <Node>
+                <Name>Label</Name>
+                <Path>classRMF_1_1Label.html</Path>
+                <Anchor>ae622cff4e9634dd4e554ff7f10a7dec8</Anchor>
+               </Node>
+               <Node>
+                <Name>Label</Name>
+                <Path>classRMF_1_1Label.html</Path>
+                <Anchor>a4a88402ba3b91a2240701eb11114780f</Anchor>
+               </Node>
+               <Node>
+                <Name>get_is</Name>
+                <Path>classRMF_1_1Label.html</Path>
+                <Anchor>ad1ac384eef4dc18b10486687f80209e7</Anchor>
+               </Node>
+               <Node>
+                <Name>set_is</Name>
+                <Path>classRMF_1_1Label.html</Path>
+                <Anchor>ad9465a8ee7f3e7787582ebd0121bb622</Anchor>
+               </Node>
+              </Subnodes>
+             </Node>
+            </Subnodes>
+           </Node>
+           <Node>
+            <Name>labels.h</Name>
+            <Path>labels_8h.html</Path>
+            <Subnodes>
+             <Node>
+              <Name>Assembly</Name>
+              <Path>classRMF_1_1decorator_1_1Assembly.html</Path>
+              <Subnodes>
+               <Node>
+                <Name>Assembly</Name>
+                <Path>classRMF_1_1decorator_1_1Assembly.html</Path>
+                <Anchor>af1b6d1b8bd34606373d4cd96205f2933</Anchor>
+               </Node>
+               <Node>
+                <Name>Assembly</Name>
+                <Path>classRMF_1_1decorator_1_1Assembly.html</Path>
+                <Anchor>a736a787d8f98f9ff8529778563f91a06</Anchor>
+               </Node>
+              </Subnodes>
+             </Node>
+             <Node>
+              <Name>Molecule</Name>
+              <Path>classRMF_1_1decorator_1_1Molecule.html</Path>
+              <Subnodes>
+               <Node>
+                <Name>Molecule</Name>
+                <Path>classRMF_1_1decorator_1_1Molecule.html</Path>
+                <Anchor>af097cc3ec81c9d48f2d2bdd8836ead1b</Anchor>
+               </Node>
+               <Node>
+                <Name>Molecule</Name>
+                <Path>classRMF_1_1decorator_1_1Molecule.html</Path>
+                <Anchor>af5d5476177736d67058bf7f5ff05b062</Anchor>
+               </Node>
+              </Subnodes>
              </Node>
             </Subnodes>
            </Node>
@@ -9813,51 +9078,6 @@
                 <Anchor>a818993f7d4784770cc3c21d26488fd01</Anchor>
                </Node>
                <Node>
-                <Name>get_category_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a01fce429416f43e7fc31d7d50aef7cb4</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a4a62805c50a68c0f78da9382fcfe4ae6</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>ad32a4d4a20234e2d79b8fb4404a054d7</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a8b1b434a3ef6908b079394458ea79890</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>ae638dc450e28c0cf26a1c50c5a3edf34</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a9f6dcee74dd8013b79e37c25011b514d</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a3836445245d304208f2c33244f98febf</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a8b434a2bc54f25a14649aa29cc3ada88</Anchor>
-               </Node>
-               <Node>
-                <Name>get_category_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a04d24afd3f58a10fee910188b6a2473e</Anchor>
-               </Node>
-               <Node>
                 <Name>get_children</Name>
                 <Path>classRMF_1_1NodeConstHandle.html</Path>
                 <Anchor>a4507228ce07f8659dc4b6336b0fd5da4</Anchor>
@@ -9880,47 +9100,7 @@
                <Node>
                 <Name>get_frame_value</Name>
                 <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a1a6b6695e9c96c10a2a7e6bd97f769e3</Anchor>
-               </Node>
-               <Node>
-                <Name>get_frame_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a68e666ea297db2f4656023d1912d9f8c</Anchor>
-               </Node>
-               <Node>
-                <Name>get_frame_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a288df809bea6eb1a16b86079713c4597</Anchor>
-               </Node>
-               <Node>
-                <Name>get_frame_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a82504a5193784c9ad067afb1c6f558ab</Anchor>
-               </Node>
-               <Node>
-                <Name>get_frame_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a570b556f37d7381f0e006af2b962b878</Anchor>
-               </Node>
-               <Node>
-                <Name>get_frame_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a09d887096a3cf7011f4dd3a69c5c589d</Anchor>
-               </Node>
-               <Node>
-                <Name>get_frame_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a050f834a2815d6db9f6229bc91032586</Anchor>
-               </Node>
-               <Node>
-                <Name>get_frame_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a94a0ad918717a25faeef3a0a49b79d76</Anchor>
-               </Node>
-               <Node>
-                <Name>get_frame_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>ad8d0fef182ed6cd94634c553e54a43a7</Anchor>
+                <Anchor>a48949d344d135a9c1bd41e0874c8e17e</Anchor>
                </Node>
                <Node>
                 <Name>get_has_association</Name>
@@ -9930,47 +9110,7 @@
                <Node>
                 <Name>get_has_value</Name>
                 <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a278ed2a6caadbceca8982232bd093855</Anchor>
-               </Node>
-               <Node>
-                <Name>get_has_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>adb8fef4d47bf5a5e7b3ab0212bd6ae21</Anchor>
-               </Node>
-               <Node>
-                <Name>get_has_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a22c555b78e2d800c365020fb0d159752</Anchor>
-               </Node>
-               <Node>
-                <Name>get_has_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a506e5e24b4e2144336c0de08c9cc2d00</Anchor>
-               </Node>
-               <Node>
-                <Name>get_has_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>ab8e74d5883e83922b2bc58ebf00ccdf7</Anchor>
-               </Node>
-               <Node>
-                <Name>get_has_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a114a04b5588d300d7d345e604de97a1c</Anchor>
-               </Node>
-               <Node>
-                <Name>get_has_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a758cb57d3281b6747d34ed8504f9415e</Anchor>
-               </Node>
-               <Node>
-                <Name>get_has_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>acd387321611cfc28a296e76a7f9fe45d</Anchor>
-               </Node>
-               <Node>
-                <Name>get_has_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a6b99aecbca3e974a31dafda53ca15031</Anchor>
+                <Anchor>ac9b0e03981b5c2022ebafcb5fa0257af</Anchor>
                </Node>
                <Node>
                 <Name>get_id</Name>
@@ -9983,94 +9123,9 @@
                 <Anchor>a8be49bdea07c4807a6b55f066ca74ad7</Anchor>
                </Node>
                <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>afca5b9072795e3a9d91bb625ee529699</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a1b97c1ed73773b176e591e9a015bd5ff</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a5e7bc5332e792706102a1bec96b7888d</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a40be4630896c3657339b02b8ca1b3388</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a81c90feb947eea49c0eb5ba5552249c8</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a27d1a40859e4be49e5deb4bc863c24a4</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a596fc095b20c967b66fa88bd26e127e1</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>ad6ee51273d6a0b28656ee5a14ba1afa0</Anchor>
-               </Node>
-               <Node>
-                <Name>get_name</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>aa83680da79f436f94431ff4f26c30946</Anchor>
-               </Node>
-               <Node>
                 <Name>get_static_value</Name>
                 <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a8db5c1b4004cb197bbdfda30e62ec74d</Anchor>
-               </Node>
-               <Node>
-                <Name>get_static_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>adc675482004c2bfb279eab29e7d39881</Anchor>
-               </Node>
-               <Node>
-                <Name>get_static_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a06c5d55737b4db8f22868d700249799b</Anchor>
-               </Node>
-               <Node>
-                <Name>get_static_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a604c264cfcbe0b04ffc8c78441d06ab1</Anchor>
-               </Node>
-               <Node>
-                <Name>get_static_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a3ae8159c79ef75b566ded3570d40cb7f</Anchor>
-               </Node>
-               <Node>
-                <Name>get_static_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>aa45020cecc56abcf71744591c2256a57</Anchor>
-               </Node>
-               <Node>
-                <Name>get_static_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a287c6206e37eb350de0ee214829d4205</Anchor>
-               </Node>
-               <Node>
-                <Name>get_static_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a4c48c996b933d0d97b89e2183134d606</Anchor>
-               </Node>
-               <Node>
-                <Name>get_static_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a6ee91666b4a5e476883aa65ebd030c6f</Anchor>
+                <Anchor>a6121c60e5e9f1f762b4b18fab7cd65e8</Anchor>
                </Node>
                <Node>
                 <Name>get_type</Name>
@@ -10080,47 +9135,7 @@
                <Node>
                 <Name>get_value</Name>
                 <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a6c5fe436d4565f3604d08362cd3951b0</Anchor>
-               </Node>
-               <Node>
-                <Name>get_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a2cc2710b20577350688d8b78a3e21001</Anchor>
-               </Node>
-               <Node>
-                <Name>get_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a85541fdc35dcba7127f3b3033e8320c8</Anchor>
-               </Node>
-               <Node>
-                <Name>get_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a0389cd90a52325c02a060311de0e3aef</Anchor>
-               </Node>
-               <Node>
-                <Name>get_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>abf2659ff155764b23c6aa965811e318d</Anchor>
-               </Node>
-               <Node>
-                <Name>get_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a87bfbc1eacb5c114189d1813f03e14ee</Anchor>
-               </Node>
-               <Node>
-                <Name>get_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a64c7a03a8b08f0136b6740b47b7717a1</Anchor>
-               </Node>
-               <Node>
-                <Name>get_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a3c66e867eebc4b77654fde73b0b4622e</Anchor>
-               </Node>
-               <Node>
-                <Name>get_value</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>af218a88455fc0621cd4f40d25d3757ed</Anchor>
+                <Anchor>a731367cb3fa38915cdb573a6d2fecf35</Anchor>
                </Node>
                <Node>
                 <Name>operator NodeID</Name>
@@ -10128,19 +9143,9 @@
                 <Anchor>a14d10c911f99d4e9755a5a2124501e80</Anchor>
                </Node>
                <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a6dd34191d4a1ce9d93a8e10534fca48a</Anchor>
-               </Node>
-               <Node>
                 <Name>set_association</Name>
                 <Path>classRMF_1_1NodeConstHandle.html</Path>
                 <Anchor>a1ca46f397a06e16561a78006b5340727</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1NodeConstHandle.html</Path>
-                <Anchor>a2594af1f6f219416e4af895075501bf4</Anchor>
                </Node>
                <Node>
                 <Name>FileHandle</Name>
@@ -10217,137 +9222,17 @@
                <Node>
                 <Name>set_frame_value</Name>
                 <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>aa06bfc8afa9c673ed1eacf8ec62d6183</Anchor>
-               </Node>
-               <Node>
-                <Name>set_frame_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>aecbd87b88e0d572e1b9e04007ec04374</Anchor>
-               </Node>
-               <Node>
-                <Name>set_frame_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a336920d27e8d78c18066eaf7e0be8d08</Anchor>
-               </Node>
-               <Node>
-                <Name>set_frame_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a002decd6ff98a3854db1459a8cc4bc99</Anchor>
-               </Node>
-               <Node>
-                <Name>set_frame_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a68dcc734cfa936a4720ff86a41289639</Anchor>
-               </Node>
-               <Node>
-                <Name>set_frame_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a0153ef910eef7cca6ace2cdbeffd45e5</Anchor>
-               </Node>
-               <Node>
-                <Name>set_frame_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a317289d6ae2555b20229e71ab169d030</Anchor>
-               </Node>
-               <Node>
-                <Name>set_frame_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a790e897ad0cca1b4ad5bdab37fb378e0</Anchor>
-               </Node>
-               <Node>
-                <Name>set_frame_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a308acbb48425ab1809ea4cc732597ef0</Anchor>
+                <Anchor>ac828f9174306779fc7ce3c2a7e4fad1f</Anchor>
                </Node>
                <Node>
                 <Name>set_static_value</Name>
                 <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a52790b200068929a6324f4d78590ee12</Anchor>
-               </Node>
-               <Node>
-                <Name>set_static_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>aabe1b34c1417ccb5d1af71c3fbabd320</Anchor>
-               </Node>
-               <Node>
-                <Name>set_static_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a40d22405c60b3ed8de4c66f483ac6f83</Anchor>
-               </Node>
-               <Node>
-                <Name>set_static_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a0d24357df3732d71edf9df9ef5291a41</Anchor>
-               </Node>
-               <Node>
-                <Name>set_static_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>ab98c2cd181cb5bc6f80121cea6d9164a</Anchor>
-               </Node>
-               <Node>
-                <Name>set_static_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a5e6911ddcba650b5e19c6fe3f3f851eb</Anchor>
-               </Node>
-               <Node>
-                <Name>set_static_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a148fe4bb345bd0cf38f0ecc458315d6a</Anchor>
-               </Node>
-               <Node>
-                <Name>set_static_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a3248d9367d175d20a26f7fe58fa15f68</Anchor>
-               </Node>
-               <Node>
-                <Name>set_static_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>aa597098dd355e25a5b2f167789209e86</Anchor>
+                <Anchor>aa7d1ab7d1e7e55ca5d099f50a74400f2</Anchor>
                </Node>
                <Node>
                 <Name>set_value</Name>
                 <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a9491fd9bd0a41e2601c24743d02c66dd</Anchor>
-               </Node>
-               <Node>
-                <Name>set_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a8a0fac9e4cd51a0b3fd048470ec8a4cc</Anchor>
-               </Node>
-               <Node>
-                <Name>set_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>aba42636e8fbdb33d60c5b7b7150e53a8</Anchor>
-               </Node>
-               <Node>
-                <Name>set_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>ae9c979401e612dba25ad4f8c7d4d84d7</Anchor>
-               </Node>
-               <Node>
-                <Name>set_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>aa307789914ad8acb7fa57aae29aa1fa5</Anchor>
-               </Node>
-               <Node>
-                <Name>set_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>aae4450d37f5edbaa72cdde609b0b561a</Anchor>
-               </Node>
-               <Node>
-                <Name>set_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a4196c2257f4397d2abc9ff25a531c7ff</Anchor>
-               </Node>
-               <Node>
-                <Name>set_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a44ba44aee41eff92ed3bc1848e5a17b8</Anchor>
-               </Node>
-               <Node>
-                <Name>set_value</Name>
-                <Path>classRMF_1_1NodeHandle.html</Path>
-                <Anchor>a4a3ac0a646a7de5332c97b337830ad3c</Anchor>
+                <Anchor>a102f9a69e6c37bded80a097bd5846225</Anchor>
                </Node>
                <Node>
                 <Name>FileHandle</Name>
@@ -10384,12 +9269,12 @@
                <Node>
                 <Name>Nullable</Name>
                 <Path>classRMF_1_1Nullable.html</Path>
-                <Anchor>a35a2ba26e4ce0b32b08a36c3ffb2347e</Anchor>
+                <Anchor>a66a37ab04783adeb8d238f917a31c3c8</Anchor>
                </Node>
                <Node>
                 <Name>get</Name>
                 <Path>classRMF_1_1Nullable.html</Path>
-                <Anchor>a1d8c4fc58640c52080daf51078a3cf9b</Anchor>
+                <Anchor>af683636e291c401325a3d057b78647b8</Anchor>
                </Node>
                <Node>
                 <Name>get_is_null</Name>
@@ -10397,9 +9282,14 @@
                 <Anchor>a39bcc975e21411935965ddc51819a459</Anchor>
                </Node>
                <Node>
-                <Name>operator const typename Traits::Type &amp;</Name>
+                <Name>get_ptr</Name>
                 <Path>classRMF_1_1Nullable.html</Path>
-                <Anchor>a4e1b84bcca579eb203b744c962800e6e</Anchor>
+                <Anchor>ad1878e35d8c302b54cec8dffaa554452</Anchor>
+               </Node>
+               <Node>
+                <Name>operator const typename Traits&lt; T &gt;::ReturnType &amp;</Name>
+                <Path>classRMF_1_1Nullable.html</Path>
+                <Anchor>a41b1fc5e7d5f868995d26591f62e69a5</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -10447,16 +9337,6 @@
                 <Name>open</Name>
                 <Path>classRMF_1_1HDF5_1_1Object.html</Path>
                 <Anchor>a56275688c2bcce2503c2fb461b6d1981</Anchor>
-               </Node>
-               <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1HDF5_1_1Object.html</Path>
-                <Anchor>a6fe091c69eafd794837d40dd34dd6285</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1HDF5_1_1Object.html</Path>
-                <Anchor>aca23b309f3b95d39fb982f4d05c06f56</Anchor>
                </Node>
                <Node>
                 <Name>Group</Name>
@@ -11892,16 +10772,6 @@
                 <Path>classRMF_1_1RestoreCurrentFrame.html</Path>
                 <Anchor>a0b43a1c90978ee700618d3793082c74c</Anchor>
                </Node>
-               <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1RestoreCurrentFrame.html</Path>
-                <Anchor>a9513c046531d3312ada32eb0047b1e4c</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1RestoreCurrentFrame.html</Path>
-                <Anchor>a0dd1934dcf375df7e3cf853efda2f0c8</Anchor>
-               </Node>
               </Subnodes>
              </Node>
             </Subnodes>
@@ -12689,16 +11559,6 @@
                 <Path>classRMF_1_1SetCurrentFrame.html</Path>
                 <Anchor>a475bf6300f0df746107f548aba31235f</Anchor>
                </Node>
-               <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1SetCurrentFrame.html</Path>
-                <Anchor>a6a7a0481d7d455ff2797ca778fe98654</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1SetCurrentFrame.html</Path>
-                <Anchor>a7bc6c6d7b80f56d3983b6edc57a33226</Anchor>
-               </Node>
               </Subnodes>
              </Node>
             </Subnodes>
@@ -13386,14 +12246,195 @@
             <Path>traits_8h.html</Path>
             <Subnodes>
              <Node>
+              <Name>Traits</Name>
+              <Path>structRMF_1_1Traits.html</Path>
+             </Node>
+             <Node>
+              <Name>FloatsTag</Name>
+              <Path>traits_8h.html</Path>
+              <Anchor>ae0727f2a2ae322adcd71885e7a4d6680</Anchor>
+             </Node>
+             <Node>
+              <Name>FloatsTraits</Name>
+              <Path>traits_8h.html</Path>
+              <Anchor>a274b510e8e2ddf84355896a93bd55c9e</Anchor>
+             </Node>
+             <Node>
+              <Name>FloatTag</Name>
+              <Path>traits_8h.html</Path>
+              <Anchor>a5354de28b5e0530b2f1f67524c4a19a1</Anchor>
+             </Node>
+             <Node>
+              <Name>FloatTraits</Name>
+              <Path>traits_8h.html</Path>
+              <Anchor>a78f521e8264158500199691663431cfa</Anchor>
+             </Node>
+             <Node>
+              <Name>IntsTag</Name>
+              <Path>traits_8h.html</Path>
+              <Anchor>aca5b2995f2a1f59ec245130a59c5ba4e</Anchor>
+             </Node>
+             <Node>
+              <Name>IntsTraits</Name>
+              <Path>traits_8h.html</Path>
+              <Anchor>a733e5f1d69b46bacb922c0137974d71e</Anchor>
+             </Node>
+             <Node>
+              <Name>IntTag</Name>
+              <Path>traits_8h.html</Path>
+              <Anchor>af499782452c3110a72ba79090c5c9b8a</Anchor>
+             </Node>
+             <Node>
+              <Name>IntTraits</Name>
+              <Path>traits_8h.html</Path>
+              <Anchor>a4afadf73cc2c7885720ed5e55befa3c1</Anchor>
+             </Node>
+             <Node>
+              <Name>StringsTag</Name>
+              <Path>traits_8h.html</Path>
+              <Anchor>af00299ef3a01f748b17428f0e0079f1d</Anchor>
+             </Node>
+             <Node>
+              <Name>StringsTraits</Name>
+              <Path>traits_8h.html</Path>
+              <Anchor>a6d6a9b97a0fae2d4f240bf6c25f076fb</Anchor>
+             </Node>
+             <Node>
+              <Name>StringTag</Name>
+              <Path>traits_8h.html</Path>
+              <Anchor>a06d33245492fc8f7255b4225f74561de</Anchor>
+             </Node>
+             <Node>
+              <Name>StringTraits</Name>
+              <Path>traits_8h.html</Path>
+              <Anchor>a491aa5ce4e718c017bcd66485590a9d4</Anchor>
+             </Node>
+             <Node>
+              <Name>Vector3sTag</Name>
+              <Path>traits_8h.html</Path>
+              <Anchor>a9e258c96e27860278397612a31a7e945</Anchor>
+             </Node>
+             <Node>
+              <Name>Vector3sTraits</Name>
+              <Path>traits_8h.html</Path>
+              <Anchor>af2547fec700d8aafd2110471024a485d</Anchor>
+             </Node>
+             <Node>
+              <Name>Vector3Tag</Name>
+              <Path>traits_8h.html</Path>
+              <Anchor>a7778afbed9726ef2200e356acf198dec</Anchor>
+             </Node>
+             <Node>
               <Name>Vector3Traits</Name>
               <Path>traits_8h.html</Path>
-              <Anchor>aa62bfd21b3e633e9e550e4841a8f06f6</Anchor>
+              <Anchor>a49bc3292d696e48568564e0b37ec6710</Anchor>
+             </Node>
+             <Node>
+              <Name>Vector4sTag</Name>
+              <Path>traits_8h.html</Path>
+              <Anchor>acb68bb4537175bd052e99c49f9e4a575</Anchor>
+             </Node>
+             <Node>
+              <Name>Vector4sTraits</Name>
+              <Path>traits_8h.html</Path>
+              <Anchor>a5336dfb0271073436187af8735831215</Anchor>
+             </Node>
+             <Node>
+              <Name>Vector4Tag</Name>
+              <Path>traits_8h.html</Path>
+              <Anchor>a33895e419f8544d88194d01decaaccd3</Anchor>
              </Node>
              <Node>
               <Name>Vector4Traits</Name>
               <Path>traits_8h.html</Path>
-              <Anchor>a665e15dbdeabfb489cbb084b21f45cd5</Anchor>
+              <Anchor>a130715b3106cc660ce5a708ffd1ac163</Anchor>
+             </Node>
+            </Subnodes>
+           </Node>
+           <Node>
+            <Name>TraverseHelper.h</Name>
+            <Path>TraverseHelper_8h.html</Path>
+            <Subnodes>
+             <Node>
+              <Name>TraverseHelper</Name>
+              <Path>classRMF_1_1TraverseHelper.html</Path>
+              <Subnodes>
+               <Node>
+                <Name>TraverseHelper</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>af5f4eaf31557fd1f0a8c17018fe528f9</Anchor>
+               </Node>
+               <Node>
+                <Name>TraverseHelper</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a28c8700854fa0d6de692db649c906719</Anchor>
+               </Node>
+               <Node>
+                <Name>get_chain_id</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a1731bab253084b4e0e20e377601b83c9</Anchor>
+               </Node>
+               <Node>
+                <Name>get_children</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a0f8eb0b6563036cb3420b753c4be98aa</Anchor>
+               </Node>
+               <Node>
+                <Name>get_copy_index</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a6a3863bb3b2856ddd4a495602ecd332d</Anchor>
+               </Node>
+               <Node>
+                <Name>get_global_coordinates</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a59e3905aba87d9ca8d75b4762e6043ab</Anchor>
+               </Node>
+               <Node>
+                <Name>get_index</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a4e98a8b404875246c679940982c9ba00</Anchor>
+               </Node>
+               <Node>
+                <Name>get_is_displayed</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a327287eb0b0d97114195e8d09075dd6c</Anchor>
+               </Node>
+               <Node>
+                <Name>get_molecule_name</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>ac1ec42bd660cf8c8c223645cfe48a26e</Anchor>
+               </Node>
+               <Node>
+                <Name>get_residue_index</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a2a9997b71fae045d49751918e6bb86af</Anchor>
+               </Node>
+               <Node>
+                <Name>get_residue_type</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>affec529948d8af3e85bcf4603909333d</Anchor>
+               </Node>
+               <Node>
+                <Name>get_rgb_color</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a5f9fe3aa0871b3eee5048ac236b376f2</Anchor>
+               </Node>
+               <Node>
+                <Name>get_state_index</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a2304df6fe5b5bcfeb57868311d19fd34</Anchor>
+               </Node>
+               <Node>
+                <Name>set_is_displayed</Name>
+                <Path>classRMF_1_1TraverseHelper.html</Path>
+                <Anchor>a8d655a44212f594647d83c46a5375228</Anchor>
+               </Node>
+              </Subnodes>
+             </Node>
+             <Node>
+              <Name>TraverseHelpers</Name>
+              <Path>TraverseHelper_8h.html</Path>
+              <Anchor>a40a6190b33e786ffee7bf5650ea8510f</Anchor>
              </Node>
             </Subnodes>
            </Node>
@@ -13517,6 +12558,16 @@
               <Anchor>a11270919ef45e9c8773c75db55a29f12</Anchor>
              </Node>
              <Node>
+              <Name>get_bounding_box</Name>
+              <Path>utility_8h.html</Path>
+              <Anchor>a0880163b36c14afd4b238a50e6f0ea86</Anchor>
+             </Node>
+             <Node>
+              <Name>get_diameter</Name>
+              <Path>utility_8h.html</Path>
+              <Anchor>a63d83e7050a695415480b5f4821deadc</Anchor>
+             </Node>
+             <Node>
               <Name>get_equal_current_values</Name>
               <Path>utility_8h.html</Path>
               <Anchor>a91037ca61955e9430da9ae4c63e46438</Anchor>
@@ -13558,16 +12609,6 @@
               <Path>classRMF_1_1Vector.html</Path>
               <Subnodes>
                <Node>
-                <Name>const_iterator</Name>
-                <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>a5eac6ca1030f18f2c30ea547b7846994</Anchor>
-               </Node>
-               <Node>
-                <Name>iterator</Name>
-                <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>a9873891ecdd6166c1cffa50684f02da6</Anchor>
-               </Node>
-               <Node>
                 <Name>Vector</Name>
                 <Path>classRMF_1_1Vector.html</Path>
                 <Anchor>a779017dbeee8296bc13d72ef42c62f86</Anchor>
@@ -13580,7 +12621,7 @@
                <Node>
                 <Name>Vector</Name>
                 <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>a87d0baa85a335f3a146a2e61a4e3a1c5</Anchor>
+                <Anchor>a1a116cd4d7cb7dba6ed38db1001ecc36</Anchor>
                </Node>
                <Node>
                 <Name>Vector</Name>
@@ -13593,44 +12634,9 @@
                 <Anchor>a9143f0d4b8147b026ab0466ba44c90e1</Anchor>
                </Node>
                <Node>
-                <Name>begin</Name>
-                <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>adb473c35264d57cd8538d4292864dc0d</Anchor>
-               </Node>
-               <Node>
-                <Name>begin</Name>
-                <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>af7846aa5d25236c0c9cc9820f31ec1df</Anchor>
-               </Node>
-               <Node>
-                <Name>end</Name>
-                <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>a30e4f3a7b5c96a62c1f1aae61f47cd0e</Anchor>
-               </Node>
-               <Node>
-                <Name>end</Name>
-                <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>a11ad67ba190c16fd19967a5dbc0bbd6d</Anchor>
-               </Node>
-               <Node>
                 <Name>get_dimension</Name>
                 <Path>classRMF_1_1Vector.html</Path>
                 <Anchor>abb293647e206ed8d969d026f85a60352</Anchor>
-               </Node>
-               <Node>
-                <Name>operator Showable</Name>
-                <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>a01a21a2893ab6029d6e78d6ed3e55bc0</Anchor>
-               </Node>
-               <Node>
-                <Name>operator[]</Name>
-                <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>af791d2d0b20247de05a554399edab91d</Anchor>
-               </Node>
-               <Node>
-                <Name>show</Name>
-                <Path>classRMF_1_1Vector.html</Path>
-                <Anchor>a9143465d07c2ef153ae204e610266937</Anchor>
                </Node>
               </Subnodes>
              </Node>

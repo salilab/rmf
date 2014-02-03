@@ -134,19 +134,24 @@ var hierarchy =
     ] ],
     [ "RMF::ID< TagT >", "classRMF_1_1ID.html", null ],
     [ "RMF::ID< CategoryTag >", "classRMF_1_1ID.html", null ],
+    [ "RMF::ID< FloatTag >", "classRMF_1_1ID.html", null ],
     [ "RMF::ID< FrameTag >", "classRMF_1_1ID.html", null ],
+    [ "RMF::ID< IntsTag >", "classRMF_1_1ID.html", null ],
+    [ "RMF::ID< IntTag >", "classRMF_1_1ID.html", null ],
     [ "RMF::ID< NodeTag >", "classRMF_1_1ID.html", null ],
-    [ "RMF::ID< RMF::FloatTraits >", "classRMF_1_1ID.html", null ],
-    [ "RMF::ID< RMF::IntsTraits >", "classRMF_1_1ID.html", null ],
-    [ "RMF::ID< RMF::IntTraits >", "classRMF_1_1ID.html", null ],
-    [ "RMF::ID< RMF::StringsTraits >", "classRMF_1_1ID.html", null ],
-    [ "RMF::ID< RMF::StringTraits >", "classRMF_1_1ID.html", null ],
-    [ "RMF::ID< RMF::Vector3sTraits >", "classRMF_1_1ID.html", null ],
-    [ "RMF::ID< RMF::Vector3Traits >", "classRMF_1_1ID.html", null ],
-    [ "RMF::ID< RMF::Vector4Traits >", "classRMF_1_1ID.html", null ],
+    [ "RMF::ID< StringsTag >", "classRMF_1_1ID.html", null ],
+    [ "RMF::ID< StringTag >", "classRMF_1_1ID.html", null ],
+    [ "RMF::ID< Vector3sTag >", "classRMF_1_1ID.html", null ],
+    [ "RMF::ID< Vector3Tag >", "classRMF_1_1ID.html", null ],
+    [ "RMF::ID< Vector4Tag >", "classRMF_1_1ID.html", null ],
+    [ "RMF::Label", "classRMF_1_1Label.html", [
+      [ "RMF::decorator::Assembly", "classRMF_1_1decorator_1_1Assembly.html", null ],
+      [ "RMF::decorator::Molecule", "classRMF_1_1decorator_1_1Molecule.html", null ]
+    ] ],
     [ "RMF::HDF5::MutableAttributes< Base >", "classRMF_1_1HDF5_1_1MutableAttributes.html", null ],
     [ "RMF::NodeConstHandle", "classRMF_1_1NodeConstHandle.html", [
-      [ "RMF::NodeHandle", "classRMF_1_1NodeHandle.html", null ]
+      [ "RMF::NodeHandle", "classRMF_1_1NodeHandle.html", null ],
+      [ "RMF::TraverseHelper", "classRMF_1_1TraverseHelper.html", null ]
     ] ],
     [ "RMF::Nullable< Tr >", "classRMF_1_1Nullable.html", null ],
     [ "RMF::HDF5::Object", "classRMF_1_1HDF5_1_1Object.html", [
@@ -168,5 +173,7 @@ var hierarchy =
     ] ],
     [ "RMF::RestoreCurrentFrame", "classRMF_1_1RestoreCurrentFrame.html", null ],
     [ "RMF::SetCurrentFrame", "classRMF_1_1SetCurrentFrame.html", null ],
-    [ "RMF::Vector< D >", "classRMF_1_1Vector.html", null ]
+    [ "RMF::Traits< T >", "structRMF_1_1Traits.html", null ],
+    [ "RMF::Vector< D >", "classRMF_1_1Vector.html", null ],
+    [ "RMF::Vector< 3 >", "classRMF_1_1Vector.html", null ]
 ];

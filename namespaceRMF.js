@@ -15,11 +15,14 @@ var namespaceRMF =
     [ "IndexException", "classRMF_1_1IndexException.html", "classRMF_1_1IndexException" ],
     [ "InternalException", "classRMF_1_1InternalException.html", "classRMF_1_1InternalException" ],
     [ "IOException", "classRMF_1_1IOException.html", "classRMF_1_1IOException" ],
+    [ "Label", "classRMF_1_1Label.html", "classRMF_1_1Label" ],
     [ "NodeConstHandle", "classRMF_1_1NodeConstHandle.html", "classRMF_1_1NodeConstHandle" ],
     [ "NodeHandle", "classRMF_1_1NodeHandle.html", "classRMF_1_1NodeHandle" ],
     [ "Nullable", "classRMF_1_1Nullable.html", "classRMF_1_1Nullable" ],
     [ "RestoreCurrentFrame", "classRMF_1_1RestoreCurrentFrame.html", "classRMF_1_1RestoreCurrentFrame" ],
     [ "SetCurrentFrame", "classRMF_1_1SetCurrentFrame.html", "classRMF_1_1SetCurrentFrame" ],
+    [ "Traits", "structRMF_1_1Traits.html", null ],
+    [ "TraverseHelper", "classRMF_1_1TraverseHelper.html", "classRMF_1_1TraverseHelper" ],
     [ "UsageException", "classRMF_1_1UsageException.html", "classRMF_1_1UsageException" ],
     [ "Vector", "classRMF_1_1Vector.html", "classRMF_1_1Vector" ]
 ];

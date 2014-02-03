@@ -9,7 +9,5 @@ var classRMF_1_1BufferConstHandle =
     [ "get_buffer", "classRMF_1_1BufferConstHandle.html#a0a15abc9b94998058809e216ca917ef5", null ],
     [ "get_string", "classRMF_1_1BufferConstHandle.html#ac659aee0ba63ae517a7cd318b61600a6", null ],
     [ "get_uint8_t", "classRMF_1_1BufferConstHandle.html#a5cba032770f21ccb9dbc7e350c639a9f", null ],
-    [ "operator Showable", "classRMF_1_1BufferConstHandle.html#a685dda73149c34197630316375d08b0d", null ],
-    [ "show", "classRMF_1_1BufferConstHandle.html#a2fa808250aee1a1d5917a0df82c642da", null ],
     [ "data_", "classRMF_1_1BufferConstHandle.html#a73e8bb4bc4b944a2d796d8db47a00b14", null ]
 ];
