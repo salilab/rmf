@@ -233,8 +233,7 @@ int main(int, char**) {
       const std::string name = name_base + ".rmf";
       {
         RMF::FileHandle fh = RMF::create_rmf_file(name);
-        std::pair<std::size_t, std::size_t> sizes =
-            benchmark_create(fh, "rmf");
+        std::pair<std::size_t, std::size_t> sizes = benchmark_create(fh, "rmf");
         std::cout << "raw, total, " << show_size(sizes.first + sizes.second)
                   << ", " << (sizes.first + sizes.second) << std::endl;
         std::cout << "raw, frame, " << show_size(sizes.second) << ", "
