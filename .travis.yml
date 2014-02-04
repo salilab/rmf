@@ -14,7 +14,7 @@ git:
 
 before_install:
  - sudo apt-get update -qq
- - sudo apt-get install -qq libboost$BOOST_VERSION-all-dev swig $TO_INSTALL
+ - sudo apt-get install -qq libboost$BOOST_VERSION-all-dev swig liblog4cxx10-dev $TO_INSTALL
  - ./setup_git.py
 
 script:
