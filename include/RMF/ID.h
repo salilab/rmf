@@ -83,8 +83,8 @@ class ID {
   }
   RMF_COMPARISONS(ID);
   RMF_HASHABLE(ID, return i_);
+  RMF_SHOWABLE(ID, get_string());
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
-  void show(std::ostream& out) const { out << get_string(); }
   ID operator++() {
     ++i_;
     return *this;
