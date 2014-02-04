@@ -7,14 +7,20 @@ compiler:
   - gcc
   - clang
 env:
-  - PRECMD="sudo apt-get install hdf5-dev && export deprecated=1" CXX11=0
-  - PRECMD="export deprecated=0" CXX11=0
-  - PRECMD="sudo apt-get install hdf5-dev && export deprecated=1" CXX11=1
-  - PRECMD="export deprecated=0" CXX11=1
+  - TO_INSTALL=libhdf5-serial-dev BOOST_VERSION=
+  - TO_INSTALL= BOOST_VERSION=1.54
 git:
   submodules: false
-before_install: sudo apt-get update && sudo apt-get install libboost-all-dev swig && git submodule update --init --recursive
-script: $PRECMD && mkdir build && cd build && cmake -DRMF_DEPRECATED_BACKENDS=$deprecated -DIMP_CXX11=$CXX11 .. && make -j 2 && ctest -j 2
+
+before_install:
+ - sudo apt-get update -qq
+ - sudo apt-get install -qq libboost$BOOST_VERSION-all-dev swig $TO_INSTALL
+ - ./setup_git.py
+
+script:
+ - mkdir build
+ - cd build && cmake -DCMAKE_CXX_FLAGS=-Werr .. && make -j 2
+ - cd build && ctest -j 2
 
 # sanitize :-) -fsanitize=address -fno-omit-frame-pointer
 # -fsanitize=undefined
