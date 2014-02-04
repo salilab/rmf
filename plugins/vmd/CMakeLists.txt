@@ -15,6 +15,8 @@ message(STATUS "Using VMD headers found in ${VMDPLUGIN_INCLUDE_PATH}")
 
 add_library(RMF-vmd MODULE "init.cpp" "Data.cpp" "Data_read.cpp")
 set_target_properties("RMF-vmd" PROPERTIES OUTPUT_NAME "rmfplugin")
+set_target_properties("RMF-lib" PROPERTIES
+                      RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/vmd")
 set_target_properties("RMF-vmd" PROPERTIES PREFIX "")
 set_target_properties("RMF-vmd" PROPERTIES SUFFIX ".so")
 set_property(TARGET "RMF-vmd" PROPERTY FOLDER "RMF")
