@@ -1,6 +1,4 @@
 # Change Log #
-- The VMD plugin is not put into the `plugins/vmd` directory to play more
-	nicely with external loading from VMD.
 - RMF now uses the new avro-based format with the `.rmf` suffix.
 - RMF::decorator::Bond and RMF::decorator::BondConst now return
 	RMF::NodeHandle and RMF::NodeConstHandle instead of ints.
