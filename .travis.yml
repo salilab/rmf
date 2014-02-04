@@ -26,3 +26,4 @@ script:
 
 # sanitize :-) -fsanitize=address -fno-omit-frame-pointer
 # -fsanitize=undefined
+#1.48 seems to exist
