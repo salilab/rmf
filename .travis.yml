@@ -22,7 +22,7 @@ script:
  - cd build
  - cmake .. -DCMAKE_BUILD_TYPE=Release
  - make -j 2
- - ctest -j 2
+ - ctest -j 2 --output-on-failure
 
 # sanitize :-) -fsanitize=address -fno-omit-frame-pointer
 # -fsanitize=undefined
