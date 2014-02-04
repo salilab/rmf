@@ -20,7 +20,7 @@ before_install:
 script:
  - mkdir build
  - cd build
- - cmake ..
+ - cmake .. -DCMAKE_BUILD_TYPE=Release
  - make -j 2
  - ctest -j 2
 
