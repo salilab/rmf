@@ -17,11 +17,11 @@ matrix:
     # I don't understand this failure, and it is only in deprecated code
     - compiler: gcc
       env: INSTALL="libhdf5-serial-dev liblog4cxx10-dev" BOOST= FLAGS=
-  include:
-    - compiler: clang
-      env: INSTALL= BOOST= FLAGS="-fsanitize=address -fno-omit-frame-pointer"
-    - compiler: clang
-      env: INSTALL= BOOST= FLAGS="-fsanitize=undefined"
+  #include:
+    #- compiler: clang
+    #  env: INSTALL= BOOST= FLAGS="-fsanitize=address -fno-omit-frame-pointer"
+    #- compiler: clang
+    #  env: INSTALL= BOOST= FLAGS="-fsanitize=undefined"
 
 before_install:
  - sudo apt-get update -qq
