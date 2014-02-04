@@ -7,12 +7,14 @@ compiler:
   - gcc
   - clang
 env:
-  - PRECMD="sudo apt-get install hdf5-dev && export deprecated=1"
-  - PRECMD="export deprecated=0"
+  - PRECMD="sudo apt-get install hdf5-dev && export deprecated=1" CXX11=0
+  - PRECMD="export deprecated=0" CXX11=0
+  - PRECMD="sudo apt-get install hdf5-dev && export deprecated=1" CXX11=1
+  - PRECMD="export deprecated=0" CXX11=1
 git:
   submodules: false
 before_install: sudo apt-get update && sudo apt-get install libboost-all-dev swig && git submodule update --init --recursive
-script: $PRECMD && mkdir build && cd build && cmake -DRMF_DEPRECATED_BACKENDS=$deprecated .. && make -j 2 && ctest -j 2
+script: $PRECMD && mkdir build && cd build && cmake -DRMF_DEPRECATED_BACKENDS=$deprecated -DIMP_CXX11=$CXX11 .. && make -j 2 && ctest -j 2
 
 # sanitize :-) -fsanitize=address -fno-omit-frame-pointer
 # -fsanitize=undefined
