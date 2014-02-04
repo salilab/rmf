@@ -131,7 +131,6 @@
 #define RMF_COMPILER_WARNINGS                                   \
   RMF_CLANG_PRAGMA(diagnostic warning "-Wall")                  \
       RMF_CLANG_PRAGMA(diagnostic warning "-Wextra")            \
-      RMF_CLANG_PRAGMA(diagnostic warning "-Weverything")       \
       RMF_CLANG_PRAGMA(diagnostic ignored "-Wconversion")       \
       RMF_CLANG_PRAGMA(diagnostic ignored "-Wc++11-extensions") \
       RMF_CLANG_PRAGMA(diagnostic ignored "-Wc++11-compat")     \

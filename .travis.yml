@@ -8,7 +8,7 @@ compiler:
   - clang
 env:
   - TO_INSTALL=libhdf5-serial-dev BOOST_VERSION=
-  - TO_INSTALL= BOOST_VERSION=1.54
+  - TO_INSTALL= BOOST_VERSION=
 git:
   submodules: false
 
@@ -19,8 +19,10 @@ before_install:
 
 script:
  - mkdir build
- - cd build && cmake -DCMAKE_CXX_FLAGS= .. && make -j 2
- - cd build && ctest -j 2
+ - cd build
+ - cmake ..
+ - make -j 2
+ - ctest -j 2
 
 # sanitize :-) -fsanitize=address -fno-omit-frame-pointer
 # -fsanitize=undefined
