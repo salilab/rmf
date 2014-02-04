@@ -7,6 +7,11 @@ class GenericTest(unittest.TestCase):
 
     def test_aliases(self):
         """Test trivial usage"""
+        try:
+            import RMF_HDF5
+            RMF_HDF5.set_show_errors(True)
+        except:
+            pass
         for suffix in RMF.suffixes:
             RMF.set_log_level("trace")
             path = RMF._get_temporary_file_path("trivial." + suffix)
