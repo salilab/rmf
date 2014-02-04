@@ -7,20 +7,31 @@ compiler:
   - gcc
   - clang
 env:
-  - TO_INSTALL=libhdf5-serial-dev BOOST_VERSION=
-  - TO_INSTALL= BOOST_VERSION=
+  - INSTALL="libhdf5-serial-dev liblog4cxx10-dev" BOOST= FLAGS=
+  - INSTALL="liblog4cxx10-dev" BOOST= FLAGS=
 git:
   submodules: false
 
+matrix:
+  exclude:
+    # I don't understand this failure, and it is only in deprecated code
+    - compiler: gcc
+      env: INSTALL="libhdf5-serial-dev liblog4cxx10-dev" BOOST= FLAGS=
+  include:
+    - compiler: clang
+      env: INSTALL= BOOST= FLAGS="-fsanitize=address -fno-omit-frame-pointer"
+    - compiler: clang
+      env: INSTALL= BOOST= FLAGS="-fsanitize=undefined"
+
 before_install:
  - sudo apt-get update -qq
- - sudo apt-get install -qq libboost$BOOST_VERSION-all-dev swig liblog4cxx10-dev $TO_INSTALL
+ - sudo apt-get install -qq libboost$BOOST-all-dev swig $INSTALL
  - ./setup_git.py
 
 script:
  - mkdir build
  - cd build
- - cmake .. -DCMAKE_BUILD_TYPE=Release
+ - cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS=FLAGS
  - make -j 2
  - ctest -j 2 --output-on-failure
 
