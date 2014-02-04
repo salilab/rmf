@@ -31,7 +31,7 @@ before_install:
 script:
  - mkdir build
  - cd build
- - cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS=$FLAGS
+ - cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="$FLAGS"
  - make -j 2
  - ctest -j 2 --output-on-failure
 
