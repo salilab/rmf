@@ -19,7 +19,7 @@ before_install:
 
 script:
  - mkdir build
- - cd build && cmake -DCMAKE_CXX_FLAGS=-Werr .. && make -j 2
+ - cd build && cmake -DCMAKE_CXX_FLAGS= .. && make -j 2
  - cd build && ctest -j 2
 
 # sanitize :-) -fsanitize=address -fno-omit-frame-pointer
