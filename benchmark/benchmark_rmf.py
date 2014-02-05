@@ -1,4 +1,4 @@
-# \example benchmark_rmf.py
+## \example benchmark_rmf.py
 # \brief Benchmark operations on the RMF from python to see how much overhead
 #        that adds
 

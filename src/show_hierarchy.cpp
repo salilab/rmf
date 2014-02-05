@@ -138,7 +138,7 @@ void show_frames_impl(FileConstHandle fh, FrameID root, std::string prefix,
   RMF_FOREACH(FrameID id, ch) { show_frames_impl(fh, id, prefix + "   ", out); }
 }
 
-  void simple_show_node(NodeConstHandle n, std::string /*prefix*/,
+void simple_show_node(NodeConstHandle n, std::string /*prefix*/,
                       std::string node_suffix, std::ostream& out) {
   using std::operator<<;
   out << "\"" << n.get_name() << "\"" << node_suffix << " [" << n.get_type()
