@@ -33,6 +33,7 @@ include(cmake_modules/FindLog4CXX.cmake)
 include(cmake_modules/IMPFindC++11.cmake)
 include(cmake_modules/IMPFindCompilerFlags.cmake)
 
+imp_execute_process("Setting up git" ${PROJECT_SOURCE_DIR} COMMAND python setup_git.py)
 
 if(RMF_DEPRECATED_BACKENDS)
 imp_execute_process("Making RMF/HDF5.h" ${PROJECT_SOURCE_DIR}
