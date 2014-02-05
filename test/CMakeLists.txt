@@ -5,4 +5,4 @@ include_directories(${PROJECT_SOURCE_DIR}/src)
 set(IMP_LINK_LIBRARIES "RMF-lib" CACHE INTERNAL "")
 set(IMP_TESTS_PROPERTIES ENVIRONMENT "PYTHONPATH=${CMAKE_BINARY_DIR}/lib")
 
-imp_add_tests("RMF" ${PROJECT_BINARY_DIR}/test RMF_TESTS ${pyfiles} ${cppfiles})
+imp_add_tests("RMF" ${PROJECT_BINARY_DIR}/test RMF_TESTS test ${pyfiles} ${cppfiles})
