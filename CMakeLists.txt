@@ -4,6 +4,16 @@ project(RMF)
 # needs to be in main CMakeLists.txt
 enable_testing()
 
+execute_process(COMMAND python setup_git.py
+                  RESULT_VARIABLE setup
+                  OUTPUT_VARIABLE toutput
+                  ERROR_VARIABLE error
+                  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+                  OUTPUT_STRIP_TRAILING_WHITESPACE)
+if(NOT ${setup} EQUAL 0)
+   message(FATAL_ERROR " Failed to run setup_git.py: ${setup}; ${error}")
+endif()
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake_modules)
 
 # C++11 can use the boost version
@@ -33,19 +43,17 @@ include(cmake_modules/FindLog4CXX.cmake)
 include(cmake_modules/IMPFindC++11.cmake)
 include(cmake_modules/IMPFindCompilerFlags.cmake)
 
-imp_execute_process("Setting up git" ${PROJECT_SOURCE_DIR} COMMAND python setup_git.py)
-
 if(RMF_DEPRECATED_BACKENDS)
 imp_execute_process("Making RMF/HDF5.h" ${PROJECT_SOURCE_DIR}
-  COMMAND "python" "${PROJECT_SOURCE_DIR}/tools/developer_tools/make_all_header.py" ${PROJECT_BINARY_DIR}/include/RMF/HDF5.h RMF/HDF5 ${PROJECT_SOURCE_DIR}/include/RMF/HDF5)
+  COMMAND "python" "${PROJECT_SOURCE_DIR}/tools/dev_tools/make_all_header.py" ${PROJECT_BINARY_DIR}/include/RMF/HDF5.h RMF/HDF5 ${PROJECT_SOURCE_DIR}/include/RMF/HDF5)
 endif()
 
 imp_execute_process("Making RMF.h" ${PROJECT_SOURCE_DIR}
-  COMMAND "python" "${PROJECT_SOURCE_DIR}/tools/developer_tools/make_all_header.py" ${PROJECT_BINARY_DIR}/include/RMF.h RMF ${PROJECT_SOURCE_DIR}/include/RMF)
+  COMMAND "python" "${PROJECT_SOURCE_DIR}/tools/dev_tools/make_all_header.py" ${PROJECT_BINARY_DIR}/include/RMF.h RMF ${PROJECT_SOURCE_DIR}/include/RMF)
 
 
 message(STATUS "Running setup_cmake.py")
-execute_process(COMMAND python ${PROJECT_SOURCE_DIR}/tools/developer_tools/setup_cmake.py
+execute_process(COMMAND python ${PROJECT_SOURCE_DIR}/tools/dev_tools/setup_cmake.py
                   RESULT_VARIABLE setup
                   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 if(NOT ${setup} EQUAL 0)
