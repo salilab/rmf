@@ -53,16 +53,7 @@ imp_execute_process("Making RMF.h" ${PROJECT_SOURCE_DIR}
 
 
 message(STATUS "Running setup_cmake.py")
-execute_process(COMMAND python ${PROJECT_SOURCE_DIR}/tools/dev_tools/setup_cmake.py
-                  RESULT_VARIABLE setup
-                  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
-if(NOT ${setup} EQUAL 0)
-   message(FATAL_ERROR " Failed to setup cmake files")
-endif()
-
-  if(NOT "${output}" STREQUAL "")
-    message(STATUS ${output})
-  endif()
+imp_execute_process("Running setup_cmake.py"  ${PROJECT_SOURCE_DIR} COMMAND python ${PROJECT_SOURCE_DIR}/tools/dev_tools/setup_cmake.py)
 
 include_directories("${PROJECT_BINARY_DIR}/src"
   "${PROJECT_SOURCE_DIR}/src")
