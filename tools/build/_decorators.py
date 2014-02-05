@@ -531,7 +531,7 @@ RMF_DISABLE_WARNINGS
     os.system(
         os.path.join(
             root,
-            "developer_tools",
+            "dev_tools",
             "cleanup_code.py") +
         " " +
         path)
