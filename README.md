@@ -7,14 +7,8 @@ storing hierarchical molecular data (such as atomic or coarse grained
 representations of proteins), along with markup, including geometry
 and score data.
 
-Note the the repository has a subrepository so you must use the
-provided `setup_git.py` script to initialize the repository after cloning
-or do `git clone --recursive` and be `git submodule update --init`
-whenever you update.
-
-The library uses the [HDF5](http://www.hdf5.org) library or
-[Avro](http://avro.apache.org) library to manage the data on
-disk. Other backends (eg mmCIF) could be used, if desired.
+If [HDF5](http://www.hdf5.org) is available, wrappers for it will be
+built and support for older RMF-based formats will be compiled.
 
 See
 - [RMF viewers](\ref viewers) for more information about viewing RMF files,
