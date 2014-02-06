@@ -41,9 +41,9 @@ class Nullable {
 #ifndef SWIG
   Nullable(typename Traits<T>::ReturnType v) : v_(v) {}
   /** \pre !get_is_null() */
-  operator const typename Traits<T>::ReturnType&() const { return get(); }
+  operator typename Traits<T>::ReturnType() const { return get(); }
   /** \pre !get_is_null() */
-  const typename Traits<T>::ReturnType& get() const {
+  typename Traits<T>::ReturnType get() const {
     RMF_USAGE_CHECK(!get_is_null(), "Can't convert null value.");
     return v_;
   }
