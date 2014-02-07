@@ -61,12 +61,12 @@ class RMFEXPORT NodeHandle : public NodeConstHandle {
   friend class FileHandle;
   template <class Tag>
   void set_value_impl(ID<Tag> k, typename Tag::ArgumentType v) const {
-    Nullable<typename Tag::Traits::Type> sv = get_static_value(k);
+    Nullable<typename Tag::Type> sv = get_static_value(k);
     if (sv.get_is_null()) {
       set_static_value(k, v);
       return;
     }
-    if (Tag::Traits::get_are_equal(sv.get(), v)) return;
+    if (Tag::get_are_equal(sv.get(), v)) return;
     set_frame_value(k, v);
   }
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
