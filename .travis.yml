@@ -7,20 +7,20 @@ compiler:
   - gcc
   - clang
 env:
-  - INSTALL="libhdf5-serial-dev liblog4cxx10-dev" BOOST= FLAGS= TESTS=RMF
-  - INSTALL="liblog4cxx10-dev" BOOST= FLAGS= TESTS=RMF
+  - INSTALL="libhdf5-serial-dev liblog4cxx10-dev" BOOST= FLAGS= TESTS=RMF TEST_SETUP=
+  - INSTALL="liblog4cxx10-dev" BOOST= FLAGS= TESTS=RMF TEST_SETUP=
 git:
   submodules: false
 
 matrix:
   exclude:
     # I don't understand this failure, and it is only in deprecated code
-    - compiler: gcc
-      env: INSTALL="libhdf5-serial-dev liblog4cxx10-dev" BOOST= FLAGS= TESTS=RMF
   include:
     # can't get it to work with the python module
+    - compiler: gcc
+      env: INSTALL="libhdf5-serial-dev liblog4cxx10-dev" BOOST= FLAGS= TESTS=RMF TEST_SETUP=LD_PRELOAD=/lib/libSegFault.so
     - compiler: clang
-      env: INSTALL= BOOST= FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" TESTS=cpp
+      env: INSTALL= BOOST= FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" TESTS=cpp TEST_SETUP=
     #- compiler: clang
     #  env: INSTALL= BOOST= FLAGS="-fsanitize=undefined"
 
@@ -31,7 +31,7 @@ before_install:
 script:
  - mkdir build
  - cd build
- - cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="$FLAGS" -DCMAKE_EXE_LINKER_FLAGS="$FLAGS" -DCMAKE_MODULE_LINKER_FLAGS="$FLAGS" -DCMAKE_SHARED_LINKER_FLAGS="$FLAGS"
+ - cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="$FLAGS" -DCMAKE_EXE_LINKER_FLAGS="$FLAGS" -DCMAKE_MODULE_LINKER_FLAGS="$FLAGS" -DCMAKE_SHARED_LINKER_FLAGS="$FLAGS" -DIMP_TEST_SETUP=$TEST_SETUP
  - make -j 2
  - ctest -j 2 --output-on-failure -L $TESTS
 
