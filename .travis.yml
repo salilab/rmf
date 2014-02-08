@@ -5,20 +5,22 @@ branches:
     - develop
 compiler:
   - gcc
-  #- clang
+  - clang
 env:
   - INSTALL="libhdf5-serial-dev liblog4cxx10-dev" BOOST= FLAGS= TESTS=RMF TEST_SETUP=
-  #- INSTALL="liblog4cxx10-dev" BOOST= FLAGS= TESTS=RMF TEST_SETUP=
+  - INSTALL="" BOOST= FLAGS= TESTS=RMF TEST_SETUP=
 git:
   submodules: false
 
 matrix:
   exclude:
     # I don't understand this failure, and it is only in deprecated code
+    - compiler: gcc
+      env: INSTALL="libhdf5-serial-dev liblog4cxx10-dev" BOOST= FLAGS= TESTS=RMF TEST_SETUP=
   include:
     # can't get it to work with the python module
-    #- compiler: clang
-    #  env: INSTALL= BOOST= FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" TESTS=cpp TEST_SETUP=
+    - compiler: clang
+      env: INSTALL= BOOST= FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" TESTS=cpp TEST_SETUP=
 
 before_install:
  - sudo apt-get update -qq
