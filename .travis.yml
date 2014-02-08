@@ -17,8 +17,8 @@ matrix:
     # I don't understand this failure, and it is only in deprecated code
   include:
     # can't get it to work with the python module
-    - compiler: gcc
-      env: INSTALL="libhdf5-serial-dev liblog4cxx10-dev" BOOST= FLAGS= TESTS=RMF TEST_SETUP=LD_PRELOAD=/lib/libSegFault.so
+    #- compiler: gcc
+    #  env: INSTALL="libhdf5-serial-dev liblog4cxx10-dev" BOOST= FLAGS= TESTS=RMF TEST_SETUP=
     - compiler: clang
       env: INSTALL= BOOST= FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" TESTS=cpp TEST_SETUP=
     #- compiler: clang
@@ -33,6 +33,7 @@ script:
  - cd build
  - cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="$FLAGS" -DCMAKE_EXE_LINKER_FLAGS="$FLAGS" -DCMAKE_MODULE_LINKER_FLAGS="$FLAGS" -DCMAKE_SHARED_LINKER_FLAGS="$FLAGS" -DIMP_TEST_SETUP=$TEST_SETUP
  - make -j 2
+ - export LD_PRELOAD=/lib/libSegFault.so
  - ctest -j 2 --output-on-failure -L $TESTS
 
 # sanitize :-) -fsanitize=address -fno-omit-frame-pointer
