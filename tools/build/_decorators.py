@@ -278,11 +278,12 @@ class RangeAttribute(AttributePair):
 
 
 decorator = """
+
   /** See also NAME and NAMEFactory.
     */
     class NAMEConst: public Decorator {
     friend class NAMEFactory;
-    friend class NAME;
+  protected:
     DATA_MEMBERS
     NAMEConst(NodeConstHandle nh,
               DATA_ARGUMENTS):
