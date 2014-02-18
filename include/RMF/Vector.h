@@ -31,6 +31,7 @@ class Vector
     : public boost::array<float, D>
 #endif
       {
+#ifndef SWIG
   typedef boost::array<float, D> P;
   // work around swig
   template <class R, class Enabled = void>
@@ -50,21 +51,16 @@ class Vector
       std::copy(boost::begin(r), boost::end(r), d.begin());
     }
   };
-
+#endif
  public:
   Vector() {}
   //#ifndef RMF_SWIG_WRAPPER
+#ifndef SWIG
   template <class Range>
   explicit Vector(Range r) {
     Convert<Range>::convert(r, *this);
   }
   Vector(const Vector<D>& o) : P(o) {};
-#if 0
-  //defined(SWIG) || defined(RMF_SWIG_WRAPPER)
-  Vector(const std::vector<float>& input) {
-    RMF_USAGE_CHECK(input.size() == D, "sizes don't match");
-    std::copy(input.begin(), input.end(), data_);
-  }
 #endif
   Vector(float x, float y, float z) {
     RMF_USAGE_CHECK(D == 3, "3 args to non-3D constructor");
