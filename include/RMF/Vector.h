@@ -60,8 +60,8 @@ class Vector
   explicit Vector(Range r) {
     Convert<Range>::convert(r, *this);
   }
-  Vector(const Vector<D>& o) : P(o) {};
 #endif
+  Vector(const Vector<D>& o) : P(o) {};
   Vector(float x, float y, float z) {
     RMF_USAGE_CHECK(D == 3, "3 args to non-3D constructor");
     P::operator[](0) = x;
