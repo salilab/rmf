@@ -45,9 +45,9 @@ typedef RMF_TYPES<Strings> StringsList;
 typedef RMF_TYPES<Ints> IntsList;
 
 /** A Vector3 */
-typedef Vector<3> Vector3;
+typedef Vector<3U> Vector3;
 /** A Vector3 */
-typedef Vector<4> Vector4;
+typedef Vector<4U> Vector4;
 /** Many Vector3s */
 typedef RMF_TYPES<Vector3> Vector3s;
 /** Many Vector4s */

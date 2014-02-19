@@ -17,21 +17,20 @@
 #include <boost/type_traits/is_convertible.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/array.hpp>
+#include <boost/static_assert.hpp>
 #include <algorithm>
 
 RMF_ENABLE_WARNINGS
 
 namespace RMF {
 
+#ifndef SWIG
 /** Represent a point.
  */
 template <unsigned int D>
 class Vector
-#ifndef SWIG
     : public boost::array<float, D>
-#endif
       {
-#ifndef SWIG
   typedef boost::array<float, D> P;
   // work around swig
   template <class R, class Enabled = void>
@@ -51,25 +50,22 @@ class Vector
       std::copy(boost::begin(r), boost::end(r), d.begin());
     }
   };
-#endif
  public:
   Vector() {}
   //#ifndef RMF_SWIG_WRAPPER
-#ifndef SWIG
   template <class Range>
   explicit Vector(Range r) {
     Convert<Range>::convert(r, *this);
   }
-#endif
   Vector(const Vector<D>& o) : P(o) {};
   Vector(float x, float y, float z) {
-    RMF_USAGE_CHECK(D == 3, "3 args to non-3D constructor");
+    BOOST_STATIC_ASSERT(D == 3);
     P::operator[](0) = x;
     P::operator[](1) = y;
     P::operator[](2) = z;
   }
   Vector(float x, float y, float z, float q) {
-    RMF_USAGE_CHECK(D == 4, "4 args to non-4D constructor");
+    BOOST_STATIC_ASSERT(D == 4);
     P::operator[](0) = x;
     P::operator[](1) = y;
     P::operator[](2) = z;
@@ -85,6 +81,29 @@ class Vector
 #endif
   static unsigned int get_dimension() { return D; }
 };
+
+#else
+template <unsigned int D>
+class Vector {};
+template <>
+struct Vector<3U> {
+  Vector() {}
+  Vector(const Vector<3U> &o);
+  Vector(float x, float y, float z);
+  float __getitem__(unsigned int i) const;
+  unsigned int __len__() const;
+  static unsigned int get_dimension();
+};
+template <>
+struct Vector<4U> {
+  Vector() {}
+  Vector(const Vector<4U> &o);
+  Vector(float w, float x, float y, float z);
+  float __getitem__(unsigned int i) const;
+  unsigned int __len__() const;
+  static unsigned int get_dimension();
+};
+#endif
 
 } /* namespace RMF */
 

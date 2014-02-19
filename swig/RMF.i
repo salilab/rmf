@@ -69,8 +69,8 @@
 
 %{
   // hack, I don't understand what swig is doing
-  typedef RMF::Vector<3> Vector3;
-  typedef RMF::Vector<4> Vector4;
+  typedef RMF::Vector<3U> Vector3;
+  typedef RMF::Vector<4U> Vector4;
 %}
 
 // old swig doesn't handle expanding the macro properly
@@ -79,12 +79,12 @@
 %template(Ints) std::vector<int>;
 %template(Floats) std::vector<float>;
 %template(Strings) std::vector<std::string>;
-%template(Vector3s) std::vector<RMF::Vector<3> >;
-%template(Vector4s) std::vector<RMF::Vector<4> >;
+%template(Vector3s) std::vector<RMF::Vector<3U> >;
+%template(Vector4s) std::vector<RMF::Vector<4U> >;
 %template(IntsList) std::vector<std::vector<int> >;
 %template(FloatsList) std::vector<std::vector<float> >;
 %template(StringsList) std::vector<std::vector<std::string> >;
-%template(Vector3sList) std::vector<std::vector<RMF::Vector<3> > >;
+%template(Vector3sList) std::vector<std::vector<RMF::Vector<3U> > >;
 
 
 %include "RMF.traits.i"
