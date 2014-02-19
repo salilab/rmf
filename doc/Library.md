@@ -4,29 +4,29 @@
 
 [TOC]
 
-The %RMF library provides an intermediate level interface to facilitate I/O of
-%RMF data into and out of programs. The primary classes of interest are
-RMF::RootHandle representing the root of an %RMF hierarchy and RMF::NodeHandle
+The RMF library provides an intermediate level interface to facilitate I/O of
+RMF data into and out of programs. The primary classes of interest are
+RMF::RootHandle representing the root of an RMF hierarchy and RMF::NodeHandle
 representing a node in the hierarchy.
 
 The file is automatically closed when the last handle to it is destroyed.
 
 # Basics # {#basics}
 
-The library defines many classes, some of which are implemented using \c C++
-templates. Every class support output to a \c std::ostream in \c C++ and
-conversion to \c str in \c Python. In addition, every class can be compared
+The library defines many classes, some of which are implemented using C++
+templates. Every class support output to a `std::ostream` in C++ and
+conversion to `str` in Python. In addition, every class can be compared
 to other instances of the same class and can be inserted in hash tables both
-in \c C++ and \c Python. The methods necessary to support these things are
+in C++ and Python. The methods necessary to support these things are
 omitted for brevity.
 
 In addition, there is a typedef for each type for managing lists of the objects.
 For example, a list of RMF::Category objects is passed using a RMF::Categories type.
-It looks like a \c std::vector in \c C++ and is a \c list in \c Python.
+It looks like a `std::vector` in `C++` and is a `list` in Python.
 
 # Associations # {#associations}
 
-The %RMF wrapper has the concept of an association between nodes in
+The RMF wrapper has the concept of an association between nodes in
 its hierarchy and objects in the program accessing. The methods
 RMF::FileConstHandle::get_node_handle_from_association(),
 RMF::NodeConstHandle::set_association() and
@@ -34,7 +34,7 @@ RMF::NodeConstHandle::get_assocation() can be used to take advantage of
 this. The idea is that one can store pointers to the programatic
 data structures corresponding to the nodes and so avoid maintaining
 ones own lookup table. Any function used in an association must support
-a \c get_uint() function. An implementation is provided for pointers.
+a `get_uint()` function. An implementation is provided for pointers.
 
 # Parallel I/O # {#parallel}
 
@@ -46,7 +46,7 @@ program.
 # Invariants # {#invariants}
 
 Currently, there is little explicit checking of invariants between attributes
-in the %RMF file. An extensible framework for checking invariants on file
+in the RMF file. An extensible framework for checking invariants on file
 close and open will be added.
 
 # Decorators and factories # {#rmfdecorators}
@@ -62,7 +62,7 @@ accessing is done through appropriately named functions (eg RMF::decorator::Part
 
 # Language bindings # {#bindings}
 
-The %RMF library currently supports C++ and Python. The API is
+The RMF library currently supports C++ and Python. The API is
 written so that [SWIG](http://www.swig.org) can be used to
 easily generate bindings for most languages. The two main
 exceptions are C and Fortran. Until the SWIG %C target support is
@@ -77,23 +77,21 @@ values for the frame are treated as every nth frame. That is, "-f -2" means take
 every other frame.
 
 
-- \c rmf_show prints out the hierarchy written to the file.
+- `rmf_show` prints out the hierarchy written to the file.
 
-- \c rmf_frame prints out the frame hierarchy written to the file.
+- `rmf_frame` prints out the frame hierarchy written to the file.
 
-- \c rmf_pdb converts to and from pdb files.
-
-- \c rmf_xml converts an rmf file to an XML files that can be opened in an XML viewer
+- `rmf_xml` converts an rmf file to an XML files that can be opened in an XML viewer
    (eg Google Chrome or Firefox). These viewers support collapsing of subtrees, which
    makes it much easier to get around large hierarchies.
 
-- \c rmf_info displays information about the attributes found in the RMF and how
+- `rmf_info` displays information about the attributes found in the RMF and how
    much they are used.
 
-- \c rmf_slice creates a new rmf from frames selected from an existing one.
+- `rmf_slice` creates a new rmf from frames selected from an existing one.
 
-- \c rmf_cat creates a new rmf concatenating several with the same structure.
+- `rmf_cat` creates a new rmf concatenating several with the same structure.
 
-- \c rmf_validate checks for errors in an RMF file.
+- `rmf_validate` checks for errors in an RMF file.
 
-- \c rmf3_dump shows a low level dump of an rmf3 file
+- rmf3_dump` shows a low level dump of an rmf3 file
