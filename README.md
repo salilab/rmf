@@ -18,3 +18,11 @@ See
 
 Also see the [rmf examples](http://www.github.com/salilab/rmf_examples) repository
 for examples of interesting or problematic RMF files.
+
+Copyright 2013 University of California, San Francisco.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
