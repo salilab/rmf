@@ -21,8 +21,8 @@ We provide a plugin for
 [VMD](http://www.ks.uiuc.edu/Research/vmd/). Instructions for how to
 install it can be found on the [VMD plugin page](\ref vmdplugin). The
 plugin supports
-- multiresolution modules using the IMP::decorator::Alternative decorator
-- multiple states stored using the IMP::decorator::State decorator
+- multiresolution modules using the RMF::decorator::Alternatives decorator
+- multiple states stored using the RMF::decorator::State decorator
 - fast loading
 - displaying restraints as bonds
 - static geometry
