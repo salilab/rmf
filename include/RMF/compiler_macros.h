@@ -165,8 +165,12 @@
                      "-Wundef") RMF_GCC_PROTOTYPES RMF_GCC_CXX0X_COMPAT
 
 #elif defined(_MSC_VER)
-#define RMF_COMPILER_WARNINGS \
-  RMF_VC_PRAGMA(warning(disable : 4275)) RMF_VC_PRAGMA(warning(disable : 4251))
+#define RMF_COMPILER_WARNINGS                \
+  RMF_VC_PRAGMA(warning(disable : 4275))     \
+      RMF_VC_PRAGMA(warning(disable : 4251)) \
+      IMP_VC_PRAGMA(warning(disable : 4244)) \
+      IMP_VC_PRAGMA(warning(disable : 4068)) \
+      IMP_VC_PRAGMA(warning(disable : 4297))
 
 #else
 #define RMF_COMPILER_WARNINGS
