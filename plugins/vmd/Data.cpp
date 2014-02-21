@@ -277,8 +277,6 @@ void Data::handle_bond(RMF::NodeConstHandle cur) {
     bond_from_.push_back(index_.find(bonded0)->second + 1);
     bond_to_.push_back(index_.find(bonded1)->second + 1);
     bond_type_.push_back(0);
-  } else {
-    std::cout << "Skipping bond " << bonded0 << " to " << bonded1 << std::endl;
   }
 }
 
@@ -301,9 +299,6 @@ void Data::handle_restraint(RMF::NodeConstHandle cur) {
           bond_from_.push_back(index_.find(bonded0)->second + 1);
           bond_to_.push_back(index_.find(bonded1)->second + 1);
           bond_type_.push_back(1);
-        } else {
-          std::cout << "Skipping feature bond " << bonded0 << " to " << bonded1
-                    << std::endl;
         }
       }
     }
