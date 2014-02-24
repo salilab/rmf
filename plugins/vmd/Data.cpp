@@ -237,7 +237,6 @@ void Data::fill_index() {
 
 void Data::fill_graphics(RMF::NodeConstHandle cur,
                          RMF::CoordinateTransformer tr) {
-  int ret = 0;
   if (rff_.get_is(cur)) {
     tr = RMF::CoordinateTransformer(tr, rff_.get(cur));
   }
