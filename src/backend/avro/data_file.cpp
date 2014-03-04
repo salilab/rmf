@@ -1,9 +1,14 @@
+/**
+ *
+ *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *
+ */
 
 #include "DataFile.hh"
 #include "Specific.hh"
 #include "avrocpp/api/DataFile.hh"
 #include "avrocpp/api/Specific.hh"
-#include "types_encode_decode.h"  // IWYU pragma: keep
+#include "encode_decode.h"  // IWYU pragma: keep
 #include "data_file.h"
 
 namespace RMF {
