@@ -1,4 +1,4 @@
-# VMD Plugin #
+# Pymol Plugin #
 
 # Using the plugin # {#pymolplugin}
 [TOC]
