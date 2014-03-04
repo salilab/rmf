@@ -4,7 +4,22 @@
 
 [TOC]
 
-The attributes and decorators are divided into several categories, each associated with a different RMF::Category. The get and set functions on the decorators always have the same names as the attribute, unless otherwise noted. For example, RMF::decorator::Particle has RMF::decorator::Particle::get_mass().
+The attributes and decorators are divided into several categories, each associated with a different RMF::Category. The get and set functions on the decorators always have the same names as the attribute, unless otherwise noted. For example, RMF::decorator::Particle has RMF::decorator::ParticleConst::get_mass().
+
+# Static and Frame Attributes # {#staticandframe}
+
+Each `get_` method and `set_` method have three variants. For get they are
+
+- `get_foo` get a value for the attribute
+- `get_frame_foo` get a value for the attribute if stored in the current frame, or `None`/null otherwise
+- `get_static_foo` get a value for the attribute if stored statically, or `None`/null otherwise
+
+and for set
+
+- `set_frame_foo`
+- `set_static_foo`
+- `set_foo`
+
 
 # Physics # {#physics}
 
