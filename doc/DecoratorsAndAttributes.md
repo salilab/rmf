@@ -4,7 +4,7 @@
 
 [TOC]
 
-The attributes and decorators are divided into several categories, each associated with a different RMF::Category. The get and set functions on the decorators always have the same names as the attribute, unless otherwise noted. For example, RMF::decorator::Particle has RMF::decorator::ParticleConst::get_mass().
+The attributes and decorators are divided into several categories, each associated with a different RMF::Category. Each decorator has three associated types eg RMF::decorator::Particle, RMF::decorator::ParticleConst and RMF::decorator::ParticleFactory. The non-const decorator inherits from the const one. The factory is used to test whether a given node has the needed attributes and create decorators decorating a given node. Note, that if passed and RMF::NodeConstHandle, the node already having the required attributes is a precondition for the factory `get()` method.
 
 # Static and Frame Attributes # {#staticandframe}
 
@@ -16,9 +16,9 @@ Each `get_` method and `set_` method have three variants. For get they are
 
 and for set
 
-- `set_frame_foo`
-- `set_static_foo`
-- `set_foo`
+- `set_frame_foo`: set a value that is stored once per frame
+- `set_static_foo`: set a value that is stored once for the whole file
+- `set_foo`: if there is no static value, set it, otherwise, if the passed value differs from the static value, set it as a frame value.
 
 
 # Physics # {#physics}
