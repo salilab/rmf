@@ -23,7 +23,4 @@
 #include "RMF/decorator/alternatives.h"
 #include "RMF/decorator/labels.h"
 
-/** \namespace RMF::decorator
-
-    Decorators for nodes. */
 #endif /* RMF_DECORATORS_H */

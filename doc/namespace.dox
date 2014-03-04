@@ -7,4 +7,8 @@ The namespace for all functionality in the library. In python, the module is als
 
 The namespace for all functionality in the library. In python, the module is also called RMF.HDF5.
 
+\namespace RMF::decorator
+
+The namespace for all decorator-related functionality. See [Decorators and Attributes](\ref decoratorsattributes) for more information.
+
 */
