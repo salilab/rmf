@@ -11,10 +11,10 @@ The attributes and decorators are divided into several categories, each associat
 Each `get_` method and `set_` method have three variants. For get they are
 
 - `get_foo` get a value for the attribute
-- `get_frame_foo` get a value for the attribute if stored in the current frame, or `None`/null otherwise
-- `get_static_foo` get a value for the attribute if stored statically, or `None`/null otherwise
+- `get_frame_foo` get a value for the attribute as stored in the current frame
+- `get_static_foo` get a value for the attribute as stored for the whole file
 
-and for set
+All have the precondition that the appropriate value exist. For set
 
 - `set_frame_foo`: set a value that is stored once per frame
 - `set_static_foo`: set a value that is stored once for the whole file
