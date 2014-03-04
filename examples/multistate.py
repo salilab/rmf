@@ -29,13 +29,6 @@ def create_hierarchy(state):
         bd.set_bonded_0(ns[i].get_id().get_index())
         bd.set_bonded_1(ns[i + 1].get_id().get_index())
     return ns
-     # create 4 frames with 3 different configurations each
-    for i in range(0, 4):
-        cur_frame = fh.add_frame(str(i), RMF.FRAME)
-        fill_coordinates(i, 0)
-        for j in range(0, 2):
-            fh.add_frame(str(i) + "-" + str(j), cur_frame, RMF.ALTERNATE)
-            fill_coordinates(i, j + 1)
 
 all_ps = []
 for i in range(0, 3):
