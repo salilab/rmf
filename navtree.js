@@ -4,6 +4,7 @@ var NAVTREE =
     [ "Change Log", "md__Users_drussel_src_rmf_rmf_ChangeLog.html", null ],
     [ "Attributes and Decorators", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html", [
       [ "Overview", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#decoratorsattributes", null ],
+      [ "Static and Frame Attributes", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#staticandframe", null ],
       [ "Physics", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#physics", [
         [ "Attributes", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#physicsattributes", null ],
         [ "Decorators", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#physicsdecorators", null ]
@@ -64,7 +65,7 @@ var NAVTREE =
     [ "Mapping Data", "md__Users_drussel_src_rmf_rmf_doc_MappingToRMF.html", [
       [ "Mapping data to RMF files", "md__Users_drussel_src_rmf_rmf_doc_MappingToRMF.html#mapping", null ]
     ] ],
-    [ "VMD Plugin", "md__Users_drussel_src_rmf_rmf_doc_PymolPlugin.html", [
+    [ "Pymol Plugin", "md__Users_drussel_src_rmf_rmf_doc_PymolPlugin.html", [
       [ "Using the plugin", "md__Users_drussel_src_rmf_rmf_doc_PymolPlugin.html#pymolplugin", null ]
     ] ],
     [ "Viewing", "md__Users_drussel_src_rmf_rmf_doc_Viewing.html", [
@@ -110,11 +111,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "BufferConstHandle_8h.html",
-"classRMF_1_1HDF5_1_1ConstAttributes.html#aa6749a47c3f6c41807baf12e63526984",
+"classRMF_1_1HDF5_1_1ConstAttributes.html#aa7037a430f2cdca86a2ca97c373f45a1",
 "classRMF_1_1decorator_1_1Alternatives.html",
-"classRMF_1_1decorator_1_1Ellipsoid.html#a4ee5f1d5c2f06458d639a13fd26622a9",
-"classRMF_1_1decorator_1_1RepresentationFactory.html#adb9539e4a9311f870c4cd22df7ba5e75",
-"keys_8h.html#a2a730542d3432e8f8df4c0566956d7dd"
+"classRMF_1_1decorator_1_1DomainFactory.html",
+"classRMF_1_1decorator_1_1ReferenceFrameFactory.html#aa0a069968d3b64b4430350c7e61ae055",
+"exceptions_8h.html#ad729a314b2f90d3327e29c9fc587bbaf"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

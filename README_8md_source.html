@@ -100,28 +100,32 @@ $(document).ready(function(){initNavTree('README_8md.html','');});
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor"># RMF #</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;The library provides support <span class="keywordflow">for</span> the RMF file format <span class="keywordflow">for</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;storing hierarchical molecular data (such as atomic or coarse grained</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;representations of proteins), along with markup, including geometry</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;and score data.</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;Note the the repository has a subrepository so you must use the</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;provided `setup_git.py` script to initialize the repository after cloning</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;or <span class="keywordflow">do</span> `git clone --recursive` and be `git submodule update --init`</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;whenever you update.</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;[![Build Status](https:<span class="comment">//travis-ci.org/salilab/rmf.png?branch=develop)](https://travis-ci.org/salilab/rmf)</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;The library provides support <span class="keywordflow">for</span> the RMF file format <span class="keywordflow">for</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;storing hierarchical molecular data (such as atomic or coarse grained</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;representations of proteins), along with markup, including geometry</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;and score data.</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;If [HDF5](http:<span class="comment">//www.hdf5.org) is available, wrappers for it will be</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;built and support <span class="keywordflow">for</span> older RMF-based formats will be compiled.</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;The library uses the [HDF5](http:<span class="comment">//www.hdf5.org) library or</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;[Avro](http:<span class="comment">//avro.apache.org) library to manage the data on</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;disk. Other backends (eg mmCIF) could be used, <span class="keywordflow">if</span> desired.</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;See</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;- [RMF viewers](\ref viewers) <span class="keywordflow">for</span> more information about viewing RMF files,</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;- [RMF file format](\ref format) <span class="keywordflow">for</span> more information about the files,</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;- [RMF Library](\ref library) <span class="keywordflow">for</span> more information about <span class="keyword">using</span> the library.</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;- [Mapping data into RMF files](\ref mapping) <span class="keywordflow">for</span> more information about how to structure data in RMF files.</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;Also see the [rmf examples](http:<span class="comment">//www.github.com/salilab/rmf_examples) repository</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keywordflow">for</span> examples of interesting or problematic RMF files.</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;See</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;- [RMF viewers](doc/Viewing.md) <span class="keywordflow">for</span> more information about viewing RMF files,</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;- [RMF file format](\ref format) <span class="keywordflow">for</span> more information about the files,</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;- [RMF Library](\ref library) <span class="keywordflow">for</span> more information about <span class="keyword">using</span> the library.</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;- [Mapping data into RMF files](\ref mapping) <span class="keywordflow">for</span> more information about how to structure data in RMF files.</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;Also see the [rmf examples](http:<span class="comment">//www.github.com/salilab/rmf_examples) repository</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordflow">for</span> examples of interesting or problematic RMF files.</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;Copyright 2013 University of California, San Francisco.</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;Licensed under the Apache License, Version 2.0 (the <span class="stringliteral">&quot;License&quot;</span>);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;you may not use <span class="keyword">this</span> file except in compliance with the License.</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;You may obtain a copy of the License at</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    http:<span class="comment">//www.apache.org/licenses/LICENSE-2.0</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

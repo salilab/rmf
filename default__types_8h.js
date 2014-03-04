@@ -12,9 +12,9 @@ var default__types_8h =
     [ "String", "default__types_8h.html#a13cd501233c2edc77db6ebec83583eec", null ],
     [ "Strings", "default__types_8h.html#a9811b522a0994fc22b47f90b00f6b564", null ],
     [ "StringsList", "default__types_8h.html#a3446a203b15cd29c3f5e901e790b3b23", null ],
-    [ "Vector3", "default__types_8h.html#a30c456cb198f6415d63f41cefab407ae", null ],
+    [ "Vector3", "default__types_8h.html#a4f81aba337d34ce6c26d7e5004fcfddf", null ],
     [ "Vector3s", "default__types_8h.html#a163c7904c3fdd6039c9907146c733133", null ],
-    [ "Vector4", "default__types_8h.html#a8affb16f9c620940ceaa63e836930f51", null ],
+    [ "Vector4", "default__types_8h.html#a1e72f2580095bf30a33fc20fa66e7bcd", null ],
     [ "Vector4s", "default__types_8h.html#a64071d2602cf37e459aee44ffdf7ead6", null ],
     [ "VectorDimension", "default__types_8h.html#a8c992cf6c6ec038038d9a185d57a1750", null ]
 ];

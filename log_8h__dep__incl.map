@@ -1,45 +1,45 @@
 <map id="log.h" name="log.h">
-<area shape="rect" id="node2" href="$ConstDataSetD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1760,83,1884,111"/>
-<area shape="rect" id="node17" href="$benchmark__rmf_8cpp_source.html" title="benchmark_rmf.cpp" alt="" coords="750,1166,889,1194"/>
-<area shape="rect" id="node3" href="$DataSetD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1575,161,1664,189"/>
-<area shape="rect" id="node7" href="$HDF5_8h.html" title="A container which has pairs which ensure a set is connected. " alt="" coords="1474,470,1541,498"/>
-<area shape="rect" id="node4" href="$ConstGroup_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1416,238,1520,266"/>
-<area shape="rect" id="node5" href="$ConstFile_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1220,315,1308,343"/>
-<area shape="rect" id="node44" href="$Group_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1124,625,1193,653"/>
-<area shape="rect" id="node6" href="$File_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1237,393,1291,421"/>
-<area shape="rect" id="node8" href="$HDF5_2types_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1671,547,1735,575"/>
-<area shape="rect" id="node38" href="$ConstAttributes_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1253,625,1376,653"/>
-<area shape="rect" id="node39" href="$Object_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1667,625,1737,653"/>
-<area shape="rect" id="node43" href="$MutableAttributes_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1209,547,1345,575"/>
-<area shape="rect" id="node9" href="$traits_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1400,625,1461,653"/>
-<area shape="rect" id="node40" href="$DataSetIndexD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1763,625,1885,653"/>
-<area shape="rect" id="node10" href="$keys_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1306,702,1365,730"/>
-<area shape="rect" id="node11" href="$NodeConstHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1199,779,1340,807"/>
-<area shape="rect" id="node37" href="$Nullable_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1390,702,1471,730"/>
-<area shape="rect" id="node12" href="$Decorator_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1476,934,1565,962"/>
-<area shape="rect" id="node26" href="$NodeHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1377,857,1483,885"/>
-<area shape="rect" id="node28" href="$validate_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="679,1011,757,1039"/>
-<area shape="rect" id="node31" href="$FileConstHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="536,857,667,885"/>
-<area shape="rect" id="node36" href="$utility_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="781,857,843,885"/>
-<area shape="rect" id="node13" href="$alias_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1685,1011,1744,1039"/>
-<area shape="rect" id="node15" href="$physics_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1676,1089,1752,1117"/>
-<area shape="rect" id="node18" href="$external_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1152,1011,1231,1039"/>
-<area shape="rect" id="node19" href="$feature_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="934,1011,1007,1039"/>
-<area shape="rect" id="node20" href="$publication_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1032,1011,1128,1039"/>
-<area shape="rect" id="node21" href="$sequence_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1511,1089,1600,1117"/>
-<area shape="rect" id="node22" href="$shape_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1819,1011,1887,1039"/>
-<area shape="rect" id="node23" href="$bond_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1357,1011,1419,1039"/>
-<area shape="rect" id="node24" href="$representation_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1442,1011,1560,1039"/>
-<area shape="rect" id="node25" href="$alternatives_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1963,1011,2063,1039"/>
-<area shape="rect" id="node14" href="$decorators_8h.html" title="Import all the decorators headers. " alt="" coords="1508,1166,1603,1194"/>
-<area shape="rect" id="node16" href="$TraverseHelper_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1921,1166,2044,1194"/>
-<area shape="rect" id="node27" href="$FileHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1248,934,1344,962"/>
-<area shape="rect" id="node29" href="$Label_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="2050,934,2115,962"/>
-<area shape="rect" id="node30" href="$labels_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1878,1089,1945,1117"/>
-<area shape="rect" id="node32" href="$info_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="93,934,147,962"/>
-<area shape="rect" id="node33" href="$RestoreCurrentFrame_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="171,934,332,962"/>
-<area shape="rect" id="node34" href="$SetCurrentFrame_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="358,934,492,962"/>
-<area shape="rect" id="node35" href="$signature_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="518,934,604,962"/>
-<area shape="rect" id="node41" href="$DataSetAccessPropertiesD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1727,702,1920,730"/>
-<area shape="rect" id="node42" href="$DataSetCreationPropertiesD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1975,779,2176,807"/>
+<area shape="rect" id="node2" href="$ConstDataSetD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1652,83,1776,111"/>
+<area shape="rect" id="node17" href="$benchmark__rmf_8cpp_source.html" title="benchmark_rmf.cpp" alt="" coords="1217,1166,1356,1194"/>
+<area shape="rect" id="node3" href="$DataSetD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1884,161,1973,189"/>
+<area shape="rect" id="node7" href="$HDF5_8h.html" title="A container which has pairs which ensure a set is connected. " alt="" coords="2085,470,2152,498"/>
+<area shape="rect" id="node4" href="$ConstGroup_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="2341,238,2445,266"/>
+<area shape="rect" id="node5" href="$ConstFile_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="2430,315,2519,343"/>
+<area shape="rect" id="node44" href="$Group_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="2392,625,2461,653"/>
+<area shape="rect" id="node6" href="$File_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="2448,393,2501,421"/>
+<area shape="rect" id="node8" href="$HDF5_2types_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1689,547,1753,575"/>
+<area shape="rect" id="node38" href="$ConstAttributes_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="2156,625,2279,653"/>
+<area shape="rect" id="node39" href="$Object_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1882,625,1952,653"/>
+<area shape="rect" id="node43" href="$MutableAttributes_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="2281,547,2417,575"/>
+<area shape="rect" id="node9" href="$traits_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1464,625,1525,653"/>
+<area shape="rect" id="node40" href="$DataSetIndexD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1685,625,1808,653"/>
+<area shape="rect" id="node10" href="$keys_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1441,702,1500,730"/>
+<area shape="rect" id="node11" href="$NodeConstHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1425,779,1567,807"/>
+<area shape="rect" id="node37" href="$Nullable_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1336,702,1416,730"/>
+<area shape="rect" id="node12" href="$Decorator_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="567,934,656,962"/>
+<area shape="rect" id="node26" href="$NodeHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="684,857,789,885"/>
+<area shape="rect" id="node28" href="$validate_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1986,1011,2064,1039"/>
+<area shape="rect" id="node31" href="$FileConstHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1733,857,1864,885"/>
+<area shape="rect" id="node36" href="$utility_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="2113,857,2175,885"/>
+<area shape="rect" id="node13" href="$alias_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="793,1011,852,1039"/>
+<area shape="rect" id="node15" href="$physics_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="922,1089,997,1117"/>
+<area shape="rect" id="node18" href="$external_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="372,1011,451,1039"/>
+<area shape="rect" id="node19" href="$feature_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="68,1011,141,1039"/>
+<area shape="rect" id="node20" href="$publication_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="167,1011,263,1039"/>
+<area shape="rect" id="node21" href="$sequence_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1087,1089,1176,1117"/>
+<area shape="rect" id="node22" href="$shape_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="876,1011,944,1039"/>
+<area shape="rect" id="node23" href="$bond_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="286,1011,348,1039"/>
+<area shape="rect" id="node24" href="$representation_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="476,1011,593,1039"/>
+<area shape="rect" id="node25" href="$alternatives_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="618,1011,717,1039"/>
+<area shape="rect" id="node14" href="$decorators_8h.html" title="Import all the decorators headers. " alt="" coords="487,1166,581,1194"/>
+<area shape="rect" id="node16" href="$TraverseHelper_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="974,1166,1097,1194"/>
+<area shape="rect" id="node27" href="$FileHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="732,934,828,962"/>
+<area shape="rect" id="node29" href="$Label_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="26,934,91,962"/>
+<area shape="rect" id="node30" href="$labels_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="5,1089,72,1117"/>
+<area shape="rect" id="node32" href="$info_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1934,934,1988,962"/>
+<area shape="rect" id="node33" href="$RestoreCurrentFrame_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1476,934,1637,962"/>
+<area shape="rect" id="node34" href="$SetCurrentFrame_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1663,934,1797,962"/>
+<area shape="rect" id="node35" href="$signature_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1823,934,1909,962"/>
+<area shape="rect" id="node41" href="$DataSetAccessPropertiesD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1887,702,2080,730"/>
+<area shape="rect" id="node42" href="$DataSetCreationPropertiesD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1950,779,2151,807"/>
 </map>

@@ -19,6 +19,11 @@
           <Anchor>decoratorsattributes</Anchor>
          </Node>
          <Node>
+          <Name>Static and Frame Attributes</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+          <Anchor>staticandframe</Anchor>
+         </Node>
+         <Node>
           <Name>Physics</Name>
           <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
           <Anchor>physics</Anchor>
@@ -276,7 +281,7 @@
         </Subnodes>
        </Node>
        <Node>
-        <Name>VMD Plugin</Name>
+        <Name>Pymol Plugin</Name>
         <Path>md__Users_drussel_src_rmf_rmf_doc_PymolPlugin.html</Path>
         <Subnodes>
          <Node>
@@ -417,6 +422,11 @@
                 <Path>classRMF_1_1decorator_1_1AliasConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>AliasConst</Name>
+                  <Path>classRMF_1_1decorator_1_1AliasConst.html</Path>
+                  <Anchor>af4da8f703b7697e5ce75d2eddbd0252d</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_aliased</Name>
                   <Path>classRMF_1_1decorator_1_1AliasConst.html</Path>
                   <Anchor>aa79d50f9bd57361e6592c65d8bf86b52</Anchor>
@@ -427,14 +437,14 @@
                   <Anchor>af5e35938ff92b924d7a1d551ba88d3ff</Anchor>
                  </Node>
                  <Node>
-                  <Name>Alias</Name>
-                  <Path>classRMF_1_1decorator_1_1AliasConst.html</Path>
-                  <Anchor>a79bc94ce849ece1b793fc22408e50fb8</Anchor>
-                 </Node>
-                 <Node>
                   <Name>AliasFactory</Name>
                   <Path>classRMF_1_1decorator_1_1AliasConst.html</Path>
                   <Anchor>ad92d95ec20484ddf9d5dbd3fbd7cd858</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>aliased_</Name>
+                  <Path>classRMF_1_1decorator_1_1AliasConst.html</Path>
+                  <Anchor>a76f00f46cf059de992ec490c2562fe16</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -669,6 +679,11 @@
                 <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>AtomConst</Name>
+                  <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
+                  <Anchor>a278270c3f9de3404b90f04c2a612cd8a</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_coordinates</Name>
                   <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
                   <Anchor>a9409d4ced264a60aad66e2590aa2f9c8</Anchor>
@@ -734,14 +749,29 @@
                   <Anchor>aaf2e7d43ebf5eca13ebefa151e58fa95</Anchor>
                  </Node>
                  <Node>
-                  <Name>Atom</Name>
-                  <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
-                  <Anchor>ad1ae724d6fb84a88faf67330fba69087</Anchor>
-                 </Node>
-                 <Node>
                   <Name>AtomFactory</Name>
                   <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
                   <Anchor>a03c212352507b6f63533daedc2c55b6f</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>coordinates_</Name>
+                  <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
+                  <Anchor>a77c69a1daa41905a680a975efd474e2b</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>element_</Name>
+                  <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
+                  <Anchor>a48d0881a3549cbcac41c5ffdb30377f0</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>mass_</Name>
+                  <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
+                  <Anchor>a21467aa80b7915df9e0ee5d2fcc8c06b</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>radius_</Name>
+                  <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
+                  <Anchor>ac5e38dc0b04147c36a34e9c5736e299c</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -832,6 +862,11 @@
                 <Path>classRMF_1_1decorator_1_1BallConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>BallConst</Name>
+                  <Path>classRMF_1_1decorator_1_1BallConst.html</Path>
+                  <Anchor>a11fc61e6b971bc94ccc2a0e4d815a988</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_coordinates</Name>
                   <Path>classRMF_1_1decorator_1_1BallConst.html</Path>
                   <Anchor>a4f85320765958e2d2cd021840839e4dd</Anchor>
@@ -867,14 +902,19 @@
                   <Anchor>a85d8d70a9c510d151b2058bac0891e1d</Anchor>
                  </Node>
                  <Node>
-                  <Name>Ball</Name>
-                  <Path>classRMF_1_1decorator_1_1BallConst.html</Path>
-                  <Anchor>aff34a635f776289ee8fb112e4ac9eaed</Anchor>
-                 </Node>
-                 <Node>
                   <Name>BallFactory</Name>
                   <Path>classRMF_1_1decorator_1_1BallConst.html</Path>
                   <Anchor>a09be8269386f82b16af698bed5b1e1d4</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>coordinates_</Name>
+                  <Path>classRMF_1_1decorator_1_1BallConst.html</Path>
+                  <Anchor>a6d06d8a10019ca1380b09533dee37878</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>radius_</Name>
+                  <Path>classRMF_1_1decorator_1_1BallConst.html</Path>
+                  <Anchor>a43a522ffea6183cde75550d66dc8825f</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -1113,6 +1153,11 @@
                 <Path>classRMF_1_1decorator_1_1ChainConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>ChainConst</Name>
+                  <Path>classRMF_1_1decorator_1_1ChainConst.html</Path>
+                  <Anchor>a2d53ca26a71873393e4336c1610c1e52</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_chain_id</Name>
                   <Path>classRMF_1_1decorator_1_1ChainConst.html</Path>
                   <Anchor>a241a28b7fdf16b51850d90dd075b7910</Anchor>
@@ -1133,14 +1178,14 @@
                   <Anchor>ad1e5811220073bea2ca5115ca0261d36</Anchor>
                  </Node>
                  <Node>
-                  <Name>Chain</Name>
-                  <Path>classRMF_1_1decorator_1_1ChainConst.html</Path>
-                  <Anchor>a65813570c30a3e0656fa523793ff1b86</Anchor>
-                 </Node>
-                 <Node>
                   <Name>ChainFactory</Name>
                   <Path>classRMF_1_1decorator_1_1ChainConst.html</Path>
                   <Anchor>a02e18af32ff2b8dc72fbb9230383c21c</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>chain_id_</Name>
+                  <Path>classRMF_1_1decorator_1_1ChainConst.html</Path>
+                  <Anchor>aed9851487a70933c0abbcf616de8b8e9</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -1216,6 +1261,11 @@
                 <Path>classRMF_1_1decorator_1_1ColoredConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>ColoredConst</Name>
+                  <Path>classRMF_1_1decorator_1_1ColoredConst.html</Path>
+                  <Anchor>a083cd395e40022e24ba79bc783e9e8da</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_decorator_type_name</Name>
                   <Path>classRMF_1_1decorator_1_1ColoredConst.html</Path>
                   <Anchor>ab3a769514c26bc815816379b7574acf9</Anchor>
@@ -1236,14 +1286,14 @@
                   <Anchor>abf50521901627605b59bb3c8175cde1a</Anchor>
                  </Node>
                  <Node>
-                  <Name>Colored</Name>
-                  <Path>classRMF_1_1decorator_1_1ColoredConst.html</Path>
-                  <Anchor>a0443732ec38fae82e83ff176069f1520</Anchor>
-                 </Node>
-                 <Node>
                   <Name>ColoredFactory</Name>
                   <Path>classRMF_1_1decorator_1_1ColoredConst.html</Path>
                   <Anchor>a229641530c928462ae662a49d0149758</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>rgb_color_</Name>
+                  <Path>classRMF_1_1decorator_1_1ColoredConst.html</Path>
+                  <Anchor>a3badc91488505b2ff7215921d480a0a5</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -1319,6 +1369,11 @@
                 <Path>classRMF_1_1decorator_1_1CopyConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>CopyConst</Name>
+                  <Path>classRMF_1_1decorator_1_1CopyConst.html</Path>
+                  <Anchor>ab572fd18cb40f54322dc41f41c46c5be</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_copy_index</Name>
                   <Path>classRMF_1_1decorator_1_1CopyConst.html</Path>
                   <Anchor>a0ce23cccd8f3597dcc6e6d00105c9c68</Anchor>
@@ -1339,14 +1394,14 @@
                   <Anchor>a2002044330af32ff7c20793cad389ec9</Anchor>
                  </Node>
                  <Node>
-                  <Name>Copy</Name>
-                  <Path>classRMF_1_1decorator_1_1CopyConst.html</Path>
-                  <Anchor>ac82f8c8068912f9a0eb4dbcc716c947f</Anchor>
-                 </Node>
-                 <Node>
                   <Name>CopyFactory</Name>
                   <Path>classRMF_1_1decorator_1_1CopyConst.html</Path>
                   <Anchor>af9e11daaea7077d301552b2200eb3cb0</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>copy_index_</Name>
+                  <Path>classRMF_1_1decorator_1_1CopyConst.html</Path>
+                  <Anchor>aa8d0a03c3f25c31c6132dd72645dfed8</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -1437,6 +1492,11 @@
                 <Path>classRMF_1_1decorator_1_1CylinderConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>CylinderConst</Name>
+                  <Path>classRMF_1_1decorator_1_1CylinderConst.html</Path>
+                  <Anchor>a72ed18771222ba4ffe33a396937ba871</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_coordinates_list</Name>
                   <Path>classRMF_1_1decorator_1_1CylinderConst.html</Path>
                   <Anchor>aa4cfab01c870380d4e174b3de479664d</Anchor>
@@ -1472,14 +1532,19 @@
                   <Anchor>a23dec3ae641f889ffb561d4821abe704</Anchor>
                  </Node>
                  <Node>
-                  <Name>Cylinder</Name>
-                  <Path>classRMF_1_1decorator_1_1CylinderConst.html</Path>
-                  <Anchor>af10773c43b75882cad4b616a1592e455</Anchor>
-                 </Node>
-                 <Node>
                   <Name>CylinderFactory</Name>
                   <Path>classRMF_1_1decorator_1_1CylinderConst.html</Path>
                   <Anchor>af222690ea5a97887ab49cfd52448f3c7</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>coordinates_list_</Name>
+                  <Path>classRMF_1_1decorator_1_1CylinderConst.html</Path>
+                  <Anchor>a241d65247f760ce2b5f70fd04b9ce26c</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>radius_</Name>
+                  <Path>classRMF_1_1decorator_1_1CylinderConst.html</Path>
+                  <Anchor>adbc9ed8d2999be0a45bb0986e685390f</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -1555,6 +1620,11 @@
                 <Path>classRMF_1_1decorator_1_1DiffuserConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>DiffuserConst</Name>
+                  <Path>classRMF_1_1decorator_1_1DiffuserConst.html</Path>
+                  <Anchor>ad63f89cd3e3dac1ffe6f5de09f44b098</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_decorator_type_name</Name>
                   <Path>classRMF_1_1decorator_1_1DiffuserConst.html</Path>
                   <Anchor>a0d21ceaa03f08a49ff5d028c1ec5e6ac</Anchor>
@@ -1575,14 +1645,14 @@
                   <Anchor>afbe4f12aa80ff58242c7c6ee1194abf8</Anchor>
                  </Node>
                  <Node>
-                  <Name>Diffuser</Name>
-                  <Path>classRMF_1_1decorator_1_1DiffuserConst.html</Path>
-                  <Anchor>a331f7dbe7f9173a64ea7ce343a6213b2</Anchor>
-                 </Node>
-                 <Node>
                   <Name>DiffuserFactory</Name>
                   <Path>classRMF_1_1decorator_1_1DiffuserConst.html</Path>
                   <Anchor>a2e75e4ccc69d31310e952eda489aa774</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>diffusion_coefficient_</Name>
+                  <Path>classRMF_1_1decorator_1_1DiffuserConst.html</Path>
+                  <Anchor>ae2c7adb60808bcaa771048a190c1310c</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -1658,6 +1728,11 @@
                 <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>DomainConst</Name>
+                  <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
+                  <Anchor>abb4d75da6902bd3138584e183764505a</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_decorator_type_name</Name>
                   <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
                   <Anchor>a964033d5bcbd30167794407e847fa443</Anchor>
@@ -1678,14 +1753,14 @@
                   <Anchor>a778f23ffaccf05c605767840b70f9e7f</Anchor>
                  </Node>
                  <Node>
-                  <Name>Domain</Name>
-                  <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
-                  <Anchor>a85e12fe8536332c4e929748421fa4e62</Anchor>
-                 </Node>
-                 <Node>
                   <Name>DomainFactory</Name>
                   <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
                   <Anchor>a722133110d12c13ccb83741b7f199abb</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>indexes_</Name>
+                  <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
+                  <Anchor>accef45c01c0682be4eee598dbdf2043a</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -1791,6 +1866,11 @@
                 <Path>classRMF_1_1decorator_1_1EllipsoidConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>EllipsoidConst</Name>
+                  <Path>classRMF_1_1decorator_1_1EllipsoidConst.html</Path>
+                  <Anchor>ae0a9a618f32523798d3c83f8e0fcbce7</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_axis_lengths</Name>
                   <Path>classRMF_1_1decorator_1_1EllipsoidConst.html</Path>
                   <Anchor>a07f19447eaff67caa598047a2712628b</Anchor>
@@ -1841,14 +1921,24 @@
                   <Anchor>a0a864f3433551e6866b51e8aec1e71d4</Anchor>
                  </Node>
                  <Node>
-                  <Name>Ellipsoid</Name>
-                  <Path>classRMF_1_1decorator_1_1EllipsoidConst.html</Path>
-                  <Anchor>a26de2ba48553f37df3a39cf643961b51</Anchor>
-                 </Node>
-                 <Node>
                   <Name>EllipsoidFactory</Name>
                   <Path>classRMF_1_1decorator_1_1EllipsoidConst.html</Path>
                   <Anchor>a0e43042a180ad9a248e36ba6724e6695</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>axis_lengths_</Name>
+                  <Path>classRMF_1_1decorator_1_1EllipsoidConst.html</Path>
+                  <Anchor>a1eecfc8b5e54e103cb9054e67856b2be</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>coordinates_</Name>
+                  <Path>classRMF_1_1decorator_1_1EllipsoidConst.html</Path>
+                  <Anchor>aa0a73114bb80805dc0acddb9a1f7bcae</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>orientation_</Name>
+                  <Path>classRMF_1_1decorator_1_1EllipsoidConst.html</Path>
+                  <Anchor>a55f47862e7433f1f0d601adf42acd265</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -1914,6 +2004,11 @@
                 <Path>classRMF_1_1decorator_1_1ExternalConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>ExternalConst</Name>
+                  <Path>classRMF_1_1decorator_1_1ExternalConst.html</Path>
+                  <Anchor>a440471ce97fdfb81e5af62715eadcd2b</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_decorator_type_name</Name>
                   <Path>classRMF_1_1decorator_1_1ExternalConst.html</Path>
                   <Anchor>a2e332d902c2b5f147f540a7bb91e1e13</Anchor>
@@ -1924,14 +2019,14 @@
                   <Anchor>a8fab248e296bbdae47819ddd9e8478a3</Anchor>
                  </Node>
                  <Node>
-                  <Name>External</Name>
-                  <Path>classRMF_1_1decorator_1_1ExternalConst.html</Path>
-                  <Anchor>a596cd8ac742ce7f7f82eba6e223f4476</Anchor>
-                 </Node>
-                 <Node>
                   <Name>ExternalFactory</Name>
                   <Path>classRMF_1_1decorator_1_1ExternalConst.html</Path>
                   <Anchor>a4a1cd32ee2a260e229f2845ff3ad3771</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>path_</Name>
+                  <Path>classRMF_1_1decorator_1_1ExternalConst.html</Path>
+                  <Anchor>aa3598ad8cfa4852b5bdd4cba03800d1b</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -2007,6 +2102,11 @@
                 <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>FragmentConst</Name>
+                  <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
+                  <Anchor>a8f2fa2f942a065036fed37248718bf34</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_decorator_type_name</Name>
                   <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
                   <Anchor>a49ea25e522efe09769d16984927d7e84</Anchor>
@@ -2027,14 +2127,14 @@
                   <Anchor>a1e2c0eb144a939047372b1da24fb2f0d</Anchor>
                  </Node>
                  <Node>
-                  <Name>Fragment</Name>
-                  <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
-                  <Anchor>adcaa892717dd216d80c530db7f8a7799</Anchor>
-                 </Node>
-                 <Node>
                   <Name>FragmentFactory</Name>
                   <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
                   <Anchor>af620a473b2475cd772c2f718a1347ad1</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>indexes_</Name>
+                  <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
+                  <Anchor>a7a297e9ec02d126f4b1b21d5c788a9ae</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -2125,6 +2225,11 @@
                 <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>GaussianParticleConst</Name>
+                  <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
+                  <Anchor>a8c8c923442a874ac4cb86fffdd27d4b0</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_decorator_type_name</Name>
                   <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
                   <Anchor>a3f0d837fed370176920d10d04e190d28</Anchor>
@@ -2160,14 +2265,19 @@
                   <Anchor>a6e24d92b88d1bd2be4479b3ed30ad117</Anchor>
                  </Node>
                  <Node>
-                  <Name>GaussianParticle</Name>
-                  <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
-                  <Anchor>a34f1a08c43daff7d663e530b67f2774d</Anchor>
-                 </Node>
-                 <Node>
                   <Name>GaussianParticleFactory</Name>
                   <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
                   <Anchor>a41ca42f068912f31bde703ce29aac888</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>mass_</Name>
+                  <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
+                  <Anchor>ae08e5524488b312ee238758721e41cbe</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>variances_</Name>
+                  <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
+                  <Anchor>a661c9700eaca711c7f4b59e8fb72c3fa</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -2258,6 +2368,11 @@
                 <Path>classRMF_1_1decorator_1_1IntermediateParticleConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>IntermediateParticleConst</Name>
+                  <Path>classRMF_1_1decorator_1_1IntermediateParticleConst.html</Path>
+                  <Anchor>a538421139a865624fe1eee6d4b751aff</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_coordinates</Name>
                   <Path>classRMF_1_1decorator_1_1IntermediateParticleConst.html</Path>
                   <Anchor>afd6cbfb0eb41e0732248dd5f1e642e75</Anchor>
@@ -2293,14 +2408,19 @@
                   <Anchor>a23f31289bd22b36fc36c576e147f7cd4</Anchor>
                  </Node>
                  <Node>
-                  <Name>IntermediateParticle</Name>
-                  <Path>classRMF_1_1decorator_1_1IntermediateParticleConst.html</Path>
-                  <Anchor>a3a40da3eeec6604f2f4ec38afd140396</Anchor>
-                 </Node>
-                 <Node>
                   <Name>IntermediateParticleFactory</Name>
                   <Path>classRMF_1_1decorator_1_1IntermediateParticleConst.html</Path>
                   <Anchor>abc8840e115997660e87de0694d4b2f09</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>coordinates_</Name>
+                  <Path>classRMF_1_1decorator_1_1IntermediateParticleConst.html</Path>
+                  <Anchor>af24a685f15b05ebf922da81455259e66</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>radius_</Name>
+                  <Path>classRMF_1_1decorator_1_1IntermediateParticleConst.html</Path>
+                  <Anchor>a90c6693367ef7f0aef1ee62ad9dfb494</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -2436,6 +2556,11 @@
                 <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>JournalArticleConst</Name>
+                  <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
+                  <Anchor>ad641ac23738b3f1fba3c0f66db900a8a</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_authors</Name>
                   <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
                   <Anchor>a086655b99632af8b33900c57dd014b0d</Anchor>
@@ -2516,14 +2641,34 @@
                   <Anchor>a11beff984e2097beda304745c1265abd</Anchor>
                  </Node>
                  <Node>
-                  <Name>JournalArticle</Name>
-                  <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
-                  <Anchor>a6eb15fd01485eb6e7bbc372a53b5ffd4</Anchor>
-                 </Node>
-                 <Node>
                   <Name>JournalArticleFactory</Name>
                   <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
                   <Anchor>aad8a94ce766dc6187f3b23f110251672</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>authors_</Name>
+                  <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
+                  <Anchor>ab643a3a24e83c5b5dbe10297112fbed9</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>journal_</Name>
+                  <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
+                  <Anchor>adc94f2292e8463462f74f3a0a4c03d5a</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>pubmed_id_</Name>
+                  <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
+                  <Anchor>a8313862cc3e11dbdc3cc9a9ff0b62730</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>title_</Name>
+                  <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
+                  <Anchor>a28739fc4f4fd806b8e114eb93dccf16a</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>year_</Name>
+                  <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
+                  <Anchor>a96d4da6fd01510bfacdb025f26e9533b</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -2645,6 +2790,11 @@
                 <Path>classRMF_1_1decorator_1_1ParticleConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>ParticleConst</Name>
+                  <Path>classRMF_1_1decorator_1_1ParticleConst.html</Path>
+                  <Anchor>ac794937199533c9a9f1a27edd0e2f26a</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_coordinates</Name>
                   <Path>classRMF_1_1decorator_1_1ParticleConst.html</Path>
                   <Anchor>a7af740fe03f4d9e94b5e69059eca9771</Anchor>
@@ -2695,14 +2845,24 @@
                   <Anchor>a95fe610b114168419383a8449ba2e33f</Anchor>
                  </Node>
                  <Node>
-                  <Name>Particle</Name>
-                  <Path>classRMF_1_1decorator_1_1ParticleConst.html</Path>
-                  <Anchor>a0f6381b33b90b7e4ab72eeaeec4cc9ff</Anchor>
-                 </Node>
-                 <Node>
                   <Name>ParticleFactory</Name>
                   <Path>classRMF_1_1decorator_1_1ParticleConst.html</Path>
                   <Anchor>a62257bca4bf5e08d72dd5e9e8f0b965a</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>coordinates_</Name>
+                  <Path>classRMF_1_1decorator_1_1ParticleConst.html</Path>
+                  <Anchor>ae306b1e4a8be4f2c179ab81928ab88ea</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>mass_</Name>
+                  <Path>classRMF_1_1decorator_1_1ParticleConst.html</Path>
+                  <Anchor>a5a3cf8600d720b6748047c0729e73ff7</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>radius_</Name>
+                  <Path>classRMF_1_1decorator_1_1ParticleConst.html</Path>
+                  <Anchor>ac09b90b157dec699a5b05896d0a7e33c</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -2793,6 +2953,11 @@
                 <Path>classRMF_1_1decorator_1_1ReferenceFrameConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>ReferenceFrameConst</Name>
+                  <Path>classRMF_1_1decorator_1_1ReferenceFrameConst.html</Path>
+                  <Anchor>a8797316c9ba83b1df9ac66411a4946e2</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_decorator_type_name</Name>
                   <Path>classRMF_1_1decorator_1_1ReferenceFrameConst.html</Path>
                   <Anchor>a2b3ac1e80a3210ce2407a2332664b8d0</Anchor>
@@ -2828,14 +2993,19 @@
                   <Anchor>a75cb69cc277fb0cca4fb196bcc495cbe</Anchor>
                  </Node>
                  <Node>
-                  <Name>ReferenceFrame</Name>
-                  <Path>classRMF_1_1decorator_1_1ReferenceFrameConst.html</Path>
-                  <Anchor>abe4227ec1bb3904d86a85e2874cad16d</Anchor>
-                 </Node>
-                 <Node>
                   <Name>ReferenceFrameFactory</Name>
                   <Path>classRMF_1_1decorator_1_1ReferenceFrameConst.html</Path>
                   <Anchor>ace5c6bdfb0143d14094c09a8668938c3</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>rotation_</Name>
+                  <Path>classRMF_1_1decorator_1_1ReferenceFrameConst.html</Path>
+                  <Anchor>a5800e293a050bedefe8be997444d2252</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>translation_</Name>
+                  <Path>classRMF_1_1decorator_1_1ReferenceFrameConst.html</Path>
+                  <Anchor>a1ff65100d7a6ec7f562d642567cc333e</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -3089,6 +3259,11 @@
                 <Path>classRMF_1_1decorator_1_1ResidueConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>ResidueConst</Name>
+                  <Path>classRMF_1_1decorator_1_1ResidueConst.html</Path>
+                  <Anchor>aee24d4cf4b5101720e5cc71ef79a470d</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_decorator_type_name</Name>
                   <Path>classRMF_1_1decorator_1_1ResidueConst.html</Path>
                   <Anchor>ab5442c03b687672b640e67b510efc57f</Anchor>
@@ -3124,14 +3299,19 @@
                   <Anchor>af74afc48afa16b5a49cbb91d027eb705</Anchor>
                  </Node>
                  <Node>
-                  <Name>Residue</Name>
-                  <Path>classRMF_1_1decorator_1_1ResidueConst.html</Path>
-                  <Anchor>a6f878544689ba2a6a3ce72c50c54375b</Anchor>
-                 </Node>
-                 <Node>
                   <Name>ResidueFactory</Name>
                   <Path>classRMF_1_1decorator_1_1ResidueConst.html</Path>
                   <Anchor>aaaddffb745924911d779ab479a973a22</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>residue_index_</Name>
+                  <Path>classRMF_1_1decorator_1_1ResidueConst.html</Path>
+                  <Anchor>ae14ab0ba001158bae63739c8279529ec</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>residue_type_</Name>
+                  <Path>classRMF_1_1decorator_1_1ResidueConst.html</Path>
+                  <Anchor>a51614d3f9ca054ad0ea8167a1d07f965</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -3222,6 +3402,11 @@
                 <Path>classRMF_1_1decorator_1_1RigidParticleConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>RigidParticleConst</Name>
+                  <Path>classRMF_1_1decorator_1_1RigidParticleConst.html</Path>
+                  <Anchor>aaa0f3d03658e5191fcfbfc5c3551aadc</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_coordinates</Name>
                   <Path>classRMF_1_1decorator_1_1RigidParticleConst.html</Path>
                   <Anchor>a4bc75a6b317c64c0c83b7be4e62db856</Anchor>
@@ -3257,14 +3442,19 @@
                   <Anchor>aa21a69c97edf23e4b91e68f47a1096be</Anchor>
                  </Node>
                  <Node>
-                  <Name>RigidParticle</Name>
-                  <Path>classRMF_1_1decorator_1_1RigidParticleConst.html</Path>
-                  <Anchor>ae643113a7f4cd92935d05011ae76b043</Anchor>
-                 </Node>
-                 <Node>
                   <Name>RigidParticleFactory</Name>
                   <Path>classRMF_1_1decorator_1_1RigidParticleConst.html</Path>
                   <Anchor>a3a7795a520d7ce681dc628ba0700978c</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>coordinates_</Name>
+                  <Path>classRMF_1_1decorator_1_1RigidParticleConst.html</Path>
+                  <Anchor>a9f614fc36a936ed30048e5be8968e99f</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>orientation_</Name>
+                  <Path>classRMF_1_1decorator_1_1RigidParticleConst.html</Path>
+                  <Anchor>ad69eaa51f69eb12d8f48fcbb8937a8c3</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -3340,6 +3530,11 @@
                 <Path>classRMF_1_1decorator_1_1ScoreConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>ScoreConst</Name>
+                  <Path>classRMF_1_1decorator_1_1ScoreConst.html</Path>
+                  <Anchor>a167630b42a770c7f09e1d498106b4547</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_decorator_type_name</Name>
                   <Path>classRMF_1_1decorator_1_1ScoreConst.html</Path>
                   <Anchor>a855c40b293b1e8e6d4496f0264b385f1</Anchor>
@@ -3360,14 +3555,14 @@
                   <Anchor>a2d29da2d2774fc065566aac00fbbfc19</Anchor>
                  </Node>
                  <Node>
-                  <Name>Score</Name>
-                  <Path>classRMF_1_1decorator_1_1ScoreConst.html</Path>
-                  <Anchor>afbfd5f68477a4cb5ab4b75ad70b04a95</Anchor>
-                 </Node>
-                 <Node>
                   <Name>ScoreFactory</Name>
                   <Path>classRMF_1_1decorator_1_1ScoreConst.html</Path>
                   <Anchor>ad47f3df733652dddec4a7452c5f97112</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>score_</Name>
+                  <Path>classRMF_1_1decorator_1_1ScoreConst.html</Path>
+                  <Anchor>aef02a75515aec3ab7c42e960ab75f540</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -3443,6 +3638,11 @@
                 <Path>classRMF_1_1decorator_1_1SegmentConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>SegmentConst</Name>
+                  <Path>classRMF_1_1decorator_1_1SegmentConst.html</Path>
+                  <Anchor>a2f8d267e298e3f82a5f6e2e6bb70af3f</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_coordinates_list</Name>
                   <Path>classRMF_1_1decorator_1_1SegmentConst.html</Path>
                   <Anchor>a33bb16a048ab53576e5b28b1290c4ea9</Anchor>
@@ -3463,14 +3663,14 @@
                   <Anchor>a47ed8d785a481c9caa191b92de971822</Anchor>
                  </Node>
                  <Node>
-                  <Name>Segment</Name>
-                  <Path>classRMF_1_1decorator_1_1SegmentConst.html</Path>
-                  <Anchor>a3686fc7786dbff5d4f068e021ebacdca</Anchor>
-                 </Node>
-                 <Node>
                   <Name>SegmentFactory</Name>
                   <Path>classRMF_1_1decorator_1_1SegmentConst.html</Path>
                   <Anchor>a178ae2924752128649eb33e31c9de208</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>coordinates_list_</Name>
+                  <Path>classRMF_1_1decorator_1_1SegmentConst.html</Path>
+                  <Anchor>abdce2ac208c38893a0296cb3fbc87fd1</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -3546,6 +3746,11 @@
                 <Path>classRMF_1_1decorator_1_1StateConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>StateConst</Name>
+                  <Path>classRMF_1_1decorator_1_1StateConst.html</Path>
+                  <Anchor>a2fe8ec38a7e8db430eca100441ab5a51</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_decorator_type_name</Name>
                   <Path>classRMF_1_1decorator_1_1StateConst.html</Path>
                   <Anchor>ae0540214fd03c7b72c313378802a8525</Anchor>
@@ -3566,14 +3771,14 @@
                   <Anchor>a69f807f312215d48817bc4054be8bedf</Anchor>
                  </Node>
                  <Node>
-                  <Name>State</Name>
-                  <Path>classRMF_1_1decorator_1_1StateConst.html</Path>
-                  <Anchor>a7edbf9e31116a21e4e18cd2dd004ae63</Anchor>
-                 </Node>
-                 <Node>
                   <Name>StateFactory</Name>
                   <Path>classRMF_1_1decorator_1_1StateConst.html</Path>
                   <Anchor>aba32d97fb33985c0b686c371e736b018</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>state_index_</Name>
+                  <Path>classRMF_1_1decorator_1_1StateConst.html</Path>
+                  <Anchor>a2ed7436af5e4627c260a276cb702cb5b</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -3649,6 +3854,11 @@
                 <Path>classRMF_1_1decorator_1_1TypedConst.html</Path>
                 <Subnodes>
                  <Node>
+                  <Name>TypedConst</Name>
+                  <Path>classRMF_1_1decorator_1_1TypedConst.html</Path>
+                  <Anchor>a69133db1efe3c8c015cfb7fd07d5aa68</Anchor>
+                 </Node>
+                 <Node>
                   <Name>get_decorator_type_name</Name>
                   <Path>classRMF_1_1decorator_1_1TypedConst.html</Path>
                   <Anchor>a7892235b8a3308b2b80e4936b1f2186b</Anchor>
@@ -3669,14 +3879,14 @@
                   <Anchor>a206551ed835c972163506ced72053439</Anchor>
                  </Node>
                  <Node>
-                  <Name>Typed</Name>
-                  <Path>classRMF_1_1decorator_1_1TypedConst.html</Path>
-                  <Anchor>a3a42b1486e55db6a3510af768a4cbf8d</Anchor>
-                 </Node>
-                 <Node>
                   <Name>TypedFactory</Name>
                   <Path>classRMF_1_1decorator_1_1TypedConst.html</Path>
                   <Anchor>ab7003e029acb1566806380600deb99f8</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>type_name_</Name>
+                  <Path>classRMF_1_1decorator_1_1TypedConst.html</Path>
+                  <Anchor>a1dfb5d8b513c73754f70fe887617763c</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -5234,7 +5444,7 @@
                <Node>
                 <Name>get</Name>
                 <Path>classRMF_1_1Nullable.html</Path>
-                <Anchor>af683636e291c401325a3d057b78647b8</Anchor>
+                <Anchor>a242c1b26e0970ad9997a66a6fa750e10</Anchor>
                </Node>
                <Node>
                 <Name>get_is_null</Name>
@@ -5247,9 +5457,9 @@
                 <Anchor>ad1878e35d8c302b54cec8dffaa554452</Anchor>
                </Node>
                <Node>
-                <Name>operator const typename Traits&lt; T &gt;::ReturnType &amp;</Name>
+                <Name>operator typename Traits&lt; T &gt;::ReturnType</Name>
                 <Path>classRMF_1_1Nullable.html</Path>
-                <Anchor>a41b1fc5e7d5f868995d26591f62e69a5</Anchor>
+                <Anchor>a66213165bee44c252b3884c2e856def1</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -6044,7 +6254,7 @@
             <Path>classRMF_1_1Vector.html</Path>
            </Node>
            <Node>
-            <Name>RMF::Vector&lt; 3 &gt;</Name>
+            <Name>RMF::Vector&lt; 3U &gt;</Name>
             <Path>classRMF_1_1Vector.html</Path>
            </Node>
           </Subnodes>
@@ -6111,6 +6321,11 @@
               <Path>classRMF_1_1decorator_1_1AliasConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>AliasConst</Name>
+                <Path>classRMF_1_1decorator_1_1AliasConst.html</Path>
+                <Anchor>af4da8f703b7697e5ce75d2eddbd0252d</Anchor>
+               </Node>
+               <Node>
                 <Name>get_aliased</Name>
                 <Path>classRMF_1_1decorator_1_1AliasConst.html</Path>
                 <Anchor>aa79d50f9bd57361e6592c65d8bf86b52</Anchor>
@@ -6121,14 +6336,14 @@
                 <Anchor>af5e35938ff92b924d7a1d551ba88d3ff</Anchor>
                </Node>
                <Node>
-                <Name>Alias</Name>
-                <Path>classRMF_1_1decorator_1_1AliasConst.html</Path>
-                <Anchor>a79bc94ce849ece1b793fc22408e50fb8</Anchor>
-               </Node>
-               <Node>
                 <Name>AliasFactory</Name>
                 <Path>classRMF_1_1decorator_1_1AliasConst.html</Path>
                 <Anchor>ad92d95ec20484ddf9d5dbd3fbd7cd858</Anchor>
+               </Node>
+               <Node>
+                <Name>aliased_</Name>
+                <Path>classRMF_1_1decorator_1_1AliasConst.html</Path>
+                <Anchor>a76f00f46cf059de992ec490c2562fe16</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -6173,10 +6388,6 @@
            <Node>
             <Name>alias.py</Name>
             <Path>alias_8py_source.html</Path>
-           </Node>
-           <Node>
-            <Name>all_scores.py</Name>
-            <Path>all__scores_8py_source.html</Path>
            </Node>
            <Node>
             <Name>alternatives.h</Name>
@@ -7417,7 +7628,7 @@
              <Node>
               <Name>Vector3</Name>
               <Path>default__types_8h.html</Path>
-              <Anchor>a30c456cb198f6415d63f41cefab407ae</Anchor>
+              <Anchor>a4f81aba337d34ce6c26d7e5004fcfddf</Anchor>
              </Node>
              <Node>
               <Name>Vector3s</Name>
@@ -7427,7 +7638,7 @@
              <Node>
               <Name>Vector4</Name>
               <Path>default__types_8h.html</Path>
-              <Anchor>a8affb16f9c620940ceaa63e836930f51</Anchor>
+              <Anchor>a1e72f2580095bf30a33fc20fa66e7bcd</Anchor>
              </Node>
              <Node>
               <Name>Vector4s</Name>
@@ -7755,6 +7966,11 @@
               <Path>classRMF_1_1decorator_1_1ExternalConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>ExternalConst</Name>
+                <Path>classRMF_1_1decorator_1_1ExternalConst.html</Path>
+                <Anchor>a440471ce97fdfb81e5af62715eadcd2b</Anchor>
+               </Node>
+               <Node>
                 <Name>get_decorator_type_name</Name>
                 <Path>classRMF_1_1decorator_1_1ExternalConst.html</Path>
                 <Anchor>a2e332d902c2b5f147f540a7bb91e1e13</Anchor>
@@ -7765,14 +7981,14 @@
                 <Anchor>a8fab248e296bbdae47819ddd9e8478a3</Anchor>
                </Node>
                <Node>
-                <Name>External</Name>
-                <Path>classRMF_1_1decorator_1_1ExternalConst.html</Path>
-                <Anchor>a596cd8ac742ce7f7f82eba6e223f4476</Anchor>
-               </Node>
-               <Node>
                 <Name>ExternalFactory</Name>
                 <Path>classRMF_1_1decorator_1_1ExternalConst.html</Path>
                 <Anchor>a4a1cd32ee2a260e229f2845ff3ad3771</Anchor>
+               </Node>
+               <Node>
+                <Name>path_</Name>
+                <Path>classRMF_1_1decorator_1_1ExternalConst.html</Path>
+                <Anchor>aa3598ad8cfa4852b5bdd4cba03800d1b</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -7858,6 +8074,11 @@
               <Path>classRMF_1_1decorator_1_1ScoreConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>ScoreConst</Name>
+                <Path>classRMF_1_1decorator_1_1ScoreConst.html</Path>
+                <Anchor>a167630b42a770c7f09e1d498106b4547</Anchor>
+               </Node>
+               <Node>
                 <Name>get_decorator_type_name</Name>
                 <Path>classRMF_1_1decorator_1_1ScoreConst.html</Path>
                 <Anchor>a855c40b293b1e8e6d4496f0264b385f1</Anchor>
@@ -7878,14 +8099,14 @@
                 <Anchor>a2d29da2d2774fc065566aac00fbbfc19</Anchor>
                </Node>
                <Node>
-                <Name>Score</Name>
-                <Path>classRMF_1_1decorator_1_1ScoreConst.html</Path>
-                <Anchor>afbfd5f68477a4cb5ab4b75ad70b04a95</Anchor>
-               </Node>
-               <Node>
                 <Name>ScoreFactory</Name>
                 <Path>classRMF_1_1decorator_1_1ScoreConst.html</Path>
                 <Anchor>ad47f3df733652dddec4a7452c5f97112</Anchor>
+               </Node>
+               <Node>
+                <Name>score_</Name>
+                <Path>classRMF_1_1decorator_1_1ScoreConst.html</Path>
+                <Anchor>aef02a75515aec3ab7c42e960ab75f540</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -8640,7 +8861,7 @@
                <Node>
                 <Name>get</Name>
                 <Path>classRMF_1_1Nullable.html</Path>
-                <Anchor>af683636e291c401325a3d057b78647b8</Anchor>
+                <Anchor>a242c1b26e0970ad9997a66a6fa750e10</Anchor>
                </Node>
                <Node>
                 <Name>get_is_null</Name>
@@ -8653,9 +8874,9 @@
                 <Anchor>ad1878e35d8c302b54cec8dffaa554452</Anchor>
                </Node>
                <Node>
-                <Name>operator const typename Traits&lt; T &gt;::ReturnType &amp;</Name>
+                <Name>operator typename Traits&lt; T &gt;::ReturnType</Name>
                 <Path>classRMF_1_1Nullable.html</Path>
-                <Anchor>a41b1fc5e7d5f868995d26591f62e69a5</Anchor>
+                <Anchor>a66213165bee44c252b3884c2e856def1</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -9274,7 +9495,7 @@
                <Node>
                 <Name>get</Name>
                 <Path>classRMF_1_1Nullable.html</Path>
-                <Anchor>af683636e291c401325a3d057b78647b8</Anchor>
+                <Anchor>a242c1b26e0970ad9997a66a6fa750e10</Anchor>
                </Node>
                <Node>
                 <Name>get_is_null</Name>
@@ -9287,9 +9508,9 @@
                 <Anchor>ad1878e35d8c302b54cec8dffaa554452</Anchor>
                </Node>
                <Node>
-                <Name>operator const typename Traits&lt; T &gt;::ReturnType &amp;</Name>
+                <Name>operator typename Traits&lt; T &gt;::ReturnType</Name>
                 <Path>classRMF_1_1Nullable.html</Path>
-                <Anchor>a41b1fc5e7d5f868995d26591f62e69a5</Anchor>
+                <Anchor>a66213165bee44c252b3884c2e856def1</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -9432,6 +9653,11 @@
               <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>AtomConst</Name>
+                <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
+                <Anchor>a278270c3f9de3404b90f04c2a612cd8a</Anchor>
+               </Node>
+               <Node>
                 <Name>get_coordinates</Name>
                 <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
                 <Anchor>a9409d4ced264a60aad66e2590aa2f9c8</Anchor>
@@ -9497,14 +9723,29 @@
                 <Anchor>aaf2e7d43ebf5eca13ebefa151e58fa95</Anchor>
                </Node>
                <Node>
-                <Name>Atom</Name>
-                <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
-                <Anchor>ad1ae724d6fb84a88faf67330fba69087</Anchor>
-               </Node>
-               <Node>
                 <Name>AtomFactory</Name>
                 <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
                 <Anchor>a03c212352507b6f63533daedc2c55b6f</Anchor>
+               </Node>
+               <Node>
+                <Name>coordinates_</Name>
+                <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
+                <Anchor>a77c69a1daa41905a680a975efd474e2b</Anchor>
+               </Node>
+               <Node>
+                <Name>element_</Name>
+                <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
+                <Anchor>a48d0881a3549cbcac41c5ffdb30377f0</Anchor>
+               </Node>
+               <Node>
+                <Name>mass_</Name>
+                <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
+                <Anchor>a21467aa80b7915df9e0ee5d2fcc8c06b</Anchor>
+               </Node>
+               <Node>
+                <Name>radius_</Name>
+                <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
+                <Anchor>ac5e38dc0b04147c36a34e9c5736e299c</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -9580,6 +9821,11 @@
               <Path>classRMF_1_1decorator_1_1DiffuserConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>DiffuserConst</Name>
+                <Path>classRMF_1_1decorator_1_1DiffuserConst.html</Path>
+                <Anchor>ad63f89cd3e3dac1ffe6f5de09f44b098</Anchor>
+               </Node>
+               <Node>
                 <Name>get_decorator_type_name</Name>
                 <Path>classRMF_1_1decorator_1_1DiffuserConst.html</Path>
                 <Anchor>a0d21ceaa03f08a49ff5d028c1ec5e6ac</Anchor>
@@ -9600,14 +9846,14 @@
                 <Anchor>afbe4f12aa80ff58242c7c6ee1194abf8</Anchor>
                </Node>
                <Node>
-                <Name>Diffuser</Name>
-                <Path>classRMF_1_1decorator_1_1DiffuserConst.html</Path>
-                <Anchor>a331f7dbe7f9173a64ea7ce343a6213b2</Anchor>
-               </Node>
-               <Node>
                 <Name>DiffuserFactory</Name>
                 <Path>classRMF_1_1decorator_1_1DiffuserConst.html</Path>
                 <Anchor>a2e75e4ccc69d31310e952eda489aa774</Anchor>
+               </Node>
+               <Node>
+                <Name>diffusion_coefficient_</Name>
+                <Path>classRMF_1_1decorator_1_1DiffuserConst.html</Path>
+                <Anchor>ae2c7adb60808bcaa771048a190c1310c</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -9698,6 +9944,11 @@
               <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>GaussianParticleConst</Name>
+                <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
+                <Anchor>a8c8c923442a874ac4cb86fffdd27d4b0</Anchor>
+               </Node>
+               <Node>
                 <Name>get_decorator_type_name</Name>
                 <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
                 <Anchor>a3f0d837fed370176920d10d04e190d28</Anchor>
@@ -9733,14 +9984,19 @@
                 <Anchor>a6e24d92b88d1bd2be4479b3ed30ad117</Anchor>
                </Node>
                <Node>
-                <Name>GaussianParticle</Name>
-                <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
-                <Anchor>a34f1a08c43daff7d663e530b67f2774d</Anchor>
-               </Node>
-               <Node>
                 <Name>GaussianParticleFactory</Name>
                 <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
                 <Anchor>a41ca42f068912f31bde703ce29aac888</Anchor>
+               </Node>
+               <Node>
+                <Name>mass_</Name>
+                <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
+                <Anchor>ae08e5524488b312ee238758721e41cbe</Anchor>
+               </Node>
+               <Node>
+                <Name>variances_</Name>
+                <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
+                <Anchor>a661c9700eaca711c7f4b59e8fb72c3fa</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -9831,6 +10087,11 @@
               <Path>classRMF_1_1decorator_1_1IntermediateParticleConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>IntermediateParticleConst</Name>
+                <Path>classRMF_1_1decorator_1_1IntermediateParticleConst.html</Path>
+                <Anchor>a538421139a865624fe1eee6d4b751aff</Anchor>
+               </Node>
+               <Node>
                 <Name>get_coordinates</Name>
                 <Path>classRMF_1_1decorator_1_1IntermediateParticleConst.html</Path>
                 <Anchor>afd6cbfb0eb41e0732248dd5f1e642e75</Anchor>
@@ -9866,14 +10127,19 @@
                 <Anchor>a23f31289bd22b36fc36c576e147f7cd4</Anchor>
                </Node>
                <Node>
-                <Name>IntermediateParticle</Name>
-                <Path>classRMF_1_1decorator_1_1IntermediateParticleConst.html</Path>
-                <Anchor>a3a40da3eeec6604f2f4ec38afd140396</Anchor>
-               </Node>
-               <Node>
                 <Name>IntermediateParticleFactory</Name>
                 <Path>classRMF_1_1decorator_1_1IntermediateParticleConst.html</Path>
                 <Anchor>abc8840e115997660e87de0694d4b2f09</Anchor>
+               </Node>
+               <Node>
+                <Name>coordinates_</Name>
+                <Path>classRMF_1_1decorator_1_1IntermediateParticleConst.html</Path>
+                <Anchor>af24a685f15b05ebf922da81455259e66</Anchor>
+               </Node>
+               <Node>
+                <Name>radius_</Name>
+                <Path>classRMF_1_1decorator_1_1IntermediateParticleConst.html</Path>
+                <Anchor>a90c6693367ef7f0aef1ee62ad9dfb494</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -9979,6 +10245,11 @@
               <Path>classRMF_1_1decorator_1_1ParticleConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>ParticleConst</Name>
+                <Path>classRMF_1_1decorator_1_1ParticleConst.html</Path>
+                <Anchor>ac794937199533c9a9f1a27edd0e2f26a</Anchor>
+               </Node>
+               <Node>
                 <Name>get_coordinates</Name>
                 <Path>classRMF_1_1decorator_1_1ParticleConst.html</Path>
                 <Anchor>a7af740fe03f4d9e94b5e69059eca9771</Anchor>
@@ -10029,14 +10300,24 @@
                 <Anchor>a95fe610b114168419383a8449ba2e33f</Anchor>
                </Node>
                <Node>
-                <Name>Particle</Name>
-                <Path>classRMF_1_1decorator_1_1ParticleConst.html</Path>
-                <Anchor>a0f6381b33b90b7e4ab72eeaeec4cc9ff</Anchor>
-               </Node>
-               <Node>
                 <Name>ParticleFactory</Name>
                 <Path>classRMF_1_1decorator_1_1ParticleConst.html</Path>
                 <Anchor>a62257bca4bf5e08d72dd5e9e8f0b965a</Anchor>
+               </Node>
+               <Node>
+                <Name>coordinates_</Name>
+                <Path>classRMF_1_1decorator_1_1ParticleConst.html</Path>
+                <Anchor>ae306b1e4a8be4f2c179ab81928ab88ea</Anchor>
+               </Node>
+               <Node>
+                <Name>mass_</Name>
+                <Path>classRMF_1_1decorator_1_1ParticleConst.html</Path>
+                <Anchor>a5a3cf8600d720b6748047c0729e73ff7</Anchor>
+               </Node>
+               <Node>
+                <Name>radius_</Name>
+                <Path>classRMF_1_1decorator_1_1ParticleConst.html</Path>
+                <Anchor>ac09b90b157dec699a5b05896d0a7e33c</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -10127,6 +10408,11 @@
               <Path>classRMF_1_1decorator_1_1ReferenceFrameConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>ReferenceFrameConst</Name>
+                <Path>classRMF_1_1decorator_1_1ReferenceFrameConst.html</Path>
+                <Anchor>a8797316c9ba83b1df9ac66411a4946e2</Anchor>
+               </Node>
+               <Node>
                 <Name>get_decorator_type_name</Name>
                 <Path>classRMF_1_1decorator_1_1ReferenceFrameConst.html</Path>
                 <Anchor>a2b3ac1e80a3210ce2407a2332664b8d0</Anchor>
@@ -10162,14 +10448,19 @@
                 <Anchor>a75cb69cc277fb0cca4fb196bcc495cbe</Anchor>
                </Node>
                <Node>
-                <Name>ReferenceFrame</Name>
-                <Path>classRMF_1_1decorator_1_1ReferenceFrameConst.html</Path>
-                <Anchor>abe4227ec1bb3904d86a85e2874cad16d</Anchor>
-               </Node>
-               <Node>
                 <Name>ReferenceFrameFactory</Name>
                 <Path>classRMF_1_1decorator_1_1ReferenceFrameConst.html</Path>
                 <Anchor>ace5c6bdfb0143d14094c09a8668938c3</Anchor>
+               </Node>
+               <Node>
+                <Name>rotation_</Name>
+                <Path>classRMF_1_1decorator_1_1ReferenceFrameConst.html</Path>
+                <Anchor>a5800e293a050bedefe8be997444d2252</Anchor>
+               </Node>
+               <Node>
+                <Name>translation_</Name>
+                <Path>classRMF_1_1decorator_1_1ReferenceFrameConst.html</Path>
+                <Anchor>a1ff65100d7a6ec7f562d642567cc333e</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -10260,6 +10551,11 @@
               <Path>classRMF_1_1decorator_1_1RigidParticleConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>RigidParticleConst</Name>
+                <Path>classRMF_1_1decorator_1_1RigidParticleConst.html</Path>
+                <Anchor>aaa0f3d03658e5191fcfbfc5c3551aadc</Anchor>
+               </Node>
+               <Node>
                 <Name>get_coordinates</Name>
                 <Path>classRMF_1_1decorator_1_1RigidParticleConst.html</Path>
                 <Anchor>a4bc75a6b317c64c0c83b7be4e62db856</Anchor>
@@ -10295,14 +10591,19 @@
                 <Anchor>aa21a69c97edf23e4b91e68f47a1096be</Anchor>
                </Node>
                <Node>
-                <Name>RigidParticle</Name>
-                <Path>classRMF_1_1decorator_1_1RigidParticleConst.html</Path>
-                <Anchor>ae643113a7f4cd92935d05011ae76b043</Anchor>
-               </Node>
-               <Node>
                 <Name>RigidParticleFactory</Name>
                 <Path>classRMF_1_1decorator_1_1RigidParticleConst.html</Path>
                 <Anchor>a3a7795a520d7ce681dc628ba0700978c</Anchor>
+               </Node>
+               <Node>
+                <Name>coordinates_</Name>
+                <Path>classRMF_1_1decorator_1_1RigidParticleConst.html</Path>
+                <Anchor>a9f614fc36a936ed30048e5be8968e99f</Anchor>
+               </Node>
+               <Node>
+                <Name>orientation_</Name>
+                <Path>classRMF_1_1decorator_1_1RigidParticleConst.html</Path>
+                <Anchor>ad69eaa51f69eb12d8f48fcbb8937a8c3</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -10448,6 +10749,11 @@
               <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>JournalArticleConst</Name>
+                <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
+                <Anchor>ad641ac23738b3f1fba3c0f66db900a8a</Anchor>
+               </Node>
+               <Node>
                 <Name>get_authors</Name>
                 <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
                 <Anchor>a086655b99632af8b33900c57dd014b0d</Anchor>
@@ -10528,14 +10834,34 @@
                 <Anchor>a11beff984e2097beda304745c1265abd</Anchor>
                </Node>
                <Node>
-                <Name>JournalArticle</Name>
-                <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
-                <Anchor>a6eb15fd01485eb6e7bbc372a53b5ffd4</Anchor>
-               </Node>
-               <Node>
                 <Name>JournalArticleFactory</Name>
                 <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
                 <Anchor>aad8a94ce766dc6187f3b23f110251672</Anchor>
+               </Node>
+               <Node>
+                <Name>authors_</Name>
+                <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
+                <Anchor>ab643a3a24e83c5b5dbe10297112fbed9</Anchor>
+               </Node>
+               <Node>
+                <Name>journal_</Name>
+                <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
+                <Anchor>adc94f2292e8463462f74f3a0a4c03d5a</Anchor>
+               </Node>
+               <Node>
+                <Name>pubmed_id_</Name>
+                <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
+                <Anchor>a8313862cc3e11dbdc3cc9a9ff0b62730</Anchor>
+               </Node>
+               <Node>
+                <Name>title_</Name>
+                <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
+                <Anchor>a28739fc4f4fd806b8e114eb93dccf16a</Anchor>
+               </Node>
+               <Node>
+                <Name>year_</Name>
+                <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
+                <Anchor>a96d4da6fd01510bfacdb025f26e9533b</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -10824,6 +11150,11 @@
               <Path>classRMF_1_1decorator_1_1ChainConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>ChainConst</Name>
+                <Path>classRMF_1_1decorator_1_1ChainConst.html</Path>
+                <Anchor>a2d53ca26a71873393e4336c1610c1e52</Anchor>
+               </Node>
+               <Node>
                 <Name>get_chain_id</Name>
                 <Path>classRMF_1_1decorator_1_1ChainConst.html</Path>
                 <Anchor>a241a28b7fdf16b51850d90dd075b7910</Anchor>
@@ -10844,14 +11175,14 @@
                 <Anchor>ad1e5811220073bea2ca5115ca0261d36</Anchor>
                </Node>
                <Node>
-                <Name>Chain</Name>
-                <Path>classRMF_1_1decorator_1_1ChainConst.html</Path>
-                <Anchor>a65813570c30a3e0656fa523793ff1b86</Anchor>
-               </Node>
-               <Node>
                 <Name>ChainFactory</Name>
                 <Path>classRMF_1_1decorator_1_1ChainConst.html</Path>
                 <Anchor>a02e18af32ff2b8dc72fbb9230383c21c</Anchor>
+               </Node>
+               <Node>
+                <Name>chain_id_</Name>
+                <Path>classRMF_1_1decorator_1_1ChainConst.html</Path>
+                <Anchor>aed9851487a70933c0abbcf616de8b8e9</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -10927,6 +11258,11 @@
               <Path>classRMF_1_1decorator_1_1CopyConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>CopyConst</Name>
+                <Path>classRMF_1_1decorator_1_1CopyConst.html</Path>
+                <Anchor>ab572fd18cb40f54322dc41f41c46c5be</Anchor>
+               </Node>
+               <Node>
                 <Name>get_copy_index</Name>
                 <Path>classRMF_1_1decorator_1_1CopyConst.html</Path>
                 <Anchor>a0ce23cccd8f3597dcc6e6d00105c9c68</Anchor>
@@ -10947,14 +11283,14 @@
                 <Anchor>a2002044330af32ff7c20793cad389ec9</Anchor>
                </Node>
                <Node>
-                <Name>Copy</Name>
-                <Path>classRMF_1_1decorator_1_1CopyConst.html</Path>
-                <Anchor>ac82f8c8068912f9a0eb4dbcc716c947f</Anchor>
-               </Node>
-               <Node>
                 <Name>CopyFactory</Name>
                 <Path>classRMF_1_1decorator_1_1CopyConst.html</Path>
                 <Anchor>af9e11daaea7077d301552b2200eb3cb0</Anchor>
+               </Node>
+               <Node>
+                <Name>copy_index_</Name>
+                <Path>classRMF_1_1decorator_1_1CopyConst.html</Path>
+                <Anchor>aa8d0a03c3f25c31c6132dd72645dfed8</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -11030,6 +11366,11 @@
               <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>DomainConst</Name>
+                <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
+                <Anchor>abb4d75da6902bd3138584e183764505a</Anchor>
+               </Node>
+               <Node>
                 <Name>get_decorator_type_name</Name>
                 <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
                 <Anchor>a964033d5bcbd30167794407e847fa443</Anchor>
@@ -11050,14 +11391,14 @@
                 <Anchor>a778f23ffaccf05c605767840b70f9e7f</Anchor>
                </Node>
                <Node>
-                <Name>Domain</Name>
-                <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
-                <Anchor>a85e12fe8536332c4e929748421fa4e62</Anchor>
-               </Node>
-               <Node>
                 <Name>DomainFactory</Name>
                 <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
                 <Anchor>a722133110d12c13ccb83741b7f199abb</Anchor>
+               </Node>
+               <Node>
+                <Name>indexes_</Name>
+                <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
+                <Anchor>accef45c01c0682be4eee598dbdf2043a</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -11133,6 +11474,11 @@
               <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>FragmentConst</Name>
+                <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
+                <Anchor>a8f2fa2f942a065036fed37248718bf34</Anchor>
+               </Node>
+               <Node>
                 <Name>get_decorator_type_name</Name>
                 <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
                 <Anchor>a49ea25e522efe09769d16984927d7e84</Anchor>
@@ -11153,14 +11499,14 @@
                 <Anchor>a1e2c0eb144a939047372b1da24fb2f0d</Anchor>
                </Node>
                <Node>
-                <Name>Fragment</Name>
-                <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
-                <Anchor>adcaa892717dd216d80c530db7f8a7799</Anchor>
-               </Node>
-               <Node>
                 <Name>FragmentFactory</Name>
                 <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
                 <Anchor>af620a473b2475cd772c2f718a1347ad1</Anchor>
+               </Node>
+               <Node>
+                <Name>indexes_</Name>
+                <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
+                <Anchor>a7a297e9ec02d126f4b1b21d5c788a9ae</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -11251,6 +11597,11 @@
               <Path>classRMF_1_1decorator_1_1ResidueConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>ResidueConst</Name>
+                <Path>classRMF_1_1decorator_1_1ResidueConst.html</Path>
+                <Anchor>aee24d4cf4b5101720e5cc71ef79a470d</Anchor>
+               </Node>
+               <Node>
                 <Name>get_decorator_type_name</Name>
                 <Path>classRMF_1_1decorator_1_1ResidueConst.html</Path>
                 <Anchor>ab5442c03b687672b640e67b510efc57f</Anchor>
@@ -11286,14 +11637,19 @@
                 <Anchor>af74afc48afa16b5a49cbb91d027eb705</Anchor>
                </Node>
                <Node>
-                <Name>Residue</Name>
-                <Path>classRMF_1_1decorator_1_1ResidueConst.html</Path>
-                <Anchor>a6f878544689ba2a6a3ce72c50c54375b</Anchor>
-               </Node>
-               <Node>
                 <Name>ResidueFactory</Name>
                 <Path>classRMF_1_1decorator_1_1ResidueConst.html</Path>
                 <Anchor>aaaddffb745924911d779ab479a973a22</Anchor>
+               </Node>
+               <Node>
+                <Name>residue_index_</Name>
+                <Path>classRMF_1_1decorator_1_1ResidueConst.html</Path>
+                <Anchor>ae14ab0ba001158bae63739c8279529ec</Anchor>
+               </Node>
+               <Node>
+                <Name>residue_type_</Name>
+                <Path>classRMF_1_1decorator_1_1ResidueConst.html</Path>
+                <Anchor>a51614d3f9ca054ad0ea8167a1d07f965</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -11369,6 +11725,11 @@
               <Path>classRMF_1_1decorator_1_1StateConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>StateConst</Name>
+                <Path>classRMF_1_1decorator_1_1StateConst.html</Path>
+                <Anchor>a2fe8ec38a7e8db430eca100441ab5a51</Anchor>
+               </Node>
+               <Node>
                 <Name>get_decorator_type_name</Name>
                 <Path>classRMF_1_1decorator_1_1StateConst.html</Path>
                 <Anchor>ae0540214fd03c7b72c313378802a8525</Anchor>
@@ -11389,14 +11750,14 @@
                 <Anchor>a69f807f312215d48817bc4054be8bedf</Anchor>
                </Node>
                <Node>
-                <Name>State</Name>
-                <Path>classRMF_1_1decorator_1_1StateConst.html</Path>
-                <Anchor>a7edbf9e31116a21e4e18cd2dd004ae63</Anchor>
-               </Node>
-               <Node>
                 <Name>StateFactory</Name>
                 <Path>classRMF_1_1decorator_1_1StateConst.html</Path>
                 <Anchor>aba32d97fb33985c0b686c371e736b018</Anchor>
+               </Node>
+               <Node>
+                <Name>state_index_</Name>
+                <Path>classRMF_1_1decorator_1_1StateConst.html</Path>
+                <Anchor>a2ed7436af5e4627c260a276cb702cb5b</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -11472,6 +11833,11 @@
               <Path>classRMF_1_1decorator_1_1TypedConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>TypedConst</Name>
+                <Path>classRMF_1_1decorator_1_1TypedConst.html</Path>
+                <Anchor>a69133db1efe3c8c015cfb7fd07d5aa68</Anchor>
+               </Node>
+               <Node>
                 <Name>get_decorator_type_name</Name>
                 <Path>classRMF_1_1decorator_1_1TypedConst.html</Path>
                 <Anchor>a7892235b8a3308b2b80e4936b1f2186b</Anchor>
@@ -11492,14 +11858,14 @@
                 <Anchor>a206551ed835c972163506ced72053439</Anchor>
                </Node>
                <Node>
-                <Name>Typed</Name>
-                <Path>classRMF_1_1decorator_1_1TypedConst.html</Path>
-                <Anchor>a3a42b1486e55db6a3510af768a4cbf8d</Anchor>
-               </Node>
-               <Node>
                 <Name>TypedFactory</Name>
                 <Path>classRMF_1_1decorator_1_1TypedConst.html</Path>
                 <Anchor>ab7003e029acb1566806380600deb99f8</Anchor>
+               </Node>
+               <Node>
+                <Name>type_name_</Name>
+                <Path>classRMF_1_1decorator_1_1TypedConst.html</Path>
+                <Anchor>a1dfb5d8b513c73754f70fe887617763c</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -11618,6 +11984,11 @@
               <Path>classRMF_1_1decorator_1_1BallConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>BallConst</Name>
+                <Path>classRMF_1_1decorator_1_1BallConst.html</Path>
+                <Anchor>a11fc61e6b971bc94ccc2a0e4d815a988</Anchor>
+               </Node>
+               <Node>
                 <Name>get_coordinates</Name>
                 <Path>classRMF_1_1decorator_1_1BallConst.html</Path>
                 <Anchor>a4f85320765958e2d2cd021840839e4dd</Anchor>
@@ -11653,14 +12024,19 @@
                 <Anchor>a85d8d70a9c510d151b2058bac0891e1d</Anchor>
                </Node>
                <Node>
-                <Name>Ball</Name>
-                <Path>classRMF_1_1decorator_1_1BallConst.html</Path>
-                <Anchor>aff34a635f776289ee8fb112e4ac9eaed</Anchor>
-               </Node>
-               <Node>
                 <Name>BallFactory</Name>
                 <Path>classRMF_1_1decorator_1_1BallConst.html</Path>
                 <Anchor>a09be8269386f82b16af698bed5b1e1d4</Anchor>
+               </Node>
+               <Node>
+                <Name>coordinates_</Name>
+                <Path>classRMF_1_1decorator_1_1BallConst.html</Path>
+                <Anchor>a6d06d8a10019ca1380b09533dee37878</Anchor>
+               </Node>
+               <Node>
+                <Name>radius_</Name>
+                <Path>classRMF_1_1decorator_1_1BallConst.html</Path>
+                <Anchor>a43a522ffea6183cde75550d66dc8825f</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -11736,6 +12112,11 @@
               <Path>classRMF_1_1decorator_1_1ColoredConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>ColoredConst</Name>
+                <Path>classRMF_1_1decorator_1_1ColoredConst.html</Path>
+                <Anchor>a083cd395e40022e24ba79bc783e9e8da</Anchor>
+               </Node>
+               <Node>
                 <Name>get_decorator_type_name</Name>
                 <Path>classRMF_1_1decorator_1_1ColoredConst.html</Path>
                 <Anchor>ab3a769514c26bc815816379b7574acf9</Anchor>
@@ -11756,14 +12137,14 @@
                 <Anchor>abf50521901627605b59bb3c8175cde1a</Anchor>
                </Node>
                <Node>
-                <Name>Colored</Name>
-                <Path>classRMF_1_1decorator_1_1ColoredConst.html</Path>
-                <Anchor>a0443732ec38fae82e83ff176069f1520</Anchor>
-               </Node>
-               <Node>
                 <Name>ColoredFactory</Name>
                 <Path>classRMF_1_1decorator_1_1ColoredConst.html</Path>
                 <Anchor>a229641530c928462ae662a49d0149758</Anchor>
+               </Node>
+               <Node>
+                <Name>rgb_color_</Name>
+                <Path>classRMF_1_1decorator_1_1ColoredConst.html</Path>
+                <Anchor>a3badc91488505b2ff7215921d480a0a5</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -11854,6 +12235,11 @@
               <Path>classRMF_1_1decorator_1_1CylinderConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>CylinderConst</Name>
+                <Path>classRMF_1_1decorator_1_1CylinderConst.html</Path>
+                <Anchor>a72ed18771222ba4ffe33a396937ba871</Anchor>
+               </Node>
+               <Node>
                 <Name>get_coordinates_list</Name>
                 <Path>classRMF_1_1decorator_1_1CylinderConst.html</Path>
                 <Anchor>aa4cfab01c870380d4e174b3de479664d</Anchor>
@@ -11889,14 +12275,19 @@
                 <Anchor>a23dec3ae641f889ffb561d4821abe704</Anchor>
                </Node>
                <Node>
-                <Name>Cylinder</Name>
-                <Path>classRMF_1_1decorator_1_1CylinderConst.html</Path>
-                <Anchor>af10773c43b75882cad4b616a1592e455</Anchor>
-               </Node>
-               <Node>
                 <Name>CylinderFactory</Name>
                 <Path>classRMF_1_1decorator_1_1CylinderConst.html</Path>
                 <Anchor>af222690ea5a97887ab49cfd52448f3c7</Anchor>
+               </Node>
+               <Node>
+                <Name>coordinates_list_</Name>
+                <Path>classRMF_1_1decorator_1_1CylinderConst.html</Path>
+                <Anchor>a241d65247f760ce2b5f70fd04b9ce26c</Anchor>
+               </Node>
+               <Node>
+                <Name>radius_</Name>
+                <Path>classRMF_1_1decorator_1_1CylinderConst.html</Path>
+                <Anchor>adbc9ed8d2999be0a45bb0986e685390f</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -12002,6 +12393,11 @@
               <Path>classRMF_1_1decorator_1_1EllipsoidConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>EllipsoidConst</Name>
+                <Path>classRMF_1_1decorator_1_1EllipsoidConst.html</Path>
+                <Anchor>ae0a9a618f32523798d3c83f8e0fcbce7</Anchor>
+               </Node>
+               <Node>
                 <Name>get_axis_lengths</Name>
                 <Path>classRMF_1_1decorator_1_1EllipsoidConst.html</Path>
                 <Anchor>a07f19447eaff67caa598047a2712628b</Anchor>
@@ -12052,14 +12448,24 @@
                 <Anchor>a0a864f3433551e6866b51e8aec1e71d4</Anchor>
                </Node>
                <Node>
-                <Name>Ellipsoid</Name>
-                <Path>classRMF_1_1decorator_1_1EllipsoidConst.html</Path>
-                <Anchor>a26de2ba48553f37df3a39cf643961b51</Anchor>
-               </Node>
-               <Node>
                 <Name>EllipsoidFactory</Name>
                 <Path>classRMF_1_1decorator_1_1EllipsoidConst.html</Path>
                 <Anchor>a0e43042a180ad9a248e36ba6724e6695</Anchor>
+               </Node>
+               <Node>
+                <Name>axis_lengths_</Name>
+                <Path>classRMF_1_1decorator_1_1EllipsoidConst.html</Path>
+                <Anchor>a1eecfc8b5e54e103cb9054e67856b2be</Anchor>
+               </Node>
+               <Node>
+                <Name>coordinates_</Name>
+                <Path>classRMF_1_1decorator_1_1EllipsoidConst.html</Path>
+                <Anchor>aa0a73114bb80805dc0acddb9a1f7bcae</Anchor>
+               </Node>
+               <Node>
+                <Name>orientation_</Name>
+                <Path>classRMF_1_1decorator_1_1EllipsoidConst.html</Path>
+                <Anchor>a55f47862e7433f1f0d601adf42acd265</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -12135,6 +12541,11 @@
               <Path>classRMF_1_1decorator_1_1SegmentConst.html</Path>
               <Subnodes>
                <Node>
+                <Name>SegmentConst</Name>
+                <Path>classRMF_1_1decorator_1_1SegmentConst.html</Path>
+                <Anchor>a2f8d267e298e3f82a5f6e2e6bb70af3f</Anchor>
+               </Node>
+               <Node>
                 <Name>get_coordinates_list</Name>
                 <Path>classRMF_1_1decorator_1_1SegmentConst.html</Path>
                 <Anchor>a33bb16a048ab53576e5b28b1290c4ea9</Anchor>
@@ -12155,14 +12566,14 @@
                 <Anchor>a47ed8d785a481c9caa191b92de971822</Anchor>
                </Node>
                <Node>
-                <Name>Segment</Name>
-                <Path>classRMF_1_1decorator_1_1SegmentConst.html</Path>
-                <Anchor>a3686fc7786dbff5d4f068e021ebacdca</Anchor>
-               </Node>
-               <Node>
                 <Name>SegmentFactory</Name>
                 <Path>classRMF_1_1decorator_1_1SegmentConst.html</Path>
                 <Anchor>a178ae2924752128649eb33e31c9de208</Anchor>
+               </Node>
+               <Node>
+                <Name>coordinates_list_</Name>
+                <Path>classRMF_1_1decorator_1_1SegmentConst.html</Path>
+                <Anchor>abdce2ac208c38893a0296cb3fbc87fd1</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -12673,16 +13084,16 @@
           <Path>alias_8py-example.html</Path>
          </Node>
          <Node>
-          <Name>all_scores.py</Name>
-          <Path>all_scores_8py-example.html</Path>
-         </Node>
-         <Node>
           <Name>alternatives.py</Name>
           <Path>alternatives_8py-example.html</Path>
          </Node>
          <Node>
           <Name>benchmark/benchmark_rmf.cpp</Name>
           <Path>benchmark_2benchmark_rmf_8cpp-example.html</Path>
+         </Node>
+         <Node>
+          <Name>benchmark_rmf.py</Name>
+          <Path>benchmark_rmf_8py-example.html</Path>
          </Node>
          <Node>
           <Name>bonds.py</Name>

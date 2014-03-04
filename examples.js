@@ -2,9 +2,9 @@ var examples =
 [
     [ "add_bonds.py", "add_bonds_8py-example.html", null ],
     [ "alias.py", "alias_8py-example.html", null ],
-    [ "all_scores.py", "all_scores_8py-example.html", null ],
     [ "alternatives.py", "alternatives_8py-example.html", null ],
     [ "benchmark/benchmark_rmf.cpp", "benchmark_2benchmark_rmf_8cpp-example.html", null ],
+    [ "benchmark_rmf.py", "benchmark_rmf_8py-example.html", null ],
     [ "bonds.py", "bonds_8py-example.html", null ],
     [ "buffers.py", "buffers_8py-example.html", null ],
     [ "consume.py", "consume_8py-example.html", null ],

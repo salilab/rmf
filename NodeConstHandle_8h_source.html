@@ -200,9 +200,9 @@ $(document).ready(function(){initNavTree('NodeConstHandle_8h_source.html','');})
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="comment">// hopefully get_value will be inlined...</span></div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Tag&gt;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <a class="code" href="classRMF_1_1Nullable.html">Nullable&lt;typename Tag::Traits::Type&gt;</a> get_value_impl(<a class="code" href="classRMF_1_1ID.html">ID&lt;Tag&gt;</a> k)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <a class="code" href="classRMF_1_1Nullable.html">Nullable&lt;typename Tag::Type&gt;</a> get_value_impl(<a class="code" href="classRMF_1_1ID.html">ID&lt;Tag&gt;</a> k)<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordflow">if</span> (shared_-&gt;get_loaded_frame() != <a class="code" href="namespaceRMF.html#a6c5e5bfc6005ee3a42a6822b58c01636">FrameID</a>()) {</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      <a class="code" href="classRMF_1_1Nullable.html">Nullable&lt;typename Tag::Traits::Type&gt;</a> ret = get_frame_value(k);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      <a class="code" href="classRMF_1_1Nullable.html">Nullable&lt;typename Tag::Type&gt;</a> ret = get_frame_value(k);</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;      <span class="keywordflow">if</span> (!ret.get_is_null()) <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    }</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordflow">return</span> get_static_value(k);</div>

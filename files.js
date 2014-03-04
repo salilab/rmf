@@ -7,7 +7,6 @@ var files =
       [ "AliasFactory", "classRMF_1_1decorator_1_1AliasFactory.html", "classRMF_1_1decorator_1_1AliasFactory" ]
     ] ],
     [ "alias.py", "alias_8py_source.html", null ],
-    [ "all_scores.py", "all__scores_8py_source.html", null ],
     [ "alternatives.h", "alternatives_8h.html", "alternatives_8h" ],
     [ "alternatives.py", "alternatives_8py_source.html", null ],
     [ "benchmark_rmf.cpp", "benchmark__rmf_8cpp_source.html", null ],

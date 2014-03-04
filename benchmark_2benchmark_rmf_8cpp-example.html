@@ -117,7 +117,6 @@ $(document).ready(function(){initNavTree('benchmark_2benchmark_rmf_8cpp-example.
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="Vector_8h.html">RMF/Vector.h</a>&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="physics_8h.html">RMF/decorator/physics.h</a>&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="sequence_8h.html">RMF/decorator/sequence.h</a>&quot;</span></div>
-<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="ConstFile_8h.html">RMF/HDF5/ConstFile.h</a>&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="enums_8h.html">RMF/enums.h</a>&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="infrastructure__macros_8h.html">RMF/infrastructure_macros.h</a>&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="log_8h.html">RMF/log.h</a>&quot;</span></div>
@@ -326,22 +325,21 @@ $(document).ready(function(){initNavTree('benchmark_2benchmark_rmf_8cpp-example.
 <div class="line"><span class="preprocessor"></span>    std::cout &lt;&lt; name_base &lt;&lt; std::endl;</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span>    {</div>
-<div class="line">      <span class="keyword">const</span> std::string name = name_base + <span class="stringliteral">&quot;.rmf3&quot;</span>;</div>
+<div class="line">      <span class="keyword">const</span> std::string name = name_base + <span class="stringliteral">&quot;.rmf&quot;</span>;</div>
 <div class="line">      {</div>
 <div class="line">        <a class="code" href="classRMF_1_1FileHandle.html">RMF::FileHandle</a> fh = <a name="a34"></a><a class="code" href="namespaceRMF.html#ab8681fee96c0b5e2cb33cd723e99b1b0">RMF::create_rmf_file</a>(name);</div>
-<div class="line">        std::pair&lt;std::size_t, std::size_t&gt; sizes =</div>
-<div class="line">            benchmark_create(fh, <span class="stringliteral">&quot;rmf3&quot;</span>);</div>
+<div class="line">        std::pair&lt;std::size_t, std::size_t&gt; sizes = benchmark_create(fh, <span class="stringliteral">&quot;rmf&quot;</span>);</div>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;raw, total, &quot;</span> &lt;&lt; show_size(sizes.first + sizes.second)</div>
 <div class="line">                  &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; (sizes.first + sizes.second) &lt;&lt; std::endl;</div>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;raw, frame, &quot;</span> &lt;&lt; show_size(sizes.second) &lt;&lt; <span class="stringliteral">&quot;, &quot;</span></div>
 <div class="line">                  &lt;&lt; sizes.second &lt;&lt; std::endl;</div>
 <div class="line">      }</div>
 <div class="line">      {</div>
-<div class="line">        <a class="code" href="classRMF_1_1FileConstHandle.html">RMF::FileConstHandle</a> fh = benchmark_open(name, <span class="stringliteral">&quot;rmf3&quot;</span>);</div>
-<div class="line">        benchmark_traverse(fh, <span class="stringliteral">&quot;rmf3&quot;</span>);</div>
-<div class="line">        benchmark_load(fh, <span class="stringliteral">&quot;rmf3&quot;</span>);</div>
+<div class="line">        <a class="code" href="classRMF_1_1FileConstHandle.html">RMF::FileConstHandle</a> fh = benchmark_open(name, <span class="stringliteral">&quot;rmf&quot;</span>);</div>
+<div class="line">        benchmark_traverse(fh, <span class="stringliteral">&quot;rmf&quot;</span>);</div>
+<div class="line">        benchmark_load(fh, <span class="stringliteral">&quot;rmf&quot;</span>);</div>
 <div class="line">      }</div>
-<div class="line">      benchmark_size(name, <span class="stringliteral">&quot;rmf3&quot;</span>);</div>
+<div class="line">      benchmark_size(name, <span class="stringliteral">&quot;rmf&quot;</span>);</div>
 <div class="line">    }</div>
 <div class="line">    {</div>
 <div class="line">      <span class="keyword">const</span> std::string name = name_base + <span class="stringliteral">&quot;.rmfz&quot;</span>;</div>
@@ -357,19 +355,6 @@ $(document).ready(function(){initNavTree('benchmark_2benchmark_rmf_8cpp-example.
 <div class="line">      benchmark_size(name, <span class="stringliteral">&quot;rmfz&quot;</span>);</div>
 <div class="line">    }</div>
 <div class="line">    {</div>
-<div class="line">      <span class="keyword">const</span> std::string name = name_base + <span class="stringliteral">&quot;.rmf&quot;</span>;</div>
-<div class="line">      {</div>
-<div class="line">        <a class="code" href="classRMF_1_1FileHandle.html">RMF::FileHandle</a> fh = <a class="code" href="namespaceRMF.html#ab8681fee96c0b5e2cb33cd723e99b1b0">RMF::create_rmf_file</a>(name);</div>
-<div class="line">        benchmark_create(fh, <span class="stringliteral">&quot;rmf&quot;</span>);</div>
-<div class="line">      }</div>
-<div class="line">      {</div>
-<div class="line">        <a class="code" href="classRMF_1_1FileConstHandle.html">RMF::FileConstHandle</a> fh = benchmark_open(name, <span class="stringliteral">&quot;rmf&quot;</span>);</div>
-<div class="line">        benchmark_traverse(fh, <span class="stringliteral">&quot;rmf&quot;</span>);</div>
-<div class="line">        benchmark_load(fh, <span class="stringliteral">&quot;rmf&quot;</span>);</div>
-<div class="line">      }</div>
-<div class="line">      benchmark_size(name, <span class="stringliteral">&quot;rmf&quot;</span>);</div>
-<div class="line">    }</div>
-<div class="line">    {</div>
 <div class="line">      <a name="_a35"></a><a class="code" href="classRMF_1_1BufferHandle.html">RMF::BufferHandle</a> buffer;</div>
 <div class="line">      {</div>
 <div class="line">        <a class="code" href="classRMF_1_1FileHandle.html">RMF::FileHandle</a> fh = <a name="a36"></a><a class="code" href="namespaceRMF.html#acb67d60e21f39a8d3b3d877192e02fae">RMF::create_rmf_buffer</a>(buffer);</div>
@@ -380,32 +365,6 @@ $(document).ready(function(){initNavTree('benchmark_2benchmark_rmf_8cpp-example.
 <div class="line">        benchmark_traverse(fh, <span class="stringliteral">&quot;buffer&quot;</span>);</div>
 <div class="line">        benchmark_load(fh, <span class="stringliteral">&quot;buffer&quot;</span>);</div>
 <div class="line">      }</div>
-<div class="line">    }</div>
-<div class="line">    {</div>
-<div class="line">      <span class="keyword">const</span> std::string name = name_base + <span class="stringliteral">&quot;.rmf2&quot;</span>;</div>
-<div class="line">      {</div>
-<div class="line">        <a class="code" href="classRMF_1_1FileHandle.html">RMF::FileHandle</a> fh = <a class="code" href="namespaceRMF.html#ab8681fee96c0b5e2cb33cd723e99b1b0">RMF::create_rmf_file</a>(name);</div>
-<div class="line">        benchmark_create(fh, <span class="stringliteral">&quot;rmf2&quot;</span>);</div>
-<div class="line">      }</div>
-<div class="line">      {</div>
-<div class="line">        <a class="code" href="classRMF_1_1FileConstHandle.html">RMF::FileConstHandle</a> fh = <a class="code" href="namespaceRMF.html#ac90654bbc3bc8b1d67aabcb206b08306">RMF::open_rmf_file_read_only</a>(name);</div>
-<div class="line">        benchmark_traverse(fh, <span class="stringliteral">&quot;rmf2&quot;</span>);</div>
-<div class="line">        benchmark_load(fh, <span class="stringliteral">&quot;rmf2&quot;</span>);</div>
-<div class="line">      }</div>
-<div class="line">      benchmark_size(name, <span class="stringliteral">&quot;rmf2&quot;</span>);</div>
-<div class="line">    }</div>
-<div class="line">    {</div>
-<div class="line">      <span class="keyword">const</span> std::string name = name_base + <span class="stringliteral">&quot;.rmfa&quot;</span>;</div>
-<div class="line">      {</div>
-<div class="line">        <a class="code" href="classRMF_1_1FileHandle.html">RMF::FileHandle</a> fh = <a class="code" href="namespaceRMF.html#ab8681fee96c0b5e2cb33cd723e99b1b0">RMF::create_rmf_file</a>(name);</div>
-<div class="line">        benchmark_create(fh, <span class="stringliteral">&quot;rmfa&quot;</span>);</div>
-<div class="line">      }</div>
-<div class="line">      {</div>
-<div class="line">        <a class="code" href="classRMF_1_1FileConstHandle.html">RMF::FileConstHandle</a> fh = <a class="code" href="namespaceRMF.html#ac90654bbc3bc8b1d67aabcb206b08306">RMF::open_rmf_file_read_only</a>(name);</div>
-<div class="line">        benchmark_traverse(fh, <span class="stringliteral">&quot;rmfa&quot;</span>);</div>
-<div class="line">        benchmark_load(fh, <span class="stringliteral">&quot;rmfa&quot;</span>);</div>
-<div class="line">      }</div>
-<div class="line">      benchmark_size(name, <span class="stringliteral">&quot;rmfa&quot;</span>);</div>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>

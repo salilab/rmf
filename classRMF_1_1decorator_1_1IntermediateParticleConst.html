@@ -99,13 +99,15 @@ $(document).ready(function(){initNavTree('classRMF_1_1decorator_1_1IntermediateP
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classRMF_1_1decorator_1_1IntermediateParticleConst-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">RMF::decorator::IntermediateParticleConst Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="physics_8h_source.html">/Users/drussel/src/rmf/release/include/RMF/decorator/physics.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="physics_8h_source.html">/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for RMF::decorator::IntermediateParticleConst:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -117,10 +119,10 @@ $(document).ready(function(){initNavTree('classRMF_1_1decorator_1_1IntermediateP
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:afd6cbfb0eb41e0732248dd5f1e642e75"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd6cbfb0eb41e0732248dd5f1e642e75"></a>
-<a class="el" href="namespaceRMF.html#a30c456cb198f6415d63f41cefab407ae">Vector3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_coordinates</b> () const </td></tr>
+<a class="el" href="namespaceRMF.html#a4f81aba337d34ce6c26d7e5004fcfddf">Vector3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_coordinates</b> () const </td></tr>
 <tr class="separator:afd6cbfb0eb41e0732248dd5f1e642e75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af54d62aca63943f265143150dd1c6e99"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af54d62aca63943f265143150dd1c6e99"></a>
-<a class="el" href="namespaceRMF.html#a30c456cb198f6415d63f41cefab407ae">Vector3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_frame_coordinates</b> () const </td></tr>
+<a class="el" href="namespaceRMF.html#a4f81aba337d34ce6c26d7e5004fcfddf">Vector3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_frame_coordinates</b> () const </td></tr>
 <tr class="separator:af54d62aca63943f265143150dd1c6e99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40b225f77df4b31d5b2d576b72bc3755"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40b225f77df4b31d5b2d576b72bc3755"></a>
 <a class="el" href="namespaceRMF.html#a86262dd447c738c45e22fae2a3375d61">Float</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_frame_radius</b> () const </td></tr>
@@ -129,7 +131,7 @@ Public Member Functions</h2></td></tr>
 <a class="el" href="namespaceRMF.html#a86262dd447c738c45e22fae2a3375d61">Float</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_radius</b> () const </td></tr>
 <tr class="separator:a090815b45968f0b2269c6ef70b370c51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2c35e3f2df1e0552dfb15880f3d2123"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa2c35e3f2df1e0552dfb15880f3d2123"></a>
-<a class="el" href="namespaceRMF.html#a30c456cb198f6415d63f41cefab407ae">Vector3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_static_coordinates</b> () const </td></tr>
+<a class="el" href="namespaceRMF.html#a4f81aba337d34ce6c26d7e5004fcfddf">Vector3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_static_coordinates</b> () const </td></tr>
 <tr class="separator:aa2c35e3f2df1e0552dfb15880f3d2123"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a23f31289bd22b36fc36c576e147f7cd4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a23f31289bd22b36fc36c576e147f7cd4"></a>
 <a class="el" href="namespaceRMF.html#a86262dd447c738c45e22fae2a3375d61">Float</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_static_radius</b> () const </td></tr>
@@ -141,8 +143,11 @@ Static Public Member Functions</h2></td></tr>
 static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>get_decorator_type_name</b> ()</td></tr>
 <tr class="separator:a6e7125da33c94bbd6c1161a1268b1122"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a538421139a865624fe1eee6d4b751aff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a538421139a865624fe1eee6d4b751aff"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>IntermediateParticleConst</b> (<a class="el" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> nh, <a class="el" href="namespaceRMF.html#a403d28d7d395a6ec19a004a61cb592f7">FloatKey</a> radius, <a class="el" href="namespaceRMF.html#a398fc67608868aa08c28d976d36b2a64">Vector3Key</a> coordinates)</td></tr>
+<tr class="separator:a538421139a865624fe1eee6d4b751aff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classRMF_1_1Decorator"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classRMF_1_1Decorator')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classRMF_1_1Decorator.html">RMF::Decorator</a></td></tr>
 <tr class="memitem:ad4e34da0f4152f1cfd1c7fdc901711af inherit pro_methods_classRMF_1_1Decorator"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad4e34da0f4152f1cfd1c7fdc901711af"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Decorator</b> (<a class="el" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> handle)</td></tr>
@@ -150,11 +155,20 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:ac28a24c28eca50d8e8d4cd655078eed6 inherit pro_methods_classRMF_1_1Decorator"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac28a24c28eca50d8e8d4cd655078eed6"></a>
 <a class="el" href="classRMF_1_1NodeHandle.html">NodeHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_node</b> () const </td></tr>
 <tr class="separator:ac28a24c28eca50d8e8d4cd655078eed6 inherit pro_methods_classRMF_1_1Decorator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:af24a685f15b05ebf922da81455259e66"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af24a685f15b05ebf922da81455259e66"></a>
+<a class="el" href="namespaceRMF.html#a398fc67608868aa08c28d976d36b2a64">Vector3Key</a>&#160;</td><td class="memItemRight" valign="bottom"><b>coordinates_</b></td></tr>
+<tr class="separator:af24a685f15b05ebf922da81455259e66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90c6693367ef7f0aef1ee62ad9dfb494"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90c6693367ef7f0aef1ee62ad9dfb494"></a>
+<a class="el" href="namespaceRMF.html#a403d28d7d395a6ec19a004a61cb592f7">FloatKey</a>&#160;</td><td class="memItemRight" valign="bottom"><b>radius_</b></td></tr>
+<tr class="separator:a90c6693367ef7f0aef1ee62ad9dfb494"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>See also <a class="el" href="classRMF_1_1decorator_1_1IntermediateParticle.html">IntermediateParticle</a> and <a class="el" href="classRMF_1_1decorator_1_1IntermediateParticleFactory.html">IntermediateParticleFactory</a>. </p>
 
-<p>Definition at line <a class="el" href="physics_8h_source.html#l00232">232</a> of file <a class="el" href="physics_8h_source.html">physics.h</a>.</p>
+<p>Definition at line <a class="el" href="physics_8h_source.html#l00233">233</a> of file <a class="el" href="physics_8h_source.html">physics.h</a>.</p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="physics_8h_source.html">physics.h</a></li>
 </ul>

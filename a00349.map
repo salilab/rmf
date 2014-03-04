@@ -1,0 +1,51 @@
+<map id="infrastructure_macros.h" name="infrastructure_macros.h">
+<area shape="rect" id="node2" href="$a00181.html" title="Manage a memory buffer for reading/writing RMF files. " alt="" coords="264,83,408,111"/>
+<area shape="rect" id="node3" href="$a00182.html" title="Manage a memory buffer for reading/writing RMF files. " alt="" coords="330,238,440,266"/>
+<area shape="rect" id="node4" href="$a00209.html" title="Handle read/write of Model data from/to files. " alt="" coords="677,547,808,575"/>
+<area shape="rect" id="node6" href="$a00173.html" title="Helper functions for manipulating RMF files. " alt="" coords="2229,702,2288,730"/>
+<area shape="rect" id="node8" href="$a00237.html" title="Helper functions for manipulating RMF files. " alt="" coords="2146,779,2221,807"/>
+<area shape="rect" id="node10" href="$a00177_source.html" title="benchmark_rmf.cpp" alt="" coords="776,857,915,885"/>
+<area shape="rect" id="node11" href="$a00205.html" title="Helper functions for manipulating RMF files. " alt="" coords="1541,702,1620,730"/>
+<area shape="rect" id="node12" href="$a00207.html" title="Helper functions for manipulating RMF files. " alt="" coords="1646,702,1719,730"/>
+<area shape="rect" id="node13" href="$a00239.html" title="Helper functions for manipulating RMF files. " alt="" coords="1795,702,1891,730"/>
+<area shape="rect" id="node14" href="$a00248.html" title="Helper functions for manipulating RMF files. " alt="" coords="2795,702,2884,730"/>
+<area shape="rect" id="node15" href="$a00250.html" title="Helper functions for manipulating RMF files. " alt="" coords="2319,702,2387,730"/>
+<area shape="rect" id="node16" href="$a00179.html" title="Helper functions for manipulating RMF files. " alt="" coords="1456,702,1517,730"/>
+<area shape="rect" id="node17" href="$a00244.html" title="Helper functions for manipulating RMF files. " alt="" coords="2426,702,2544,730"/>
+<area shape="rect" id="node18" href="$a00175.html" title="Helper functions for manipulating RMF files. " alt="" coords="2910,702,3009,730"/>
+<area shape="rect" id="node21" href="$a00245.html" title="Handle read/write of Model data from/to files. " alt="" coords="144,625,305,653"/>
+<area shape="rect" id="node22" href="$a00249.html" title="Handle read/write of Model data from/to files. " alt="" coords="331,625,465,653"/>
+<area shape="rect" id="node24" href="$a00217.html" title="Handle read/write of Model data from/to files. " alt="" coords="1450,161,1496,189"/>
+<area shape="rect" id="node26" href="$a00233.html" title="Handle read/write of Model data from/to files. " alt="" coords="1496,470,1637,498"/>
+<area shape="rect" id="node27" href="$a00198.html" title="Helper functions for manipulating RMF files. " alt="" coords="2206,625,2295,653"/>
+<area shape="rect" id="node28" href="$a00234.html" title="Handle read/write of Model data from/to files. " alt="" coords="2067,547,2172,575"/>
+<area shape="rect" id="node31" href="$a00221.html" title="Handle read/write of Model data from/to files. " alt="" coords="1570,393,1629,421"/>
+<area shape="rect" id="node34" href="$a00235.html" title="Handle read/write of Model data from/to files. " alt="" coords="2269,393,2349,421"/>
+<area shape="rect" id="node43" href="$a00259.html" title="Represent coordinates. " alt="" coords="2435,83,2504,111"/>
+<area shape="rect" id="node44" href="$a00193.html" title="Handle read/write of Model data from/to files. " alt="" coords="3343,161,3512,189"/>
+<area shape="rect" id="node47" href="$a00202.html" title="Handle read/write of Model data from/to files. " alt="" coords="2826,315,2893,343"/>
+<area shape="rect" id="node49" href="$a00220.html" title="Various general useful macros for IMP. " alt="" coords="3779,83,3940,111"/>
+<area shape="rect" id="node5" href="$a00211.html" title="Handle read/write of Model data from/to files. " alt="" coords="1795,625,1891,653"/>
+<area shape="rect" id="node19" href="$a00258.html" title="Handle read/write of Model data from/to files. " alt="" coords="1034,702,1112,730"/>
+<area shape="rect" id="node20" href="$a00218.html" title="Helper functions for manipulating RMF files. " alt="" coords="642,625,696,653"/>
+<area shape="rect" id="node23" href="$a00252.html" title="Helper functions for manipulating RMF files. " alt="" coords="720,625,807,653"/>
+<area shape="rect" id="node7" href="$a00199.html" title="Import all the decorators headers. " alt="" coords="2174,857,2268,885"/>
+<area shape="rect" id="node9" href="$a00254.html" title="Helper functions for manipulating RMF files. " alt="" coords="2834,857,2957,885"/>
+<area shape="rect" id="node25" href="$a00187.html" title="Various utilities for rmfing. " alt="" coords="1902,393,1991,421"/>
+<area shape="rect" id="node32" href="$a00256.html" title="Handle read/write of Model data from/to files. " alt="" coords="3721,238,3785,266"/>
+<area shape="rect" id="node30" href="$a00257.html" title="Helper functions for manipulating RMF files. " alt="" coords="2336,547,2397,575"/>
+<area shape="rect" id="node29" href="$a00222.html" title="Helper functions for manipulating RMF files. " alt="" coords="2066,625,2131,653"/>
+<area shape="rect" id="node33" href="$a00253.html" title="Handle read/write of Model data from/to files. " alt="" coords="1931,315,1992,343"/>
+<area shape="rect" id="node35" href="$a00188.html" title="Handle read/write of Model data from/to files. " alt="" coords="3850,315,3973,343"/>
+<area shape="rect" id="node36" href="$a00189.html" title="Handle read/write of Model data from/to files. " alt="" coords="3749,393,3873,421"/>
+<area shape="rect" id="node37" href="$a00196.html" title="Handle read/write of Model data from/to files. " alt="" coords="3707,470,3796,498"/>
+<area shape="rect" id="node39" href="$a00215.html" title="A container which has pairs which ensure a set is connected. " alt="" coords="4010,625,4077,653"/>
+<area shape="rect" id="node40" href="$a00236.html" title="Handle read/write of Model data from/to files. " alt="" coords="3691,702,3761,730"/>
+<area shape="rect" id="node42" href="$a00197.html" title="Handle read/write of Model data from/to files. " alt="" coords="4072,315,4195,343"/>
+<area shape="rect" id="node38" href="$a00191.html" title="Handle read/write of Model data from/to files. " alt="" coords="3789,547,3893,575"/>
+<area shape="rect" id="node41" href="$a00230.html" title="Handle read/write of Model data from/to files. " alt="" coords="3976,702,4112,730"/>
+<area shape="rect" id="node45" href="$a00201.html" title="Default implementation for types.h. " alt="" coords="2320,161,2431,189"/>
+<area shape="rect" id="node46" href="$a00255.html" title="types.h" alt="" coords="1963,238,2027,266"/>
+<area shape="rect" id="node48" href="$a00203.html" title="Handle read/write of Model data from/to files. " alt="" coords="1805,393,1877,421"/>
+<area shape="rect" id="node50" href="$a00214.html" title="Handle read/write of Model data from/to files. " alt="" coords="4121,161,4193,189"/>
+</map>

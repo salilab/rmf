@@ -1,5 +1,6 @@
 var classRMF_1_1decorator_1_1JournalArticleConst =
 [
+    [ "JournalArticleConst", "classRMF_1_1decorator_1_1JournalArticleConst.html#ad641ac23738b3f1fba3c0f66db900a8a", null ],
     [ "get_authors", "classRMF_1_1decorator_1_1JournalArticleConst.html#a086655b99632af8b33900c57dd014b0d", null ],
     [ "get_decorator_type_name", "classRMF_1_1decorator_1_1JournalArticleConst.html#a5718503fc725a624dd942c73eaccf134", null ],
     [ "get_frame_authors", "classRMF_1_1decorator_1_1JournalArticleConst.html#a7ebbb6c201cd04bd0963a87ad6052469", null ],
@@ -16,6 +17,10 @@ var classRMF_1_1decorator_1_1JournalArticleConst =
     [ "get_static_year", "classRMF_1_1decorator_1_1JournalArticleConst.html#a2cc849c5a8c2588b02cc0ec320a20bcf", null ],
     [ "get_title", "classRMF_1_1decorator_1_1JournalArticleConst.html#a14ea3860bf5f21d97f550ee82a0c7038", null ],
     [ "get_year", "classRMF_1_1decorator_1_1JournalArticleConst.html#a11beff984e2097beda304745c1265abd", null ],
-    [ "JournalArticle", "classRMF_1_1decorator_1_1JournalArticleConst.html#a6eb15fd01485eb6e7bbc372a53b5ffd4", null ],
-    [ "JournalArticleFactory", "classRMF_1_1decorator_1_1JournalArticleConst.html#aad8a94ce766dc6187f3b23f110251672", null ]
+    [ "JournalArticleFactory", "classRMF_1_1decorator_1_1JournalArticleConst.html#aad8a94ce766dc6187f3b23f110251672", null ],
+    [ "authors_", "classRMF_1_1decorator_1_1JournalArticleConst.html#ab643a3a24e83c5b5dbe10297112fbed9", null ],
+    [ "journal_", "classRMF_1_1decorator_1_1JournalArticleConst.html#adc94f2292e8463462f74f3a0a4c03d5a", null ],
+    [ "pubmed_id_", "classRMF_1_1decorator_1_1JournalArticleConst.html#a8313862cc3e11dbdc3cc9a9ff0b62730", null ],
+    [ "title_", "classRMF_1_1decorator_1_1JournalArticleConst.html#a28739fc4f4fd806b8e114eb93dccf16a", null ],
+    [ "year_", "classRMF_1_1decorator_1_1JournalArticleConst.html#a96d4da6fd01510bfacdb025f26e9533b", null ]
 ];

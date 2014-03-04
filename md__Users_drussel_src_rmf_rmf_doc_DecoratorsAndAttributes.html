@@ -94,6 +94,7 @@ $(document).ready(function(){initNavTree('md__Users_drussel_src_rmf_rmf_doc_Deco
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
 <ul><li class="level1"><a href="#decoratorsattributes">Overview</a></li>
+<li class="level1"><a href="#staticandframe">Static and Frame Attributes</a></li>
 <li class="level1"><a href="#physics">Physics</a><ul><li class="level2"><a href="#physicsattributes">Attributes</a></li>
 <li class="level2"><a href="#physicsdecorators">Decorators</a></li>
 </ul>
@@ -130,7 +131,21 @@ $(document).ready(function(){initNavTree('md__Users_drussel_src_rmf_rmf_doc_Deco
 </div>
 <div class="textblock"><h1><a class="anchor" id="decoratorsattributes"></a>
 Overview</h1>
-<p>The attributes and decorators are divided into several categories, each associated with a different <a class="el" href="namespaceRMF.html#a60dddb83d1bd6434432a9fa32463ba2f">RMF::Category</a>. The get and set functions on the decorators always have the same names as the attribute, unless otherwise noted. For example, <a class="el" href="classRMF_1_1decorator_1_1Particle.html">RMF::decorator::Particle</a> has RMF::decorator::Particle::get_mass().</p>
+<p>The attributes and decorators are divided into several categories, each associated with a different <a class="el" href="namespaceRMF.html#a60dddb83d1bd6434432a9fa32463ba2f">RMF::Category</a>. The get and set functions on the decorators always have the same names as the attribute, unless otherwise noted. For example, <a class="el" href="classRMF_1_1decorator_1_1Particle.html">RMF::decorator::Particle</a> has RMF::decorator::ParticleConst::get_mass().</p>
+<h1><a class="anchor" id="staticandframe"></a>
+Static and Frame Attributes</h1>
+<p>Each <code>get_</code> method and <code>set_</code> method have three variants. For get they are</p>
+<ul>
+<li><code>get_foo</code> get a value for the attribute</li>
+<li><code>get_frame_foo</code> get a value for the attribute if stored in the current frame, or <code>None</code>/null otherwise</li>
+<li><code>get_static_foo</code> get a value for the attribute if stored statically, or <code>None</code>/null otherwise</li>
+</ul>
+<p>and for set</p>
+<ul>
+<li><code>set_frame_foo</code></li>
+<li><code>set_static_foo</code></li>
+<li><code>set_foo</code></li>
+</ul>
 <h1><a class="anchor" id="physics"></a>
 Physics</h1>
 <p>The category name is <code>physics</code>. It includes information about the physical structure of molecules.</p>
@@ -140,17 +155,17 @@ Attributes</h2>
 <tr>
 <th align="right">Name </th><th align="right">Type </th><th align="left">Description  </th></tr>
 <tr>
-<td align="right"><code>coordinates</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a30c456cb198f6415d63f41cefab407ae">RMF::Vector3</a> </td><td align="left">The cartesian coordinates in angstroms </td></tr>
+<td align="right"><code>coordinates</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a4f81aba337d34ce6c26d7e5004fcfddf">RMF::Vector3</a> </td><td align="left">The cartesian coordinates in angstroms </td></tr>
 <tr>
-<td align="right"><code>orientation</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a8affb16f9c620940ceaa63e836930f51">RMF::Vector4</a> </td><td align="left">The orientation quaternion </td></tr>
+<td align="right"><code>orientation</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a1e72f2580095bf30a33fc20fa66e7bcd">RMF::Vector4</a> </td><td align="left">The orientation quaternion </td></tr>
 <tr>
 <td align="right"><code>mass</code> </td><td align="right">float </td><td align="left">The mass in Daltons </td></tr>
 <tr>
 <td align="right"><code>radius</code> </td><td align="right">float </td><td align="left">The radius in angstroms </td></tr>
 <tr>
-<td align="right"><code>rotation</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a8affb16f9c620940ceaa63e836930f51">RMF::Vector4</a> </td><td align="left">The rotation quaternion </td></tr>
+<td align="right"><code>rotation</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a1e72f2580095bf30a33fc20fa66e7bcd">RMF::Vector4</a> </td><td align="left">The rotation quaternion </td></tr>
 <tr>
-<td align="right"><code>translation</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a30c456cb198f6415d63f41cefab407ae">RMF::Vector3</a> </td><td align="left">The translation vector in angstroms </td></tr>
+<td align="right"><code>translation</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a4f81aba337d34ce6c26d7e5004fcfddf">RMF::Vector3</a> </td><td align="left">The translation vector in angstroms </td></tr>
 <tr>
 <td align="right"><code>bonded {0,1}</code> </td><td align="right">int </td><td align="left">The <a class="el" href="namespaceRMF.html#a6a47f5e7d9ef4573ff2ee2df65aab051">RMF::NodeID</a> of the bonds endpoints </td></tr>
 <tr>
@@ -249,17 +264,17 @@ Attributes</h2>
 <tr>
 <th align="right">Name </th><th align="right">Type </th><th align="left">Description  </th></tr>
 <tr>
-<td align="right"><code>rgb color</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a30c456cb198f6415d63f41cefab407ae">RMF::Vector3</a> </td><td align="left">The red, green, and blue color components, each component is in the range from 0 to 1. </td></tr>
+<td align="right"><code>rgb color</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a4f81aba337d34ce6c26d7e5004fcfddf">RMF::Vector3</a> </td><td align="left">The red, green, and blue color components, each component is in the range from 0 to 1. </td></tr>
 <tr>
 <td align="right"><code>coordinates list</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a163c7904c3fdd6039c9907146c733133">RMF::Vector3s</a> </td><td align="left">A list of coordinates. </td></tr>
 <tr>
-<td align="right"><code>coordinates</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a30c456cb198f6415d63f41cefab407ae">RMF::Vector3</a> </td><td align="left">The coordinates in angstrom. </td></tr>
+<td align="right"><code>coordinates</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a4f81aba337d34ce6c26d7e5004fcfddf">RMF::Vector3</a> </td><td align="left">The coordinates in angstrom. </td></tr>
 <tr>
 <td align="right"><code>radius</code> </td><td align="right">float </td><td align="left">The radius in angstroms </td></tr>
 <tr>
-<td align="right"><code>axis lengths</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a30c456cb198f6415d63f41cefab407ae">RMF::Vector3</a> </td><td align="left">The length along each coordinate axis. </td></tr>
+<td align="right"><code>axis lengths</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a4f81aba337d34ce6c26d7e5004fcfddf">RMF::Vector3</a> </td><td align="left">The length along each coordinate axis. </td></tr>
 <tr>
-<td align="right"><code>orientation</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a8affb16f9c620940ceaa63e836930f51">RMF::Vector4</a> </td><td align="left">The ordientation quaternion. </td></tr>
+<td align="right"><code>orientation</code> </td><td align="right"><a class="el" href="namespaceRMF.html#a1e72f2580095bf30a33fc20fa66e7bcd">RMF::Vector4</a> </td><td align="left">The ordientation quaternion. </td></tr>
 </table>
 <h2><a class="anchor" id="shapedecorators"></a>
 Decorators</h2>

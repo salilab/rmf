@@ -175,5 +175,5 @@ var hierarchy =
     [ "RMF::SetCurrentFrame", "classRMF_1_1SetCurrentFrame.html", null ],
     [ "RMF::Traits< T >", "structRMF_1_1Traits.html", null ],
     [ "RMF::Vector< D >", "classRMF_1_1Vector.html", null ],
-    [ "RMF::Vector< 3 >", "classRMF_1_1Vector.html", null ]
+    [ "RMF::Vector< 3U >", "classRMF_1_1Vector.html", null ]
 ];

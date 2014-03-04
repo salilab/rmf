@@ -1,5 +1,6 @@
 var classRMF_1_1decorator_1_1AtomConst =
 [
+    [ "AtomConst", "classRMF_1_1decorator_1_1AtomConst.html#a278270c3f9de3404b90f04c2a612cd8a", null ],
     [ "get_coordinates", "classRMF_1_1decorator_1_1AtomConst.html#a9409d4ced264a60aad66e2590aa2f9c8", null ],
     [ "get_decorator_type_name", "classRMF_1_1decorator_1_1AtomConst.html#a7387f0457e57218569de23db3a6b93d5", null ],
     [ "get_element", "classRMF_1_1decorator_1_1AtomConst.html#ad308770d09f95efc5accf558e214baf8", null ],
@@ -13,6 +14,9 @@ var classRMF_1_1decorator_1_1AtomConst =
     [ "get_static_element", "classRMF_1_1decorator_1_1AtomConst.html#a0b4e2f6eae2c533106c838effaf06f51", null ],
     [ "get_static_mass", "classRMF_1_1decorator_1_1AtomConst.html#ad667a9f21d9a684c3faa6600c6287773", null ],
     [ "get_static_radius", "classRMF_1_1decorator_1_1AtomConst.html#aaf2e7d43ebf5eca13ebefa151e58fa95", null ],
-    [ "Atom", "classRMF_1_1decorator_1_1AtomConst.html#ad1ae724d6fb84a88faf67330fba69087", null ],
-    [ "AtomFactory", "classRMF_1_1decorator_1_1AtomConst.html#a03c212352507b6f63533daedc2c55b6f", null ]
+    [ "AtomFactory", "classRMF_1_1decorator_1_1AtomConst.html#a03c212352507b6f63533daedc2c55b6f", null ],
+    [ "coordinates_", "classRMF_1_1decorator_1_1AtomConst.html#a77c69a1daa41905a680a975efd474e2b", null ],
+    [ "element_", "classRMF_1_1decorator_1_1AtomConst.html#a48d0881a3549cbcac41c5ffdb30377f0", null ],
+    [ "mass_", "classRMF_1_1decorator_1_1AtomConst.html#a21467aa80b7915df9e0ee5d2fcc8c06b", null ],
+    [ "radius_", "classRMF_1_1decorator_1_1AtomConst.html#ac5e38dc0b04147c36a34e9c5736e299c", null ]
 ];
