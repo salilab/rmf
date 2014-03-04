@@ -71,8 +71,8 @@ Data::Data(std::string name, int *num_atoms)
 }
 
 double Data::get_resolution() {
-  RMF::Floats resolutions =
-      RMF::decorator::get_resolutions(file_.get_root_node(), RMF::PARTICLE, .1);
+  RMF::Floats resolutions = RMF::decorator::get_resolutions(
+      file_.get_root_node(), RMF::PARTICLE, .01);
   if (resolutions.size() > 1) {
     std::cout << "RMF: Resolutions are " << RMF::Showable(resolutions)
               << ".\nPlease enter desired resolution (or -1 for all): "
