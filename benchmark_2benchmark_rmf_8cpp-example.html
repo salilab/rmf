@@ -218,14 +218,18 @@ $(document).ready(function(){initNavTree('benchmark_2benchmark_rmf_8cpp-example.
 <div class="line">  <span class="keywordflow">return</span> std::make_pair(ret[0] + ret[1] + ret[2], total_size);</div>
 <div class="line">}</div>
 <div class="line"></div>
-<div class="line">boost::tuple&lt;double, std::size_t, std::size_t&gt; create(<a class="code" href="classRMF_1_1FileHandle.html">RMF::FileHandle</a> file) {</div>
+<div class="line">boost::tuple&lt;std::size_t&gt; create(<a class="code" href="classRMF_1_1FileHandle.html">RMF::FileHandle</a> file, <a class="code" href="namespaceRMF.html#aa8add0668393fee2450b059fa221f709">RMF::NodeIDs</a>&amp; atoms) {</div>
 <div class="line">  std::size_t hierarchy_size = create_hierarchy(file);</div>
-<div class="line">  <a class="code" href="namespaceRMF.html#aa8add0668393fee2450b059fa221f709">RMF::NodeIDs</a> atoms;</div>
 <div class="line">  RMF_FOREACH(<a class="code" href="classRMF_1_1ID.html">RMF::NodeID</a> n, file.<a name="a17"></a>get_node_ids()) {</div>
 <div class="line">    <span class="keywordflow">if</span> (file.<a class="code" href="classRMF_1_1FileHandle.html#ae6a14319cd485318420685f86fcfb942">get_node</a>(n).<a name="a18"></a>get_children().empty()) {</div>
 <div class="line">      atoms.push_back(n);</div>
 <div class="line">    }</div>
 <div class="line">  }</div>
+<div class="line">  <span class="keywordflow">return</span> boost::make_tuple(hierarchy_size);</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">boost::tuple&lt;double, std::size_t&gt; create_frames(<a class="code" href="classRMF_1_1FileHandle.html">RMF::FileHandle</a> file,</div>
+<div class="line">                                                <span class="keyword">const</span> <a class="code" href="namespaceRMF.html#aa8add0668393fee2450b059fa221f709">RMF::NodeIDs</a>&amp; atoms) {</div>
 <div class="line">  <a class="code" href="classRMF_1_1decorator_1_1ParticleFactory.html">RMF::decorator::ParticleFactory</a> ipf(file);</div>
 <div class="line">  <span class="keywordtype">double</span> check_value = 0;</div>
 <div class="line">  std::size_t frame_size = 0;</div>
@@ -235,7 +239,7 @@ $(document).ready(function(){initNavTree('benchmark_2benchmark_rmf_8cpp-example.
 <div class="line">    check_value += cur.first;</div>
 <div class="line">    frame_size += cur.second;</div>
 <div class="line">  }</div>
-<div class="line">  <span class="keywordflow">return</span> boost::make_tuple(check_value, hierarchy_size, frame_size);</div>
+<div class="line">  <span class="keywordflow">return</span> boost::make_tuple(check_value, frame_size);</div>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">double</span> traverse(<a name="_a21"></a><a class="code" href="classRMF_1_1FileConstHandle.html">RMF::FileConstHandle</a> file) {</div>
@@ -271,11 +275,16 @@ $(document).ready(function(){initNavTree('benchmark_2benchmark_rmf_8cpp-example.
 <div class="line"></div>
 <div class="line">std::pair&lt;std::size_t, std::size_t&gt; benchmark_create(<a class="code" href="classRMF_1_1FileHandle.html">RMF::FileHandle</a> file,</div>
 <div class="line">                                                     std::string type) {</div>
+<div class="line">  <a class="code" href="namespaceRMF.html#aa8add0668393fee2450b059fa221f709">RMF::NodeIDs</a> atoms;</div>
 <div class="line">  boost::timer timer;</div>
-<div class="line">  boost::tuple&lt;double, std::size_t, std::size_t&gt; cur = create(file);</div>
+<div class="line">  boost::tuple&lt;std::size_t&gt; cur = create(file, atoms);</div>
 <div class="line">  std::cout &lt;&lt; type &lt;&lt; <span class="stringliteral">&quot;, create, &quot;</span> &lt;&lt; timer.elapsed() &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; cur.get&lt;0&gt;()</div>
 <div class="line">            &lt;&lt; std::endl;</div>
-<div class="line">  <span class="keywordflow">return</span> std::make_pair(cur.get&lt;1&gt;(), cur.get&lt;2&gt;());</div>
+<div class="line">  boost::timer frame_timer;</div>
+<div class="line">  boost::tuple&lt;double, std::size_t&gt; frames = create_frames(file, atoms);</div>
+<div class="line">  std::cout &lt;&lt; type &lt;&lt; <span class="stringliteral">&quot;, create frame, &quot;</span> &lt;&lt; frame_timer.elapsed() / 20.0</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; frames.get&lt;0&gt;() &lt;&lt; std::endl;</div>
+<div class="line">  <span class="keywordflow">return</span> std::make_pair(cur.get&lt;0&gt;(), frames.get&lt;1&gt;());</div>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> benchmark_traverse(<a class="code" href="classRMF_1_1FileConstHandle.html">RMF::FileConstHandle</a> file, std::string type) {</div>
@@ -299,7 +308,7 @@ $(document).ready(function(){initNavTree('benchmark_2benchmark_rmf_8cpp-example.
 <div class="line">  }</div>
 <div class="line">  boost::timer timer;</div>
 <div class="line">  <span class="keywordtype">double</span> dist = load(file, nodes);</div>
-<div class="line">  std::cout &lt;&lt; type &lt;&lt; <span class="stringliteral">&quot;, load, &quot;</span> &lt;&lt; timer.elapsed() &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; dist</div>
+<div class="line">  std::cout &lt;&lt; type &lt;&lt; <span class="stringliteral">&quot;, load, &quot;</span> &lt;&lt; timer.elapsed() / 20.0 &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; dist</div>
 <div class="line">            &lt;&lt; std::endl;</div>
 <div class="line">}</div>
 <div class="line"></div>
@@ -361,7 +370,10 @@ $(document).ready(function(){initNavTree('benchmark_2benchmark_rmf_8cpp-example.
 <div class="line">        benchmark_create(fh, <span class="stringliteral">&quot;buffer&quot;</span>);</div>
 <div class="line">      }</div>
 <div class="line">      {</div>
+<div class="line">        boost::timer timer;</div>
 <div class="line">        <a class="code" href="classRMF_1_1FileConstHandle.html">RMF::FileConstHandle</a> fh = <a name="a37"></a><a class="code" href="namespaceRMF.html#a25b9eb4fac988c9195b16f25755b5ec9">RMF::open_rmf_buffer_read_only</a>(buffer);</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;buffer&quot;</span></div>
+<div class="line">                  &lt;&lt; <span class="stringliteral">&quot;, open, &quot;</span> &lt;&lt; timer.elapsed() &lt;&lt; <span class="stringliteral">&quot;, 0&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">        benchmark_traverse(fh, <span class="stringliteral">&quot;buffer&quot;</span>);</div>
 <div class="line">        benchmark_load(fh, <span class="stringliteral">&quot;buffer&quot;</span>);</div>
 <div class="line">      }</div>

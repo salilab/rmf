@@ -46,10 +46,8 @@ var NAVTREE =
       [ "Inheritance of properties", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#inheritance", null ],
       [ "Frames", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#frames", null ],
       [ "Adding custom data to an RMF", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#adding", null ],
-      [ "On disk formats", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#on_disk", [
-        [ "RMF3", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#rmf_and_avro", null ],
-        [ "RMF and HDF5", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#rmf_hdf5", null ]
-      ] ]
+      [ "On disk format", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#on_disk", null ],
+      [ "Benchmarks", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#benchmarks", null ]
     ] ],
     [ "HDF5", "md__Users_drussel_src_rmf_rmf_doc_HDF5.html", null ],
     [ "Library", "md__Users_drussel_src_rmf_rmf_doc_Library.html", [
@@ -111,11 +109,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "BufferConstHandle_8h.html",
-"classRMF_1_1HDF5_1_1ConstAttributes.html#aa7037a430f2cdca86a2ca97c373f45a1",
-"classRMF_1_1decorator_1_1Alternatives.html",
-"classRMF_1_1decorator_1_1DomainFactory.html",
-"classRMF_1_1decorator_1_1ReferenceFrameFactory.html#aa0a069968d3b64b4430350c7e61ae055",
-"exceptions_8h.html#ad729a314b2f90d3327e29c9fc587bbaf"
+"classRMF_1_1HDF5_1_1ConstAttributes.html#aa6749a47c3f6c41807baf12e63526984",
+"classRMF_1_1decorator_1_1AliasFactory.html#aec01257b041b404dead6011def0ed63e",
+"classRMF_1_1decorator_1_1DomainConst.html#accef45c01c0682be4eee598dbdf2043a",
+"classRMF_1_1decorator_1_1ReferenceFrameFactory.html#a8bb9c8e2eb8e8036a80c13d737a121f0",
+"exceptions_8h.html#a9a0e045ddea07da76fdbc99371fcdaa1"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

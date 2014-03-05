@@ -201,21 +201,14 @@
           <Anchor>adding</Anchor>
          </Node>
          <Node>
-          <Name>On disk formats</Name>
+          <Name>On disk format</Name>
           <Path>md__Users_drussel_src_rmf_rmf_doc_FileFormat.html</Path>
           <Anchor>on_disk</Anchor>
-          <Subnodes>
-           <Node>
-            <Name>RMF3</Name>
-            <Path>md__Users_drussel_src_rmf_rmf_doc_FileFormat.html</Path>
-            <Anchor>rmf_and_avro</Anchor>
-           </Node>
-           <Node>
-            <Name>RMF and HDF5</Name>
-            <Path>md__Users_drussel_src_rmf_rmf_doc_FileFormat.html</Path>
-            <Anchor>rmf_hdf5</Anchor>
-           </Node>
-          </Subnodes>
+         </Node>
+         <Node>
+          <Name>Benchmarks</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_FileFormat.html</Path>
+          <Anchor>benchmarks</Anchor>
          </Node>
         </Subnodes>
        </Node>
@@ -4769,6 +4762,11 @@
                 <Anchor>a23e44888c9c8feb727608dc8380812fc</Anchor>
                </Node>
                <Node>
+                <Name>BufferHandle</Name>
+                <Path>classRMF_1_1BufferHandle.html</Path>
+                <Anchor>a3d27fc94cef621037aeb66d71c7cccf8</Anchor>
+               </Node>
+               <Node>
                 <Name>access_buffer</Name>
                 <Path>classRMF_1_1BufferHandle.html</Path>
                 <Anchor>a508638d31cc992389cd268337f39891e</Anchor>
@@ -6772,6 +6770,11 @@
                 <Name>BufferHandle</Name>
                 <Path>classRMF_1_1BufferHandle.html</Path>
                 <Anchor>a23e44888c9c8feb727608dc8380812fc</Anchor>
+               </Node>
+               <Node>
+                <Name>BufferHandle</Name>
+                <Path>classRMF_1_1BufferHandle.html</Path>
+                <Anchor>a3d27fc94cef621037aeb66d71c7cccf8</Anchor>
                </Node>
                <Node>
                 <Name>access_buffer</Name>
@@ -13092,8 +13095,8 @@
           <Path>benchmark_2benchmark_rmf_8cpp-example.html</Path>
          </Node>
          <Node>
-          <Name>benchmark_rmf.py</Name>
-          <Path>benchmark_rmf_8py-example.html</Path>
+          <Name>benchmark/benchmark_rmf.py</Name>
+          <Path>benchmark_2benchmark_rmf_8py-example.html</Path>
          </Node>
          <Node>
           <Name>bonds.py</Name>

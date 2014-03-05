@@ -1,5 +1,6 @@
 var NAVTREEINDEX5 =
 {
+"exceptions_8h.html#a9a0e045ddea07da76fdbc99371fcdaa1":[11,0,30,13],
 "exceptions_8h.html#ad729a314b2f90d3327e29c9fc587bbaf":[11,0,30,12],
 "exceptions_8h_source.html":[11,0,30],
 "external_8h.html":[11,0,31],
@@ -103,14 +104,13 @@ var NAVTREEINDEX5 =
 "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html":[2],
 "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#adding":[2,6],
 "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#attribute":[2,3],
+"md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#benchmarks":[2,8],
 "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#example_files":[2,1],
 "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#format":[2,0],
 "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#frames":[2,5],
 "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#hierarchy":[2,2],
 "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#inheritance":[2,4],
 "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#on_disk":[2,7],
-"md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#rmf_and_avro":[2,7,0],
-"md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#rmf_hdf5":[2,7,1],
 "md__Users_drussel_src_rmf_rmf_doc_HDF5.html":[3],
 "md__Users_drussel_src_rmf_rmf_doc_Library.html":[4],
 "md__Users_drussel_src_rmf_rmf_doc_Library.html#associations":[4,2],

@@ -131,20 +131,20 @@ $(document).ready(function(){initNavTree('md__Users_drussel_src_rmf_rmf_doc_Deco
 </div>
 <div class="textblock"><h1><a class="anchor" id="decoratorsattributes"></a>
 Overview</h1>
-<p>The attributes and decorators are divided into several categories, each associated with a different <a class="el" href="namespaceRMF.html#a60dddb83d1bd6434432a9fa32463ba2f">RMF::Category</a>. The get and set functions on the decorators always have the same names as the attribute, unless otherwise noted. For example, <a class="el" href="classRMF_1_1decorator_1_1Particle.html">RMF::decorator::Particle</a> has RMF::decorator::ParticleConst::get_mass().</p>
+<p>The attributes and decorators are divided into several categories, each associated with a different <a class="el" href="namespaceRMF.html#a60dddb83d1bd6434432a9fa32463ba2f">RMF::Category</a>. Each decorator has three associated types eg <a class="el" href="classRMF_1_1decorator_1_1Particle.html">RMF::decorator::Particle</a>, <a class="el" href="classRMF_1_1decorator_1_1ParticleConst.html">RMF::decorator::ParticleConst</a> and <a class="el" href="classRMF_1_1decorator_1_1ParticleFactory.html">RMF::decorator::ParticleFactory</a>. The non-const decorator inherits from the const one. The factory is used to test whether a given node has the needed attributes and create decorators decorating a given node. Note, that if passed and <a class="el" href="classRMF_1_1NodeConstHandle.html" title="A handle for a particular node in a read-only hierarchy. ">RMF::NodeConstHandle</a>, the node already having the required attributes is a precondition for the factory <code>get()</code> method.</p>
 <h1><a class="anchor" id="staticandframe"></a>
 Static and Frame Attributes</h1>
 <p>Each <code>get_</code> method and <code>set_</code> method have three variants. For get they are</p>
 <ul>
 <li><code>get_foo</code> get a value for the attribute</li>
-<li><code>get_frame_foo</code> get a value for the attribute if stored in the current frame, or <code>None</code>/null otherwise</li>
-<li><code>get_static_foo</code> get a value for the attribute if stored statically, or <code>None</code>/null otherwise</li>
+<li><code>get_frame_foo</code> get a value for the attribute as stored in the current frame</li>
+<li><code>get_static_foo</code> get a value for the attribute as stored for the whole file</li>
 </ul>
-<p>and for set</p>
+<p>All have the precondition that the appropriate value exist. For set</p>
 <ul>
-<li><code>set_frame_foo</code></li>
-<li><code>set_static_foo</code></li>
-<li><code>set_foo</code></li>
+<li><code>set_frame_foo</code>: set a value that is stored once per frame</li>
+<li><code>set_static_foo</code>: set a value that is stored once for the whole file</li>
+<li><code>set_foo</code>: if there is no static value, set it, otherwise, if the passed value differs from the static value, set it as a frame value.</li>
 </ul>
 <h1><a class="anchor" id="physics"></a>
 Physics</h1>

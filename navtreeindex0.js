@@ -147,9 +147,9 @@ var NAVTREEINDEX0 =
 "alternatives_8py_source.html":[11,0,4],
 "annotated.html":[10,0],
 "benchmark_2benchmark_rmf_8cpp-example.html":[12,3],
+"benchmark_2benchmark_rmf_8py-example.html":[12,4],
 "benchmark__rmf_8cpp_source.html":[11,0,5],
 "benchmark__rmf_8py_source.html":[11,0,6],
-"benchmark_rmf_8py-example.html":[12,4],
 "bond_8h.html":[11,0,7],
 "bond_8h_source.html":[11,0,7],
 "bonds_8py-example.html":[12,5],
@@ -169,7 +169,8 @@ var NAVTREEINDEX0 =
 "classRMF_1_1BufferConstHandle.html#afabb56339e518d0f9fe8f2f52c9b5584":[10,0,0,2,2],
 "classRMF_1_1BufferHandle.html":[10,0,0,3],
 "classRMF_1_1BufferHandle.html#a23e44888c9c8feb727608dc8380812fc":[10,0,0,3,0],
-"classRMF_1_1BufferHandle.html#a508638d31cc992389cd268337f39891e":[10,0,0,3,1],
+"classRMF_1_1BufferHandle.html#a3d27fc94cef621037aeb66d71c7cccf8":[10,0,0,3,1],
+"classRMF_1_1BufferHandle.html#a508638d31cc992389cd268337f39891e":[10,0,0,3,2],
 "classRMF_1_1CoordinateTransformer.html":[10,0,0,4],
 "classRMF_1_1CoordinateTransformer.html#a9784e3ca128daf02bbf2dda128bc8df0":[10,0,0,4,1],
 "classRMF_1_1CoordinateTransformer.html#a98e1231a3d3380817b4c7a45ee69a119":[10,0,0,4,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "classRMF_1_1FileHandle.html#ae6a14319cd485318420685f86fcfb942":[10,0,0,10,5],
 "classRMF_1_1FileHandle.html#aedfc6e644aba15dc8a9b459790478408":[10,0,0,10,3],
 "classRMF_1_1HDF5_1_1ConstAttributes.html":[10,0,0,1,0],
-"classRMF_1_1HDF5_1_1ConstAttributes.html#a41a395140938051d9fc084b37f2203e7":[10,0,0,1,0,7],
-"classRMF_1_1HDF5_1_1ConstAttributes.html#aa6749a47c3f6c41807baf12e63526984":[10,0,0,1,0,4]
+"classRMF_1_1HDF5_1_1ConstAttributes.html#a41a395140938051d9fc084b37f2203e7":[10,0,0,1,0,7]
 };

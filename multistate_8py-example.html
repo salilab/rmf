@@ -124,26 +124,19 @@ $(document).ready(function(){initNavTree('multistate_8py-example.html','');});
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        bd.set_bonded_0(ns[i].get_id().get_index())</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        bd.set_bonded_1(ns[i + 1].get_id().get_index())</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordflow">return</span> ns</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;     <span class="comment"># create 4 frames with 3 different configurations each</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(0, 4):</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        cur_frame = fh.add_frame(str(i), RMF.FRAME)</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        fill_coordinates(i, 0)</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordflow">for</span> j <span class="keywordflow">in</span> range(0, 2):</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            fh.add_frame(str(i) + <span class="stringliteral">&quot;-&quot;</span> + str(j), cur_frame, RMF.ALTERNATE)</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            fill_coordinates(i, j + 1)</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;all_ps = []</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(0, 3):</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    all_ps.append(create_hierarchy(i))</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordflow">for</span> frame <span class="keywordflow">in</span> range(0, 4):</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    fh.add_frame(str(i), RMF.FRAME)</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">for</span> state, sps <span class="keywordflow">in</span> enumerate(all_ps):</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordflow">for</span> particle, p <span class="keywordflow">in</span> enumerate(sps):</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            pf.get(</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                p).set_coordinates(<a class="code" href="classRMF_1_1Vector.html">RMF.Vector3</a>(particle + frame + .1 * state,</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                                               frame + .1 * state,</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                                               frame + .1 * state))</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;all_ps = []</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(0, 3):</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    all_ps.append(create_hierarchy(i))</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keywordflow">for</span> frame <span class="keywordflow">in</span> range(0, 4):</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    fh.add_frame(str(i), RMF.FRAME)</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordflow">for</span> state, sps <span class="keywordflow">in</span> enumerate(all_ps):</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordflow">for</span> particle, p <span class="keywordflow">in</span> enumerate(sps):</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            pf.get(</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                p).set_coordinates(<a class="code" href="classRMF_1_1Vector.html">RMF.Vector3</a>(particle + frame + .1 * state,</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                                               frame + .1 * state,</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                                               frame + .1 * state))</div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
