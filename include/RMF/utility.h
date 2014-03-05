@@ -62,10 +62,6 @@ RMFEXPORT bool get_equal_current_values(FileConstHandle input,
 RMFEXPORT bool get_equal_static_values(FileConstHandle input,
                                        FileConstHandle out);
 
-/** Add the child node as an alias child of the parent. */
-RMFEXPORT void add_child_alias(decorator::AliasFactory af, NodeHandle parent,
-                               NodeConstHandle child);
-
 /** This function simply throws an exception. It is here for testing.*/
 RMFEXPORT void test_throw_exception();
 

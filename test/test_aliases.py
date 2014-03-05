@@ -29,7 +29,7 @@ class Tests(unittest.TestCase):
             af = RMF.AliasFactory(fh)
             rh = fh.get_root_node()
             nh = rh.add_child("hi", RMF.REPRESENTATION)
-            RMF.add_child_alias(af, nh, rh)
+            af.get(nh.add_child("alias", RMF.ALIAS)).set_aliased(rh)
             ch = nh.get_children()
             self.assertEqual(len(ch), 1)
             print ch

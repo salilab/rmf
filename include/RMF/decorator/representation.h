@@ -16,7 +16,6 @@
 #include <RMF/Decorator.h>
 #include <RMF/constants.h>
 #include <RMF/Vector.h>
-#include <RMF/internal/utility.h>
 #include <RMF/internal/paths.h>
 #include <boost/array.hpp>
 #include <boost/lexical_cast.hpp>

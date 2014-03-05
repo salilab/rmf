@@ -17,7 +17,6 @@
 #include "RMF/NodeConstHandle.h"
 #include "RMF/compiler_macros.h"
 #include "RMF/infrastructure_macros.h"
-#include "RMF/internal/utility.h"
 #include "RMF/types.h"
 
 RMF_ENABLE_WARNINGS

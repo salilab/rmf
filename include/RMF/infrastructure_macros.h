@@ -14,6 +14,7 @@
 #include <string>
 #include "RMF/compiler_macros.h"
 #include "internal/use.h"
+#include <vector>
 #include <boost/config.hpp>
 #include <boost/version.hpp>
 #if defined(BOOST_NO_CXX11_RANGE_BASED_FOR) || BOOST_VERSION <= 104100
@@ -22,8 +23,6 @@
 #else
 #define RMF_FOREACH(v, r) for (v : r)
 #endif
-
-#include <vector>
 
 RMF_ENABLE_WARNINGS
 
@@ -185,6 +184,7 @@ inline std::size_t hash_value(const T& t) {
   return t.__hash__();
 }
 
+/** An adaptor class to provide operator<< for classes easily. */
 struct Showable {
   std::string t_;
   template <class T>
