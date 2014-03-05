@@ -192,8 +192,8 @@ should be loaded as a child of the current node.
 | `title`          | string    |  Title of the article                            |
 | `journal`        | string    |  Title of the journal                            |
 | `pubmed id`      | string    |  The pubmed ID                                   |
-| `year`           | int       |  The year (full                                  |
-| `authors`        | RMF::Strings |  The author names                                |
+| `year`           | int       |  The year                                        |
+| `authors`        | RMF::Strings |  The author names as "First Last"             |
 
 
 ## Decorators ## {#publicationdecorators}
