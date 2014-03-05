@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('md__Users_drussel_src_rmf_rmf_doc_Mapp
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="mapping"></a>
 Mapping data to RMF files</h1>
-<p>This page outlines how one would go about storing various types of data in <a class="el" href="namespaceRMF.html">RMF</a> files. Much of what it says is merely suggestions, and is not mandatory.</p>
+<p>This page outlines how one would go about storing various types of data in <a class="el" href="namespaceRMF.html" title="The namespace for all functionality in the library. ">RMF</a> files. Much of what it says is merely suggestions, and is not mandatory.</p>
 <p>For nodes types, the following node shapes are used </p>
 <div align="center">
 <iframe scrolling="no" frameborder="0" src="dot_inline_dotgraph_1.svg" width="1654" height="179"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
@@ -109,14 +109,14 @@ Mapping data to RMF files</h1>
 <p>All bonds are stored as <a class="el" href="namespaceRMF.html#a3bcd8902b6a60baf3d3afe915d82b0da" title="A link between two atoms. ">RMF::BOND</a> nodes with two children for the endpoints of the bond. The bonds are stored as children of the first common ancestor of the endpoints.</p>
 <div align="center">
 <iframe scrolling="no" frameborder="0" src="dot_inline_dotgraph_2.svg" width="2112" height="563"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-<p>If the PDB file has more than one model, all with the same structure, the models should be stored as frames in the <a class="el" href="namespaceRMF.html">RMF</a> file.</p>
+<p>If the PDB file has more than one model, all with the same structure, the models should be stored as frames in the <a class="el" href="namespaceRMF.html" title="The namespace for all functionality in the library. ">RMF</a> file.</p>
 <h1>Rigid fits of proteins into EM maps or other data</h1>
 <p>When you have a number of structures that are formed by applying a rigid transform to a set of base structures (eg fitting pdb structures into an EM map), they can be stored as follows:</p>
 <ul>
 <li><a class="el" href="classRMF_1_1decorator_1_1ReferenceFrame.html">RMF::decorator::ReferenceFrame</a> nodes can be used to store the rigid transforms</li>
 <li>under each <a class="el" href="classRMF_1_1decorator_1_1ReferenceFrame.html">RMF::decorator::ReferenceFrame</a> node, you can store one of<ul>
 <li>a <a class="el" href="classRMF_1_1decorator_1_1External.html">RMF::decorator::External</a> referencing an external structure</li>
-<li>an <a class="el" href="namespaceRMF.html">RMF</a> hierarchy detailing the structure being transformed Multiple <a class="el" href="classRMF_1_1decorator_1_1External.html">RMF::decorator::External</a> or the child hierarchies can refer to the same structure. Hopefully software loading the <a class="el" href="namespaceRMF.html">RMF</a> file will take advantage of that.</li>
+<li>an <a class="el" href="namespaceRMF.html" title="The namespace for all functionality in the library. ">RMF</a> hierarchy detailing the structure being transformed Multiple <a class="el" href="classRMF_1_1decorator_1_1External.html">RMF::decorator::External</a> or the child hierarchies can refer to the same structure. Hopefully software loading the <a class="el" href="namespaceRMF.html" title="The namespace for all functionality in the library. ">RMF</a> file will take advantage of that.</li>
 </ul>
 </li>
 </ul>

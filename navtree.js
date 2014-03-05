@@ -38,6 +38,25 @@ var NAVTREE =
         [ "Decorators", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#publicationdecorators", null ]
       ] ]
     ] ],
+    [ "Developers", "md__Users_drussel_src_rmf_rmf_doc_Developers.html", [
+      [ "Overview", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#developers", null ],
+      [ "Developer tools", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#dev_tools", null ],
+      [ "CMake tools", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#cmake_tools", null ],
+      [ "Decorators", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#makedecorators", null ],
+      [ "Avro", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#avrocpp", null ],
+      [ "SharedData", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#shareddata", null ]
+    ] ],
+    [ "Executables", "md__Users_drussel_src_rmf_rmf_doc_Executables.html", [
+      [ "Overview", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#developers", null ],
+      [ "rmf_show", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#rmf_show", null ],
+      [ "rmf_frames", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#rmf_frames", null ],
+      [ "rmf_info", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#rmf_info", null ],
+      [ "rmf_slice", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#rmf_slice", null ],
+      [ "rmf_cat", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#rmf_cat", null ],
+      [ "rmf_xml", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#rmf_xml", null ],
+      [ "rmf_validate", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#rmf_validate", null ],
+      [ "rmf3_dump", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#rmf3_dump", null ]
+    ] ],
     [ "File Format", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html", [
       [ "Overview", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#format", null ],
       [ "Examples", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#example_files", null ],
@@ -57,8 +76,7 @@ var NAVTREE =
       [ "Parallel I/O", "md__Users_drussel_src_rmf_rmf_doc_Library.html#parallel", null ],
       [ "Invariants", "md__Users_drussel_src_rmf_rmf_doc_Library.html#invariants", null ],
       [ "Decorators and factories", "md__Users_drussel_src_rmf_rmf_doc_Library.html#rmfdecorators", null ],
-      [ "Language bindings", "md__Users_drussel_src_rmf_rmf_doc_Library.html#bindings", null ],
-      [ "Helper programs", "md__Users_drussel_src_rmf_rmf_doc_Library.html#helpers", null ]
+      [ "Language bindings", "md__Users_drussel_src_rmf_rmf_doc_Library.html#bindings", null ]
     ] ],
     [ "Mapping Data", "md__Users_drussel_src_rmf_rmf_doc_MappingToRMF.html", [
       [ "Mapping data to RMF files", "md__Users_drussel_src_rmf_rmf_doc_MappingToRMF.html#mapping", null ]

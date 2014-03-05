@@ -1,10 +1,10 @@
 <map id="Decorator.h" name="Decorator.h">
-<area shape="rect" id="node2" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="26,489,125,517"/>
-<area shape="rect" id="node4" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="825,395,985,423"/>
-<area shape="rect" id="node13" href="$ID_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="144,286,189,314"/>
-<area shape="rect" id="node46" href="$NodeConstHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1096,193,1237,221"/>
-<area shape="rect" id="node50" href="$NodeHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="847,99,952,127"/>
-<area shape="rect" id="node3" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="306,566,472,594"/>
-<area shape="rect" id="node14" href="$exceptions_8h.html" title="Various general useful macros for IMP. " alt="" coords="321,395,417,423"/>
-<area shape="rect" id="node48" href="$Nullable_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="314,286,427,314"/>
+<area shape="rect" id="node2" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="1987,489,2087,517"/>
+<area shape="rect" id="node4" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="1005,395,1165,423"/>
+<area shape="rect" id="node13" href="$ID_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1956,286,2001,314"/>
+<area shape="rect" id="node46" href="$NodeConstHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1159,193,1300,221"/>
+<area shape="rect" id="node50" href="$NodeHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1785,99,1891,127"/>
+<area shape="rect" id="node3" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="1789,566,1955,594"/>
+<area shape="rect" id="node14" href="$exceptions_8h.html" title="Various general useful macros for IMP. " alt="" coords="1468,395,1564,423"/>
+<area shape="rect" id="node48" href="$Nullable_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1561,286,1673,314"/>
 </map>

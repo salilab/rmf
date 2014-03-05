@@ -168,33 +168,6 @@ $(document).ready(function(){initNavTree('Library_8md.html','');});
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;exceptions are C and Fortran. Until the SWIG %C target support is</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;finished, these can be supported by writing a simple %C %API</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;manually, probably a weeks work.</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;# Helper programs # {#helpers}</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;Several helper programs are provided. They all take the name of the RMF file as</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;the first argument and an argument &quot;-f&quot; which is the frame to act on. Negative</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;values for the frame are treated as every nth frame. That is, &quot;-f -2&quot; means take</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;every other frame.</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;- `rmf_show` prints out the hierarchy written to the file.</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;- `rmf_frame` prints out the frame hierarchy written to the file.</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;- `rmf_xml` converts an rmf file to an XML files that can be opened in an XML viewer</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;   (eg Google Chrome or Firefox). These viewers support collapsing of subtrees, which</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;   makes it much easier to get around large hierarchies.</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;- `rmf_info` displays information about the attributes found in the RMF and how</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;   much they are used.</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;- `rmf_slice` creates a new rmf from frames selected from an existing one.</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;- `rmf_cat` creates a new rmf concatenating several with the same structure.</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;- `rmf_validate` checks for errors in an RMF file.</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;- rmf3_dump` shows a low level dump of an rmf3 file</div>
 <div class="ttc" id="classRMF_1_1NodeConstHandle_html_a1ca46f397a06e16561a78006b5340727"><div class="ttname"><a href="classRMF_1_1NodeConstHandle.html#a1ca46f397a06e16561a78006b5340727">RMF::NodeConstHandle::set_association</a></div><div class="ttdeci">void set_association(const T &amp;v, bool overwrite=false) const </div><div class="ttdef"><b>Definition:</b> <a href="NodeConstHandle_8h_source.html#l00179">NodeConstHandle.h:179</a></div></div>
 <div class="ttc" id="classRMF_1_1NodeHandle_html"><div class="ttname"><a href="classRMF_1_1NodeHandle.html">RMF::NodeHandle</a></div><div class="ttdoc">A handle for a particular node in the hierarchy. </div><div class="ttdef"><b>Definition:</b> <a href="NodeHandle_8h_source.html#l00060">NodeHandle.h:60</a></div></div>
 <div class="ttc" id="namespaceRMF_html_a535bfc3c97d4cb0c54166b3e1e41faeb"><div class="ttname"><a href="namespaceRMF.html#a535bfc3c97d4cb0c54166b3e1e41faeb">RMF::Categories</a></div><div class="ttdeci">std::vector&lt; Category &gt; Categories</div><div class="ttdef"><b>Definition:</b> <a href="ID_8h_source.html#l00107">ID.h:107</a></div></div>

@@ -98,13 +98,13 @@ $(document).ready(function(){initNavTree('md__Users_drussel_src_rmf_rmf_doc_VMDP
 </div>
 <div class="textblock"><h1><a class="anchor" id="vmdplugin"></a>
 Building and installing</h1>
-<p>Once you build <a class="el" href="namespaceRMF.html">RMF</a>, there will be a file called <code>rmfplugin.so</code> in the <code>lib</code> directory. Creating a link to that in the <code>vmd/plugins/YOUR_ARCHITECTURE/molfile/</code> directory, should make <code>vmd</code> load the plugin next time it launches.</p>
+<p>Once you build <a class="el" href="namespaceRMF.html" title="The namespace for all functionality in the library. ">RMF</a>, there will be a file called <code>rmfplugin.so</code> in the <code>lib</code> directory. Creating a link to that in the <code>vmd/plugins/YOUR_ARCHITECTURE/molfile/</code> directory, should make <code>vmd</code> load the plugin next time it launches.</p>
 <p>If you can't modify your VMD build's plugin directory, you can load the plugin by adding something like <code>vmd_plugin_scandirectory /Users/drussel/src/rmf/32_bit/lib/ rmfplugin.so</code> to your <code>.vmdrc</code>. Note, you probably also want to have the line <code>menu main on</code> to restore default behavior of VMD. Note also, this method does not allow you to open models from the command line. You have to launch VMD and then do <code>New Molecule...</code>.</p>
 <h2>Building on Mac OS</h2>
-<p>VMD doesn't seem to support 64 bit builds on MacOS (at least no usable pre-built ones are provided). By default, <a class="el" href="namespaceRMF.html">RMF</a> is build 64 bit, and so the plugin will not work. To build a 32 bit version with <a href="http://brew.sh">HomeBrew</a> do</p>
+<p>VMD doesn't seem to support 64 bit builds on MacOS (at least no usable pre-built ones are provided). By default, <a class="el" href="namespaceRMF.html" title="The namespace for all functionality in the library. ">RMF</a> is build 64 bit, and so the plugin will not work. To build a 32 bit version with <a href="http://brew.sh">HomeBrew</a> do</p>
 <ul>
 <li>build <code>szip</code>, <code>hdf5</code>, <code>log4cxx</code> and <code>boost</code> with the <code>--universal</code> flag (you have to uninstall them first).</li>
-<li>configure <a class="el" href="namespaceRMF.html">RMF</a> with <code>-DCMAKE_OSX_ARCHITECTURES=i386</code></li>
+<li>configure <a class="el" href="namespaceRMF.html" title="The namespace for all functionality in the library. ">RMF</a> with <code>-DCMAKE_OSX_ARCHITECTURES=i386</code></li>
 <li>build it and link as above</li>
 </ul>
 <h1>Caveats</h1>

@@ -162,6 +162,93 @@
         </Subnodes>
        </Node>
        <Node>
+        <Name>Developers</Name>
+        <Path>md__Users_drussel_src_rmf_rmf_doc_Developers.html</Path>
+        <Subnodes>
+         <Node>
+          <Name>Overview</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_Developers.html</Path>
+          <Anchor>developers</Anchor>
+         </Node>
+         <Node>
+          <Name>Developer tools</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_Developers.html</Path>
+          <Anchor>dev_tools</Anchor>
+         </Node>
+         <Node>
+          <Name>CMake tools</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_Developers.html</Path>
+          <Anchor>cmake_tools</Anchor>
+         </Node>
+         <Node>
+          <Name>Decorators</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_Developers.html</Path>
+          <Anchor>makedecorators</Anchor>
+         </Node>
+         <Node>
+          <Name>Avro</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_Developers.html</Path>
+          <Anchor>avrocpp</Anchor>
+         </Node>
+         <Node>
+          <Name>SharedData</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_Developers.html</Path>
+          <Anchor>shareddata</Anchor>
+         </Node>
+        </Subnodes>
+       </Node>
+       <Node>
+        <Name>Executables</Name>
+        <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+        <Subnodes>
+         <Node>
+          <Name>Overview</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+          <Anchor>developers</Anchor>
+         </Node>
+         <Node>
+          <Name>rmf_show</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+          <Anchor>rmf_show</Anchor>
+         </Node>
+         <Node>
+          <Name>rmf_frames</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+          <Anchor>rmf_frames</Anchor>
+         </Node>
+         <Node>
+          <Name>rmf_info</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+          <Anchor>rmf_info</Anchor>
+         </Node>
+         <Node>
+          <Name>rmf_slice</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+          <Anchor>rmf_slice</Anchor>
+         </Node>
+         <Node>
+          <Name>rmf_cat</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+          <Anchor>rmf_cat</Anchor>
+         </Node>
+         <Node>
+          <Name>rmf_xml</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+          <Anchor>rmf_xml</Anchor>
+         </Node>
+         <Node>
+          <Name>rmf_validate</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+          <Anchor>rmf_validate</Anchor>
+         </Node>
+         <Node>
+          <Name>rmf3_dump</Name>
+          <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+          <Anchor>rmf3_dump</Anchor>
+         </Node>
+        </Subnodes>
+       </Node>
+       <Node>
         <Name>File Format</Name>
         <Path>md__Users_drussel_src_rmf_rmf_doc_FileFormat.html</Path>
         <Subnodes>
@@ -254,11 +341,6 @@
           <Name>Language bindings</Name>
           <Path>md__Users_drussel_src_rmf_rmf_doc_Library.html</Path>
           <Anchor>bindings</Anchor>
-         </Node>
-         <Node>
-          <Name>Helper programs</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Library.html</Path>
-          <Anchor>helpers</Anchor>
          </Node>
         </Subnodes>
        </Node>
@@ -12946,11 +13028,6 @@
             <Name>utility.h</Name>
             <Path>utility_8h.html</Path>
             <Subnodes>
-             <Node>
-              <Name>add_child_alias</Name>
-              <Path>utility_8h.html</Path>
-              <Anchor>aab4fe8f7e414f0d7a240e071a82b3dfb</Anchor>
-             </Node>
              <Node>
               <Name>clone_file_info</Name>
               <Path>utility_8h.html</Path>

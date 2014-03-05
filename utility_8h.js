@@ -1,6 +1,5 @@
 var utility_8h =
 [
-    [ "add_child_alias", "utility_8h.html#aab4fe8f7e414f0d7a240e071a82b3dfb", null ],
     [ "clone_file_info", "utility_8h.html#af75a5f1ae743a486e821fcdb00732633", null ],
     [ "clone_hierarchy", "utility_8h.html#acdab768b7ce19125ab5db6e0774e55be", null ],
     [ "clone_loaded_frame", "utility_8h.html#a0f1656ff96631e3c2cc3eee5b75c3381", null ],

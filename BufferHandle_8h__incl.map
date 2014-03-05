@@ -1,7 +1,7 @@
 <map id="BufferHandle.h" name="BufferHandle.h">
-<area shape="rect" id="node2" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="1546,238,1645,266"/>
-<area shape="rect" id="node4" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="441,161,601,189"/>
-<area shape="rect" id="node13" href="$exceptions_8h.html" title="Various general useful macros for IMP. " alt="" coords="1356,161,1452,189"/>
-<area shape="rect" id="node17" href="$BufferConstHandle_8h.html" title="Manage a memory buffer for reading/writing RMF files. " alt="" coords="1010,83,1155,111"/>
-<area shape="rect" id="node3" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="926,315,1092,343"/>
+<area shape="rect" id="node2" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="1556,238,1656,266"/>
+<area shape="rect" id="node4" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="451,161,612,189"/>
+<area shape="rect" id="node13" href="$exceptions_8h.html" title="Various general useful macros for IMP. " alt="" coords="1367,161,1463,189"/>
+<area shape="rect" id="node17" href="$BufferConstHandle_8h.html" title="Manage a memory buffer for reading/writing RMF files. " alt="" coords="1021,83,1165,111"/>
+<area shape="rect" id="node3" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="937,315,1103,343"/>
 </map>

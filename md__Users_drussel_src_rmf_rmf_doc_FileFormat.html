@@ -152,7 +152,7 @@ Attributes</h1>
 </ul>
 <p>On a per RMF basis, the data associated with a given key can either have one value for each node which has that attribute, or one value per frame per node with the attribute. The methods in <a class="el" href="classRMF_1_1NodeHandle.html" title="A handle for a particular node in the hierarchy. ">RMF::NodeHandle</a> to get and set the attributes take an optional frame number.</p>
 <p>The library provides decorators to group together and provide easier manipulation of standard attributes. Examples include RMF::Particle, <a class="el" href="classRMF_1_1decorator_1_1Colored.html">RMF::decorator::Colored</a>, <a class="el" href="classRMF_1_1decorator_1_1Ball.html">RMF::decorator::Ball</a> etc. See <a class="el" href="md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#decoratorsattributes">Decorators</a> for more information.</p>
-<p>The data types that can currently be stored in an <a class="el" href="namespaceRMF.html">RMF</a> file are </p>
+<p>The data types that can currently be stored in an <a class="el" href="namespaceRMF.html" title="The namespace for all functionality in the library. ">RMF</a> file are </p>
 <table class="doxtable">
 <tr>
 <th align="right">Name </th><th>Description </th><th align="center">C++ type </th><th align="center">Python type  </th></tr>
@@ -177,9 +177,9 @@ Attributes</h1>
 <tr>
 <td align="right"><a class="el" href="namespaceRMF.html#affffd1547fb5b085b9b5875cafe5771a">RMF::Floats</a> </td><td align="center">std::vector&lt;RMF::Float&gt; </td><td>the type used to pass a list of floating point values. It looks like an <code>std::vector</code> in <code>C++</code> and a <code>list</code> in <code>Python</code> </td></tr>
 <tr>
-<td align="right"><a class="el" href="namespaceRMF.html#a403d28d7d395a6ec19a004a61cb592f7">RMF::FloatKey</a> </td><td align="center">RMF::ID&lt;RMF::FloatTraits&gt; </td><td>a RMF::Key used to identify a floating point value associated with a node in the <a class="el" href="namespaceRMF.html">RMF</a> hierarchy </td></tr>
+<td align="right"><a class="el" href="namespaceRMF.html#a403d28d7d395a6ec19a004a61cb592f7">RMF::FloatKey</a> </td><td align="center">RMF::ID&lt;RMF::FloatTraits&gt; </td><td>a RMF::Key used to identify a floating point value associated with a node in the <a class="el" href="namespaceRMF.html" title="The namespace for all functionality in the library. ">RMF</a> hierarchy </td></tr>
 <tr>
-<td align="right"><a class="el" href="namespaceRMF.html#a72cf70a79da88403bd9bb0a48982ebce">RMF::FloatsKey</a> </td><td align="center">std::vector&lt;RMF::FloatKey&gt; </td><td>a RMF::Key used to identify a list of floating points value associated with a node in the <a class="el" href="namespaceRMF.html">RMF</a> hierarchy </td></tr>
+<td align="right"><a class="el" href="namespaceRMF.html#a72cf70a79da88403bd9bb0a48982ebce">RMF::FloatsKey</a> </td><td align="center">std::vector&lt;RMF::FloatKey&gt; </td><td>a RMF::Key used to identify a list of floating points value associated with a node in the <a class="el" href="namespaceRMF.html" title="The namespace for all functionality in the library. ">RMF</a> hierarchy </td></tr>
 <tr>
 <td align="right">RMF::FloatTraits </td><td align="center">RMF::FloatTraits </td><td>a traits classes to tell HDF5 how to read and write one or more floating point values </td></tr>
 <tr>
@@ -191,7 +191,7 @@ Inheritance of properties</h1>
 <p>Current examples are - RMF::Colored is inherited. That is, a node that is not an RMF::Colored node, has the color of its closest RMF::Colored ancestor. - The RMF::Particle and RMF::RigidParticle coordinates are transforms of any RMF::ReferenceFrame(s) that occur on the particle itself or its ancestors. That is, a node that is a RMF::Particle or RMF::Ball with an ancestor that is an RMF::ReferenceFrame has global coordinates at the RMF::ReferenceFrame's transformation applied to its coordinates. See the example rigid_bodies.py.</p>
 <h1><a class="anchor" id="frames"></a>
 Frames</h1>
-<p>Each <a class="el" href="namespaceRMF.html">RMF</a> file stores one or more frames (conformations). The attributes of a node in a given conformation are the union of conformation-specific attributes as well as static attributes (values that hold for all frames).</p>
+<p>Each <a class="el" href="namespaceRMF.html" title="The namespace for all functionality in the library. ">RMF</a> file stores one or more frames (conformations). The attributes of a node in a given conformation are the union of conformation-specific attributes as well as static attributes (values that hold for all frames).</p>
 <p>As with nodes, frames have a hierarchical relationship to one another. This hierarchy supports natural representation of clustering results (eg you have a frame for the cluster center with a child frame for each conformation that is in the cluster). By convention, sequential frames in a simulation should be stored as with the successor frame as a child of the predecessor.</p>
 <p>Frames also have arbitrary attributes associated with them, like nodes.</p>
 <h1><a class="anchor" id="adding"></a>
@@ -200,7 +200,7 @@ Adding custom data to an RMF</h1>
 <p>If, instead, the data is likely to be a general interest, it probably makes sense to add it to the documentation of this library so that the names used can be standardized.</p>
 <h1><a class="anchor" id="on_disk"></a>
 On disk format</h1>
-<p>The <a class="el" href="namespaceRMF.html">RMF</a> library has supported various on-disk formats. Currently 3 output methods are support, files with suffix <code>.rmf</code> and <code>.rmfz</code> and buffers in memory.</p>
+<p>The <a class="el" href="namespaceRMF.html" title="The namespace for all functionality in the library. ">RMF</a> library has supported various on-disk formats. Currently 3 output methods are support, files with suffix <code>.rmf</code> and <code>.rmfz</code> and buffers in memory.</p>
 <p>The current format stores the structure in an <a href="http://avro.apache.org/docs/1.7.5/spec.html#Object+Container+Files">Avro Object Container</a>. If the <code>.rmfz</code> suffix is used, the contents are compressed. The structure is stored as a series of records, each containing either a frame or static data (there can be multiple static data frames, they are implicitly merged). Upon opening, the file is scanned once, after that, frames can be accessed in a random access fashion. See <a href="Frame.json">Frame.json</a> for the schema.</p>
 <p>The format is robust to corruption (all on disk data is safe if garbage data is written or the process is killed).</p>
 <p>There are several ways that the files can be made more compact (without breaking forwards compatibility of existing files). They can be investigated further if there is sufficient demand.</p>
@@ -219,7 +219,7 @@ Benchmarks</h1>
 </table>
 <p>The operations are:</p>
 <ul>
-<li><code>create</code>: create a <a class="el" href="namespaceRMF.html">RMF</a> file with a hierarchy with 45000 particles</li>
+<li><code>create</code>: create a <a class="el" href="namespaceRMF.html" title="The namespace for all functionality in the library. ">RMF</a> file with a hierarchy with 45000 particles</li>
 <li><code>write frame</code>: save coordinates for those particles</li>
 <li><code>open</code>: open the file</li>
 <li><code>traverse</code>: traverse the loaded hierarchy, touching atom, residue and chain data</li>

@@ -146,11 +146,11 @@ $(document).ready(function(){initNavTree('alias_8py-example.html','');});
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;af = RMF.AliasFactory(fh)</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keywordflow">for</span> r <span class="keywordflow">in</span> red:</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="namespaceRMF.html#aab4fe8f7e414f0d7a240e071a82b3dfb">RMF.add_child_alias</a>(af, redh, r)</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    af.get(redh.add_child(<span class="stringliteral">&quot;red&quot;</span>, RMF.ALIAS)).set_aliased(r)</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keywordflow">for</span> g <span class="keywordflow">in</span> green:</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <a class="code" href="namespaceRMF.html#aab4fe8f7e414f0d7a240e071a82b3dfb">RMF.add_child_alias</a>(af, greenh, g)</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    af.get(greenh.add_child(<span class="stringliteral">&quot;green&quot;</span>, RMF.ALIAS)).set_aliased(g)</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keywordflow">for</span> b <span class="keywordflow">in</span> blue:</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="namespaceRMF.html#aab4fe8f7e414f0d7a240e071a82b3dfb">RMF.add_child_alias</a>(af, blueh, b)</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    af.get(blueh.add_child(<span class="stringliteral">&quot;blue&quot;</span>, RMF.ALIAS)).set_aliased(b)</div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -1,7 +1,7 @@
 <map id="enums.h" name="enums.h">
-<area shape="rect" id="node2" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="899,254,999,282"/>
-<area shape="rect" id="node4" href="$Enum_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="840,83,907,111"/>
-<area shape="rect" id="node3" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="866,331,1032,359"/>
-<area shape="rect" id="node5" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="522,169,683,197"/>
-<area shape="rect" id="node14" href="$exceptions_8h.html" title="Various general useful macros for IMP. " alt="" coords="1093,169,1189,197"/>
+<area shape="rect" id="node2" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="898,254,997,282"/>
+<area shape="rect" id="node4" href="$Enum_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="838,83,905,111"/>
+<area shape="rect" id="node3" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="865,331,1031,359"/>
+<area shape="rect" id="node5" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="454,169,615,197"/>
+<area shape="rect" id="node14" href="$exceptions_8h.html" title="Various general useful macros for IMP. " alt="" coords="1092,169,1188,197"/>
 </map>

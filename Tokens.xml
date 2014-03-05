@@ -1227,17 +1227,6 @@
   </Token>
   <Token>
     <TokenIdentifier>
-      <Name>add_child_alias</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>func</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>aab4fe8f7e414f0d7a240e071a82b3dfb</Anchor>
-    <DeclaredIn>utility.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
       <Name>get_bounding_box</Name>
       <APILanguage>cpp</APILanguage>
       <Type>func</Type>
@@ -1373,6 +1362,20 @@
   </Token>
   <Token>
     <TokenIdentifier>
+      <Name>md__Users_drussel_src_rmf_rmf_doc_Developers</Name>
+      <APILanguage>markdown</APILanguage>
+    </TokenIdentifier>
+    <Path>md__Users_drussel_src_rmf_rmf_doc_Developers.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>md__Users_drussel_src_rmf_rmf_doc_Executables</Name>
+      <APILanguage>markdown</APILanguage>
+    </TokenIdentifier>
+    <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+  </Token>
+  <Token>
+    <TokenIdentifier>
       <Name>md__Users_drussel_src_rmf_rmf_doc_FileFormat</Name>
       <APILanguage>markdown</APILanguage>
     </TokenIdentifier>
@@ -1428,6 +1431,7 @@
       <Scope>RMF</Scope>
     </TokenIdentifier>
     <Path>namespaceRMF.html</Path>
+    <Abstract>The namespace for all functionality in the library. </Abstract>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1742,17 +1746,6 @@
     <Anchor>a8c992cf6c6ec038038d9a185d57a1750</Anchor>
     <Abstract>Work around clang issue. </Abstract>
     <DeclaredIn>default_types.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>add_child_alias</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>func</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>aab4fe8f7e414f0d7a240e071a82b3dfb</Anchor>
-    <DeclaredIn>utility.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3691,6 +3684,7 @@
       <Scope>RMF::decorator</Scope>
     </TokenIdentifier>
     <Path>namespaceRMF_1_1decorator.html</Path>
+    <Abstract>See Decorators and Attributes for more information. </Abstract>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5435,6 +5429,7 @@
       <Scope>RMF::HDF5</Scope>
     </TokenIdentifier>
     <Path>namespaceRMF_1_1HDF5.html</Path>
+    <Abstract>The namespace for all HDF5 functionality in the library. </Abstract>
   </Token>
   <Token>
     <TokenIdentifier>
