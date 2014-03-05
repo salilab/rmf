@@ -115,12 +115,18 @@ chain = Decorator(["REPRESENTATION"], "sequence",
 
 domain = Decorator(["REPRESENTATION"], "sequence",
                    "Domain",
-                   [RangeAttribute("indexes", "Int", "first residue index",
-                                   "last residue index")])
+                   [RangeAttribute(
+                       "residue indexes", "Int", "first residue index",
+                       "last residue index")])
 
 fragment = Decorator(["REPRESENTATION"], "sequence",
                      "Fragment",
-                     [Attribute("indexes", "Ints")])
+                     [Attribute("residue indexes", "Ints")])
+
+bcfragment = Decorator(["REPRESENTATION"], "sequence",
+                       "BackwardsCompatibilityFragment",
+                       [Attribute("indexes", "Ints")])
+
 
 copy = Decorator(["REPRESENTATION"], "sequence",
                  "Copy",
@@ -139,7 +145,7 @@ make_header(
     "sequence",
     [residue,
      chain,
-     fragment,
+     fragment, bcfragment,
      domain,
      typed,
      copy,

@@ -131,15 +131,20 @@ class RMFEXPORT NodeConstHandle
   operator NodeID() const { return node_; }
 #endif
 
+  /** Get the NodeID for this handle. */
   NodeID get_id() const { return node_; }
   RMF_COMPARISONS(NodeConstHandle);
   RMF_HASHABLE(NodeConstHandle, return node_.get_index());
   NodeConstHandle() {}
 
-  //! Return the number of child nodes
+  /** The name of the node is not necessarily unique. */
   std::string get_name() const { return shared_->get_name(node_); }
   NodeConstHandles get_children() const;
 
+ /** \name Functions to access attributes
+
+      @{
+   */
   template <class Tag>
   Nullable<typename Tag::Type> get_value(ID<Tag> k) const {
     return get_value_impl(k);
@@ -158,6 +163,7 @@ class RMFEXPORT NodeConstHandle
   Nullable<typename Tag::Type> get_static_value(ID<Tag> k) const {
     return shared_->get_static_value(node_, k);
   }
+/** @} */
 
 #ifndef SWIG
   /** Each node can be associated at runtime with an
@@ -196,12 +202,8 @@ class RMFEXPORT NodeConstHandle
   //! get the type of this node
   NodeType get_type() const { return NodeType(shared_->get_type(node_)); }
 
-  /** \name Functions to access attributes
-
-      @{
-   */
   RMF_FOREACH_TYPE(RMF_HDF5_NODE_CONST_KEY_TYPE_METHODS_DECL);
-  /** @} */
+
   RMF_SHOWABLE(NodeConstHandle, get_name() << "(" << get_type() << ", " << node_
                                            << ")");
 

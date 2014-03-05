@@ -1,9 +1,15 @@
 # Change Log #
-- RMF now uses the new avro-based format with the `.rmf` suffix.
+- To be more consisent, RMF::decorator::Domain and
+	RMF::decorator::Fragment had their access methods modified to
+	include `residue` in the name.
+- A Pymol plugin was added
+- RMF now uses the new avro-based format with the `.rmf` suffix, you
+	should use this and `.rmfz` as your suffixes.
 - RMF::decorator::Bond and RMF::decorator::BondConst now return
 	RMF::NodeHandle and RMF::NodeConstHandle instead of ints.
 - RMF::decorator::Representation and RMF::decorator::RepresentationConst now return
 	RMF::NodeHandles and RMF::NodeConstHandles instead of ints.
+- RMF::decorator::Domain takes two ints in its set method rather than a list
 - RMF::NodeConstHandle::get_index() went away as it was a duplicate of
 	RMF::NodeConstHandle::get_id()
 - RMF::NodeType and RMF::FrameType were replaced with RMF::Enum
@@ -13,18 +19,10 @@
 	RMF::decorator::Residue::get_residue_type() replace the versions
 	without `residue` in the name
 - Decorators and factories have been moved into the RMF::decorator namespace in C++.
-- Two new formats have been added: `.rmf3` and its compressed version
-	`.rmfz`. You should use those in preference to the prior formats
-	for new files.
-- The RMF repository now has a git submodule. This means you need to do
-	`git submodule init` after cloning (or `git clone
-	git@github.com:salilab/RMF.git --recursive`) and then update with
-	`git pull --recursive origin develop`.
 - You can now only either create a new RMF or open an existing one read
 	only. Most backends only supported those two anyway.
 - Managing of data buffers has been revamped and wrapped in the
 	RMF::BufferHandle class which tracks a shared buffer.
-- Indexes and NodeID attributes are now just ints.
 - You now get keys by passing the appropriate traits object instead of
 	having the type in the function name: eg `f.get_key(cat, "name", RMF.IntTraits())`
 - Appropriate decorators now return RMF::Vector3, RMF::Vector4 or

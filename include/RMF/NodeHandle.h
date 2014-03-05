@@ -116,9 +116,9 @@ class RMFEXPORT NodeHandle : public NodeConstHandle {
   void set_static_value(ID<Tag> k, typename Tag::ArgumentType v) const {
     shared_->set_static_value(node_, k, v);
   }
+  /** @} */
 
   RMF_FOREACH_TYPE(RMF_HDF5_NODE_KEY_TYPE_METHODS);
-  /** @} */
 
   FileHandle get_file() const;
 };

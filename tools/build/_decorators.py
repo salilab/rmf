@@ -235,43 +235,52 @@ class RangeAttribute(AttributePair):
     def __init__(self, name, data_type, begin, end):
         AttributePair.__init__(
             self, name, data_type, data_type + "Range", begin, end)
-        self.get_methods = """  /** DOC */
+        self.get_methods = """
   TYPE get_NAME() const {
     try {
-      return std::make_pair(get_node().GET_BOTH(NAME_[0]), get_node().GET_BOTH(NAME_[1]));
+      TYPE ret;
+      ret[0] = get_node().GET_BOTH(NAME_[0]);
+      ret[1] = get_node().GET_BOTH(NAME_[1]);
+      return ret;
     } RMF_DECORATOR_CATCH( );
   }
   TYPE get_static_NAME() const {
     try {
-      return std::make_pair(get_node().GET_STATIC(NAME_[0]), get_node().GET_STATIC(NAME_[1]));
+      TYPE ret;
+      ret[0] = get_node().GET_STATIC(NAME_[0]);
+      ret[1] = get_node().GET_STATIC(NAME_[1]);
+      return ret;
     } RMF_DECORATOR_CATCH( );
   }
   TYPE get_frame_NAME() const {
     try {
-      return std::make_pair(get_node().GET_FRAME(NAME_[0]), get_node().GET_FRAME(NAME_[1]));
+    TYPE ret;
+      ret[0] = get_node().GET_FRAME(NAME_[0]);
+      ret[1] = get_node().GET_FRAME(NAME_[1]);
+      return ret;
     } RMF_DECORATOR_CATCH( );
   }
 """
         self.set_methods = """
-  void set_NAME(TYPE v) {
+  void set_NAME(%s v0, %s v1) {
     try {
-      get_node().SET_BOTH(NAME_[0], v.first);
-      get_node().SET_BOTH(NAME_[1], v.second);
+      get_node().SET_BOTH(NAME_[0], v0);
+      get_node().SET_BOTH(NAME_[1], v1);
     } RMF_DECORATOR_CATCH( );
   }
-  void set_frame_NAME(TYPE v) {
+  void set_frame_NAME(%s v0, %s v1) {
     try {
-      get_node().SET_FRAME(NAME_[0], v.first);
-      get_node().SET_FRAME(NAME_[1], v.second);
+      get_node().SET_FRAME(NAME_[0], v0);
+      get_node().SET_FRAME(NAME_[1], v1);
     } RMF_DECORATOR_CATCH( );
   }
-    void set_static_NAME(TYPE v) {
+  void set_static_NAME(%s v0, %s v1) {
     try {
-      get_node().SET_STATIC(NAME_[0], v.first);
-      get_node().SET_STATIC(NAME_[1], v.second);
+      get_node().SET_STATIC(NAME_[0], v0);
+      get_node().SET_STATIC(NAME_[1], v1);
     } RMF_DECORATOR_CATCH( );
   }
-"""
+""" % (data_type, data_type, data_type, data_type, data_type, data_type)
         self.check = "!nh.GET(NAME_[0]).get_is_null() && !nh.GET(NAME_[1]).get_is_null() && nh.GET_BOTH(NAME_[0]) < nh.GET_BOTH(NAME_[1])"
 
         self.check = "!nh.GET(NAME_[0]).get_is_null() && !nh.GET(NAME_[1]).get_is_null() && nh.GET_BOTH(NAME_[0]) < nh.GET_BOTH(NAME_[1])"

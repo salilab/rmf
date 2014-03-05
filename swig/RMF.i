@@ -55,8 +55,6 @@
 %include "RMF/infrastructure_macros.h"
 
 
-%template(IntRange) std::pair<int,int>;
-
 %include "RMF/ID.h"
 %template(FrameID) RMF::ID<RMF::FrameTag>;
 %template(NodeID) RMF::ID<RMF::NodeTag>;
@@ -71,10 +69,12 @@
   // hack, I don't understand what swig is doing
   typedef RMF::Vector<3U> Vector3;
   typedef RMF::Vector<4U> Vector4;
+  typedef boost::array<int,2> IntRange;
 %}
 
+%include "RMF.range.i"
 // old swig doesn't handle expanding the macro properly
-%include "RMF/default_types.h"
+%include "RMF/types.h"
  // have to be the real type due to https://github.com/swig/swig/issues/73
 %template(Ints) std::vector<int>;
 %template(Floats) std::vector<float>;
