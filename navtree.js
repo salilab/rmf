@@ -44,7 +44,8 @@ var NAVTREE =
       [ "CMake tools", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#cmake_tools", null ],
       [ "Decorators", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#makedecorators", null ],
       [ "Avro", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#avrocpp", null ],
-      [ "SharedData", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#shareddata", null ]
+      [ "SharedData", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#shareddata", null ],
+      [ "Documentation", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#documention", null ]
     ] ],
     [ "Executables", "md__Users_drussel_src_rmf_rmf_doc_Executables.html", [
       [ "Overview", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#developers", null ],

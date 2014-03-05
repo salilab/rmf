@@ -99,6 +99,7 @@ $(document).ready(function(){initNavTree('md__Users_drussel_src_rmf_rmf_doc_Deve
 <li class="level1"><a href="#makedecorators">Decorators</a></li>
 <li class="level1"><a href="#avrocpp">Avro</a></li>
 <li class="level1"><a href="#shareddata">SharedData</a></li>
+<li class="level1"><a href="#documention">Documentation</a></li>
 </ul>
 </div>
 <div class="textblock"><h1><a class="anchor" id="developers"></a>
@@ -118,8 +119,18 @@ Avro</h1>
 <p><a class="el" href="namespaceRMF.html" title="The namespace for all functionality in the library. ">RMF</a> uses a <a href="https://github.com/salilab/avrocpp">fork of AvroCpp</a> to encode data. See that repository for more information. The fork is mostly necessary in order to add seek support to the DataFileReader and to support writing to memory buffers with the DataFileWriter. The other big patch has made it into Avro 1.7.6.</p>
 <h1><a class="anchor" id="shareddata"></a>
 SharedData</h1>
-<p><a class="el" href="classRMF_1_1NodeConstHandle.html" title="A handle for a particular node in a read-only hierarchy. ">RMF::NodeConstHandle</a> and <a class="el" href="classRMF_1_1FileConstHandle.html" title="A handle for a read-only RMF file. ">RMF::FileConstHandle</a> work by maintaining a reference counted pointer to an RMF::internal::SharedData that contains the data for the open file. The SharedData object contains in memory a copy of the data from the current frame as well as various other file data (node hierarchy, frame hierarchy etc). Note, since it is ref counted, the file is kept open as long as there are any handles in existence. </p>
-</div></div><!-- contents -->
+<p><a class="el" href="classRMF_1_1NodeConstHandle.html" title="A handle for a particular node in a read-only hierarchy. ">RMF::NodeConstHandle</a> and <a class="el" href="classRMF_1_1FileConstHandle.html" title="A handle for a read-only RMF file. ">RMF::FileConstHandle</a> work by maintaining a reference counted pointer to an RMF::internal::SharedData that contains the data for the open file. The SharedData object contains in memory a copy of the data from the current frame as well as various other file data (node hierarchy, frame hierarchy etc). Note, since it is ref counted, the file is kept open as long as there are any handles in existence.</p>
+<h1><a class="anchor" id="documention"></a>
+Documentation</h1>
+<p><a class="el" href="namespaceRMF.html" title="The namespace for all functionality in the library. ">RMF</a> uses doxygen to build its documentation and it is published using the github pages support. To simplify things (so we can assume a fixed doxygen version), <a class="el" href="namespaceRMF.html" title="The namespace for all functionality in the library. ">RMF</a> downloads it own copy of doxygen (on mac or linux). To update the published docs, first it helps to have a second clone of the repository checked out to the <code>gh-pages</code> branch (assumed to be called <code>gh-pages</code>) and lets assume you are building in a directory called <code>release</code>. Then do </p>
+<pre class="fragment">cd release
+ninja -j 4 RMF-doc
+cd ../gh-pages
+rm -rf *
+cp -r ../release/doc/html/* .
+git add --all .
+git commit -a -m "update docs"
+git push origin gh-pages </pre> </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

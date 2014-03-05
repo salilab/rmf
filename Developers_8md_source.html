@@ -125,6 +125,19 @@ $(document).ready(function(){initNavTree('Developers_8md.html','');});
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor"># SharedData # {#shareddata}</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<a class="code" href="classRMF_1_1NodeConstHandle.html">RMF::NodeConstHandle</a> and <a class="code" href="classRMF_1_1FileConstHandle.html">RMF::FileConstHandle</a> work by maintaining a reference counted pointer to an RMF::internal::SharedData that contains the data <span class="keywordflow">for</span> the open file. The SharedData <span class="keywordtype">object</span> contains in memory a copy of the data from the current frame as well as various other file data (node hierarchy, frame hierarchy etc). Note, since it is ref counted, the file is kept open as <span class="keywordtype">long</span> as there are any handles in existence.</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;# Documentation # {#documention}</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;RMF uses doxygen to build its documentation and it is published <span class="keyword">using</span> the github pages support. To simplify things (so we can assume a fixed doxygen version), RMF downloads it own copy of doxygen (on mac or linux).  To update the published docs, first it helps to have a second clone of the repository checked out to the `gh-pages` branch (assumed to be called `gh-pages`) and lets assume you are building in a directory called `release`. Then do</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    cd release</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    ninja -j 4 RMF-doc</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    cd ../gh-pages</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    rm -rf *</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    cp -r ../release/doc/html<span class="comment">/* .</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">    git add --all .</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">    git commit -a -m &quot;update docs&quot;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">    git push origin gh-pages</span></div>
 <div class="ttc" id="classRMF_1_1NodeConstHandle_html"><div class="ttname"><a href="classRMF_1_1NodeConstHandle.html">RMF::NodeConstHandle</a></div><div class="ttdoc">A handle for a particular node in a read-only hierarchy. </div><div class="ttdef"><b>Definition:</b> <a href="NodeConstHandle_8h_source.html#l00081">NodeConstHandle.h:81</a></div></div>
 <div class="ttc" id="classRMF_1_1FileConstHandle_html"><div class="ttname"><a href="classRMF_1_1FileConstHandle.html">RMF::FileConstHandle</a></div><div class="ttdoc">A handle for a read-only RMF file. </div><div class="ttdef"><b>Definition:</b> <a href="FileConstHandle_8h_source.html#l00078">FileConstHandle.h:78</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
