@@ -68,30 +68,3 @@ easily generate bindings for most languages. The two main
 exceptions are C and Fortran. Until the SWIG %C target support is
 finished, these can be supported by writing a simple %C %API
 manually, probably a weeks work.
-
-# Helper programs # {#helpers}
-
-Several helper programs are provided. They all take the name of the RMF file as
-the first argument and an argument "-f" which is the frame to act on. Negative
-values for the frame are treated as every nth frame. That is, "-f -2" means take
-every other frame.
-
-
-- `rmf_show` prints out the hierarchy written to the file.
-
-- `rmf_frame` prints out the frame hierarchy written to the file.
-
-- `rmf_xml` converts an rmf file to an XML files that can be opened in an XML viewer
-   (eg Google Chrome or Firefox). These viewers support collapsing of subtrees, which
-   makes it much easier to get around large hierarchies.
-
-- `rmf_info` displays information about the attributes found in the RMF and how
-   much they are used.
-
-- `rmf_slice` creates a new rmf from frames selected from an existing one.
-
-- `rmf_cat` creates a new rmf concatenating several with the same structure.
-
-- `rmf_validate` checks for errors in an RMF file.
-
-- rmf3_dump` shows a low level dump of an rmf3 file

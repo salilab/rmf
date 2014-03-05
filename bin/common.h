@@ -28,7 +28,6 @@ extern std::string description;
 std::vector<std::string> positional_names;
 boost::program_options::options_description options, positional_options;
 boost::program_options::variables_map variables_map;
-bool verbose = false;
 boost::program_options::positional_options_description
     positional_options_description;
 void print_help_and_exit(char* argv[]) {
@@ -46,13 +45,15 @@ void print_help_and_exit(char* argv[]) {
 boost::program_options::variables_map process_options(int argc, char* argv[]) {
   boost::program_options::options_description all;
   std::string log_level("Off");
-  options.add_options()("help,h", "Get help on command line arguments.")(
-      "verbose,v", "Produce more output.")
+  options.add_options()("help,h", "Show help on command line arguments.");
 #if RMF_HAS_DEPRECATED_BACKENDS
-      ("hdf5-errors", "Show hdf5 errors.")
+  options.add_options()("hdf5-errors", "Show hdf5 errors.");
 #endif
-      ("log-level", boost::program_options::value<std::string>(&log_level),
-       "What log level to use: Trace, Info, Warn, Error, Off");
+#if RMF_HAS_LOG4CXX
+  options.add_options()("log-level",
+                        boost::program_options::value<std::string>(&log_level),
+                        "What log level to use: Trace, Info, Warn, Error, Off");
+#endif
   all.add(positional_options).add(options);
   boost::program_options::store(
       boost::program_options::command_line_parser(argc, argv)
@@ -63,9 +64,6 @@ boost::program_options::variables_map process_options(int argc, char* argv[]) {
   boost::program_options::notify(variables_map);
   if (variables_map.count("help")) {
     print_help_and_exit(argv);
-  }
-  if (variables_map.count("verbose")) {
-    verbose = true;
   }
 #if RMF_HAS_DEPRECATED_BACKENDS
   if (variables_map.count("hdf5-errors")) {

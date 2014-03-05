@@ -19,8 +19,10 @@ std::string description("Show an rmf file as text.");
 int main(int argc, char** argv) {
   try {
     options.add_options()("decorators,d",
-                          "Show what decorators recognize each node.");
-    RMF_ADD_INPUT_FILE("rmf");
+                          "Show what decorators recognize each node.")(
+        "verbose,v",
+        "Show the attribute values for each node.");
+    RMF_ADD_INPUT_FILE("input_rmf");
     int frame = 0;
     options.add_options()("frame,f", boost::program_options::value<int>(&frame),
                           "Frame to use");

@@ -73,7 +73,7 @@ void show_hierarchy(RMF::NodeConstHandle nh, const RMF::Categories& cs,
   out << "<node name=\"" << nh.get_name() << "\" id=\"" << nh.get_id() << "\" "
       << "type=\"" << nh.get_type() << "\">\n";
   if (seen.find(nh) == seen.end()) {
-    if (verbose) {
+    if (variables_map.count("verbose")) {
       for (unsigned int i = 0; i < cs.size(); ++i) {
         show_data_xml(nh, cs[i], out);
       }
@@ -96,7 +96,8 @@ int main(int argc, char** argv) {
     RMF_ADD_OUTPUT_FILE("xml");
     int frame = 0;
     options.add_options()("frame,f", boost::program_options::value<int>(&frame),
-                          "Frame to use, if -1 just show static data");
+                          "Frame to use, if -1 just show static data")(
+        "verbose,v", "Show the attribute values for each node.");
 
     process_options(argc, argv);
 

@@ -19,8 +19,8 @@ std::string description("Grab frames from an rmf file");
 
 int main(int argc, char** argv) {
   try {
-    RMF_ADD_INPUT_FILE("rmf");
-    RMF_ADD_OUTPUT_FILE("rmf");
+    RMF_ADD_INPUT_FILE("input_rmf");
+    RMF_ADD_OUTPUT_FILE("output_rmf");
     RMF_ADD_FRAMES;
     process_options(argc, argv);
 
