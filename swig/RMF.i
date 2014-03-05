@@ -110,8 +110,7 @@ RMF_SWIG_VECTOR(RMF, NodeConstHandle)
 %include "RMF/NodeHandle.h"
 RMF_SWIG_VECTOR(RMF, NodeHandle)
 
-%include "RMF/BufferConstHandle.h"
-%include "RMF/BufferHandle.h"
+%include "RMF.buffer.i"
 
 
 %include "RMF.FileConstHandle.i"

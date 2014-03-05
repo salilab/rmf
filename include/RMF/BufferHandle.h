@@ -23,6 +23,10 @@ class BufferHandle : public BufferConstHandle {
  public:
   //! Empty buffer
   BufferHandle() : BufferConstHandle(std::vector<char>()) {}
+#if !defined(IMP_DOXYGEN)
+  // for pickling
+  BufferHandle(std::string st) : BufferConstHandle(st) {}
+#endif
 #if !defined(IMP_DOXYGEN) && !defined(SWIG)
   std::vector<char> &access_buffer() const { return *data_; }
 #endif

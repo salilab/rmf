@@ -20,7 +20,9 @@
 RMF_ENABLE_WARNINGS
 
 namespace RMF {
-/** Manage a shared buffer for storing a RMF.*/
+/** Manage a shared buffer for storing a RMF.
+
+    Buffers are pickleable in python. */
 class BufferConstHandle {
  protected:
   boost::shared_ptr<std::vector<char> > data_;
