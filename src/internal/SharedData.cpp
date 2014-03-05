@@ -34,7 +34,7 @@ RMF_LARGE_UNORDERED_SET<std::string> open_for_writing;
 }
 SharedData::SharedData(boost::shared_ptr<backends::IO> io, std::string name,
                        bool write, bool created)
-    : SharedDataPath(name), write_(write), io_(io) {
+    : path_(name), write_(write), io_(io) {
   if (!created) {
     reload();
   }

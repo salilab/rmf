@@ -17,17 +17,17 @@
 #include "RMF/constants.h"
 #include "RMF/enums.h"
 #include "RMF/infrastructure_macros.h"
-#include "RMF/internal/SharedDataCategory.h"
-#include "RMF/internal/SharedDataData.h"
-#include "RMF/internal/SharedDataFile.h"
-#include "RMF/internal/SharedDataHierarchy.h"
-#include "RMF/internal/SharedDataKeys.h"
-#include "RMF/internal/SharedDataFrames.h"
-#include "RMF/internal/SharedDataPath.h"
-#include "RMF/internal/SharedDataUserData.h"
+#include "SharedDataCategory.h"
+#include "SharedDataData.h"
+#include "SharedDataFile.h"
+#include "SharedDataHierarchy.h"
+#include "SharedDataKeys.h"
+#include "SharedDataFrames.h"
+#include "SharedDataUserData.h"
 #include "RMF/names.h"
 #include "RMF/traits.h"
 #include "RMF/types.h"
+#include "paths.h"
 
 RMF_ENABLE_WARNINGS
 
@@ -54,12 +54,12 @@ namespace internal {
 
 class RMFEXPORT SharedData
     : public SharedDataUserData,
-      public SharedDataPath,
       public SharedDataFile,
       public SharedDataHierarchy,
       public SharedDataCategory,
       public SharedDataData,
       RMF_FOREACH_TYPE(RMF_SHARED_DATA_PARENT) public SharedDataFrames {
+  std::string path_;
   bool write_;
   boost::shared_ptr<backends::IO> io_;
   FrameID loaded_frame_;
@@ -81,6 +81,8 @@ class RMFEXPORT SharedData
   void flush();
   void reload();
   FrameID get_loaded_frame() const { return loaded_frame_; }
+  std::string get_file_path() const { return path_; }
+  std::string get_file_name() const { return internal::get_file_name(path_); }
   ~SharedData();
 };
 
