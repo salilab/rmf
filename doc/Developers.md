@@ -25,3 +25,16 @@ RMF uses a [fork of AvroCpp](https://github.com/salilab/avrocpp) to encode data.
 # SharedData # {#shareddata}
 
 RMF::NodeConstHandle and RMF::FileConstHandle work by maintaining a reference counted pointer to an RMF::internal::SharedData that contains the data for the open file. The SharedData object contains in memory a copy of the data from the current frame as well as various other file data (node hierarchy, frame hierarchy etc). Note, since it is ref counted, the file is kept open as long as there are any handles in existence.
+
+# Documentation # {#documention}
+
+RMF uses doxygen to build its documentation and it is published using the github pages support. To simplify things (so we can assume a fixed doxygen version), RMF downloads it own copy of doxygen (on mac or linux).  To update the published docs, first it helps to have a second clone of the repository checked out to the `gh-pages` branch (assumed to be called `gh-pages`) and lets assume you are building in a directory called `release`. Then do
+
+    cd release
+    ninja -j 4 RMF-doc
+    cd ../gh-pages
+    rm -rf *
+    cp -r ../release/doc/html/* .
+    git add --all .
+    git commit -a -m "update docs"
+    git push origin gh-pages
