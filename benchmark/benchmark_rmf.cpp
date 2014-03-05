@@ -123,14 +123,18 @@ std::pair<double, std::size_t> create_frame(RMF::FileHandle fh,
   return std::make_pair(ret[0] + ret[1] + ret[2], total_size);
 }
 
-boost::tuple<double, std::size_t, std::size_t> create(RMF::FileHandle file) {
+boost::tuple<std::size_t> create(RMF::FileHandle file, RMF::NodeIDs& atoms) {
   std::size_t hierarchy_size = create_hierarchy(file);
-  RMF::NodeIDs atoms;
   RMF_FOREACH(RMF::NodeID n, file.get_node_ids()) {
     if (file.get_node(n).get_children().empty()) {
       atoms.push_back(n);
     }
   }
+  return boost::make_tuple(hierarchy_size);
+}
+
+boost::tuple<double, std::size_t> create_frames(RMF::FileHandle file,
+                                                const RMF::NodeIDs& atoms) {
   RMF::decorator::ParticleFactory ipf(file);
   double check_value = 0;
   std::size_t frame_size = 0;
@@ -140,7 +144,7 @@ boost::tuple<double, std::size_t, std::size_t> create(RMF::FileHandle file) {
     check_value += cur.first;
     frame_size += cur.second;
   }
-  return boost::make_tuple(check_value, hierarchy_size, frame_size);
+  return boost::make_tuple(check_value, frame_size);
 }
 
 double traverse(RMF::FileConstHandle file) {
@@ -176,11 +180,16 @@ double load(RMF::FileConstHandle file, const RMF::NodeIDs& nodes) {
 
 std::pair<std::size_t, std::size_t> benchmark_create(RMF::FileHandle file,
                                                      std::string type) {
+  RMF::NodeIDs atoms;
   boost::timer timer;
-  boost::tuple<double, std::size_t, std::size_t> cur = create(file);
+  boost::tuple<std::size_t> cur = create(file, atoms);
   std::cout << type << ", create, " << timer.elapsed() << ", " << cur.get<0>()
             << std::endl;
-  return std::make_pair(cur.get<1>(), cur.get<2>());
+  boost::timer frame_timer;
+  boost::tuple<double, std::size_t> frames = create_frames(file, atoms);
+  std::cout << type << ", create frame, " << frame_timer.elapsed() / 20.0
+            << ", " << frames.get<0>() << std::endl;
+  return std::make_pair(cur.get<0>(), frames.get<1>());
 }
 
 void benchmark_traverse(RMF::FileConstHandle file, std::string type) {
@@ -204,7 +213,7 @@ void benchmark_load(RMF::FileConstHandle file, std::string type) {
   }
   boost::timer timer;
   double dist = load(file, nodes);
-  std::cout << type << ", load, " << timer.elapsed() << ", " << dist
+  std::cout << type << ", load, " << timer.elapsed() / 20.0 << ", " << dist
             << std::endl;
 }
 
@@ -266,7 +275,10 @@ int main(int, char**) {
         benchmark_create(fh, "buffer");
       }
       {
+        boost::timer timer;
         RMF::FileConstHandle fh = RMF::open_rmf_buffer_read_only(buffer);
+        std::cout << "buffer"
+                  << ", open, " << timer.elapsed() << ", 0" << std::endl;
         benchmark_traverse(fh, "buffer");
         benchmark_load(fh, "buffer");
       }

@@ -169,28 +169,12 @@ If, instead, the data is likely to be a general interest, it probably
 makes sense to add it to the documentation of this library so that the
 names used can be standardized.
 
-# On disk formats # {#on_disk}
+# On disk format # {#on_disk}
 
-The RMF library supports several
-on-disk formats. They are differentiated by the file suffix. The API
-for accessing all of them are the same with any exceptions noted
-below.
+The RMF library has supported various on-disk formats. Currently 3 output
+methods are support, files with suffix `.rmf` and `.rmfz` and buffers in memory.
 
-A quick comparison of the various options (taken from benchmark/benchmark_rmf.cpp).
-
-| type | create | traverse | load | size |
-|-----:|-------:|---------:|-----:|-----:|
-|rmf3  | 1.1    | 0.09     | 1.4  | 14M  |
-|rmfz  | 1.9    | 0.08     | 1.3  | 10M  |
-|rmf   | 6.2    | 0.17     | 3.3  |  9M  |
-|buffer| 1.1    | 0.07     | 1.2  | 14M  |
-|data  |        |          |      | 12M  |
-
-`data` is the size of the raw data saved to disk.
-
-## RMF3 ## {#rmf_and_avro}
-
-RMF3 stores the structure in an [Avro Object
+The current format stores the structure in an [Avro Object
 Container](http://avro.apache.org/docs/1.7.5/spec.html#Object+Container+Files). If
 the `.rmfz` suffix is used, the contents are compressed. The structure
 is stored as a series of records, each containing either a frame or
@@ -206,37 +190,22 @@ There are several ways that the files can be made more compact
 (without breaking forwards compatibility of existing files). They can be investigated
 further if there is sufficient demand.
 
-## RMF and HDF5 ## {#rmf_hdf5}
+# Benchmarks # {#benchmarks}
 
-The %RMF data is stored in a single
-[HDF5](http://www.hdfgroup.org/HDF5/doc/UG/UG_frame09Groups.html)
-group} in the file on disk. As a result, one could easily put multiple
-%RMF "files" in a single HDF5 archive, as well as store other data
-(such as electron density maps).  However, adding extra data sets
-within the %RMF HDF5 group is not supported.
+A quick comparison of the various options (taken from benchmark/benchmark_rmf.cpp).
 
-HDF5 was chosen over the other candidates as it - supports binary i/o,
-avoiding issues parsing and delimiters that occur with text files -
-supports random access, allowing loading of individual conformations
-without reading the who file - can use internal compression to reduce
-the size of files - has well developed support library facilitating
-easy use from most programming languages and has a variety of command
-line tools to aid debugging
+| type | create | write frame | open  | traverse | read frame | size |
+|-----:|-------:|------------:|------:|---------:|-----------:|------|
+|rmf   | 0.11   | 0.05        | 0.2   | 0.03     | 0.04       | 14M  |
+|rmfz  | 0.09   | 0.10        | 0.5   | 0.03     | 0.05       | 10M  |
+|buffer| 0.09   | 0.10        | 0.5   | 0.03     | 0.05       | 10M  |
 
-\note The following information about how the data is stored on disk
-is not complete. Implementers should instead use the API provided in
-the [RMF library](#rmflib).
+The operations are:
+- `create`: create a RMF file with a hierarchy with 45000 particles
+- `write frame`: save coordinates for those particles
+- `open`: open the file
+- `traverse`: traverse the loaded hierarchy, touching atom, residue and chain data
+- `read frame`: load the coordinates from a frame
+- `size`: the size of the file. The raw data saved is 11M.
 
-The %RMF data is spread over various data sets, divided up into
-classes based on the RMF::Category, data type and whether the
-particular attribute has one value per frame or just one for the whole
-file and whether the data is for one one or a sets of nodes. Each node
-has space allocated where it can store information about whether it
-has attributes in a given class, and if so, where in the corresponding
-data set the attributes are stored.
-
-Space is allocated in the appropriate table if an attribute in a
-particular class is used in a node. A special marker value is used to
-signify when a particular attribute in a class is not found for a
-particular node (e.g. a -1 is used to signify that a node does not
-have an index attribute).
+Note that the file stayed in RAM for these operations (hence the identical buffer and to disk times).
