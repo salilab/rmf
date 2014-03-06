@@ -21,23 +21,23 @@ double get_resolution_metric(double a, double b) {
   return a / b - 1;
 }
 
-std::pair<double, double> get_resolution_impl(NodeConstHandle root,
+std::pair<double, bool> get_resolution_impl(NodeConstHandle root,
                                               IntermediateParticleFactory ipcf,
                                               GaussianParticleFactory gpf) {
-  std::pair<double, double> ret(0.0, 0.0);
+  std::pair<double, bool> ret(std::numeric_limits<double>::max(), false);
   RMF_FOREACH(NodeConstHandle ch, root.get_children()) {
-    std::pair<double, double> cur = get_resolution_impl(ch, ipcf, gpf);
-    ret.first += cur.first;
-    ret.second += cur.second;
+    std::pair<double, bool> cur = get_resolution_impl(ch, ipcf, gpf);
+    ret.first = std::min(ret.first, cur.first);
+    ret.second = ret.second || cur.second;
   }
-  if (ret.second == 0) {
+  if (!ret.second) {
     if (ipcf.get_is(root)) {
       ret.first = ipcf.get(root).get_radius();
-      ret.second = 1.0;
+      ret.second = true;
     } else if (gpf.get_is(root)) {
       Vector3 sdfs = gpf.get(root).get_variances();
       ret.first = std::accumulate(sdfs.begin(), sdfs.end(), 0.0) / 3.0;
-      ret.second = 1.0;
+      ret.second = true;
     }
   }
   return ret;
@@ -101,10 +101,10 @@ NodeIDs AlternativesConst::get_alternatives_impl(RepresentationType type)
 double get_resolution(NodeConstHandle root) {
   IntermediateParticleFactory ipcf(root.get_file());
   GaussianParticleFactory gpf(root.get_file());
-  std::pair<double, double> total = get_resolution_impl(root, ipcf, gpf);
-  RMF_USAGE_CHECK(total.first != 0,
+  std::pair<double, bool> total = get_resolution_impl(root, ipcf, gpf);
+  RMF_USAGE_CHECK(total.second,
                   std::string("No particles were found at ") + root.get_name());
-  return total.second / total.first;
+  return 1.0 / total.first;
 }
 
 Alternatives::Alternatives(NodeHandle nh, IntsKey types_key, IntsKey roots_key)
