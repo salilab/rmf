@@ -1,6 +1,6 @@
 /**
  *  \file RMF/BufferConstHandle.h
- *  \brief Manage a memory buffer for reading/writing RMF files.
+ *  \brief Declare RMF::BufferConstHandle.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
@@ -20,9 +20,13 @@
 RMF_ENABLE_WARNINGS
 
 namespace RMF {
-/** Manage a shared buffer for storing a RMF.
+//! Manage a shared buffer for loading a RMF.
 
-    Buffers are pickleable in python. */
+/** Buffers are pickleable in python and can be created from a wide range
+    of sources.
+
+    See buffers.py for an example.
+    */
 class BufferConstHandle {
  protected:
   boost::shared_ptr<std::vector<char> > data_;

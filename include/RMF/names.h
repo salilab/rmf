@@ -1,6 +1,6 @@
 /**
  *  \file RMF/names.h
- *  \brief Handle read/write of Model data from/to files.
+ *  \brief Functions to check if names are valid.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
@@ -15,16 +15,20 @@
 #include "RMF/config.h"
 #include "types.h"
 
-RMF_ENABLE_WARNINGS namespace RMF {
+RMF_ENABLE_WARNINGS
+namespace RMF {
 
-  /** Node names have to obey certain rules, such as no quotes
-      in the name. This returns a string that has been modified to
-      obey the rules.*/
-  RMFEXPORT std::string get_as_node_name(std::string input);
+/** \name Names
+    @{ */
+/** Node names have to obey certain rules, such as no quotes
+    in the name. This returns a string that has been modified to
+    obey the rules.*/
+RMFEXPORT std::string get_as_node_name(std::string input);
 
-  RMFEXPORT bool get_is_valid_key_name(std::string name);
-  RMFEXPORT bool get_is_valid_node_name(std::string name);
+RMFEXPORT bool get_is_valid_key_name(std::string name);
+RMFEXPORT bool get_is_valid_node_name(std::string name);
 
+/** @} */
 } /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

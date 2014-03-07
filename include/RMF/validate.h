@@ -1,6 +1,6 @@
 /**
  *  \file RMF/validate.h
- *  \brief Handle read/write of Model data from/to files.
+ *  \brief Support for validating the data in a file.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
@@ -23,7 +23,10 @@ RMF_ENABLE_WARNINGS
 
 namespace RMF {
 /** Validate the hierarchy. Throw an exception if it is not valid and log any
- * errors encountered. */
+ * errors encountered.
+ *
+ * This function checks invariants such as all representation leaves having
+ * coordinates and radii. */
 RMFEXPORT void validate(FileConstHandle fh);
 
 } /* namespace RMF */

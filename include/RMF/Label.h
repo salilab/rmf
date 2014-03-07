@@ -1,6 +1,6 @@
 /**
  *  \file RMF/Label.h
- *  \brief Helper functions for manipulating RMF files.
+ *  \brief Declaration of RMF::Label.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
@@ -15,6 +15,7 @@
 RMF_ENABLE_WARNINGS
 namespace RMF {
 
+//! A decorator-like class to mark certain nodes (eg molecule bounaries)
 /** Labels mark a node of the hierarchy as having a property, but, unlike
     Decorator nodes, don't have any other associated data.
  */

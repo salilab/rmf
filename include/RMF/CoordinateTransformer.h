@@ -1,6 +1,6 @@
 /**
  *  \file RMF/CoordinateTransformer.h
- *  \brief Handle read/write of Model data from/to files.
+ *  \brief Declare the RMF::CoordinateTransformer class.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
@@ -22,6 +22,8 @@ namespace RMF {
 namespace decorator {
 class ReferenceFrameConst;
 }
+
+//! Transform coordinates into the global reference frame
 /** Transform coordinates into the global reference frame from
     a nested one.
  */

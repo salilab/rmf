@@ -25,7 +25,10 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 
 #ifndef SWIG
-/** Represent a point.
+/** \brief Represent a point in some dimension.
+
+    [boost::array](http://www.boost.org/doc/libs/1_55_0/doc/html/array.html)
+    provides `operator[]()` and `begin()`/`end()` in C++.
  */
 template <unsigned int D>
 class Vector

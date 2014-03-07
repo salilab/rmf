@@ -1,6 +1,6 @@
 /**
  *  \file RMF/SetCurrentFrame.h
- *  \brief Handle read/write of Model data from/to files.
+ *  \brief Temporarily change the current frame.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
@@ -19,8 +19,8 @@
 RMF_ENABLE_WARNINGS
 namespace RMF {
 
-/** Set the current frame to a value and then return it to the old value when
-    this goes out of scope.
+/** \brief Set the current frame to a value and then return it to the old value
+     when this goes out of scope.
 
     \note This does not check that the current frame is the expected value
     when restoring the frame, so you are free to change it all you want in

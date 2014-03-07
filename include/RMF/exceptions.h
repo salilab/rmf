@@ -1,6 +1,6 @@
 /**
  *  \file RMF/exceptions.h
- *  \brief Various general useful macros for IMP.
+ *  \brief Declarations of the various exception types.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
@@ -16,69 +16,70 @@
 #include "RMF/config.h"
 #include "compiler_macros.h"
 
-RMF_ENABLE_WARNINGS namespace RMF {
-  /** The base class for RMF exceptions. Use the what() method
-      to get back a string describing the exception.
+RMF_ENABLE_WARNINGS
+namespace RMF {
+/** The base class for RMF exceptions. Use the what() method
+    to get back a string describing the exception.
 
-      Use get_message() to get a nice message describing the
-      exception.
-   */
-  class RMFEXPORT Exception : public virtual std::exception,
-                              public virtual boost::exception {
-    mutable std::string message_;
+    Use get_message() to get a nice message describing the
+    exception.
+ */
+class RMFEXPORT Exception : public virtual std::exception,
+                            public virtual boost::exception {
+  mutable std::string message_;
 
-   public:
-    RMF_CXX11_DEFAULT_COPY_CONSTRUCTOR(Exception);
-    Exception();
-    const char* what() const RMF_NOEXCEPT;
-    virtual ~Exception() RMF_NOEXCEPT;
-  };
+ public:
+  RMF_CXX11_DEFAULT_COPY_CONSTRUCTOR(Exception);
+  Exception();
+  const char* what() const RMF_NOEXCEPT;
+  virtual ~Exception() RMF_NOEXCEPT;
+};
 
-  /** Use this instead of the more standard what() to get the
-      message as what() presents issues for memory management
-      with dynamically generated messages like. */
-  RMFEXPORT std::string get_message(const Exception & e);
+/** Use this instead of the more standard what() to get the
+    message as what() presents issues for memory management
+    with dynamically generated messages like. */
+RMFEXPORT std::string get_message(const Exception& e);
 
-  /** Usage exceptions are thrown when the library is misused in some way,
-      eg, an out of bounds element is requested from a collection. In general
-      when these are throw, the failed operation should have been cleanly
-      aborted without changing the file.
-   */
-  class RMFEXPORT UsageException : public Exception {
-   public:
-    RMF_CXX11_DEFAULT_COPY_CONSTRUCTOR(UsageException);
-    UsageException();
-    ~UsageException() RMF_NOEXCEPT;
-  };
+/** Usage exceptions are thrown when the library is misused in some way,
+    eg, an out of bounds element is requested from a collection. In general
+    when these are throw, the failed operation should have been cleanly
+    aborted without changing the file.
+ */
+class RMFEXPORT UsageException : public Exception {
+ public:
+  RMF_CXX11_DEFAULT_COPY_CONSTRUCTOR(UsageException);
+  UsageException();
+  ~UsageException() RMF_NOEXCEPT;
+};
 
-  /** IOExceptions are thrown when some operation on a disk file fails.
-   */
-  class RMFEXPORT IOException : public Exception {
-   public:
-    RMF_CXX11_DEFAULT_COPY_CONSTRUCTOR(IOException);
-    IOException();
-    ~IOException() RMF_NOEXCEPT;
-  };
+/** IOExceptions are thrown when some operation on a disk file fails.
+ */
+class RMFEXPORT IOException : public Exception {
+ public:
+  RMF_CXX11_DEFAULT_COPY_CONSTRUCTOR(IOException);
+  IOException();
+  ~IOException() RMF_NOEXCEPT;
+};
 
-  /** Internal exceptions are thrown when the library discovers that some
-      internal invariant no longer holds. Since they represent bugs in the
-      library, one can not necessarily recover when they occur..
-   */
-  class RMFEXPORT InternalException : public Exception {
-   public:
-    RMF_CXX11_DEFAULT_COPY_CONSTRUCTOR(InternalException);
-    InternalException();
-    ~InternalException() RMF_NOEXCEPT;
-  };
+/** Internal exceptions are thrown when the library discovers that some
+    internal invariant no longer holds. Since they represent bugs in the
+    library, one can not necessarily recover when they occur..
+ */
+class RMFEXPORT InternalException : public Exception {
+ public:
+  RMF_CXX11_DEFAULT_COPY_CONSTRUCTOR(InternalException);
+  InternalException();
+  ~InternalException() RMF_NOEXCEPT;
+};
 
-  /** IndexExceptions are thrown when you walk off the end of something.
-   */
-  class RMFEXPORT IndexException : public Exception {
-   public:
-    RMF_CXX11_DEFAULT_COPY_CONSTRUCTOR(IndexException);
-    IndexException();
-    ~IndexException() RMF_NOEXCEPT;
-  };
+/** IndexExceptions are thrown when you walk off the end of something.
+ */
+class RMFEXPORT IndexException : public Exception {
+ public:
+  RMF_CXX11_DEFAULT_COPY_CONSTRUCTOR(IndexException);
+  IndexException();
+  ~IndexException() RMF_NOEXCEPT;
+};
 }
 
 #define RMF_THROW(m, e)                          \

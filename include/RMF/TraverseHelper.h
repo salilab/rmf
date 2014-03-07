@@ -1,6 +1,6 @@
 /**
  *  \file RMF/TraverseHelper.h
- *  \brief Helper functions for manipulating RMF files.
+ *  \brief A helper function for managing data when traversing an RMF.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
@@ -25,8 +25,12 @@ namespace RMF {
 class TraverseHelper;
 typedef std::vector<TraverseHelper> TraverseHelpers;
 
-/** This class tracks common data that one needs to keep as one traverses the
-    hierarchy.
+/** \brief This class tracks common data that one needs to keep as one traverses
+    the hierarchy.
+
+    Things like residue index, chain id, the local reference frame are all
+    properties of the path taken to reach a given node when traversing. This
+    class helps keep track of them.
 
     Feel free to request that other data types be added.
 

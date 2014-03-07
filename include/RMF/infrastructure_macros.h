@@ -128,8 +128,13 @@ RMF_ENABLE_WARNINGS
   }
 #endif
 
+/** Suppress the unused variable compiler warning. */
 #define RMF_UNUSED(variable) RMF::internal::use(variable);
 
+/** Provide a dummy return for something that doesn't return.
+
+    This is a nasty hack to suppress warnings in some compilers.
+*/
 #define RMF_NO_RETURN(type) return type()
 
 /** Apply the macro to each supported constant size type (eg int as opposed

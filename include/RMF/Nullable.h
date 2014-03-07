@@ -1,6 +1,6 @@
 /**
  *  \file RMF/Nullable.h
- *  \brief Handle read/write of Model data from/to files.
+ *  \brief A helper class for allowing nice return of possibly null values.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
@@ -19,7 +19,9 @@ RMF_ENABLE_WARNINGS
 
 namespace RMF {
 
-/** Store a value as returned by RMF with the additional ability to check if it
+/** \brief Return a possibly null value.
+
+  Return a value as returned by RMF with the additional ability to check if it
   is the null value. These get converted to plain values or `None` in python.
   \note they should never be stored.
 */

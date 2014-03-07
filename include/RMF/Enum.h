@@ -1,6 +1,6 @@
 /**
  *  \file RMF/Enum.h
- *  \brief Handle read/write of Model data from/to files.
+ *  \brief Declaration of RMF::Enum.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
@@ -39,6 +39,7 @@ struct RMFEXPORT RepresentationTypeTag {
 #endif
 };
 
+//! A strong enum with an associated string name for each value
 /** A general purpose Enum that has associated names and is type checked in
  * python.*/
 template <class TagT>

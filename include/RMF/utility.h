@@ -14,14 +14,10 @@
 #include "RMF/internal/errors.h"
 #include "Vector.h"
 #include <boost/array.hpp>
-#include "internal/errors.h"
 
 RMF_ENABLE_WARNINGS
 
 namespace RMF {
-namespace decorator {
-class AliasFactory;
-}
 
 class FileConstHandle;
 class FileHandle;
@@ -30,7 +26,8 @@ class NodeHandle;
 
 /** \name Copy functions
 
-    \note These functions make use of the association field.
+    See the example cloning.py for a usage example.
+
     @{
  */
 
@@ -54,18 +51,18 @@ RMFEXPORT void clone_static_frame(FileConstHandle input, FileHandle output);
 RMFEXPORT bool get_equal_structure(FileConstHandle input,
                                    FileConstHandle output,
                                    bool print_diff = false);
-/** Return true of the two have the same structure.*/
+/** Return true of the two have the same values in the current frame.*/
 RMFEXPORT bool get_equal_current_values(FileConstHandle input,
                                         FileConstHandle out);
 
-/** Return true of the two have the same structure.*/
+/** Return true if the two have the same values in the static frame.*/
 RMFEXPORT bool get_equal_static_values(FileConstHandle input,
                                        FileConstHandle out);
 
 /** This function simply throws an exception. It is here for testing.*/
 RMFEXPORT void test_throw_exception();
 
-/** Return a lowerbound/upperbound pair that ]bounds the data stored in the
+/** Return a lowerbound/upperbound pair that bounds the data stored in the
  * tree.
  */
 RMFEXPORT boost::array<RMF::Vector3, 2> get_bounding_box(NodeConstHandle root);

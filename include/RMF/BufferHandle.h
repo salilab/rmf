@@ -1,6 +1,6 @@
 /**
  *  \file RMF/BufferHandle.h
- *  \brief Manage a memory buffer for reading/writing RMF files.
+ *  \brief Declare RMF::BufferHandle.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
@@ -18,7 +18,7 @@
 RMF_ENABLE_WARNINGS
 
 namespace RMF {
-/** Manage a shared buffer for storing a RMF.*/
+//! Manage a shared buffer for storing a RMF
 class BufferHandle : public BufferConstHandle {
  public:
   //! Empty buffer

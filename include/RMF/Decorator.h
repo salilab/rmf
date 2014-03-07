@@ -1,6 +1,6 @@
 /**
  *  \file RMF/Decorator.h
- *  \brief Helper functions for manipulating RMF files.
+ *  \brief Mostly empty base classes for decorators and factories.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
@@ -20,8 +20,11 @@
 RMF_ENABLE_WARNINGS
 namespace RMF {
 
+//! The base class for decorators.
 /** Decorators in RMF provide high level routines to manipulate attributes
     of nodes in the hierarchy. They are created by an associated Factory.
+
+    See [Decorators and attributes](\ref decoratorsattributes) for more info.
  */
 class Decorator {
  private:
@@ -37,7 +40,7 @@ class Decorator {
  public:
   RMF_SHOWABLE(Decorator, get_node().get_name());
 };
-
+//! The base class for Factories
 /** This common base class for all factories is here for organizational
  * purposes. It doesn't provide any functionality. */
 class Factory {};

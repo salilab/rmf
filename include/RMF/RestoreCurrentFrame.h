@@ -1,6 +1,6 @@
 /**
  *  \file RMF/RestoreCurrentFrame.h
- *  \brief Handle read/write of Model data from/to files.
+ *  \brief Restore the current frame when exiting a scope.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
@@ -19,7 +19,7 @@
 RMF_ENABLE_WARNINGS
 namespace RMF {
 
-/** Restore the frame that was current on creation upon destruction.
+/** \brief Restore the frame that was current on creation upon destruction.
  */
 class RMFEXPORT RestoreCurrentFrame {
   FileConstHandle file_;

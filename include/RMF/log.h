@@ -1,6 +1,6 @@
 /**
  *  \file RMF/log.h
- *  \brief Helper functions for manipulating RMF files.
+ *  \brief Functions and macros for logging.
  *
  *  Copyright 2007-2012 IMP Inventors. All rights reserved.
  *
@@ -34,6 +34,8 @@ RMFEXPORT log4cxx::LoggerPtr get_logger();
     - Warn
     - Error
     - Off
+
+   Log4CXX is required for loggin to be supported.
 */
 RMFEXPORT void set_log_level(std::string level);
 

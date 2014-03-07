@@ -1,6 +1,6 @@
 /**
  *  \file RMF/constants.h
- *  \brief Various utilities for rmfing
+ *  \brief Various constants.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *

@@ -1,6 +1,6 @@
 /**
  *  \file RMF/info.h
- *  \brief Helper functions for manipulating RMF files.
+ *  \brief Show info about the file.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
@@ -16,7 +16,8 @@
 RMF_ENABLE_WARNINGS
 
 namespace RMF {
-/** Show various statistics about the file. */
+/** Show various statistics about the file such as attributes
+    and how often they are used. */
 RMFEXPORT void show_info(RMF::FileConstHandle rh,
                          std::ostream& out = std::cout);
 
