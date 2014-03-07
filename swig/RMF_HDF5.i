@@ -1,16 +1,10 @@
 %module "RMF_HDF5"
 %feature("autodoc", 1);
-// turn off the warning as it mostly triggers on methods (and lots of them)
-%warnfilter(321);
+
+%include "RMF.warnings.i"
 
 %{
 #include <RMF/compiler_macros.h>
-
-// needs to go beyond the POP
-RMF_GCC_PRAGMA( diagnostic ignored "-Wmissing-declarations")
-RMF_PUSH_WARNINGS
-RMF_GCC_PRAGMA( diagnostic ignored "-Wunused-value")
-
 /* SWIG generates long class names with wrappers that use certain Boost classes,
    longer than the 255 character name length for MSVC. This shouldn't affect
    the code, but does result in a lot of warning output, so disable this warning
@@ -34,13 +28,6 @@ RMF_VC_PRAGMA(warning( disable: 4503 ))
 
 %include "RMF/config.h"
 
-%pythoncode %{
-_value_types=[]
-_object_types=[]
-_raii_types=[]
-_plural_types=[]
-%}
-
 
 
 %include "typemaps.i"
@@ -57,10 +44,20 @@ def get_data_types():
    return _types_list
 %}
 
+%template(Ints) std::vector<int>;
+%template(Floats) std::vector<float>;
+%template(Strings) std::vector<std::string>;
+%template(Doubles) std::vector<double>;
+%template(IntsList) std::vector<std::vector<int> >;
+%template(FloatsList) std::vector<std::vector<float> >;
+%template(StringsList) std::vector<std::vector<std::string> >;
+%template(DoublesList) std::vector<std::vector<double> >;
+
+
 /* Apply the passed macro to each type used in RMF */
-%define IMP_RMF_SWIG_FOREACH_HDF5_TYPE(macroname)
+%define RMF_SWIG_FOREACH_HDF5_TYPE(macroname)
   macroname(int, Int, Ints, int);
-macroname(ints, Ints, IntsList, RMF::HDF5::Ints);
+  macroname(ints, Ints, IntsList, RMF::HDF5::Ints);
   macroname(float, Float, Floats, double);
   macroname(floats, Floats, FloatsList, RMF::HDF5::Floats);
   macroname(index, Index, Indexes, int);
@@ -70,19 +67,8 @@ macroname(ints, Ints, IntsList, RMF::HDF5::Ints);
 %enddef
 
 
-IMP_RMF_SWIG_NATIVE_VALUES_LIST(RMF::HDF5, double, Floats, FloatsList);
-IMP_RMF_SWIG_NATIVE_VALUES_LIST(RMF::HDF5, int, Ints, IntsList);
-IMP_RMF_SWIG_NATIVE_VALUES_LIST(RMF::HDF5, std::string, Strings, StringsList);
-IMP_RMF_SWIG_VALUE_BUILTIN(RMF::HDF5, Float, Floats, double);
-IMP_RMF_SWIG_VALUE_BUILTIN(RMF::HDF5, Int, Ints, int);
-IMP_RMF_SWIG_VALUE_BUILTIN(RMF::HDF5, String, Strings, std::string);
-IMP_RMF_SWIG_NATIVE_VALUE(float);
-IMP_RMF_SWIG_NATIVE_VALUE(double);
-IMP_RMF_SWIG_NATIVE_VALUE(int);
-IMP_RMF_SWIG_NATIVE_VALUE(std::string);
-
 /* Declare the needed things for each type */
-%define IMP_RMF_SWIG_DECLARE_HDF5_TYPE(lcname, Ucname, Ucnames, Type)
+%define RMF_SWIG_DECLARE_HDF5_TYPE(lcname, Ucname, Ucnames, Type)
 namespace RMF {
   namespace HDF5 {
     %rename(_##Ucname##Traits) Ucname##Traits;
@@ -98,19 +84,10 @@ namespace RMF {
 %pythoncode %{
 _types_list.append(#lcname)
 %}
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##DataSet1D, Ucname##DataSet1D, Ucname##DataSet1Ds);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##DataSet2D, Ucname##DataSet2D, Ucname##DataSet2Ds);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##DataSet3D, Ucname##DataSet3D, Ucname##DataSet3Ds);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##DataSet1DAttributes, Ucname##DataSet1DAttributes, Ucname##DataSet1DAttributesList);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##DataSet2DAttributes, Ucname##DataSet2DAttributes, Ucname##DataSet2DAttributesList);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##DataSet3DAttributes, Ucname##DataSet3DAttributes, Ucname##DataSet3DAttributesList);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##ConstDataSet1D, Ucname##ConstDataSet1D, Ucname##ConstDataSet1Ds);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##ConstDataSet2D, Ucname##ConstDataSet2D, Ucname##ConstDataSet2Ds);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##ConstDataSet3D, Ucname##ConstDataSet3D, Ucname##ConstDataSet3Ds);
 %enddef
 
 
-%define IMP_RMF_SWIG_DEFINE_INTERMEDIATE_HDF5_TYPE(lcname, Ucname, Ucnames, Type)
+%define RMF_SWIG_DEFINE_INTERMEDIATE_HDF5_TYPE(lcname, Ucname, Ucnames, Type)
 %template(Ucname##ConstDataSet1D) RMF::HDF5::ConstDataSetD<RMF::HDF5::Ucname##Traits, 1>;
 %template(Ucname##ConstDataSet2D) RMF::HDF5::ConstDataSetD<RMF::HDF5::Ucname##Traits, 2>;
 %template(Ucname##ConstDataSet3D) RMF::HDF5::ConstDataSetD<RMF::HDF5::Ucname##Traits, 3>;
@@ -119,27 +96,14 @@ IMP_RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, Ucname##ConstDataSet3D, Ucname##ConstData
 %template(Ucname##DataSetAttributes3D) RMF::HDF5::MutableAttributes< RMF::HDF5::ConstDataSetD<RMF::HDF5::Ucname##Traits, 3> >;
 %enddef
 
-%define IMP_RMF_SWIG_DEFINE_HDF5_TYPE(lcname, Ucname, Ucnames, Type)
+%define RMF_SWIG_DEFINE_HDF5_TYPE(lcname, Ucname, Ucnames, Type)
 %template(Ucname##DataSet1D) RMF::HDF5::DataSetD<RMF::HDF5::Ucname##Traits, 1>;
 %template(Ucname##DataSet2D) RMF::HDF5::DataSetD<RMF::HDF5::Ucname##Traits, 2>;
 %template(Ucname##DataSet3D) RMF::HDF5::DataSetD<RMF::HDF5::Ucname##Traits, 3>;
 %enddef
 
-IMP_RMF_SWIG_VALUE(RMF::HDF5, Object, Objects);
-IMP_RMF_SWIG_VALUE_TEMPLATE(RMF::HDF5, ConstAttributes);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, ConstGroupAttributes,ConstGroupAttributes, ConstGroupAttributesList);
-IMP_RMF_SWIG_VALUE(RMF::HDF5, ConstGroup, ConstGroups);
-IMP_RMF_SWIG_VALUE(RMF::HDF5, ConstFile, ConstFiles);
-IMP_RMF_SWIG_VALUE_TEMPLATE(RMF::HDF5, MutableAttributes);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, GroupAttributes,GroupAttributes, GroupAttributesList);
-IMP_RMF_SWIG_VALUE(RMF::HDF5, Group, Groups);
-IMP_RMF_SWIG_VALUE(RMF::HDF5, File, Files);
-IMP_RMF_SWIG_VALUE_TEMPLATE(RMF::HDF5, DataSetD);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, DataSetIndex1D, DataSetIndex1D, DataSetIndex1Ds);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, DataSetIndex2D, DataSetIndex2D, DataSetIndex2Ds);
-IMP_RMF_SWIG_VALUE_INSTANCE(RMF::HDF5, DataSetIndex3D, DataSetIndex3D, DataSetIndex3Ds);
 
-IMP_RMF_SWIG_FOREACH_HDF5_TYPE(IMP_RMF_SWIG_DECLARE_HDF5_TYPE);
+RMF_SWIG_FOREACH_HDF5_TYPE(RMF_SWIG_DECLARE_HDF5_TYPE);
 
 %implicitconv;
 
@@ -151,6 +115,32 @@ namespace RMF {
 }
 
 %include "RMF/HDF5/types.h"
+
+%template(_IntTraitsBaseClass) RMF::HDF5::SimpleTraits<RMF::HDF5::IntTraitsBase>;
+%template(_IntsTraitsBase) RMF::HDF5::SimplePluralTraits<RMF::HDF5::IntTraits>;
+%template(_FloatTraitsBaseClass) RMF::HDF5::SimpleTraits<RMF::HDF5::FloatTraitsBase>;
+%template(_FloatsTraitsBase) RMF::HDF5::SimplePluralTraits<RMF::HDF5::FloatTraits>;
+%template(_IndexTraitsBaseClass) RMF::HDF5::SimpleTraits<RMF::HDF5::IndexTraitsBase>;
+%template(_IndexesTraitsBase) RMF::HDF5::SimplePluralTraits<RMF::HDF5::IndexTraits>;
+%rename(_IntTraitsBase) IntTraitsBase;
+%rename(_FloatTraitsBase) FloatTraitsBase;
+%rename(_IndexTraitsBase) IndexTraitsBase;
+
+%inline %{
+  namespace RMF {
+    namespace HDF5 {
+#ifdef SWIG
+struct IntTraits : public RMF::HDF5::SimpleTraits<RMF::HDF5::IntTraitsBase> {};
+struct IntsTraits : public SimplePluralTraits<IntTraits> {};
+struct FloatTraits : public SimpleTraits<FloatTraitsBase> {};
+struct FloatsTraits : public SimplePluralTraits<FloatTraits> {};
+struct IndexTraits : public SimpleTraits<IndexTraitsBase> {};
+struct IndexesTraits : public SimplePluralTraits<IndexTraits> {};
+#endif
+    }
+  }
+%}
+
 %include "RMF/HDF5/handle.h"
 %include "RMF/HDF5/Object.h"
 %include "RMF/HDF5/ConstAttributes.h"
@@ -164,43 +154,14 @@ namespace RMF {
 %include "RMF/HDF5/DataSetAccessPropertiesD.h"
 %include "RMF/HDF5/DataSetCreationPropertiesD.h"
 %include "RMF/HDF5/ConstDataSetD.h"
-IMP_RMF_SWIG_FOREACH_HDF5_TYPE(IMP_RMF_SWIG_DEFINE_INTERMEDIATE_HDF5_TYPE);
+RMF_SWIG_FOREACH_HDF5_TYPE(RMF_SWIG_DEFINE_INTERMEDIATE_HDF5_TYPE);
 %include "RMF/HDF5/DataSetD.h"
 
 
-IMP_RMF_SWIG_FOREACH_HDF5_TYPE(IMP_RMF_SWIG_DEFINE_HDF5_TYPE);
+RMF_SWIG_FOREACH_HDF5_TYPE(RMF_SWIG_DEFINE_HDF5_TYPE);
 
 %include "RMF/HDF5/ConstGroup.h"
 %template(_HDF5MutableAttributesGroup) RMF::HDF5::MutableAttributes<RMF::HDF5::ConstGroup>;
 %include "RMF/HDF5/ConstFile.h"
 %include "RMF/HDF5/Group.h"
 %include "RMF/HDF5/File.h"
-
-%pythoncode %{
-_tmpdir=None
-
-def _get_temporary_file_path(name):
-   global _tmpdir
-   if not _tmpdir:
-       import tempfile
-       _tmpdir = tempfile.mkdtemp()
-   import os.path
-   return os.path.join(_tmpdir, name)
-
-def _get_test_input_file_path(name):
-   import sys
-   import os.path
-   dir= os.path.split(sys.argv[0])[0]
-   return os.path.join(dir, "input", name)
-
-def get_example_path(name):
-   import sys
-   import os.path
-   dir= os.path.split(sys.argv[0])[0]
-   return os.path.join(dir, name)
-%}
-
-%{
-RMF_POP_WARNINGS
-%}
-

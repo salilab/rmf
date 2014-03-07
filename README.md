@@ -1,17 +1,18 @@
 # RMF #
-The library provides support for the RMF
-file format for storing
-hierarchical molecular data (such as atomic or coarse
-grained representations of proteins), along with
-markup, including geometry and score data.
 
-The library uses the [HDF5](http://www.hdf5.org,HDF5) library or [Avro](http://avro.apache.org) library to manage the data on
-disk. Other backends (eg mmCIF) could be used, if desired.
+[![Build Status](https://travis-ci.org/salilab/rmf.png?branch=develop)](https://travis-ci.org/salilab/rmf)
 
-See
-- [RMF file format](\ref rmf) for more information about the files,
-- [RMF Library](\ref rmflib) for more information about using the library.
-- [Mapping data into RMF files](\ref mapping) for more information about how to structure data in RMF files.
+The library provides support for the RMF file format for
+storing hierarchical molecular data (such as atomic or coarse grained
+representations of proteins), along with markup, including geometry
+and score data.
 
-Also see the [rmf examples](http://www.github.com/salilab/rmf_examples) repository
-for examples of interesting or problematic RMF files.
+The main documentation is found on the [web site](http://salilab.github.io/rmf).
+
+Copyright 2013 University of California, San Francisco.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0

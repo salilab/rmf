@@ -1,13 +1,15 @@
 import RMF
 for suffix in RMF.suffixes:
-    path=RMF._get_temporary_file_path("alias."+suffix)
+    path = RMF._get_temporary_file_path("alias." + suffix)
     f = RMF.create_rmf_file(path)
-    fs = f.get_current_frame()
-    f0 = fs.add_child("frame", RMF.FRAME)
+    f0 = f.add_frame("frame", RMF.FRAME)
     cat = f.get_category("cat")
-    k = f.get_int_key(cat, "key")
-    fs.set_as_current_frame()
+    k = f.get_key(cat, "key", RMF.int_tag)
     n = f.get_root_node()
-    n.set_value(k, 1)
-    f0.set_as_current_frame()
+    n.set_static_value(k, 1)
+    del f
+    del n
+    f = RMF.open_rmf_file_read_only(path)
+    f.set_current_frame(f0)
+    n = f.get_root_node()
     assert(n.get_value(k) == 1)

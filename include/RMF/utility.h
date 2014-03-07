@@ -9,58 +9,67 @@
 #ifndef RMF_UTILITY_H
 #define RMF_UTILITY_H
 
-#include <RMF/config.h>
-#include "internal/errors.h"
 #include "NodeConstHandle.h"
+#include "RMF/config.h"
+#include "RMF/internal/errors.h"
+#include "Vector.h"
+#include <boost/array.hpp>
 
-RMF_ENABLE_WARNINGS namespace RMF {
+RMF_ENABLE_WARNINGS
 
-  class FileConstHandle;
-  class FileHandle;
-  class AliasFactory;
-  class NodeHandle;
-  class NodeConstHandle;
+namespace RMF {
 
-  /** \name Copy functions
+class FileConstHandle;
+class FileHandle;
+class NodeConstHandle;
+class NodeHandle;
 
-      \note These functions make use of the association field.
-      @{
-   */
+/** \name Copy functions
 
-  /** Copy the hierarchy structure and set structure from one rmf
-      file to another.*/
-  RMFEXPORT void copy_structure(FileConstHandle input, FileHandle output);
+    See the example cloning.py for a usage example.
 
-  /** Add the associations between the input and output needed to
-      use the other copy functions.*/
-  RMFEXPORT void link_structure(FileConstHandle input, FileHandle output);
+    @{
+ */
 
-  /** Copy the hierarchy structure entailed by the set of nodes passed
-      for the input. They most form a coherent subhierarchy of their
-      input file (no nodes whose parents aren't included).*/
-  RMFEXPORT void copy_structure(const NodeConstHandles & input,
-                                FileHandle output);
+/** Copy the hierarchy structure and set structure from one rmf
+    file to another.*/
+RMFEXPORT void clone_file_info(FileConstHandle input, FileHandle output);
 
-  /** Copy the data of a single frame from between two files. Parts missing
-      in the output file will be skipped.*/
-  RMFEXPORT void copy_frame(FileConstHandle input, FileHandle output);
-  /** Copy all values of the given nodes to the output file.*/
-  RMFEXPORT void copy_values(FileConstHandle input, FileHandle output);
-  /** @} */
+/** Copy the hierarchy structure and set structure from one rmf
+    file to another.*/
+RMFEXPORT void clone_hierarchy(FileConstHandle input, FileHandle output);
 
-  /** Return true of the two have the same structure.*/
-  RMFEXPORT bool get_equal_structure(
-      FileConstHandle input, FileConstHandle output, bool print_diff = false);
-  /** Return true of the two have the same structure.*/
-  RMFEXPORT bool get_equal_frame(
-      FileConstHandle input, FileConstHandle out, bool print_diff = false);
+/** Copy the data of a single frame from between two files.*/
+RMFEXPORT void clone_loaded_frame(FileConstHandle input, FileHandle output);
 
-  /** Add the child node as an alias child of the parent. */
-  RMFEXPORT void add_child_alias(
-      AliasFactory af, NodeHandle parent, NodeConstHandle child);
+/** Copy the data of a single frame from between two files. Parts missing
+    in the output file will be skipped.*/
+RMFEXPORT void clone_static_frame(FileConstHandle input, FileHandle output);
+/** @} */
 
-  /** This function simply throws an exception. It is here for testing.*/
-  RMFEXPORT void test_throw_exception();
+/** Return true of the two have the same structure.*/
+RMFEXPORT bool get_equal_structure(FileConstHandle input,
+                                   FileConstHandle output,
+                                   bool print_diff = false);
+/** Return true of the two have the same values in the current frame.*/
+RMFEXPORT bool get_equal_current_values(FileConstHandle input,
+                                        FileConstHandle out);
+
+/** Return true if the two have the same values in the static frame.*/
+RMFEXPORT bool get_equal_static_values(FileConstHandle input,
+                                       FileConstHandle out);
+
+/** This function simply throws an exception. It is here for testing.*/
+RMFEXPORT void test_throw_exception();
+
+/** Return a lowerbound/upperbound pair that bounds the data stored in the
+ * tree.
+ */
+RMFEXPORT boost::array<RMF::Vector3, 2> get_bounding_box(NodeConstHandle root);
+
+/** Return the diameter of the system. Unlike bounding box, this one can
+    be called from python. */
+RMFEXPORT float get_diameter(NodeConstHandle root);
 
 } /* namespace RMF */
 

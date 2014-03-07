@@ -1,15 +1,17 @@
 /**
  * Copyright 2007-2013 IMP Inventors. All rights reserved.
  */
-#include <RMF/FileHandle.h>
-#include <RMF/NodeConstHandle.h>
 #include <boost/algorithm/string/predicate.hpp>
-#include <cstdio>
-#include <boost/filesystem.hpp>
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/path.hpp>
+#include <exception>
+#include <iostream>
+#include <string>
+
 #include "common.h"
+
 namespace {
 std::string description("Try to upgrade an out of date RMF file.");
-int frame = 0;
 }
 int main(int argc, char** argv) {
   try {
@@ -25,7 +27,7 @@ int main(int argc, char** argv) {
       std::cout << "Nothing to do" << std::endl;
     }
   }
-  catch (const std::exception & e) {
+  catch (const std::exception& e) {
     std::cerr << "Error: " << e.what() << std::endl;
   }
   return 0;

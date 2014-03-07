@@ -1,15 +1,15 @@
 /**
- *  \file RMF/File.h
+ *  \file RMF/HDF5/File.h
  *  \brief Handle read/write of Model data from/to files.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
-#ifndef RMF_HDF_5FILE_H
-#define RMF_HDF_5FILE_H
+#ifndef RMF_HDF5_FILE_H
+#define RMF_HDF5_FILE_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "Group.h"
 #include "ConstFile.h"
 
@@ -22,25 +22,25 @@ RMF_ENABLE_WARNINGS namespace RMF {
       - The \external{http://hdf5.org, standard HDF5 C++ interface} doesn't
       really simplify use of the HDF5 library and doesn't make use of the
       features of C++.
-  
+
       The main classes provide access too:
       - HDF5 files through RMF::File and RMF::HDF5::ConstFile
       - HDF5 groups through RMF::Group and RMF::HDF5::ConstGroup
       - HDF5 data sets through RMF::DataSetD and RMF::HDF5::ConstDataSetD
-  
+
       The \c Const variants are for read only files.
-  
+
       They allow one to create a manipulate data sets containing floating point
       values, integers, strings, variable length arrays of floating point values
       and a few other types. Attributes on data sets of groups of those types
       can also be manipulated.
-  
+
       The top level classes are, in turn, derived from RMF::Object,
       RMF::HDF5::ConstAttributes and RMF::HDF5::MutableAttributes which provide
       access to general HDF5 per-object and attribute functionality (all objects
       in HDF5 can have arbitrary small pieces of data attached to them via
       attributes).
-  
+
       Not all of the functionality of the HDF5 \c C library is covered in C++.
       You can get the corresponding native handle from most objects with methods
       like RMF::File::get_handle() and use that for other operations if needed.
@@ -71,13 +71,13 @@ RMF_ENABLE_WARNINGS namespace RMF {
 
   /** Create a new hdf5 file, clearing any existing file with the same
       name if needed. The file cannot already be open.
-  
+
       \exception RMF::IOException couldn't create file
    */
   RMFEXPORT File create_file(std::string name);
 
   /** Open an existing hdf5 file. The file cannot already be open/.
-  
+
       \exception RMF::IOException couldn't open file
    */
   RMFEXPORT File open_file(std::string name);
@@ -95,8 +95,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
   typedef std::vector<File> Files;
 
   } /* namespace HDF5 */
-}   /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_HDF_5FILE_H */
+#endif /* RMF_HDF5_FILE_H */

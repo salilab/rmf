@@ -6,148 +6,151 @@
  *
  */
 
-#include <RMF/internal/SharedData.h>
-#include <RMF/NodeHandle.h>
-#include <boost/unordered_set.hpp>
-#include <RMF/HDF5/File.h>
-#include <boost/filesystem/path.hpp>
-#include <boost/scoped_ptr.hpp>
-#include <boost/version.hpp>
-#include <backend/hdf5/create.h>
-#include <backend/avro/create.h>
-#include <RMF/log.h>
+#include <algorithm>
+#include <exception>
+#include <functional>
+#include <iostream>
+#include <string>
 
-RMF_ENABLE_WARNINGS namespace RMF {
-  namespace internal {
+#include "RMF/ID.h"
+#include "RMF/compiler_macros.h"
+#include "RMF/constants.h"
+#include "RMF/enums.h"
+#include "RMF/exceptions.h"
+#include "RMF/infrastructure_macros.h"
+#include "RMF/internal/SharedData.h"
+#include "RMF/internal/large_set_map.h"
+#include "RMF/log.h"
+#include "RMF/types.h"
+#include "backend/IO.h"
 
-  SharedData::SharedData(std::string path)
-      : valid_(11111), cur_frame_(ALL_FRAMES), path_(path) {
-    RMF_INFO(get_logger(), "Opening file " << path_);
+RMF_ENABLE_WARNINGS
+
+namespace RMF {
+namespace internal {
+
+namespace {
+RMF_LARGE_UNORDERED_SET<std::string> open_for_writing;
+}
+SharedData::SharedData(boost::shared_ptr<backends::IO> io, std::string name,
+                       bool write, bool created)
+    : path_(name), write_(write), io_(io) {
+  if (!created) {
+    reload();
   }
-  ;
-  SharedData::~SharedData() {
-    RMF_INTERNAL_CHECK(valid_ == 11111, "Already destroyed");
-    valid_ = -66666;
-    RMF_INFO(get_logger(), "Closing file " << path_);
-  }
+  RMF_USAGE_CHECK(
+      open_for_writing.find(get_file_path()) == open_for_writing.end(),
+      "Opening a file that is still being written is asking for trouble.");
+  if (write) open_for_writing.insert(get_file_path());
+}
 
-  void SharedData::audit_key_name(std::string name) const {
-    if (name.empty()) {
-      RMF_THROW(Message("Empty key name"), UsageException);
+void SharedData::set_loaded_frame(FrameID frame) {
+  RMF_USAGE_CHECK(!write_, "Can't call set loaded frame when writing.");
+  RMF_USAGE_CHECK(frame != ALL_FRAMES, "Trying to set loaded to all frames");
+  RMF_USAGE_CHECK(
+      frame == FrameID() || frame.get_index() < get_number_of_frames(),
+      "Trying to load a frame that isn't there");
+  if (frame == get_loaded_frame()) return;
+  RMF_INFO("Setting loaded frame to " << frame);
+  loaded_frame_ = frame;
+
+  clear_loaded_values();
+  if (frame != FrameID()) {
+    io_->load_loaded_frame(this);
+  }
+}
+
+FrameID SharedData::add_frame(std::string name, FrameType type) {
+  RMF_INTERNAL_CHECK(write_, "Can't add frame if not writing");
+  FrameID ret(get_number_of_frames());
+  FrameID cl = get_loaded_frame();
+  RMF_INTERNAL_CHECK(cl != ret, "Huh, frames are the same");
+  if (cl != FrameID()) {
+    if (SharedDataFile::get_is_dirty()) {
+      RMF_INFO("Flushing file info");
+      io_->save_file(this);
+      SharedDataFile::set_is_dirty(false);
     }
-    static const char* illegal = "\\:=()[]{}\"'";
-    const char* cur = illegal;
-    while (*cur != '\0') {
-      if (name.find(*cur) != std::string::npos) {
-        RMF_THROW(Message(get_error_message("Key names can't contain ", *cur)),
-                  UsageException);
-      }
-      ++cur;
+    if (SharedDataHierarchy::get_is_dirty()) {
+      RMF_INFO("Flushing node hierarchy");
+      io_->save_hierarchy(this);
+      SharedDataHierarchy::set_is_dirty(false);
     }
-    if (name.find("  ") != std::string::npos) {
-      RMF_THROW(Message("Key names can't contain two consecutive spaces"),
-                UsageException);
-    }
+    io_->save_loaded_frame(this);
   }
+  add_frame_data(ret, name, type);
 
-  void SharedData::audit_node_name(std::string name) const {
-    if (name.empty()) {
-      RMF_THROW(Message("Empty key name"), UsageException);
-    }
-    static const char* illegal = "\"";
-    const char* cur = illegal;
-    while (*cur != '\0') {
-      if (name.find(*cur) != std::string::npos) {
-        RMF_THROW(Message(get_error_message("Node names names can't contain \"",
-                                            *cur,
-                                            "\", but \"",
-                                            name,
-                                            "\" does.")),
-                  UsageException);
-      }
-      ++cur;
-    }
+  clear_loaded_values();
+  loaded_frame_ = ret;
+  return ret;
+}
+
+FrameID SharedData::add_frame(std::string name, FrameID parent,
+                              FrameType type) {
+  FrameID ret = add_frame(name, type);
+  add_child_frame(parent, ret);
+  return ret;
+}
+
+void SharedData::flush() {
+  if (!write_) return;
+  RMF_INFO("Flushing file " << get_file_path());
+  if (SharedDataFile::get_is_dirty()) {
+    RMF_INFO("Flushing file info");
+    io_->save_file(this);
+    SharedDataFile::set_is_dirty(false);
   }
-
-  std::string SharedData::get_file_name() const {
-#if BOOST_VERSION >= 104600
-    return boost::filesystem::path(path_).filename().string();
-#else
-    return boost::filesystem::path(path_).filename();
-#endif
+  if (SharedDataHierarchy::get_is_dirty()) {
+    RMF_INFO("Flushing node hierarchy");
+    io_->save_hierarchy(this);
+    SharedDataHierarchy::set_is_dirty(false);
   }
-
-  void SharedData::set_current_frame(FrameID frame) {
-    RMF_TRACE(get_logger(), "Setting current frame to " << frame);
-    cur_frame_ = frame;
+  if (get_static_is_dirty()) {
+    RMF_INFO("Saving static frame");
+    io_->save_static_frame(this);
+    set_static_is_dirty(false);
   }
+  io_->flush();
+}
 
-  namespace {
-  boost::shared_ptr<SharedData> create_shared_data_internal(std::string path,
-                                          bool create,
-                                          bool read_only) {
+void SharedData::reload() {
+  RMF_INFO("(Re)loading file " << get_file_path());
+  SharedDataHierarchy::clear();
+  io_->load_file(this);
+  SharedDataFile::set_is_dirty(false);
+  io_->load_hierarchy(this);
+  SharedDataHierarchy::set_is_dirty(false);
+
+  clear_static_values();
+  io_->load_static_frame(this);
+  set_static_is_dirty(false);
+
+  clear_loaded_values();
+  if (get_loaded_frame() != FrameID() &&
+      get_loaded_frame().get_index() < get_number_of_frames()) {
+    io_->load_loaded_frame(this);
+  }
+}
+
+SharedData::~SharedData() {
+  if (write_) {
     try {
-      boost::shared_ptr<SharedData> ret;
-      if ((ret = hdf5_backend::create_shared_data(path, create, read_only))) {
-        return ret;
-      } else if ((ret = avro_backend::create_shared_data(
-                     path, create, read_only))) {
-        return ret;
-      } else {
-        RMF_THROW(Message("Don't know how to open file"), IOException);
+      RMF_INFO("Closing file " << get_file_path());
+      flush();
+      if (get_loaded_frame() != FrameID()) {
+        io_->save_loaded_frame(this);
       }
+      io_.reset();
     }
-    catch (Exception & e) {
-      RMF_RETHROW(File(path), e);
+    catch (const std::exception &e) {
+      std::cerr << "Exception caught in shared data destructor " << e.what()
+                << std::endl;
     }
+    open_for_writing.erase(get_file_path());
   }
-  }
+}
 
-  // throws RMF::IOException if couldn't create file or unsupported file
-  // format
-    boost::shared_ptr<SharedData> create_shared_data(std::string path, bool create) {
-    return create_shared_data_internal(path, create, false);
-  }
-
-  boost::shared_ptr<SharedData> create_read_only_shared_data(std::string path) {
-    return create_shared_data_internal(path, false, true);
-  }
-
-  boost::shared_ptr<SharedData> create_shared_data_in_buffer(std::string& buffer, bool create) {
-    try {
-      boost::shared_ptr<SharedData> ret;
-      if ((ret = hdf5_backend::create_shared_data_buffer(buffer, create))) {
-        return ret;
-      } else if ((ret = avro_backend::create_shared_data_buffer(buffer,
-                                                                create))) {
-        return ret;
-      } else {
-        RMF_THROW(Message("Don't know how to open file"), IOException);
-      }
-    }
-    catch (Exception & e) {
-      RMF_RETHROW(File("buffer"), e);
-    }
-  }
-
-  boost::shared_ptr<SharedData> create_read_only_shared_data_from_buffer(
-      const std::string& buffer) {
-    try {
-      boost::shared_ptr<SharedData> ret;
-      if ((ret = hdf5_backend::create_shared_data_buffer(buffer))) {
-        return ret;
-      } else if ((ret = avro_backend::create_shared_data_buffer(buffer))) {
-        return ret;
-      } else {
-        RMF_THROW(Message("Don't know how to open file"), IOException);
-      }
-    }
-    catch (Exception & e) {
-      RMF_RETHROW(File("buffer"), e);
-    }
-  }
-
-  }  // namespace internal
-}    /* namespace RMF */
+}  // namespace internal
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS

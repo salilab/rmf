@@ -1,15 +1,15 @@
 /**
- *  \file RMF/DataSetIndexD.h
+ *  \file RMF/HDF5/DataSetIndexD.h
  *  \brief Handle read/write of Model data from/to files.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
-#ifndef RMF_HDF_5DATA_SET_INDEX_D_H
-#define RMF_HDF_5DATA_SET_INDEX_D_H
+#ifndef RMF_HDF5_DATA_SET_INDEX_D_H
+#define RMF_HDF5_DATA_SET_INDEX_D_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "infrastructure_macros.h"
 #include <H5public.h>
 #include "types.h"
@@ -22,7 +22,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
       for 1,2 and 3 dimension indexes, name like
       DataSetIndex2D.
    */
-  template <int D> class DataSetIndexD {
+  template <int D>
+  class DataSetIndexD {
     hsize_t d_[D];
     int compare(const DataSetIndexD<D>& o) const {
       for (unsigned int i = 0; i < D; ++i) {
@@ -47,17 +48,14 @@ RMF_ENABLE_WARNINGS namespace RMF {
     DataSetIndexD(unsigned int i, unsigned int j) {
       RMF_USAGE_CHECK(D == 2, "Constructor does not match dimension.");
       d_[0] = i;
-      if (D > 1)
-        d_[1] = j;
+      if (D > 1) d_[1] = j;
     }
     DataSetIndexD(unsigned int i, unsigned int j, unsigned int k) {
       RMF_USAGE_CHECK(D == 3, "Constructor does not match dimension.");
       d_[0] = i;
       // for clang
-      if (D > 1)
-        d_[1] = j;
-      if (D > 2)
-        d_[2] = k;
+      if (D > 1) d_[1] = j;
+      if (D > 2) d_[2] = k;
     }
 #ifndef SWIG
     hsize_t& operator[](unsigned int i) {
@@ -89,8 +87,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
     RMF_COMPARISONS(DataSetIndexD);
     RMF_HASHABLE(DataSetIndexD, size_t ret = 0;
                  for (unsigned int i = 0; i < D; ++i) {
-      boost::hash_combine(ret, static_cast<size_t>(d_[i]));
-    } return ret;);
+                        boost::hash_combine(ret, static_cast<size_t>(d_[i]));
+                      } return ret;);
   };
 
 #ifndef RMF_DOXYGEN
@@ -103,8 +101,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
 #endif
 
   } /* namespace HDF5 */
-}   /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_HDF_5DATA_SET_INDEX_D_H */
+#endif /* RMF_HDF5_DATA_SET_INDEX_D_H */

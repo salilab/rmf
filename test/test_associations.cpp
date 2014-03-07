@@ -5,8 +5,18 @@
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
+#include <assert.h>
 #include <boost/shared_ptr.hpp>
-#include <RMF/FileHandle.h>
+#include <stdio.h>
+#include <exception>
+#include <iostream>
+#include <string>
+
+#include "RMF/FileHandle.h"
+#include "RMF/NodeConstHandle.h"
+#include "RMF/NodeHandle.h"
+#include "RMF/enums.h"
+#include "RMF/infrastructure_macros.h"
 
 namespace {
 struct MyInt {
@@ -42,11 +52,13 @@ void test(const char* fname) {
   assert(sib == si);
 
   RMF::NodeHandle c3 = fh.get_root_node().add_child("c3", RMF::GEOMETRY);
-  MyInt sint = { 6 };
+  MyInt sint = {6};
   c3.set_association(sint);
   RMF::NodeHandle c3b = fh.get_node_from_association(sint);
+  RMF_UNUSED(c3b);
   assert(c3 == c3b);
   MyInt sintb = c3.get_association<MyInt>();
+  RMF_UNUSED(sintb);
   assert(sintb.i == sint.i);
 }
 }
@@ -58,7 +70,7 @@ int main(int, char * []) {
     test(fname);
     remove(fname);
   }
-  catch (const std::exception & e) {
+  catch (const std::exception& e) {
     std::cerr << "Terminated with error: " << e.what() << std::endl;
     return 1;
   }

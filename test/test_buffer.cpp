@@ -5,8 +5,14 @@
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
-#include <boost/shared_ptr.hpp>
-#include <RMF/FileHandle.h>
+#include <assert.h>
+
+#include "RMF/BufferHandle.h"
+#include "RMF/FileConstHandle.h"
+#include "RMF/FileHandle.h"
+#include "RMF/NodeConstHandle.h"
+#include "RMF/NodeHandle.h"
+#include "RMF/enums.h"
 
 namespace {
 struct MyInt {
@@ -14,7 +20,7 @@ struct MyInt {
 };
 
 void test() {
-  std::string buffer;
+  RMF::BufferHandle buffer;
   {
     RMF::FileHandle fh = RMF::create_rmf_buffer(buffer);
     RMF::NodeHandle c0 = fh.get_root_node().add_child("c0", RMF::GEOMETRY);

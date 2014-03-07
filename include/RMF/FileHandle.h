@@ -1,6 +1,6 @@
 /**
  *  \file RMF/FileHandle.h
- *  \brief Handle read/write of Model data from/to files.
+ *  \brief Declaration for RMF::FileHandle.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
@@ -9,16 +9,37 @@
 #ifndef RMF_FILE_HANDLE_H
 #define RMF_FILE_HANDLE_H
 
-#include <RMF/config.h>
-#include "internal/SharedData.h"
-#include "Key.h"
-#include "FileConstHandle.h"
-#include "NodeHandle.h"
-#include "FrameHandle.h"
+#include <boost/shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
+#include <string>
+#include <vector>
 
-RMF_ENABLE_WARNINGS RMF_VECTOR_DECL(FileHandle);
+#include "FileConstHandle.h"
+#include "ID.h"
+#include "NodeHandle.h"
+#include "RMF/config.h"
+#include "RMF/internal/SharedData.h"
+#include "compiler_macros.h"
+#include "enums.h"
+#include "internal/SharedData.h"
+#include "types.h"
 
 namespace RMF {
+namespace internal {
+class SharedData;
+}  // namespace internal
+}  // namespace RMF
+
+RMF_ENABLE_WARNINGS
+
+namespace RMF {
+
+class FileHandle;
+
+//! Pass a list of them
+typedef std::vector<FileHandle> FileHandles;
+
+class BufferHandle;
 
 //! A handle for an RMF file
 /** Use this handle to perform operations relevant to the
@@ -29,7 +50,7 @@ namespace RMF {
     for the non-modifying methods.
 
     \see create_rmf_file
-    \see open_rmf_file
+    \see create_rmf_buffer
  */
 class RMFEXPORT FileHandle : public FileConstHandle {
   friend class NodeHandle;
@@ -40,73 +61,61 @@ class RMFEXPORT FileHandle : public FileConstHandle {
   FileHandle() {}
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
   FileHandle(boost::shared_ptr<internal::SharedData> shared_);
-  FileHandle(std::string name, bool create);
 #endif
 
   /** Return the root of the hierarchy stored in the file.
    */
-  NodeHandle get_root_node() const {
-    return NodeHandle(NodeID(0),
-                      get_shared_data());
-  }
+  NodeHandle get_root_node() const { return NodeHandle(NodeID(0), shared_); }
+  /** Add a frame and make it the current frame. */
+  FrameID add_frame(std::string name, FrameType t = FRAME) const;
 
-  //! Return the root of the frame hierarchy
-  FrameHandle get_root_frame() const {
-    return FrameHandle(FrameID(-1), get_shared_data());
-  }
+  /** Add a frame and make it the current frame.
 
-  //! Return the ith frame
-  FrameHandle get_frame(unsigned int i) const {
-    RMF_USAGE_CHECK(i < get_number_of_frames(), "Out of range frame");
-    return FrameHandle(FrameID(i), get_shared_data());
-  }
-
-  FrameHandle get_current_frame() const {
-    return FrameHandle(get_shared_data()->get_current_frame(),
-                       get_shared_data());
-  }
-
+     It will be the child of the passed frame. */
+  FrameID add_frame(std::string name, FrameID parent,
+                    FrameType t = FRAME) const;
 #ifndef SWIG
   /** Each node in the hierarchy can be associated with some arbitrary bit
       of external data. Nodes can be extracted using these bits of data.
    */
-  template <class T> NodeHandle get_node_from_association(const T& d) const {
-    if (!get_shared_data()->get_has_associated_node(d)) {
+  template <class T>
+  NodeHandle get_node_from_association(const T& d) const {
+    if (!shared_->get_has_associated_node(d)) {
       return NodeHandle();
     } else {
-      return NodeHandle(get_shared_data()->get_associated_node(d),
-                        get_shared_data());
+      return NodeHandle(shared_->get_associated_node(d), shared_);
     }
   }
 #else
   NodeHandle get_node_from_association(void* d) const;
 #endif
+  /* @} */
+
   /** Return a NodeHandle from a NodeID. The NodeID must refer
       to a valid NodeHandle.*/
   NodeHandle get_node(NodeID id) const;
-  /** Suggest how many frames the file is likely to have. This can
-      make writing more efficient as space will be preallocated.
-   */
-  void set_number_of_frames_hint(unsigned int i) {
-    get_shared_data()->save_frames_hint(i);
-  }
+
+  /** Add a node with no parents. This node will not be accessible in the
+      hierarchy unless you add it as a child of something. */
+  NodeHandle add_node(std::string name, NodeType t) const;
+
   /** Each RMF structure has an associated description. This should
       consist of unstructured text describing the contents of the RMF
       data. Conventionally. this description can consist of multiple
       paragraphs, each separated by a newline character and should end
       in a newline.
    */
-  void set_description(std::string descr);
+  void set_description(std::string descr) const;
 
   /** Each RMF structure has an associated field that the code that
       produced the file can use to describe itself.
    */
-  void set_producer(std::string);
+  void set_producer(std::string) const;
 
   /** Make sure all data gets written to disk. Once flush is called, it
        should be safe to open the file in another process for reading.
    */
-  void flush();
+  void flush() const;
 };
 
 /**
@@ -117,22 +126,12 @@ class RMFEXPORT FileHandle : public FileConstHandle {
  */
 RMFEXPORT FileHandle create_rmf_file(std::string path);
 
-#ifndef SWIG
 /**
    Create an RMF in a buffer.
 
    \param buffer The buffer to place the contents in.
  */
-RMFEXPORT FileHandle create_rmf_buffer(std::string& buffer);
-#endif
-
-/**
-   Open an RMF from a file system path.
-
-   \param path the system path to the rmf file
-   \exception RMF::IOException couldn't create file, or unsupported file format
- */
-RMFEXPORT FileHandle open_rmf_file(std::string path);
+RMFEXPORT FileHandle create_rmf_buffer(BufferHandle buffer);
 
 } /* namespace RMF */
 

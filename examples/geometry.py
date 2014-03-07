@@ -1,11 +1,13 @@
-## \example Show creation of geometry in an RMF
+## \example geometry.py
+# Show creation of geometry in an RMF
 
 import RMF
 
-tfn=RMF._get_temporary_file_path("aliases.rmf")
+tfn = RMF._get_temporary_file_path("aliases.rmf")
 print "File is", tfn
 
 f = RMF.create_rmf_file(tfn)
+f.add_frame("root", RMF.FRAME)
 
 r = f.get_root_node()
 
@@ -15,8 +17,8 @@ sf = RMF.SegmentFactory(f)
 
 b = bf.get(r.add_child("ball", RMF.GEOMETRY))
 b.set_radius(1)
-b.set_coordinates([0,0,0])
+b.set_coordinates(RMF.Vector3(0, 0, 0))
 
 c = cf.get(r.add_child("cylinder", RMF.GEOMETRY))
 c.set_radius(.5)
-c.set_coordinates([[0,5],[0,5],[0,5]])
+c.set_coordinates_list([RMF.Vector3(0, 0, 0), RMF.Vector3(5, 5, 5)])

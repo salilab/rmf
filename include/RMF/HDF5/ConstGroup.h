@@ -1,15 +1,15 @@
 /**
- *  \file RMF/ConstGroup.h
+ *  \file RMF/HDF5/ConstGroup.h
  *  \brief Handle read/write of Model data from/to files.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
-#ifndef RMF_HDF_5CONST_GROUP_H
-#define RMF_HDF_5CONST_GROUP_H
+#ifndef RMF_HDF5_CONST_GROUP_H
+#define RMF_HDF5_CONST_GROUP_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "Object.h"
 #include "DataSetD.h"
 #include "ConstAttributes.h"
@@ -41,8 +41,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     ConstGroup(boost::shared_ptr<SharedHandle> h);
 #endif
    public:
-    ConstGroup() {}
-    ;
+    ConstGroup() {};
     RMF_SHOWABLE(ConstGroup, "Group " << get_name());
 
     // create from an existing group
@@ -54,8 +53,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     }
     template <class TypeTraits, unsigned int D>
     ConstDataSetD<TypeTraits, D> get_child_data_set(
-        std::string name,
-        DataSetAccessPropertiesD<TypeTraits, D> props) const {
+        std::string name, DataSetAccessPropertiesD<TypeTraits, D> props) const {
       return ConstDataSetD<TypeTraits, D>(get_shared_handle(), name, props);
     }
 
@@ -71,21 +69,21 @@ RMF_ENABLE_WARNINGS namespace RMF {
     return get_child_data_set<UCName##Traits, D>(name);                  \
   }
 
-#define RMF_HDF5_DATA_SET_CONST_METHODS(                                    \
-    lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues)       \
-  RMF_HDF5_DATA_SET_CONST_METHODS_D(                                        \
-      lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues, 1); \
-  RMF_HDF5_DATA_SET_CONST_METHODS_D(                                        \
-      lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues, 2); \
-  RMF_HDF5_DATA_SET_CONST_METHODS_D(                                        \
-      lcname, UCName, PassValue, ReturnValue, PassValues, ReturnValues, 3)
+#define RMF_HDF5_DATA_SET_CONST_METHODS(lcname, UCName, PassValue,             \
+                                        ReturnValue, PassValues, ReturnValues) \
+  RMF_HDF5_DATA_SET_CONST_METHODS_D(lcname, UCName, PassValue, ReturnValue,    \
+                                    PassValues, ReturnValues, 1);              \
+  RMF_HDF5_DATA_SET_CONST_METHODS_D(lcname, UCName, PassValue, ReturnValue,    \
+                                    PassValues, ReturnValues, 2);              \
+  RMF_HDF5_DATA_SET_CONST_METHODS_D(lcname, UCName, PassValue, ReturnValue,    \
+                                    PassValues, ReturnValues, 3)
 
     /** \name Untemplated methods
         When using Python, you must call the non-templated methods listed
         below.
         @{
      */
-    RMF_FOREACH_HDF5_TYPE(RMF_HDF5_DATA_SET_CONST_METHODS);
+    RMF_HDF5_FOREACH_TYPE(RMF_HDF5_DATA_SET_CONST_METHODS);
     /** @} */
 
     unsigned int get_number_of_children() const;
@@ -97,8 +95,8 @@ RMF_ENABLE_WARNINGS namespace RMF {
   };
 
   } /* namespace HDF5 */
-}   /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_HDF_5CONST_GROUP_H */
+#endif /* RMF_HDF5_CONST_GROUP_H */

@@ -4,49 +4,85 @@ project(RMF)
 # needs to be in main CMakeLists.txt
 enable_testing()
 
-message(STATUS "Running setup_cmake.py")
-execute_process(COMMAND python ${PROJECT_SOURCE_DIR}/scripts/setup-cmake.py
+execute_process(COMMAND python setup_git.py
                   RESULT_VARIABLE setup
-                  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+                  OUTPUT_VARIABLE toutput
+                  ERROR_VARIABLE error
+                  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+                  OUTPUT_STRIP_TRAILING_WHITESPACE)
 if(NOT ${setup} EQUAL 0)
-   message(FATAL_ERROR " Failed to setup cmake files")
+   message(FATAL_ERROR " Failed to run setup_git.py: ${setup}; ${error}")
 endif()
 
-  if(NOT "${output}" STREQUAL "")
-    message(STATUS ${output})
-  endif()
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake_modules)
+
+# C++11 can use the boost version
+set(Boost_NO_BOOST_CMAKE ON)
+find_package(Boost COMPONENTS system filesystem thread program_options iostreams
+  REQUIRED)
+
+include(FindHDF5)
+find_package(HDF5)
+
+if("${HDF5_INCLUDE_DIRS}" MATCHES .*NOTFOUND)
+set(RMF_DEPRECATED_BACKENDS 0 CACHE BOOL "Whether to build deprecated backends.")
+set(HDF5_LIBRARIES "" CACHE INTERNAL "" FORCE)
+set(HDF5_INCLUDE_DIRS "" CACHE INTERNAL "" FORCE)
+else()
+set(RMF_DEPRECATED_BACKENDS 1 CACHE BOOL "Whether to build deprecated backends.")
+endif()
+
+if(RMF_DEPRECATED_BACKENDS)
+message(STATUS "Deprecated backends (and hdf5) are enabled")
+else()
+message(STATUS "Deprecated backends (and hdf5) are disabled")
+endif()
+
+include(cmake_modules/IMPExecuteProcess.cmake)
+include(cmake_modules/FindLog4CXX.cmake)
+include(cmake_modules/IMPFindC++11.cmake)
+include(cmake_modules/IMPFindCompilerFlags.cmake)
+
+if(RMF_DEPRECATED_BACKENDS)
+imp_execute_process("Making RMF/HDF5.h" ${PROJECT_SOURCE_DIR}
+  COMMAND "python" "${PROJECT_SOURCE_DIR}/tools/dev_tools/make_all_header.py" ${PROJECT_BINARY_DIR}/include/RMF/HDF5.h RMF/HDF5 ${PROJECT_SOURCE_DIR}/include/RMF/HDF5)
+endif()
+
+imp_execute_process("Making RMF.h" ${PROJECT_SOURCE_DIR}
+  COMMAND "python" "${PROJECT_SOURCE_DIR}/tools/dev_tools/make_all_header.py" ${PROJECT_BINARY_DIR}/include/RMF.h RMF ${PROJECT_SOURCE_DIR}/include/RMF)
 
 
+message(STATUS "Running setup_cmake.py")
+imp_execute_process("Running setup_cmake.py"  ${PROJECT_SOURCE_DIR} COMMAND python ${PROJECT_SOURCE_DIR}/tools/dev_tools/setup_cmake.py)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
+include_directories("${PROJECT_BINARY_DIR}/src"
+  "${PROJECT_SOURCE_DIR}/src")
+
 
 set(RMF_INCLUDE_PATH "" CACHE INTERNAL "" FORCE)
+
+# make sure it initialized
+set(RMF_TESTS "" CACHE INTERNAL "" FORCE)
 
 if(POLICY CMP0017)
 cmake_policy(SET CMP0017 NEW)
 endif(POLICY CMP0017)
 
-include(FindLog4CXX)
 
 if (${Log4CXX_LIBRARY} MATCHES "Log4CXX_LIBRARY-NOTFOUND")
-  set(RMF_HAS_LOG4CXX "0" CACHE BOOL "Whether to use Log4CXX")
+  set(RMF_HAS_LOG4CXX "0" CACHE BOOL "Whether to use Log4CXX" FORCE)
   message(STATUS "Logging disabled")
   set(Log4CXX_LIBRARY "")
 else()
   message(STATUS "Logging enabled")
-  set(RMF_HAS_LOG4CXX "1" CACHE BOOL "Whether to use Log4CXX")
+  set(RMF_HAS_LOG4CXX "1" CACHE BOOL "Whether to use Log4CXX" FORCE)
   include_directories(${Log4CXX_INCLUDE_DIR})
   link_directories(${Log4CXX_LIBRARY_DIR})
 endif()
 
-set(Boost_NO_BOOST_CMAKE ON)
-find_package(Boost COMPONENTS system filesystem thread program_options
-  REQUIRED)
 
 include(GNUInstallDirs)
 
-include(FindHDF5)
-find_package(HDF5 REQUIRED)
 
 include_directories(${HDF5_INCLUDE_DIRS})
 set(RMF_INCLUDE_PATH ${RMF_INCLUDE_PATH} ${HDF5_INCLUDE_DIRS}
@@ -79,6 +115,7 @@ add_subdirectory(src)
 add_subdirectory(bin)
 
 add_subdirectory(plugins/vmd/)
+add_subdirectory(plugins/pymol/)
 
 # swig support is a little broken
 

@@ -6,44 +6,46 @@
  *
  */
 
-#include <RMF/NodeHandle.h>
-#include <boost/tuple/tuple.hpp>
-#include <RMF/Category.h>
-#include <RMF/FileHandle.h>
-#include <RMF/decorators.h>
+#include <boost/shared_ptr.hpp>
+#include <string>
 
-RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(NodeHandle);
+#include "RMF/FileHandle.h"
+#include "RMF/ID.h"
+#include "RMF/NodeConstHandle.h"
+#include "RMF/NodeHandle.h"
+#include "RMF/compiler_macros.h"
+#include "RMF/enums.h"
+
+RMF_ENABLE_WARNINGS
 
 namespace RMF {
 
-NodeHandle::NodeHandle(NodeID node, boost::shared_ptr<internal::SharedData> shared)
+NodeHandle::NodeHandle(NodeID node,
+                       boost::shared_ptr<internal::SharedData> shared)
     : NodeConstHandle(node, shared) {}
 
-NodeHandle NodeHandle::add_child(std::string name, NodeType t) {
+NodeHandle NodeHandle::add_child(std::string name, NodeType t) const {
   try {
-    return NodeHandle(get_shared_data()->add_child(get_node_id(), name, t),
-                      get_shared_data());
+    return NodeHandle(shared_->add_child(node_, name, t), shared_);
   }
   RMF_NODE_CATCH();
 }
 
-void NodeHandle::add_child(NodeConstHandle nh) {
+void NodeHandle::add_child(NodeConstHandle nh) const {
   try {
-    get_shared_data()->add_child(get_node_id(), nh.get_node_id());
+    shared_->add_child(node_, nh.get_id());
   }
   RMF_NODE_CATCH();
 }
 
-FileHandle NodeHandle::get_file() const {
-  return FileHandle(get_shared_data());
-}
+FileHandle NodeHandle::get_file() const { return FileHandle(shared_); }
 
 NodeHandles NodeHandle::get_children() const {
   try {
-    NodeIDs children = get_shared_data()->get_children(get_node_id());
+    NodeIDs children = shared_->get_children(node_);
     NodeHandles ret(children.size());
     for (unsigned int i = 0; i < ret.size(); ++i) {
-      ret[i] = NodeHandle(children[i], get_shared_data());
+      ret[i] = NodeHandle(children[i], shared_);
     }
     return ret;
   }

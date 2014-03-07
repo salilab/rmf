@@ -2,7 +2,7 @@ set(VMDPLUGIN_INCLUDE_DIR ${VMDPLUGIN_INCLUDE_DIR} CACHE STRING "Path to vmd plu
 
 find_path(VMDPLUGIN_INCLUDE_PATH
           NAMES molfile_plugin.h
-          PATHS ${VMDPLUGIN_INCLUDE_DIR}
+          PATHS ${VMDPLUGIN_INCLUDE_DIR} ${PROJECT_SOURCE_DIR}/plugins/vmd/include
           )
 
 if(${VMDPLUGIN_INCLUDE_PATH} MATCHES "VMDPLUGIN_INCLUDE_PATH-NOTFOUND")
@@ -11,10 +11,13 @@ set(RMF_VMD "" CACHE INTERNAL "" FORCE)
 else()
 include_directories(${VMDPLUGIN_INCLUDE_PATH})
 
-add_library(RMF-vmd MODULE "rmfplugin.cpp")
-set_target_properties("RMF-vmd" PROPERTIES OUTPUT_NAME "rmfplugin")
-set_target_properties("RMF-vmd" PROPERTIES PREFIX "")
-set_target_properties("RMF-vmd" PROPERTIES SUFFIX ".so")
+message(STATUS "Using VMD headers found in ${VMDPLUGIN_INCLUDE_PATH}")
+
+add_library(RMF-vmd MODULE "init.cpp" "Data.cpp" "Data_read.cpp")
+set_target_properties("RMF-vmd" PROPERTIES OUTPUT_NAME "rmfplugin"
+                                PREFIX ""
+                                SUFFIX ".so"
+                                RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 set_property(TARGET "RMF-vmd" PROPERTY FOLDER "RMF")
 
 

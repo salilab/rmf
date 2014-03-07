@@ -6,10 +6,17 @@
  *
  */
 
-#include <hdf5.h>
+#include <RMF/config.h>
+#if RMF_HAS_DEPRECATED_BACKENDS
+#include <H5Dpublic.h>
+#include <H5Fpublic.h>
+#include <H5Ipublic.h>
+#include <H5Ppublic.h>
+#include <H5Spublic.h>
+#include <H5Tpublic.h>
+#include <H5public.h>
+#include <stddef.h>
 #include <iostream>
-
-//#include <RMF/hdf5_handle.h>
 
 #define HDF5_CALL(x)                                             \
   {                                                              \
@@ -20,7 +27,6 @@
   }
 
 #define HDF5_HANDLE(name, cmd, cleanup) hid_t name = cmd
-//#define HDF5_HANDLE(name, cmd, cleanup) RMF_HDF5_HANDLE(name, cmd, cleanup)
 
 namespace {
 const int D = 2;
@@ -55,11 +61,10 @@ void set_value(hid_t ds, int i, int j, double v) {
 int main(int argc, char* argv[]) {
   HDF5_CALL(H5open());
   HDF5_HANDLE(plist, get_parameters(), H5Pclose);
-  HDF5_HANDLE(file,
-              H5Fcreate("test.hdf5", H5F_ACC_TRUNC, H5P_DEFAULT, plist),
+  HDF5_HANDLE(file, H5Fcreate("test.hdf5", H5F_ACC_TRUNC, H5P_DEFAULT, plist),
               &H5Fclose);
-  hsize_t dims[D] = { 0 };
-  hsize_t cdims[D] = { 64 };
+  hsize_t dims[D] = {0};
+  hsize_t cdims[D] = {64};
   cdims[D - 1] = 1;
   hsize_t maxs[D];
   maxs[0] = H5S_UNLIMITED;
@@ -82,14 +87,8 @@ int main(int argc, char* argv[]) {
     HDF5_CALL(H5Pset_fill_time(dplist, H5D_FILL_TIME_IFSET));
     HDF5_CALL(H5Pset_alloc_time(dplist, H5D_ALLOC_TIME_EARLY));
   }
-  HDF5_HANDLE(ds,
-              H5Dcreate2(file,
-                         "dataset",
-                         H5T_IEEE_F64LE,
-                         space,
-                         H5P_DEFAULT,
-                         dplist,
-                         H5P_DEFAULT),
+  HDF5_HANDLE(ds, H5Dcreate2(file, "dataset", H5T_IEEE_F64LE, space,
+                             H5P_DEFAULT, dplist, H5P_DEFAULT),
               &H5Dclose);
   set_size(ds, 1, 1);
   set_value(ds, 0, 0, .5);
@@ -100,3 +99,7 @@ int main(int argc, char* argv[]) {
   set_size(ds, 3, 4);
   return 0;
 }
+
+#else
+int main(int, char * []) { return 0; }
+#endif

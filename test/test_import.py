@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 import unittest
 
+
 class GenericTest(unittest.TestCase):
+
     def test_data_types(self):
         """Test that import works"""
         import sys

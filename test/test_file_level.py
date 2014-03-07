@@ -3,85 +3,112 @@ import unittest
 import RMF
 import shutil
 
+
 class Tests(unittest.TestCase):
+
     def _show(self, g):
         for i in range(0, g.get_number_of_children()):
             print i, g.get_child_name(i), g.get_child_is_group(i)
     """Test the python code"""
+
     def test_perturbed(self):
         """Test creating a simple hierarchy file"""
         for suffix in RMF.suffixes:
-            f= RMF.create_rmf_file(RMF._get_temporary_file_path("test_file_perturbed."+suffix))
-            r= f.get_root_node()
+            f = RMF.create_rmf_file(
+                RMF._get_temporary_file_path("test_file_perturbed." + suffix))
+            r = f.get_root_node()
             print r.get_type()
-            sc= f.get_category("sequence")
-            ik= f.get_int_key(sc, "ik0")
-            f.get_root_frame().add_child("0", RMF.FRAME)
+            sc = f.get_category("sequence")
+            ik = f.get_key(sc, "ik0", RMF.int_tag)
+            f.add_frame("0", RMF.FRAME)
             r.set_value(ik, 1)
             print r.get_value(ik)
             self.assertEqual(r.get_value(ik), 1)
+
     def test_frames(self):
         """Test creating a simple hierarchy file with frames"""
         for suffix in RMF.suffixes:
-            path=RMF._get_temporary_file_path("test_file_frames."+suffix)
-            f= RMF.create_rmf_file(path)
-            r= f.get_root_node()
+            path = RMF._get_temporary_file_path("test_file_frames." + suffix)
+            f = RMF.create_rmf_file(path)
+            f.add_frame("root", RMF.FRAME)
+            r = f.get_root_node()
             print r.get_type()
-            sc= f.get_category("sequence")
-            ik= f.get_int_key(sc, "ik0")
-            f0= f.get_root_frame().add_child("0", RMF.FRAME)
+            sc = f.get_category("sequence")
+            ik = f.get_key(sc, "ik0", RMF.int_tag)
             r.set_value(ik, 1)
             self.assertEqual(r.get_value(ik), 1, 0)
-            f1= f0.add_child("1", RMF.FRAME)
+            f.add_frame("1", RMF.FRAME)
             r.set_value(ik, 2)
 
             del f
             del sc
             del ik
             del r
-            del f0
-            del f1
-            f= RMF.open_rmf_file_read_only(path)
-            r= f.get_root_node()
-            sc= f.get_category("sequence")
-            ik= f.get_int_key(sc, "ik0")
+            f = RMF.open_rmf_file_read_only(path)
+            r = f.get_root_node()
+            sc = f.get_category("sequence")
+            ik = f.get_key(sc, "ik0", RMF.int_tag)
             f.set_current_frame(RMF.FrameID(0))
             self.assertEqual(r.get_value(ik), 1, 0)
             f.set_current_frame(RMF.FrameID(1))
+            RMF.show_hierarchy_with_values(f.get_root_node())
             self.assertEqual(r.get_value(ik), 2)
             f.set_current_frame(RMF.FrameID(0))
             self.assertEqual(r.get_value(ik), 1)
             self.assertEqual(f.get_number_of_frames(), 2)
-    def test_perturbed_values(self):
+
+    def test_perturbed_values_0(self):
         """Test null values int"""
         for suffix in RMF.suffixes:
-            path=RMF._get_temporary_file_path("test_filei."+suffix)
-            f= RMF.create_rmf_file(path)
-            r= f.get_root_node()
+            path = RMF._get_temporary_file_path("test_filei." + suffix)
+            f = RMF.create_rmf_file(path)
+            r = f.get_root_node()
             print r.get_type()
-            sc= f.get_category("sequence")
-            ik= f.get_int_key(sc, "ik0")
-            f0= f.get_root_frame().add_child("0", RMF.FRAME)
-            r.set_value(ik, 1)
-            ika= r.get_value_always(ik)
+            sc = f.get_category("sequence")
+            ik = f.get_key(sc, "ik0", RMF.int_tag)
+            f.add_frame("0", RMF.FRAME)
+            r.set_frame_value(ik, 1)
+            ika = r.get_value(ik)
             self.assertEqual(ika, 1)
-            f1= f0.add_child("1", RMF.FRAME)
-            ikna= r.get_value_always(ik)
-            self.assertEqual(ikna, RMF.NullInt)
+            f1 = f.add_frame("1", RMF.FRAME)
+            ikna = r.get_value(ik)
+            self.assertEqual(ikna, None)
+
     def test_perturbed_values(self):
         """Test null values int"""
         for suffix in RMF.suffixes:
-            path=RMF._get_temporary_file_path("test_filef."+suffix)
-            f= RMF.create_rmf_file(path)
-            r= f.get_root_node()
-            sc= f.get_category("sequence")
-            fk= f.get_float_key(sc, "fk0")
-            f0= f.get_root_frame().add_child("0", RMF.FRAME)
-            r.set_value(fk, 1)
-            fka= r.get_value_always(fk)
+            RMF.set_log_level("trace")
+            path = RMF._get_temporary_file_path("test_filef." + suffix)
+            f = RMF.create_rmf_file(path)
+            r = f.get_root_node()
+            sc = f.get_category("sequence")
+            fk = f.get_key(sc, "fk0", RMF.float_tag)
+            f0 = f.add_frame("0", RMF.FRAME)
+            r.set_frame_value(fk, 1)
+            fka = r.get_value(fk)
             self.assertEqual(fka, 1)
-            f1= f0.add_child("1", RMF.FRAME)
-            fkna= r.get_value_always(fk)
-            self.assertEqual(fkna, RMF.NullFloat)
+            RMF.show_hierarchy_with_values(r)
+            f.add_frame("1", RMF.FRAME)
+            RMF.show_hierarchy_with_values(r)
+            fkna = r.get_value(fk)
+            self.assertEqual(fkna, None)
+
+    def test_base_frames(self):
+        """Test initialization of frames"""
+        for suffix in RMF.suffixes:
+            path = RMF._get_temporary_file_path("test_base_frames." + suffix)
+            f = RMF.create_rmf_file(path)
+            self.assertEqual(f.get_number_of_frames(), 0)
+            self.assertEqual(f.get_current_frame(), RMF.FrameID())
+            f.add_frame("hi", RMF.FRAME)
+            self.assertEqual(f.get_number_of_frames(), 1)
+            self.assertEqual(f.get_current_frame(), RMF.FrameID(0))
+            del f
+            f = RMF.open_rmf_file_read_only(path)
+            self.assertEqual(f.get_number_of_frames(), 1)
+            self.assertEqual(f.get_current_frame(), RMF.FrameID())
+            f.set_current_frame(RMF.FrameID(0))
+
 if __name__ == '__main__':
+
     unittest.main()

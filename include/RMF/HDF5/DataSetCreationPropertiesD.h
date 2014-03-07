@@ -1,15 +1,15 @@
 /**
- *  \file RMF/DataSetCreationPropertiesD.h
+ *  \file RMF/HDF5/DataSetCreationPropertiesD.h
  *  \brief Handle read/write of Model data from/to files.
  *
  *  Copyright 2007-2013 IMP Inventors. All rights reserved.
  *
  */
 
-#ifndef RMF_HDF_5DATA_SET_CREATION_PROPERTIES_D_H
-#define RMF_HDF_5DATA_SET_CREATION_PROPERTIES_D_H
+#ifndef RMF_HDF5_DATA_SET_CREATION_PROPERTIES_D_H
+#define RMF_HDF5_DATA_SET_CREATION_PROPERTIES_D_H
 
-#include <RMF/config.h>
+#include "RMF/config.h"
 #include "DataSetAccessPropertiesD.h"
 
 RMF_ENABLE_WARNINGS namespace RMF {
@@ -61,13 +61,12 @@ RMF_ENABLE_WARNINGS namespace RMF {
                                       &TypeTraits::get_fill_value()));
       RMF_HDF5_CALL(H5Pset_fill_time(get_handle(), H5D_FILL_TIME_ALLOC));
       RMF_HDF5_CALL(H5Pset_alloc_time(get_handle(), H5D_ALLOC_TIME_INCR));
-
     }
   };
 
   } /* namespace HDF5 */
-}   /* namespace RMF */
+} /* namespace RMF */
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_HDF_5DATA_SET_CREATION_PROPERTIES_D_H */
+#endif /* RMF_HDF5_DATA_SET_CREATION_PROPERTIES_D_H */

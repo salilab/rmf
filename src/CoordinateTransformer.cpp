@@ -6,14 +6,15 @@
  *
  */
 
-#include <RMF/CoordinateTransformer.h>
-#include <RMF/decorators.h>
+#include "RMF/CoordinateTransformer.h"
+#include "RMF/compiler_macros.h"
+#include "RMF/decorator/physics.h"
 
-RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(CoordinateTransformer);
+RMF_ENABLE_WARNINGS
 
 namespace RMF {
 CoordinateTransformer::CoordinateTransformer(CoordinateTransformer base,
-                                             ReferenceFrameConst rb)
+                                             decorator::ReferenceFrameConst rb)
     : transform_(base.transform_,
                  internal::Transform(internal::Rotation(rb.get_rotation()),
                                      rb.get_translation())) {}

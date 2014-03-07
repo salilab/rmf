@@ -6,22 +6,24 @@
  *
  */
 
-#include <RMF/SetCurrentFrame.h>
+#include "RMF/FileConstHandle.h"
+#include "RMF/ID.h"
+#include "RMF/SetCurrentFrame.h"
+#include "RMF/compiler_macros.h"
+#include "RMF/infrastructure_macros.h"
 
-RMF_ENABLE_WARNINGS RMF_VECTOR_DEF(SetCurrentFrame);
+RMF_ENABLE_WARNINGS
 
 namespace RMF {
 SetCurrentFrame::SetCurrentFrame(FileConstHandle file, FrameID current_frame)
-    : old_frame_(file.get_current_frame()) {
-  if (current_frame != FrameID()) {
-    file.set_current_frame(current_frame);
+    : file_(file), old_frame_(file.get_current_frame()) {
+  file.set_current_frame(current_frame);
+}
+SetCurrentFrame::~SetCurrentFrame() {
+  if (old_frame_ != FrameID()) {
+    file_.set_current_frame(old_frame_);
   }
 }
-SetCurrentFrame::SetCurrentFrame(FrameConstHandle frame)
-    : old_frame_(frame.get_file().get_current_frame()) {
-  frame.set_as_current_frame();
-}
-SetCurrentFrame::~SetCurrentFrame() { old_frame_.set_as_current_frame(); }
 }
 
 RMF_DISABLE_WARNINGS

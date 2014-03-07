@@ -6,10 +6,6 @@
  *
  */
 
-#include <RMF/decorators.h>
-#include <cstdlib>
-#include <fstream>
+#include "RMF/decorators.h"
 
-namespace RMF {
-
-} /* namespace RMF */
+namespace RMF {} /* namespace RMF */

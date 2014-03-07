@@ -1,11 +1,9 @@
 
 include("Files.cmake")
+include(${PROJECT_SOURCE_DIR}/cmake_modules/IMPAddTests.cmake)
 
-foreach (test ${pyfiles})
-   GET_FILENAME_COMPONENT(name ${test} NAME_WE)
-  add_test("RMF.${name}" "python" ${PROJECT_SOURCE_DIR}/examples/${test})
-  set_tests_properties("RMF.${name}"
-    PROPERTIES ENVIRONMENT "PYTHONPATH=${CMAKE_BINARY_DIR}/lib")
-  set_tests_properties("RMF.${name}" PROPERTIES LABELS "RMF;example")
-  #add_dependencies(${name} RMFPython)
-endforeach()
+include_directories(${PROJECT_SOURCE_DIR}/bin)
+set(IMP_LINK_LIBRARIES "RMF-lib" CACHE INTERNAL "")
+set(IMP_TESTS_PROPERTIES ENVIRONMENT "PYTHONPATH=${CMAKE_BINARY_DIR}/lib")
+
+imp_add_tests("RMF" ${PROJECT_BINARY_DIR}/examples RMF_TESTS examples ${pyfiles} ${cppfiles})

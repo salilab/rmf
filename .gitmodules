@@ -1,0 +1,9 @@
+[submodule "src/avrocpp"]
+	path = src/avrocpp
+	url = ../avrocpp.git
+[submodule "cmake_modules"]
+	path = cmake_modules
+	url = ../cmake_modules
+[submodule "tools/developer_tools"]
+	path = tools/dev_tools
+	url = ../developer_tools.git
