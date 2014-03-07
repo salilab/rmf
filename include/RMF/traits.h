@@ -23,8 +23,10 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 
 #ifndef SWIG
-
-/** Traits classes that describe how types are handled. */
+//! Traits classes describing how RMF uses types for storing data
+/** Traits classes that describe how types are handled. Currently, adding a new
+    type is beyond the scope of the documentation, so traits is not documented.
+*/
 template <class T>
 struct Traits {};
 
