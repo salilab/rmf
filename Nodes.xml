@@ -892,6 +892,114 @@
                 </Subnodes>
                </Node>
                <Node>
+                <Name>BackwardsCompatibilityFragment</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragment.html</Path>
+                <Subnodes>
+                 <Node>
+                  <Name>get_decorator_type_name</Name>
+                  <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragment.html</Path>
+                  <Anchor>a2443a3494398149d27ac1995b0d69a5b</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>set_frame_indexes</Name>
+                  <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragment.html</Path>
+                  <Anchor>a9a930db5cfeb2421e6315d9b3e493648</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>set_indexes</Name>
+                  <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragment.html</Path>
+                  <Anchor>a2247a53f2c48d86a4a475d574f5e913f</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>set_static_indexes</Name>
+                  <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragment.html</Path>
+                  <Anchor>ac943aa9c8ffbc75a04fcac99c3663a01</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>BackwardsCompatibilityFragmentFactory</Name>
+                  <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragment.html</Path>
+                  <Anchor>ae77064757b00f7e0ac26666320409914</Anchor>
+                 </Node>
+                </Subnodes>
+               </Node>
+               <Node>
+                <Name>BackwardsCompatibilityFragmentConst</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
+                <Subnodes>
+                 <Node>
+                  <Name>BackwardsCompatibilityFragmentConst</Name>
+                  <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
+                  <Anchor>a889759e188df303b6bc868decb1b7977</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>get_decorator_type_name</Name>
+                  <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
+                  <Anchor>a62c1124a32bd7b0f7ba5252c9ccdfd2f</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>get_frame_indexes</Name>
+                  <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
+                  <Anchor>a0c815ac8e6ded2015e0a7cd905e72e4b</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>get_indexes</Name>
+                  <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
+                  <Anchor>acee2aa87fd87c9009f2a2ed38252bef6</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>get_static_indexes</Name>
+                  <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
+                  <Anchor>a1f48a902ce4963d66ad52130b928d36d</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>BackwardsCompatibilityFragmentFactory</Name>
+                  <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
+                  <Anchor>ae77064757b00f7e0ac26666320409914</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>indexes_</Name>
+                  <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
+                  <Anchor>a738016e0a225960a43ea5cfdd608ffaa</Anchor>
+                 </Node>
+                </Subnodes>
+               </Node>
+               <Node>
+                <Name>BackwardsCompatibilityFragmentFactory</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
+                <Subnodes>
+                 <Node>
+                  <Name>BackwardsCompatibilityFragmentFactory</Name>
+                  <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
+                  <Anchor>a5655cb29a42ed76b4fae7f1209d913df</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>BackwardsCompatibilityFragmentFactory</Name>
+                  <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
+                  <Anchor>a4cb256198566d28a2d01e9aca815ebea</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>get</Name>
+                  <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
+                  <Anchor>acec304e0881d022a82b7926059fe282c</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>get</Name>
+                  <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
+                  <Anchor>ab05f464f656a2d0e35590644550abc5f</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>get_is</Name>
+                  <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
+                  <Anchor>aa592e0900ccb9cadaa27c86459ac6143</Anchor>
+                 </Node>
+                 <Node>
+                  <Name>get_is_static</Name>
+                  <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
+                  <Anchor>a9f398e4f3b5c5ccc909ba14d5de598df</Anchor>
+                 </Node>
+                </Subnodes>
+               </Node>
+               <Node>
                 <Name>Ball</Name>
                 <Path>classRMF_1_1decorator_1_1Ball.html</Path>
                 <Subnodes>
@@ -1782,19 +1890,19 @@
                   <Anchor>a017638c2085e470353447bd19f053740</Anchor>
                  </Node>
                  <Node>
-                  <Name>set_frame_indexes</Name>
+                  <Name>set_frame_residue_indexes</Name>
                   <Path>classRMF_1_1decorator_1_1Domain.html</Path>
-                  <Anchor>a8575b1c882ce548076b2c32ef63fc6fb</Anchor>
+                  <Anchor>ad70662f91f3ececb13994b0fa625cde6</Anchor>
                  </Node>
                  <Node>
-                  <Name>set_indexes</Name>
+                  <Name>set_residue_indexes</Name>
                   <Path>classRMF_1_1decorator_1_1Domain.html</Path>
-                  <Anchor>a5680fa00021553de6c3ab8f6aecd0b2f</Anchor>
+                  <Anchor>a0f30689069501e96b2002064e1848605</Anchor>
                  </Node>
                  <Node>
-                  <Name>set_static_indexes</Name>
+                  <Name>set_static_residue_indexes</Name>
                   <Path>classRMF_1_1decorator_1_1Domain.html</Path>
-                  <Anchor>a9ea07ffad0f31dd58707dd6eacfd095b</Anchor>
+                  <Anchor>a32f12201d78aa976da585c8748b17d0c</Anchor>
                  </Node>
                  <Node>
                   <Name>DomainFactory</Name>
@@ -1810,7 +1918,7 @@
                  <Node>
                   <Name>DomainConst</Name>
                   <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
-                  <Anchor>abb4d75da6902bd3138584e183764505a</Anchor>
+                  <Anchor>a022a8e06830a7185d130103ffac6567e</Anchor>
                  </Node>
                  <Node>
                   <Name>get_decorator_type_name</Name>
@@ -1818,19 +1926,19 @@
                   <Anchor>a964033d5bcbd30167794407e847fa443</Anchor>
                  </Node>
                  <Node>
-                  <Name>get_frame_indexes</Name>
+                  <Name>get_frame_residue_indexes</Name>
                   <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
-                  <Anchor>a2fdd103aa29b48716e7af5c48e8bc3ab</Anchor>
+                  <Anchor>a82d4afebecd307c8236247030e09e1d4</Anchor>
                  </Node>
                  <Node>
-                  <Name>get_indexes</Name>
+                  <Name>get_residue_indexes</Name>
                   <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
-                  <Anchor>a7283022e875ffd015234ee64ffb1e92f</Anchor>
+                  <Anchor>a26db675a3dd8ca3b38f036235dba600c</Anchor>
                  </Node>
                  <Node>
-                  <Name>get_static_indexes</Name>
+                  <Name>get_static_residue_indexes</Name>
                   <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
-                  <Anchor>a778f23ffaccf05c605767840b70f9e7f</Anchor>
+                  <Anchor>a33065690af3f34cf3e1d570fa3a0c272</Anchor>
                  </Node>
                  <Node>
                   <Name>DomainFactory</Name>
@@ -1838,9 +1946,9 @@
                   <Anchor>a722133110d12c13ccb83741b7f199abb</Anchor>
                  </Node>
                  <Node>
-                  <Name>indexes_</Name>
+                  <Name>residue_indexes_</Name>
                   <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
-                  <Anchor>accef45c01c0682be4eee598dbdf2043a</Anchor>
+                  <Anchor>a09bab43299a1e7a1b95f25ec275a1fb4</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -2156,19 +2264,19 @@
                   <Anchor>ae9ea0eb61584ed5ad93c65b0ca19838d</Anchor>
                  </Node>
                  <Node>
-                  <Name>set_frame_indexes</Name>
+                  <Name>set_frame_residue_indexes</Name>
                   <Path>classRMF_1_1decorator_1_1Fragment.html</Path>
-                  <Anchor>a4d0f4786e3390a6c30dcd7755037e464</Anchor>
+                  <Anchor>acda0ce99a6e34e62d0c10bd72b6dc2e9</Anchor>
                  </Node>
                  <Node>
-                  <Name>set_indexes</Name>
+                  <Name>set_residue_indexes</Name>
                   <Path>classRMF_1_1decorator_1_1Fragment.html</Path>
-                  <Anchor>ab2776e90430286e9b7a959fc390471fb</Anchor>
+                  <Anchor>a24e2b7b52dfcb4bb84ced0c204bd834d</Anchor>
                  </Node>
                  <Node>
-                  <Name>set_static_indexes</Name>
+                  <Name>set_static_residue_indexes</Name>
                   <Path>classRMF_1_1decorator_1_1Fragment.html</Path>
-                  <Anchor>ab9149becd8bec1b45ebf541356ebd6d0</Anchor>
+                  <Anchor>a189df209e0865be2443447553247f9bd</Anchor>
                  </Node>
                  <Node>
                   <Name>FragmentFactory</Name>
@@ -2184,7 +2292,7 @@
                  <Node>
                   <Name>FragmentConst</Name>
                   <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
-                  <Anchor>a8f2fa2f942a065036fed37248718bf34</Anchor>
+                  <Anchor>aa7733f07513146d12061e4e245a99bd2</Anchor>
                  </Node>
                  <Node>
                   <Name>get_decorator_type_name</Name>
@@ -2192,19 +2300,19 @@
                   <Anchor>a49ea25e522efe09769d16984927d7e84</Anchor>
                  </Node>
                  <Node>
-                  <Name>get_frame_indexes</Name>
+                  <Name>get_frame_residue_indexes</Name>
                   <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
-                  <Anchor>ad4816f5a8c9fd708ec71e315b879a650</Anchor>
+                  <Anchor>ae7117b948eca3b18e98dc4c8b95104c2</Anchor>
                  </Node>
                  <Node>
-                  <Name>get_indexes</Name>
+                  <Name>get_residue_indexes</Name>
                   <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
-                  <Anchor>a5977e99878f94dbe34c7cdeb2ef20384</Anchor>
+                  <Anchor>a7c67eee09d3539c57e7b25cd035b4bf1</Anchor>
                  </Node>
                  <Node>
-                  <Name>get_static_indexes</Name>
+                  <Name>get_static_residue_indexes</Name>
                   <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
-                  <Anchor>a1e2c0eb144a939047372b1da24fb2f0d</Anchor>
+                  <Anchor>ae498ab6bfae22e6576580c06ad2ac296</Anchor>
                  </Node>
                  <Node>
                   <Name>FragmentFactory</Name>
@@ -2212,9 +2320,9 @@
                   <Anchor>af620a473b2475cd772c2f718a1347ad1</Anchor>
                  </Node>
                  <Node>
-                  <Name>indexes_</Name>
+                  <Name>residue_indexes_</Name>
                   <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
-                  <Anchor>a7a297e9ec02d126f4b1b21d5c788a9ae</Anchor>
+                  <Anchor>a3d6d56bccbb21b0ebd9269483787649b</Anchor>
                  </Node>
                 </Subnodes>
                </Node>
@@ -5791,6 +5899,16 @@
               </Subnodes>
              </Node>
              <Node>
+              <Name>RMF::decorator::BackwardsCompatibilityFragmentConst</Name>
+              <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
+              <Subnodes>
+               <Node>
+                <Name>RMF::decorator::BackwardsCompatibilityFragment</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragment.html</Path>
+               </Node>
+              </Subnodes>
+             </Node>
+             <Node>
               <Name>RMF::decorator::BallConst</Name>
               <Path>classRMF_1_1decorator_1_1BallConst.html</Path>
               <Subnodes>
@@ -6069,6 +6187,10 @@
              <Node>
               <Name>RMF::decorator::AtomFactory</Name>
               <Path>classRMF_1_1decorator_1_1AtomFactory.html</Path>
+             </Node>
+             <Node>
+              <Name>RMF::decorator::BackwardsCompatibilityFragmentFactory</Name>
+              <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
              </Node>
              <Node>
               <Name>RMF::decorator::BallFactory</Name>
@@ -6877,6 +6999,10 @@
             <Path>buffers_8py_source.html</Path>
            </Node>
            <Node>
+            <Name>cloning.py</Name>
+            <Path>cloning_8py_source.html</Path>
+           </Node>
+           <Node>
             <Name>compiler_macros.h</Name>
             <Path>compiler__macros_8h.html</Path>
             <Subnodes>
@@ -7650,97 +7776,6 @@
            <Node>
             <Name>decorators.h</Name>
             <Path>decorators_8h.html</Path>
-           </Node>
-           <Node>
-            <Name>default_types.h</Name>
-            <Path>default__types_8h.html</Path>
-            <Subnodes>
-             <Node>
-              <Name>RMF_TYPES</Name>
-              <Path>default__types_8h.html</Path>
-              <Anchor>a80692ae03c7d6197938860c08091c7f5</Anchor>
-             </Node>
-             <Node>
-              <Name>RMF_VECTOR</Name>
-              <Path>default__types_8h.html</Path>
-              <Anchor>a0fe61c8bad6616e90dca5590b800cf6e</Anchor>
-             </Node>
-             <Node>
-              <Name>Float</Name>
-              <Path>default__types_8h.html</Path>
-              <Anchor>a86262dd447c738c45e22fae2a3375d61</Anchor>
-             </Node>
-             <Node>
-              <Name>Floats</Name>
-              <Path>default__types_8h.html</Path>
-              <Anchor>affffd1547fb5b085b9b5875cafe5771a</Anchor>
-             </Node>
-             <Node>
-              <Name>FloatsList</Name>
-              <Path>default__types_8h.html</Path>
-              <Anchor>a5fd1f9b86dea5ff568a810082497c010</Anchor>
-             </Node>
-             <Node>
-              <Name>Int</Name>
-              <Path>default__types_8h.html</Path>
-              <Anchor>a42aed102a7e7e9b5ddc9feecc05fd158</Anchor>
-             </Node>
-             <Node>
-              <Name>IntRange</Name>
-              <Path>default__types_8h.html</Path>
-              <Anchor>a9c2b3b9142834a9270b0ea0b75a582e0</Anchor>
-             </Node>
-             <Node>
-              <Name>Ints</Name>
-              <Path>default__types_8h.html</Path>
-              <Anchor>a6c938fb137bdddb4f61c5711206300d5</Anchor>
-             </Node>
-             <Node>
-              <Name>IntsList</Name>
-              <Path>default__types_8h.html</Path>
-              <Anchor>a0d4303b9c65190a11aa400a594070c33</Anchor>
-             </Node>
-             <Node>
-              <Name>String</Name>
-              <Path>default__types_8h.html</Path>
-              <Anchor>a13cd501233c2edc77db6ebec83583eec</Anchor>
-             </Node>
-             <Node>
-              <Name>Strings</Name>
-              <Path>default__types_8h.html</Path>
-              <Anchor>a9811b522a0994fc22b47f90b00f6b564</Anchor>
-             </Node>
-             <Node>
-              <Name>StringsList</Name>
-              <Path>default__types_8h.html</Path>
-              <Anchor>a3446a203b15cd29c3f5e901e790b3b23</Anchor>
-             </Node>
-             <Node>
-              <Name>Vector3</Name>
-              <Path>default__types_8h.html</Path>
-              <Anchor>a4f81aba337d34ce6c26d7e5004fcfddf</Anchor>
-             </Node>
-             <Node>
-              <Name>Vector3s</Name>
-              <Path>default__types_8h.html</Path>
-              <Anchor>a163c7904c3fdd6039c9907146c733133</Anchor>
-             </Node>
-             <Node>
-              <Name>Vector4</Name>
-              <Path>default__types_8h.html</Path>
-              <Anchor>a1e72f2580095bf30a33fc20fa66e7bcd</Anchor>
-             </Node>
-             <Node>
-              <Name>Vector4s</Name>
-              <Path>default__types_8h.html</Path>
-              <Anchor>a64071d2602cf37e459aee44ffdf7ead6</Anchor>
-             </Node>
-             <Node>
-              <Name>VectorDimension</Name>
-              <Path>default__types_8h.html</Path>
-              <Anchor>a8c992cf6c6ec038038d9a185d57a1750</Anchor>
-             </Node>
-            </Subnodes>
            </Node>
            <Node>
             <Name>Enum.h</Name>
@@ -11205,6 +11240,114 @@
             <Path>sequence_8h.html</Path>
             <Subnodes>
              <Node>
+              <Name>BackwardsCompatibilityFragment</Name>
+              <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragment.html</Path>
+              <Subnodes>
+               <Node>
+                <Name>get_decorator_type_name</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragment.html</Path>
+                <Anchor>a2443a3494398149d27ac1995b0d69a5b</Anchor>
+               </Node>
+               <Node>
+                <Name>set_frame_indexes</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragment.html</Path>
+                <Anchor>a9a930db5cfeb2421e6315d9b3e493648</Anchor>
+               </Node>
+               <Node>
+                <Name>set_indexes</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragment.html</Path>
+                <Anchor>a2247a53f2c48d86a4a475d574f5e913f</Anchor>
+               </Node>
+               <Node>
+                <Name>set_static_indexes</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragment.html</Path>
+                <Anchor>ac943aa9c8ffbc75a04fcac99c3663a01</Anchor>
+               </Node>
+               <Node>
+                <Name>BackwardsCompatibilityFragmentFactory</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragment.html</Path>
+                <Anchor>ae77064757b00f7e0ac26666320409914</Anchor>
+               </Node>
+              </Subnodes>
+             </Node>
+             <Node>
+              <Name>BackwardsCompatibilityFragmentConst</Name>
+              <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
+              <Subnodes>
+               <Node>
+                <Name>BackwardsCompatibilityFragmentConst</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
+                <Anchor>a889759e188df303b6bc868decb1b7977</Anchor>
+               </Node>
+               <Node>
+                <Name>get_decorator_type_name</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
+                <Anchor>a62c1124a32bd7b0f7ba5252c9ccdfd2f</Anchor>
+               </Node>
+               <Node>
+                <Name>get_frame_indexes</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
+                <Anchor>a0c815ac8e6ded2015e0a7cd905e72e4b</Anchor>
+               </Node>
+               <Node>
+                <Name>get_indexes</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
+                <Anchor>acee2aa87fd87c9009f2a2ed38252bef6</Anchor>
+               </Node>
+               <Node>
+                <Name>get_static_indexes</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
+                <Anchor>a1f48a902ce4963d66ad52130b928d36d</Anchor>
+               </Node>
+               <Node>
+                <Name>BackwardsCompatibilityFragmentFactory</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
+                <Anchor>ae77064757b00f7e0ac26666320409914</Anchor>
+               </Node>
+               <Node>
+                <Name>indexes_</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
+                <Anchor>a738016e0a225960a43ea5cfdd608ffaa</Anchor>
+               </Node>
+              </Subnodes>
+             </Node>
+             <Node>
+              <Name>BackwardsCompatibilityFragmentFactory</Name>
+              <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
+              <Subnodes>
+               <Node>
+                <Name>BackwardsCompatibilityFragmentFactory</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
+                <Anchor>a5655cb29a42ed76b4fae7f1209d913df</Anchor>
+               </Node>
+               <Node>
+                <Name>BackwardsCompatibilityFragmentFactory</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
+                <Anchor>a4cb256198566d28a2d01e9aca815ebea</Anchor>
+               </Node>
+               <Node>
+                <Name>get</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
+                <Anchor>acec304e0881d022a82b7926059fe282c</Anchor>
+               </Node>
+               <Node>
+                <Name>get</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
+                <Anchor>ab05f464f656a2d0e35590644550abc5f</Anchor>
+               </Node>
+               <Node>
+                <Name>get_is</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
+                <Anchor>aa592e0900ccb9cadaa27c86459ac6143</Anchor>
+               </Node>
+               <Node>
+                <Name>get_is_static</Name>
+                <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
+                <Anchor>a9f398e4f3b5c5ccc909ba14d5de598df</Anchor>
+               </Node>
+              </Subnodes>
+             </Node>
+             <Node>
               <Name>Chain</Name>
               <Path>classRMF_1_1decorator_1_1Chain.html</Path>
               <Subnodes>
@@ -11430,19 +11573,19 @@
                 <Anchor>a017638c2085e470353447bd19f053740</Anchor>
                </Node>
                <Node>
-                <Name>set_frame_indexes</Name>
+                <Name>set_frame_residue_indexes</Name>
                 <Path>classRMF_1_1decorator_1_1Domain.html</Path>
-                <Anchor>a8575b1c882ce548076b2c32ef63fc6fb</Anchor>
+                <Anchor>ad70662f91f3ececb13994b0fa625cde6</Anchor>
                </Node>
                <Node>
-                <Name>set_indexes</Name>
+                <Name>set_residue_indexes</Name>
                 <Path>classRMF_1_1decorator_1_1Domain.html</Path>
-                <Anchor>a5680fa00021553de6c3ab8f6aecd0b2f</Anchor>
+                <Anchor>a0f30689069501e96b2002064e1848605</Anchor>
                </Node>
                <Node>
-                <Name>set_static_indexes</Name>
+                <Name>set_static_residue_indexes</Name>
                 <Path>classRMF_1_1decorator_1_1Domain.html</Path>
-                <Anchor>a9ea07ffad0f31dd58707dd6eacfd095b</Anchor>
+                <Anchor>a32f12201d78aa976da585c8748b17d0c</Anchor>
                </Node>
                <Node>
                 <Name>DomainFactory</Name>
@@ -11458,7 +11601,7 @@
                <Node>
                 <Name>DomainConst</Name>
                 <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
-                <Anchor>abb4d75da6902bd3138584e183764505a</Anchor>
+                <Anchor>a022a8e06830a7185d130103ffac6567e</Anchor>
                </Node>
                <Node>
                 <Name>get_decorator_type_name</Name>
@@ -11466,19 +11609,19 @@
                 <Anchor>a964033d5bcbd30167794407e847fa443</Anchor>
                </Node>
                <Node>
-                <Name>get_frame_indexes</Name>
+                <Name>get_frame_residue_indexes</Name>
                 <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
-                <Anchor>a2fdd103aa29b48716e7af5c48e8bc3ab</Anchor>
+                <Anchor>a82d4afebecd307c8236247030e09e1d4</Anchor>
                </Node>
                <Node>
-                <Name>get_indexes</Name>
+                <Name>get_residue_indexes</Name>
                 <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
-                <Anchor>a7283022e875ffd015234ee64ffb1e92f</Anchor>
+                <Anchor>a26db675a3dd8ca3b38f036235dba600c</Anchor>
                </Node>
                <Node>
-                <Name>get_static_indexes</Name>
+                <Name>get_static_residue_indexes</Name>
                 <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
-                <Anchor>a778f23ffaccf05c605767840b70f9e7f</Anchor>
+                <Anchor>a33065690af3f34cf3e1d570fa3a0c272</Anchor>
                </Node>
                <Node>
                 <Name>DomainFactory</Name>
@@ -11486,9 +11629,9 @@
                 <Anchor>a722133110d12c13ccb83741b7f199abb</Anchor>
                </Node>
                <Node>
-                <Name>indexes_</Name>
+                <Name>residue_indexes_</Name>
                 <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
-                <Anchor>accef45c01c0682be4eee598dbdf2043a</Anchor>
+                <Anchor>a09bab43299a1e7a1b95f25ec275a1fb4</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -11538,19 +11681,19 @@
                 <Anchor>ae9ea0eb61584ed5ad93c65b0ca19838d</Anchor>
                </Node>
                <Node>
-                <Name>set_frame_indexes</Name>
+                <Name>set_frame_residue_indexes</Name>
                 <Path>classRMF_1_1decorator_1_1Fragment.html</Path>
-                <Anchor>a4d0f4786e3390a6c30dcd7755037e464</Anchor>
+                <Anchor>acda0ce99a6e34e62d0c10bd72b6dc2e9</Anchor>
                </Node>
                <Node>
-                <Name>set_indexes</Name>
+                <Name>set_residue_indexes</Name>
                 <Path>classRMF_1_1decorator_1_1Fragment.html</Path>
-                <Anchor>ab2776e90430286e9b7a959fc390471fb</Anchor>
+                <Anchor>a24e2b7b52dfcb4bb84ced0c204bd834d</Anchor>
                </Node>
                <Node>
-                <Name>set_static_indexes</Name>
+                <Name>set_static_residue_indexes</Name>
                 <Path>classRMF_1_1decorator_1_1Fragment.html</Path>
-                <Anchor>ab9149becd8bec1b45ebf541356ebd6d0</Anchor>
+                <Anchor>a189df209e0865be2443447553247f9bd</Anchor>
                </Node>
                <Node>
                 <Name>FragmentFactory</Name>
@@ -11566,7 +11709,7 @@
                <Node>
                 <Name>FragmentConst</Name>
                 <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
-                <Anchor>a8f2fa2f942a065036fed37248718bf34</Anchor>
+                <Anchor>aa7733f07513146d12061e4e245a99bd2</Anchor>
                </Node>
                <Node>
                 <Name>get_decorator_type_name</Name>
@@ -11574,19 +11717,19 @@
                 <Anchor>a49ea25e522efe09769d16984927d7e84</Anchor>
                </Node>
                <Node>
-                <Name>get_frame_indexes</Name>
+                <Name>get_frame_residue_indexes</Name>
                 <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
-                <Anchor>ad4816f5a8c9fd708ec71e315b879a650</Anchor>
+                <Anchor>ae7117b948eca3b18e98dc4c8b95104c2</Anchor>
                </Node>
                <Node>
-                <Name>get_indexes</Name>
+                <Name>get_residue_indexes</Name>
                 <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
-                <Anchor>a5977e99878f94dbe34c7cdeb2ef20384</Anchor>
+                <Anchor>a7c67eee09d3539c57e7b25cd035b4bf1</Anchor>
                </Node>
                <Node>
-                <Name>get_static_indexes</Name>
+                <Name>get_static_residue_indexes</Name>
                 <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
-                <Anchor>a1e2c0eb144a939047372b1da24fb2f0d</Anchor>
+                <Anchor>ae498ab6bfae22e6576580c06ad2ac296</Anchor>
                </Node>
                <Node>
                 <Name>FragmentFactory</Name>
@@ -11594,9 +11737,9 @@
                 <Anchor>af620a473b2475cd772c2f718a1347ad1</Anchor>
                </Node>
                <Node>
-                <Name>indexes_</Name>
+                <Name>residue_indexes_</Name>
                 <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
-                <Anchor>a7a297e9ec02d126f4b1b21d5c788a9ae</Anchor>
+                <Anchor>a3d6d56bccbb21b0ebd9269483787649b</Anchor>
                </Node>
               </Subnodes>
              </Node>
@@ -12942,6 +13085,93 @@
            <Node>
             <Name>types.h</Name>
             <Path>types_8h.html</Path>
+            <Subnodes>
+             <Node>
+              <Name>RMF_TYPES</Name>
+              <Path>types_8h.html</Path>
+              <Anchor>a80692ae03c7d6197938860c08091c7f5</Anchor>
+             </Node>
+             <Node>
+              <Name>RMF_VECTOR</Name>
+              <Path>types_8h.html</Path>
+              <Anchor>a0fe61c8bad6616e90dca5590b800cf6e</Anchor>
+             </Node>
+             <Node>
+              <Name>Float</Name>
+              <Path>types_8h.html</Path>
+              <Anchor>a86262dd447c738c45e22fae2a3375d61</Anchor>
+             </Node>
+             <Node>
+              <Name>Floats</Name>
+              <Path>types_8h.html</Path>
+              <Anchor>affffd1547fb5b085b9b5875cafe5771a</Anchor>
+             </Node>
+             <Node>
+              <Name>FloatsList</Name>
+              <Path>types_8h.html</Path>
+              <Anchor>a5fd1f9b86dea5ff568a810082497c010</Anchor>
+             </Node>
+             <Node>
+              <Name>Int</Name>
+              <Path>types_8h.html</Path>
+              <Anchor>a42aed102a7e7e9b5ddc9feecc05fd158</Anchor>
+             </Node>
+             <Node>
+              <Name>IntRange</Name>
+              <Path>types_8h.html</Path>
+              <Anchor>a6d98e08e1ac51ae3ec2ac3d835d75504</Anchor>
+             </Node>
+             <Node>
+              <Name>Ints</Name>
+              <Path>types_8h.html</Path>
+              <Anchor>a6c938fb137bdddb4f61c5711206300d5</Anchor>
+             </Node>
+             <Node>
+              <Name>IntsList</Name>
+              <Path>types_8h.html</Path>
+              <Anchor>a0d4303b9c65190a11aa400a594070c33</Anchor>
+             </Node>
+             <Node>
+              <Name>String</Name>
+              <Path>types_8h.html</Path>
+              <Anchor>a13cd501233c2edc77db6ebec83583eec</Anchor>
+             </Node>
+             <Node>
+              <Name>Strings</Name>
+              <Path>types_8h.html</Path>
+              <Anchor>a9811b522a0994fc22b47f90b00f6b564</Anchor>
+             </Node>
+             <Node>
+              <Name>StringsList</Name>
+              <Path>types_8h.html</Path>
+              <Anchor>a3446a203b15cd29c3f5e901e790b3b23</Anchor>
+             </Node>
+             <Node>
+              <Name>Vector3</Name>
+              <Path>types_8h.html</Path>
+              <Anchor>a4f81aba337d34ce6c26d7e5004fcfddf</Anchor>
+             </Node>
+             <Node>
+              <Name>Vector3s</Name>
+              <Path>types_8h.html</Path>
+              <Anchor>a163c7904c3fdd6039c9907146c733133</Anchor>
+             </Node>
+             <Node>
+              <Name>Vector4</Name>
+              <Path>types_8h.html</Path>
+              <Anchor>a1e72f2580095bf30a33fc20fa66e7bcd</Anchor>
+             </Node>
+             <Node>
+              <Name>Vector4s</Name>
+              <Path>types_8h.html</Path>
+              <Anchor>a64071d2602cf37e459aee44ffdf7ead6</Anchor>
+             </Node>
+             <Node>
+              <Name>VectorDimension</Name>
+              <Path>types_8h.html</Path>
+              <Anchor>a8c992cf6c6ec038038d9a185d57a1750</Anchor>
+             </Node>
+            </Subnodes>
            </Node>
            <Node>
             <Name>HDF5/types.h</Name>
@@ -13187,6 +13417,10 @@
          <Node>
           <Name>buffers.py</Name>
           <Path>buffers_8py-example.html</Path>
+         </Node>
+         <Node>
+          <Name>cloning.py</Name>
+          <Path>cloning_8py-example.html</Path>
          </Node>
          <Node>
           <Name>consume.py</Name>

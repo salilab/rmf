@@ -1,6 +1,6 @@
 <map id="alias.h" name="alias.h">
 <area shape="rect" id="node2" href="$decorators_8h.html" title="Import all the decorators headers. " alt="" coords="4,161,99,189"/>
 <area shape="rect" id="node3" href="$physics_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="132,83,208,111"/>
-<area shape="rect" id="node4" href="$TraverseHelper_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="124,161,247,189"/>
+<area shape="rect" id="node4" href="$TraverseHelper_8h.html" title="A helper function for managing data when traversing an RMF. " alt="" coords="124,161,247,189"/>
 <area shape="rect" id="node5" href="$benchmark__rmf_8cpp_source.html" title="benchmark_rmf.cpp" alt="" coords="270,161,409,189"/>
 </map>

@@ -134,6 +134,7 @@ $(document).ready(function(){initNavTree('infrastructure__macros_8h.html','');})
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRMF_1_1Nullable.html">RMF::Nullable&lt; Tr &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a possibly null value.  <a href="classRMF_1_1Nullable.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -157,14 +158,12 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="infrastructure__macros_8h.html#a77097a6a431974623cc6f0a30717c388">RMF_HASHABLE</a>(name, hashret)</td></tr>
 <tr class="memdesc:a77097a6a431974623cc6f0a30717c388"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement a hash function for the class. <br/></td></tr>
 <tr class="separator:a77097a6a431974623cc6f0a30717c388"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acae100b3b9e267e6efd606edac7978a1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acae100b3b9e267e6efd606edac7978a1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>RMF_NO_RETURN</b>(type)&#160;&#160;&#160;return type()</td></tr>
+<tr class="memitem:acae100b3b9e267e6efd606edac7978a1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="infrastructure__macros_8h.html#acae100b3b9e267e6efd606edac7978a1">RMF_NO_RETURN</a>(type)&#160;&#160;&#160;return type()</td></tr>
 <tr class="separator:acae100b3b9e267e6efd606edac7978a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae13b69bb80e8874f4a2186d77c3b171d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae13b69bb80e8874f4a2186d77c3b171d"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>RMF_SHOWABLE</b>(Name, streamed)</td></tr>
 <tr class="separator:ae13b69bb80e8874f4a2186d77c3b171d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e12fa0f40d2d5fb1db44fcfaf4dbc7b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e12fa0f40d2d5fb1db44fcfaf4dbc7b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>RMF_UNUSED</b>(variable)&#160;&#160;&#160;RMF::internal::use(variable);</td></tr>
+<tr class="memitem:a1e12fa0f40d2d5fb1db44fcfaf4dbc7b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="infrastructure__macros_8h.html#a1e12fa0f40d2d5fb1db44fcfaf4dbc7b">RMF_UNUSED</a>(variable)&#160;&#160;&#160;RMF::internal::use(variable);</td></tr>
 <tr class="separator:a1e12fa0f40d2d5fb1db44fcfaf4dbc7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abfad2653b3aae687996dbcb619d90078"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="infrastructure__macros_8h.html#abfad2653b3aae687996dbcb619d90078">RMF_VALIDATOR</a>(Type)&#160;&#160;&#160;RMF::Registrar&lt;Type&gt; Type##Reg(#Type);</td></tr>
 <tr class="separator:abfad2653b3aae687996dbcb619d90078"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -223,7 +222,7 @@ Comparisons</h2></td></tr>
 <div class="line">    RMF_RETHROW(Decorator(get_decorator_type_name()) extra_info, e); \</div>
 <div class="line">  }</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="infrastructure__macros_8h_source.html#l00163">163</a> of file <a class="el" href="infrastructure__macros_8h_source.html">infrastructure_macros.h</a>.</p>
+<p>Definition at line <a class="el" href="infrastructure__macros_8h_source.html#l00168">168</a> of file <a class="el" href="infrastructure__macros_8h_source.html">infrastructure_macros.h</a>.</p>
 
 </div>
 </div>
@@ -243,15 +242,15 @@ Comparisons</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">macroname(<span class="keywordtype">int</span>, <a class="code" href="namespaceRMF.html#a42aed102a7e7e9b5ddc9feecc05fd158">Int</a>, <span class="keywordtype">int</span>, <span class="keywordtype">int</span>, <span class="keyword">const</span> <a class="code" href="namespaceRMF.html#a6c938fb137bdddb4f61c5711206300d5">Ints</a>&amp;, <a class="code" href="namespaceRMF.html#a6c938fb137bdddb4f61c5711206300d5">Ints</a>);             \</div>
 <div class="line">  macroname(<span class="keywordtype">float</span>, <a class="code" href="namespaceRMF.html#a86262dd447c738c45e22fae2a3375d61">Float</a>, <span class="keywordtype">float</span>, <span class="keywordtype">float</span>, <span class="keyword">const</span> <a class="code" href="namespaceRMF.html#affffd1547fb5b085b9b5875cafe5771a">Floats</a>&amp;, <a class="code" href="namespaceRMF.html#affffd1547fb5b085b9b5875cafe5771a">Floats</a>); \</div>
 <div class="line">  macroname(index, <a class="code" href="namespaceRMF_1_1HDF5.html#a50cb18ac78bcf61cbf53534f5c656d2a">Index</a>, <span class="keywordtype">int</span>, <span class="keywordtype">int</span>, <span class="keyword">const</span> <a class="code" href="namespaceRMF.html#a6c938fb137bdddb4f61c5711206300d5">Ints</a>&amp;, <a class="code" href="namespaceRMF.html#a6c938fb137bdddb4f61c5711206300d5">Ints</a>)</div>
-<div class="ttc" id="namespaceRMF_html_a86262dd447c738c45e22fae2a3375d61"><div class="ttname"><a href="namespaceRMF.html#a86262dd447c738c45e22fae2a3375d61">RMF::Float</a></div><div class="ttdeci">float Float</div><div class="ttdef"><b>Definition:</b> <a href="default__types_8h_source.html#l00033">default_types.h:33</a></div></div>
+<div class="ttc" id="namespaceRMF_html_a86262dd447c738c45e22fae2a3375d61"><div class="ttname"><a href="namespaceRMF.html#a86262dd447c738c45e22fae2a3375d61">RMF::Float</a></div><div class="ttdeci">float Float</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00033">types.h:33</a></div></div>
 <div class="ttc" id="namespaceRMF_1_1HDF5_html_a50cb18ac78bcf61cbf53534f5c656d2a"><div class="ttname"><a href="namespaceRMF_1_1HDF5.html#a50cb18ac78bcf61cbf53534f5c656d2a">RMF::HDF5::Index</a></div><div class="ttdeci">int Index</div><div class="ttdef"><b>Definition:</b> <a href="HDF5_2types_8h_source.html#l00038">HDF5/types.h:38</a></div></div>
-<div class="ttc" id="namespaceRMF_html_a6c938fb137bdddb4f61c5711206300d5"><div class="ttname"><a href="namespaceRMF.html#a6c938fb137bdddb4f61c5711206300d5">RMF::Ints</a></div><div class="ttdeci">std::vector&lt; Int &gt; Ints</div><div class="ttdef"><b>Definition:</b> <a href="default__types_8h_source.html#l00031">default_types.h:31</a></div></div>
-<div class="ttc" id="namespaceRMF_html_affffd1547fb5b085b9b5875cafe5771a"><div class="ttname"><a href="namespaceRMF.html#affffd1547fb5b085b9b5875cafe5771a">RMF::Floats</a></div><div class="ttdeci">std::vector&lt; Float &gt; Floats</div><div class="ttdef"><b>Definition:</b> <a href="default__types_8h_source.html#l00035">default_types.h:35</a></div></div>
-<div class="ttc" id="namespaceRMF_html_a42aed102a7e7e9b5ddc9feecc05fd158"><div class="ttname"><a href="namespaceRMF.html#a42aed102a7e7e9b5ddc9feecc05fd158">RMF::Int</a></div><div class="ttdeci">int Int</div><div class="ttdef"><b>Definition:</b> <a href="default__types_8h_source.html#l00029">default_types.h:29</a></div></div>
+<div class="ttc" id="namespaceRMF_html_a6c938fb137bdddb4f61c5711206300d5"><div class="ttname"><a href="namespaceRMF.html#a6c938fb137bdddb4f61c5711206300d5">RMF::Ints</a></div><div class="ttdeci">std::vector&lt; Int &gt; Ints</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00031">types.h:31</a></div></div>
+<div class="ttc" id="namespaceRMF_html_affffd1547fb5b085b9b5875cafe5771a"><div class="ttname"><a href="namespaceRMF.html#affffd1547fb5b085b9b5875cafe5771a">RMF::Floats</a></div><div class="ttdeci">std::vector&lt; Float &gt; Floats</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00035">types.h:35</a></div></div>
+<div class="ttc" id="namespaceRMF_html_a42aed102a7e7e9b5ddc9feecc05fd158"><div class="ttname"><a href="namespaceRMF.html#a42aed102a7e7e9b5ddc9feecc05fd158">RMF::Int</a></div><div class="ttdeci">int Int</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00029">types.h:29</a></div></div>
 </div><!-- fragment --><p>Apply the macro to each supported constant size type (eg int as opposed to string).</p>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="infrastructure__macros_8h.html#add4dc0dd6e232a39c967f143ce2c7993">RMF_FOREACH_TYPE()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="infrastructure__macros_8h_source.html#l00140">140</a> of file <a class="el" href="infrastructure__macros_8h_source.html">infrastructure_macros.h</a>.</p>
+<p>Definition at line <a class="el" href="infrastructure__macros_8h_source.html#l00145">145</a> of file <a class="el" href="infrastructure__macros_8h_source.html">infrastructure_macros.h</a>.</p>
 
 </div>
 </div>
@@ -278,7 +277,46 @@ Comparisons</h2></td></tr>
 <li>the C++ type for returning more than one value </li>
 </ul>
 
-<p>Definition at line <a class="el" href="infrastructure__macros_8h_source.html#l00154">154</a> of file <a class="el" href="infrastructure__macros_8h_source.html">infrastructure_macros.h</a>.</p>
+<p>Definition at line <a class="el" href="infrastructure__macros_8h_source.html#l00159">159</a> of file <a class="el" href="infrastructure__macros_8h_source.html">infrastructure_macros.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acae100b3b9e267e6efd606edac7978a1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RMF_NO_RETURN</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">type</td><td>)</td>
+          <td>&#160;&#160;&#160;return type()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Provide a dummy return for something that doesn't return.</p>
+<p>This is a nasty hack to suppress warnings in some compilers. </p>
+
+<p>Definition at line <a class="el" href="infrastructure__macros_8h_source.html#l00138">138</a> of file <a class="el" href="infrastructure__macros_8h_source.html">infrastructure_macros.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1e12fa0f40d2d5fb1db44fcfaf4dbc7b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RMF_UNUSED</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">variable</td><td>)</td>
+          <td>&#160;&#160;&#160;RMF::internal::use(variable);</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Suppress the unused variable compiler warning. </p>
+
+<p>Definition at line <a class="el" href="infrastructure__macros_8h_source.html#l00132">132</a> of file <a class="el" href="infrastructure__macros_8h_source.html">infrastructure_macros.h</a>.</p>
 
 </div>
 </div>
@@ -297,7 +335,7 @@ Comparisons</h2></td></tr>
 </div><div class="memdoc">
 <p>Register a validator function. See Validator for more information. </p>
 
-<p>Definition at line <a class="el" href="infrastructure__macros_8h_source.html#l00170">170</a> of file <a class="el" href="infrastructure__macros_8h_source.html">infrastructure_macros.h</a>.</p>
+<p>Definition at line <a class="el" href="infrastructure__macros_8h_source.html#l00175">175</a> of file <a class="el" href="infrastructure__macros_8h_source.html">infrastructure_macros.h</a>.</p>
 
 </div>
 </div>

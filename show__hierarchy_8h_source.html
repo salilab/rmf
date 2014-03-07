@@ -100,7 +100,7 @@ $(document).ready(function(){initNavTree('show__hierarchy_8h_source.html','');})
 <div class="contents">
 <a href="show__hierarchy_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/**</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  \file RMF/show_hierarchy.h</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *  \brief Handle read/write of Model data from/to files.</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *  \brief Functions to show the hierarchy.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> *  Copyright 2007-2013 IMP Inventors. All rights reserved.</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> *</span></div>
@@ -116,33 +116,38 @@ $(document).ready(function(){initNavTree('show__hierarchy_8h_source.html','');})
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">class </span>NodeConstHandle;</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">class </span>FileConstHandle;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">/** Print out the hierarchy as an ascii tree.</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;RMFEXPORT <span class="keywordtype">void</span> <a class="code" href="namespaceRMF.html#af9d7cf76014fecf43fbea94df32b8118">show_hierarchy</a>(NodeConstHandle root,</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                              std::ostream&amp; out = std::cout);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">/** Print out the hierarchy as an ascii tree along with values</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">    as described by the frame parameters. If end_frame is -1,</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">    the only one frame is shown.</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;RMFEXPORT <span class="keywordtype">void</span> <a class="code" href="namespaceRMF.html#ad426288c930d6835bd323a0533a0c72b">show_hierarchy_with_values</a>(NodeConstHandle root,</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                                          std::ostream&amp; out = std::cout);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">/** Print out the hierarchy as an ascii tree marking what decorators</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">    apply where.</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;RMFEXPORT <span class="keywordtype">void</span> <a class="code" href="namespaceRMF.html#a7de3d326b2b2192b418d25ade389c571">show_hierarchy_with_decorators</a>(NodeConstHandle root,</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                                              <span class="keywordtype">bool</span> verbose = <span class="keyword">false</span>,</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                                              std::ostream&amp; out = std::cout);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">/** Show the frames hierarchy. */</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;RMFEXPORT <span class="keywordtype">void</span> <a class="code" href="namespaceRMF.html#a2eff9ab9ea4fa8de784b921ae41c5bc9">show_frames</a>(FileConstHandle fh, std::ostream&amp; out = std::cout);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;} <span class="comment">/* namespace RMF */</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;RMF_DISABLE_WARNINGS</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RMF_NODE_SHOW_HIERARCHY_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">/** \name Showing the hierarchy</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">These functions print out the hierarchy with various extra information</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">for each node. Each prints out an ascii tree designed for human inspection.</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">@{ */</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">/** Print out just the node names and types.</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;RMFEXPORT <span class="keywordtype">void</span> <a class="code" href="namespaceRMF.html#af9d7cf76014fecf43fbea94df32b8118">show_hierarchy</a>(NodeConstHandle root,</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                              std::ostream&amp; out = std::cout);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">/** Print out all attributes for each node for the current frame.</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;RMFEXPORT <span class="keywordtype">void</span> <a class="code" href="namespaceRMF.html#ad426288c930d6835bd323a0533a0c72b">show_hierarchy_with_values</a>(NodeConstHandle root,</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                                          std::ostream&amp; out = std::cout);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">/** Print out the list of decorators that can be used to decorate each node</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">    based on the current attributes in the loaded frame..</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;RMFEXPORT <span class="keywordtype">void</span> <a class="code" href="namespaceRMF.html#a7de3d326b2b2192b418d25ade389c571">show_hierarchy_with_decorators</a>(NodeConstHandle root,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                                              <span class="keywordtype">bool</span> verbose = <span class="keyword">false</span>,</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                                              std::ostream&amp; out = std::cout);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">/** Show the frame hierarchy rather than the node hierarchy. */</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;RMFEXPORT <span class="keywordtype">void</span> <a class="code" href="namespaceRMF.html#a2eff9ab9ea4fa8de784b921ae41c5bc9">show_frames</a>(FileConstHandle fh, std::ostream&amp; out = std::cout);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">/** @} */</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;} <span class="comment">/* namespace RMF */</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;RMF_DISABLE_WARNINGS</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RMF_NODE_SHOW_HIERARCHY_H */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="namespaceRMF_html_ad426288c930d6835bd323a0533a0c72b"><div class="ttname"><a href="namespaceRMF.html#ad426288c930d6835bd323a0533a0c72b">RMF::show_hierarchy_with_values</a></div><div class="ttdeci">void show_hierarchy_with_values(NodeConstHandle root, std::ostream &amp;out=std::cout)</div></div>
 <div class="ttc" id="namespaceRMF_html_a7de3d326b2b2192b418d25ade389c571"><div class="ttname"><a href="namespaceRMF.html#a7de3d326b2b2192b418d25ade389c571">RMF::show_hierarchy_with_decorators</a></div><div class="ttdeci">void show_hierarchy_with_decorators(NodeConstHandle root, bool verbose=false, std::ostream &amp;out=std::cout)</div></div>
 <div class="ttc" id="namespaceRMF_html_a2eff9ab9ea4fa8de784b921ae41c5bc9"><div class="ttname"><a href="namespaceRMF.html#a2eff9ab9ea4fa8de784b921ae41c5bc9">RMF::show_frames</a></div><div class="ttdeci">void show_frames(FileConstHandle fh, std::ostream &amp;out=std::cout)</div></div>

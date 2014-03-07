@@ -276,7 +276,7 @@
 </g>
 <!-- Node16 -->
 <g id="node16" class="node"><title>Node16</title>
-<g id="a_node16"><a xlink:href="exceptions_8h.html" target="_top" xlink:title="Various general useful macros for IMP. ">
+<g id="a_node16"><a xlink:href="exceptions_8h.html" target="_top" xlink:title="Declarations of the various exception types. ">
 <polygon fill="none" stroke="black" points="1125.71,-129 1125.71,-149 1222.29,-149 1222.29,-129 1125.71,-129"/>
 <text text-anchor="middle" x="1174" y="-135" font-family="Helvetica,sans-Serif" font-size="10.00">RMF/exceptions.h</text>
 </a>
@@ -528,7 +528,7 @@
 </g>
 <!-- Node25 -->
 <g id="node25" class="node"><title>Node25</title>
-<g id="a_node25"><a xlink:href="ID_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node25"><a xlink:href="ID_8h.html" target="_top" xlink:title="Declaration of RMF::ID. ">
 <polygon fill="none" stroke="black" points="820.611,-187 820.611,-207 879.389,-207 879.389,-187 820.611,-187"/>
 <text text-anchor="middle" x="850" y="-193" font-family="Helvetica,sans-Serif" font-size="10.00">RMF/ID.h</text>
 </a>
@@ -606,7 +606,7 @@
 </g>
 <!-- Node29 -->
 <g id="node29" class="node"><title>Node29</title>
-<g id="a_node29"><a xlink:href="log_8h.html" target="_top" xlink:title="Helper functions for manipulating RMF files. ">
+<g id="a_node29"><a xlink:href="log_8h.html" target="_top" xlink:title="Functions and macros for logging. ">
 <polygon fill="none" stroke="black" points="912.938,-129 912.938,-149 975.062,-149 975.062,-129 912.938,-129"/>
 <text text-anchor="middle" x="944" y="-135" font-family="Helvetica,sans-Serif" font-size="10.00">RMF/log.h</text>
 </a>

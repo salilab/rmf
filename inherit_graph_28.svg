@@ -10,7 +10,7 @@
 <title>Graphical Class Hierarchy</title>
 <!-- Node1 -->
 <g id="node1" class="node"><title>Node1</title>
-<g id="a_node1"><a xlink:href="classRMF_1_1RestoreCurrentFrame.html" target="_top" xlink:title="RMF::RestoreCurrentFrame">
+<g id="a_node1"><a xlink:href="classRMF_1_1RestoreCurrentFrame.html" target="_top" xlink:title="Restore the frame that was current on creation upon destruction. ">
 <polygon fill="none" stroke="black" points="-0.233887,-0 -0.233887,-20 140.234,-20 140.234,-0 -0.233887,-0"/>
 <text text-anchor="middle" x="70" y="-6" font-family="Helvetica,sans-Serif" font-size="10.00">RMF::RestoreCurrentFrame</text>
 </a>

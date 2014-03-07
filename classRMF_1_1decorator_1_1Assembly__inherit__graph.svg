@@ -15,7 +15,7 @@
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>
-<g id="a_node2"><a xlink:href="classRMF_1_1Label.html" target="_top" xlink:title="RMF::Label">
+<g id="a_node2"><a xlink:href="classRMF_1_1Label.html" target="_top" xlink:title="A decorator&#45;like class to mark certain nodes (eg molecule bounaries) ">
 <polygon fill="none" stroke="black" points="33.1577,-59 33.1577,-79 100.842,-79 100.842,-59 33.1577,-59"/>
 <text text-anchor="middle" x="67" y="-65" font-family="Helvetica,sans-Serif" font-size="10.00">RMF::Label</text>
 </a>

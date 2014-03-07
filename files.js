@@ -22,6 +22,7 @@ var files =
       [ "BufferHandle", "classRMF_1_1BufferHandle.html", "classRMF_1_1BufferHandle" ]
     ] ],
     [ "buffers.py", "buffers_8py_source.html", null ],
+    [ "cloning.py", "cloning_8py_source.html", null ],
     [ "compiler_macros.h", "compiler__macros_8h.html", "compiler__macros_8h" ],
     [ "config.h", "config_8h_source.html", null ],
     [ "constants.h", "constants_8h.html", "constants_8h" ],
@@ -46,7 +47,6 @@ var files =
       [ "Factory", "classRMF_1_1Factory.html", null ]
     ] ],
     [ "decorators.h", "decorators_8h.html", null ],
-    [ "default_types.h", "default__types_8h.html", "default__types_8h" ],
     [ "Enum.h", "Enum_8h.html", "Enum_8h" ],
     [ "enums.h", "enums_8h.html", "enums_8h" ],
     [ "exceptions.h", "exceptions_8h.html", "exceptions_8h" ],
@@ -136,6 +136,9 @@ var files =
     [ "rmf_decorator.py", "rmf__decorator_8py_source.html", null ],
     [ "rmf_xml.py", "rmf__xml_8py_source.html", null ],
     [ "sequence.h", "sequence_8h.html", [
+      [ "BackwardsCompatibilityFragment", "classRMF_1_1decorator_1_1BackwardsCompatibilityFragment.html", "classRMF_1_1decorator_1_1BackwardsCompatibilityFragment" ],
+      [ "BackwardsCompatibilityFragmentConst", "classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html", "classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst" ],
+      [ "BackwardsCompatibilityFragmentFactory", "classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html", "classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory" ],
       [ "Chain", "classRMF_1_1decorator_1_1Chain.html", "classRMF_1_1decorator_1_1Chain" ],
       [ "ChainConst", "classRMF_1_1decorator_1_1ChainConst.html", "classRMF_1_1decorator_1_1ChainConst" ],
       [ "ChainFactory", "classRMF_1_1decorator_1_1ChainFactory.html", "classRMF_1_1decorator_1_1ChainFactory" ],
@@ -182,7 +185,7 @@ var files =
     [ "signature.h", "signature_8h.html", "signature_8h" ],
     [ "traits.h", "traits_8h.html", "traits_8h" ],
     [ "TraverseHelper.h", "TraverseHelper_8h.html", "TraverseHelper_8h" ],
-    [ "types.h", "types_8h.html", null ],
+    [ "types.h", "types_8h.html", "types_8h" ],
     [ "HDF5/types.h", "HDF5_2types_8h.html", "HDF5_2types_8h" ],
     [ "utility.h", "utility_8h.html", "utility_8h" ],
     [ "validate.h", "validate_8h.html", "validate_8h" ],

@@ -10,7 +10,7 @@
 <title>Graphical Class Hierarchy</title>
 <!-- Node1 -->
 <g id="node1" class="node"><title>Node1</title>
-<g id="a_node1"><a xlink:href="classRMF_1_1SetCurrentFrame.html" target="_top" xlink:title="RMF::SetCurrentFrame">
+<g id="a_node1"><a xlink:href="classRMF_1_1SetCurrentFrame.html" target="_top" xlink:title="Set the current frame to a value and then return it to the old value when this goes out of scope...">
 <polygon fill="none" stroke="black" points="-0.231445,-0 -0.231445,-20 120.231,-20 120.231,-0 -0.231445,-0"/>
 <text text-anchor="middle" x="60" y="-6" font-family="Helvetica,sans-Serif" font-size="10.00">RMF::SetCurrentFrame</text>
 </a>

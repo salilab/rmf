@@ -303,7 +303,7 @@ var sectionId = 'dynsection-1';
 </g>
 <!-- Node11 -->
 <g id="node11" class="node"><title>Node11</title>
-<g id="a_node11"><a xlink:href="keys_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node11"><a xlink:href="keys_8h.html" target="_top" xlink:title="Declarations of the various key types. ">
 <polygon fill="none" stroke="black" points="882.208,-349 882.208,-369 927.109,-369 927.109,-349 882.208,-349"/>
 <text text-anchor="middle" x="904.658" y="-355" font-family="Helvetica,sans-Serif" font-size="10.00">keys.h</text>
 </a>
@@ -316,7 +316,7 @@ var sectionId = 'dynsection-1';
 </g>
 <!-- Node12 -->
 <g id="node12" class="node"><title>Node12</title>
-<g id="a_node12"><a xlink:href="NodeConstHandle_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node12"><a xlink:href="NodeConstHandle_8h.html" target="_top" xlink:title="Declaration of NodeConstHandlke. ">
 <polygon fill="none" stroke="black" points="821.629,-291 821.629,-311 927.688,-311 927.688,-291 821.629,-291"/>
 <text text-anchor="middle" x="874.658" y="-297" font-family="Helvetica,sans-Serif" font-size="10.00">NodeConstHandle.h</text>
 </a>
@@ -329,7 +329,7 @@ var sectionId = 'dynsection-1';
 </g>
 <!-- Node38 -->
 <g id="node38" class="node"><title>Node38</title>
-<g id="a_node38"><a xlink:href="Nullable_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node38"><a xlink:href="Nullable_8h.html" target="_top" xlink:title="A helper class for allowing nice return of possibly null values. ">
 <polygon fill="none" stroke="black" points="945.422,-349 945.422,-369 1005.89,-369 1005.89,-349 945.422,-349"/>
 <text text-anchor="middle" x="975.658" y="-355" font-family="Helvetica,sans-Serif" font-size="10.00">Nullable.h</text>
 </a>
@@ -347,7 +347,7 @@ var sectionId = 'dynsection-1';
 </g>
 <!-- Node13 -->
 <g id="node13" class="node"><title>Node13</title>
-<g id="a_node13"><a xlink:href="Decorator_8h.html" target="_top" xlink:title="Helper functions for manipulating RMF files. ">
+<g id="a_node13"><a xlink:href="Decorator_8h.html" target="_top" xlink:title="Mostly empty base classes for decorators and factories. ">
 <polygon fill="none" stroke="black" points="1041.81,-175 1041.81,-195 1109.51,-195 1109.51,-175 1041.81,-175"/>
 <text text-anchor="middle" x="1075.66" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00">Decorator.h</text>
 </a>
@@ -373,7 +373,7 @@ var sectionId = 'dynsection-1';
 </g>
 <!-- Node27 -->
 <g id="node27" class="node"><title>Node27</title>
-<g id="a_node27"><a xlink:href="NodeHandle_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node27"><a xlink:href="NodeHandle_8h.html" target="_top" xlink:title="Declaration of NodeHandle. ">
 <polygon fill="none" stroke="black" points="935.691,-233 935.691,-253 1015.63,-253 1015.63,-233 935.691,-233"/>
 <text text-anchor="middle" x="975.658" y="-239" font-family="Helvetica,sans-Serif" font-size="10.00">NodeHandle.h</text>
 </a>
@@ -386,7 +386,7 @@ var sectionId = 'dynsection-1';
 </g>
 <!-- Node29 -->
 <g id="node29" class="node"><title>Node29</title>
-<g id="a_node29"><a xlink:href="validate_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node29"><a xlink:href="validate_8h.html" target="_top" xlink:title="Support for validating the data in a file. ">
 <polygon fill="none" stroke="black" points="415.255,-117 415.255,-137 474.062,-137 474.062,-117 415.255,-117"/>
 <text text-anchor="middle" x="444.658" y="-123" font-family="Helvetica,sans-Serif" font-size="10.00">validate.h</text>
 </a>
@@ -578,7 +578,7 @@ var sectionId = 'dynsection-1';
 </g>
 <!-- Node17 -->
 <g id="node17" class="node"><title>Node17</title>
-<g id="a_node17"><a xlink:href="TraverseHelper_8h.html" target="_top" xlink:title="Helper functions for manipulating RMF files. ">
+<g id="a_node17"><a xlink:href="TraverseHelper_8h.html" target="_top" xlink:title="A helper function for managing data when traversing an RMF. ">
 <polygon fill="none" stroke="black" points="1203.49,-1 1203.49,-21 1295.83,-21 1295.83,-1 1203.49,-1"/>
 <text text-anchor="middle" x="1249.66" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">TraverseHelper.h</text>
 </a>
@@ -716,7 +716,7 @@ var sectionId = 'dynsection-1';
 </g>
 <!-- Node28 -->
 <g id="node28" class="node"><title>Node28</title>
-<g id="a_node28"><a xlink:href="FileHandle_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node28"><a xlink:href="FileHandle_8h.html" target="_top" xlink:title="Declaration for RMF::FileHandle. ">
 <polygon fill="none" stroke="black" points="825.587,-175 825.587,-195 897.73,-195 897.73,-175 825.587,-175"/>
 <text text-anchor="middle" x="861.658" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00">FileHandle.h</text>
 </a>
@@ -729,7 +729,7 @@ var sectionId = 'dynsection-1';
 </g>
 <!-- Node30 -->
 <g id="node30" class="node"><title>Node30</title>
-<g id="a_node30"><a xlink:href="Label_8h.html" target="_top" xlink:title="Helper functions for manipulating RMF files. ">
+<g id="a_node30"><a xlink:href="Label_8h.html" target="_top" xlink:title="Declaration of RMF::Label. ">
 <polygon fill="none" stroke="black" points="1442.25,-175 1442.25,-195 1491.06,-195 1491.06,-175 1442.25,-175"/>
 <text text-anchor="middle" x="1466.66" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00">Label.h</text>
 </a>
@@ -835,7 +835,7 @@ var sectionId = 'dynsection-1';
 </g>
 <!-- Node33 -->
 <g id="node33" class="node"><title>Node33</title>
-<g id="a_node33"><a xlink:href="info_8h.html" target="_top" xlink:title="Helper functions for manipulating RMF files. ">
+<g id="a_node33"><a xlink:href="info_8h.html" target="_top" xlink:title="Show info about the file. ">
 <polygon fill="none" stroke="black" points="13.4269,-175 13.4269,-195 53.8898,-195 53.8898,-175 13.4269,-175"/>
 <text text-anchor="middle" x="33.6583" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00">info.h</text>
 </a>
@@ -848,7 +848,7 @@ var sectionId = 'dynsection-1';
 </g>
 <!-- Node34 -->
 <g id="node34" class="node"><title>Node34</title>
-<g id="a_node34"><a xlink:href="RestoreCurrentFrame_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node34"><a xlink:href="RestoreCurrentFrame_8h.html" target="_top" xlink:title="Restore the current frame when exiting a scope. ">
 <polygon fill="none" stroke="black" points="71.8629,-175 71.8629,-195 193.454,-195 193.454,-175 71.8629,-175"/>
 <text text-anchor="middle" x="132.658" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00">RestoreCurrentFrame.h</text>
 </a>
@@ -861,7 +861,7 @@ var sectionId = 'dynsection-1';
 </g>
 <!-- Node35 -->
 <g id="node35" class="node"><title>Node35</title>
-<g id="a_node35"><a xlink:href="SetCurrentFrame_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node35"><a xlink:href="SetCurrentFrame_8h.html" target="_top" xlink:title="Temporarily change the current frame. ">
 <polygon fill="none" stroke="black" points="211.865,-175 211.865,-195 313.451,-195 313.451,-175 211.865,-175"/>
 <text text-anchor="middle" x="262.658" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00">SetCurrentFrame.h</text>
 </a>
@@ -874,7 +874,7 @@ var sectionId = 'dynsection-1';
 </g>
 <!-- Node36 -->
 <g id="node36" class="node"><title>Node36</title>
-<g id="a_node36"><a xlink:href="signature_8h.html" target="_top" xlink:title="Helper functions for manipulating RMF files. ">
+<g id="a_node36"><a xlink:href="signature_8h.html" target="_top" xlink:title="Return a (long) string describing a file that can be compared. ">
 <polygon fill="none" stroke="black" points="331.92,-175 331.92,-195 397.397,-195 397.397,-175 331.92,-175"/>
 <text text-anchor="middle" x="364.658" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00">signature.h</text>
 </a>

@@ -28,7 +28,7 @@
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>
-<g id="a_node2"><a xlink:href="classRMF_1_1Decorator.html" target="_top" xlink:title="RMF::Decorator">
+<g id="a_node2"><a xlink:href="classRMF_1_1Decorator.html" target="_top" xlink:title="The base class for decorators. ">
 <polygon fill="none" stroke="black" points="25.4385,-117 25.4385,-137 112.562,-137 112.562,-117 25.4385,-117"/>
 <text text-anchor="middle" x="69" y="-123" font-family="Helvetica,sans-Serif" font-size="10.00">RMF::Decorator</text>
 </a>

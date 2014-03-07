@@ -158,7 +158,7 @@
 </g>
 <!-- Node15 -->
 <g id="node15" class="node"><title>Node15</title>
-<g id="a_node15"><a xlink:href="validate_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node15"><a xlink:href="validate_8h.html" target="_top" xlink:title="Support for validating the data in a file. ">
 <polygon fill="none" stroke="black" points="702.596,-117 702.596,-137 761.404,-137 761.404,-117 702.596,-117"/>
 <text text-anchor="middle" x="732" y="-123" font-family="Helvetica,sans-Serif" font-size="10.00">validate.h</text>
 </a>
@@ -194,7 +194,7 @@
 </g>
 <!-- Node5 -->
 <g id="node5" class="node"><title>Node5</title>
-<g id="a_node5"><a xlink:href="TraverseHelper_8h.html" target="_top" xlink:title="Helper functions for manipulating RMF files. ">
+<g id="a_node5"><a xlink:href="TraverseHelper_8h.html" target="_top" xlink:title="A helper function for managing data when traversing an RMF. ">
 <polygon fill="none" stroke="black" points="425.831,-1 425.831,-21 518.169,-21 518.169,-1 425.831,-1"/>
 <text text-anchor="middle" x="472" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">TraverseHelper.h</text>
 </a>

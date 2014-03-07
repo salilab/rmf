@@ -10,7 +10,7 @@
 <title>Graphical Class Hierarchy</title>
 <!-- Node1 -->
 <g id="node1" class="node"><title>Node1</title>
-<g id="a_node1"><a xlink:href="classRMF_1_1BufferConstHandle.html" target="_top" xlink:title="RMF::BufferConstHandle">
+<g id="a_node1"><a xlink:href="classRMF_1_1BufferConstHandle.html" target="_top" xlink:title="Manage a shared buffer for loading a RMF. ">
 <polygon fill="none" stroke="black" points="0.233398,-0 0.233398,-20 127.767,-20 127.767,-0 0.233398,-0"/>
 <text text-anchor="middle" x="64" y="-6" font-family="Helvetica,sans-Serif" font-size="10.00">RMF::BufferConstHandle</text>
 </a>
@@ -18,7 +18,7 @@
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>
-<g id="a_node2"><a xlink:href="classRMF_1_1BufferHandle.html" target="_top" xlink:title="RMF::BufferHandle">
+<g id="a_node2"><a xlink:href="classRMF_1_1BufferHandle.html" target="_top" xlink:title="Manage a shared buffer for storing a RMF. ">
 <polygon fill="none" stroke="black" points="164.295,-0 164.295,-20 265.705,-20 265.705,-0 164.295,-0"/>
 <text text-anchor="middle" x="215" y="-6" font-family="Helvetica,sans-Serif" font-size="10.00">RMF::BufferHandle</text>
 </a>

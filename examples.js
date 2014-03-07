@@ -7,6 +7,7 @@ var examples =
     [ "benchmark/benchmark_rmf.py", "benchmark_2benchmark_rmf_8py-example.html", null ],
     [ "bonds.py", "bonds_8py-example.html", null ],
     [ "buffers.py", "buffers_8py-example.html", null ],
+    [ "cloning.py", "cloning_8py-example.html", null ],
     [ "consume.py", "consume_8py-example.html", null ],
     [ "externals.py", "externals_8py-example.html", null ],
     [ "geometry.py", "geometry_8py-example.html", null ],

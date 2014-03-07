@@ -251,7 +251,7 @@ var sectionId = 'dynsection-0';
 </g>
 <!-- Node25 -->
 <g id="node25" class="node"><title>Node25</title>
-<g id="a_node25"><a xlink:href="ID_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node25"><a xlink:href="ID_8h.html" target="_top" xlink:title="Declaration of RMF::ID. ">
 <polygon fill="none" stroke="black" points="240.844,-245 240.844,-265 299.622,-265 299.622,-245 240.844,-245"/>
 <text text-anchor="middle" x="270.233" y="-251" font-family="Helvetica,sans-Serif" font-size="10.00">RMF/ID.h</text>
 </a>
@@ -309,7 +309,7 @@ var sectionId = 'dynsection-0';
 </g>
 <!-- Node17 -->
 <g id="node17" class="node"><title>Node17</title>
-<g id="a_node17"><a xlink:href="exceptions_8h.html" target="_top" xlink:title="Various general useful macros for IMP. ">
+<g id="a_node17"><a xlink:href="exceptions_8h.html" target="_top" xlink:title="Declarations of the various exception types. ">
 <polygon fill="none" stroke="black" points="12.9397,-187 12.9397,-207 109.526,-207 109.526,-187 12.9397,-187"/>
 <text text-anchor="middle" x="61.2327" y="-193" font-family="Helvetica,sans-Serif" font-size="10.00">RMF/exceptions.h</text>
 </a>
@@ -717,7 +717,7 @@ var sectionId = 'dynsection-0';
 </g>
 <!-- Node30 -->
 <g id="node30" class="node"><title>Node30</title>
-<g id="a_node30"><a xlink:href="log_8h.html" target="_top" xlink:title="Helper functions for manipulating RMF files. ">
+<g id="a_node30"><a xlink:href="log_8h.html" target="_top" xlink:title="Functions and macros for logging. ">
 <polygon fill="none" stroke="black" points="1609.17,-187 1609.17,-207 1671.29,-207 1671.29,-187 1609.17,-187"/>
 <text text-anchor="middle" x="1640.23" y="-193" font-family="Helvetica,sans-Serif" font-size="10.00">RMF/log.h</text>
 </a>

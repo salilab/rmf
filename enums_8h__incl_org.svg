@@ -28,7 +28,7 @@
 </g>
 <!-- Node4 -->
 <g id="node4" class="node"><title>Node4</title>
-<g id="a_node4"><a xlink:href="Enum_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node4"><a xlink:href="Enum_8h.html" target="_top" xlink:title="Declaration of RMF::Enum. ">
 <polygon fill="none" stroke="black" points="624.769,-187 624.769,-207 675.231,-207 675.231,-187 624.769,-187"/>
 <text text-anchor="middle" x="650" y="-193" font-family="Helvetica,sans-Serif" font-size="10.00">Enum.h</text>
 </a>
@@ -92,7 +92,7 @@
 </g>
 <!-- Node14 -->
 <g id="node14" class="node"><title>Node14</title>
-<g id="a_node14"><a xlink:href="exceptions_8h.html" target="_top" xlink:title="Various general useful macros for IMP. ">
+<g id="a_node14"><a xlink:href="exceptions_8h.html" target="_top" xlink:title="Declarations of the various exception types. ">
 <polygon fill="none" stroke="black" points="814.926,-123 814.926,-143 887.074,-143 887.074,-123 814.926,-123"/>
 <text text-anchor="middle" x="851" y="-129" font-family="Helvetica,sans-Serif" font-size="10.00">exceptions.h</text>
 </a>

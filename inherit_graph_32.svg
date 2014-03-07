@@ -10,7 +10,7 @@
 <title>Graphical Class Hierarchy</title>
 <!-- Node1 -->
 <g id="node1" class="node"><title>Node1</title>
-<g id="a_node1"><a xlink:href="classRMF_1_1Vector.html" target="_top" xlink:title="RMF::Vector\&lt; D \&gt;">
+<g id="a_node1"><a xlink:href="classRMF_1_1Vector.html" target="_top" xlink:title="Represent a point in some dimension. ">
 <polygon fill="none" stroke="black" points="-0.0146484,-0 -0.0146484,-20 96.0146,-20 96.0146,-0 -0.0146484,-0"/>
 <text text-anchor="middle" x="48" y="-6" font-family="Helvetica,sans-Serif" font-size="10.00">RMF::Vector&lt; D &gt;</text>
 </a>

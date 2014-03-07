@@ -134,7 +134,7 @@
 </g>
 <!-- Node4 -->
 <g id="node4" class="node"><title>Node4</title>
-<g id="a_node4"><a xlink:href="keys_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node4"><a xlink:href="keys_8h.html" target="_top" xlink:title="Declarations of the various key types. ">
 <polygon fill="none" stroke="black" points="1019.55,-349 1019.55,-369 1064.45,-369 1064.45,-349 1019.55,-349"/>
 <text text-anchor="middle" x="1042" y="-355" font-family="Helvetica,sans-Serif" font-size="10.00">keys.h</text>
 </a>
@@ -147,7 +147,7 @@
 </g>
 <!-- Node5 -->
 <g id="node5" class="node"><title>Node5</title>
-<g id="a_node5"><a xlink:href="NodeConstHandle_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node5"><a xlink:href="NodeConstHandle_8h.html" target="_top" xlink:title="Declaration of NodeConstHandlke. ">
 <polygon fill="none" stroke="black" points="963.971,-291 963.971,-311 1070.03,-311 1070.03,-291 963.971,-291"/>
 <text text-anchor="middle" x="1017" y="-297" font-family="Helvetica,sans-Serif" font-size="10.00">NodeConstHandle.h</text>
 </a>
@@ -160,7 +160,7 @@
 </g>
 <!-- Node31 -->
 <g id="node31" class="node"><title>Node31</title>
-<g id="a_node31"><a xlink:href="Nullable_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node31"><a xlink:href="Nullable_8h.html" target="_top" xlink:title="A helper class for allowing nice return of possibly null values. ">
 <polygon fill="none" stroke="black" points="827.764,-349 827.764,-369 888.236,-369 888.236,-349 827.764,-349"/>
 <text text-anchor="middle" x="858" y="-355" font-family="Helvetica,sans-Serif" font-size="10.00">Nullable.h</text>
 </a>
@@ -178,7 +178,7 @@
 </g>
 <!-- Node6 -->
 <g id="node6" class="node"><title>Node6</title>
-<g id="a_node6"><a xlink:href="Decorator_8h.html" target="_top" xlink:title="Helper functions for manipulating RMF files. ">
+<g id="a_node6"><a xlink:href="Decorator_8h.html" target="_top" xlink:title="Mostly empty base classes for decorators and factories. ">
 <polygon fill="none" stroke="black" points="418.15,-175 418.15,-195 485.85,-195 485.85,-175 418.15,-175"/>
 <text text-anchor="middle" x="452" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00">Decorator.h</text>
 </a>
@@ -204,7 +204,7 @@
 </g>
 <!-- Node20 -->
 <g id="node20" class="node"><title>Node20</title>
-<g id="a_node20"><a xlink:href="NodeHandle_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node20"><a xlink:href="NodeHandle_8h.html" target="_top" xlink:title="Declaration of NodeHandle. ">
 <polygon fill="none" stroke="black" points="564.032,-233 564.032,-253 643.968,-253 643.968,-233 564.032,-233"/>
 <text text-anchor="middle" x="604" y="-239" font-family="Helvetica,sans-Serif" font-size="10.00">NodeHandle.h</text>
 </a>
@@ -217,7 +217,7 @@
 </g>
 <!-- Node22 -->
 <g id="node22" class="node"><title>Node22</title>
-<g id="a_node22"><a xlink:href="validate_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node22"><a xlink:href="validate_8h.html" target="_top" xlink:title="Support for validating the data in a file. ">
 <polygon fill="none" stroke="black" points="1044.6,-117 1044.6,-137 1103.4,-137 1103.4,-117 1044.6,-117"/>
 <text text-anchor="middle" x="1074" y="-123" font-family="Helvetica,sans-Serif" font-size="10.00">validate.h</text>
 </a>
@@ -409,7 +409,7 @@
 </g>
 <!-- Node10 -->
 <g id="node10" class="node"><title>Node10</title>
-<g id="a_node10"><a xlink:href="TraverseHelper_8h.html" target="_top" xlink:title="Helper functions for manipulating RMF files. ">
+<g id="a_node10"><a xlink:href="TraverseHelper_8h.html" target="_top" xlink:title="A helper function for managing data when traversing an RMF. ">
 <polygon fill="none" stroke="black" points="200.831,-1 200.831,-21 293.169,-21 293.169,-1 200.831,-1"/>
 <text text-anchor="middle" x="247" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">TraverseHelper.h</text>
 </a>
@@ -547,7 +547,7 @@
 </g>
 <!-- Node21 -->
 <g id="node21" class="node"><title>Node21</title>
-<g id="a_node21"><a xlink:href="FileHandle_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node21"><a xlink:href="FileHandle_8h.html" target="_top" xlink:title="Declaration for RMF::FileHandle. ">
 <polygon fill="none" stroke="black" points="650.929,-175 650.929,-195 723.071,-195 723.071,-175 650.929,-175"/>
 <text text-anchor="middle" x="687" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00">FileHandle.h</text>
 </a>
@@ -560,7 +560,7 @@
 </g>
 <!-- Node23 -->
 <g id="node23" class="node"><title>Node23</title>
-<g id="a_node23"><a xlink:href="Label_8h.html" target="_top" xlink:title="Helper functions for manipulating RMF files. ">
+<g id="a_node23"><a xlink:href="Label_8h.html" target="_top" xlink:title="Declaration of RMF::Label. ">
 <polygon fill="none" stroke="black" points="76.5962,-175 76.5962,-195 125.404,-195 125.404,-175 76.5962,-175"/>
 <text text-anchor="middle" x="101" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00">Label.h</text>
 </a>
@@ -666,7 +666,7 @@
 </g>
 <!-- Node26 -->
 <g id="node26" class="node"><title>Node26</title>
-<g id="a_node26"><a xlink:href="info_8h.html" target="_top" xlink:title="Helper functions for manipulating RMF files. ">
+<g id="a_node26"><a xlink:href="info_8h.html" target="_top" xlink:title="Show info about the file. ">
 <polygon fill="none" stroke="black" points="1158.77,-175 1158.77,-195 1199.23,-195 1199.23,-175 1158.77,-175"/>
 <text text-anchor="middle" x="1179" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00">info.h</text>
 </a>
@@ -679,7 +679,7 @@
 </g>
 <!-- Node27 -->
 <g id="node27" class="node"><title>Node27</title>
-<g id="a_node27"><a xlink:href="RestoreCurrentFrame_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node27"><a xlink:href="RestoreCurrentFrame_8h.html" target="_top" xlink:title="Restore the current frame when exiting a scope. ">
 <polygon fill="none" stroke="black" points="1217.2,-175 1217.2,-195 1338.8,-195 1338.8,-175 1217.2,-175"/>
 <text text-anchor="middle" x="1278" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00">RestoreCurrentFrame.h</text>
 </a>
@@ -692,7 +692,7 @@
 </g>
 <!-- Node28 -->
 <g id="node28" class="node"><title>Node28</title>
-<g id="a_node28"><a xlink:href="SetCurrentFrame_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node28"><a xlink:href="SetCurrentFrame_8h.html" target="_top" xlink:title="Temporarily change the current frame. ">
 <polygon fill="none" stroke="black" points="1357.21,-175 1357.21,-195 1458.79,-195 1458.79,-175 1357.21,-175"/>
 <text text-anchor="middle" x="1408" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00">SetCurrentFrame.h</text>
 </a>
@@ -705,7 +705,7 @@
 </g>
 <!-- Node29 -->
 <g id="node29" class="node"><title>Node29</title>
-<g id="a_node29"><a xlink:href="signature_8h.html" target="_top" xlink:title="Helper functions for manipulating RMF files. ">
+<g id="a_node29"><a xlink:href="signature_8h.html" target="_top" xlink:title="Return a (long) string describing a file that can be compared. ">
 <polygon fill="none" stroke="black" points="1477.26,-175 1477.26,-195 1542.74,-195 1542.74,-175 1477.26,-175"/>
 <text text-anchor="middle" x="1510" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00">signature.h</text>
 </a>

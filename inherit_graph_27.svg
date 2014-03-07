@@ -10,7 +10,7 @@
 <title>Graphical Class Hierarchy</title>
 <!-- Node1 -->
 <g id="node1" class="node"><title>Node1</title>
-<g id="a_node1"><a xlink:href="classRMF_1_1Nullable.html" target="_top" xlink:title="RMF::Nullable\&lt; Tr \&gt;">
+<g id="a_node1"><a xlink:href="classRMF_1_1Nullable.html" target="_top" xlink:title="Return a possibly null value. ">
 <polygon fill="none" stroke="black" points="0.258789,-0 0.258789,-20 105.741,-20 105.741,-0 0.258789,-0"/>
 <text text-anchor="middle" x="53" y="-6" font-family="Helvetica,sans-Serif" font-size="10.00">RMF::Nullable&lt; Tr &gt;</text>
 </a>

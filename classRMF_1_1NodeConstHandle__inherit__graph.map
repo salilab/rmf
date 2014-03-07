@@ -1,4 +1,4 @@
 <map id="RMF::NodeConstHandle" name="RMF::NodeConstHandle">
 <area shape="rect" id="node2" href="$classRMF_1_1NodeHandle.html" title="A handle for a particular node in the hierarchy. " alt="" coords="5,83,136,111"/>
-<area shape="rect" id="node3" href="$classRMF_1_1TraverseHelper.html" title="RMF::TraverseHelper" alt="" coords="160,83,308,111"/>
+<area shape="rect" id="node3" href="$classRMF_1_1TraverseHelper.html" title="This class tracks common data that one needs to keep as one traverses the hierarchy. " alt="" coords="160,83,308,111"/>
 </map>

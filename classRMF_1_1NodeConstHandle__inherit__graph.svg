@@ -28,7 +28,7 @@
 </g>
 <!-- Node3 -->
 <g id="node3" class="node"><title>Node3</title>
-<g id="a_node3"><a xlink:href="classRMF_1_1TraverseHelper.html" target="_top" xlink:title="RMF::TraverseHelper">
+<g id="a_node3"><a xlink:href="classRMF_1_1TraverseHelper.html" target="_top" xlink:title="This class tracks common data that one needs to keep as one traverses the hierarchy. ">
 <polygon fill="none" stroke="black" points="116.119,-1 116.119,-21 227.881,-21 227.881,-1 116.119,-1"/>
 <text text-anchor="middle" x="172" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">RMF::TraverseHelper</text>
 </a>

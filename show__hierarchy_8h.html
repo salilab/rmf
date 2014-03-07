@@ -95,14 +95,13 @@ $(document).ready(function(){initNavTree('show__hierarchy_8h.html','');});
 <div id="doc-content">
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
 <div class="title">show_hierarchy.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Handle read/write of Model data from/to files.  
+<p>Functions to show the hierarchy.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;RMF/config.h&gt;</code><br/>
 <code>#include &lt;iostream&gt;</code><br/>
@@ -122,16 +121,18 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:namespaceRMF"><td class="mdescLeft">&#160;</td><td class="mdescRight">The namespace for all functionality in the library. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a2eff9ab9ea4fa8de784b921ae41c5bc9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRMF.html#a2eff9ab9ea4fa8de784b921ae41c5bc9">RMF::show_frames</a> (FileConstHandle fh, std::ostream &amp;out=std::cout)</td></tr>
-<tr class="separator:a2eff9ab9ea4fa8de784b921ae41c5bc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Showing the hierarchy</h2></td></tr>
+<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrpc8de93d792de41358fd53cb5f224f29c"></a>These functions print out the hierarchy with various extra information for each node. Each prints out an ascii tree designed for human inspection. </p>
+</td></tr>
 <tr class="memitem:af9d7cf76014fecf43fbea94df32b8118"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRMF.html#af9d7cf76014fecf43fbea94df32b8118">RMF::show_hierarchy</a> (NodeConstHandle root, std::ostream &amp;out=std::cout)</td></tr>
 <tr class="separator:af9d7cf76014fecf43fbea94df32b8118"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7de3d326b2b2192b418d25ade389c571"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRMF.html#a7de3d326b2b2192b418d25ade389c571">RMF::show_hierarchy_with_decorators</a> (NodeConstHandle root, bool verbose=false, std::ostream &amp;out=std::cout)</td></tr>
-<tr class="separator:a7de3d326b2b2192b418d25ade389c571"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad426288c930d6835bd323a0533a0c72b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRMF.html#ad426288c930d6835bd323a0533a0c72b">RMF::show_hierarchy_with_values</a> (NodeConstHandle root, std::ostream &amp;out=std::cout)</td></tr>
 <tr class="separator:ad426288c930d6835bd323a0533a0c72b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7de3d326b2b2192b418d25ade389c571"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRMF.html#a7de3d326b2b2192b418d25ade389c571">RMF::show_hierarchy_with_decorators</a> (NodeConstHandle root, bool verbose=false, std::ostream &amp;out=std::cout)</td></tr>
+<tr class="separator:a7de3d326b2b2192b418d25ade389c571"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2eff9ab9ea4fa8de784b921ae41c5bc9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRMF.html#a2eff9ab9ea4fa8de784b921ae41c5bc9">RMF::show_frames</a> (FileConstHandle fh, std::ostream &amp;out=std::cout)</td></tr>
+<tr class="separator:a2eff9ab9ea4fa8de784b921ae41c5bc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Copyright 2007-2013 IMP Inventors. All rights reserved. </p>

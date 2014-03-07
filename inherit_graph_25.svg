@@ -10,7 +10,7 @@
 <title>Graphical Class Hierarchy</title>
 <!-- Node1 -->
 <g id="node1" class="node"><title>Node1</title>
-<g id="a_node1"><a xlink:href="classRMF_1_1Label.html" target="_top" xlink:title="RMF::Label">
+<g id="a_node1"><a xlink:href="classRMF_1_1Label.html" target="_top" xlink:title="A decorator&#45;like class to mark certain nodes (eg molecule bounaries) ">
 <polygon fill="none" stroke="black" points="0.157715,-19 0.157715,-39 67.8423,-39 67.8423,-19 0.157715,-19"/>
 <text text-anchor="middle" x="34" y="-25" font-family="Helvetica,sans-Serif" font-size="10.00">RMF::Label</text>
 </a>

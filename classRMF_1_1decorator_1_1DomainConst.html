@@ -118,14 +118,15 @@ $(document).ready(function(){initNavTree('classRMF_1_1decorator_1_1DomainConst.h
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2fdd103aa29b48716e7af5c48e8bc3ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2fdd103aa29b48716e7af5c48e8bc3ab"></a>
-IntRange&#160;</td><td class="memItemRight" valign="bottom"><b>get_frame_indexes</b> () const </td></tr>
-<tr class="separator:a2fdd103aa29b48716e7af5c48e8bc3ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7283022e875ffd015234ee64ffb1e92f"><td class="memItemLeft" align="right" valign="top">IntRange&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRMF_1_1decorator_1_1DomainConst.html#a7283022e875ffd015234ee64ffb1e92f">get_indexes</a> () const </td></tr>
-<tr class="separator:a7283022e875ffd015234ee64ffb1e92f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a778f23ffaccf05c605767840b70f9e7f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a778f23ffaccf05c605767840b70f9e7f"></a>
-IntRange&#160;</td><td class="memItemRight" valign="bottom"><b>get_static_indexes</b> () const </td></tr>
-<tr class="separator:a778f23ffaccf05c605767840b70f9e7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82d4afebecd307c8236247030e09e1d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a82d4afebecd307c8236247030e09e1d4"></a>
+IntRange&#160;</td><td class="memItemRight" valign="bottom"><b>get_frame_residue_indexes</b> () const </td></tr>
+<tr class="separator:a82d4afebecd307c8236247030e09e1d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26db675a3dd8ca3b38f036235dba600c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26db675a3dd8ca3b38f036235dba600c"></a>
+IntRange&#160;</td><td class="memItemRight" valign="bottom"><b>get_residue_indexes</b> () const </td></tr>
+<tr class="separator:a26db675a3dd8ca3b38f036235dba600c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33065690af3f34cf3e1d570fa3a0c272"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a33065690af3f34cf3e1d570fa3a0c272"></a>
+IntRange&#160;</td><td class="memItemRight" valign="bottom"><b>get_static_residue_indexes</b> () const </td></tr>
+<tr class="separator:a33065690af3f34cf3e1d570fa3a0c272"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -135,9 +136,9 @@ static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>get_dec
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:abb4d75da6902bd3138584e183764505a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abb4d75da6902bd3138584e183764505a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>DomainConst</b> (<a class="el" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> nh, boost::array&lt; <a class="el" href="namespaceRMF.html#a260d67e37197e618435696abbb3a37ce">IntKey</a>, 2 &gt; indexes)</td></tr>
-<tr class="separator:abb4d75da6902bd3138584e183764505a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a022a8e06830a7185d130103ffac6567e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a022a8e06830a7185d130103ffac6567e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>DomainConst</b> (<a class="el" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> nh, boost::array&lt; <a class="el" href="namespaceRMF.html#a260d67e37197e618435696abbb3a37ce">IntKey</a>, 2 &gt; residue_indexes)</td></tr>
+<tr class="separator:a022a8e06830a7185d130103ffac6567e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classRMF_1_1Decorator"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classRMF_1_1Decorator')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classRMF_1_1Decorator.html">RMF::Decorator</a></td></tr>
 <tr class="memitem:ad4e34da0f4152f1cfd1c7fdc901711af inherit pro_methods_classRMF_1_1Decorator"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad4e34da0f4152f1cfd1c7fdc901711af"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Decorator</b> (<a class="el" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> handle)</td></tr>
@@ -148,34 +149,15 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:accef45c01c0682be4eee598dbdf2043a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="accef45c01c0682be4eee598dbdf2043a"></a>
-boost::array&lt; <a class="el" href="namespaceRMF.html#a260d67e37197e618435696abbb3a37ce">IntKey</a>, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>indexes_</b></td></tr>
-<tr class="separator:accef45c01c0682be4eee598dbdf2043a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09bab43299a1e7a1b95f25ec275a1fb4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09bab43299a1e7a1b95f25ec275a1fb4"></a>
+boost::array&lt; <a class="el" href="namespaceRMF.html#a260d67e37197e618435696abbb3a37ce">IntKey</a>, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>residue_indexes_</b></td></tr>
+<tr class="separator:a09bab43299a1e7a1b95f25ec275a1fb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>See also <a class="el" href="classRMF_1_1decorator_1_1Domain.html">Domain</a> and <a class="el" href="classRMF_1_1decorator_1_1DomainFactory.html">DomainFactory</a>. </p>
 
-<p>Definition at line <a class="el" href="sequence_8h_source.html#l00405">405</a> of file <a class="el" href="sequence_8h_source.html">sequence.h</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a7283022e875ffd015234ee64ffb1e92f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">IntRange RMF::decorator::DomainConst::get_indexes </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>DOC </p>
-
-<p>Definition at line <a class="el" href="sequence_8h_source.html#l00415">415</a> of file <a class="el" href="sequence_8h_source.html">sequence.h</a>.</p>
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<p>Definition at line <a class="el" href="sequence_8h_source.html#l00528">528</a> of file <a class="el" href="sequence_8h_source.html">sequence.h</a>.</p>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="sequence_8h_source.html">sequence.h</a></li>
 </ul>
 </div><!-- contents -->

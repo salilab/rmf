@@ -87,7 +87,7 @@ var sectionId = 'dynsection-0';
 </g>
 <!-- Node13 -->
 <g id="node13" class="node"><title>Node13</title>
-<g id="a_node13"><a xlink:href="exceptions_8h.html" target="_top" xlink:title="Various general useful macros for IMP. ">
+<g id="a_node13"><a xlink:href="exceptions_8h.html" target="_top" xlink:title="Declarations of the various exception types. ">
 <polygon fill="none" stroke="black" points="293.926,-117 293.926,-137 366.074,-137 366.074,-117 293.926,-117"/>
 <text text-anchor="middle" x="330" y="-123" font-family="Helvetica,sans-Serif" font-size="10.00">exceptions.h</text>
 </a>

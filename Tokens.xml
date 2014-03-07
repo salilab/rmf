@@ -91,183 +91,6 @@
   </Token>
   <Token>
     <TokenIdentifier>
-      <Name>RMF_TYPES</Name>
-      <APILanguage>unknown</APILanguage>
-      <Type>macro</Type>
-    </TokenIdentifier>
-    <Path>default__types_8h.html</Path>
-    <Anchor>a80692ae03c7d6197938860c08091c7f5</Anchor>
-    <Abstract>For template classes that want to deal with lists of values. </Abstract>
-    <DeclaredIn>default_types.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>RMF_VECTOR</Name>
-      <APILanguage>unknown</APILanguage>
-      <Type>macro</Type>
-    </TokenIdentifier>
-    <Path>default__types_8h.html</Path>
-    <Anchor>a0fe61c8bad6616e90dca5590b800cf6e</Anchor>
-    <Abstract>For classes that are templated on the dimension. </Abstract>
-    <DeclaredIn>default_types.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>Float</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>tdef</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>a86262dd447c738c45e22fae2a3375d61</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>Floats</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>tdef</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>affffd1547fb5b085b9b5875cafe5771a</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>FloatsList</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>tdef</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>a5fd1f9b86dea5ff568a810082497c010</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>Int</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>tdef</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>a42aed102a7e7e9b5ddc9feecc05fd158</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>Ints</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>tdef</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>a6c938fb137bdddb4f61c5711206300d5</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>IntsList</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>tdef</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>a0d4303b9c65190a11aa400a594070c33</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>String</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>tdef</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>a13cd501233c2edc77db6ebec83583eec</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>Strings</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>tdef</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>a9811b522a0994fc22b47f90b00f6b564</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>StringsList</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>tdef</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>a3446a203b15cd29c3f5e901e790b3b23</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>Vector3</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>tdef</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>a4f81aba337d34ce6c26d7e5004fcfddf</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>Vector3s</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>tdef</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>a163c7904c3fdd6039c9907146c733133</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>Vector4</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>tdef</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>a1e72f2580095bf30a33fc20fa66e7bcd</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>Vector4s</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>tdef</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>a64071d2602cf37e459aee44ffdf7ead6</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>VectorDimension</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>tdef</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>a8c992cf6c6ec038038d9a185d57a1750</Anchor>
-    <Abstract>Work around clang issue. </Abstract>
-    <DeclaredIn>default_types.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
       <Name>FrameType</Name>
       <APILanguage>cpp</APILanguage>
       <Type>tdef</Type>
@@ -711,6 +534,26 @@
   </Token>
   <Token>
     <TokenIdentifier>
+      <Name>RMF_NO_RETURN</Name>
+      <APILanguage>unknown</APILanguage>
+      <Type>macro</Type>
+    </TokenIdentifier>
+    <Path>infrastructure__macros_8h.html</Path>
+    <Anchor>acae100b3b9e267e6efd606edac7978a1</Anchor>
+    <DeclaredIn>infrastructure_macros.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>RMF_UNUSED</Name>
+      <APILanguage>unknown</APILanguage>
+      <Type>macro</Type>
+    </TokenIdentifier>
+    <Path>infrastructure__macros_8h.html</Path>
+    <Anchor>a1e12fa0f40d2d5fb1db44fcfaf4dbc7b</Anchor>
+    <DeclaredIn>infrastructure_macros.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
       <Name>RMF_VALIDATOR</Name>
       <APILanguage>unknown</APILanguage>
       <Type>macro</Type>
@@ -996,17 +839,6 @@
   </Token>
   <Token>
     <TokenIdentifier>
-      <Name>show_frames</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>func</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>a2eff9ab9ea4fa8de784b921ae41c5bc9</Anchor>
-    <DeclaredIn>show_hierarchy.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
       <Name>show_hierarchy</Name>
       <APILanguage>cpp</APILanguage>
       <Type>func</Type>
@@ -1014,17 +846,6 @@
     </TokenIdentifier>
     <Path>namespaceRMF.html</Path>
     <Anchor>af9d7cf76014fecf43fbea94df32b8118</Anchor>
-    <DeclaredIn>show_hierarchy.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>show_hierarchy_with_decorators</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>func</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>a7de3d326b2b2192b418d25ade389c571</Anchor>
     <DeclaredIn>show_hierarchy.h</DeclaredIn>
   </Token>
   <Token>
@@ -1040,6 +861,28 @@
   </Token>
   <Token>
     <TokenIdentifier>
+      <Name>show_hierarchy_with_decorators</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>a7de3d326b2b2192b418d25ade389c571</Anchor>
+    <DeclaredIn>show_hierarchy.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>show_frames</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>a2eff9ab9ea4fa8de784b921ae41c5bc9</Anchor>
+    <DeclaredIn>show_hierarchy.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
       <Name>get_signature_string</Name>
       <APILanguage>cpp</APILanguage>
       <Type>func</Type>
@@ -1048,6 +891,183 @@
     <Path>namespaceRMF.html</Path>
     <Anchor>aeb63966cd5453243f7aa9f09e09e9164</Anchor>
     <DeclaredIn>signature.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>RMF_TYPES</Name>
+      <APILanguage>unknown</APILanguage>
+      <Type>macro</Type>
+    </TokenIdentifier>
+    <Path>types_8h.html</Path>
+    <Anchor>a80692ae03c7d6197938860c08091c7f5</Anchor>
+    <Abstract>For template classes that want to deal with lists of values. </Abstract>
+    <DeclaredIn>types.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>RMF_VECTOR</Name>
+      <APILanguage>unknown</APILanguage>
+      <Type>macro</Type>
+    </TokenIdentifier>
+    <Path>types_8h.html</Path>
+    <Anchor>a0fe61c8bad6616e90dca5590b800cf6e</Anchor>
+    <Abstract>For classes that are templated on the dimension. </Abstract>
+    <DeclaredIn>types.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>Float</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>tdef</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>a86262dd447c738c45e22fae2a3375d61</Anchor>
+    <DeclaredIn>types.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>Floats</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>tdef</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>affffd1547fb5b085b9b5875cafe5771a</Anchor>
+    <DeclaredIn>types.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>FloatsList</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>tdef</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>a5fd1f9b86dea5ff568a810082497c010</Anchor>
+    <DeclaredIn>types.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>Int</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>tdef</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>a42aed102a7e7e9b5ddc9feecc05fd158</Anchor>
+    <DeclaredIn>types.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>Ints</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>tdef</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>a6c938fb137bdddb4f61c5711206300d5</Anchor>
+    <DeclaredIn>types.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>IntsList</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>tdef</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>a0d4303b9c65190a11aa400a594070c33</Anchor>
+    <DeclaredIn>types.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>String</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>tdef</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>a13cd501233c2edc77db6ebec83583eec</Anchor>
+    <DeclaredIn>types.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>Strings</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>tdef</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>a9811b522a0994fc22b47f90b00f6b564</Anchor>
+    <DeclaredIn>types.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>StringsList</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>tdef</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>a3446a203b15cd29c3f5e901e790b3b23</Anchor>
+    <DeclaredIn>types.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>Vector3</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>tdef</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>a4f81aba337d34ce6c26d7e5004fcfddf</Anchor>
+    <DeclaredIn>types.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>Vector3s</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>tdef</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>a163c7904c3fdd6039c9907146c733133</Anchor>
+    <DeclaredIn>types.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>Vector4</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>tdef</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>a1e72f2580095bf30a33fc20fa66e7bcd</Anchor>
+    <DeclaredIn>types.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>Vector4s</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>tdef</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>a64071d2602cf37e459aee44ffdf7ead6</Anchor>
+    <DeclaredIn>types.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>VectorDimension</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>tdef</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>a8c992cf6c6ec038038d9a185d57a1750</Anchor>
+    <Abstract>Work around clang issue. </Abstract>
+    <DeclaredIn>types.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1500,7 +1520,7 @@
     </TokenIdentifier>
     <Path>namespaceRMF.html</Path>
     <Anchor>a86262dd447c738c45e22fae2a3375d61</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
+    <DeclaredIn>types.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1511,7 +1531,7 @@
     </TokenIdentifier>
     <Path>namespaceRMF.html</Path>
     <Anchor>affffd1547fb5b085b9b5875cafe5771a</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
+    <DeclaredIn>types.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1522,7 +1542,7 @@
     </TokenIdentifier>
     <Path>namespaceRMF.html</Path>
     <Anchor>a5fd1f9b86dea5ff568a810082497c010</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
+    <DeclaredIn>types.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1566,7 +1586,7 @@
     </TokenIdentifier>
     <Path>namespaceRMF.html</Path>
     <Anchor>a42aed102a7e7e9b5ddc9feecc05fd158</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
+    <DeclaredIn>types.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1577,7 +1597,7 @@
     </TokenIdentifier>
     <Path>namespaceRMF.html</Path>
     <Anchor>a6c938fb137bdddb4f61c5711206300d5</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
+    <DeclaredIn>types.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1588,7 +1608,7 @@
     </TokenIdentifier>
     <Path>namespaceRMF.html</Path>
     <Anchor>a0d4303b9c65190a11aa400a594070c33</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
+    <DeclaredIn>types.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1667,7 +1687,7 @@
     </TokenIdentifier>
     <Path>namespaceRMF.html</Path>
     <Anchor>a13cd501233c2edc77db6ebec83583eec</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
+    <DeclaredIn>types.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1678,7 +1698,7 @@
     </TokenIdentifier>
     <Path>namespaceRMF.html</Path>
     <Anchor>a9811b522a0994fc22b47f90b00f6b564</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
+    <DeclaredIn>types.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1689,7 +1709,7 @@
     </TokenIdentifier>
     <Path>namespaceRMF.html</Path>
     <Anchor>a3446a203b15cd29c3f5e901e790b3b23</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
+    <DeclaredIn>types.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1700,7 +1720,7 @@
     </TokenIdentifier>
     <Path>namespaceRMF.html</Path>
     <Anchor>a4f81aba337d34ce6c26d7e5004fcfddf</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
+    <DeclaredIn>types.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1711,7 +1731,7 @@
     </TokenIdentifier>
     <Path>namespaceRMF.html</Path>
     <Anchor>a163c7904c3fdd6039c9907146c733133</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
+    <DeclaredIn>types.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1722,7 +1742,7 @@
     </TokenIdentifier>
     <Path>namespaceRMF.html</Path>
     <Anchor>a1e72f2580095bf30a33fc20fa66e7bcd</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
+    <DeclaredIn>types.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1733,7 +1753,7 @@
     </TokenIdentifier>
     <Path>namespaceRMF.html</Path>
     <Anchor>a64071d2602cf37e459aee44ffdf7ead6</Anchor>
-    <DeclaredIn>default_types.h</DeclaredIn>
+    <DeclaredIn>types.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1745,7 +1765,7 @@
     <Path>namespaceRMF.html</Path>
     <Anchor>a8c992cf6c6ec038038d9a185d57a1750</Anchor>
     <Abstract>Work around clang issue. </Abstract>
-    <DeclaredIn>default_types.h</DeclaredIn>
+    <DeclaredIn>types.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1768,17 +1788,6 @@
     <Path>namespaceRMF.html</Path>
     <Anchor>ab8681fee96c0b5e2cb33cd723e99b1b0</Anchor>
     <DeclaredIn>FileHandle.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>get_as_node_name</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>func</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>a0a3ad608f943f0c850ed23347d8c38ac</Anchor>
-    <DeclaredIn>names.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1889,50 +1898,6 @@
     <Path>namespaceRMF.html</Path>
     <Anchor>ac600cc982dce090a5001e53352b20a68</Anchor>
     <DeclaredIn>log.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>show_frames</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>func</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>a2eff9ab9ea4fa8de784b921ae41c5bc9</Anchor>
-    <DeclaredIn>show_hierarchy.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>show_hierarchy</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>func</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>af9d7cf76014fecf43fbea94df32b8118</Anchor>
-    <DeclaredIn>show_hierarchy.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>show_hierarchy_with_decorators</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>func</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>a7de3d326b2b2192b418d25ade389c571</Anchor>
-    <DeclaredIn>show_hierarchy.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>show_hierarchy_with_values</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>func</Type>
-      <Scope>RMF</Scope>
-    </TokenIdentifier>
-    <Path>namespaceRMF.html</Path>
-    <Anchor>ad426288c930d6835bd323a0533a0c72b</Anchor>
-    <DeclaredIn>show_hierarchy.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -2367,6 +2332,61 @@
   </Token>
   <Token>
     <TokenIdentifier>
+      <Name>get_as_node_name</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>a0a3ad608f943f0c850ed23347d8c38ac</Anchor>
+    <DeclaredIn>names.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>show_hierarchy</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>af9d7cf76014fecf43fbea94df32b8118</Anchor>
+    <DeclaredIn>show_hierarchy.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>show_hierarchy_with_values</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>ad426288c930d6835bd323a0533a0c72b</Anchor>
+    <DeclaredIn>show_hierarchy.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>show_hierarchy_with_decorators</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>a7de3d326b2b2192b418d25ade389c571</Anchor>
+    <DeclaredIn>show_hierarchy.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>show_frames</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>func</Type>
+      <Scope>RMF</Scope>
+    </TokenIdentifier>
+    <Path>namespaceRMF.html</Path>
+    <Anchor>a2eff9ab9ea4fa8de784b921ae41c5bc9</Anchor>
+    <DeclaredIn>show_hierarchy.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
       <Name>clone_file_info</Name>
       <APILanguage>cpp</APILanguage>
       <Type>func</Type>
@@ -2417,6 +2437,7 @@
       <Scope>RMF::BufferConstHandle</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1BufferConstHandle.html</Path>
+    <Abstract>Manage a shared buffer for loading a RMF. </Abstract>
     <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/BufferConstHandle.h</DeclaredIn>
   </Token>
   <Token>
@@ -2439,6 +2460,7 @@
       <Scope>RMF::BufferHandle</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1BufferHandle.html</Path>
+    <Abstract>Manage a shared buffer for storing a RMF. </Abstract>
     <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/BufferHandle.h</DeclaredIn>
   </Token>
   <Token>
@@ -2473,6 +2495,7 @@
       <Scope>RMF::CoordinateTransformer</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1CoordinateTransformer.html</Path>
+    <Abstract>Transform coordinates into the global reference frame. </Abstract>
     <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/CoordinateTransformer.h</DeclaredIn>
   </Token>
   <Token>
@@ -2538,6 +2561,7 @@
       <Scope>RMF::Decorator</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1Decorator.html</Path>
+    <Abstract>The base class for decorators. </Abstract>
     <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/Decorator.h</DeclaredIn>
   </Token>
   <Token>
@@ -2548,6 +2572,7 @@
       <Scope>RMF::Enum</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1Enum.html</Path>
+    <Abstract>A strong enum with an associated string name for each value. </Abstract>
     <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/Enum.h</DeclaredIn>
   </Token>
   <Token>
@@ -2568,6 +2593,7 @@
       <Scope>RMF::Factory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1Factory.html</Path>
+    <Abstract>The base class for Factories. </Abstract>
     <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/Decorator.h</DeclaredIn>
   </Token>
   <Token>
@@ -3201,6 +3227,7 @@
       <Scope>RMF::ID</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1ID.html</Path>
+    <Abstract>A general purpose ID in RMF used, with different tags, to idenfity things. </Abstract>
     <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/ID.h</DeclaredIn>
   </Token>
   <Token>
@@ -3241,6 +3268,7 @@
       <Scope>RMF::Label</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1Label.html</Path>
+    <Abstract>A decorator-like class to mark certain nodes (eg molecule bounaries) </Abstract>
     <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/Label.h</DeclaredIn>
   </Token>
   <Token>
@@ -3268,6 +3296,17 @@
   </Token>
   <Token>
     <TokenIdentifier>
+      <Name>get_id</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>instm</Type>
+      <Scope>RMF::NodeConstHandle</Scope>
+    </TokenIdentifier>
+    <Path>classRMF_1_1NodeConstHandle.html</Path>
+    <Anchor>a003339523463bcd2ca7c82e329b794f2</Anchor>
+    <DeclaredIn>NodeConstHandle.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
       <Name>get_name</Name>
       <APILanguage>cpp</APILanguage>
       <Type>instm</Type>
@@ -3275,7 +3314,6 @@
     </TokenIdentifier>
     <Path>classRMF_1_1NodeConstHandle.html</Path>
     <Anchor>a8be49bdea07c4807a6b55f066ca74ad7</Anchor>
-    <Abstract>Return the number of child nodes. </Abstract>
     <DeclaredIn>NodeConstHandle.h</DeclaredIn>
   </Token>
   <Token>
@@ -3348,6 +3386,17 @@
   </Token>
   <Token>
     <TokenIdentifier>
+      <Name>get_id</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>instm</Type>
+      <Scope>RMF::NodeConstHandle</Scope>
+    </TokenIdentifier>
+    <Path>classRMF_1_1NodeConstHandle.html</Path>
+    <Anchor>a003339523463bcd2ca7c82e329b794f2</Anchor>
+    <DeclaredIn>NodeConstHandle.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
       <Name>get_name</Name>
       <APILanguage>cpp</APILanguage>
       <Type>instm</Type>
@@ -3355,7 +3404,6 @@
     </TokenIdentifier>
     <Path>classRMF_1_1NodeConstHandle.html</Path>
     <Anchor>a8be49bdea07c4807a6b55f066ca74ad7</Anchor>
-    <Abstract>Return the number of child nodes. </Abstract>
     <DeclaredIn>NodeConstHandle.h</DeclaredIn>
   </Token>
   <Token>
@@ -3424,6 +3472,7 @@
       <Scope>RMF::Nullable</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1Nullable.html</Path>
+    <Abstract>Return a possibly null value. </Abstract>
     <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/Nullable.h</DeclaredIn>
   </Token>
   <Token>
@@ -3467,6 +3516,7 @@
       <Scope>RMF::RestoreCurrentFrame</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1RestoreCurrentFrame.html</Path>
+    <Abstract>Restore the frame that was current on creation upon destruction. </Abstract>
     <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/RestoreCurrentFrame.h</DeclaredIn>
   </Token>
   <Token>
@@ -3477,6 +3527,7 @@
       <Scope>RMF::SetCurrentFrame</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1SetCurrentFrame.html</Path>
+    <Abstract>Set the current frame to a value and then return it to the old value when this goes out of scope...</Abstract>
     <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/SetCurrentFrame.h</DeclaredIn>
   </Token>
   <Token>
@@ -3497,6 +3548,7 @@
       <Scope>RMF::TraverseHelper</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1TraverseHelper.html</Path>
+    <Abstract>This class tracks common data that one needs to keep as one traverses the hierarchy. </Abstract>
     <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/TraverseHelper.h</DeclaredIn>
   </Token>
   <Token>
@@ -3623,6 +3675,17 @@
   </Token>
   <Token>
     <TokenIdentifier>
+      <Name>get_id</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>instm</Type>
+      <Scope>RMF::NodeConstHandle</Scope>
+    </TokenIdentifier>
+    <Path>classRMF_1_1NodeConstHandle.html</Path>
+    <Anchor>a003339523463bcd2ca7c82e329b794f2</Anchor>
+    <DeclaredIn>NodeConstHandle.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
       <Name>get_name</Name>
       <APILanguage>cpp</APILanguage>
       <Type>instm</Type>
@@ -3630,7 +3693,6 @@
     </TokenIdentifier>
     <Path>classRMF_1_1NodeConstHandle.html</Path>
     <Anchor>a8be49bdea07c4807a6b55f066ca74ad7</Anchor>
-    <Abstract>Return the number of child nodes. </Abstract>
     <DeclaredIn>NodeConstHandle.h</DeclaredIn>
   </Token>
   <Token>
@@ -3674,6 +3736,7 @@
       <Scope>RMF::Vector</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1Vector.html</Path>
+    <Abstract>Represent a point in some dimension. </Abstract>
     <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/Vector.h</DeclaredIn>
   </Token>
   <Token>
@@ -3939,6 +4002,69 @@
     <Path>classRMF_1_1decorator_1_1AtomFactory.html</Path>
     <Anchor>a001418b37810426140f1b9f0a11e7e49</Anchor>
     <DeclaredIn>physics.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>RMF::decorator::BackwardsCompatibilityFragment</Name>
+      <APILanguage>c</APILanguage>
+      <Type>cl</Type>
+      <Scope>RMF::decorator::BackwardsCompatibilityFragment</Scope>
+    </TokenIdentifier>
+    <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragment.html</Path>
+    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>RMF::decorator::BackwardsCompatibilityFragmentConst</Name>
+      <APILanguage>c</APILanguage>
+      <Type>cl</Type>
+      <Scope>RMF::decorator::BackwardsCompatibilityFragmentConst</Scope>
+    </TokenIdentifier>
+    <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
+    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>RMF::decorator::BackwardsCompatibilityFragmentFactory</Name>
+      <APILanguage>c</APILanguage>
+      <Type>cl</Type>
+      <Scope>RMF::decorator::BackwardsCompatibilityFragmentFactory</Scope>
+    </TokenIdentifier>
+    <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
+    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>get</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>instm</Type>
+      <Scope>RMF::decorator::BackwardsCompatibilityFragmentFactory</Scope>
+    </TokenIdentifier>
+    <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
+    <Anchor>acec304e0881d022a82b7926059fe282c</Anchor>
+    <DeclaredIn>sequence.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>get</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>instm</Type>
+      <Scope>RMF::decorator::BackwardsCompatibilityFragmentFactory</Scope>
+    </TokenIdentifier>
+    <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
+    <Anchor>ab05f464f656a2d0e35590644550abc5f</Anchor>
+    <DeclaredIn>sequence.h</DeclaredIn>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>get_is</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>instm</Type>
+      <Scope>RMF::decorator::BackwardsCompatibilityFragmentFactory</Scope>
+    </TokenIdentifier>
+    <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
+    <Anchor>aa592e0900ccb9cadaa27c86459ac6143</Anchor>
+    <DeclaredIn>sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4393,17 +4519,6 @@
   </Token>
   <Token>
     <TokenIdentifier>
-      <Name>get_indexes</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>instm</Type>
-      <Scope>RMF::decorator::DomainConst</Scope>
-    </TokenIdentifier>
-    <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
-    <Anchor>a7283022e875ffd015234ee64ffb1e92f</Anchor>
-    <DeclaredIn>sequence.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
       <Name>RMF::decorator::DomainConst</Name>
       <APILanguage>c</APILanguage>
       <Type>cl</Type>
@@ -4411,17 +4526,6 @@
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
     <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
-  </Token>
-  <Token>
-    <TokenIdentifier>
-      <Name>get_indexes</Name>
-      <APILanguage>cpp</APILanguage>
-      <Type>instm</Type>
-      <Scope>RMF::decorator::DomainConst</Scope>
-    </TokenIdentifier>
-    <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
-    <Anchor>a7283022e875ffd015234ee64ffb1e92f</Anchor>
-    <DeclaredIn>sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>

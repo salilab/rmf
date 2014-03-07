@@ -100,7 +100,7 @@ $(document).ready(function(){initNavTree('validate_8h_source.html','');});
 <div class="contents">
 <a href="validate_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/**</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  \file RMF/validate.h</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *  \brief Handle read/write of Model data from/to files.</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *  \brief Support for validating the data in a file.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> *  Copyright 2007-2013 IMP Inventors. All rights reserved.</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> *</span></div>
@@ -123,16 +123,19 @@ $(document).ready(function(){initNavTree('validate_8h_source.html','');});
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">namespace </span>RMF {<span class="comment"></span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">/** Validate the hierarchy. Throw an exception if it is not valid and log any</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"> * errors encountered. */</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;RMFEXPORT <span class="keywordtype">void</span> <a class="code" href="namespaceRMF.html#ac991dfe1862f9608339f5d0bc3af0a5e">validate</a>(FileConstHandle fh);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;} <span class="comment">/* namespace RMF */</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;RMF_DISABLE_WARNINGS</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RMF_VALIDATE_H */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="FileHandle_8h_html"><div class="ttname"><a href="FileHandle_8h.html">FileHandle.h</a></div><div class="ttdoc">Handle read/write of Model data from/to files. </div></div>
-<div class="ttc" id="NodeConstHandle_8h_html"><div class="ttname"><a href="NodeConstHandle_8h.html">NodeConstHandle.h</a></div><div class="ttdoc">Handle read/write of Model data from/to files. </div></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"> * errors encountered.</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment"> * This function checks invariants such as all representation leaves having</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> * coordinates and radii. */</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;RMFEXPORT <span class="keywordtype">void</span> <a class="code" href="namespaceRMF.html#ac991dfe1862f9608339f5d0bc3af0a5e">validate</a>(FileConstHandle fh);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;} <span class="comment">/* namespace RMF */</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;RMF_DISABLE_WARNINGS</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RMF_VALIDATE_H */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="FileHandle_8h_html"><div class="ttname"><a href="FileHandle_8h.html">FileHandle.h</a></div><div class="ttdoc">Declaration for RMF::FileHandle. </div></div>
+<div class="ttc" id="NodeConstHandle_8h_html"><div class="ttname"><a href="NodeConstHandle_8h.html">NodeConstHandle.h</a></div><div class="ttdoc">Declaration of NodeConstHandlke. </div></div>
 <div class="ttc" id="FileConstHandle_8h_html"><div class="ttname"><a href="FileConstHandle_8h.html">FileConstHandle.h</a></div><div class="ttdoc">Handle read/write of Model data from/to files. </div></div>
 <div class="ttc" id="namespaceRMF_html_ac991dfe1862f9608339f5d0bc3af0a5e"><div class="ttname"><a href="namespaceRMF.html#ac991dfe1862f9608339f5d0bc3af0a5e">RMF::validate</a></div><div class="ttdeci">void validate(FileConstHandle fh)</div></div>
 </div><!-- fragment --></div><!-- contents -->

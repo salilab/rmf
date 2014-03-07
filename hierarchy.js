@@ -19,6 +19,9 @@ var hierarchy =
       [ "RMF::decorator::AtomConst", "classRMF_1_1decorator_1_1AtomConst.html", [
         [ "RMF::decorator::Atom", "classRMF_1_1decorator_1_1Atom.html", null ]
       ] ],
+      [ "RMF::decorator::BackwardsCompatibilityFragmentConst", "classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html", [
+        [ "RMF::decorator::BackwardsCompatibilityFragment", "classRMF_1_1decorator_1_1BackwardsCompatibilityFragment.html", null ]
+      ] ],
       [ "RMF::decorator::BallConst", "classRMF_1_1decorator_1_1BallConst.html", [
         [ "RMF::decorator::Ball", "classRMF_1_1decorator_1_1Ball.html", null ]
       ] ],
@@ -102,6 +105,7 @@ var hierarchy =
       [ "RMF::decorator::AliasFactory", "classRMF_1_1decorator_1_1AliasFactory.html", null ],
       [ "RMF::decorator::AlternativesFactory", "classRMF_1_1decorator_1_1AlternativesFactory.html", null ],
       [ "RMF::decorator::AtomFactory", "classRMF_1_1decorator_1_1AtomFactory.html", null ],
+      [ "RMF::decorator::BackwardsCompatibilityFragmentFactory", "classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html", null ],
       [ "RMF::decorator::BallFactory", "classRMF_1_1decorator_1_1BallFactory.html", null ],
       [ "RMF::decorator::BondFactory", "classRMF_1_1decorator_1_1BondFactory.html", null ],
       [ "RMF::decorator::ChainFactory", "classRMF_1_1decorator_1_1ChainFactory.html", null ],

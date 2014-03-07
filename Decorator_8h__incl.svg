@@ -107,7 +107,7 @@ var sectionId = 'dynsection-0';
 </g>
 <!-- Node13 -->
 <g id="node13" class="node"><title>Node13</title>
-<g id="a_node13"><a xlink:href="ID_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node13"><a xlink:href="ID_8h.html" target="_top" xlink:title="Declaration of RMF::ID. ">
 <polygon fill="none" stroke="black" points="1462.83,-211 1462.83,-231 1497.17,-231 1497.17,-211 1462.83,-211"/>
 <text text-anchor="middle" x="1480" y="-217" font-family="Helvetica,sans-Serif" font-size="10.00">ID.h</text>
 </a>
@@ -423,7 +423,7 @@ var sectionId = 'dynsection-0';
 </g>
 <!-- Node46 -->
 <g id="node46" class="node"><title>Node46</title>
-<g id="a_node46"><a xlink:href="NodeConstHandle_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node46"><a xlink:href="NodeConstHandle_8h.html" target="_top" xlink:title="Declaration of NodeConstHandlke. ">
 <polygon fill="none" stroke="black" points="864.971,-281 864.971,-301 971.029,-301 971.029,-281 864.971,-281"/>
 <text text-anchor="middle" x="918" y="-287" font-family="Helvetica,sans-Serif" font-size="10.00">NodeConstHandle.h</text>
 </a>
@@ -436,7 +436,7 @@ var sectionId = 'dynsection-0';
 </g>
 <!-- Node50 -->
 <g id="node50" class="node"><title>Node50</title>
-<g id="a_node50"><a xlink:href="NodeHandle_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node50"><a xlink:href="NodeHandle_8h.html" target="_top" xlink:title="Declaration of NodeHandle. ">
 <polygon fill="none" stroke="black" points="1335.03,-351 1335.03,-371 1414.97,-371 1414.97,-351 1335.03,-351"/>
 <text text-anchor="middle" x="1375" y="-357" font-family="Helvetica,sans-Serif" font-size="10.00">NodeHandle.h</text>
 </a>
@@ -547,7 +547,7 @@ var sectionId = 'dynsection-0';
 </g>
 <!-- Node14 -->
 <g id="node14" class="node"><title>Node14</title>
-<g id="a_node14"><a xlink:href="exceptions_8h.html" target="_top" xlink:title="Various general useful macros for IMP. ">
+<g id="a_node14"><a xlink:href="exceptions_8h.html" target="_top" xlink:title="Declarations of the various exception types. ">
 <polygon fill="none" stroke="black" points="1096.93,-129 1096.93,-149 1169.07,-149 1169.07,-129 1096.93,-129"/>
 <text text-anchor="middle" x="1133" y="-135" font-family="Helvetica,sans-Serif" font-size="10.00">exceptions.h</text>
 </a>
@@ -700,7 +700,7 @@ var sectionId = 'dynsection-0';
 </g>
 <!-- Node48 -->
 <g id="node48" class="node"><title>Node48</title>
-<g id="a_node48"><a xlink:href="Nullable_8h.html" target="_top" xlink:title="Handle read/write of Model data from/to files. ">
+<g id="a_node48"><a xlink:href="Nullable_8h.html" target="_top" xlink:title="A helper class for allowing nice return of possibly null values. ">
 <polygon fill="none" stroke="black" points="1166.54,-211 1166.54,-231 1251.46,-231 1251.46,-211 1166.54,-211"/>
 <text text-anchor="middle" x="1209" y="-217" font-family="Helvetica,sans-Serif" font-size="10.00">RMF/Nullable.h</text>
 </a>

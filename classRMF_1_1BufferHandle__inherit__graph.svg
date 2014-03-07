@@ -15,7 +15,7 @@
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>
-<g id="a_node2"><a xlink:href="classRMF_1_1BufferConstHandle.html" target="_top" xlink:title="RMF::BufferConstHandle">
+<g id="a_node2"><a xlink:href="classRMF_1_1BufferConstHandle.html" target="_top" xlink:title="Manage a shared buffer for loading a RMF. ">
 <polygon fill="none" stroke="black" points="-0.766602,-59 -0.766602,-79 126.767,-79 126.767,-59 -0.766602,-59"/>
 <text text-anchor="middle" x="63" y="-65" font-family="Helvetica,sans-Serif" font-size="10.00">RMF::BufferConstHandle</text>
 </a>

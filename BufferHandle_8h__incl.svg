@@ -87,7 +87,7 @@ var sectionId = 'dynsection-0';
 </g>
 <!-- Node13 -->
 <g id="node13" class="node"><title>Node13</title>
-<g id="a_node13"><a xlink:href="exceptions_8h.html" target="_top" xlink:title="Various general useful macros for IMP. ">
+<g id="a_node13"><a xlink:href="exceptions_8h.html" target="_top" xlink:title="Declarations of the various exception types. ">
 <polygon fill="none" stroke="black" points="1020.93,-117 1020.93,-137 1093.07,-137 1093.07,-117 1020.93,-117"/>
 <text text-anchor="middle" x="1057" y="-123" font-family="Helvetica,sans-Serif" font-size="10.00">exceptions.h</text>
 </a>
@@ -100,7 +100,7 @@ var sectionId = 'dynsection-0';
 </g>
 <!-- Node17 -->
 <g id="node17" class="node"><title>Node17</title>
-<g id="a_node17"><a xlink:href="BufferConstHandle_8h.html" target="_top" xlink:title="Manage a memory buffer for reading/writing RMF files. ">
+<g id="a_node17"><a xlink:href="BufferConstHandle_8h.html" target="_top" xlink:title="Declare RMF::BufferConstHandle. ">
 <polygon fill="none" stroke="black" points="761.672,-175 761.672,-195 870.328,-195 870.328,-175 761.672,-175"/>
 <text text-anchor="middle" x="816" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00">BufferConstHandle.h</text>
 </a>

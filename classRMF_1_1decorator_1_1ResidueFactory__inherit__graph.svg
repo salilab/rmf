@@ -15,7 +15,7 @@
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>
-<g id="a_node2"><a xlink:href="classRMF_1_1Factory.html" target="_top" xlink:title="RMF::Factory">
+<g id="a_node2"><a xlink:href="classRMF_1_1Factory.html" target="_top" xlink:title="The base class for Factories. ">
 <polygon fill="none" stroke="black" points="41.7217,-59 41.7217,-79 118.278,-79 118.278,-59 41.7217,-59"/>
 <text text-anchor="middle" x="80" y="-65" font-family="Helvetica,sans-Serif" font-size="10.00">RMF::Factory</text>
 </a>

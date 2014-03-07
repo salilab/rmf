@@ -100,22 +100,80 @@ $(document).ready(function(){initNavTree('types_8h_source.html','');});
 <div class="contents">
 <a href="types_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/**</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  \file RMF/types.h</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *  RMF allows the basic types used to be configured. The default set are</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *  define in default_types.h, but one can create a header with simular types</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> *  and tell RMF to use it instead by defining RMF_TYPES_HEADER when</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> *  configuring.</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"> *  Copyright 2007-2013 IMP Inventors. All rights reserved.</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#ifndef RMF_TYPES_H</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define RMF_TYPES_H</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;RMF/config.h&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include RMF_TYPES_HEADER</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RMF_TYPES_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *  \brief Default implementation for types.h</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> *  Use RMF_TYPES_HEADER to replace it with another header.</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"> *  Copyright 2007-2013 IMP Inventors. All rights reserved.</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#ifndef RMF_TYPES_H</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define RMF_TYPES_H</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;RMF/config.h&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Vector_8h.html">Vector.h</a>&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">namespace </span>RMF {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">//! Work around clang issue</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="namespaceRMF.html#a8c992cf6c6ec038038d9a185d57a1750">   20</a></span>&#160;<span class="comment"></span><span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="namespaceRMF.html#a8c992cf6c6ec038038d9a185d57a1750">VectorDimension</a>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">//! For classes that are templated on the dimension</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="types_8h.html#a0fe61c8bad6616e90dca5590b800cf6e">   23</a></span>&#160;<span class="comment"></span><span class="preprocessor">#define RMF_VECTOR RMF::Vector</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor"></span><span class="comment"></span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">//! For template classes that want to deal with lists of values</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="types_8h.html#a80692ae03c7d6197938860c08091c7f5">   26</a></span>&#160;<span class="comment"></span><span class="preprocessor">#define RMF_TYPES std::vector</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor"></span><span class="comment"></span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">/** The type used to store integral values.*/</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="namespaceRMF.html#a42aed102a7e7e9b5ddc9feecc05fd158">   29</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">int</span> <a class="code" href="namespaceRMF.html#a42aed102a7e7e9b5ddc9feecc05fd158">Int</a>;<span class="comment"></span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">/** The type used to store lists of integral values.*/</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="namespaceRMF.html#a6c938fb137bdddb4f61c5711206300d5">   31</a></span>&#160;<span class="keyword">typedef</span> RMF_TYPES&lt;Int&gt; <a class="code" href="namespaceRMF.html#a6c938fb137bdddb4f61c5711206300d5">Ints</a>;<span class="comment"></span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">/** The type used to store lists of floating point values.*/</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="namespaceRMF.html#a86262dd447c738c45e22fae2a3375d61">   33</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">float</span> <a class="code" href="namespaceRMF.html#a86262dd447c738c45e22fae2a3375d61">Float</a>;<span class="comment"></span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">/** The type used to store lists of floating point values.*/</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="namespaceRMF.html#affffd1547fb5b085b9b5875cafe5771a">   35</a></span>&#160;<span class="keyword">typedef</span> RMF_TYPES&lt;Float&gt; <a class="code" href="namespaceRMF.html#affffd1547fb5b085b9b5875cafe5771a">Floats</a>;<span class="comment"></span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">/** The type used to store lists of floating point values.*/</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="namespaceRMF.html#a5fd1f9b86dea5ff568a810082497c010">   37</a></span>&#160;<span class="keyword">typedef</span> RMF_TYPES&lt;Floats&gt; <a class="code" href="namespaceRMF.html#a5fd1f9b86dea5ff568a810082497c010">FloatsList</a>;<span class="comment"></span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">/** The type used to store lists of string values.*/</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="namespaceRMF.html#a13cd501233c2edc77db6ebec83583eec">   39</a></span>&#160;<span class="keyword">typedef</span> std::string <a class="code" href="namespaceRMF.html#a13cd501233c2edc77db6ebec83583eec">String</a>;<span class="comment"></span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">/** The type used to store lists of string values.*/</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="namespaceRMF.html#a9811b522a0994fc22b47f90b00f6b564">   41</a></span>&#160;<span class="keyword">typedef</span> RMF_TYPES&lt;String&gt; <a class="code" href="namespaceRMF.html#a9811b522a0994fc22b47f90b00f6b564">Strings</a>;<span class="comment"></span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">/** The type used to store lists of strings values.*/</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="namespaceRMF.html#a3446a203b15cd29c3f5e901e790b3b23">   43</a></span>&#160;<span class="keyword">typedef</span> RMF_TYPES&lt;Strings&gt; <a class="code" href="namespaceRMF.html#a3446a203b15cd29c3f5e901e790b3b23">StringsList</a>;<span class="comment"></span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">/** The type used to store lists of lists of integers values.*/</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="namespaceRMF.html#a0d4303b9c65190a11aa400a594070c33">   45</a></span>&#160;<span class="keyword">typedef</span> RMF_TYPES&lt;Ints&gt; <a class="code" href="namespaceRMF.html#a0d4303b9c65190a11aa400a594070c33">IntsList</a>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">/** A Vector3 */</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="namespaceRMF.html#a4f81aba337d34ce6c26d7e5004fcfddf">   48</a></span>&#160;<span class="keyword">typedef</span> <a class="code" href="classRMF_1_1Vector.html">Vector&lt;3U&gt;</a> <a class="code" href="namespaceRMF.html#a4f81aba337d34ce6c26d7e5004fcfddf">Vector3</a>;<span class="comment"></span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">/** A Vector3 */</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="namespaceRMF.html#a1e72f2580095bf30a33fc20fa66e7bcd">   50</a></span>&#160;<span class="keyword">typedef</span> <a class="code" href="classRMF_1_1Vector.html">Vector&lt;4U&gt;</a> <a class="code" href="namespaceRMF.html#a1e72f2580095bf30a33fc20fa66e7bcd">Vector4</a>;<span class="comment"></span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">/** Many Vector3s */</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="namespaceRMF.html#a163c7904c3fdd6039c9907146c733133">   52</a></span>&#160;<span class="keyword">typedef</span> RMF_TYPES&lt;Vector3&gt; <a class="code" href="namespaceRMF.html#a163c7904c3fdd6039c9907146c733133">Vector3s</a>;<span class="comment"></span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment">/** Many Vector4s */</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="namespaceRMF.html#a64071d2602cf37e459aee44ffdf7ead6">   54</a></span>&#160;<span class="keyword">typedef</span> RMF_TYPES&lt;Vector4&gt; <a class="code" href="namespaceRMF.html#a64071d2602cf37e459aee44ffdf7ead6">Vector4s</a>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">typedef</span> boost::array&lt;int, 2&gt; IntRange;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;} <span class="comment">/* namespace RMF */</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RMF_TYPES_H */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="namespaceRMF_html_a8c992cf6c6ec038038d9a185d57a1750"><div class="ttname"><a href="namespaceRMF.html#a8c992cf6c6ec038038d9a185d57a1750">RMF::VectorDimension</a></div><div class="ttdeci">unsigned int VectorDimension</div><div class="ttdoc">Work around clang issue. </div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00020">types.h:20</a></div></div>
+<div class="ttc" id="namespaceRMF_html_a86262dd447c738c45e22fae2a3375d61"><div class="ttname"><a href="namespaceRMF.html#a86262dd447c738c45e22fae2a3375d61">RMF::Float</a></div><div class="ttdeci">float Float</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00033">types.h:33</a></div></div>
+<div class="ttc" id="namespaceRMF_html_a163c7904c3fdd6039c9907146c733133"><div class="ttname"><a href="namespaceRMF.html#a163c7904c3fdd6039c9907146c733133">RMF::Vector3s</a></div><div class="ttdeci">std::vector&lt; Vector3 &gt; Vector3s</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00052">types.h:52</a></div></div>
+<div class="ttc" id="namespaceRMF_html_a3446a203b15cd29c3f5e901e790b3b23"><div class="ttname"><a href="namespaceRMF.html#a3446a203b15cd29c3f5e901e790b3b23">RMF::StringsList</a></div><div class="ttdeci">std::vector&lt; Strings &gt; StringsList</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00043">types.h:43</a></div></div>
+<div class="ttc" id="namespaceRMF_html_a64071d2602cf37e459aee44ffdf7ead6"><div class="ttname"><a href="namespaceRMF.html#a64071d2602cf37e459aee44ffdf7ead6">RMF::Vector4s</a></div><div class="ttdeci">std::vector&lt; Vector4 &gt; Vector4s</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00054">types.h:54</a></div></div>
+<div class="ttc" id="namespaceRMF_html_a5fd1f9b86dea5ff568a810082497c010"><div class="ttname"><a href="namespaceRMF.html#a5fd1f9b86dea5ff568a810082497c010">RMF::FloatsList</a></div><div class="ttdeci">std::vector&lt; Floats &gt; FloatsList</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00037">types.h:37</a></div></div>
+<div class="ttc" id="classRMF_1_1Vector_html"><div class="ttname"><a href="classRMF_1_1Vector.html">RMF::Vector&lt; 3U &gt;</a></div></div>
+<div class="ttc" id="namespaceRMF_html_a1e72f2580095bf30a33fc20fa66e7bcd"><div class="ttname"><a href="namespaceRMF.html#a1e72f2580095bf30a33fc20fa66e7bcd">RMF::Vector4</a></div><div class="ttdeci">Vector&lt; 4U &gt; Vector4</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00050">types.h:50</a></div></div>
+<div class="ttc" id="namespaceRMF_html_a9811b522a0994fc22b47f90b00f6b564"><div class="ttname"><a href="namespaceRMF.html#a9811b522a0994fc22b47f90b00f6b564">RMF::Strings</a></div><div class="ttdeci">std::vector&lt; String &gt; Strings</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00041">types.h:41</a></div></div>
+<div class="ttc" id="namespaceRMF_html_a6c938fb137bdddb4f61c5711206300d5"><div class="ttname"><a href="namespaceRMF.html#a6c938fb137bdddb4f61c5711206300d5">RMF::Ints</a></div><div class="ttdeci">std::vector&lt; Int &gt; Ints</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00031">types.h:31</a></div></div>
+<div class="ttc" id="namespaceRMF_html_a0d4303b9c65190a11aa400a594070c33"><div class="ttname"><a href="namespaceRMF.html#a0d4303b9c65190a11aa400a594070c33">RMF::IntsList</a></div><div class="ttdeci">std::vector&lt; Ints &gt; IntsList</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00045">types.h:45</a></div></div>
+<div class="ttc" id="Vector_8h_html"><div class="ttname"><a href="Vector_8h.html">Vector.h</a></div><div class="ttdoc">Represent coordinates. </div></div>
+<div class="ttc" id="namespaceRMF_html_a13cd501233c2edc77db6ebec83583eec"><div class="ttname"><a href="namespaceRMF.html#a13cd501233c2edc77db6ebec83583eec">RMF::String</a></div><div class="ttdeci">std::string String</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00039">types.h:39</a></div></div>
+<div class="ttc" id="namespaceRMF_html_affffd1547fb5b085b9b5875cafe5771a"><div class="ttname"><a href="namespaceRMF.html#affffd1547fb5b085b9b5875cafe5771a">RMF::Floats</a></div><div class="ttdeci">std::vector&lt; Float &gt; Floats</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00035">types.h:35</a></div></div>
+<div class="ttc" id="namespaceRMF_html_a42aed102a7e7e9b5ddc9feecc05fd158"><div class="ttname"><a href="namespaceRMF.html#a42aed102a7e7e9b5ddc9feecc05fd158">RMF::Int</a></div><div class="ttdeci">int Int</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00029">types.h:29</a></div></div>
+<div class="ttc" id="namespaceRMF_html_a4f81aba337d34ce6c26d7e5004fcfddf"><div class="ttname"><a href="namespaceRMF.html#a4f81aba337d34ce6c26d7e5004fcfddf">RMF::Vector3</a></div><div class="ttdeci">Vector&lt; 3U &gt; Vector3</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00048">types.h:48</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

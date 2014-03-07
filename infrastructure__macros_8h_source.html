@@ -227,117 +227,122 @@ $(document).ready(function(){initNavTree('infrastructure__macros_8h_source.html'
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor">    return out.str();                                     \</span></div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">  }</span></div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor">#define RMF_UNUSED(variable) RMF::internal::use(variable);</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="preprocessor">#define RMF_NO_RETURN(type) return type()</span></div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="preprocessor"></span><span class="comment"></span></div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="comment">/** Apply the macro to each supported constant size type (eg int as opposed</span></div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="comment">    to string).</span></div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="comment">    \see RMF_FOREACH_TYPE()</span></div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00140"></a><span class="lineno"><a class="line" href="infrastructure__macros_8h.html#a1697751831ad0001e776f4fb23f6014b">  140</a></span>&#160;<span class="preprocessor">#define RMF_FOREACH_SIMPLE_TYPE(macroname)                      \</span></div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="preprocessor">  macroname(int, Int, int, int, const Ints&amp;, Ints);             \</span></div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="preprocessor">  macroname(float, Float, float, float, const Floats&amp;, Floats); \</span></div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="preprocessor">  macroname(index, Index, int, int, const Ints&amp;, Ints)</span></div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="preprocessor"></span><span class="comment"></span></div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="comment">/** Expand to applying the macro to each type supported by</span></div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="comment">    the rmf library. The macro should take six argments</span></div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="comment">    - the lower case name of the type</span></div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="comment">    - the upper case name</span></div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="comment">    - the C++ type for accepting the value</span></div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="comment">    - the C++ type for returning the value</span></div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="comment">    - the C++ type for accepting more than one value</span></div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="comment">    - the C++ type for returning more than one value</span></div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="comment">*/</span></div>
-<div class="line"><a name="l00154"></a><span class="lineno"><a class="line" href="infrastructure__macros_8h.html#add4dc0dd6e232a39c967f143ce2c7993">  154</a></span>&#160;<span class="preprocessor">#define RMF_FOREACH_TYPE(macroname)                                         \</span></div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="preprocessor">  macroname(RMF::IntTraits, Int) macroname(RMF::FloatTraits, Float)         \</span></div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="preprocessor">      macroname(RMF::StringTraits, String) macroname(RMF::IntsTraits, Ints) \</span></div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="preprocessor">      macroname(RMF::FloatsTraits, Floats)                                  \</span></div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="preprocessor">      macroname(RMF::StringsTraits, Strings)                                \</span></div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="preprocessor">      macroname(RMF::Vector3Traits, Vector3)                                \</span></div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="preprocessor">      macroname(RMF::Vector4Traits, Vector4)                                \</span></div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="preprocessor">      macroname(RMF::Vector3sTraits, Vector3s)</span></div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="preprocessor">#define RMF_DECORATOR_CATCH(extra_info)                              \</span></div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="preprocessor">  catch (Exception&amp; e) {                                             \</span></div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="preprocessor">    RMF_RETHROW(Decorator(get_decorator_type_name()) extra_info, e); \</span></div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor">  }</span></div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="preprocessor"></span><span class="comment"></span></div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="comment">/** Register a validator function. See Validator for more</span></div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="comment">    information.*/</span></div>
-<div class="line"><a name="l00170"></a><span class="lineno"><a class="line" href="infrastructure__macros_8h.html#abfad2653b3aae687996dbcb619d90078">  170</a></span>&#160;<span class="preprocessor">#define RMF_VALIDATOR(Type) RMF::Registrar&lt;Type&gt; Type##Reg(#Type);</span></div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="preprocessor"></span><span class="keyword">namespace </span>RMF {</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">class</span> Tr&gt;</div>
-<div class="line"><a name="l00174"></a><span class="lineno"><a class="line" href="classRMF_1_1Nullable.html">  174</a></span>&#160;<span class="keyword">class </span><a class="code" href="classRMF_1_1Nullable.html">Nullable</a>;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="preprocessor">#if !defined(RMF_DOXYGEN) &amp;&amp; !defined(SWIG)</span></div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;<span class="preprocessor"></span><span class="keyword">struct </span>Showable;</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;<span class="keyword">inline</span> std::ostream&amp; operator&lt;&lt;(std::ostream&amp; out, <span class="keyword">const</span> Showable&amp; t);</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;<span class="comment">/** Produce hash values for boost hash tables.</span></div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<span class="keyword">inline</span> std::size_t hash_value(<span class="keyword">const</span> T&amp; t) {</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  <span class="keywordflow">return</span> t.__hash__();</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;}</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="comment">/** An adaptor class to provide operator&lt;&lt; for classes easily. */</span></div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="keyword">struct </span>Showable {</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  std::string t_;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  <span class="keyword">explicit</span> Showable(<span class="keyword">const</span> T&amp; t) {</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    std::ostringstream oss;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    oss &lt;&lt; t;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    t_ = oss.str();</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  }</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> TT&gt;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  Showable(<span class="keyword">const</span> std::pair&lt;T, TT&gt;&amp; p) {</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    std::ostringstream oss;</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    oss &lt;&lt; <span class="stringliteral">&quot;(&quot;</span> &lt;&lt; p.first &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; p.second &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    t_ = oss.str();</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  }</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  Showable(std::string t) : t_(std::string(<span class="stringliteral">&quot;\&quot;&quot;</span>) + t + <span class="stringliteral">&quot;\&quot;&quot;</span>) {}</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  <span class="keyword">struct </span>Special {};</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  Showable(std::string t, Special) : t_(t) {}</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  Showable(<span class="keyword">const</span> std::vector&lt;T&gt;&amp; t) {</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    std::ostringstream out;</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    out &lt;&lt; <span class="stringliteral">&quot;[&quot;</span>;</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; t.size(); ++i) {</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;      <span class="keywordflow">if</span> (i != 0) {</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;        out &lt;&lt; <span class="stringliteral">&quot;, &quot;</span>;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;      }</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;      out &lt;&lt; t[i];</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    }</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    out &lt;&lt; <span class="stringliteral">&quot;]&quot;</span>;</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    t_ = out.str();</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  }</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Tr&gt;</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  Showable(<span class="keyword">const</span> Nullable&lt;Tr&gt;&amp; t) {</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    std::ostringstream out;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    <span class="keywordflow">if</span> (t.get_is_null())</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;      out &lt;&lt; <span class="stringliteral">&quot;&lt;None&gt;&quot;</span>;</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;      out &lt;&lt; t.get();</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    t_ = out.str();</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;  }</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;};</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="keyword">inline</span> std::ostream&amp; operator&lt;&lt;(std::ostream&amp; out, <span class="keyword">const</span> Showable&amp; t) {</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  out &lt;&lt; t.t_;</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  <span class="keywordflow">return</span> out;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;}</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="preprocessor"></span><span class="comment"></span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="comment">/** Suppress the unused variable compiler warning. */</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno"><a class="line" href="infrastructure__macros_8h.html#a1e12fa0f40d2d5fb1db44fcfaf4dbc7b">  132</a></span>&#160;<span class="preprocessor">#define RMF_UNUSED(variable) RMF::internal::use(variable);</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="preprocessor"></span><span class="comment"></span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="comment">/** Provide a dummy return for something that doesn&#39;t return.</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="comment">    This is a nasty hack to suppress warnings in some compilers.</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00138"></a><span class="lineno"><a class="line" href="infrastructure__macros_8h.html#acae100b3b9e267e6efd606edac7978a1">  138</a></span>&#160;<span class="preprocessor">#define RMF_NO_RETURN(type) return type()</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="preprocessor"></span><span class="comment"></span></div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="comment">/** Apply the macro to each supported constant size type (eg int as opposed</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="comment">    to string).</span></div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="comment">    \see RMF_FOREACH_TYPE()</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno"><a class="line" href="infrastructure__macros_8h.html#a1697751831ad0001e776f4fb23f6014b">  145</a></span>&#160;<span class="preprocessor">#define RMF_FOREACH_SIMPLE_TYPE(macroname)                      \</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="preprocessor">  macroname(int, Int, int, int, const Ints&amp;, Ints);             \</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="preprocessor">  macroname(float, Float, float, float, const Floats&amp;, Floats); \</span></div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="preprocessor">  macroname(index, Index, int, int, const Ints&amp;, Ints)</span></div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="preprocessor"></span><span class="comment"></span></div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="comment">/** Expand to applying the macro to each type supported by</span></div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="comment">    the rmf library. The macro should take six argments</span></div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="comment">    - the lower case name of the type</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="comment">    - the upper case name</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="comment">    - the C++ type for accepting the value</span></div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="comment">    - the C++ type for returning the value</span></div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="comment">    - the C++ type for accepting more than one value</span></div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="comment">    - the C++ type for returning more than one value</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00159"></a><span class="lineno"><a class="line" href="infrastructure__macros_8h.html#add4dc0dd6e232a39c967f143ce2c7993">  159</a></span>&#160;<span class="preprocessor">#define RMF_FOREACH_TYPE(macroname)                                         \</span></div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="preprocessor">  macroname(RMF::IntTraits, Int) macroname(RMF::FloatTraits, Float)         \</span></div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="preprocessor">      macroname(RMF::StringTraits, String) macroname(RMF::IntsTraits, Ints) \</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="preprocessor">      macroname(RMF::FloatsTraits, Floats)                                  \</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="preprocessor">      macroname(RMF::StringsTraits, Strings)                                \</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="preprocessor">      macroname(RMF::Vector3Traits, Vector3)                                \</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="preprocessor">      macroname(RMF::Vector4Traits, Vector4)                                \</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor">      macroname(RMF::Vector3sTraits, Vector3s)</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="preprocessor">#define RMF_DECORATOR_CATCH(extra_info)                              \</span></div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="preprocessor">  catch (Exception&amp; e) {                                             \</span></div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="preprocessor">    RMF_RETHROW(Decorator(get_decorator_type_name()) extra_info, e); \</span></div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="preprocessor"></span><span class="comment"></span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="comment">/** Register a validator function. See Validator for more</span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="comment">    information.*/</span></div>
+<div class="line"><a name="l00175"></a><span class="lineno"><a class="line" href="infrastructure__macros_8h.html#abfad2653b3aae687996dbcb619d90078">  175</a></span>&#160;<span class="preprocessor">#define RMF_VALIDATOR(Type) RMF::Registrar&lt;Type&gt; Type##Reg(#Type);</span></div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="preprocessor"></span><span class="keyword">namespace </span>RMF {</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">class</span> Tr&gt;</div>
+<div class="line"><a name="l00179"></a><span class="lineno"><a class="line" href="classRMF_1_1Nullable.html">  179</a></span>&#160;<span class="keyword">class </span><a class="code" href="classRMF_1_1Nullable.html">Nullable</a>;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="preprocessor">#if !defined(RMF_DOXYGEN) &amp;&amp; !defined(SWIG)</span></div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="preprocessor"></span><span class="keyword">struct </span>Showable;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<span class="keyword">inline</span> std::ostream&amp; operator&lt;&lt;(std::ostream&amp; out, <span class="keyword">const</span> Showable&amp; t);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="comment">/** Produce hash values for boost hash tables.</span></div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="keyword">inline</span> std::size_t hash_value(<span class="keyword">const</span> T&amp; t) {</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  <span class="keywordflow">return</span> t.__hash__();</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;}</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="comment">/** An adaptor class to provide operator&lt;&lt; for classes easily. */</span></div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="keyword">struct </span>Showable {</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  std::string t_;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  <span class="keyword">explicit</span> Showable(<span class="keyword">const</span> T&amp; t) {</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    std::ostringstream oss;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    oss &lt;&lt; t;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    t_ = oss.str();</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  }</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> TT&gt;</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  Showable(<span class="keyword">const</span> std::pair&lt;T, TT&gt;&amp; p) {</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    std::ostringstream oss;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    oss &lt;&lt; <span class="stringliteral">&quot;(&quot;</span> &lt;&lt; p.first &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; p.second &lt;&lt; <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    t_ = oss.str();</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  }</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  Showable(std::string t) : t_(std::string(<span class="stringliteral">&quot;\&quot;&quot;</span>) + t + <span class="stringliteral">&quot;\&quot;&quot;</span>) {}</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;  <span class="keyword">struct </span>Special {};</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  Showable(std::string t, Special) : t_(t) {}</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  Showable(<span class="keyword">const</span> std::vector&lt;T&gt;&amp; t) {</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    std::ostringstream out;</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    out &lt;&lt; <span class="stringliteral">&quot;[&quot;</span>;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; t.size(); ++i) {</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;      <span class="keywordflow">if</span> (i != 0) {</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;        out &lt;&lt; <span class="stringliteral">&quot;, &quot;</span>;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;      }</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;      out &lt;&lt; t[i];</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    }</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    out &lt;&lt; <span class="stringliteral">&quot;]&quot;</span>;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    t_ = out.str();</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  }</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Tr&gt;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  Showable(<span class="keyword">const</span> Nullable&lt;Tr&gt;&amp; t) {</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    std::ostringstream out;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <span class="keywordflow">if</span> (t.get_is_null())</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;      out &lt;&lt; <span class="stringliteral">&quot;&lt;None&gt;&quot;</span>;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;      out &lt;&lt; t.get();</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    t_ = out.str();</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  }</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;};</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="preprocessor"></span>}</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;RMF_DISABLE_WARNINGS</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="keyword">inline</span> std::ostream&amp; operator&lt;&lt;(std::ostream&amp; out, <span class="keyword">const</span> Showable&amp; t) {</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;  out &lt;&lt; t.t_;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;  <span class="keywordflow">return</span> out;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;}</div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RMF_INFRASTRUCTURE_MACROS_H */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="classRMF_1_1Nullable_html"><div class="ttname"><a href="classRMF_1_1Nullable.html">RMF::Nullable</a></div><div class="ttdef"><b>Definition:</b> <a href="infrastructure__macros_8h_source.html#l00174">infrastructure_macros.h:174</a></div></div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="preprocessor"></span>}</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;RMF_DISABLE_WARNINGS</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RMF_INFRASTRUCTURE_MACROS_H */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="classRMF_1_1Nullable_html"><div class="ttname"><a href="classRMF_1_1Nullable.html">RMF::Nullable</a></div><div class="ttdoc">Return a possibly null value. </div><div class="ttdef"><b>Definition:</b> <a href="infrastructure__macros_8h_source.html#l00179">infrastructure_macros.h:179</a></div></div>
 <div class="ttc" id="compiler__macros_8h_html"><div class="ttname"><a href="compiler__macros_8h.html">compiler_macros.h</a></div><div class="ttdoc">Various compiler workarounds. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

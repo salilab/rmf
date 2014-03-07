@@ -1,23 +1,20 @@
 <map id="RestoreCurrentFrame.h" name="RestoreCurrentFrame.h">
-<area shape="rect" id="node3" href="$FileConstHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="2394,83,2525,111"/>
-<area shape="rect" id="node11" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="1214,734,1313,762"/>
-<area shape="rect" id="node13" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="2503,649,2664,677"/>
-<area shape="rect" id="node30" href="$ID_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1386,486,1464,514"/>
-<area shape="rect" id="node10" href="$BufferHandle_8h.html" title="Manage a memory buffer for reading/writing RMF files. " alt="" coords="805,409,915,437"/>
-<area shape="rect" id="node20" href="$exceptions_8h.html" title="Various general useful macros for IMP. " alt="" coords="1932,649,2028,677"/>
-<area shape="rect" id="node28" href="$NodeConstHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1883,169,2024,197"/>
-<area shape="rect" id="node33" href="$types_8h.html" title="RMF/types.h" alt="" coords="1301,409,1397,437"/>
-<area shape="rect" id="node43" href="$constants_8h.html" title="Various utilities for rmfing. " alt="" coords="1187,331,1308,359"/>
-<area shape="rect" id="node44" href="$enums_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="2887,486,2992,514"/>
-<area shape="rect" id="node24" href="$BufferConstHandle_8h.html" title="Manage a memory buffer for reading/writing RMF files. " alt="" coords="746,486,891,514"/>
-<area shape="rect" id="node12" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="1813,811,1979,839"/>
-<area shape="rect" id="node31" href="$Nullable_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1505,254,1617,282"/>
-<area shape="rect" id="node32" href="$traits_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1784,331,1845,359"/>
-<area shape="rect" id="node47" href="$keys_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1651,254,1743,282"/>
-<area shape="rect" id="node38" href="$HDF5_2types_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1998,409,2132,437"/>
-<area shape="rect" id="node34" href="$default__types_8h.html" title="Default implementation for types.h. " alt="" coords="1016,486,1160,514"/>
-<area shape="rect" id="node35" href="$Vector_8h.html" title="Represent coordinates. " alt="" coords="1331,563,1400,591"/>
-<area shape="rect" id="node39" href="$handle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="2029,486,2101,514"/>
-<area shape="rect" id="node40" href="$HDF5_2infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="2774,563,2935,591"/>
-<area shape="rect" id="node45" href="$Enum_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="2378,563,2445,591"/>
+<area shape="rect" id="node3" href="$FileConstHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1996,83,2127,111"/>
+<area shape="rect" id="node11" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="2080,657,2180,685"/>
+<area shape="rect" id="node13" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="426,571,587,599"/>
+<area shape="rect" id="node30" href="$ID_8h.html" title="Declaration of RMF::ID. " alt="" coords="1022,486,1100,514"/>
+<area shape="rect" id="node10" href="$BufferHandle_8h.html" title="Declare RMF::BufferHandle. " alt="" coords="1732,409,1841,437"/>
+<area shape="rect" id="node20" href="$exceptions_8h.html" title="Declarations of the various exception types. " alt="" coords="1015,571,1111,599"/>
+<area shape="rect" id="node28" href="$NodeConstHandle_8h.html" title="Declaration of NodeConstHandlke. " alt="" coords="1081,169,1223,197"/>
+<area shape="rect" id="node33" href="$types_8h.html" title="Default implementation for types.h. " alt="" coords="1972,409,2068,437"/>
+<area shape="rect" id="node43" href="$constants_8h.html" title="Various constants. " alt="" coords="1828,331,1949,359"/>
+<area shape="rect" id="node44" href="$enums_8h.html" title="The various enums used in RMF. " alt="" coords="374,409,479,437"/>
+<area shape="rect" id="node24" href="$BufferConstHandle_8h.html" title="Declare RMF::BufferConstHandle. " alt="" coords="2109,486,2253,514"/>
+<area shape="rect" id="node12" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="1430,734,1596,762"/>
+<area shape="rect" id="node31" href="$Nullable_8h.html" title="A helper class for allowing nice return of possibly null values. " alt="" coords="1273,254,1385,282"/>
+<area shape="rect" id="node32" href="$traits_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1299,331,1360,359"/>
+<area shape="rect" id="node47" href="$keys_8h.html" title="Declarations of the various key types. " alt="" coords="1106,254,1197,282"/>
+<area shape="rect" id="node41" href="$HDF5_2types_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1415,409,1549,437"/>
+<area shape="rect" id="node34" href="$Vector_8h.html" title="Represent coordinates. " alt="" coords="1921,486,1991,514"/>
+<area shape="rect" id="node45" href="$Enum_8h.html" title="Declaration of RMF::Enum. " alt="" coords="729,486,796,514"/>
 </map>

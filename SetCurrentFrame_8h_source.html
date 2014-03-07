@@ -100,7 +100,7 @@ $(document).ready(function(){initNavTree('SetCurrentFrame_8h_source.html','');})
 <div class="contents">
 <a href="SetCurrentFrame_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/**</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  \file RMF/SetCurrentFrame.h</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *  \brief Handle read/write of Model data from/to files.</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *  \brief Temporarily change the current frame.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> *  Copyright 2007-2013 IMP Inventors. All rights reserved.</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> *</span></div>
@@ -119,8 +119,8 @@ $(document).ready(function(){initNavTree('SetCurrentFrame_8h_source.html','');})
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;RMF_ENABLE_WARNINGS</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace </span>RMF {</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">/** Set the current frame to a value and then return it to the old value when</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">    this goes out of scope.</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">/** \brief Set the current frame to a value and then return it to the old value</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">     when this goes out of scope.</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">    \note This does not check that the current frame is the expected value</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">    when restoring the frame, so you are free to change it all you want in</span></div>
@@ -141,10 +141,10 @@ $(document).ready(function(){initNavTree('SetCurrentFrame_8h_source.html','');})
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;RMF_DISABLE_WARNINGS</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RMF_SET_CURRENT_FRAME_H */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="ID_8h_html"><div class="ttname"><a href="ID_8h.html">ID.h</a></div><div class="ttdoc">Handle read/write of Model data from/to files. </div></div>
+<div class="ttc" id="ID_8h_html"><div class="ttname"><a href="ID_8h.html">ID.h</a></div><div class="ttdoc">Declaration of RMF::ID. </div></div>
 <div class="ttc" id="classRMF_1_1FileConstHandle_html"><div class="ttname"><a href="classRMF_1_1FileConstHandle.html">RMF::FileConstHandle</a></div><div class="ttdoc">A handle for a read-only RMF file. </div><div class="ttdef"><b>Definition:</b> <a href="FileConstHandle_8h_source.html#l00078">FileConstHandle.h:78</a></div></div>
 <div class="ttc" id="classRMF_1_1ID_html"><div class="ttname"><a href="classRMF_1_1ID.html">RMF::ID&lt; FrameTag &gt;</a></div></div>
-<div class="ttc" id="classRMF_1_1SetCurrentFrame_html"><div class="ttname"><a href="classRMF_1_1SetCurrentFrame.html">RMF::SetCurrentFrame</a></div><div class="ttdef"><b>Definition:</b> <a href="SetCurrentFrame_8h_source.html#l00029">SetCurrentFrame.h:29</a></div></div>
+<div class="ttc" id="classRMF_1_1SetCurrentFrame_html"><div class="ttname"><a href="classRMF_1_1SetCurrentFrame.html">RMF::SetCurrentFrame</a></div><div class="ttdoc">Set the current frame to a value and then return it to the old value when this goes out of scope...</div><div class="ttdef"><b>Definition:</b> <a href="SetCurrentFrame_8h_source.html#l00029">SetCurrentFrame.h:29</a></div></div>
 <div class="ttc" id="FileConstHandle_8h_html"><div class="ttname"><a href="FileConstHandle_8h.html">FileConstHandle.h</a></div><div class="ttdoc">Handle read/write of Model data from/to files. </div></div>
 <div class="ttc" id="infrastructure__macros_8h_html"><div class="ttname"><a href="infrastructure__macros_8h.html">infrastructure_macros.h</a></div><div class="ttdoc">Various general useful macros for IMP. </div></div>
 </div><!-- fragment --></div><!-- contents -->

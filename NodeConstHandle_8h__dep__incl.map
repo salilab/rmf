@@ -1,8 +1,8 @@
 <map id="NodeConstHandle.h" name="NodeConstHandle.h">
-<area shape="rect" id="node2" href="$Decorator_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="452,161,541,189"/>
+<area shape="rect" id="node2" href="$Decorator_8h.html" title="Mostly empty base classes for decorators and factories. " alt="" coords="452,161,541,189"/>
 <area shape="rect" id="node7" href="$benchmark__rmf_8cpp_source.html" title="benchmark_rmf.cpp" alt="" coords="1103,393,1242,421"/>
-<area shape="rect" id="node16" href="$NodeHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="649,83,754,111"/>
-<area shape="rect" id="node18" href="$validate_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1382,238,1459,266"/>
+<area shape="rect" id="node16" href="$NodeHandle_8h.html" title="Declaration of NodeHandle. " alt="" coords="649,83,754,111"/>
+<area shape="rect" id="node18" href="$validate_8h.html" title="Support for validating the data in a file. " alt="" coords="1382,238,1459,266"/>
 <area shape="rect" id="node21" href="$FileConstHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1383,83,1514,111"/>
 <area shape="rect" id="node26" href="$utility_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="2019,83,2081,111"/>
 <area shape="rect" id="node3" href="$alias_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="691,238,750,266"/>
@@ -16,12 +16,12 @@
 <area shape="rect" id="node14" href="$representation_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="549,238,666,266"/>
 <area shape="rect" id="node15" href="$alternatives_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="237,238,337,266"/>
 <area shape="rect" id="node4" href="$decorators_8h.html" title="Import all the decorators headers. " alt="" coords="560,393,654,421"/>
-<area shape="rect" id="node6" href="$TraverseHelper_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="319,393,442,421"/>
-<area shape="rect" id="node17" href="$FileHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="739,161,835,189"/>
-<area shape="rect" id="node19" href="$Label_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1135,161,1199,189"/>
+<area shape="rect" id="node6" href="$TraverseHelper_8h.html" title="A helper function for managing data when traversing an RMF. " alt="" coords="319,393,442,421"/>
+<area shape="rect" id="node17" href="$FileHandle_8h.html" title="Declaration for RMF::FileHandle. " alt="" coords="739,161,835,189"/>
+<area shape="rect" id="node19" href="$Label_8h.html" title="Declaration of RMF::Label. " alt="" coords="1135,161,1199,189"/>
 <area shape="rect" id="node20" href="$labels_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1139,315,1206,343"/>
-<area shape="rect" id="node22" href="$info_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1704,161,1758,189"/>
-<area shape="rect" id="node23" href="$RestoreCurrentFrame_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1782,161,1943,189"/>
-<area shape="rect" id="node24" href="$SetCurrentFrame_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1433,161,1567,189"/>
-<area shape="rect" id="node25" href="$signature_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="1593,161,1679,189"/>
+<area shape="rect" id="node22" href="$info_8h.html" title="Show info about the file. " alt="" coords="1704,161,1758,189"/>
+<area shape="rect" id="node23" href="$RestoreCurrentFrame_8h.html" title="Restore the current frame when exiting a scope. " alt="" coords="1782,161,1943,189"/>
+<area shape="rect" id="node24" href="$SetCurrentFrame_8h.html" title="Temporarily change the current frame. " alt="" coords="1433,161,1567,189"/>
+<area shape="rect" id="node25" href="$signature_8h.html" title="Return a (long) string describing a file that can be compared. " alt="" coords="1593,161,1679,189"/>
 </map>
