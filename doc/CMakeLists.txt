@@ -13,7 +13,7 @@ add_custom_target(RMF-doc
         COMMAND ${IMP_DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/doc/Doxyfile
         COMMAND cat ${PROJECT_BINARY_DIR}/doc/doc.log
         WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/doc
-        DEPENDS RMF-rmf_show ${IMP_DOXYGEN_FETCH}
+        DEPENDS RMF-rmf_show RMF-rmf3_dump ${IMP_DOXYGEN_FETCH}
         COMMENT "Generating API documentation with Doxygen" VERBATIM
         )
   set_property(TARGET "RMF-doc" PROPERTY FOLDER "RMF")
