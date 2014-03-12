@@ -7,10 +7,11 @@
 The %RMF file format (short for Rich Molecular Format) stores
 hierarchical data about a molecular structure in a file or buffer in
 memory. This data can include
-molecular structures stored hierarchically. These structures need
-not be atomic resolution.  feature information about parts of the
-structures, such as how well it fits a particular measurement.
-geometric markup such as segments, surfaces, balls, colors which can
+- molecular structures stored hierarchically. These structures need
+not be atomic resolution.
+- feature information about parts of the structures, such as how well it
+fits a particular measurement.
+- geometric markup such as segments, surfaces, balls, colors which can
 be used to improve visualization
 
 For example, a protein can be stored as a hierarchy where the root is
