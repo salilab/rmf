@@ -1,13 +1,13 @@
 <map id="RMF::ID&lt; TagT &gt;" name="RMF::ID&lt; TagT &gt;">
-<area shape="rect" id="node2" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; IntsTag \&gt;" alt="" coords="297,10,434,38"/>
-<area shape="rect" id="node3" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; IntTag \&gt;" alt="" coords="300,62,430,90"/>
-<area shape="rect" id="node4" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; Vector3sTag \&gt;" alt="" coords="282,114,449,142"/>
-<area shape="rect" id="node5" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; FrameTag \&gt;" alt="" coords="288,166,442,194"/>
-<area shape="rect" id="node6" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; StringsTag \&gt;" alt="" coords="287,218,444,246"/>
-<area shape="rect" id="node7" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; CategoryTag \&gt;" alt="" coords="281,270,450,298"/>
-<area shape="rect" id="node8" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; NodeTag \&gt;" alt="" coords="292,322,439,350"/>
-<area shape="rect" id="node9" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; Vector4Tag \&gt;" alt="" coords="285,374,446,402"/>
-<area shape="rect" id="node10" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; Vector3Tag \&gt;" alt="" coords="285,426,446,454"/>
-<area shape="rect" id="node11" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; StringTag \&gt;" alt="" coords="290,478,440,506"/>
-<area shape="rect" id="node12" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; FloatTag \&gt;" alt="" coords="293,530,438,558"/>
+<area shape="rect" id="node2" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; IntsTag \&gt;" alt="" coords="297,9,434,34"/>
+<area shape="rect" id="node3" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; IntTag \&gt;" alt="" coords="300,58,430,83"/>
+<area shape="rect" id="node4" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; Vector3sTag \&gt;" alt="" coords="282,107,449,133"/>
+<area shape="rect" id="node5" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; FrameTag \&gt;" alt="" coords="288,157,442,182"/>
+<area shape="rect" id="node6" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; StringsTag \&gt;" alt="" coords="287,206,444,231"/>
+<area shape="rect" id="node7" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; CategoryTag \&gt;" alt="" coords="281,255,450,281"/>
+<area shape="rect" id="node8" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; NodeTag \&gt;" alt="" coords="292,305,439,330"/>
+<area shape="rect" id="node9" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; Vector4Tag \&gt;" alt="" coords="285,354,446,379"/>
+<area shape="rect" id="node10" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; Vector3Tag \&gt;" alt="" coords="285,403,446,429"/>
+<area shape="rect" id="node11" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; StringTag \&gt;" alt="" coords="290,453,440,478"/>
+<area shape="rect" id="node12" href="$classRMF_1_1ID.html" title="RMF::ID\&lt; FloatTag \&gt;" alt="" coords="293,502,438,527"/>
 </map>

@@ -7,154 +7,149 @@
       <Subnodes>
        <Node>
         <Name>Change Log</Name>
-        <Path>md__Users_drussel_src_rmf_rmf_ChangeLog.html</Path>
+        <Path>changelog.html</Path>
        </Node>
        <Node>
-        <Name>Attributes and Decorators</Name>
-        <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+        <Name>Decorators and Attributes</Name>
+        <Path>decoratorsattributes.html</Path>
         <Subnodes>
          <Node>
-          <Name>Overview</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
-          <Anchor>decoratorsattributes</Anchor>
-         </Node>
-         <Node>
           <Name>Static and Frame Attributes</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+          <Path>decoratorsattributes.html</Path>
           <Anchor>staticandframe</Anchor>
          </Node>
          <Node>
           <Name>Physics</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+          <Path>decoratorsattributes.html</Path>
           <Anchor>physics</Anchor>
           <Subnodes>
            <Node>
             <Name>Attributes</Name>
-            <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+            <Path>decoratorsattributes.html</Path>
             <Anchor>physicsattributes</Anchor>
            </Node>
            <Node>
             <Name>Decorators</Name>
-            <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+            <Path>decoratorsattributes.html</Path>
             <Anchor>physicsdecorators</Anchor>
            </Node>
           </Subnodes>
          </Node>
          <Node>
           <Name>Sequence</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+          <Path>decoratorsattributes.html</Path>
           <Anchor>sequence</Anchor>
           <Subnodes>
            <Node>
             <Name>Attributes</Name>
-            <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+            <Path>decoratorsattributes.html</Path>
             <Anchor>sequenceattributes</Anchor>
            </Node>
            <Node>
             <Name>Decorators</Name>
-            <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+            <Path>decoratorsattributes.html</Path>
             <Anchor>sequencedecorators</Anchor>
            </Node>
           </Subnodes>
          </Node>
          <Node>
           <Name>Feature</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+          <Path>decoratorsattributes.html</Path>
           <Anchor>feature</Anchor>
           <Subnodes>
            <Node>
             <Name>Attributes</Name>
-            <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+            <Path>decoratorsattributes.html</Path>
             <Anchor>featureattributes</Anchor>
            </Node>
            <Node>
             <Name>Decorators</Name>
-            <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+            <Path>decoratorsattributes.html</Path>
             <Anchor>featuredecorators</Anchor>
            </Node>
           </Subnodes>
          </Node>
          <Node>
           <Name>Shape</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+          <Path>decoratorsattributes.html</Path>
           <Anchor>shape</Anchor>
           <Subnodes>
            <Node>
             <Name>Attributes</Name>
-            <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+            <Path>decoratorsattributes.html</Path>
             <Anchor>shapeattributes</Anchor>
            </Node>
            <Node>
             <Name>Decorators</Name>
-            <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+            <Path>decoratorsattributes.html</Path>
             <Anchor>shapedecorators</Anchor>
            </Node>
           </Subnodes>
          </Node>
          <Node>
           <Name>Alternatives</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+          <Path>decoratorsattributes.html</Path>
           <Anchor>alternatives</Anchor>
           <Subnodes>
            <Node>
             <Name>Attributes</Name>
-            <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+            <Path>decoratorsattributes.html</Path>
             <Anchor>alternativesattributes</Anchor>
            </Node>
            <Node>
             <Name>Decorators</Name>
-            <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+            <Path>decoratorsattributes.html</Path>
             <Anchor>alternativesdecorators</Anchor>
            </Node>
           </Subnodes>
          </Node>
          <Node>
           <Name>Alias</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+          <Path>decoratorsattributes.html</Path>
           <Anchor>alias</Anchor>
           <Subnodes>
            <Node>
             <Name>Attributes</Name>
-            <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+            <Path>decoratorsattributes.html</Path>
             <Anchor>aliasattributes</Anchor>
            </Node>
            <Node>
             <Name>Decorators</Name>
-            <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+            <Path>decoratorsattributes.html</Path>
             <Anchor>aliasdecorators</Anchor>
            </Node>
           </Subnodes>
          </Node>
          <Node>
           <Name>External</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+          <Path>decoratorsattributes.html</Path>
           <Anchor>external</Anchor>
           <Subnodes>
            <Node>
             <Name>Attributes</Name>
-            <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+            <Path>decoratorsattributes.html</Path>
             <Anchor>externalattributes</Anchor>
            </Node>
            <Node>
             <Name>Decorators</Name>
-            <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+            <Path>decoratorsattributes.html</Path>
             <Anchor>externaldecorators</Anchor>
            </Node>
           </Subnodes>
          </Node>
          <Node>
           <Name>Publication</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+          <Path>decoratorsattributes.html</Path>
           <Anchor>publication</Anchor>
           <Subnodes>
            <Node>
             <Name>Attributes</Name>
-            <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+            <Path>decoratorsattributes.html</Path>
             <Anchor>publicationattributes</Anchor>
            </Node>
            <Node>
             <Name>Decorators</Name>
-            <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+            <Path>decoratorsattributes.html</Path>
             <Anchor>publicationdecorators</Anchor>
            </Node>
           </Subnodes>
@@ -163,250 +158,204 @@
        </Node>
        <Node>
         <Name>Developers</Name>
-        <Path>md__Users_drussel_src_rmf_rmf_doc_Developers.html</Path>
+        <Path>developers.html</Path>
         <Subnodes>
          <Node>
-          <Name>Overview</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Developers.html</Path>
-          <Anchor>developers</Anchor>
-         </Node>
-         <Node>
           <Name>Developer tools</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Developers.html</Path>
+          <Path>developers.html</Path>
           <Anchor>dev_tools</Anchor>
          </Node>
          <Node>
           <Name>CMake tools</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Developers.html</Path>
+          <Path>developers.html</Path>
           <Anchor>cmake_tools</Anchor>
          </Node>
          <Node>
           <Name>Decorators</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Developers.html</Path>
+          <Path>developers.html</Path>
           <Anchor>makedecorators</Anchor>
          </Node>
          <Node>
           <Name>Avro</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Developers.html</Path>
+          <Path>developers.html</Path>
           <Anchor>avrocpp</Anchor>
          </Node>
          <Node>
           <Name>SharedData</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Developers.html</Path>
+          <Path>developers.html</Path>
           <Anchor>shareddata</Anchor>
          </Node>
          <Node>
           <Name>Documentation</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Developers.html</Path>
+          <Path>developers.html</Path>
           <Anchor>documention</Anchor>
          </Node>
         </Subnodes>
        </Node>
        <Node>
         <Name>Executables</Name>
-        <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+        <Path>executables.html</Path>
         <Subnodes>
          <Node>
-          <Name>Overview</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
-          <Anchor>developers</Anchor>
-         </Node>
-         <Node>
           <Name>rmf_show</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+          <Path>executables.html</Path>
           <Anchor>rmf_show</Anchor>
          </Node>
          <Node>
           <Name>rmf_frames</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+          <Path>executables.html</Path>
           <Anchor>rmf_frames</Anchor>
          </Node>
          <Node>
           <Name>rmf_info</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+          <Path>executables.html</Path>
           <Anchor>rmf_info</Anchor>
          </Node>
          <Node>
           <Name>rmf_slice</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+          <Path>executables.html</Path>
           <Anchor>rmf_slice</Anchor>
          </Node>
          <Node>
           <Name>rmf_cat</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+          <Path>executables.html</Path>
           <Anchor>rmf_cat</Anchor>
          </Node>
          <Node>
           <Name>rmf_xml</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+          <Path>executables.html</Path>
           <Anchor>rmf_xml</Anchor>
          </Node>
          <Node>
           <Name>rmf_validate</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+          <Path>executables.html</Path>
           <Anchor>rmf_validate</Anchor>
          </Node>
          <Node>
           <Name>rmf3_dump</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+          <Path>executables.html</Path>
           <Anchor>rmf3_dump</Anchor>
          </Node>
         </Subnodes>
        </Node>
        <Node>
         <Name>File Format</Name>
-        <Path>md__Users_drussel_src_rmf_rmf_doc_FileFormat.html</Path>
+        <Path>format.html</Path>
         <Subnodes>
          <Node>
-          <Name>Overview</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_FileFormat.html</Path>
-          <Anchor>format</Anchor>
-         </Node>
-         <Node>
           <Name>Examples</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_FileFormat.html</Path>
+          <Path>format.html</Path>
           <Anchor>example_files</Anchor>
          </Node>
          <Node>
           <Name>The RMF Hierarchy</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_FileFormat.html</Path>
+          <Path>format.html</Path>
           <Anchor>hierarchy</Anchor>
          </Node>
          <Node>
           <Name>Attributes</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_FileFormat.html</Path>
+          <Path>format.html</Path>
           <Anchor>attribute</Anchor>
          </Node>
          <Node>
           <Name>Inheritance of properties</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_FileFormat.html</Path>
+          <Path>format.html</Path>
           <Anchor>inheritance</Anchor>
          </Node>
          <Node>
           <Name>Frames</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_FileFormat.html</Path>
+          <Path>format.html</Path>
           <Anchor>frames</Anchor>
          </Node>
          <Node>
           <Name>Adding custom data to an RMF</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_FileFormat.html</Path>
+          <Path>format.html</Path>
           <Anchor>adding</Anchor>
          </Node>
          <Node>
           <Name>On disk format</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_FileFormat.html</Path>
+          <Path>format.html</Path>
           <Anchor>on_disk</Anchor>
          </Node>
          <Node>
           <Name>Benchmarks</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_FileFormat.html</Path>
+          <Path>format.html</Path>
           <Anchor>benchmarks</Anchor>
          </Node>
         </Subnodes>
        </Node>
        <Node>
         <Name>HDF5</Name>
-        <Path>md__Users_drussel_src_rmf_rmf_doc_HDF5.html</Path>
+        <Path>hdf5.html</Path>
        </Node>
        <Node>
         <Name>Library</Name>
-        <Path>md__Users_drussel_src_rmf_rmf_doc_Library.html</Path>
+        <Path>library.html</Path>
         <Subnodes>
          <Node>
-          <Name>Overview</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Library.html</Path>
-          <Anchor>library</Anchor>
-         </Node>
-         <Node>
           <Name>Basics</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Library.html</Path>
+          <Path>library.html</Path>
           <Anchor>basics</Anchor>
          </Node>
          <Node>
           <Name>Associations</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Library.html</Path>
+          <Path>library.html</Path>
           <Anchor>associations</Anchor>
          </Node>
          <Node>
           <Name>Parallel I/O</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Library.html</Path>
+          <Path>library.html</Path>
           <Anchor>parallel</Anchor>
          </Node>
          <Node>
           <Name>Invariants</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Library.html</Path>
+          <Path>library.html</Path>
           <Anchor>invariants</Anchor>
          </Node>
          <Node>
           <Name>Decorators and factories</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Library.html</Path>
+          <Path>library.html</Path>
           <Anchor>rmfdecorators</Anchor>
          </Node>
          <Node>
           <Name>Language bindings</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Library.html</Path>
+          <Path>library.html</Path>
           <Anchor>bindings</Anchor>
          </Node>
         </Subnodes>
        </Node>
        <Node>
-        <Name>Mapping Data</Name>
-        <Path>md__Users_drussel_src_rmf_rmf_doc_MappingToRMF.html</Path>
-        <Subnodes>
-         <Node>
-          <Name>Mapping data to RMF files</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_MappingToRMF.html</Path>
-          <Anchor>mapping</Anchor>
-         </Node>
-        </Subnodes>
+        <Name>Mapping data to RMF files</Name>
+        <Path>mapping.html</Path>
        </Node>
        <Node>
         <Name>Pymol Plugin</Name>
-        <Path>md__Users_drussel_src_rmf_rmf_doc_PymolPlugin.html</Path>
-        <Subnodes>
-         <Node>
-          <Name>Using the plugin</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_PymolPlugin.html</Path>
-          <Anchor>pymolplugin</Anchor>
-         </Node>
-        </Subnodes>
+        <Path>pymolplugin.html</Path>
        </Node>
        <Node>
         <Name>Viewing</Name>
-        <Path>md__Users_drussel_src_rmf_rmf_doc_Viewing.html</Path>
+        <Path>viewing.html</Path>
         <Subnodes>
          <Node>
-          <Name>Overview</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Viewing.html</Path>
-          <Anchor>viewers</Anchor>
-         </Node>
-         <Node>
           <Name>Chimera</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Viewing.html</Path>
+          <Path>viewing.html</Path>
           <Anchor>chimera</Anchor>
          </Node>
          <Node>
           <Name>VMD</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Viewing.html</Path>
+          <Path>viewing.html</Path>
           <Anchor>vmd</Anchor>
          </Node>
          <Node>
           <Name>Pymol</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_Viewing.html</Path>
+          <Path>viewing.html</Path>
           <Anchor>pymol</Anchor>
          </Node>
         </Subnodes>
        </Node>
        <Node>
         <Name>VMD Plugin</Name>
-        <Path>md__Users_drussel_src_rmf_rmf_doc_VMDPlugin.html</Path>
-        <Subnodes>
-         <Node>
-          <Name>Building and installing</Name>
-          <Path>md__Users_drussel_src_rmf_rmf_doc_VMDPlugin.html</Path>
-          <Anchor>vmdplugin</Anchor>
-         </Node>
-        </Subnodes>
+        <Path>vmdplugin.html</Path>
        </Node>
        <Node>
         <Name>Namespaces</Name>
@@ -7457,10 +7406,6 @@
             </Subnodes>
            </Node>
            <Node>
-            <Name>consume.py</Name>
-            <Path>consume_8py_source.html</Path>
-           </Node>
-           <Node>
             <Name>CoordinateTransformer.h</Name>
             <Path>CoordinateTransformer_8h.html</Path>
             <Subnodes>
@@ -9294,11 +9239,6 @@
               <Anchor>a2894b5db59641931e3ca9671775353a3</Anchor>
              </Node>
              <Node>
-              <Name>get_logger</Name>
-              <Path>log_8h.html</Path>
-              <Anchor>a25924d2419f7988030372c4ce75e9604</Anchor>
-             </Node>
-             <Node>
               <Name>set_log_level</Name>
               <Path>log_8h.html</Path>
               <Anchor>ac600cc982dce090a5001e53352b20a68</Anchor>
@@ -10769,10 +10709,6 @@
               </Subnodes>
              </Node>
             </Subnodes>
-           </Node>
-           <Node>
-            <Name>produce.py</Name>
-            <Path>produce_8py_source.html</Path>
            </Node>
            <Node>
             <Name>publication.h</Name>
@@ -13423,10 +13359,6 @@
           <Path>cloning_8py-example.html</Path>
          </Node>
          <Node>
-          <Name>consume.py</Name>
-          <Path>consume_8py-example.html</Path>
-         </Node>
-         <Node>
           <Name>externals.py</Name>
           <Path>externals_8py-example.html</Path>
          </Node>
@@ -13445,10 +13377,6 @@
          <Node>
           <Name>multistate.py</Name>
           <Path>multistate_8py-example.html</Path>
-         </Node>
-         <Node>
-          <Name>produce.py</Name>
-          <Path>produce_8py-example.html</Path>
          </Node>
          <Node>
           <Name>reference_frame_particle.py</Name>

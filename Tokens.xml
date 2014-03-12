@@ -1368,80 +1368,80 @@
   </Token>
   <Token>
     <TokenIdentifier>
-      <Name>md__Users_drussel_src_rmf_rmf_ChangeLog</Name>
+      <Name>changelog</Name>
       <APILanguage>markdown</APILanguage>
     </TokenIdentifier>
-    <Path>md__Users_drussel_src_rmf_rmf_ChangeLog.html</Path>
+    <Path>changelog.html</Path>
   </Token>
   <Token>
     <TokenIdentifier>
-      <Name>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes</Name>
+      <Name>decoratorsattributes</Name>
       <APILanguage>markdown</APILanguage>
     </TokenIdentifier>
-    <Path>md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html</Path>
+    <Path>decoratorsattributes.html</Path>
   </Token>
   <Token>
     <TokenIdentifier>
-      <Name>md__Users_drussel_src_rmf_rmf_doc_Developers</Name>
+      <Name>developers</Name>
       <APILanguage>markdown</APILanguage>
     </TokenIdentifier>
-    <Path>md__Users_drussel_src_rmf_rmf_doc_Developers.html</Path>
+    <Path>developers.html</Path>
   </Token>
   <Token>
     <TokenIdentifier>
-      <Name>md__Users_drussel_src_rmf_rmf_doc_Executables</Name>
+      <Name>executables</Name>
       <APILanguage>markdown</APILanguage>
     </TokenIdentifier>
-    <Path>md__Users_drussel_src_rmf_rmf_doc_Executables.html</Path>
+    <Path>executables.html</Path>
   </Token>
   <Token>
     <TokenIdentifier>
-      <Name>md__Users_drussel_src_rmf_rmf_doc_FileFormat</Name>
+      <Name>format</Name>
       <APILanguage>markdown</APILanguage>
     </TokenIdentifier>
-    <Path>md__Users_drussel_src_rmf_rmf_doc_FileFormat.html</Path>
+    <Path>format.html</Path>
   </Token>
   <Token>
     <TokenIdentifier>
-      <Name>md__Users_drussel_src_rmf_rmf_doc_HDF5</Name>
+      <Name>hdf5</Name>
       <APILanguage>markdown</APILanguage>
     </TokenIdentifier>
-    <Path>md__Users_drussel_src_rmf_rmf_doc_HDF5.html</Path>
+    <Path>hdf5.html</Path>
   </Token>
   <Token>
     <TokenIdentifier>
-      <Name>md__Users_drussel_src_rmf_rmf_doc_Library</Name>
+      <Name>library</Name>
       <APILanguage>markdown</APILanguage>
     </TokenIdentifier>
-    <Path>md__Users_drussel_src_rmf_rmf_doc_Library.html</Path>
+    <Path>library.html</Path>
   </Token>
   <Token>
     <TokenIdentifier>
-      <Name>md__Users_drussel_src_rmf_rmf_doc_MappingToRMF</Name>
+      <Name>mapping</Name>
       <APILanguage>markdown</APILanguage>
     </TokenIdentifier>
-    <Path>md__Users_drussel_src_rmf_rmf_doc_MappingToRMF.html</Path>
+    <Path>mapping.html</Path>
   </Token>
   <Token>
     <TokenIdentifier>
-      <Name>md__Users_drussel_src_rmf_rmf_doc_PymolPlugin</Name>
+      <Name>pymolplugin</Name>
       <APILanguage>markdown</APILanguage>
     </TokenIdentifier>
-    <Path>md__Users_drussel_src_rmf_rmf_doc_PymolPlugin.html</Path>
+    <Path>pymolplugin.html</Path>
   </Token>
   <Token>
     <TokenIdentifier>
-      <Name>md__Users_drussel_src_rmf_rmf_doc_Viewing</Name>
+      <Name>viewing</Name>
       <APILanguage>markdown</APILanguage>
     </TokenIdentifier>
-    <Path>md__Users_drussel_src_rmf_rmf_doc_Viewing.html</Path>
+    <Path>viewing.html</Path>
   </Token>
   <Token>
     <TokenIdentifier>
-      <Name>md__Users_drussel_src_rmf_rmf_doc_VMDPlugin</Name>
+      <Name>vmdplugin</Name>
       <APILanguage>markdown</APILanguage>
     </TokenIdentifier>
-    <Path>md__Users_drussel_src_rmf_rmf_doc_VMDPlugin.html</Path>
+    <Path>vmdplugin.html</Path>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -2438,7 +2438,7 @@
     </TokenIdentifier>
     <Path>classRMF_1_1BufferConstHandle.html</Path>
     <Abstract>Manage a shared buffer for loading a RMF. </Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/BufferConstHandle.h</DeclaredIn>
+    <DeclaredIn>RMF/BufferConstHandle.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -2461,7 +2461,7 @@
     </TokenIdentifier>
     <Path>classRMF_1_1BufferHandle.html</Path>
     <Abstract>Manage a shared buffer for storing a RMF. </Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/BufferHandle.h</DeclaredIn>
+    <DeclaredIn>RMF/BufferHandle.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -2496,7 +2496,7 @@
     </TokenIdentifier>
     <Path>classRMF_1_1CoordinateTransformer.html</Path>
     <Abstract>Transform coordinates into the global reference frame. </Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/CoordinateTransformer.h</DeclaredIn>
+    <DeclaredIn>RMF/CoordinateTransformer.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -2562,7 +2562,7 @@
     </TokenIdentifier>
     <Path>classRMF_1_1Decorator.html</Path>
     <Abstract>The base class for decorators. </Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/Decorator.h</DeclaredIn>
+    <DeclaredIn>RMF/Decorator.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -2573,7 +2573,7 @@
     </TokenIdentifier>
     <Path>classRMF_1_1Enum.html</Path>
     <Abstract>A strong enum with an associated string name for each value. </Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/Enum.h</DeclaredIn>
+    <DeclaredIn>RMF/Enum.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -2583,7 +2583,7 @@
       <Scope>RMF::Exception</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1Exception.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/exceptions.h</DeclaredIn>
+    <DeclaredIn>RMF/exceptions.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -2594,7 +2594,7 @@
     </TokenIdentifier>
     <Path>classRMF_1_1Factory.html</Path>
     <Abstract>The base class for Factories. </Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/Decorator.h</DeclaredIn>
+    <DeclaredIn>RMF/Decorator.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -2605,7 +2605,7 @@
     </TokenIdentifier>
     <Path>classRMF_1_1FileConstHandle.html</Path>
     <Abstract>A handle for a read-only RMF file. </Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/FileConstHandle.h</DeclaredIn>
+    <DeclaredIn>RMF/FileConstHandle.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -2894,7 +2894,7 @@
     </TokenIdentifier>
     <Path>classRMF_1_1FileHandle.html</Path>
     <Abstract>A handle for an RMF file. </Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/FileHandle.h</DeclaredIn>
+    <DeclaredIn>RMF/FileHandle.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3228,7 +3228,7 @@
     </TokenIdentifier>
     <Path>classRMF_1_1ID.html</Path>
     <Abstract>A general purpose ID in RMF used, with different tags, to idenfity things. </Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/ID.h</DeclaredIn>
+    <DeclaredIn>RMF/ID.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3238,7 +3238,7 @@
       <Scope>RMF::IndexException</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1IndexException.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/exceptions.h</DeclaredIn>
+    <DeclaredIn>RMF/exceptions.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3248,7 +3248,7 @@
       <Scope>RMF::InternalException</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1InternalException.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/exceptions.h</DeclaredIn>
+    <DeclaredIn>RMF/exceptions.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3258,7 +3258,7 @@
       <Scope>RMF::IOException</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1IOException.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/exceptions.h</DeclaredIn>
+    <DeclaredIn>RMF/exceptions.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3269,7 +3269,7 @@
     </TokenIdentifier>
     <Path>classRMF_1_1Label.html</Path>
     <Abstract>A decorator-like class to mark certain nodes (eg molecule bounaries) </Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/Label.h</DeclaredIn>
+    <DeclaredIn>RMF/Label.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3280,7 +3280,7 @@
     </TokenIdentifier>
     <Path>classRMF_1_1NodeConstHandle.html</Path>
     <Abstract>A handle for a particular node in a read-only hierarchy. </Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/NodeConstHandle.h</DeclaredIn>
+    <DeclaredIn>RMF/NodeConstHandle.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3348,7 +3348,7 @@
     </TokenIdentifier>
     <Path>classRMF_1_1NodeHandle.html</Path>
     <Abstract>A handle for a particular node in the hierarchy. </Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/NodeHandle.h</DeclaredIn>
+    <DeclaredIn>RMF/NodeHandle.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3473,7 +3473,7 @@
     </TokenIdentifier>
     <Path>classRMF_1_1Nullable.html</Path>
     <Abstract>Return a possibly null value. </Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/Nullable.h</DeclaredIn>
+    <DeclaredIn>RMF/Nullable.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3517,7 +3517,7 @@
     </TokenIdentifier>
     <Path>classRMF_1_1RestoreCurrentFrame.html</Path>
     <Abstract>Restore the frame that was current on creation upon destruction. </Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/RestoreCurrentFrame.h</DeclaredIn>
+    <DeclaredIn>RMF/RestoreCurrentFrame.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3528,7 +3528,7 @@
     </TokenIdentifier>
     <Path>classRMF_1_1SetCurrentFrame.html</Path>
     <Abstract>Set the current frame to a value and then return it to the old value when this goes out of scope...</Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/SetCurrentFrame.h</DeclaredIn>
+    <DeclaredIn>RMF/SetCurrentFrame.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3538,7 +3538,8 @@
       <Scope>RMF::Traits</Scope>
     </TokenIdentifier>
     <Path>structRMF_1_1Traits.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/traits.h</DeclaredIn>
+    <Abstract>Traits classes describing how RMF uses types for storing data. </Abstract>
+    <DeclaredIn>RMF/traits.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3549,7 +3550,7 @@
     </TokenIdentifier>
     <Path>classRMF_1_1TraverseHelper.html</Path>
     <Abstract>This class tracks common data that one needs to keep as one traverses the hierarchy. </Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/TraverseHelper.h</DeclaredIn>
+    <DeclaredIn>RMF/TraverseHelper.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3726,7 +3727,7 @@
       <Scope>RMF::UsageException</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1UsageException.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/exceptions.h</DeclaredIn>
+    <DeclaredIn>RMF/exceptions.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3737,7 +3738,7 @@
     </TokenIdentifier>
     <Path>classRMF_1_1Vector.html</Path>
     <Abstract>Represent a point in some dimension. </Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/Vector.h</DeclaredIn>
+    <DeclaredIn>RMF/Vector.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3779,7 +3780,7 @@
       <Scope>RMF::decorator::Alias</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Alias.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/alias.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/alias.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3789,7 +3790,7 @@
       <Scope>RMF::decorator::AliasConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1AliasConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/alias.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/alias.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3799,7 +3800,7 @@
       <Scope>RMF::decorator::AliasFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1AliasFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/alias.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/alias.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3842,7 +3843,7 @@
       <Scope>RMF::decorator::Alternatives</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Alternatives.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/decorator/alternatives.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/alternatives.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3885,7 +3886,7 @@
       <Scope>RMF::decorator::AlternativesConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1AlternativesConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/decorator/alternatives.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/alternatives.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3928,7 +3929,7 @@
       <Scope>RMF::decorator::AlternativesFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1AlternativesFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/decorator/alternatives.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/alternatives.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3938,7 +3939,7 @@
       <Scope>RMF::decorator::Assembly</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Assembly.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/decorator/labels.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/labels.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3948,7 +3949,7 @@
       <Scope>RMF::decorator::Atom</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Atom.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3958,7 +3959,7 @@
       <Scope>RMF::decorator::AtomConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1AtomConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -3968,7 +3969,7 @@
       <Scope>RMF::decorator::AtomFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1AtomFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4011,7 +4012,7 @@
       <Scope>RMF::decorator::BackwardsCompatibilityFragment</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragment.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4021,7 +4022,7 @@
       <Scope>RMF::decorator::BackwardsCompatibilityFragmentConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4031,7 +4032,7 @@
       <Scope>RMF::decorator::BackwardsCompatibilityFragmentFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1BackwardsCompatibilityFragmentFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4074,7 +4075,7 @@
       <Scope>RMF::decorator::Ball</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Ball.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/shape.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/shape.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4084,7 +4085,7 @@
       <Scope>RMF::decorator::BallConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1BallConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/shape.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/shape.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4094,7 +4095,7 @@
       <Scope>RMF::decorator::BallFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1BallFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/shape.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/shape.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4137,7 +4138,7 @@
       <Scope>RMF::decorator::Bond</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Bond.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/decorator/bond.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/bond.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4147,7 +4148,7 @@
       <Scope>RMF::decorator::BondConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1BondConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/decorator/bond.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/bond.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4157,7 +4158,7 @@
       <Scope>RMF::decorator::BondFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1BondFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/decorator/bond.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/bond.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4200,7 +4201,7 @@
       <Scope>RMF::decorator::Chain</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Chain.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4210,7 +4211,7 @@
       <Scope>RMF::decorator::ChainConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1ChainConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4220,7 +4221,7 @@
       <Scope>RMF::decorator::ChainFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1ChainFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4263,7 +4264,7 @@
       <Scope>RMF::decorator::Colored</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Colored.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/shape.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/shape.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4273,7 +4274,7 @@
       <Scope>RMF::decorator::ColoredConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1ColoredConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/shape.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/shape.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4283,7 +4284,7 @@
       <Scope>RMF::decorator::ColoredFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1ColoredFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/shape.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/shape.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4326,7 +4327,7 @@
       <Scope>RMF::decorator::Copy</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Copy.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4336,7 +4337,7 @@
       <Scope>RMF::decorator::CopyConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1CopyConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4346,7 +4347,7 @@
       <Scope>RMF::decorator::CopyFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1CopyFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4389,7 +4390,7 @@
       <Scope>RMF::decorator::Cylinder</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Cylinder.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/shape.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/shape.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4399,7 +4400,7 @@
       <Scope>RMF::decorator::CylinderConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1CylinderConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/shape.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/shape.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4409,7 +4410,7 @@
       <Scope>RMF::decorator::CylinderFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1CylinderFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/shape.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/shape.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4452,7 +4453,7 @@
       <Scope>RMF::decorator::Diffuser</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Diffuser.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4462,7 +4463,7 @@
       <Scope>RMF::decorator::DiffuserConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1DiffuserConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4472,7 +4473,7 @@
       <Scope>RMF::decorator::DiffuserFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1DiffuserFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4515,7 +4516,7 @@
       <Scope>RMF::decorator::Domain</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Domain.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4525,7 +4526,7 @@
       <Scope>RMF::decorator::DomainConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1DomainConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4535,7 +4536,7 @@
       <Scope>RMF::decorator::DomainFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1DomainFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4578,7 +4579,7 @@
       <Scope>RMF::decorator::Ellipsoid</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Ellipsoid.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/shape.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/shape.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4588,7 +4589,7 @@
       <Scope>RMF::decorator::EllipsoidConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1EllipsoidConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/shape.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/shape.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4598,7 +4599,7 @@
       <Scope>RMF::decorator::EllipsoidFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1EllipsoidFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/shape.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/shape.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4641,7 +4642,7 @@
       <Scope>RMF::decorator::External</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1External.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/external.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/external.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4651,7 +4652,7 @@
       <Scope>RMF::decorator::ExternalConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1ExternalConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/external.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/external.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4661,7 +4662,7 @@
       <Scope>RMF::decorator::ExternalFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1ExternalFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/external.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/external.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4704,7 +4705,7 @@
       <Scope>RMF::decorator::Fragment</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Fragment.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4714,7 +4715,7 @@
       <Scope>RMF::decorator::FragmentConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1FragmentConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4724,7 +4725,7 @@
       <Scope>RMF::decorator::FragmentFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1FragmentFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4767,7 +4768,7 @@
       <Scope>RMF::decorator::GaussianParticle</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1GaussianParticle.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4777,7 +4778,7 @@
       <Scope>RMF::decorator::GaussianParticleConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1GaussianParticleConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4787,7 +4788,7 @@
       <Scope>RMF::decorator::GaussianParticleFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1GaussianParticleFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4830,7 +4831,7 @@
       <Scope>RMF::decorator::IntermediateParticle</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1IntermediateParticle.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4840,7 +4841,7 @@
       <Scope>RMF::decorator::IntermediateParticleConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1IntermediateParticleConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4850,7 +4851,7 @@
       <Scope>RMF::decorator::IntermediateParticleFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1IntermediateParticleFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4893,7 +4894,7 @@
       <Scope>RMF::decorator::JournalArticle</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1JournalArticle.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/publication.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/publication.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4903,7 +4904,7 @@
       <Scope>RMF::decorator::JournalArticleConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1JournalArticleConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/publication.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/publication.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4913,7 +4914,7 @@
       <Scope>RMF::decorator::JournalArticleFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1JournalArticleFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/publication.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/publication.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4956,7 +4957,7 @@
       <Scope>RMF::decorator::Molecule</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Molecule.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/decorator/labels.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/labels.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4966,7 +4967,7 @@
       <Scope>RMF::decorator::Particle</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Particle.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4976,7 +4977,7 @@
       <Scope>RMF::decorator::ParticleConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1ParticleConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -4986,7 +4987,7 @@
       <Scope>RMF::decorator::ParticleFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1ParticleFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5029,7 +5030,7 @@
       <Scope>RMF::decorator::ReferenceFrame</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1ReferenceFrame.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5039,7 +5040,7 @@
       <Scope>RMF::decorator::ReferenceFrameConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1ReferenceFrameConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5049,7 +5050,7 @@
       <Scope>RMF::decorator::ReferenceFrameFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1ReferenceFrameFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5092,7 +5093,7 @@
       <Scope>RMF::decorator::Representation</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Representation.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/decorator/representation.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/representation.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5102,7 +5103,7 @@
       <Scope>RMF::decorator::RepresentationConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1RepresentationConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/decorator/representation.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/representation.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5112,7 +5113,7 @@
       <Scope>RMF::decorator::RepresentationFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1RepresentationFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/decorator/representation.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/representation.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5155,7 +5156,7 @@
       <Scope>RMF::decorator::Residue</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Residue.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5165,7 +5166,7 @@
       <Scope>RMF::decorator::ResidueConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1ResidueConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5175,7 +5176,7 @@
       <Scope>RMF::decorator::ResidueFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1ResidueFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5218,7 +5219,7 @@
       <Scope>RMF::decorator::RigidParticle</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1RigidParticle.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5228,7 +5229,7 @@
       <Scope>RMF::decorator::RigidParticleConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1RigidParticleConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5238,7 +5239,7 @@
       <Scope>RMF::decorator::RigidParticleFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1RigidParticleFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/physics.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/physics.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5281,7 +5282,7 @@
       <Scope>RMF::decorator::Score</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Score.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/feature.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/feature.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5291,7 +5292,7 @@
       <Scope>RMF::decorator::ScoreConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1ScoreConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/feature.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/feature.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5301,7 +5302,7 @@
       <Scope>RMF::decorator::ScoreFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1ScoreFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/feature.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/feature.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5344,7 +5345,7 @@
       <Scope>RMF::decorator::Segment</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Segment.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/shape.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/shape.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5354,7 +5355,7 @@
       <Scope>RMF::decorator::SegmentConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1SegmentConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/shape.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/shape.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5364,7 +5365,7 @@
       <Scope>RMF::decorator::SegmentFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1SegmentFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/shape.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/shape.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5407,7 +5408,7 @@
       <Scope>RMF::decorator::State</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1State.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5417,7 +5418,7 @@
       <Scope>RMF::decorator::StateConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1StateConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5427,7 +5428,7 @@
       <Scope>RMF::decorator::StateFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1StateFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5470,7 +5471,7 @@
       <Scope>RMF::decorator::Typed</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1Typed.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5480,7 +5481,7 @@
       <Scope>RMF::decorator::TypedConst</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1TypedConst.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5490,7 +5491,7 @@
       <Scope>RMF::decorator::TypedFactory</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1decorator_1_1TypedFactory.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/debug/include/RMF/decorator/sequence.h</DeclaredIn>
+    <DeclaredIn>RMF/decorator/sequence.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5797,7 +5798,7 @@
       <Scope>RMF::HDF5::ConstAttributes</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1HDF5_1_1ConstAttributes.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/HDF5/ConstAttributes.h</DeclaredIn>
+    <DeclaredIn>RMF/HDF5/ConstAttributes.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5807,7 +5808,7 @@
       <Scope>RMF::HDF5::ConstDataSetD</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1HDF5_1_1ConstDataSetD.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/HDF5/ConstDataSetD.h</DeclaredIn>
+    <DeclaredIn>RMF/HDF5/ConstDataSetD.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5841,7 +5842,7 @@
       <Scope>RMF::HDF5::ConstFile</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1HDF5_1_1ConstFile.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/HDF5/ConstFile.h</DeclaredIn>
+    <DeclaredIn>RMF/HDF5/ConstFile.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5863,7 +5864,7 @@
       <Scope>RMF::HDF5::ConstGroup</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1HDF5_1_1ConstGroup.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/HDF5/ConstGroup.h</DeclaredIn>
+    <DeclaredIn>RMF/HDF5/ConstGroup.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5885,7 +5886,7 @@
       <Scope>RMF::HDF5::DataSetAccessPropertiesD</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1HDF5_1_1DataSetAccessPropertiesD.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/HDF5/DataSetAccessPropertiesD.h</DeclaredIn>
+    <DeclaredIn>RMF/HDF5/DataSetAccessPropertiesD.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5895,7 +5896,7 @@
       <Scope>RMF::HDF5::DataSetCreationPropertiesD</Scope>
     </TokenIdentifier>
     <Path>structRMF_1_1HDF5_1_1DataSetCreationPropertiesD.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/HDF5/DataSetCreationPropertiesD.h</DeclaredIn>
+    <DeclaredIn>RMF/HDF5/DataSetCreationPropertiesD.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5916,7 +5917,7 @@
       <Scope>RMF::HDF5::DataSetD</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1HDF5_1_1DataSetD.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/HDF5/DataSetD.h</DeclaredIn>
+    <DeclaredIn>RMF/HDF5/DataSetD.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5962,7 +5963,7 @@
       <Scope>RMF::HDF5::DataSetIndexD</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1HDF5_1_1DataSetIndexD.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/HDF5/DataSetIndexD.h</DeclaredIn>
+    <DeclaredIn>RMF/HDF5/DataSetIndexD.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5972,7 +5973,7 @@
       <Scope>RMF::HDF5::File</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1HDF5_1_1File.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/HDF5/File.h</DeclaredIn>
+    <DeclaredIn>RMF/HDF5/File.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -5994,7 +5995,7 @@
       <Scope>RMF::HDF5::Group</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1HDF5_1_1Group.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/HDF5/Group.h</DeclaredIn>
+    <DeclaredIn>RMF/HDF5/Group.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -6017,7 +6018,7 @@
     </TokenIdentifier>
     <Path>classRMF_1_1HDF5_1_1Handle.html</Path>
     <Abstract>Make sure an HDF5 handle is released. </Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/HDF5/handle.h</DeclaredIn>
+    <DeclaredIn>RMF/HDF5/handle.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -6027,7 +6028,7 @@
       <Scope>RMF::HDF5::MutableAttributes</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1HDF5_1_1MutableAttributes.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/HDF5/MutableAttributes.h</DeclaredIn>
+    <DeclaredIn>RMF/HDF5/MutableAttributes.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -6037,7 +6038,7 @@
       <Scope>RMF::HDF5::Object</Scope>
     </TokenIdentifier>
     <Path>classRMF_1_1HDF5_1_1Object.html</Path>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/HDF5/Object.h</DeclaredIn>
+    <DeclaredIn>RMF/HDF5/Object.h</DeclaredIn>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -6060,6 +6061,6 @@
     </TokenIdentifier>
     <Path>classRMF_1_1HDF5_1_1SharedHandle.html</Path>
     <Abstract>Share an HDF5 handle. </Abstract>
-    <DeclaredIn>/Users/drussel/src/rmf/rmf/include/RMF/HDF5/handle.h</DeclaredIn>
+    <DeclaredIn>RMF/HDF5/handle.h</DeclaredIn>
   </Token>
 </Tokens>

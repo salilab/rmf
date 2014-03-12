@@ -1,6 +1,6 @@
 <map id="BufferConstHandle.h" name="BufferConstHandle.h">
-<area shape="rect" id="node2" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="4,161,104,189"/>
-<area shape="rect" id="node4" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="829,83,989,111"/>
-<area shape="rect" id="node13" href="$exceptions_8h.html" title="Declarations of the various exception types. " alt="" coords="483,83,579,111"/>
-<area shape="rect" id="node3" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="558,238,724,266"/>
+<area shape="rect" id="node2" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="4,167,104,193"/>
+<area shape="rect" id="node4" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="753,81,913,106"/>
+<area shape="rect" id="node13" href="$exceptions_8h.html" title="Declarations of the various exception types. " alt="" coords="444,81,540,106"/>
+<area shape="rect" id="node3" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="482,254,648,279"/>
 </map>

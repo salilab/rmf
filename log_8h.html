@@ -107,23 +107,21 @@ $(document).ready(function(){initNavTree('log_8h.html','');});
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;string&gt;</code><br/>
 <code>#include &quot;RMF/config.h&quot;</code><br/>
-<code>#include &lt;log4cxx/logger.h&gt;</code><br/>
-<code>#include &lt;log4cxx/ndc.h&gt;</code><br/>
-<code>#include &lt;log4cxx/helpers/messagebuffer.h&gt;</code><br/>
-<code>#include &lt;log4cxx/helpers/objectptr.h&gt;</code><br/>
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for log.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="log_8h__incl.svg" width="100%" height="446"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="log_8h__incl.svg" width="222" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 </div><div class="textblock"><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="closed.png" alt="+"/> This graph shows which files directly or indirectly include this file:</div>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="log_8h__dep__incl.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="log_8h__dep__incl.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 </div>
 </div>
 <p><a href="log_8h_source.html">Go to the source code of this file.</a></p>
@@ -137,32 +135,29 @@ Namespaces</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ab5a5384fc4ce0659c35ada3f020ffa88"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5a5384fc4ce0659c35ada3f020ffa88"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>RMF_CONTEXT</b>(expr)&#160;&#160;&#160;log4cxx::NDC _log_context(expr)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RMF_CONTEXT</b>(expr)</td></tr>
 <tr class="separator:ab5a5384fc4ce0659c35ada3f020ffa88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fd9c69e444a08c58d1f2499d0449de9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7fd9c69e444a08c58d1f2499d0449de9"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>RMF_DEBUG</b>(expr)&#160;&#160;&#160;LOG4CXX_DEBUG(RMF::get_logger(), expr)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RMF_DEBUG</b>(expr)</td></tr>
 <tr class="separator:a7fd9c69e444a08c58d1f2499d0449de9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d74e40912cd38c182dd1023568a8935"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d74e40912cd38c182dd1023568a8935"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>RMF_ERROR</b>(expr)&#160;&#160;&#160;LOG4CXX_ERROR(RMF::get_logger(), expr)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RMF_ERROR</b>(expr)</td></tr>
 <tr class="separator:a3d74e40912cd38c182dd1023568a8935"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16c873a6b68154227756e45475fe7314"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16c873a6b68154227756e45475fe7314"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>RMF_FATAL</b>(expr)&#160;&#160;&#160;LOG4CXX_FATAL(RMF::get_logger(), expr)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RMF_FATAL</b>(expr)</td></tr>
 <tr class="separator:a16c873a6b68154227756e45475fe7314"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acfcbda23f0dd36bf83289cd7d2aa9f84"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfcbda23f0dd36bf83289cd7d2aa9f84"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>RMF_INFO</b>(expr)&#160;&#160;&#160;LOG4CXX_INFO(RMF::get_logger(), expr)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RMF_INFO</b>(expr)</td></tr>
 <tr class="separator:acfcbda23f0dd36bf83289cd7d2aa9f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a705899e91b567377e51553debf39ab62"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a705899e91b567377e51553debf39ab62"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>RMF_TRACE</b>(expr)&#160;&#160;&#160;LOG4CXX_TRACE(RMF::get_logger(), expr)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RMF_TRACE</b>(expr)</td></tr>
 <tr class="separator:a705899e91b567377e51553debf39ab62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2894b5db59641931e3ca9671775353a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2894b5db59641931e3ca9671775353a3"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>RMF_WARN</b>(expr)&#160;&#160;&#160;LOG4CXX_WARN(RMF::get_logger(), expr)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RMF_WARN</b>(expr)</td></tr>
 <tr class="separator:a2894b5db59641931e3ca9671775353a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a25924d2419f7988030372c4ce75e9604"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a25924d2419f7988030372c4ce75e9604"></a>
-log4cxx::LoggerPtr&#160;</td><td class="memItemRight" valign="bottom"><b>RMF::get_logger</b> ()</td></tr>
-<tr class="separator:a25924d2419f7988030372c4ce75e9604"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac600cc982dce090a5001e53352b20a68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRMF.html#ac600cc982dce090a5001e53352b20a68">RMF::set_log_level</a> (std::string level)</td></tr>
 <tr class="separator:ac600cc982dce090a5001e53352b20a68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>

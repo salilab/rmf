@@ -1,99 +1,87 @@
 var NAVTREE =
 [
   [ "RMF", "index.html", [
-    [ "Change Log", "md__Users_drussel_src_rmf_rmf_ChangeLog.html", null ],
-    [ "Attributes and Decorators", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html", [
-      [ "Overview", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#decoratorsattributes", null ],
-      [ "Static and Frame Attributes", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#staticandframe", null ],
-      [ "Physics", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#physics", [
-        [ "Attributes", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#physicsattributes", null ],
-        [ "Decorators", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#physicsdecorators", null ]
+    [ "Change Log", "changelog.html", null ],
+    [ "Decorators and Attributes", "decoratorsattributes.html", [
+      [ "Static and Frame Attributes", "decoratorsattributes.html#staticandframe", null ],
+      [ "Physics", "decoratorsattributes.html#physics", [
+        [ "Attributes", "decoratorsattributes.html#physicsattributes", null ],
+        [ "Decorators", "decoratorsattributes.html#physicsdecorators", null ]
       ] ],
-      [ "Sequence", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#sequence", [
-        [ "Attributes", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#sequenceattributes", null ],
-        [ "Decorators", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#sequencedecorators", null ]
+      [ "Sequence", "decoratorsattributes.html#sequence", [
+        [ "Attributes", "decoratorsattributes.html#sequenceattributes", null ],
+        [ "Decorators", "decoratorsattributes.html#sequencedecorators", null ]
       ] ],
-      [ "Feature", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#feature", [
-        [ "Attributes", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#featureattributes", null ],
-        [ "Decorators", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#featuredecorators", null ]
+      [ "Feature", "decoratorsattributes.html#feature", [
+        [ "Attributes", "decoratorsattributes.html#featureattributes", null ],
+        [ "Decorators", "decoratorsattributes.html#featuredecorators", null ]
       ] ],
-      [ "Shape", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#shape", [
-        [ "Attributes", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#shapeattributes", null ],
-        [ "Decorators", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#shapedecorators", null ]
+      [ "Shape", "decoratorsattributes.html#shape", [
+        [ "Attributes", "decoratorsattributes.html#shapeattributes", null ],
+        [ "Decorators", "decoratorsattributes.html#shapedecorators", null ]
       ] ],
-      [ "Alternatives", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#alternatives", [
-        [ "Attributes", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#alternativesattributes", null ],
-        [ "Decorators", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#alternativesdecorators", null ]
+      [ "Alternatives", "decoratorsattributes.html#alternatives", [
+        [ "Attributes", "decoratorsattributes.html#alternativesattributes", null ],
+        [ "Decorators", "decoratorsattributes.html#alternativesdecorators", null ]
       ] ],
-      [ "Alias", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#alias", [
-        [ "Attributes", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#aliasattributes", null ],
-        [ "Decorators", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#aliasdecorators", null ]
+      [ "Alias", "decoratorsattributes.html#alias", [
+        [ "Attributes", "decoratorsattributes.html#aliasattributes", null ],
+        [ "Decorators", "decoratorsattributes.html#aliasdecorators", null ]
       ] ],
-      [ "External", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#external", [
-        [ "Attributes", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#externalattributes", null ],
-        [ "Decorators", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#externaldecorators", null ]
+      [ "External", "decoratorsattributes.html#external", [
+        [ "Attributes", "decoratorsattributes.html#externalattributes", null ],
+        [ "Decorators", "decoratorsattributes.html#externaldecorators", null ]
       ] ],
-      [ "Publication", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#publication", [
-        [ "Attributes", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#publicationattributes", null ],
-        [ "Decorators", "md__Users_drussel_src_rmf_rmf_doc_DecoratorsAndAttributes.html#publicationdecorators", null ]
+      [ "Publication", "decoratorsattributes.html#publication", [
+        [ "Attributes", "decoratorsattributes.html#publicationattributes", null ],
+        [ "Decorators", "decoratorsattributes.html#publicationdecorators", null ]
       ] ]
     ] ],
-    [ "Developers", "md__Users_drussel_src_rmf_rmf_doc_Developers.html", [
-      [ "Overview", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#developers", null ],
-      [ "Developer tools", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#dev_tools", null ],
-      [ "CMake tools", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#cmake_tools", null ],
-      [ "Decorators", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#makedecorators", null ],
-      [ "Avro", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#avrocpp", null ],
-      [ "SharedData", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#shareddata", null ],
-      [ "Documentation", "md__Users_drussel_src_rmf_rmf_doc_Developers.html#documention", null ]
+    [ "Developers", "developers.html", [
+      [ "Developer tools", "developers.html#dev_tools", null ],
+      [ "CMake tools", "developers.html#cmake_tools", null ],
+      [ "Decorators", "developers.html#makedecorators", null ],
+      [ "Avro", "developers.html#avrocpp", null ],
+      [ "SharedData", "developers.html#shareddata", null ],
+      [ "Documentation", "developers.html#documention", null ]
     ] ],
-    [ "Executables", "md__Users_drussel_src_rmf_rmf_doc_Executables.html", [
-      [ "Overview", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#developers", null ],
-      [ "rmf_show", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#rmf_show", null ],
-      [ "rmf_frames", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#rmf_frames", null ],
-      [ "rmf_info", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#rmf_info", null ],
-      [ "rmf_slice", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#rmf_slice", null ],
-      [ "rmf_cat", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#rmf_cat", null ],
-      [ "rmf_xml", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#rmf_xml", null ],
-      [ "rmf_validate", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#rmf_validate", null ],
-      [ "rmf3_dump", "md__Users_drussel_src_rmf_rmf_doc_Executables.html#rmf3_dump", null ]
+    [ "Executables", "executables.html", [
+      [ "rmf_show", "executables.html#rmf_show", null ],
+      [ "rmf_frames", "executables.html#rmf_frames", null ],
+      [ "rmf_info", "executables.html#rmf_info", null ],
+      [ "rmf_slice", "executables.html#rmf_slice", null ],
+      [ "rmf_cat", "executables.html#rmf_cat", null ],
+      [ "rmf_xml", "executables.html#rmf_xml", null ],
+      [ "rmf_validate", "executables.html#rmf_validate", null ],
+      [ "rmf3_dump", "executables.html#rmf3_dump", null ]
     ] ],
-    [ "File Format", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html", [
-      [ "Overview", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#format", null ],
-      [ "Examples", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#example_files", null ],
-      [ "The RMF Hierarchy", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#hierarchy", null ],
-      [ "Attributes", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#attribute", null ],
-      [ "Inheritance of properties", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#inheritance", null ],
-      [ "Frames", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#frames", null ],
-      [ "Adding custom data to an RMF", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#adding", null ],
-      [ "On disk format", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#on_disk", null ],
-      [ "Benchmarks", "md__Users_drussel_src_rmf_rmf_doc_FileFormat.html#benchmarks", null ]
+    [ "File Format", "format.html", [
+      [ "Examples", "format.html#example_files", null ],
+      [ "The RMF Hierarchy", "format.html#hierarchy", null ],
+      [ "Attributes", "format.html#attribute", null ],
+      [ "Inheritance of properties", "format.html#inheritance", null ],
+      [ "Frames", "format.html#frames", null ],
+      [ "Adding custom data to an RMF", "format.html#adding", null ],
+      [ "On disk format", "format.html#on_disk", null ],
+      [ "Benchmarks", "format.html#benchmarks", null ]
     ] ],
-    [ "HDF5", "md__Users_drussel_src_rmf_rmf_doc_HDF5.html", null ],
-    [ "Library", "md__Users_drussel_src_rmf_rmf_doc_Library.html", [
-      [ "Overview", "md__Users_drussel_src_rmf_rmf_doc_Library.html#library", null ],
-      [ "Basics", "md__Users_drussel_src_rmf_rmf_doc_Library.html#basics", null ],
-      [ "Associations", "md__Users_drussel_src_rmf_rmf_doc_Library.html#associations", null ],
-      [ "Parallel I/O", "md__Users_drussel_src_rmf_rmf_doc_Library.html#parallel", null ],
-      [ "Invariants", "md__Users_drussel_src_rmf_rmf_doc_Library.html#invariants", null ],
-      [ "Decorators and factories", "md__Users_drussel_src_rmf_rmf_doc_Library.html#rmfdecorators", null ],
-      [ "Language bindings", "md__Users_drussel_src_rmf_rmf_doc_Library.html#bindings", null ]
+    [ "HDF5", "hdf5.html", null ],
+    [ "Library", "library.html", [
+      [ "Basics", "library.html#basics", null ],
+      [ "Associations", "library.html#associations", null ],
+      [ "Parallel I/O", "library.html#parallel", null ],
+      [ "Invariants", "library.html#invariants", null ],
+      [ "Decorators and factories", "library.html#rmfdecorators", null ],
+      [ "Language bindings", "library.html#bindings", null ]
     ] ],
-    [ "Mapping Data", "md__Users_drussel_src_rmf_rmf_doc_MappingToRMF.html", [
-      [ "Mapping data to RMF files", "md__Users_drussel_src_rmf_rmf_doc_MappingToRMF.html#mapping", null ]
+    [ "Mapping data to RMF files", "mapping.html", null ],
+    [ "Pymol Plugin", "pymolplugin.html", null ],
+    [ "Viewing", "viewing.html", [
+      [ "Chimera", "viewing.html#chimera", null ],
+      [ "VMD", "viewing.html#vmd", null ],
+      [ "Pymol", "viewing.html#pymol", null ]
     ] ],
-    [ "Pymol Plugin", "md__Users_drussel_src_rmf_rmf_doc_PymolPlugin.html", [
-      [ "Using the plugin", "md__Users_drussel_src_rmf_rmf_doc_PymolPlugin.html#pymolplugin", null ]
-    ] ],
-    [ "Viewing", "md__Users_drussel_src_rmf_rmf_doc_Viewing.html", [
-      [ "Overview", "md__Users_drussel_src_rmf_rmf_doc_Viewing.html#viewers", null ],
-      [ "Chimera", "md__Users_drussel_src_rmf_rmf_doc_Viewing.html#chimera", null ],
-      [ "VMD", "md__Users_drussel_src_rmf_rmf_doc_Viewing.html#vmd", null ],
-      [ "Pymol", "md__Users_drussel_src_rmf_rmf_doc_Viewing.html#pymol", null ]
-    ] ],
-    [ "VMD Plugin", "md__Users_drussel_src_rmf_rmf_doc_VMDPlugin.html", [
-      [ "Building and installing", "md__Users_drussel_src_rmf_rmf_doc_VMDPlugin.html#vmdplugin", null ]
-    ] ],
+    [ "VMD Plugin", "vmdplugin.html", null ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -128,12 +116,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "BufferConstHandle_8h.html",
-"classRMF_1_1HDF5_1_1ConstAttributes.html#aa6749a47c3f6c41807baf12e63526984",
-"classRMF_1_1decorator_1_1AliasFactory.html#aec01257b041b404dead6011def0ed63e",
-"classRMF_1_1decorator_1_1DiffuserConst.html#afbe4f12aa80ff58242c7c6ee1194abf8",
-"classRMF_1_1decorator_1_1ReferenceFrame.html#a8e248c7ae2889d084956208b9bb3cfd2",
-"exceptions_8h.html#a603692b957dfa0a63389a0f8c3cc31d6",
-"utility_8h.html"
+"classRMF_1_1HDF5_1_1ConstAttributes.html#a41a395140938051d9fc084b37f2203e7",
+"classRMF_1_1decorator_1_1AliasFactory.html#adfee01f025cdfb511921b4083ab64a8d",
+"classRMF_1_1decorator_1_1DiffuserConst.html#ae2c7adb60808bcaa771048a190c1310c",
+"classRMF_1_1decorator_1_1ReferenceFrame.html#a5e78f4fced4acb80aa07a229d21c0c65",
+"developers.html",
+"vmdplugin.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

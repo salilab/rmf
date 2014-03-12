@@ -1,8 +1,8 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title="STL class. " alt="" coords="6,83,109,111"/>
-<area shape="rect" id="node2" href="$classRMF_1_1Exception.html" title="RMF::Exception" alt="" coords="158,83,274,111"/>
-<area shape="rect" id="node3" href="$classRMF_1_1IndexException.html" title="RMF::IndexException" alt="" coords="328,5,477,33"/>
-<area shape="rect" id="node4" href="$classRMF_1_1InternalException.html" title="RMF::InternalException" alt="" coords="322,57,483,85"/>
-<area shape="rect" id="node5" href="$classRMF_1_1IOException.html" title="RMF::IOException" alt="" coords="338,109,468,137"/>
-<area shape="rect" id="node6" href="$classRMF_1_1UsageException.html" title="RMF::UsageException" alt="" coords="325,161,480,189"/>
+<area shape="rect" id="node1" title="STL class. " alt="" coords="6,79,109,105"/>
+<area shape="rect" id="node2" href="$classRMF_1_1Exception.html" title="RMF::Exception" alt="" coords="158,79,274,105"/>
+<area shape="rect" id="node3" href="$classRMF_1_1IndexException.html" title="RMF::IndexException" alt="" coords="328,5,477,30"/>
+<area shape="rect" id="node4" href="$classRMF_1_1InternalException.html" title="RMF::InternalException" alt="" coords="322,54,483,79"/>
+<area shape="rect" id="node5" href="$classRMF_1_1IOException.html" title="RMF::IOException" alt="" coords="338,103,468,129"/>
+<area shape="rect" id="node6" href="$classRMF_1_1UsageException.html" title="RMF::UsageException" alt="" coords="325,153,480,178"/>
 </map>

@@ -123,100 +123,117 @@ $(document).ready(function(){initNavTree('alias_8h_source.html','');});
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;RMF_ENABLE_WARNINGS</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">namespace </span>RMF {</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">namespace </span>decorator {</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">/** See also Alias and AliasFactory.</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">  */</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classRMF_1_1decorator_1_1AliasConst.html">   29</a></span>&#160;<span class="keyword">class </span><a class="code" href="classRMF_1_1decorator_1_1AliasConst.html">AliasConst</a> : <span class="keyword">public</span> <a class="code" href="classRMF_1_1Decorator.html">Decorator</a> {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classRMF_1_1decorator_1_1AliasFactory.html">AliasFactory</a>;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <a class="code" href="classRMF_1_1ID.html">IntKey</a> aliased_;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <a class="code" href="classRMF_1_1decorator_1_1AliasConst.html">AliasConst</a>(<a class="code" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> nh, <a class="code" href="classRMF_1_1ID.html">IntKey</a> aliased)</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;      : <a class="code" href="classRMF_1_1Decorator.html">Decorator</a>(nh), aliased_(aliased) {}</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <a class="code" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> get_aliased()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordflow">try</span> {</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;      <span class="keywordtype">int</span> <span class="keywordtype">id</span> = get_node().get_value(aliased_);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;      <span class="keywordflow">return</span> get_node().get_file().<a class="code" href="classRMF_1_1FileHandle.html#ae6a14319cd485318420685f86fcfb942">get_node</a>(<a class="code" href="namespaceRMF.html#a6a47f5e7d9ef4573ff2ee2df65aab051">NodeID</a>(<span class="keywordtype">id</span>));</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    }</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    RMF_DECORATOR_CATCH();</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  }</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keyword">static</span> std::string get_decorator_type_name() { <span class="keywordflow">return</span> <span class="stringliteral">&quot;AliasConst&quot;</span>; }</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  RMF_SHOWABLE(<a class="code" href="classRMF_1_1decorator_1_1AliasConst.html">AliasConst</a>, <span class="stringliteral">&quot;Alias: &quot;</span> &lt;&lt; get_node());</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;};<span class="comment"></span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">/** See also AliasFactory.</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classRMF_1_1decorator_1_1Alias.html">   51</a></span>&#160;<span class="keyword">class </span><a class="code" href="classRMF_1_1decorator_1_1Alias.html">Alias</a> : <span class="keyword">public</span> <a class="code" href="classRMF_1_1decorator_1_1AliasConst.html">AliasConst</a> {</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classRMF_1_1decorator_1_1AliasFactory.html">AliasFactory</a>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <a class="code" href="classRMF_1_1decorator_1_1Alias.html">Alias</a>(<a class="code" href="classRMF_1_1NodeHandle.html">NodeHandle</a> nh, <a class="code" href="classRMF_1_1ID.html">IntKey</a> aliased) : <a class="code" href="classRMF_1_1decorator_1_1AliasConst.html">AliasConst</a>(nh, aliased) {}</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordtype">void</span> set_aliased(<a class="code" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> v) {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">try</span> {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      get_node().<a class="code" href="classRMF_1_1NodeHandle.html#a102f9a69e6c37bded80a097bd5846225">set_value</a>(aliased_, v.<a class="code" href="classRMF_1_1NodeConstHandle.html#a003339523463bcd2ca7c82e329b794f2">get_id</a>().get_index());</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    RMF_DECORATOR_CATCH();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  }</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keyword">static</span> std::string get_decorator_type_name() { <span class="keywordflow">return</span> <span class="stringliteral">&quot;Alias&quot;</span>; }</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;};</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">/** Create decorators of type Alias.</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment">  */</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classRMF_1_1decorator_1_1AliasFactory.html">   68</a></span>&#160;<span class="keyword">class </span><a class="code" href="classRMF_1_1decorator_1_1AliasFactory.html">AliasFactory</a> : <span class="keyword">public</span> <a class="code" href="classRMF_1_1Factory.html">Factory</a> {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <a class="code" href="classRMF_1_1ID.html">Category</a> cat_;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <a class="code" href="classRMF_1_1ID.html">IntKey</a> aliased_;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <a class="code" href="classRMF_1_1decorator_1_1AliasFactory.html">AliasFactory</a>(<a class="code" href="classRMF_1_1FileConstHandle.html">FileConstHandle</a> fh)</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      : cat_(fh.get_category(<span class="stringliteral">&quot;alias&quot;</span>)),</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        aliased_(fh.<a class="code" href="classRMF_1_1FileConstHandle.html#a7b5d18865ecb3b778dd08dab8e775d05">get_key</a>&lt;IntTag&gt;(cat_, <span class="stringliteral">&quot;aliased&quot;</span>)) {}</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <a class="code" href="classRMF_1_1decorator_1_1AliasFactory.html">AliasFactory</a>(<a class="code" href="classRMF_1_1FileHandle.html">FileHandle</a> fh)</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      : cat_(fh.get_category(<span class="stringliteral">&quot;alias&quot;</span>)),</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        aliased_(fh.<a class="code" href="classRMF_1_1FileConstHandle.html#a7b5d18865ecb3b778dd08dab8e775d05">get_key</a>&lt;IntTag&gt;(cat_, <span class="stringliteral">&quot;aliased&quot;</span>)) {}<span class="comment"></span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment">  /** Get a AliasConst for nh.*/</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="classRMF_1_1decorator_1_1AliasFactory.html#aec01257b041b404dead6011def0ed63e">   80</a></span>&#160;  <a class="code" href="classRMF_1_1decorator_1_1AliasConst.html">AliasConst</a> <span class="keyword">get</span>(<a class="code" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> nh) <span class="keyword">const</span> {</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    RMF_USAGE_CHECK((nh.get_type() == <a class="code" href="namespaceRMF.html#a105f7c0c5cc13a538a6dfbed8748c077">RMF::ALIAS</a>),</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                    std::string(<span class="stringliteral">&quot;Bad node type. Got \&quot;&quot;</span>) +</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                        boost::lexical_cast&lt;std::string&gt;(nh.get_type()) +</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                        <span class="stringliteral">&quot;\&quot; in decorator type  Alias&quot;</span>);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classRMF_1_1decorator_1_1AliasConst.html">AliasConst</a>(nh, aliased_);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  }<span class="comment"></span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">  /** Get a Alias for nh.*/</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="classRMF_1_1decorator_1_1AliasFactory.html#ac6b8d513444e3cc5ddeb002cef009352">   88</a></span>&#160;  <a class="code" href="classRMF_1_1decorator_1_1Alias.html">Alias</a> <span class="keyword">get</span>(<a class="code" href="classRMF_1_1NodeHandle.html">NodeHandle</a> nh) <span class="keyword">const</span> {</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    RMF_USAGE_CHECK((nh.get_type() == <a class="code" href="namespaceRMF.html#a105f7c0c5cc13a538a6dfbed8748c077">RMF::ALIAS</a>),</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                    std::string(<span class="stringliteral">&quot;Bad node type. Got \&quot;&quot;</span>) +</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                        boost::lexical_cast&lt;std::string&gt;(nh.get_type()) +</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                        <span class="stringliteral">&quot;\&quot; in decorator type  Alias&quot;</span>);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classRMF_1_1decorator_1_1Alias.html">Alias</a>(nh, aliased_);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  }<span class="comment"></span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="comment">  /** Check whether nh has all the attributes required to be a</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment">      AliasConst.*/</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="classRMF_1_1decorator_1_1AliasFactory.html#adfee01f025cdfb511921b4083ab64a8d">   97</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classRMF_1_1decorator_1_1AliasFactory.html#adfee01f025cdfb511921b4083ab64a8d">get_is</a>(<a class="code" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> nh)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordflow">return</span> (nh.<a class="code" href="classRMF_1_1NodeConstHandle.html#a21e664736cab122b6151b95ef3f39dfc">get_type</a>() == <a class="code" href="namespaceRMF.html#a105f7c0c5cc13a538a6dfbed8748c077">RMF::ALIAS</a>) &amp;&amp;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;           !nh.get_value(aliased_).get_is_null();</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  }</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="keywordtype">bool</span> get_is_static(<a class="code" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> nh)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordflow">return</span> (nh.<a class="code" href="classRMF_1_1NodeConstHandle.html#a21e664736cab122b6151b95ef3f39dfc">get_type</a>() == <a class="code" href="namespaceRMF.html#a105f7c0c5cc13a538a6dfbed8748c077">RMF::ALIAS</a>) &amp;&amp;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;           !nh.get_static_value(aliased_).get_is_null();</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  }</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  RMF_SHOWABLE(AliasFactory, <span class="stringliteral">&quot;AliasFactory&quot;</span>);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;};</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">#ifndef RMF_DOXYGEN</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor"></span><span class="keyword">struct </span>AliasConstFactory : <span class="keyword">public</span> AliasFactory {</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  AliasConstFactory(FileConstHandle fh) : AliasFactory(fh) {}</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  AliasConstFactory(FileHandle fh) : AliasFactory(fh) {}</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;};</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;} <span class="comment">/* namespace decorator */</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;} <span class="comment">/* namespace RMF */</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;RMF_DISABLE_WARNINGS</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RMF_ALIAS_DECORATORS_H */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="classRMF_1_1decorator_1_1AliasFactory_html_adfee01f025cdfb511921b4083ab64a8d"><div class="ttname"><a href="classRMF_1_1decorator_1_1AliasFactory.html#adfee01f025cdfb511921b4083ab64a8d">RMF::decorator::AliasFactory::get_is</a></div><div class="ttdeci">bool get_is(NodeConstHandle nh) const </div><div class="ttdef"><b>Definition:</b> <a href="alias_8h_source.html#l00097">alias.h:97</a></div></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">  /** See also Alias and AliasFactory.</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">    */</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classRMF_1_1decorator_1_1AliasConst.html">   31</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classRMF_1_1decorator_1_1AliasConst.html">AliasConst</a>: <span class="keyword">public</span> <a class="code" href="classRMF_1_1Decorator.html">Decorator</a> {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classRMF_1_1decorator_1_1AliasFactory.html">AliasFactory</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="classRMF_1_1ID.html">IntKey</a> aliased_;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="classRMF_1_1decorator_1_1AliasConst.html">AliasConst</a>(<a class="code" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> nh,</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;              <a class="code" href="classRMF_1_1ID.html">IntKey</a> aliased):</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;       <a class="code" href="classRMF_1_1Decorator.html">Decorator</a>(nh),</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;aliased_(aliased) {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    }</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <a class="code" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> get_aliased()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordflow">try</span> {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;      <span class="keywordtype">int</span> <span class="keywordtype">id</span> = get_node().get_value(aliased_);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;      <span class="keywordflow">return</span> get_node().get_file().<a class="code" href="classRMF_1_1FileHandle.html#ae6a14319cd485318420685f86fcfb942">get_node</a>(<a class="code" href="namespaceRMF.html#a6a47f5e7d9ef4573ff2ee2df65aab051">NodeID</a>(<span class="keywordtype">id</span>));</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    } RMF_DECORATOR_CATCH( );</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">static</span> std::string get_decorator_type_name() {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;         <span class="keywordflow">return</span> <span class="stringliteral">&quot;AliasConst&quot;</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    RMF_SHOWABLE(<a class="code" href="classRMF_1_1decorator_1_1AliasConst.html">AliasConst</a>, <span class="stringliteral">&quot;Alias: &quot;</span> &lt;&lt; get_node());</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  };<span class="comment"></span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">   /** See also AliasFactory.</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">    */</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classRMF_1_1decorator_1_1Alias.html">   56</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classRMF_1_1decorator_1_1Alias.html">Alias</a>: <span class="keyword">public</span> <a class="code" href="classRMF_1_1decorator_1_1AliasConst.html">AliasConst</a> {</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classRMF_1_1decorator_1_1AliasFactory.html">AliasFactory</a>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="classRMF_1_1decorator_1_1Alias.html">Alias</a>(<a class="code" href="classRMF_1_1NodeHandle.html">NodeHandle</a> nh,</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;              <a class="code" href="classRMF_1_1ID.html">IntKey</a> aliased):</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;       <a class="code" href="classRMF_1_1decorator_1_1AliasConst.html">AliasConst</a>(nh, aliased) {</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    }</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keywordtype">void</span> set_aliased(<a class="code" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> v) {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">try</span> {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      get_node().<a class="code" href="classRMF_1_1NodeHandle.html#a102f9a69e6c37bded80a097bd5846225">set_value</a>(aliased_, v.<a class="code" href="classRMF_1_1NodeConstHandle.html#a003339523463bcd2ca7c82e329b794f2">get_id</a>().get_index());</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    } RMF_DECORATOR_CATCH( );</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keyword">static</span> std::string get_decorator_type_name() {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;         <span class="keywordflow">return</span> <span class="stringliteral">&quot;Alias&quot;</span>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  };</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment">  /** Create decorators of type Alias.</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">    */</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classRMF_1_1decorator_1_1AliasFactory.html">   78</a></span>&#160;  <span class="keyword">class </span><a class="code" href="classRMF_1_1decorator_1_1AliasFactory.html">AliasFactory</a>: <span class="keyword">public</span> <a class="code" href="classRMF_1_1Factory.html">Factory</a> {</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <a class="code" href="classRMF_1_1ID.html">Category</a> cat_;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<a class="code" href="classRMF_1_1ID.html">IntKey</a> aliased_;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <a class="code" href="classRMF_1_1decorator_1_1AliasFactory.html">AliasFactory</a>(<a class="code" href="classRMF_1_1FileConstHandle.html">FileConstHandle</a> fh):</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    cat_(fh.get_category(<span class="stringliteral">&quot;alias&quot;</span>)),</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    aliased_(fh.<a class="code" href="classRMF_1_1FileConstHandle.html#a7b5d18865ecb3b778dd08dab8e775d05">get_key</a>&lt;IntTag&gt;(cat_, <span class="stringliteral">&quot;aliased&quot;</span>)) {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    }</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;     <a class="code" href="classRMF_1_1decorator_1_1AliasFactory.html">AliasFactory</a>(<a class="code" href="classRMF_1_1FileHandle.html">FileHandle</a> fh):</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    cat_(fh.get_category(<span class="stringliteral">&quot;alias&quot;</span>)),</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    aliased_(fh.<a class="code" href="classRMF_1_1FileConstHandle.html#a7b5d18865ecb3b778dd08dab8e775d05">get_key</a>&lt;IntTag&gt;(cat_, <span class="stringliteral">&quot;aliased&quot;</span>)) {</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    }<span class="comment"></span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">    /** Get a AliasConst for nh.*/</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classRMF_1_1decorator_1_1AliasFactory.html#aec01257b041b404dead6011def0ed63e">   92</a></span>&#160;    <a class="code" href="classRMF_1_1decorator_1_1AliasConst.html">AliasConst</a> <span class="keyword">get</span>(<a class="code" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> nh) <span class="keyword">const</span> {</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      RMF_USAGE_CHECK((nh.get_type() == <a class="code" href="namespaceRMF.html#a105f7c0c5cc13a538a6dfbed8748c077">RMF::ALIAS</a>), std::string(<span class="stringliteral">&quot;Bad node type. Got \&quot;&quot;</span>)</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;                                      + boost::lexical_cast&lt;std::string&gt;(nh.get_type())</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                                      + <span class="stringliteral">&quot;\&quot; in decorator type  Alias&quot;</span>);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="classRMF_1_1decorator_1_1AliasConst.html">AliasConst</a>(nh, aliased_);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    }<span class="comment"></span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="comment">    /** Get a Alias for nh.*/</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="classRMF_1_1decorator_1_1AliasFactory.html#ac6b8d513444e3cc5ddeb002cef009352">   99</a></span>&#160;    <a class="code" href="classRMF_1_1decorator_1_1Alias.html">Alias</a> <span class="keyword">get</span>(<a class="code" href="classRMF_1_1NodeHandle.html">NodeHandle</a> nh) <span class="keyword">const</span> {</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      RMF_USAGE_CHECK((nh.get_type() == <a class="code" href="namespaceRMF.html#a105f7c0c5cc13a538a6dfbed8748c077">RMF::ALIAS</a>), std::string(<span class="stringliteral">&quot;Bad node type. Got \&quot;&quot;</span>)</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;                                      + boost::lexical_cast&lt;std::string&gt;(nh.get_type())</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;                                      + <span class="stringliteral">&quot;\&quot; in decorator type  Alias&quot;</span>);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="classRMF_1_1decorator_1_1Alias.html">Alias</a>(nh, aliased_);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    }<span class="comment"></span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="comment">    /** Check whether nh has all the attributes required to be a</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="comment">        AliasConst.*/</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="classRMF_1_1decorator_1_1AliasFactory.html#adfee01f025cdfb511921b4083ab64a8d">  107</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classRMF_1_1decorator_1_1AliasFactory.html#adfee01f025cdfb511921b4083ab64a8d">get_is</a>(<a class="code" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> nh)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      <span class="keywordflow">return</span> (nh.<a class="code" href="classRMF_1_1NodeConstHandle.html#a21e664736cab122b6151b95ef3f39dfc">get_type</a>() == <a class="code" href="namespaceRMF.html#a105f7c0c5cc13a538a6dfbed8748c077">RMF::ALIAS</a>)</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    &amp;&amp; !nh.get_value(aliased_).get_is_null();</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keywordtype">bool</span> get_is_static(<a class="code" href="classRMF_1_1NodeConstHandle.html">NodeConstHandle</a> nh)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      <span class="keywordflow">return</span> (nh.<a class="code" href="classRMF_1_1NodeConstHandle.html#a21e664736cab122b6151b95ef3f39dfc">get_type</a>() == <a class="code" href="namespaceRMF.html#a105f7c0c5cc13a538a6dfbed8748c077">RMF::ALIAS</a>)</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    &amp;&amp; !nh.get_static_value(aliased_).get_is_null();</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    }</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    RMF_SHOWABLE(AliasFactory, <span class="stringliteral">&quot;AliasFactory&quot;</span>);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  };</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="preprocessor">  #ifndef RMF_DOXYGEN</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor"></span><span class="keyword">struct </span>AliasConstFactory: <span class="keyword">public</span> AliasFactory {</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    AliasConstFactory(FileConstHandle fh):</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    AliasFactory(fh) {</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    }</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    AliasConstFactory(FileHandle fh):</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    AliasFactory(fh) {</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    }</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;};</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor">  #endif</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;} <span class="comment">/* namespace decorator */</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;} <span class="comment">/* namespace RMF */</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;RMF_DISABLE_WARNINGS</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RMF_ALIAS_DECORATORS_H */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="classRMF_1_1decorator_1_1AliasFactory_html_adfee01f025cdfb511921b4083ab64a8d"><div class="ttname"><a href="classRMF_1_1decorator_1_1AliasFactory.html#adfee01f025cdfb511921b4083ab64a8d">RMF::decorator::AliasFactory::get_is</a></div><div class="ttdeci">bool get_is(NodeConstHandle nh) const </div><div class="ttdef"><b>Definition:</b> <a href="alias_8h_source.html#l00107">alias.h:107</a></div></div>
 <div class="ttc" id="Decorator_8h_html"><div class="ttname"><a href="Decorator_8h.html">Decorator.h</a></div><div class="ttdoc">Mostly empty base classes for decorators and factories. </div></div>
 <div class="ttc" id="classRMF_1_1NodeConstHandle_html_a003339523463bcd2ca7c82e329b794f2"><div class="ttname"><a href="classRMF_1_1NodeConstHandle.html#a003339523463bcd2ca7c82e329b794f2">RMF::NodeConstHandle::get_id</a></div><div class="ttdeci">NodeID get_id() const </div><div class="ttdef"><b>Definition:</b> <a href="NodeConstHandle_8h_source.html#l00135">NodeConstHandle.h:135</a></div></div>
 <div class="ttc" id="namespaceRMF_html_a105f7c0c5cc13a538a6dfbed8748c077"><div class="ttname"><a href="namespaceRMF.html#a105f7c0c5cc13a538a6dfbed8748c077">RMF::ALIAS</a></div><div class="ttdeci">const NodeType ALIAS</div></div>
@@ -225,18 +242,18 @@ $(document).ready(function(){initNavTree('alias_8h_source.html','');});
 <div class="ttc" id="classRMF_1_1NodeConstHandle_html_a21e664736cab122b6151b95ef3f39dfc"><div class="ttname"><a href="classRMF_1_1NodeConstHandle.html#a21e664736cab122b6151b95ef3f39dfc">RMF::NodeConstHandle::get_type</a></div><div class="ttdeci">NodeType get_type() const </div><div class="ttdoc">get the type of this node </div><div class="ttdef"><b>Definition:</b> <a href="NodeConstHandle_8h_source.html#l00203">NodeConstHandle.h:203</a></div></div>
 <div class="ttc" id="constants_8h_html"><div class="ttname"><a href="constants_8h.html">constants.h</a></div><div class="ttdoc">Various constants. </div></div>
 <div class="ttc" id="classRMF_1_1NodeConstHandle_html"><div class="ttname"><a href="classRMF_1_1NodeConstHandle.html">RMF::NodeConstHandle</a></div><div class="ttdoc">A handle for a particular node in a read-only hierarchy. </div><div class="ttdef"><b>Definition:</b> <a href="NodeConstHandle_8h_source.html#l00081">NodeConstHandle.h:81</a></div></div>
-<div class="ttc" id="classRMF_1_1decorator_1_1AliasConst_html"><div class="ttname"><a href="classRMF_1_1decorator_1_1AliasConst.html">RMF::decorator::AliasConst</a></div><div class="ttdef"><b>Definition:</b> <a href="alias_8h_source.html#l00029">alias.h:29</a></div></div>
+<div class="ttc" id="classRMF_1_1decorator_1_1AliasConst_html"><div class="ttname"><a href="classRMF_1_1decorator_1_1AliasConst.html">RMF::decorator::AliasConst</a></div><div class="ttdef"><b>Definition:</b> <a href="alias_8h_source.html#l00031">alias.h:31</a></div></div>
 <div class="ttc" id="classRMF_1_1FileConstHandle_html"><div class="ttname"><a href="classRMF_1_1FileConstHandle.html">RMF::FileConstHandle</a></div><div class="ttdoc">A handle for a read-only RMF file. </div><div class="ttdef"><b>Definition:</b> <a href="FileConstHandle_8h_source.html#l00078">FileConstHandle.h:78</a></div></div>
 <div class="ttc" id="classRMF_1_1ID_html"><div class="ttname"><a href="classRMF_1_1ID.html">RMF::ID&lt; IntTag &gt;</a></div></div>
 <div class="ttc" id="classRMF_1_1NodeHandle_html_a102f9a69e6c37bded80a097bd5846225"><div class="ttname"><a href="classRMF_1_1NodeHandle.html#a102f9a69e6c37bded80a097bd5846225">RMF::NodeHandle::set_value</a></div><div class="ttdeci">void set_value(ID&lt; Tag &gt; k, typename Tag::ArgumentType v) const </div><div class="ttdef"><b>Definition:</b> <a href="NodeHandle_8h_source.html#l00109">NodeHandle.h:109</a></div></div>
 <div class="ttc" id="classRMF_1_1FileHandle_html"><div class="ttname"><a href="classRMF_1_1FileHandle.html">RMF::FileHandle</a></div><div class="ttdoc">A handle for an RMF file. </div><div class="ttdef"><b>Definition:</b> <a href="FileHandle_8h_source.html#l00055">FileHandle.h:55</a></div></div>
 <div class="ttc" id="classRMF_1_1Factory_html"><div class="ttname"><a href="classRMF_1_1Factory.html">RMF::Factory</a></div><div class="ttdoc">The base class for Factories. </div><div class="ttdef"><b>Definition:</b> <a href="Decorator_8h_source.html#l00046">Decorator.h:46</a></div></div>
-<div class="ttc" id="classRMF_1_1decorator_1_1AliasFactory_html"><div class="ttname"><a href="classRMF_1_1decorator_1_1AliasFactory.html">RMF::decorator::AliasFactory</a></div><div class="ttdef"><b>Definition:</b> <a href="alias_8h_source.html#l00068">alias.h:68</a></div></div>
+<div class="ttc" id="classRMF_1_1decorator_1_1AliasFactory_html"><div class="ttname"><a href="classRMF_1_1decorator_1_1AliasFactory.html">RMF::decorator::AliasFactory</a></div><div class="ttdef"><b>Definition:</b> <a href="alias_8h_source.html#l00078">alias.h:78</a></div></div>
 <div class="ttc" id="namespaceRMF_html_a6a47f5e7d9ef4573ff2ee2df65aab051"><div class="ttname"><a href="namespaceRMF.html#a6a47f5e7d9ef4573ff2ee2df65aab051">RMF::NodeID</a></div><div class="ttdeci">ID&lt; NodeTag &gt; NodeID</div><div class="ttdef"><b>Definition:</b> <a href="ID_8h_source.html#l00096">ID.h:96</a></div></div>
 <div class="ttc" id="FileHandle_8h_html"><div class="ttname"><a href="FileHandle_8h.html">FileHandle.h</a></div><div class="ttdoc">Declaration for RMF::FileHandle. </div></div>
 <div class="ttc" id="Vector_8h_html"><div class="ttname"><a href="Vector_8h.html">Vector.h</a></div><div class="ttdoc">Represent coordinates. </div></div>
 <div class="ttc" id="NodeHandle_8h_html"><div class="ttname"><a href="NodeHandle_8h.html">NodeHandle.h</a></div><div class="ttdoc">Declaration of NodeHandle. </div></div>
-<div class="ttc" id="classRMF_1_1decorator_1_1Alias_html"><div class="ttname"><a href="classRMF_1_1decorator_1_1Alias.html">RMF::decorator::Alias</a></div><div class="ttdef"><b>Definition:</b> <a href="alias_8h_source.html#l00051">alias.h:51</a></div></div>
+<div class="ttc" id="classRMF_1_1decorator_1_1Alias_html"><div class="ttname"><a href="classRMF_1_1decorator_1_1Alias.html">RMF::decorator::Alias</a></div><div class="ttdef"><b>Definition:</b> <a href="alias_8h_source.html#l00056">alias.h:56</a></div></div>
 <div class="ttc" id="classRMF_1_1FileConstHandle_html_a7b5d18865ecb3b778dd08dab8e775d05"><div class="ttname"><a href="classRMF_1_1FileConstHandle.html#a7b5d18865ecb3b778dd08dab8e775d05">RMF::FileConstHandle::get_key</a></div><div class="ttdeci">ID&lt; Tag &gt; get_key(Category category, std::string name) const </div><div class="ttdef"><b>Definition:</b> <a href="FileConstHandle_8h_source.html#l00133">FileConstHandle.h:133</a></div></div>
 <div class="ttc" id="infrastructure__macros_8h_html"><div class="ttname"><a href="infrastructure__macros_8h.html">infrastructure_macros.h</a></div><div class="ttdoc">Various general useful macros for IMP. </div></div>
 <div class="ttc" id="classRMF_1_1FileHandle_html_ae6a14319cd485318420685f86fcfb942"><div class="ttname"><a href="classRMF_1_1FileHandle.html#ae6a14319cd485318420685f86fcfb942">RMF::FileHandle::get_node</a></div><div class="ttdeci">NodeHandle get_node(NodeID id) const </div></div>

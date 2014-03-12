@@ -1,16 +1,16 @@
 <map id="FileHandle.h" name="FileHandle.h">
-<area shape="rect" id="node2" href="$alias_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="454,83,513,111"/>
-<area shape="rect" id="node4" href="$physics_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="676,161,752,189"/>
-<area shape="rect" id="node6" href="$benchmark__rmf_8cpp_source.html" title="benchmark_rmf.cpp" alt="" coords="753,238,892,266"/>
-<area shape="rect" id="node7" href="$external_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="153,161,232,189"/>
-<area shape="rect" id="node8" href="$feature_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="258,161,331,189"/>
-<area shape="rect" id="node9" href="$publication_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="333,83,429,111"/>
-<area shape="rect" id="node10" href="$sequence_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="778,161,867,189"/>
-<area shape="rect" id="node11" href="$shape_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="458,161,525,189"/>
-<area shape="rect" id="node12" href="$bond_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="5,83,67,111"/>
-<area shape="rect" id="node13" href="$representation_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="90,83,208,111"/>
-<area shape="rect" id="node14" href="$alternatives_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="551,161,651,189"/>
-<area shape="rect" id="node15" href="$validate_8h.html" title="Support for validating the data in a file. " alt="" coords="942,83,1020,111"/>
-<area shape="rect" id="node3" href="$decorators_8h.html" title="Import all the decorators headers. " alt="" coords="347,238,441,266"/>
-<area shape="rect" id="node5" href="$TraverseHelper_8h.html" title="A helper function for managing data when traversing an RMF. " alt="" coords="573,238,696,266"/>
+<area shape="rect" id="node2" href="$alias_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="454,81,513,106"/>
+<area shape="rect" id="node4" href="$physics_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="676,155,752,181"/>
+<area shape="rect" id="node6" href="$benchmark__rmf_8cpp_source.html" title="benchmark_rmf.cpp" alt="" coords="753,230,892,255"/>
+<area shape="rect" id="node7" href="$external_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="153,155,232,181"/>
+<area shape="rect" id="node8" href="$feature_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="258,155,331,181"/>
+<area shape="rect" id="node9" href="$publication_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="333,81,429,106"/>
+<area shape="rect" id="node10" href="$sequence_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="778,155,867,181"/>
+<area shape="rect" id="node11" href="$shape_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="458,155,525,181"/>
+<area shape="rect" id="node12" href="$bond_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="5,81,67,106"/>
+<area shape="rect" id="node13" href="$representation_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="90,81,208,106"/>
+<area shape="rect" id="node14" href="$alternatives_8h.html" title="Helper functions for manipulating RMF files. " alt="" coords="551,155,651,181"/>
+<area shape="rect" id="node15" href="$validate_8h.html" title="Support for validating the data in a file. " alt="" coords="942,81,1020,106"/>
+<area shape="rect" id="node3" href="$decorators_8h.html" title="Import all the decorators headers. " alt="" coords="347,230,441,255"/>
+<area shape="rect" id="node5" href="$TraverseHelper_8h.html" title="A helper function for managing data when traversing an RMF. " alt="" coords="573,230,696,255"/>
 </map>

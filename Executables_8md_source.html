@@ -98,78 +98,79 @@ $(document).ready(function(){initNavTree('Executables_8md.html','');});
 <div class="title">Executables.md</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor"># Executables</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"># Overview # {#developers}</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;[TOC]</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;RMF provides a number of useful executables in the `bin` directory.</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;# rmf_show # {#rmf_show}</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;`rmf_show` out the hierarchy in the file, optionally showing decorators and data.</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    Show an rmf file as text.</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    Usage: ./bin/rmf_show rmf</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;      -d [ --decorators ]   Show what decorators recognize each node.</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;      -f [ --frame ] arg    Frame to use</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;      -h [ --help ]         Get help on command line arguments.</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;      -v [ --verbose ]      Show attribute values <span class="keywordflow">for each</span> node.</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;Executables {#executables}</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;===========</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor"># Overview #</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;[TOC]</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;RMF provides a number of useful executables in the `bin` directory.</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;# rmf_show # {#rmf_show}</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;`rmf_show` out the hierarchy in the file, optionally showing decorators and data.</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    Show an rmf file as text.</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    Usage: ./bin/rmf_show rmf</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;      -d [ --decorators ]   Show what decorators recognize each node.</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;      -f [ --frame ] arg    Frame to use</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;      -h [ --help ]         Get help on command line arguments.</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;      -v [ --verbose ]      Show attribute values <span class="keywordflow">for each</span> node.</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;# rmf_frames # {#rmf_frames}</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;`rmf_frames` prints out the frame hierarchy in the passed file.</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    Print out information about frames</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    Usage: ./bin/rmf_frames rmf</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;      -h [ --help ]         Get help on command line arguments.</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;# rmf_info # {#rmf_info}</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;`rmf_info` displays information about the attributes found in the RMF and how</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;much they are used.</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    Print out information about categories and keys.</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    Usage: ./bin/rmf_info rmf</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;      -f [ --frame ] arg    Frame to use</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;      -h [ --help ]         Get help on command line arguments.</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;# rmf_frames # {#rmf_frames}</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;`rmf_frames` prints out the frame hierarchy in the passed file.</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    Print out information about frames</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    Usage: ./bin/rmf_frames rmf</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;      -h [ --help ]         Get help on command line arguments.</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;# rmf_info # {#rmf_info}</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;`rmf_info` displays information about the attributes found in the RMF and how</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;much they are used.</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    Print out information about categories and keys.</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    Usage: ./bin/rmf_info rmf</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;      -f [ --frame ] arg    Frame to use</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;      -h [ --help ]         Get help on command line arguments.</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;# rmf_slice # {#rmf_slice}</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;`rmf_slice` creates a <span class="keyword">new</span> rmf from frames selected from an existing one.</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    Grab frames from an rmf file</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    Usage: ./bin/rmf_slice input_rmf output_rmf</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;      -f [ --frame ] arg      First (or only) frame to use</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;      -s [ --frame_step ] arg The step size <span class="keywordflow">for</span> frames. Must be &gt; 0.</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;      -h [ --help ]           Get help on command line arguments.</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;# rmf_cat # {#rmf_cat}</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;`rmf_cat` creates a <span class="keyword">new</span> rmf by concatenating several. Each file must have the same hierarchical structure.</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    Combine two or more rmf files.</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    Usage: ./bin/rmf_cat input_1.rmf input_2.rmf ... output.rmf</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      -h [ --help ]         Get help on command line arguments.</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      -v [ --verbose ]      Produce more output.</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      --hdf5-errors         Show hdf5 errors.</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      --log-level arg       What log level to use: Trace, Info, Warn, Error, Off</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;# rmf_slice # {#rmf_slice}</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;`rmf_slice` creates a <span class="keyword">new</span> rmf from frames selected from an existing one.</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    Grab frames from an rmf file</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    Usage: ./bin/rmf_slice input_rmf output_rmf</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;      -f [ --frame ] arg      First (or only) frame to use</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;      -s [ --frame_step ] arg The step size <span class="keywordflow">for</span> frames. Must be &gt; 0.</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;      -h [ --help ]           Get help on command line arguments.</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;# rmf_cat # {#rmf_cat}</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;`rmf_cat` creates a <span class="keyword">new</span> rmf by concatenating several. Each file must have the same hierarchical structure.</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    Combine two or more rmf files.</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    Usage: ./bin/rmf_cat input_1.rmf input_2.rmf ... output.rmf</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      -h [ --help ]         Get help on command line arguments.</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      -v [ --verbose ]      Produce more output.</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      --hdf5-errors         Show hdf5 errors.</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      --log-level arg       What log level to use: Trace, Info, Warn, Error, Off</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor"># rmf_xml # {#rmf_xml}</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor"></span>`rmf_xml` prints out the hierarchy and data to an XML files that can be opened in an XML viewer</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;   (eg Google Chrome or Firefox). These viewers support collapsing of subtrees, which</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;   makes it much easier to <span class="keyword">get</span> around large hierarchies.</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor"># rmf_xml # {#rmf_xml}</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor"></span>`rmf_xml` prints out the hierarchy and data to an XML files that can be opened in an XML viewer</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;   (eg Google Chrome or Firefox). These viewers support collapsing of subtrees, which</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;   makes it much easier to <span class="keyword">get</span> around large hierarchies.</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;# rmf_validate # {#rmf_validate}</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;`rmf_validate` checks <span class="keywordflow">for</span> errors in an RMF file, it currently isn<span class="stringliteral">&#39;t very powerful.</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="stringliteral"></span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="stringliteral"># rmf3_dump # {#rmf3_dump}</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="stringliteral"></span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="stringliteral">`rmf3_dump` shows a low level dump of a 3rd generation RMF file (these are the current, avro-based files). It is primarily there for debugging.</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;# rmf_validate # {#rmf_validate}</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;`rmf_validate` checks <span class="keywordflow">for</span> errors in an RMF file, it currently isn<span class="stringliteral">&#39;t very powerful.</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="stringliteral"></span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="stringliteral"># rmf3_dump # {#rmf3_dump}</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="stringliteral"></span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="stringliteral">`rmf3_dump` shows a low level dump of a 3rd generation RMF file (these are the current, avro-based files). It is primarily there for debugging.</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

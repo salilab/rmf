@@ -148,10 +148,10 @@ $(document).ready(function(){initNavTree('add__bonds_8py_source.html','');});
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                    bf,</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                    prev)</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">return</span> prev</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;fh = <a class="code" href="namespaceRMF.html#ac90654bbc3bc8b1d67aabcb206b08306">RMF.open_rmf_file_read_only</a>(RMF.get_example_path(<span class="stringliteral">&quot;3U7W.rmf3&quot;</span>))</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;fh = <a class="code" href="namespaceRMF.html#ac90654bbc3bc8b1d67aabcb206b08306">RMF.open_rmf_file_read_only</a>(RMF.get_example_path(<span class="stringliteral">&quot;3U7W.rmf&quot;</span>))</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;fh.set_current_frame(<a class="code" href="classRMF_1_1ID.html">RMF.FrameID</a>(0))</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;outpath = RMF._get_temporary_file_path(<span class="stringliteral">&quot;3U7W-residues.rmf3&quot;</span>)</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;outpath = RMF._get_temporary_file_path(<span class="stringliteral">&quot;3U7W-residues.rmf&quot;</span>)</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;out = <a class="code" href="namespaceRMF.html#ab8681fee96c0b5e2cb33cd723e99b1b0">RMF.create_rmf_file</a>(outpath)</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;out.add_frame(<span class="stringliteral">&quot;nothing&quot;</span>, RMF.FRAME)</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keywordflow">print</span> <span class="stringliteral">&quot;file is&quot;</span>, outpath</div>

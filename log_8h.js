@@ -7,6 +7,5 @@ var log_8h =
     [ "RMF_INFO", "log_8h.html#acfcbda23f0dd36bf83289cd7d2aa9f84", null ],
     [ "RMF_TRACE", "log_8h.html#a705899e91b567377e51553debf39ab62", null ],
     [ "RMF_WARN", "log_8h.html#a2894b5db59641931e3ca9671775353a3", null ],
-    [ "get_logger", "log_8h.html#a25924d2419f7988030372c4ce75e9604", null ],
     [ "set_log_level", "log_8h.html#ac600cc982dce090a5001e53352b20a68", null ]
 ];
