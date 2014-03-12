@@ -1,6 +1,7 @@
-# VMD Plugin #
+VMD Plugin {#vmdplugin}
+==========
 
-# Building and installing # {#vmdplugin}
+# Building and installing #
 [TOC]
 
 Once you build RMF, there will be a file called `rmfplugin.so` in the

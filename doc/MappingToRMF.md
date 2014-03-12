@@ -1,6 +1,5 @@
-# Mapping Data
-
-# Mapping data to RMF files # {#mapping}
+Mapping data to RMF files {#mapping}
+=========================
 
 This page outlines how one would go about storing various types of data in RMF files. Much of what it says is merely suggestions, and is not mandatory.
 

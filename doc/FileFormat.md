@@ -1,6 +1,7 @@
-# File Format
+File Format {#format}
+===========
 
-# Overview # {#format}
+# Overview #
 
 [TOC]
 

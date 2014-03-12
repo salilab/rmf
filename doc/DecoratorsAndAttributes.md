@@ -1,6 +1,7 @@
-# Attributes and Decorators
+Decorators and Attributes {#decoratorsattributes}
+=========================
 
-# Overview # {#decoratorsattributes}
+# Overview #
 
 [TOC]
 

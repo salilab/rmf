@@ -1,4 +1,5 @@
-# HDF5
+HDF5 {#hdf5}
+====
 
 We provide a simple set of classes for accessing core HDF5 functionality from C++. This was needed since
 - The HDF5 C interface is not trivial to use peroperly, particularly in regards to data type conversions and resource management

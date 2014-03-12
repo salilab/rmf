@@ -1,4 +1,6 @@
-# Change Log #
+Change Log {#changelog}
+==========
+
 - To be more consisent, RMF::decorator::Domain and
 	RMF::decorator::Fragment had their access methods modified to
 	include `residue` in the name.
