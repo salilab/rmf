@@ -14,9 +14,9 @@ The file is automatically closed when the last handle to it is destroyed.
 # Basics # {#basics}
 
 The library defines many classes, some of which are implemented using C++
-templates. Every class support output to a `std::ostream` in C++ and
+templates. Every class supports output to a `std::ostream` in C++ and
 conversion to `str` in Python. In addition, every class can be compared
-to other instances of the same class and can be inserted in hash tables both
+to other instances of the same class and can be inserted into hash tables both
 in C++ and Python. The methods necessary to support these things are
 omitted for brevity.
 
@@ -67,4 +67,4 @@ written so that [SWIG](http://www.swig.org) can be used to
 easily generate bindings for most languages. The two main
 exceptions are C and Fortran. Until the SWIG %C target support is
 finished, these can be supported by writing a simple %C %API
-manually, probably a weeks work.
+manually, probably a week's work.
