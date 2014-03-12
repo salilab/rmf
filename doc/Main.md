@@ -9,7 +9,7 @@ If [HDF5](http://www.hdf5.org) is available, wrappers for it will be
 built and support for older RMF-based formats will be compiled.
 
 See
-- [RMF viewers](doc/Viewing.md) for more information about viewing RMF files,
+- [RMF viewers](\ref viewing) for more information about viewing RMF files,
 - [RMF file format](\ref format) for more information about the files,
 - [RMF Library](\ref library) for more information about using the library.
 - [Mapping data into RMF files](\ref mapping) for more information about how to structure data in RMF files.
