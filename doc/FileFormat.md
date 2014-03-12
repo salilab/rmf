@@ -6,13 +6,12 @@
 
 The %RMF file format (short for Rich Molecular Format) stores
 hierarchical data about a molecular structure in a file or buffer in
-memoery. This data can include
-
-- molecular structures stored hierarchically. These structures need
-- not be atomic resolution.  feature information about parts of the
-- structures, such as how well it fits a particular measurement.
-- geometric markup such as segments, surfaces, balls, colors which can
-- be used to improve visualization
+memory. This data can include
+molecular structures stored hierarchically. These structures need
+not be atomic resolution.  feature information about parts of the
+structures, such as how well it fits a particular measurement.
+geometric markup such as segments, surfaces, balls, colors which can
+be used to improve visualization
 
 For example, a protein can be stored as a hierarchy where the root is
 the whole molecule. The root has one node per chain, each chain has
@@ -34,19 +33,22 @@ frame has the same hierarchical structure, but some aspects of the
 data (eg coordinates) can have different values for each frame (or no
 value for a particle frame if they happen not be be applicable then).
 
-A hierarchical storage format was chose since - most biological
-molecules have a natural hierarchical structure - it reduces
-redundancy (eg the residue type is only stored once, as is the residue
-index) - most software uses a hierarchy of some sort to represent
-structures at runtime, so less translation is needed - low resolution
-and multiresolution structures are then more natural as they are just
-truncations of a full, atomic hierarchy.
+A hierarchical storage format was chosen since
+- most biological molecules have a natural hierarchical structure
+- it reduces redundancy (eg the residue type is only stored once, as is
+the residue index)
+- most software uses a hierarchy of some sort to represent structures at
+runtime, so less translation is needed
+- low resolution and multiresolution structures are then more natural
+as they are just truncations of a full, atomic hierarchy.
 
 In addition to structural information, the file can also store
-information about - bonds - how different parts of the structure
-relate to different experimental data - different organization schemes
-on the structure - arbitrary extra data needed by other programs -
-associated authorship and publication information
+information about
+- bonds
+- how different parts of the structure relate to different experimental data
+- different organization schemes on the structure
+- arbitrary extra data needed by other programs
+- associated authorship and publication information
 
 # Examples # {#example_files}
 
@@ -163,7 +165,7 @@ nodes.
 When adding data to an %RMF file that is just to be used for internal
 consumption, one should create a new category. For example,
 [IMP](http://www.integrativemodeling.org) defines an ''imp'' category
-when arbitrary particle data is stored.
+when arbitrary particle data are stored.
 
 If, instead, the data is likely to be a general interest, it probably
 makes sense to add it to the documentation of this library so that the
@@ -172,18 +174,19 @@ names used can be standardized.
 # On disk format # {#on_disk}
 
 The RMF library has supported various on-disk formats. Currently 3 output
-methods are support, files with suffix `.rmf` and `.rmfz` and buffers in memory.
+methods are supported: files with suffix `.rmf` and `.rmfz` and buffers
+in memory.
 
 The current format stores the structure in an [Avro Object
 Container](http://avro.apache.org/docs/1.7.5/spec.html#Object+Container+Files). If
 the `.rmfz` suffix is used, the contents are compressed. The structure
 is stored as a series of records, each containing either a frame or
-static data (there can be multiple static data frames, they are
-implicitly merged).  Upon opening, the file is scanned once, after
+static data (there can be multiple static data frames - they are
+implicitly merged).  Upon opening, the file is scanned once; after
 that, frames can be accessed in a random access fashion. See
 [Frame.json](Frame.json) for the schema.
 
-The format is robust to corruption (all on disk data is safe if
+The format is robust to corruption (all on disk data are safe if
 garbage data is written or the process is killed).
 
 There are several ways that the files can be made more compact
