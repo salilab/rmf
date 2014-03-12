@@ -6,9 +6,9 @@ add_custom_target(RMF-doc
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/examples/simple.pdb ${CMAKE_BINARY_DIR}/doc/html/simple.pdb.txt
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/examples/3U7W.pdb ${CMAKE_BINARY_DIR}/doc/html/3U7W.pdb.txt
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/src/backend/avro/Frame.json ${CMAKE_BINARY_DIR}/doc/html/
-        COMMAND ${CMAKE_BINARY_DIR}/bin/rmf_show -v ${CMAKE_SOURCE_DIR}/examples/3U7W.rmf3 > ${CMAKE_BINARY_DIR}/doc/html/3U7W.txt
+        COMMAND ${CMAKE_BINARY_DIR}/bin/rmf_show -v ${CMAKE_SOURCE_DIR}/examples/3U7W.rmf > ${CMAKE_BINARY_DIR}/doc/html/3U7W.txt
         COMMAND ${CMAKE_BINARY_DIR}/bin/rmf_show -v ${CMAKE_SOURCE_DIR}/examples/simple.rmf3 > ${CMAKE_BINARY_DIR}/doc/html/simple.txt
-        COMMAND ${CMAKE_BINARY_DIR}/bin/rmf3_dump ${CMAKE_SOURCE_DIR}/examples/3U7W.rmf3 > ${CMAKE_BINARY_DIR}/doc/html/3U7W.rmf3.txt
+        COMMAND ${CMAKE_BINARY_DIR}/bin/rmf3_dump ${CMAKE_SOURCE_DIR}/examples/3U7W.rmf > ${CMAKE_BINARY_DIR}/doc/html/3U7W.rmf.txt
         COMMAND ${CMAKE_BINARY_DIR}/bin/rmf3_dump ${CMAKE_SOURCE_DIR}/examples/simple.rmf3 > ${CMAKE_BINARY_DIR}/doc/html/simple.rmf3.txt
         COMMAND ${IMP_DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/doc/Doxyfile
         COMMAND cat ${PROJECT_BINARY_DIR}/doc/doc.log
