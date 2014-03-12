@@ -1,10 +1,10 @@
 <map id="Decorator.h" name="Decorator.h">
-<area shape="rect" id="node2" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="1768,463,1868,489"/>
-<area shape="rect" id="node4" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="834,377,995,402"/>
-<area shape="rect" id="node13" href="$ID_8h.html" title="Declaration of RMF::ID. " alt="" coords="1673,290,1719,315"/>
-<area shape="rect" id="node46" href="$NodeConstHandle_8h.html" title="Declaration of NodeConstHandlke. " alt="" coords="988,191,1129,217"/>
-<area shape="rect" id="node50" href="$NodeHandle_8h.html" title="Declaration of NodeHandle. " alt="" coords="1436,93,1541,118"/>
-<area shape="rect" id="node3" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="1570,550,1736,575"/>
-<area shape="rect" id="node14" href="$exceptions_8h.html" title="Declarations of the various exception types. " alt="" coords="1297,377,1393,402"/>
-<area shape="rect" id="node48" href="$Nullable_8h.html" title="A helper class for allowing nice return of possibly null values. " alt="" coords="1390,290,1503,315"/>
+<area shape="rect" id="node2" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="1770,393,1869,418"/>
+<area shape="rect" id="node4" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="946,318,1107,343"/>
+<area shape="rect" id="node12" href="$ID_8h.html" title="Declaration of RMF::ID. " alt="" coords="1800,243,1845,269"/>
+<area shape="rect" id="node33" href="$NodeConstHandle_8h.html" title="Declaration of NodeConstHandlke. " alt="" coords="867,169,1008,194"/>
+<area shape="rect" id="node36" href="$NodeHandle_8h.html" title="Declaration of NodeHandle. " alt="" coords="1373,87,1479,113"/>
+<area shape="rect" id="node3" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="1321,467,1487,493"/>
+<area shape="rect" id="node13" href="$exceptions_8h.html" title="Declarations of the various exception types. " alt="" coords="1493,318,1589,343"/>
+<area shape="rect" id="node35" href="$Nullable_8h.html" title="A helper class for allowing nice return of possibly null values. " alt="" coords="1391,243,1504,269"/>
 </map>

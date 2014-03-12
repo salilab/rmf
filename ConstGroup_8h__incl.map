@@ -1,23 +1,23 @@
 <map id="ConstGroup.h" name="ConstGroup.h">
-<area shape="rect" id="node2" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="792,714,892,739"/>
-<area shape="rect" id="node4" href="$Object_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1218,81,1288,106"/>
-<area shape="rect" id="node28" href="$ConstAttributes_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1669,478,1864,503"/>
-<area shape="rect" id="node35" href="$DataSetCreationPropertiesD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="334,478,535,503"/>
-<area shape="rect" id="node40" href="$DataSetD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1054,329,1215,354"/>
-<area shape="rect" id="node3" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="1410,901,1576,926"/>
-<area shape="rect" id="node5" href="$HDF5_2types_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1623,155,1687,181"/>
-<area shape="rect" id="node6" href="$handle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1692,553,1764,578"/>
-<area shape="rect" id="node7" href="$HDF5_2infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="1846,714,2007,739"/>
-<area shape="rect" id="node27" href="$HDF5_8h.html" title="A container which has pairs which ensure a set is connected. " alt="" coords="1224,242,1281,267"/>
-<area shape="rect" id="node25" href="$ID_8h.html" title="Declaration of RMF::ID. " alt="" coords="1838,553,1916,578"/>
-<area shape="rect" id="node17" href="$exceptions_8h.html" title="Declarations of the various exception types. " alt="" coords="1609,627,1737,653"/>
-<area shape="rect" id="node12" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="1826,801,1957,839"/>
-<area shape="rect" id="node29" href="$ConstDataSetD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="899,403,1095,429"/>
-<area shape="rect" id="node31" href="$DataSetIndexD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="200,627,323,653"/>
-<area shape="rect" id="node36" href="$DataSetAccessPropertiesD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="484,553,677,578"/>
-<area shape="rect" id="node39" href="$ConstFile_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="287,403,445,429"/>
-<area shape="rect" id="node41" href="$MutableAttributes_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1307,478,1443,503"/>
-<area shape="rect" id="node42" href="$File_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="732,329,856,354"/>
-<area shape="rect" id="node43" href="$Group_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1235,403,1304,429"/>
-<area shape="rect" id="node30" href="$log_8h.html" title="Functions and macros for logging. " alt="" coords="93,627,176,653"/>
+<area shape="rect" id="node2" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="946,678,1045,703"/>
+<area shape="rect" id="node4" href="$Object_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1095,81,1165,106"/>
+<area shape="rect" id="node25" href="$ConstAttributes_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1661,454,1856,479"/>
+<area shape="rect" id="node32" href="$DataSetCreationPropertiesD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="427,454,628,479"/>
+<area shape="rect" id="node37" href="$DataSetD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1366,305,1527,330"/>
+<area shape="rect" id="node3" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="1526,841,1692,866"/>
+<area shape="rect" id="node5" href="$HDF5_2types_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1559,155,1623,181"/>
+<area shape="rect" id="node6" href="$handle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1722,529,1795,554"/>
+<area shape="rect" id="node7" href="$HDF5_2infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="2095,678,2256,703"/>
+<area shape="rect" id="node24" href="$HDF5_8h.html" title="A container which has pairs which ensure a set is connected. " alt="" coords="1101,230,1159,255"/>
+<area shape="rect" id="node23" href="$ID_8h.html" title="Declaration of RMF::ID. " alt="" coords="1989,529,2067,554"/>
+<area shape="rect" id="node16" href="$exceptions_8h.html" title="Declarations of the various exception types. " alt="" coords="1762,603,1891,629"/>
+<area shape="rect" id="node12" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="1862,753,1993,791"/>
+<area shape="rect" id="node26" href="$ConstDataSetD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="907,379,1103,405"/>
+<area shape="rect" id="node28" href="$DataSetIndexD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="179,603,301,629"/>
+<area shape="rect" id="node33" href="$DataSetAccessPropertiesD_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="326,529,519,554"/>
+<area shape="rect" id="node36" href="$ConstFile_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="561,379,720,405"/>
+<area shape="rect" id="node38" href="$MutableAttributes_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1299,454,1435,479"/>
+<area shape="rect" id="node39" href="$File_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="861,305,985,330"/>
+<area shape="rect" id="node40" href="$Group_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1128,379,1197,405"/>
+<area shape="rect" id="node27" href="$log_8h.html" title="Functions and macros for logging. " alt="" coords="597,603,680,629"/>
 </map>

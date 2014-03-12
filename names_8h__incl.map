@@ -1,8 +1,8 @@
 <map id="names.h" name="names.h">
-<area shape="rect" id="node4" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="4,330,104,355"/>
-<area shape="rect" id="node6" href="$types_8h.html" title="Default implementation for types.h. " alt="" coords="699,81,763,106"/>
-<area shape="rect" id="node5" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="1131,417,1297,442"/>
-<area shape="rect" id="node7" href="$Vector_8h.html" title="Represent coordinates. " alt="" coords="696,155,765,181"/>
-<area shape="rect" id="node8" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="1477,237,1637,262"/>
-<area shape="rect" id="node15" href="$exceptions_8h.html" title="Declarations of the various exception types. " alt="" coords="1167,237,1263,262"/>
+<area shape="rect" id="node4" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="1730,318,1829,343"/>
+<area shape="rect" id="node6" href="$types_8h.html" title="Default implementation for types.h. " alt="" coords="1140,81,1204,106"/>
+<area shape="rect" id="node5" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="1281,393,1447,418"/>
+<area shape="rect" id="node7" href="$Vector_8h.html" title="Represent coordinates. " alt="" coords="1137,155,1207,181"/>
+<area shape="rect" id="node8" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="297,237,457,262"/>
+<area shape="rect" id="node14" href="$exceptions_8h.html" title="Declarations of the various exception types. " alt="" coords="1608,237,1704,262"/>
 </map>

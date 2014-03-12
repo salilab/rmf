@@ -1,7 +1,7 @@
 <map id="enums.h" name="enums.h">
-<area shape="rect" id="node2" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="868,266,968,291"/>
-<area shape="rect" id="node4" href="$Enum_8h.html" title="Declaration of RMF::Enum. " alt="" coords="862,81,929,106"/>
-<area shape="rect" id="node3" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="835,353,1001,378"/>
-<area shape="rect" id="node5" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="425,167,585,193"/>
-<area shape="rect" id="node14" href="$exceptions_8h.html" title="Declarations of the various exception types. " alt="" coords="1063,167,1159,193"/>
+<area shape="rect" id="node2" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="4,230,104,255"/>
+<area shape="rect" id="node4" href="$Enum_8h.html" title="Declaration of RMF::Enum. " alt="" coords="404,81,471,106"/>
+<area shape="rect" id="node3" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="59,305,225,330"/>
+<area shape="rect" id="node5" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="794,155,955,181"/>
+<area shape="rect" id="node13" href="$exceptions_8h.html" title="Declarations of the various exception types. " alt="" coords="365,155,461,181"/>
 </map>

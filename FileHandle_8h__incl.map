@@ -1,20 +1,20 @@
 <map id="FileHandle.h" name="FileHandle.h">
-<area shape="rect" id="node5" href="$FileConstHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1349,81,1480,106"/>
-<area shape="rect" id="node11" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="2719,687,2819,713"/>
-<area shape="rect" id="node12" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="1082,774,1248,799"/>
-<area shape="rect" id="node29" href="$ID_8h.html" title="Declaration of RMF::ID. " alt="" coords="1574,353,1652,378"/>
-<area shape="rect" id="node32" href="$types_8h.html" title="Default implementation for types.h. " alt="" coords="2477,427,2573,453"/>
-<area shape="rect" id="node43" href="$enums_8h.html" title="The various enums used in RMF. " alt="" coords="2977,353,3081,378"/>
-<area shape="rect" id="node50" href="$NodeHandle_8h.html" title="Declaration of NodeHandle. " alt="" coords="2295,81,2400,106"/>
-<area shape="rect" id="node10" href="$BufferHandle_8h.html" title="Declare RMF::BufferHandle. " alt="" coords="1242,266,1352,291"/>
-<area shape="rect" id="node13" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="1243,589,1404,614"/>
-<area shape="rect" id="node20" href="$exceptions_8h.html" title="Declarations of the various exception types. " alt="" coords="1021,589,1117,614"/>
-<area shape="rect" id="node27" href="$NodeConstHandle_8h.html" title="Declaration of NodeConstHandlke. " alt="" coords="1955,167,2096,193"/>
-<area shape="rect" id="node42" href="$constants_8h.html" title="Various constants. " alt="" coords="1630,266,1751,291"/>
-<area shape="rect" id="node24" href="$BufferConstHandle_8h.html" title="Declare RMF::BufferConstHandle. " alt="" coords="973,353,1117,378"/>
-<area shape="rect" id="node30" href="$Nullable_8h.html" title="A helper class for allowing nice return of possibly null values. " alt="" coords="2122,266,2235,291"/>
-<area shape="rect" id="node31" href="$traits_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="2195,353,2256,378"/>
-<area shape="rect" id="node46" href="$keys_8h.html" title="Declarations of the various key types. " alt="" coords="2006,266,2097,291"/>
-<area shape="rect" id="node33" href="$Vector_8h.html" title="Represent coordinates. " alt="" coords="2383,502,2452,527"/>
-<area shape="rect" id="node44" href="$Enum_8h.html" title="Declaration of RMF::Enum. " alt="" coords="3002,502,3069,527"/>
+<area shape="rect" id="node5" href="$FileConstHandle_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="1120,81,1251,106"/>
+<area shape="rect" id="node11" href="$config_8h_source.html" title="RMF/config.h" alt="" coords="360,617,460,642"/>
+<area shape="rect" id="node12" href="$compiler__macros_8h.html" title="Various compiler workarounds. " alt="" coords="1825,691,1991,717"/>
+<area shape="rect" id="node27" href="$ID_8h.html" title="Declaration of RMF::ID. " alt="" coords="1378,305,1456,330"/>
+<area shape="rect" id="node30" href="$types_8h.html" title="Default implementation for types.h. " alt="" coords="194,379,291,405"/>
+<area shape="rect" id="node40" href="$enums_8h.html" title="The various enums used in RMF. " alt="" coords="2254,305,2359,330"/>
+<area shape="rect" id="node43" href="$NodeHandle_8h.html" title="Declaration of NodeHandle. " alt="" coords="2355,81,2460,106"/>
+<area shape="rect" id="node10" href="$BufferHandle_8h.html" title="Declare RMF::BufferHandle. " alt="" coords="909,230,1019,255"/>
+<area shape="rect" id="node13" href="$infrastructure__macros_8h.html" title="Various general useful macros for IMP. " alt="" coords="2010,535,2171,561"/>
+<area shape="rect" id="node19" href="$exceptions_8h.html" title="Declarations of the various exception types. " alt="" coords="1775,535,1871,561"/>
+<area shape="rect" id="node25" href="$NodeConstHandle_8h.html" title="Declaration of NodeConstHandlke. " alt="" coords="1496,155,1637,181"/>
+<area shape="rect" id="node39" href="$constants_8h.html" title="Various constants. " alt="" coords="246,230,367,255"/>
+<area shape="rect" id="node22" href="$BufferConstHandle_8h.html" title="Declare RMF::BufferConstHandle. " alt="" coords="1005,305,1149,330"/>
+<area shape="rect" id="node28" href="$Nullable_8h.html" title="A helper class for allowing nice return of possibly null values. " alt="" coords="1375,230,1488,255"/>
+<area shape="rect" id="node29" href="$traits_8h.html" title="Handle read/write of Model data from/to files. " alt="" coords="499,305,560,330"/>
+<area shape="rect" id="node42" href="$keys_8h.html" title="Declarations of the various key types. " alt="" coords="1107,230,1199,255"/>
+<area shape="rect" id="node31" href="$Vector_8h.html" title="Represent coordinates. " alt="" coords="827,454,896,479"/>
+<area shape="rect" id="node41" href="$Enum_8h.html" title="Declaration of RMF::Enum. " alt="" coords="1746,454,1813,479"/>
 </map>
