@@ -135,14 +135,17 @@ theirs). Note that since a given node can be reached through multiple
 path in the hierarchy, a given view of the file might have to have
 multiple objects (eg graphics) for a single node.
 
-Current examples are - RMF::Colored is inherited. That is, a node that
-is not an RMF::Colored node, has the color of its closest RMF::Colored
-ancestor.  - The RMF::Particle and RMF::RigidParticle coordinates are
-transforms of any RMF::ReferenceFrame(s) that occur on the particle
-itself or its ancestors. That is, a node that is a RMF::Particle or
-RMF::Ball with an ancestor that is an RMF::ReferenceFrame has global
-coordinates at the RMF::ReferenceFrame's transformation applied to its
-coordinates.  See the example rigid_bodies.py.
+Current examples are
+- RMF::decorator::Colored is inherited. That is, a node that is not an
+RMF::decorator::Colored node, has the color of its closest
+RMF::decorator::Colored ancestor.
+- The RMF::decorator::Particle and RMF::decorator::RigidParticle coordinates
+are transforms of any RMF::decorator::ReferenceFrame(s) that occur on the
+particle itself or its ancestors. That is, a node that is a
+RMF::decorator::Particle or RMF::decorator::Ball with an ancestor that
+is an RMF::decorator::ReferenceFrame has global coordinates at the
+RMF::decorator::ReferenceFrame's transformation applied to its coordinates.
+See the example reference_frames.py.
 
 # Frames # {#frames}
 
