@@ -62,7 +62,7 @@ Simple example:
 Larger pdb:
 - [3U7W pdb](3U7W.pdb.txt)
 - [3U7W hierarchy](3U7W.txt) for the hierarchy and data stored
-- [3U7W on disk](3U7W.rmf3.txt) for how the data is stored in an RMF3 file.
+- [3U7W on disk](3U7W.rmf.txt) for how the data is stored in an RMF3 file.
 
 
 # The RMF Hierarchy # {#hierarchy}
