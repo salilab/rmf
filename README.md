@@ -7,7 +7,8 @@ storing hierarchical molecular data (such as atomic or coarse grained
 representations of proteins), along with markup, including geometry
 and score data.
 
-The main documentation is found on the [web site](http://salilab.github.io/rmf).
+The main documentation is found on the
+[web site](http://integrativemodeling.org/rmf/nightly/doc/).
 
 Copyright 2013 University of California, San Francisco.
 
