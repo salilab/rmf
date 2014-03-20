@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF_AVRO2_IO_H
-#define RMF_AVRO2_IO_H
+#ifndef RMF_AVRO_IO_H
+#define RMF_AVRO_IO_H
 
 #include "RMF/config.h"
 #include "backend/IO.h"
@@ -358,4 +358,4 @@ Avro2IO<RW>::~Avro2IO() {
 
 RMF_DISABLE_WARNINGS
 
-#endif  // RMF_AVRO2_IO_H
+#endif  /* RMF_AVRO_IO_H */

@@ -111,4 +111,4 @@ void write_text(const Data& data, internal_avro::ValidSchema schema,
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_INTERNAL_SCHEMA_IO_H */
+#endif /* RMF_INTERNAL_AVRO_SCHEMA_IO_H */

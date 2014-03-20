@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF_INTERNAL_SINGLE_AVRO_FILE_BASE_H
-#define RMF_INTERNAL_SINGLE_AVRO_FILE_BASE_H
+#ifndef RMF_INTERNAL_MULTIPLE_AVRO_FILE_BASE_H
+#define RMF_INTERNAL_MULTIPLE_AVRO_FILE_BASE_H
 
 #include "AllJSON.h"
 #include <string>
@@ -79,4 +79,4 @@ class MultipleAvroFileBase : public AvroKeysAndCategories {
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_INTERNAL_MULTIPLE_AVRO_FILE_H */
+#endif /* RMF_INTERNAL_MULTIPLE_AVRO_FILE_BASE_H */

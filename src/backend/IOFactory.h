@@ -45,4 +45,4 @@ class IOFactory {
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_INTERNAL_IO_H */
+#endif /* RMF_INTERNAL_IO_FACTORY_H */

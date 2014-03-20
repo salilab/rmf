@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef RMF_INTERNAL_SINGLE_AVRO_FILE_READER_H
-#define RMF_INTERNAL_SINGLE_AVRO_FILE_READER_H
+#ifndef RMF_INTERNAL_MULTIPLE_AVRO_FILE_READER_H
+#define RMF_INTERNAL_MULTIPLE_AVRO_FILE_READER_H
 
 #include "avrocpp/api/DataFile.hh"
 #include <boost/shared_ptr.hpp>
