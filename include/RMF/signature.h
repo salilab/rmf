@@ -2,7 +2,7 @@
  *  \file RMF/signature.h
  *  \brief Return a (long) string describing a file that can be compared.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2014 IMP Inventors. All rights reserved.
  *
  */
 

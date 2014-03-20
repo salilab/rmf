@@ -2,7 +2,7 @@
  *  \file RMF/show_hierarchy.h
  *  \brief Functions to show the hierarchy.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2014 IMP Inventors. All rights reserved.
  *
  */
 
