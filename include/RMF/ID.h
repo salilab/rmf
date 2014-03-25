@@ -28,7 +28,7 @@ struct CategoryTag {
   static std::string get_tag() { return "c"; }
 };
 
-//! A general purpose ID in RMF used, with different tags, to idenfity things.
+//! A general purpose ID in RMF used, with different tags, to identify things.
 template <class TagT>
 class ID {
   int i_;
