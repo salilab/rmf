@@ -1,4 +1,0 @@
-Block offset 28198
-static
-Block offset 28198
-Frame: 0

@@ -1,5 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classRMF_1_1Label.html" title="A decorator&#45;like class to mark certain nodes (eg molecule bounaries) " alt="" coords="6,30,96,55"/>
-<area shape="rect" id="node2" href="$classRMF_1_1decorator_1_1Assembly.html" title="RMF::decorator::Assembly" alt="" coords="144,5,323,30"/>
-<area shape="rect" id="node3" href="$classRMF_1_1decorator_1_1Molecule.html" title="RMF::decorator::Molecule" alt="" coords="146,54,321,79"/>
-</map>
