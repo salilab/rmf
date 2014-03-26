@@ -35,7 +35,7 @@ void write(std::string name) {
   frame.id = RMF::FrameID(2);
   RMF::avro2::write(&writer, frame);
 }
-void read(std::string name) {
+unsigned read(std::string name) {
   internal_avro::DataFileReader<RMF::avro2::FileData> reader(
       name.c_str(),
       internal_avro::compileJsonSchemaFromString(RMF::data_avro::frame_json));
@@ -43,10 +43,13 @@ void read(std::string name) {
   RMF::avro2::load_file_data(reader, file_data);
   assert(file_data.description == "description1");
   assert(file_data.max_id.get_index() == 2);
+  return file_data.max_id.get_index();
+}
+void read_frames(std::string name, unsigned max_id) {
   internal_avro::DataFileReader<RMF::avro2::Frame> frame_reader(
       name.c_str(),
       internal_avro::compileJsonSchemaFromString(RMF::data_avro::frame_json));
-  for (unsigned int i = 0; i <= file_data.max_id.get_index(); ++i) {
+  for (unsigned int i = 0; i <= max_id; ++i) {
     RMF::avro2::Frame frame;
     load_frame(RMF::FrameID(i), frame_reader, frame);
   }
@@ -76,7 +79,8 @@ int main(int, char * []) {
   std::string name = RMF::internal::get_unique_path();
   std::cout << "File is " << name << std::endl;
   write(name);
-  read(name);
+  unsigned max_id = read(name);
+  read_frames(name, max_id);
   read_raw(name);
   return 0;
 }
