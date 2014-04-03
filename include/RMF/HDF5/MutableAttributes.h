@@ -18,7 +18,7 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 namespace HDF5 {
 /** Wrap an HDF5 Object. See
-    \external{http://www.hdfobject.org/HDF5/doc/UG/UG_frame09Objects.html,
+    \external{http://www.hdfgroup.org/HDF5/doc/UG/UG_frame09Groups.html,
     the HDF5 manual} for more information.
  */
 template <class Base>
