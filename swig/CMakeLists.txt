@@ -21,10 +21,6 @@ INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_DIRS})
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/swig)
 
-SET(CMAKE_SWIG_FLAGS "-castmode" "-naturalvar" "-Wextra" "-fvirtual"
-  "-DPySwigIterator=RMF_PySwigIterator" "-c++"
-  "-DSwigPyIterator=RMF_SwigPyIterator"
-  "-DRMFEXPORT")
 set(CMAKE_SWIG_OUTDIR "${PROJECT_BINARY_DIR}")
 include_directories("${PROJECT_BINARY_DIR}/include"
   "${PROJECT_SOURCE_DIR}/include" "${PROJECT_SOURCE_DIR}/swig" ${HDF5_INCLUDE_DIRS})
@@ -39,6 +35,10 @@ SET(SWIG_MODULE_RMF_EXTRA_DEPS ${rmf_headers} ${SWIG_INCLUDES} RMF-decorators
   )
 
 set(CMAKE_SWIG_OUTDIR ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" FORCE)
+SET(CMAKE_SWIG_FLAGS "-castmode" "-naturalvar" "-Wextra" "-fvirtual"
+  "-DPySwigIterator=RMF_PySwigIterator" "-c++"
+  "-DSwigPyIterator=RMF_SwigPyIterator"
+  "-DRMFEXPORT")
 SWIG_ADD_MODULE(RMF python RMF.i)
 set_property(TARGET "${SWIG_MODULE_RMF_REAL_NAME}" PROPERTY FOLDER "RMF")
 if(APPLE)
@@ -68,6 +68,10 @@ SET(SWIG_MODULE_RMF_HDF5_EXTRA_DEPS ${headers}  ${hdf5_headers} ${SWIG_INCLUDES}
   )
 
 set(CMAKE_SWIG_OUTDIR ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" FORCE)
+SET(CMAKE_SWIG_FLAGS "-castmode" "-naturalvar" "-Wextra" "-fvirtual"
+  "-DPySwigIterator=RMF_HDF5_PySwigIterator" "-c++"
+  "-DSwigPyIterator=RMF_HDF5_SwigPyIterator"
+  "-DRMFEXPORT")
 SWIG_ADD_MODULE(RMF_HDF5 python RMF_HDF5.i)
 set_property(TARGET "${SWIG_MODULE_RMF_HDF5_REAL_NAME}" PROPERTY FOLDER "RMF")
 if(APPLE)
