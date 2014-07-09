@@ -177,25 +177,44 @@ void show_node_decorators(
   using std::operator<<;
   out << "\"" << n.get_name() << "\"" << node_suffix << " [" << n.get_type()
       << ":";
-  if (bdcf.get_is(n)) out << " bond";
-  if (ccf.get_is(n)) out << " color";
-  if (pcf.get_is(n))
+  if (bdcf.get_is_static(n)) out << " bond(s)";
+  else if (bdcf.get_is(n)) out << " bond";
+  if (ccf.get_is_static(n)) out << " color(s)";
+  else if (ccf.get_is(n)) out << " color";
+  if (pcf.get_is_static(n))
+    out << " particle(s)";
+  else if (ipcf.get_is_static(n))
+    out << " iparticle(s)";
+  else if (pcf.get_is(n))
     out << " particle";
   else if (ipcf.get_is(n))
     out << " iparticle";
-  if (rpcf.get_is(n)) out << " rigid";
-  if (scf.get_is(n)) out << " score";
-  if (repcf.get_is(n)) out << " representation";
-  if (bcf.get_is(n)) out << " ball";
-  if (cycf.get_is(n)) out << " cylinder";
-  if (segcf.get_is(n)) out << " segment";
-  if (rcf.get_is(n)) out << " residue";
-  if (acf.get_is(n)) out << " atom";
-  if (chaincf.get_is(n)) out << " chain";
-  if (fragcf.get_is(n)) out << " domain";
-  if (copycf.get_is(n)) out << " copy";
-  if (typedcf.get_is(n)) out << " typed";
-  if (diffusercf.get_is(n)) out << " diffuser";
+  if (rpcf.get_is_static(n)) out << " rigid(s)";
+  else if (rpcf.get_is(n)) out << " rigid";
+  if (scf.get_is_static(n)) out << " score(s)";
+  else if (scf.get_is(n)) out << " score";
+  if (repcf.get_is_static(n)) out << " representation(s)";
+  else if (repcf.get_is(n)) out << " representation";
+  if (bcf.get_is_static(n)) out << " ball(s)";
+  else if (bcf.get_is(n)) out << " ball";
+  if (cycf.get_is_static(n)) out << " cylinder(s)";
+  else if (cycf.get_is(n)) out << " cylinder";
+  if (segcf.get_is_static(n)) out << " segment(s)";
+  else if (segcf.get_is(n)) out << " segment";
+  if (rcf.get_is_static(n)) out << " residue(s)";
+  else if (rcf.get_is(n)) out << " residue";
+  if (acf.get_is_static(n)) out << " atom(s)";
+  else if (acf.get_is(n)) out << " atom";
+  if (chaincf.get_is_static(n)) out << " chain(s)";
+  else if (chaincf.get_is(n)) out << " chain";
+  if (fragcf.get_is_static(n)) out << " domain(s)";
+  else if (fragcf.get_is(n)) out << " domain";
+  if (copycf.get_is_static(n)) out << " copy(s)";
+  else if (copycf.get_is(n)) out << " copy";
+  if (typedcf.get_is_static(n)) out << " typed(s)";
+  else if (typedcf.get_is(n)) out << " typed";
+  if (diffusercf.get_is_static(n)) out << " diffuser(s)";
+  else if (diffusercf.get_is(n)) out << " diffuser";
   out << "]";
 }
 
