@@ -40,7 +40,7 @@ refframe = Decorator(["REPRESENTATION", "ORGANIZATIONAL"], "physics",
 
 atom = Decorator(["REPRESENTATION"], "physics",
                  "Atom",
-                 [Attribute("element", "Int"), coordinates, mass, radius
+                 [Attribute("element", "Int"), mass, radius
                   ])
 
 diffuser = Decorator(["REPRESENTATION"], "physics",
