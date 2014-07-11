@@ -15,6 +15,10 @@ supports
 - interactive display of restraints and restraint scores
 - geometry
 
+While support for RMF was added to the Chimera 1.9 stable release, only the
+nightly builds of Chimera work with the very latest RMF features. So if Chimera
+is unable to read an RMF file, first try updating to the latest nightly build.
+
 
 # VMD # {#vmd}
 
