@@ -6,7 +6,7 @@ representations of proteins), along with markup, including geometry
 and score data.
 
 If [HDF5](http://www.hdf5.org) is available, wrappers for it will be
-built and support for older RMF-based formats will be compiled.
+built and support for older HDF5-based RMF formats will be compiled.
 
 See
 - [RMF viewers](\ref viewing) for more information about viewing RMF files,
