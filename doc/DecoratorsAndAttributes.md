@@ -90,7 +90,7 @@ The category name is `feature` and the data stored relates to scoring functions,
 
 | Name             | Type      | Description                                      |
 |-----------------:|----------:|:-------------------------------------------------|
-| `score`          | float     |  Some sort or score                              |
+| `score`          | float     |  Some sort of score                              |
 | `representation` | RMF::Ints |  The NodeIDs of the nodes involved in this score |
 
 ## Decorators ## {#featuredecorators}
@@ -113,7 +113,7 @@ The category name is `shape` and the information relates to geometric markup of 
 | `coordinates`    | RMF::Vector3     |  The coordinates in angstrom.                    |
 | `radius`         | float            |  The radius in angstroms                         |
 | `axis lengths`   | RMF::Vector3     |  The length along each coordinate axis.          |
-| `orientation`    | RMF::Vector4     |  The ordientation quaternion.                    |
+| `orientation`    | RMF::Vector4     |  The orientation quaternion.                    |
 
 ## Decorators ## {#shapedecorators}
 
