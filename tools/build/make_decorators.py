@@ -140,6 +140,10 @@ state = Decorator(["REPRESENTATION"], "sequence",
                   "State",
                   [Attribute("state index", "Int")])
 
+expres = Decorator(["REPRESENTATION"], "sequence",
+                   "ExplicitResolution",
+                   [Attribute("explicit resolution", "Float")])
+
 
 make_header(
     "sequence",
@@ -149,7 +153,8 @@ make_header(
      domain,
      typed,
      copy,
-     state],
+     state,
+     expres],
     [])
 
 
