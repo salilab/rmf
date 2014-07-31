@@ -5,17 +5,17 @@ Decorators and Attributes {#decoratorsattributes}
 
 [TOC]
 
-The attributes and decorators are divided into several categories, each associated with a different RMF::Category. Each decorator has three associated types eg RMF::decorator::Particle, RMF::decorator::ParticleConst and RMF::decorator::ParticleFactory. The non-const decorator inherits from the const one. The factory is used to test whether a given node has the needed attributes and create decorators decorating a given node. Note, that if passed and RMF::NodeConstHandle, the node already having the required attributes is a precondition for the factory `get()` method.
+The attributes and decorators are divided into several categories, each associated with a different RMF::Category. Each decorator has three associated types eg RMF::decorator::Particle, RMF::decorator::ParticleConst and RMF::decorator::ParticleFactory. The non-const decorator inherits from the const one. The factory is used to test whether a given node has the needed attributes and to create decorators decorating a given node. Note, that if passed an RMF::NodeConstHandle, the node already having the required attributes is a precondition for the factory `get()` method.
 
 # Static and Frame Attributes # {#staticandframe}
 
-Each `get_` method and `set_` method have three variants. For get they are
+Each `get_` method and `set_` method has three variants. For `get` they are
 
 - `get_foo` get a value for the attribute
 - `get_frame_foo` get a value for the attribute as stored in the current frame
 - `get_static_foo` get a value for the attribute as stored for the whole file
 
-All have the precondition that the appropriate value exist. For set
+All have the precondition that the appropriate value exists. For `set`
 
 - `set_frame_foo`: set a value that is stored once per frame
 - `set_static_foo`: set a value that is stored once for the whole file
@@ -36,7 +36,7 @@ The category name is `physics`. It includes information about the physical struc
 | `radius`       | float        |  The radius in angstroms                  |
 | `rotation`     | RMF::Vector4 |  The rotation quaternion                  |
 | `translation`  | RMF::Vector3 |  The translation vector in angstroms      |
-| `bonded {0,1}` | int          |  The RMF::NodeID of the bonds endpoints   |
+| `bonded {0,1}` | int          |  The RMF::NodeID of the bond endpoints    |
 | `element`      | int          |  The atomic number of the element         |
 | `diffusion coefficient` | float | A diffusion coefficient in A^2/fs  |
 
@@ -108,10 +108,10 @@ The category name is `shape` and the information relates to geometric markup of 
 
 | Name             | Type             | Description                                      |
 |-----------------:|-----------------:|:-------------------------------------------------|
-| `rgb color`      | RMF::Vector3     |  The red, green, and blue color components, each component is in the range from 0 to 1. |
+| `rgb color`      | RMF::Vector3     |  The red, green, and blue color components; each component is in the range from 0 to 1. |
 | `coordinates list` | RMF::Vector3s  |  A list of coordinates.                          |
-| `coordinates`    | RMF::Vector3     |  The coordinates in angstrom.                    |
-| `radius`         | float            |  The radius in angstroms                         |
+| `coordinates`    | RMF::Vector3     |  The coordinates in angstroms.                   |
+| `radius`         | float            |  The radius in angstroms.                        |
 | `axis lengths`   | RMF::Vector3     |  The length along each coordinate axis.          |
 | `orientation`    | RMF::Vector4     |  The orientation quaternion.                    |
 
@@ -168,7 +168,7 @@ The category name is `alias` and it stores information for nodes that provide a 
 
 # External # {#external}
 
-The category name is `external` and it store references to all or part of external files. For example, a path to a PDB file that
+The category name is `external` and it stores references to all or part of external files, for example, a path to a PDB file that
 should be loaded as a child of the current node.
 
 ## Attributes ## {#externalattributes}
