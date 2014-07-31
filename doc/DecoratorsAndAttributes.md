@@ -68,6 +68,7 @@ The category name is `sequence` and it includes information about the types and 
 | `copy index`     | int       |  The index of this particular copy of a protein (when there are multiple copies of the same protein) |
 | `type name`      | string       |  An arbitrary type name for a particle. It could be the protein type or ligand type. |
 | `state index`    | int       |  An arbitrary integer to label different states of a hierarchy. |
+| `explicit resolution` | float     |  Explicitly-specified resolution for a hierarchy. |
 
 
 ## Decorators ## {#sequencedecorators}
@@ -81,6 +82,7 @@ The category name is `sequence` and it includes information about the types and 
 | RMF::decorator::Copy            | RMF::REPRESENTATION     |  copy index                        |
 | RMF::decorator::Typed           | RMF::REPRESENTATION     |  type name                         |
 | RMF::decorator::State           | RMF::REPRESENTATION     |  state index                       |
+| RMF::decorator::ExplicitResolution | RMF::REPRESENTATION  |  explicit resolution               |
 
 
 # Feature # {#feature}
