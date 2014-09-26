@@ -1,12 +1,13 @@
 # RMF #
 
-The library provides support for the RMF file format for
+The library provides support for the [RMF file format](\ref format) for
 storing hierarchical molecular data (such as atomic or coarse grained
 representations of proteins), along with markup, including geometry
 and score data.
 
-If [HDF5](http://www.hdf5.org) is available, wrappers for it will be
-built and support for older HDF5-based RMF formats will be compiled.
+The RMF source code is available [on github](https://github.com/salilab/rmf/).
+It can be built standalone, although it is generally used as part of
+[IMP](http://integrativemodeling.org).
 
 See
 - [RMF viewers](\ref viewing) for more information about viewing RMF files,

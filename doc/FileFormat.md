@@ -198,6 +198,9 @@ There are several ways that the files can be made more compact
 (without breaking forwards compatibility of existing files). They can be investigated
 further if there is sufficient demand.
 
+If [HDF5](http://www.hdf5.org) is available when RMF is built, wrappers for it
+will be built and support for older HDF5-based RMF formats will be compiled.
+
 # Benchmarks # {#benchmarks}
 
 A quick comparison of the various options (taken from benchmark/benchmark_rmf.cpp).
