@@ -498,7 +498,7 @@ def make_header(name, infos, deps):
 
     path = os.path.join("include", "RMF", "decorator", name + ".h")
     fl = open(path, "w")
-    print >> fl, """/**
+    fl.write("""/**
  *  \\file RMF/decorator/%(name)s.h
  *  \\brief Helper functions for manipulating RMF files.
  *
@@ -518,22 +518,24 @@ def make_header(name, infos, deps):
 #include <RMF/Vector.h>
 #include <RMF/internal/paths.h>
 #include <boost/array.hpp>
-#include <boost/lexical_cast.hpp>""" % {"name": name, "NAME": name.upper()}
+#include <boost/lexical_cast.hpp>
+""" % {"name": name, "NAME": name.upper()})
     for d in deps:
-        print >> fl, """#include "%s.h" """ % d
-    print >> fl, """
+        fl.write('#include "%s.h"\n' % d)
+    fl.write("""
 RMF_ENABLE_WARNINGS
 namespace RMF {
 namespace decorator {
-""" % {"name": name, "NAME": name.upper()}
+""" % {"name": name, "NAME": name.upper()})
     for i in infos:
-        print >> fl, i.get()
-    print >> fl, """
+        fl.write(i.get() + '\n')
+    fl.write("""
 } /* namespace decorator */
 } /* namespace RMF */
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_%(NAME)s_DECORATORS_H */""" % {"name": name, "NAME": name.upper()}
+#endif /* RMF_%(NAME)s_DECORATORS_H */
+""" % {"name": name, "NAME": name.upper()})
 
     del fl
     root = os.path.split(os.path.split(sys.argv[0])[0])[0]
