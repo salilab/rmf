@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import unittest
 import RMF
 import shutil
@@ -8,7 +9,7 @@ class GenericTest(unittest.TestCase):
 
     def _show(self, g):
         for i in range(0, g.get_number_of_children()):
-            print i, g.get_child_name(i), g.get_child_is_group(i)
+            print(i, g.get_child_name(i), g.get_child_is_group(i))
     """Test the python code"""
 
     def _do_test(self, suffix):
@@ -17,7 +18,7 @@ class GenericTest(unittest.TestCase):
             RMF._get_temporary_file_path("multikey." + suffix))
         f.add_frame("0", RMF.FRAME)
         r = f.get_root_node()
-        print r.get_type()
+        print(r.get_type())
         sc = f.get_category("multikey")
         ikfp = f.get_key(sc, "ik0", RMF.int_tag)
         ik = f.get_key(sc, "ik0", RMF.int_tag)
@@ -25,8 +26,8 @@ class GenericTest(unittest.TestCase):
         f.add_frame("1", RMF.FRAME)
         r.set_value(ikfp, 1)
         on.set_value(ik, 10)
-        print r.get_value(ikfp)
-        print on.get_value(ik)
+        print(r.get_value(ikfp))
+        print(on.get_value(ik))
 
     def test_multiparent(self):
         """Test creating a simple hierarchy file with multiple keys"""

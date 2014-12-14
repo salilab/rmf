@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import unittest
 import RMF
 
@@ -9,7 +10,7 @@ class GenericTest(unittest.TestCase):
         """Test that invalid float values work in rmft"""
         # not much of a test, no text support at the moment
         name = RMF._get_temporary_file_path("test_data_types.rmf")
-        print "file is", name
+        print("file is", name)
         f = RMF.create_rmf_file(name)
         f.add_frame("root", RMF.FRAME)
         cat = f.get_category("test")

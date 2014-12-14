@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import unittest
 import RMF
 import shutil
@@ -22,7 +23,7 @@ class GenericTest(unittest.TestCase):
         n.set_static_value(k2, 8)
         RMF.show_hierarchy_with_values(n)
         fh.flush()
-        print "closing"
+        print("closing")
         del n
         del fh
         del k

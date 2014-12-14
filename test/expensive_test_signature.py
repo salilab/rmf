@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import unittest
 import RMF
 
@@ -17,7 +18,7 @@ class Tests(unittest.TestCase):
             "conformations.imp.old.0fd20c095e58.rmf")
         f = RMF.open_rmf_file_read_only(path)
         sig = RMF.get_signature_string(f)
-        print sig
+        print(sig)
         open("conformations.imp.old.0fd20c095e58.signature", "w").write(sig)
         old_sig = open(
             RMF._get_test_input_file_path(

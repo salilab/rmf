@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import unittest
 import RMF
 
@@ -15,7 +16,7 @@ class GenericTest(unittest.TestCase):
 
     def _show(self, g):
         for i in range(0, g.get_number_of_children()):
-            print i, g.get_child_name(i), g.get_child_is_group(i)
+            print(i, g.get_child_name(i), g.get_child_is_group(i))
 
     def _do_touch_types(self, f, pccc):
         ds = f.add_child_float_data_set_2d("ds" + str(pccc))
@@ -41,11 +42,11 @@ class GenericTest(unittest.TestCase):
 
     def _touch_all_types(self, nm):
         """touch all types so all static hids are created"""
-        print "touching"
+        print("touching")
         f = RMF.HDF5.create_file(
             RMF._get_temporary_file_path(nm + "_types.hdf5"))
         self._do_touch_types(f, False)
-        print "done touching"
+        print("done touching")
 
     """Test the python code"""
 
@@ -60,7 +61,7 @@ class GenericTest(unittest.TestCase):
         f = RMF.HDF5.create_file(
             RMF._get_temporary_file_path("test.hdf5"))
         self._show(f)
-        print "adding"
+        print("adding")
         g = f.add_child_group("hi")
         ff = g.get_file()
         self.assertEqual(ff.get_name(), f.get_name())
@@ -71,7 +72,7 @@ class GenericTest(unittest.TestCase):
         self.assertEqual(
             RMF.HDF5.get_number_of_open_handles(), num_base_handles)
         f = RMF.HDF5.open_file(RMF._get_temporary_file_path("test.hdf5"))
-        print "showing"
+        print("showing")
         self._show(f)
         del f
         self.assertEqual(
@@ -88,27 +89,27 @@ class GenericTest(unittest.TestCase):
         f = RMF.HDF5.create_file(
             RMF._get_temporary_file_path("testd.hdf5"))
         self._show(f)
-        print "adding"
+        print("adding")
         g = f.add_child_group("hi")
         self._show(f)
         ds = f.add_child_float_data_set_3d("x")
-        print "name is", ds.get_name()
+        print("name is", ds.get_name())
         self._show(f)
         ds.set_size(I3(1, 1, 1))
         ds.set_value(I3(0, 0, 0), 1)
-        print ds.get_value(I3(0, 0, 0))
+        print(ds.get_value(I3(0, 0, 0)))
         self.assertEqual(ds.get_value(I3(0, 0, 0)), 1)
         ds = f.add_child_string_data_set_3d("str")
         self._show(f)
         ds.set_size(I3(2, 1, 1))
         ds.set_value([1, 0, 0], "there")
-        print ds.get_value([1, 0, 0])
+        print(ds.get_value([1, 0, 0]))
         self.assertEqual(ds.get_value(I3(1, 0, 0)), "there")
         ds = f.add_child_int_data_set_3d("int")
         self._show(f)
         ds.set_size(I3(1, 1, 1))
         ds.set_value(I3(0, 0, 0), 1)
-        print ds.get_value(I3(0, 0, 0))
+        print(ds.get_value(I3(0, 0, 0)))
         self.assertEqual(ds.get_value(I3(0, 0, 0)), 1)
         del f
         del g
@@ -127,11 +128,11 @@ class GenericTest(unittest.TestCase):
         f = RMF.HDF5.create_file(
             RMF._get_temporary_file_path("testdb.hdf5"))
         self._show(f)
-        print "adding"
+        print("adding")
         g = f.add_child_group("hi")
         self._show(f)
         ds = f.add_child_index_data_set_3d("x")
-        print "name is", ds.get_name()
+        print("name is", ds.get_name())
         self._show(f)
         ds.set_size(I3(10, 10, 10))
         ds.set_block(I3(2, 3, 4), I3(3, 4, 5), range(0, 3 * 4 * 5))
@@ -154,30 +155,30 @@ class GenericTest(unittest.TestCase):
         f = RMF.HDF5.create_file(
             RMF._get_temporary_file_path("testdg.hdf5"))
         self._show(f)
-        print "adding"
+        print("adding")
         g = f.add_child_group("hi")
         self._show(f)
         ds = f.add_child_float_data_set_3d("coords")
-        print "setting num"
+        print("setting num")
         ds.set_size([1, 3, 1])
-        print "setting values", [0, 0, 0]
+        print("setting values", [0, 0, 0])
         ds.set_value([0, 0, 0], 1)
-        print "getting", [0, 0, 0]
-        print ds.get_value([0, 0, 0])
+        print("getting", [0, 0, 0])
+        print(ds.get_value([0, 0, 0]))
         self.assertEqual(ds.get_value([0, 0, 0]), 1)
-        print "setting", 0, 2
+        print("setting", 0, 2)
         ds.set_value([0, 2, 0], 2)
-        print "getting", 0, 2
-        print ds.get_value([0, 2, 0])
+        print("getting", 0, 2)
+        print(ds.get_value([0, 2, 0]))
         self.assertEqual(ds.get_value([0, 2, 0]), 2)
         ds.set_size([4, 5, 6])
-        print "setting", 3, 4, 5
+        print("setting", 3, 4, 5)
         ds.set_value([3, 4, 5], 4)
-        print "getting", 3, 4, 5
-        print ds.get_value([3, 4, 5])
+        print("getting", 3, 4, 5)
+        print(ds.get_value([3, 4, 5]))
         self.assertEqual(ds.get_value([3, 4, 5]), 4)
-        print "getting", 1, 1, 1
-        print ds.get_value([1, 1, 1])
+        print("getting", 1, 1, 1)
+        print(ds.get_value([1, 1, 1]))
 
         del ds
         del f
@@ -194,17 +195,17 @@ class GenericTest(unittest.TestCase):
         f = RMF.HDF5.create_file(
             RMF._get_temporary_file_path("testadg.hdf5"))
         self._show(f)
-        print "adding"
+        print("adding")
         ds = f.add_child_ints_data_set_2d("coords")
-        print "setting num"
+        print("setting num")
         ds.set_size([1, 3])
         ind = [0, 1, 2, 3]
         ds.set_value([0, 0], ind)
         ds.set_value([0, 1], [4, 5, 6, 7, 8, 9])
         ds.set_size([2, 3])
         out = ds.get_value([0, 0])
-        print out
-        print ds.get_value([0, 1])
+        print(out)
+        print(ds.get_value([0, 1]))
         self.assertEqual(ind, list(out))
 
         del ds
@@ -226,17 +227,17 @@ class GenericTest(unittest.TestCase):
         f = RMF.HDF5.create_file(
             RMF._get_temporary_file_path("testadgs.hdf5"))
         self._show(f)
-        print "adding"
+        print("adding")
         ds = f.add_child_string_data_set_2d("strings")
-        print "setting num"
+        print("setting num")
         ds.set_size([1, 3])
         ind = "0123"
         ds.set_value([0, 0], ind)
         ds.set_value([0, 1], "adfjhslak")
         ds.set_size([2, 3])
         out = ds.get_value([0, 0])
-        print out
-        print ds.get_value([0, 1])
+        print(out)
+        print(ds.get_value([0, 1]))
         self.assertEqual(ind, out)
 
         del ds
@@ -258,9 +259,9 @@ class GenericTest(unittest.TestCase):
         f = RMF.HDF5.create_file(
             RMF._get_temporary_file_path("testadgs1.hdf5"))
         self._show(f)
-        print "adding"
+        print("adding")
         ds = f.add_child_string_data_set_1d("strings")
-        print "setting num"
+        print("setting num")
         ds.set_size([1])
         ind = "0123"
         ds.set_value([0], ind)
@@ -268,8 +269,8 @@ class GenericTest(unittest.TestCase):
         ds.set_value([1], "adfjhslak")
         ds.set_size([3])
         out = ds.get_value([0])
-        print out
-        print ds.get_value([1])
+        print(out)
+        print(ds.get_value([1]))
         self.assertEqual(ind, out)
 
         del ds
@@ -295,21 +296,21 @@ class GenericTest(unittest.TestCase):
         self.assertEqual(
             RMF.HDF5.get_number_of_open_handles(), num_base_handles + 1)
         self._show(f)
-        print "adding"
+        print("adding")
         g = f.add_child_group("hi")
         self.assertEqual(
             RMF.HDF5.get_number_of_open_handles(), num_base_handles + 2)
-        print "float"
+        print("float")
         f.set_float_attribute("at", [2.0])
         self.assertEqual(
             RMF.HDF5.get_number_of_open_handles(), num_base_handles + 2)
-        print f.get_float_attribute("at")
+        print(f.get_float_attribute("at"))
         self.assertEqual(
             RMF.HDF5.get_number_of_open_handles(), num_base_handles + 2)
         self.assertEqual(list(f.get_float_attribute("at")), [2.0])
         self.assertEqual(
             RMF.HDF5.get_number_of_open_handles(), num_base_handles + 2)
-        print "string"
+        print("string")
         #f.set_string_attribute("str", ["there", "not there"])
         #self.assertEqual(RMF.HDF5.get_number_of_open_handles(), num_base_handles+2)
         self._show(f)
@@ -318,7 +319,7 @@ class GenericTest(unittest.TestCase):
         #self.assertEqual(f.get_string_attribute("str"), ["there", "not there"])
         del g
         del f
-        print "done"
+        print("done")
         self.assertEqual(
             RMF.HDF5.get_number_of_open_handles(), num_base_handles)
 

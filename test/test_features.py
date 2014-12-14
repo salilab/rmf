@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import unittest
 import RMF
 
@@ -36,9 +37,9 @@ class GenericTest(unittest.TestCase):
         rf = RMF.RepresentationFactory(fh)
         sd = sf.get(fn)
         rd = rf.get(fn)
-        print sd.get_score()
-        print reps
-        print rd.get_representation()
+        print(sd.get_score())
+        print(reps)
+        print(rd.get_representation())
         self.assert_(sd.get_score() == 10)
         for r0, r1 in zip(rd.get_representation(), reps):
             self.assertEqual(r0, r1)
@@ -49,7 +50,7 @@ class GenericTest(unittest.TestCase):
         RMF.set_log_level("trace")
         for suffix in RMF.suffixes:
             path = RMF._get_temporary_file_path("feature." + suffix)
-            print "file is", path
+            print("file is", path)
             self._create(path)
             self._test(path)
 

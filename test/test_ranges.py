@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import unittest
 import RMF
 
@@ -13,14 +14,14 @@ class GenericTest(unittest.TestCase):
         key = f.get_key(cat, "key", RMF.int_tag)
         n = f.get_root_node().add_child("node", RMF.REPRESENTATION)
         n.set_value(key, 1)
-        print "frames", f.get_number_of_frames()
+        print("frames", f.get_number_of_frames())
         f.add_frame("next", RMF.FRAME)
-        print "frames", f.get_number_of_frames()
-        print f.get_keys(cat)
-        print "frames", f.get_number_of_frames()
+        print("frames", f.get_number_of_frames())
+        print(f.get_keys(cat))
+        print("frames", f.get_number_of_frames())
         for fr in f.get_frames():
-            print fr
-        print "frames", f.get_number_of_frames()
+            print(fr)
+        print("frames", f.get_number_of_frames())
         self.assertEqual(len(f.get_frames()), 2)
 
 

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import unittest
 import RMF
 import shutil
@@ -8,14 +9,14 @@ class GenericTest(unittest.TestCase):
 
     def _show(self, g):
         for i in range(0, g.get_number_of_children()):
-            print i, g.get_child_name(i), g.get_child_is_group(i)
+            print(i, g.get_child_name(i), g.get_child_is_group(i))
     """Test the python code"""
 
     def test_perturbed(self):
         """Test the description of an rmf file"""
         for suffix in RMF.suffixes:
             fn = RMF._get_temporary_file_path("test_file_perturbed." + suffix)
-            print fn
+            print(fn)
             f = RMF.create_rmf_file(fn)
             descr = "hi there\n"
             self.assertEqual(f.get_description(), "")

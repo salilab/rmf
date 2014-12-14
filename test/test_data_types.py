@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import unittest
 import RMF
 
@@ -29,9 +30,9 @@ class GenericTest(unittest.TestCase):
         nh = f.get_root_node().get_children()[0]
         cat = f.get_category("mine")
         for i, p in enumerate(lst):
-            print i
+            print(i)
             k = f.get_key(cat, "hi" + str(i), p[0])
-            print k, p[1]
+            print(k, p[1])
             nh.set_value(k, p[1])
 
     def _test_read(self, name):
@@ -43,20 +44,20 @@ class GenericTest(unittest.TestCase):
         for i, p in enumerate(lst):
             k = f.get_key(cat, "hi" + str(i), p[0])
             v = nh.get_value(k)
-            print v, p[1]
+            print(v, p[1])
             # to handle list comparisons
             t = type(p[1])
             self.assertEqual(p[1], t(v))
 
     def _do_test_types(self, name):
-        print "write"
+        print("write")
         self._test_write(name)
-        print "read"
+        print("read")
         self._test_read(name)
 
     def test_data_types(self):
         """Test that the various data types work"""
-        print "testing types"
+        print("testing types")
         RMF.set_log_level("trace")
         for suffix in RMF.suffixes:
             name = RMF._get_temporary_file_path("test_data_types." + suffix)

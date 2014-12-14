@@ -1,3 +1,4 @@
+from __future__ import print_function
 import RMF
 try:
     import cPickle as pickle
@@ -15,4 +16,4 @@ picklestring = pickle.dumps(b)
 bb = pickle.loads(picklestring)
 
 f = RMF.open_rmf_buffer_read_only(bb)
-print f.get_root_node().get_children()[0]
+print(f.get_root_node().get_children()[0])
