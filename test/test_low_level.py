@@ -137,7 +137,7 @@ class GenericTest(unittest.TestCase):
         ds.set_size(I3(10, 10, 10))
         ds.set_block(I3(2, 3, 4), I3(3, 4, 5), range(0, 3 * 4 * 5))
         got = ds.get_block(I3(2, 3, 4), I3(3, 4, 5))
-        self.assertEqual(list(got), range(0, 3 * 4 * 5))
+        self.assertEqual(list(got), list(range(0, 3 * 4 * 5)))
         del g
         del f
         del ds
