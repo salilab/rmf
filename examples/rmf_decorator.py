@@ -1,6 +1,7 @@
 ## \example rmf_decorator.py
 # The example shows how to use the decorators by printing the
 # coordates and radius of every node that has them.
+from __future__ import print_function
 import RMF
 
 
@@ -9,7 +10,7 @@ def traverse(nh, pf):
     if pf.get_is(nh):
         # create a decorator for the current node
         d = pf.get(nh)
-        print nh.get_name(), d.get_coordinates()
+        print(nh.get_name(), d.get_coordinates())
     # recurse on the children
     children = nh.get_children()
     for c in children:

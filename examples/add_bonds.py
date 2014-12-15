@@ -1,5 +1,6 @@
 ## \example add_bonds.py
 # Show how to add bonds to a file.
+from __future__ import print_function
 import RMF
 
 
@@ -54,7 +55,7 @@ fh.set_current_frame(RMF.FrameID(0))
 outpath = RMF._get_temporary_file_path("3U7W-residues.rmf")
 out = RMF.create_rmf_file(outpath)
 out.add_frame("nothing", RMF.FRAME)
-print "file is", outpath
+print("file is", outpath)
 bf = RMF.BondFactory(out)
 
 rcf = RMF.ResidueFactory(fh)

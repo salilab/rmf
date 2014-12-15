@@ -1,12 +1,13 @@
 ## \example bonds.py
 # Show how to extract bonds from a file.
+from __future__ import print_function
 import RMF
 
 
 def print_bonds(node, bf):
     if bf.get_is(node):
         bd = bf.get(node)
-        print "bond", bd.get_bonded_0(), bd.get_bonded_1()
+        print("bond", bd.get_bonded_0(), bd.get_bonded_1())
     else:
         for c in node.get_children():
             print_bonds(c, bf)

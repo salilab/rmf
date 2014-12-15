@@ -5,10 +5,11 @@
 # biological entity. Different representations can be used for different
 # purposes based on resolution or other criteria.
 
+from __future__ import print_function
 import RMF
 
 tfn = RMF._get_temporary_file_path("alternatives.rmf3")
-print "File is", tfn
+print("File is", tfn)
 
 f = RMF.create_rmf_file(tfn)
 f.add_frame("frame", RMF.FRAME)
@@ -78,5 +79,5 @@ da.add_alternative(create_gmm(), RMF.GAUSSIAN_PARTICLE)
 
 RMF.show_hierarchy(n)
 
-print "particles", RMF.get_resolutions(n, RMF.PARTICLE)
-print "gaussian particles", RMF.get_resolutions(n, RMF.GAUSSIAN_PARTICLE)
+print("particles", RMF.get_resolutions(n, RMF.PARTICLE))
+print("gaussian particles", RMF.get_resolutions(n, RMF.GAUSSIAN_PARTICLE))
