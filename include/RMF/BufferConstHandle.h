@@ -40,8 +40,10 @@ class BufferConstHandle {
   }
 
  public:
+#ifndef SWIG
   explicit BufferConstHandle(std::string r)
       : data_(boost::make_shared<std::vector<char> >(r.begin(), r.end())) {}
+#endif
   explicit BufferConstHandle(const std::vector<char> &r)
       : data_(boost::make_shared<std::vector<char> >(r.begin(), r.end())) {}
   explicit BufferConstHandle(const std::vector<uint8_t> &r)
@@ -49,10 +51,12 @@ class BufferConstHandle {
   explicit BufferConstHandle(boost::shared_ptr<std::vector<char> > r)
       : data_(r) {}
   const std::vector<char> &get_buffer() const { return *data_; }
+#ifndef SWIG
   //! get the buffer encoded in a string
   std::string get_string() const {
     return std::string(data_->begin(), data_->end());
   }
+#endif
   RMF_COMPARISONS(BufferConstHandle);
   RMF_HASHABLE(BufferConstHandle, return reinterpret_cast<size_t>(&*data_););
   RMF_SHOWABLE(BufferConstHandle, "buffer");
