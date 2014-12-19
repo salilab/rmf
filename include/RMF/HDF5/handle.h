@@ -12,7 +12,7 @@
 #include "RMF/config.h"
 #include "infrastructure_macros.h"
 #include "RMF/exceptions.h"
-#include <H5Ipublic.h>
+#include <hdf5.h>
 #include <algorithm>
 #include <vector>
 #include <exception>
