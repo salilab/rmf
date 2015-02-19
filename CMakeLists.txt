@@ -55,9 +55,8 @@ imp_execute_process("Making RMF.h" ${PROJECT_SOURCE_DIR}
 message(STATUS "Running setup_cmake.py")
 imp_execute_process("Running setup_cmake.py"  ${PROJECT_SOURCE_DIR} COMMAND python ${PROJECT_SOURCE_DIR}/tools/dev_tools/setup_cmake.py)
 
-include_directories("${PROJECT_BINARY_DIR}/src"
-  "${PROJECT_SOURCE_DIR}/src")
-
+include_directories(BEFORE "${PROJECT_BINARY_DIR}/include"
+  "${PROJECT_SOURCE_DIR}/include")
 
 set(RMF_INCLUDE_PATH "" CACHE INTERNAL "" FORCE)
 
@@ -108,9 +107,6 @@ configure_file (
   "${PROJECT_SOURCE_DIR}/config.h.in"
   "${PROJECT_BINARY_DIR}/include/RMF/config.h"
   )
-
-include_directories("${PROJECT_BINARY_DIR}/include"
-  "${PROJECT_SOURCE_DIR}/include")
 
 add_subdirectory(data)
 add_subdirectory(include)

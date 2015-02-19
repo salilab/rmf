@@ -17,13 +17,11 @@ message(STATUS "Python binary is " ${python_full_path} " (version " ${python_ful
 FIND_PACKAGE(PythonLibs ${python_full_version} EXACT REQUIRED)
 endif()
 
-INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_DIRS})
-
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/swig)
-
 set(CMAKE_SWIG_OUTDIR "${PROJECT_BINARY_DIR}")
-include_directories("${PROJECT_BINARY_DIR}/include"
-  "${PROJECT_SOURCE_DIR}/include" "${PROJECT_SOURCE_DIR}/swig" ${HDF5_INCLUDE_DIRS})
+include_directories(BEFORE "${PROJECT_SOURCE_DIR}/swig")
+include_directories(${HDF5_INCLUDE_DIRS})
+
+INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_DIRS})
 
 FILE(GLOB rmf_headers "${PROJECT_SOURCE_DIR}/include/RMF/*.h" "${PROJECT_BINARY_DIR}/include/RMF/*.h" "${PROJECT_BINARY_DIR}/include/RMF/decorator/*.h")
 FILE(GLOB SWIG_INCLUDES "${PROJECT_SOURCE_DIR}/swig/RMF.*.i")

@@ -5,7 +5,9 @@ file(GLOB_RECURSE avrocpp_sources "${PROJECT_SOURCE_DIR}/src/avrocpp/impl/*.cc")
 list(REMOVE_ITEM avrocpp_sources "${PROJECT_SOURCE_DIR}/src/avrocpp/impl/avrogencpp.cc")
 
 add_definitions("-DAVRO_DYN_LINK" "-DAVRO_SOURCE")
-include_directories("${PROJECT_SOURCE_DIR}/src/avrocpp/api/")
+include_directories(BEFORE "${PROJECT_SOURCE_DIR}/src")
+include_directories(BEFORE "${PROJECT_BINARY_DIR}/src")
+include_directories(BEFORE "${PROJECT_SOURCE_DIR}/src/avrocpp/api/")
 
 foreach (jf ${jsonfiles})
 set(jsonfiles_expanded ${jsonfiles_expanded} ${PROJECT_SOURCE_DIR}/src/${jf})
