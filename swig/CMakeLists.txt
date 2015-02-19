@@ -2,11 +2,11 @@ FIND_PACKAGE(SWIG 1.3.40 REQUIRED)
 INCLUDE(${SWIG_USE_FILE})
 
 if(NOT DEFINED PYTHON_INCLUDE_DIRS)
-execute_process(COMMAND python -c "import sys; print sys.executable"
+execute_process(COMMAND python -c "import sys; print(sys.executable)"
                 WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
                 OUTPUT_VARIABLE python_full_path
                 OUTPUT_STRIP_TRAILING_WHITESPACE)
-execute_process(COMMAND python -c "import sys; print '%d.%d.%d' % sys.version_info[:3]"
+execute_process(COMMAND python -c "import sys; print('%d.%d.%d' % sys.version_info[:3])"
                 WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
                 OUTPUT_VARIABLE python_full_version
                 OUTPUT_STRIP_TRAILING_WHITESPACE)
