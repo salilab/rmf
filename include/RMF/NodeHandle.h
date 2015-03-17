@@ -100,7 +100,7 @@ class RMFEXPORT NodeHandle : public NodeConstHandle {
     shared_->set_loaded_value(node_, k, v);
   }
   /** Set the value
-      - if the attribute has a static value and it is equal the current one
+      - if the attribute has a static value and it is equal to the current one
         do nothing.
       - if the attribute doesn't have a static value, set it,
       - otherwise set the frame value.
