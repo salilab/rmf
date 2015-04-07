@@ -3,6 +3,7 @@
 """Use clang-format and autopep8 when available to clean up the listed source
    files."""
 
+from __future__ import print_function
 import glob
 from optparse import OptionParser
 import subprocess
