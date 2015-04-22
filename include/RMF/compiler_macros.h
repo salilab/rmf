@@ -144,8 +144,7 @@
 #if __GNUC__ > 4 || __GNUC_MINOR__ >= 6
 #define RMF_GCC_CXX0X_COMPAT        \
   RMF_GCC_PRAGMA(diagnostic ignored \
-                 "-Wc++0x-compa"    \
-                 "t")
+                 "-Wc++0x-compat")
 #define RMF_GCC_PROTOTYPES \
   RMF_GCC_PRAGMA(diagnostic warning "-Wmissing-declarations")
 
