@@ -145,8 +145,12 @@
 #define RMF_GCC_CXX0X_COMPAT        \
   RMF_GCC_PRAGMA(diagnostic ignored \
                  "-Wc++0x-compat")
+#ifdef RMF_SWIG_WRAPPER
+#define RMF_GCC_PROTOTYPES
+#else
 #define RMF_GCC_PROTOTYPES \
   RMF_GCC_PRAGMA(diagnostic warning "-Wmissing-declarations")
+#endif
 
 #else
 #define RMF_GCC_CXX0X_COMPAT
