@@ -13,7 +13,8 @@ include_directories(${VMDPLUGIN_INCLUDE_PATH})
 
 message(STATUS "Using VMD headers found in ${VMDPLUGIN_INCLUDE_PATH}")
 
-add_library(RMF-vmd MODULE "init.cpp" "Data.cpp" "Data_read.cpp")
+include_directories(BEFORE ".")
+add_library(RMF-vmd MODULE "vmdplugin.cpp")
 if(WIN32)
   set(DSO_SUFFIX ".dll")
 else()
