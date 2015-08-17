@@ -6,7 +6,7 @@ find_path(VMDPLUGIN_INCLUDE_PATH
           )
 
 if(${VMDPLUGIN_INCLUDE_PATH} MATCHES "VMDPLUGIN_INCLUDE_PATH-NOTFOUND")
-message(STATUS "Compilation of VMD plugin disabled. Defined VMDPLUGIN_INCLUDE_DIR to point to the include path for the header.")
+message(STATUS "Compilation of VMD plugin disabled. Define VMDPLUGIN_INCLUDE_DIR to point to the include path for the header.")
 set(RMF_VMD "" CACHE INTERNAL "" FORCE)
 else()
 include_directories(${VMDPLUGIN_INCLUDE_PATH})
