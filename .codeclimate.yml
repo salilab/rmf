@@ -25,6 +25,8 @@ ratings:
   - "**.php"
   - "**.py"
   - "**.rb"
+  - "**.sh"
+  - "**.md"
 exclude_paths:
 - test/
 - tools/dev_tools/**/*
