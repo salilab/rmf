@@ -33,8 +33,6 @@ elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
   else()
     message(STATUS "Enabling clang C++11 support")
     set(IMP_CXX11_FLAGS "--std=c++11" CACHE INTERNAL "" FORCE)
-  else()
-
   endif()
 else()
   message(STATUS "Unknown compiler, not sure what to do about C++11")
