@@ -1,3 +1,5 @@
+sudo: required
+dist: trusty
 language: cpp
 branches:
   only:
@@ -7,7 +9,7 @@ compiler:
   - gcc
   - clang
 env:
-  - INSTALL="libhdf5-serial-dev liblog4cxx10-dev" BOOST= FLAGS= TESTS=RMF TEST_SETUP=
+  - INSTALL="libhdf5-dev liblog4cxx10-dev" BOOST= FLAGS= TESTS=RMF TEST_SETUP=
   - INSTALL="" BOOST= FLAGS= TESTS=RMF TEST_SETUP=
 git:
   submodules: false
@@ -16,7 +18,7 @@ matrix:
   exclude:
     # I don't understand this failure, and it is only in deprecated code
     - compiler: gcc
-      env: INSTALL="libhdf5-serial-dev liblog4cxx10-dev" BOOST= FLAGS= TESTS=RMF TEST_SETUP=
+      env: INSTALL="libhdf5-dev liblog4cxx10-dev" BOOST= FLAGS= TESTS=RMF TEST_SETUP=
   include:
     # can't get it to work with the python module
     - compiler: clang
@@ -25,7 +27,6 @@ matrix:
 before_install:
  - sudo apt-get update -qq
  - sudo apt-get install -qq libboost$BOOST-all-dev swig libc-dbg $INSTALL
- - sudo pip install codecov
 
 script:
  - mkdir build
@@ -36,7 +37,7 @@ script:
  - export LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
  - ctest -j 2 --output-on-failure -L $TESTS
  - (cd coverage && coverage combine && mv .coverage ..)
- - codecov
+ - bash <(curl -s https://codecov.io/bash)
 
 # sanitize :-) -fsanitize=address -fno-omit-frame-pointer
 # -fsanitize=undefined
