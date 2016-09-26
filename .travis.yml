@@ -35,7 +35,7 @@ script:
  - make -j 2
  - export LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
  - ctest -j 2 --output-on-failure -L $TESTS
- - ../tools/coverage/gather.py
+ - (cd coverage && coverage combine && mv .coverage ..)
  - codecov
 
 # sanitize :-) -fsanitize=address -fno-omit-frame-pointer
