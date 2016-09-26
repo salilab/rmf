@@ -1,8 +1,6 @@
 sudo: required
 dist: trusty
 language: cpp
-python:
-  - 2.7
 branches:
   only:
     - master
@@ -35,7 +33,7 @@ script:
  - cd build
  - ../tools/coverage/setup.py
  - PYTHON_INC=$(echo $(dirname $(which python))/../include/*/)
- - PYTHON_LIB=$(echo /opt/python/${TRAVIS_PYTHON_VERSION}.*/lib/libpython${TRAVIS_PYTHON_VERSION}*.so)
+ - PYTHON_LIB=$(echo /opt/python/2.7.*/lib/libpython2.7*.so)
  - PYTHONPATH=`pwd`/coverage cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="$FLAGS --coverage" -DCMAKE_EXE_LINKER_FLAGS="$FLAGS --coverage" -DCMAKE_MODULE_LINKER_FLAGS="$FLAGS --coverage" -DCMAKE_SHARED_LINKER_FLAGS="$FLAGS --coverage" -DIMP_TEST_SETUP=$TEST_SETUP -DPYTHON_INCLUDE_DIR=$PYTHON_INC -DPYTHON_LIBRARY=$PYTHON_LIB
  - make -j 2
  - export LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
