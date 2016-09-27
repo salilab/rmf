@@ -27,6 +27,7 @@ matrix:
 before_install:
  - sudo apt-get update -qq
  - sudo apt-get install -qq libboost$BOOST-all-dev swig libc-dbg $INSTALL
+ - sudo pip install coverage
 
 script:
  - mkdir build
