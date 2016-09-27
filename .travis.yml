@@ -16,9 +16,6 @@ matrix:
       env: INSTALL="libhdf5-dev liblog4cxx10-dev" BOOST= FLAGS="--coverage" TESTS=RMF TEST_SETUP= BUILD="Debug"
     - compiler: clang
       env: INSTALL="" BOOST= FLAGS="--coverage" TESTS=RMF TEST_SETUP= BUILD="Debug"
-    # can't get it to work with the python module
-    - compiler: clang
-      env: INSTALL= BOOST= FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" TESTS=cpp TEST_SETUP= BUILD="Release"
 
 before_install:
  - sudo apt-get update -qq
