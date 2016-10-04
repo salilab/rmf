@@ -2,3 +2,4 @@ ignore:
   - test
   - tools/dev_tools
   - src/avrocpp
+  - benchmark
