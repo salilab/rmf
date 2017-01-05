@@ -15,7 +15,7 @@ See
 - [RMF Library](\ref library) for more information about using the library.
 - [Mapping data into RMF files](\ref mapping) for more information about how to structure data in RMF files.
 
-Also see the [rmf examples](http://www.github.com/salilab/rmf_examples) repository
+Also see the [rmf examples](https://github.com/salilab/rmf_examples) repository
 for examples of interesting or problematic RMF files.
 
 Copyright 2007-2017 IMP Inventors.
