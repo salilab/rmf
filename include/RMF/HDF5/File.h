@@ -19,9 +19,10 @@ RMF_ENABLE_WARNINGS namespace RMF {
       - The HDF5 C interface is not trivial to use peroperly, particularly in
       regards to data type conversions and resource management
       - It is very easy to use the C interface incorrectly without knowning it.
-      - The \external{http://hdf5.org, standard HDF5 C++ interface} doesn't
-      really simplify use of the HDF5 library and doesn't make use of the
-      features of C++.
+      - The
+      \external{https://support.hdfgroup.org/HDF5/, standard HDF5 C++ interface}
+      doesn't really simplify use of the HDF5 library and doesn't make use
+      of the features of C++.
 
       The main classes provide access too:
       - HDF5 files through RMF::File and RMF::HDF5::ConstFile
