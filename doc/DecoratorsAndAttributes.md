@@ -70,7 +70,6 @@ The category name is `sequence` and it includes information about the types and 
 | `state index`    | int       |  An arbitrary integer to label different states of a hierarchy. |
 | `explicit resolution` | float     |  Explicitly-specified resolution for a hierarchy. |
 | `reference` | int          |  The RMF::NodeID of the reference node    |
-| `provenance` | int         |  The RMF::NodeID of the provenance node   |
 
 
 ## Decorators ## {#sequencedecorators}
@@ -86,7 +85,6 @@ The category name is `sequence` and it includes information about the types and 
 | RMF::decorator::State           | RMF::REPRESENTATION     |  state index                       |
 | RMF::decorator::ExplicitResolution | RMF::REPRESENTATION  |  explicit resolution               |
 | RMF::decorator::Reference       | RMF::REPRESENTATION     |  pointer to reference node         |
-| RMF::decorator::Provenance      | RMF::REPRESENTATION     |  pointer to provenance node        |
 
 
 # Feature # {#feature}

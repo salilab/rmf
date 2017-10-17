@@ -134,7 +134,7 @@ cluster = Decorator(["PROVENANCE"], "provenance",
                     "ClusterProvenance",
                     [Attribute("cp_members", "Int", function_name='members')])
 
-make_header("provenance_types",
+make_header("provenance",
             [structure, sample, combine, filterp, cluster], [])
 
 residue = Decorator(["REPRESENTATION"], "sequence",

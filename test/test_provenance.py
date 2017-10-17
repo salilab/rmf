@@ -41,29 +41,18 @@ class Tests(unittest.TestCase):
         rmf.add_frame('zero', RMF.FRAME)
         rt = rmf.get_root_node()
 
-        pf = RMF.ProvenanceFactory(rmf)
-        c0 = self._add_provenance_nodes(rmf, rt)
         c1 = rt.add_child("c1", RMF.REPRESENTATION)
-        prov = pf.get(c1)
-        prov.set_provenance(c0)
-        self._check_provenance_nodes(rmf, c0, c1)
-        self.assertEqual(prov.get_provenance(), c0)
-        self.assertFalse(pf.get_is(c0))
-        self.assertTrue(pf.get_is(c1))
+        c0 = self._add_provenance_nodes(rmf, c1)
+        self._check_provenance_nodes(rmf, c0)
 
     def _read(self, fname):
         rmf = RMF.open_rmf_file_read_only(fname)
         rt = rmf.get_root_node()
-        c0, c1 = rt.get_children()
-        self._check_provenance_nodes(rmf, c0, c1)
+        c1, = rt.get_children()
+        c0, = c1.get_children()
+        self._check_provenance_nodes(rmf, c0)
 
-    def _check_provenance_nodes(self, rmf, prov_root, rep):
-        pf = RMF.ProvenanceFactory(rmf)
-        prov = pf.get(rep)
-        self.assertEqual(prov.get_provenance(), prov_root)
-        self.assertFalse(pf.get_is(prov_root))
-        self.assertTrue(pf.get_is(rep))
-
+    def _check_provenance_nodes(self, rmf, prov_root):
         strucpf = RMF.StructureProvenanceFactory(rmf)
         samppf = RMF.SampleProvenanceFactory(rmf)
         clustpf = RMF.ClusterProvenanceFactory(rmf)

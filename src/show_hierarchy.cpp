@@ -176,7 +176,6 @@ void show_node_decorators(
     decorator::ChainFactory chaincf, decorator::DomainFactory fragcf,
     decorator::CopyFactory copycf, decorator::DiffuserFactory diffusercf,
     decorator::TypedFactory typedcf, decorator::ReferenceFactory refcf,
-    decorator::ProvenanceFactory provcf,
     decorator::StructureProvenanceFactory strucpcf,
     decorator::SampleProvenanceFactory samppcf,
     decorator::CombineProvenanceFactory combpcf,
@@ -226,8 +225,6 @@ void show_node_decorators(
   else if (diffusercf.get_is(n)) out << " diffuser";
   if (refcf.get_is_static(n)) out << " reference(s)";
   else if (refcf.get_is(n)) out << " reference";
-  if (provcf.get_is_static(n)) out << " provenance(s)";
-  else if (provcf.get_is(n)) out << " provenance";
   if (strucpcf.get_is_static(n)) out << " structure provenance(s)";
   else if (strucpcf.get_is(n)) out << " structure provenance";
   if (samppcf.get_is_static(n)) out << " sample provenance(s)";
@@ -297,7 +294,6 @@ struct ShowDecorators {
   decorator::DiffuserFactory diffusercf;
   decorator::TypedFactory typedcf;
   decorator::ReferenceFactory refcf;
-  decorator::ProvenanceFactory provcf;
   decorator::StructureProvenanceFactory strucpcf;
   decorator::SampleProvenanceFactory samppcf;
   decorator::CombineProvenanceFactory combpcf;
@@ -322,7 +318,6 @@ struct ShowDecorators {
         diffusercf(fh),
         typedcf(fh),
         refcf(fh),
-        provcf(fh),
         strucpcf(fh),
         samppcf(fh),
         combpcf(fh),
@@ -332,7 +327,7 @@ struct ShowDecorators {
                   std::ostream& out) {
     show_node_decorators(cur, suffix, out, bdf, ccf, pcf, ipcf, rpcf, scf,
                          repcf, bcf, cycf, segcf, rcf, acf, chaincf, fragcf,
-                         copycf, diffusercf, typedcf, refcf, provcf, strucpcf,
+                         copycf, diffusercf, typedcf, refcf, strucpcf,
                          samppcf, combpcf, filtpcf, clustpcf, prefix + "   ");
   }
 };
