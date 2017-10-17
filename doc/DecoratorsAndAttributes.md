@@ -215,24 +215,25 @@ structure was generated.
 
 ## Attributes ## {#provenanceattributes}
 
-| Name           | Type         | Description                               |
-|---------------:|-------------:|:------------------------------------------|
-| `filename`     | string       |  File from which the structure was read   |
-| `chain`        | string       |  Chain ID of the structure that was read  |
-| `method`       | string       |  Sampling method utilized                 |
-| `frames`       | int          |  Number of frames in an ensemble          |
-| `iterations`   | int          |  Number of sampling iterations used       |
-| `runs`         | int          |  Number of sampling runs utilized         |
-| `threshold`    | float        |  Score threshold to discard bad models    |
-| `members`      | int          |  Number of members in a cluster           |
+| Name                  | Type         | Description                               |
+|----------------------:|-------------:|:------------------------------------------|
+| `structure filename`  | string       |  File from which the structure was read   |
+| `structure chain`     | string       |  Chain ID of the structure that was read  |
+| `sampling method`     | string       |  Sampling method utilized                 |
+| `sampling frames`     | int          |  Number of frames in the sample ensemble  |
+| `sampling iterations` | int          |  Number of sampling iterations used       |
+| `combined runs`       | int          |  Number of sampling runs utilized         |
+| `combined frames`     | int          |  Total number of frames combined          |
+| `filter threshold`    | float        |  Score threshold to discard bad models    |
+| `cluster members`     | int          |  Number of members in a cluster           |
 
 
 ## Decorators ## {#provenancedecorators}
 
-| Name                                |  Node Type          | Attributes                 |
-|------------------------------------:|:-------------------:|:---------------------------|
-| RMF::decorator::StructureProvenance |  RMF::PROVENANCE    | filename, chain            |
-| RMF::decorator::SampleProvenance    |  RMF::PROVENANCE    | method, frames, iterations |
-| RMF::decorator::CombineProvenance   |  RMF::PROVENANCE    | runs, frames               |
-| RMF::decorator::FilterProvenance    |  RMF::PROVENANCE    | threshold, frames          |
-| RMF::decorator::ClusterProvenance   |  RMF::PROVENANCE    | members                    |
+| Name                                |  Node Type          | Attributes                                            |
+|------------------------------------:|:-------------------:|:------------------------------------------------------|
+| RMF::decorator::StructureProvenance |  RMF::PROVENANCE    | structure filename, structure chain                   |
+| RMF::decorator::SampleProvenance    |  RMF::PROVENANCE    | sampling method, sampling frames, sampling iterations |
+| RMF::decorator::CombineProvenance   |  RMF::PROVENANCE    | combined runs, combined frames                        |
+| RMF::decorator::FilterProvenance    |  RMF::PROVENANCE    | filter threshold, filter frames                       |
+| RMF::decorator::ClusterProvenance   |  RMF::PROVENANCE    | cluster members                                       |

@@ -108,31 +108,36 @@ structure = Decorator(["PROVENANCE"], "provenance",
                       # Note that this should really be PathAttribute,
                       # but that currently requires that the file exists,
                       # otherwise reading the RMF file will fail
-                      [Attribute("sp_filename", "String",
+                      [Attribute("structure filename", "String",
                                  function_name='filename'),
-                       Attribute("sp_chain", "String", function_name='chain')])
+                       Attribute("structure chain", "String",
+                                 function_name='chain')])
 
 sample = Decorator(["PROVENANCE"], "provenance",
                     "SampleProvenance",
-                    [Attribute("sp_method", "String", function_name='method'),
-                     Attribute("sp_frames", "Int", function_name='frames'),
-                     Attribute("sp_iterations", "Int",
+                    [Attribute("sampling method", "String",
+                               function_name='method'),
+                     Attribute("sampling frames", "Int",
+                               function_name='frames'),
+                     Attribute("sampling iterations", "Int",
                                function_name='iterations')])
 
 combine = Decorator(["PROVENANCE"], "provenance",
                     "CombineProvenance",
-                    [Attribute("cp_runs", "Int", function_name='runs'),
-                     Attribute("cp_frames", "Int", function_name='frames')])
+                    [Attribute("combined runs", "Int", function_name='runs'),
+                     Attribute("combined frames", "Int",
+                               function_name='frames')])
 
 filterp = Decorator(["PROVENANCE"], "provenance",
                     "FilterProvenance",
-                    [Attribute("fp_threshold", "Float",
+                    [Attribute("filter threshold", "Float",
                                function_name='threshold'),
-                     Attribute("fp_frames", "Int", function_name='frames')])
+                     Attribute("filter frames", "Int", function_name='frames')])
 
 cluster = Decorator(["PROVENANCE"], "provenance",
                     "ClusterProvenance",
-                    [Attribute("cp_members", "Int", function_name='members')])
+                    [Attribute("cluster members", "Int",
+                               function_name='members')])
 
 make_header("provenance",
             [structure, sample, combine, filterp, cluster], [])
