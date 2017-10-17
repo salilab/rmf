@@ -19,17 +19,17 @@ class Tests(unittest.TestCase):
         samppf = RMF.SampleProvenanceFactory(rmf)
         clustpf = RMF.ClusterProvenanceFactory(rmf)
 
-        clust_node = rt.add_child("clustering", RMF.ORGANIZATIONAL)
+        clust_node = rt.add_child("clustering", RMF.PROVENANCE)
         clust = clustpf.get(clust_node)
         clust.set_members(10)
 
-        samp_node = clust_node.add_child("sampling", RMF.ORGANIZATIONAL)
+        samp_node = clust_node.add_child("sampling", RMF.PROVENANCE)
         samp = samppf.get(samp_node)
         samp.set_method("Monte Carlo")
         samp.set_frames(100)
         samp.set_iterations(10)
 
-        struc_node = samp_node.add_child("structure", RMF.ORGANIZATIONAL)
+        struc_node = samp_node.add_child("structure", RMF.PROVENANCE)
         struc = strucpf.get(struc_node)
         struc.set_filename('foo.pdb')
         struc.set_chain('X')

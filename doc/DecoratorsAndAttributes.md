@@ -231,10 +231,10 @@ structure was generated.
 
 ## Decorators ## {#provenancedecorators}
 
-| Name                                |  Node Type              | Attributes                 |
-|------------------------------------:|:-----------------------:|:---------------------------|
-| RMF::decorator::StructureProvenance |  RMF::ORGANIZATIONAL    | filename, chain            |
-| RMF::decorator::SampleProvenance    |  RMF::ORGANIZATIONAL    | method, frames, iterations |
-| RMF::decorator::CombineProvenance   |  RMF::ORGANIZATIONAL    | runs, frames               |
-| RMF::decorator::FilterProvenance    |  RMF::ORGANIZATIONAL    | threshold, frames          |
-| RMF::decorator::ClusterProvenance   |  RMF::ORGANIZATIONAL    | members                    |
+| Name                                |  Node Type          | Attributes                 |
+|------------------------------------:|:-------------------:|:---------------------------|
+| RMF::decorator::StructureProvenance |  RMF::PROVENANCE    | filename, chain            |
+| RMF::decorator::SampleProvenance    |  RMF::PROVENANCE    | method, frames, iterations |
+| RMF::decorator::CombineProvenance   |  RMF::PROVENANCE    | runs, frames               |
+| RMF::decorator::FilterProvenance    |  RMF::PROVENANCE    | threshold, frames          |
+| RMF::decorator::ClusterProvenance   |  RMF::PROVENANCE    | members                    |
