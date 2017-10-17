@@ -70,6 +70,7 @@ The category name is `sequence` and it includes information about the types and 
 | `state index`    | int       |  An arbitrary integer to label different states of a hierarchy. |
 | `explicit resolution` | float     |  Explicitly-specified resolution for a hierarchy. |
 | `reference` | int          |  The RMF::NodeID of the reference node    |
+| `provenance` | int         |  The RMF::NodeID of the provenance node   |
 
 
 ## Decorators ## {#sequencedecorators}
@@ -85,6 +86,7 @@ The category name is `sequence` and it includes information about the types and 
 | RMF::decorator::State           | RMF::REPRESENTATION     |  state index                       |
 | RMF::decorator::ExplicitResolution | RMF::REPRESENTATION  |  explicit resolution               |
 | RMF::decorator::Reference       | RMF::REPRESENTATION     |  pointer to reference node         |
+| RMF::decorator::Provenance      | RMF::REPRESENTATION     |  pointer to provenance node        |
 
 
 # Feature # {#feature}
@@ -207,3 +209,32 @@ should be loaded as a child of the current node.
 | Name                            |  Node Type              | Attributes                         |
 |--------------------------------:|:-----------------------:|:-----------------------------------|
 | RMF::decorator::JournalArticle  | RMF::ORGANIZATIONAL     |  title, journal, pubmed id, year, authors |
+
+# Provenance # {#provenance}
+
+The category name is `provenance`. It includes information about how the
+structure was generated.
+
+## Attributes ## {#provenanceattributes}
+
+| Name           | Type         | Description                               |
+|---------------:|-------------:|:------------------------------------------|
+| `filename`     | string       |  File from which the structure was read   |
+| `chain`        | string       |  Chain ID of the structure that was read  |
+| `method`       | string       |  Sampling method utilized                 |
+| `frames`       | int          |  Number of frames in an ensemble          |
+| `iterations`   | int          |  Number of sampling iterations used       |
+| `runs`         | int          |  Number of sampling runs utilized         |
+| `threshold`    | float        |  Score threshold to discard bad models    |
+| `members`      | int          |  Number of members in a cluster           |
+
+
+## Decorators ## {#provenancedecorators}
+
+| Name                                |  Node Type              | Attributes                 |
+|------------------------------------:|:-----------------------:|:---------------------------|
+| RMF::decorator::StructureProvenance |  RMF::ORGANIZATIONAL    | filename, chain            |
+| RMF::decorator::SampleProvenance    |  RMF::ORGANIZATIONAL    | method, frames, iterations |
+| RMF::decorator::CombineProvenance   |  RMF::ORGANIZATIONAL    | runs, frames               |
+| RMF::decorator::FilterProvenance    |  RMF::ORGANIZATIONAL    | threshold, frames          |
+| RMF::decorator::ClusterProvenance   |  RMF::ORGANIZATIONAL    | members                    |
