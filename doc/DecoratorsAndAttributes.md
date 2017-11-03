@@ -221,7 +221,7 @@ structure was generated.
 |----------------------:|-------------:|:------------------------------------------|
 | `structure filename`  | string       |  File from which the structure was read   |
 | `structure chain`     | string       |  Chain ID of the structure that was read  |
-| `structure residue offset` | int     |  Structure residue # - offset = Model residue # |
+| `structure residue offset` | int     |  Model residue # = Structure residue # + offset |
 | `sampling method`     | string       |  Sampling method utilized                 |
 | `sampling frames`     | int          |  Number of frames in the sample ensemble  |
 | `sampling iterations` | int          |  Number of sampling iterations used       |
