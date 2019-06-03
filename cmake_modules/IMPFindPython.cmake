@@ -18,6 +18,9 @@ function(imp_find_python)
       message(STATUS "Python binary is " ${python_full_path} " (version " ${python_full_version} ")")
 
       find_package(PythonLibs ${python_full_version} EXACT REQUIRED)
+      # Make sure PYTHON_INCLUDE_DIRS is in the cache so it can be
+      # used elsewhere
+      set(PYTHON_INCLUDE_DIRS ${PYTHON_INCLUDE_DIRS} CACHE INTERNAL "")
     endif()
     if(NOT DEFINED PYTHON_NUMPY_INCLUDE_DIR)
       execute_process(COMMAND ${PYTHON_EXECUTABLE} -c
