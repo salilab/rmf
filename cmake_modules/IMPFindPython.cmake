@@ -9,6 +9,7 @@ function(imp_find_python)
 		      OUTPUT_VARIABLE python_full_path
                       OUTPUT_STRIP_TRAILING_WHITESPACE)
       set(PYTHON_EXECUTABLE ${python_full_path} CACHE INTERNAL "" FORCE)
+      set(PYTHON_TEST_EXECUTABLE ${python_full_path} CACHE STRING "")
       execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "import sys; print('%d.%d.%d' % sys.version_info[:3])"
                       WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
                       OUTPUT_VARIABLE python_full_version
@@ -60,6 +61,7 @@ function(imp_find_python)
        AND Python3_Interpreter_FOUND AND Python3_Development_FOUND)
       # Use Python 3 tools
       set(PYTHON_EXECUTABLE ${Python3_EXECUTABLE} CACHE INTERNAL "" FORCE)
+      set(PYTHON_TEST_EXECUTABLE ${Python3_EXECUTABLE} CACHE STRING "")
       set(PYTHON_LIBRARIES ${Python3_LIBRARIES} CACHE INTERNAL "" FORCE)
       set(PYTHON_INCLUDE_DIRS ${Python3_INCLUDE_DIRS} CACHE INTERNAL "" FORCE)
       set(PYTHON_LIBRARY_DIRS ${Python3_LIBRARY_DIRS} CACHE INTERNAL "" FORCE)
@@ -74,6 +76,7 @@ function(imp_find_python)
       find_package(Python2 COMPONENTS Interpreter Development NumPy)
       if(Python2_Interpreter_FOUND AND Python2_Development_FOUND)
         set(PYTHON_EXECUTABLE ${Python2_EXECUTABLE} CACHE INTERNAL "" FORCE)
+        set(PYTHON_TEST_EXECUTABLE ${Python2_EXECUTABLE} CACHE STRING "")
         set(PYTHON_LIBRARIES ${Python2_LIBRARIES} CACHE INTERNAL "" FORCE)
         set(PYTHON_INCLUDE_DIRS ${Python2_INCLUDE_DIRS} CACHE INTERNAL "" FORCE)
         set(PYTHON_LIBRARY_DIRS ${Python2_LIBRARY_DIRS} CACHE INTERNAL "" FORCE)
