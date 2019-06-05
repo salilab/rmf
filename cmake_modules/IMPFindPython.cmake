@@ -13,8 +13,16 @@ function(imp_find_python)
                       WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
                       OUTPUT_VARIABLE python_full_version
                       OUTPUT_STRIP_TRAILING_WHITESPACE)
-      string(REGEX REPLACE "^([0-9]+\\.[0-9]+).*" "\\1" python_version
+      string(REGEX REPLACE "^([0-9])+\\.[0-9]+.*" "\\1" major
              "${python_full_version}")
+      string(REGEX REPLACE "^[0-9]+\\.([0-9]+).*" "\\1" minor
+             "${python_full_version}")
+      string(REGEX REPLACE "^[0-9]+\\.[0-9]+\\.([0-9]+).*" "\\1" patch
+             "${python_full_version}")
+      set(PYTHON_VERSION ${python_full_version} CACHE INTERNAL "" FORCE)
+      set(PYTHON_VERSION_MAJOR ${major} CACHE INTERNAL "" FORCE)
+      set(PYTHON_VERSION_MINOR ${minor} CACHE INTERNAL "" FORCE)
+      set(PYTHON_VERSION_PATCH ${patch} CACHE INTERNAL "" FORCE)
       message(STATUS "Python binary is " ${python_full_path} " (version " ${python_full_version} ")")
 
       find_package(PythonLibs ${python_full_version} EXACT REQUIRED)
@@ -58,6 +66,10 @@ function(imp_find_python)
       set(PYTHON_NUMPY_FOUND ${Python3_NumPy_FOUND} CACHE INTERNAL "" FORCE)
       set(PYTHON_NUMPY_INCLUDE_DIR ${Python3_NumPy_INCLUDE_DIRS}
           CACHE INTERNAL "" FORCE)
+      set(PYTHON_VERSION ${Python3_VERSION} CACHE INTERNAL "" FORCE)
+      set(PYTHON_VERSION_MAJOR ${Python3_VERSION_MAJOR} CACHE INTERNAL "" FORCE)
+      set(PYTHON_VERSION_MINOR ${Python3_VERSION_MINOR} CACHE INTERNAL "" FORCE)
+      set(PYTHON_VERSION_PATCH ${Python3_VERSION_PATCH} CACHE INTERNAL "" FORCE)
     else()
       find_package(Python2 COMPONENTS Interpreter Development NumPy)
       if(Python2_Interpreter_FOUND AND Python2_Development_FOUND)
@@ -67,6 +79,13 @@ function(imp_find_python)
         set(PYTHON_LIBRARY_DIRS ${Python2_LIBRARY_DIRS} CACHE INTERNAL "" FORCE)
         set(PYTHON_NUMPY_FOUND ${Python2_NumPy_FOUND} CACHE INTERNAL "" FORCE)
         set(PYTHON_NUMPY_INCLUDE_DIR ${Python2_NumPy_INCLUDE_DIRS}
+            CACHE INTERNAL "" FORCE)
+        set(PYTHON_VERSION ${Python2_VERSION} CACHE INTERNAL "" FORCE)
+        set(PYTHON_VERSION_MAJOR ${Python2_VERSION_MAJOR}
+            CACHE INTERNAL "" FORCE)
+        set(PYTHON_VERSION_MINOR ${Python2_VERSION_MINOR}
+            CACHE INTERNAL "" FORCE)
+        set(PYTHON_VERSION_PATCH ${Python2_VERSION_PATCH}
             CACHE INTERNAL "" FORCE)
       else()
         message(FATAL_ERROR "Could not find a Python interpreter and matching headers/libraries. Python is required to build.")
