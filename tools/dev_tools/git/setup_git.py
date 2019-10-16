@@ -39,7 +39,14 @@ else:
         out = os.path.join(hdir, os.path.split(f)[1])
         if os.path.exists(out):
             os.unlink(out)
-        shutil.copy2(f, out)
+        if f.endswith('pre-commit'):
+            with open(f) as fin:
+                with open(out, 'w') as fout:
+                    for line in fin:
+                        fout.write(line.replace('@PYTHON@', sys.executable))
+            os.chmod(out, 0o755)
+        else:
+            shutil.copy2(f, out)
     shutil.copy2(os.path.join(dev_tools_path, "check_standards.py"), hdir)
     out_tools = os.path.join(hdir, "python_tools")
     if os.path.exists(out_tools):
