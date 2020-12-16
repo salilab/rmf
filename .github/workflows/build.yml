@@ -57,5 +57,6 @@ jobs:
         ctest -j 2 --output-on-failure -L ${{ matrix.tests }}
     - name: Upload coverage to codecov
       run: |
+        cd build
         (cd coverage && coverage combine && mv .coverage ..)
         bash <(curl -s https://codecov.io/bash)
