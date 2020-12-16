@@ -29,7 +29,7 @@ jobs:
           build: Release
         - os: ubuntu-latest
           python-version: 3.9
-          install: 'libhdf5-dev liblog4cxx10-dev'
+          install: 'libhdf5-dev liblog4cxx-dev'
           flags: '--coverage'
           tests: RMF
           build: Debug
