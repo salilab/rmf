@@ -1,6 +1,7 @@
 Change Log {#changelog}
 ==========
-- All RMF binaries now support the --version flag.
+- All RMF binaries now support the --version flag, and the RMF library itself
+  is versioned.
 
 # 1.2 - 2021-04-19 # {#changelog_1_2}
 - A new category of decorators 'provenance' allows information about how the
