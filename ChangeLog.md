@@ -8,6 +8,8 @@ Change Log {#changelog}
 - The new RMF::decorator::ExplicitResolution decorator allows attaching an
   explicitly-set resolution to a node. (This allows such values from IMP to
   be accurately stored in the file.)
+
+# 1.1 - 2014-03-07 # {#changelog_1_1}
 - To be more consisent, RMF::decorator::Domain and
 	RMF::decorator::Fragment had their access methods modified to
 	include `residue` in the name.
