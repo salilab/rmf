@@ -1,11 +1,12 @@
 #!/usr/bin/env python
-from _decorators import *
+from _decorators import Attribute, Decorator, make_header, PathAttribute
+from _decorators import NodeAttribute, RangeAttribute, OptionalPathAttribute
 import os.path
 import os
 
 try:
     os.makedirs(os.path.join("include", "RMF"))
-except:
+except OSError:
     pass
 
 coordinates = Attribute(
@@ -40,7 +41,7 @@ refframe = Decorator(["REPRESENTATION", "ORGANIZATIONAL"], "physics",
 
 atom = Decorator(["REPRESENTATION"], "physics",
                  "Atom",
-                 [Attribute("element", "Int"), coordinates, mass, radius
+                 [Attribute("element", "Int"), mass, radius
                   ])
 
 diffuser = Decorator(["REPRESENTATION"], "physics",
@@ -77,7 +78,8 @@ ball = Decorator(["GEOMETRY"], "shape",
 
 ellipsoid = Decorator(["GEOMETRY"], "shape",
                       "Ellipsoid",
-                      [Attribute("axis lengths", "Vector3"), orientation, coordinates])
+                      [Attribute("axis lengths", "Vector3"), orientation,
+                       coordinates])
 
 
 cylinder = Decorator(["GEOMETRY"], "shape",
@@ -103,6 +105,68 @@ journal = Decorator(["ORGANIZATIONAL"], "publication",
 
 make_header("publication", [journal], [])
 
+structure = Decorator(["PROVENANCE"], "provenance",
+                      "StructureProvenance",
+                      [PathAttribute("structure filename",
+                                     function_name='filename'),
+                       Attribute("structure chain", "String",
+                                 function_name='chain'),
+                       Attribute("structure residue offset", "Int",
+                                 function_name='residue_offset',
+                                 default=0)])
+
+sample = Decorator(["PROVENANCE"], "provenance",
+                   "SampleProvenance",
+                   [Attribute("sampling method", "String",
+                              function_name='method'),
+                    Attribute("sampling frames", "Int",
+                              function_name='frames'),
+                    Attribute("sampling iterations", "Int",
+                              function_name='iterations'),
+                    Attribute("sampling replicas", "Int",
+                              function_name='replicas')])
+
+combine = Decorator(["PROVENANCE"], "provenance",
+                    "CombineProvenance",
+                    [Attribute("combined runs", "Int", function_name='runs'),
+                     Attribute("combined frames", "Int",
+                               function_name='frames')])
+
+filterp = Decorator(["PROVENANCE"], "provenance",
+                    "FilterProvenance",
+                    [Attribute("filter method", "String",
+                               function_name='method'),
+                     Attribute("filter threshold", "Float",
+                               function_name='threshold'),
+                     Attribute("filter frames", "Int",
+                               function_name='frames')])
+
+cluster = Decorator(["PROVENANCE"], "provenance",
+                    "ClusterProvenance",
+                    [Attribute("cluster members", "Int",
+                               function_name='members'),
+                     Attribute("cluster precision", "Float",
+                               function_name='precision', default=0.),
+                     OptionalPathAttribute("cluster density",
+                                           function_name='density')])
+
+script = Decorator(["PROVENANCE"], "provenance",
+                   "ScriptProvenance",
+                   [PathAttribute("script filename",
+                                  function_name='filename')])
+
+software = Decorator(["PROVENANCE"], "provenance",
+                     "SoftwareProvenance",
+                     [Attribute("software name", "String",
+                                function_name='name'),
+                      Attribute("software version", "String",
+                                function_name='version'),
+                      Attribute("software location", "String",
+                                function_name='location')])
+
+make_header("provenance",
+            [structure, sample, combine, filterp, cluster, script, software],
+            [])
 
 residue = Decorator(["REPRESENTATION"], "sequence",
                     "Residue",
@@ -111,7 +175,10 @@ residue = Decorator(["REPRESENTATION"], "sequence",
 
 chain = Decorator(["REPRESENTATION"], "sequence",
                   "Chain",
-                  [Attribute("chain id", "String")])
+                  [Attribute("chain id", "String"),
+                   Attribute("sequence", "String", default=""),
+                   Attribute("chain type", "String",
+                             default='UnknownChainType')])
 
 domain = Decorator(["REPRESENTATION"], "sequence",
                    "Domain",
@@ -140,6 +207,10 @@ state = Decorator(["REPRESENTATION"], "sequence",
                   "State",
                   [Attribute("state index", "Int")])
 
+expres = Decorator(["REPRESENTATION"], "sequence",
+                   "ExplicitResolution",
+                   [Attribute("explicit resolution", "Float")])
+
 
 make_header(
     "sequence",
@@ -149,9 +220,16 @@ make_header(
      domain,
      typed,
      copy,
-     state],
+     state,
+     expres],
     [])
 
+scale = Decorator(["REPRESENTATION"], "uncertainty",
+                  "Scale",
+                  [Attribute("scale", "Float"),
+                   Attribute("scale lower", "Float", function_name='lower'),
+                   Attribute("scale upper", "Float", function_name='upper')])
+make_header("uncertainty", [scale], [])
 
 salias = Decorator(["ALIAS"], "alias",
                    "Alias",

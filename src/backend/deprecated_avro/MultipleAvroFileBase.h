@@ -2,12 +2,12 @@
  *  \file RMF/internal/SharedData.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
-#ifndef RMF_INTERNAL_SINGLE_AVRO_FILE_BASE_H
-#define RMF_INTERNAL_SINGLE_AVRO_FILE_BASE_H
+#ifndef RMF_INTERNAL_MULTIPLE_AVRO_FILE_BASE_H
+#define RMF_INTERNAL_MULTIPLE_AVRO_FILE_BASE_H
 
 #include "AllJSON.h"
 #include <string>
@@ -79,4 +79,4 @@ class MultipleAvroFileBase : public AvroKeysAndCategories {
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_INTERNAL_MULTIPLE_AVRO_FILE_H */
+#endif /* RMF_INTERNAL_MULTIPLE_AVRO_FILE_BASE_H */

@@ -2,7 +2,7 @@
  *  \file RMF/infrastructure_macros.h
  *  \brief Various general useful macros for IMP.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
@@ -17,7 +17,7 @@
 #include <vector>
 #include <boost/config.hpp>
 #include <boost/version.hpp>
-#if defined(BOOST_NO_CXX11_RANGE_BASED_FOR) || BOOST_VERSION <= 104100
+#if defined(BOOST_NO_CXX11_RANGE_BASED_FOR) || BOOST_VERSION < 105300
 #define RMF_FOREACH(v, r) BOOST_FOREACH(v, r)
 #include <boost/foreach.hpp>  // IWYU pragma: export
 #else
@@ -137,7 +137,7 @@ RMF_ENABLE_WARNINGS
 */
 #define RMF_NO_RETURN(type) return type()
 
-/** Apply the macro to each supported constant size type (eg int as opposed
+/** Apply the macro to each supported constant size type (e.g. int as opposed
     to string).
 
     \see RMF_FOREACH_TYPE()
@@ -148,7 +148,7 @@ RMF_ENABLE_WARNINGS
   macroname(index, Index, int, int, const Ints&, Ints)
 
 /** Expand to applying the macro to each type supported by
-    the rmf library. The macro should take six argments
+    the RMF library. The macro should take six arguments
     - the lower case name of the type
     - the upper case name
     - the C++ type for accepting the value
@@ -181,13 +181,6 @@ class Nullable;
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
 struct Showable;
 inline std::ostream& operator<<(std::ostream& out, const Showable& t);
-
-/** Produce hash values for boost hash tables.
- */
-template <class T>
-inline std::size_t hash_value(const T& t) {
-  return t.__hash__();
-}
 
 /** An adaptor class to provide operator<< for classes easily. */
 struct Showable {

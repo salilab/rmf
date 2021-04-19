@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+from __future__ import print_function
 import unittest
 import RMF
 
@@ -15,28 +15,28 @@ class GenericTest(unittest.TestCase):
         for suffix in RMF.suffixes:
             RMF.set_log_level("trace")
             path = RMF._get_temporary_file_path("trivial." + suffix)
-            print path
-            print "create"
+            print(path)
+            print("create")
             fh = RMF.create_rmf_file(path)
-            print "add frame"
+            print("add frame")
             fh.add_frame("root", RMF.FRAME)
-            print "keys"
+            print("keys")
             cat = fh.get_category("MyCat")
             key = fh.get_key(cat, "MyKey", RMF.int_tag)
-            print "set"
+            print("set")
             fh.get_root_node().set_static_value(key, 1)
             self.assertEqual(fh.get_root_node().get_value(key), 1)
             RMF.show_hierarchy_with_values(fh.get_root_node())
             del fh
-            print "open"
+            print("open")
             fh = RMF.open_rmf_file_read_only(path)
-            print "set frame"
+            print("set frame")
             fh.set_current_frame(RMF.FrameID(0))
-            print "keys"
+            print("keys")
             RMF.show_hierarchy_with_values(fh.get_root_node())
             cat = fh.get_category("MyCat")
             key = fh.get_key(cat, "MyKey", RMF.int_tag)
-            print "get value"
+            print("get value")
             v = fh.get_root_node().get_value(key)
             self.assertEqual(v, 1)
 

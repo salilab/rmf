@@ -2,7 +2,7 @@
  *  \file RMF/Category.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
@@ -17,6 +17,9 @@
 #include "RMF/decorator/representation.h"
 #include "RMF/decorator/alternatives.h"
 #include "RMF/decorator/shape.h"
+#include "RMF/decorator/reference.h"
+#include "RMF/decorator/provenance.h"
+#include "RMF/decorator/uncertainty.h"
 #include "RMF/enums.h"
 #include "RMF/infrastructure_macros.h"
 #include "RMF/types.h"
@@ -173,29 +176,75 @@ void show_node_decorators(
     decorator::ResidueFactory rcf, decorator::AtomFactory acf,
     decorator::ChainFactory chaincf, decorator::DomainFactory fragcf,
     decorator::CopyFactory copycf, decorator::DiffuserFactory diffusercf,
-    decorator::TypedFactory typedcf, std::string) {
+    decorator::TypedFactory typedcf, decorator::ReferenceFactory refcf,
+    decorator::ScaleFactory scalecf,
+    decorator::StructureProvenanceFactory strucpcf,
+    decorator::SampleProvenanceFactory samppcf,
+    decorator::CombineProvenanceFactory combpcf,
+    decorator::FilterProvenanceFactory filtpcf,
+    decorator::ClusterProvenanceFactory clustpcf,
+    decorator::ScriptProvenanceFactory scriptpcf,
+    decorator::SoftwareProvenanceFactory softpcf,
+    std::string) {
   using std::operator<<;
   out << "\"" << n.get_name() << "\"" << node_suffix << " [" << n.get_type()
       << ":";
-  if (bdcf.get_is(n)) out << " bond";
-  if (ccf.get_is(n)) out << " color";
-  if (pcf.get_is(n))
+  if (bdcf.get_is_static(n)) out << " bond(s)";
+  else if (bdcf.get_is(n)) out << " bond";
+  if (ccf.get_is_static(n)) out << " color(s)";
+  else if (ccf.get_is(n)) out << " color";
+  if (pcf.get_is_static(n))
+    out << " particle(s)";
+  else if (ipcf.get_is_static(n))
+    out << " iparticle(s)";
+  else if (pcf.get_is(n))
     out << " particle";
   else if (ipcf.get_is(n))
     out << " iparticle";
-  if (rpcf.get_is(n)) out << " rigid";
-  if (scf.get_is(n)) out << " score";
-  if (repcf.get_is(n)) out << " representation";
-  if (bcf.get_is(n)) out << " ball";
-  if (cycf.get_is(n)) out << " cylinder";
-  if (segcf.get_is(n)) out << " segment";
-  if (rcf.get_is(n)) out << " residue";
-  if (acf.get_is(n)) out << " atom";
-  if (chaincf.get_is(n)) out << " chain";
-  if (fragcf.get_is(n)) out << " domain";
-  if (copycf.get_is(n)) out << " copy";
-  if (typedcf.get_is(n)) out << " typed";
-  if (diffusercf.get_is(n)) out << " diffuser";
+  if (rpcf.get_is_static(n)) out << " rigid(s)";
+  else if (rpcf.get_is(n)) out << " rigid";
+  if (scf.get_is_static(n)) out << " score(s)";
+  else if (scf.get_is(n)) out << " score";
+  if (repcf.get_is_static(n)) out << " representation(s)";
+  else if (repcf.get_is(n)) out << " representation";
+  if (bcf.get_is_static(n)) out << " ball(s)";
+  else if (bcf.get_is(n)) out << " ball";
+  if (cycf.get_is_static(n)) out << " cylinder(s)";
+  else if (cycf.get_is(n)) out << " cylinder";
+  if (segcf.get_is_static(n)) out << " segment(s)";
+  else if (segcf.get_is(n)) out << " segment";
+  if (rcf.get_is_static(n)) out << " residue(s)";
+  else if (rcf.get_is(n)) out << " residue";
+  if (acf.get_is_static(n)) out << " atom(s)";
+  else if (acf.get_is(n)) out << " atom";
+  if (chaincf.get_is_static(n)) out << " chain(s)";
+  else if (chaincf.get_is(n)) out << " chain";
+  if (fragcf.get_is_static(n)) out << " domain(s)";
+  else if (fragcf.get_is(n)) out << " domain";
+  if (copycf.get_is_static(n)) out << " copy(s)";
+  else if (copycf.get_is(n)) out << " copy";
+  if (typedcf.get_is_static(n)) out << " typed(s)";
+  else if (typedcf.get_is(n)) out << " typed";
+  if (diffusercf.get_is_static(n)) out << " diffuser(s)";
+  else if (diffusercf.get_is(n)) out << " diffuser";
+  if (refcf.get_is_static(n)) out << " reference(s)";
+  else if (refcf.get_is(n)) out << " reference";
+  if (scalecf.get_is_static(n)) out << " scale(s)";
+  else if (scalecf.get_is(n)) out << " scale";
+  if (strucpcf.get_is_static(n)) out << " structure provenance(s)";
+  else if (strucpcf.get_is(n)) out << " structure provenance";
+  if (samppcf.get_is_static(n)) out << " sample provenance(s)";
+  else if (samppcf.get_is(n)) out << " sample provenance";
+  if (combpcf.get_is_static(n)) out << " combine provenance(s)";
+  else if (combpcf.get_is(n)) out << " combine provenance";
+  if (filtpcf.get_is_static(n)) out << " filter provenance(s)";
+  else if (filtpcf.get_is(n)) out << " filter provenance";
+  if (clustpcf.get_is_static(n)) out << " cluster provenance(s)";
+  else if (clustpcf.get_is(n)) out << " cluster provenance";
+  if (scriptpcf.get_is_static(n)) out << " script provenance(s)";
+  else if (scriptpcf.get_is(n)) out << " script provenance";
+  if (softpcf.get_is_static(n)) out << " software provenance(s)";
+  else if (softpcf.get_is(n)) out << " software provenance";
   out << "]";
 }
 
@@ -254,6 +303,15 @@ struct ShowDecorators {
   decorator::CopyFactory copycf;
   decorator::DiffuserFactory diffusercf;
   decorator::TypedFactory typedcf;
+  decorator::ReferenceFactory refcf;
+  decorator::ScaleFactory scalecf;
+  decorator::StructureProvenanceFactory strucpcf;
+  decorator::SampleProvenanceFactory samppcf;
+  decorator::CombineProvenanceFactory combpcf;
+  decorator::FilterProvenanceFactory filtpcf;
+  decorator::ClusterProvenanceFactory clustpcf;
+  decorator::ScriptProvenanceFactory scriptpcf;
+  decorator::SoftwareProvenanceFactory softpcf;
   ShowDecorators(FileConstHandle fh)
       : bdf(fh),
         ccf(fh),
@@ -271,24 +329,41 @@ struct ShowDecorators {
         fragcf(fh),
         copycf(fh),
         diffusercf(fh),
-        typedcf(fh) {}
+        typedcf(fh),
+        refcf(fh),
+        scalecf(fh),
+        strucpcf(fh),
+        samppcf(fh),
+        combpcf(fh),
+        filtpcf(fh),
+        clustpcf(fh),
+        scriptpcf(fh),
+        softpcf(fh) {}
   void operator()(NodeConstHandle cur, std::string prefix, std::string suffix,
                   std::ostream& out) {
     show_node_decorators(cur, suffix, out, bdf, ccf, pcf, ipcf, rpcf, scf,
                          repcf, bcf, cycf, segcf, rcf, acf, chaincf, fragcf,
-                         copycf, diffusercf, typedcf, prefix + "   ");
+                         copycf, diffusercf, typedcf, refcf, scalecf, strucpcf,
+                         samppcf, combpcf, filtpcf, clustpcf, scriptpcf,
+                         softpcf, prefix + "   ");
   }
 };
 }
 
 void show_hierarchy(NodeConstHandle root, std::ostream& out) {
-  using std::operator<<;
-  decorator::AlternativesFactory altcf(root.get_file());
   print_tree(out, root, simple_show_node);
+}
+
+void show_hierarchy(NodeConstHandle root) {
+  print_tree(std::cout, root, simple_show_node);
 }
 
 void show_hierarchy_with_values(NodeConstHandle root, std::ostream& out) {
   print_tree(out, root, ShowValues(root.get_file()));
+}
+
+void show_hierarchy_with_values(NodeConstHandle root) {
+  print_tree(std::cout, root, ShowValues(root.get_file()));
 }
 
 void show_hierarchy_with_decorators(NodeConstHandle root, bool,

@@ -2,12 +2,12 @@
  *  \file RMF/internal/SharedData.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
-#ifndef RMF_INTERNAL_SINGLE_AVRO_FILE_WRITER_H
-#define RMF_INTERNAL_SINGLE_AVRO_FILE_WRITER_H
+#ifndef RMF_INTERNAL_MULTIPLE_AVRO_FILE_WRITER_H
+#define RMF_INTERNAL_MULTIPLE_AVRO_FILE_WRITER_H
 
 #include "avrocpp/api/DataFile.hh"
 #include "AllJSON.h"

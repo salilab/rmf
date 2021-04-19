@@ -2,7 +2,7 @@
  *  \file RMF/BufferHandle.h
  *  \brief Declare RMF::BufferHandle.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
@@ -25,7 +25,7 @@ class BufferHandle : public BufferConstHandle {
   BufferHandle() : BufferConstHandle(std::vector<char>()) {}
 #if !defined(IMP_DOXYGEN)
   // for pickling
-  BufferHandle(std::string st) : BufferConstHandle(st) {}
+  BufferHandle(const std::vector<char> &st) : BufferConstHandle(st) {}
 #endif
 #if !defined(IMP_DOXYGEN) && !defined(SWIG)
   std::vector<char> &access_buffer() const { return *data_; }

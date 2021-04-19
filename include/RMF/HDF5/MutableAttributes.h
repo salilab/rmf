@@ -2,7 +2,7 @@
  *  \file RMF/HDF5/MutableAttributes.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
@@ -17,8 +17,8 @@
 RMF_ENABLE_WARNINGS
 namespace RMF {
 namespace HDF5 {
-/** Wrap an HDF5 Object. See
-    \external{http://www.hdfobject.org/HDF5/doc/UG/UG_frame09Objects.html,
+/** Wrap a set of HDF5 Attributes. See
+    \external{https://support.hdfgroup.org/HDF5/doc/RM/RM_H5A.html,
     the HDF5 manual} for more information.
  */
 template <class Base>
@@ -45,7 +45,7 @@ class MutableAttributes : public Base {
 #endif
  public:
   /** \name Template attribute methods
-      When manipulating attriutes from C++ you can use these
+      When manipulating attributes from C++ you can use these
       templated methods.
       @{
    */

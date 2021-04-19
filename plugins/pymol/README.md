@@ -1,6 +1,7 @@
-# Pymol Plugin #
+Pymol Plugin {#pymolplugin}
+============
 
-# Using the plugin # {#pymolplugin}
+# Using the plugin #
 [TOC]
 
 Pymol does not seem to support a file type plugin architecture. So

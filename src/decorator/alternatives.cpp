@@ -2,12 +2,13 @@
  *  \file RMF/Category.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
 #include "RMF/decorator/alternatives.h"
 #include "RMF/decorator/physics.h"
+#include "RMF/decorator/sequence.h"
 #include <numeric>
 
 RMF_ENABLE_WARNINGS
@@ -99,12 +100,17 @@ NodeIDs AlternativesConst::get_alternatives_impl(RepresentationType type)
 }
 
 double get_resolution(NodeConstHandle root) {
-  IntermediateParticleFactory ipcf(root.get_file());
-  GaussianParticleFactory gpf(root.get_file());
-  std::pair<double, bool> total = get_resolution_impl(root, ipcf, gpf);
-  RMF_USAGE_CHECK(total.second,
+  ExplicitResolutionFactory erf(root.get_file());
+  if (erf.get_is(root)) {
+    return erf.get(root).get_static_explicit_resolution();
+  } else {
+    IntermediateParticleFactory ipcf(root.get_file());
+    GaussianParticleFactory gpf(root.get_file());
+    std::pair<double, bool> total = get_resolution_impl(root, ipcf, gpf);
+    RMF_USAGE_CHECK(total.second,
                   std::string("No particles were found at ") + root.get_name());
-  return 1.0 / total.first;
+    return 1.0 / total.first;
+  }
 }
 
 Alternatives::Alternatives(NodeHandle nh, IntsKey types_key, IntsKey roots_key)

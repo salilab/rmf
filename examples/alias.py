@@ -1,11 +1,12 @@
 ## \example alias.py
 # Show using aliases to provide two different organization schemes
 # for manipulating a hierarchy.
+from __future__ import print_function
 import RMF
 
 # find the name for a temporary file to use to for writing the hdf5 file
 tfn = RMF._get_temporary_file_path("aliases.rmf")
-print "File is", tfn
+print("File is", tfn)
 
 # open the temporary file, clearing any existing contents
 fh = RMF.create_rmf_file(tfn)

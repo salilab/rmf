@@ -2,7 +2,7 @@
  *  \file RMF/BufferConstHandle.h
  *  \brief Declare RMF::BufferConstHandle.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
@@ -40,8 +40,10 @@ class BufferConstHandle {
   }
 
  public:
+#ifndef SWIG
   explicit BufferConstHandle(std::string r)
       : data_(boost::make_shared<std::vector<char> >(r.begin(), r.end())) {}
+#endif
   explicit BufferConstHandle(const std::vector<char> &r)
       : data_(boost::make_shared<std::vector<char> >(r.begin(), r.end())) {}
   explicit BufferConstHandle(const std::vector<uint8_t> &r)
@@ -49,10 +51,12 @@ class BufferConstHandle {
   explicit BufferConstHandle(boost::shared_ptr<std::vector<char> > r)
       : data_(r) {}
   const std::vector<char> &get_buffer() const { return *data_; }
+#ifndef SWIG
   //! get the buffer encoded in a string
   std::string get_string() const {
     return std::string(data_->begin(), data_->end());
   }
+#endif
   RMF_COMPARISONS(BufferConstHandle);
   RMF_HASHABLE(BufferConstHandle, return reinterpret_cast<size_t>(&*data_););
   RMF_SHOWABLE(BufferConstHandle, "buffer");
@@ -64,6 +68,11 @@ class BufferConstHandle {
   boost::shared_ptr<std::vector<char> > get() const { return data_; }
 #endif
 };
+
+//! Produce hash values for boost hash tables.
+inline std::size_t hash_value(const BufferConstHandle &t) {
+  return t.__hash__();
+}
 
 RMFEXPORT BufferConstHandle read_buffer(std::string file_name);
 

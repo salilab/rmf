@@ -2,7 +2,7 @@
  *  \file compatibility/hash.h
  *  \brief Make sure that we avoid errors in specialization of boost hash
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  */
 
 #ifndef RMF_INTERNAL_AVRO_SCHEMA_IO_H
@@ -111,4 +111,4 @@ void write_text(const Data& data, internal_avro::ValidSchema schema,
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_INTERNAL_SCHEMA_IO_H */
+#endif /* RMF_INTERNAL_AVRO_SCHEMA_IO_H */

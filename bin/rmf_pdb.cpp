@@ -1,5 +1,5 @@
 /**
- * Copyright 2007-2013 IMP Inventors. All rights reserved.
+ * Copyright 2007-2021 IMP Inventors. All rights reserved.
  */
 
 #include <boost/format.hpp>  // IWYU pragma: keep
@@ -123,6 +123,7 @@ RMF_ENABLE_WARNINGS namespace {
 
   int write_atoms(
       std::ostream & out, int current_index, RMF::NodeConstHandle nh,
+      RMF::decorator::IntermediateParticleFactory ipf,
       RMF::decorator::AtomFactory af, RMF::decorator::ChainFactory cf,
       RMF::decorator::ResidueFactory rf, std::string chain = std::string(),
       int residue_index = -1, std::string residue_type = std::string()) {
@@ -136,7 +137,7 @@ RMF_ENABLE_WARNINGS namespace {
     }
     if (af.get_is(nh)) {
       RMF::decorator::AtomConst a = af.get(nh);
-      RMF::Vector3 coords = a.get_coordinates();
+      RMF::Vector3 coords = ipf.get(nh).get_coordinates();
       int element = a.get_element();
       // not safe
       std::string element_name = element_names[element - 1];
@@ -148,8 +149,8 @@ RMF_ENABLE_WARNINGS namespace {
     }
     RMF::NodeConstHandles ch = nh.get_children();
     for (unsigned int i = 0; i < ch.size(); ++i) {
-      current_index = write_atoms(out, current_index, ch[i], af, cf, rf, chain,
-                                  residue_index, residue_type);
+      current_index = write_atoms(out, current_index, ch[i], ipf, af, cf, rf,
+                                  chain, residue_index, residue_type);
     }
     return current_index;
   }
@@ -175,6 +176,7 @@ int main(int argc, char** argv) {
     } else {
       out = &std::cout;
     }
+    RMF::decorator::IntermediateParticleFactory ipf(rh);
     RMF::decorator::AtomFactory af(rh);
     RMF::decorator::ChainFactory cf(rh);
     RMF::decorator::ResidueFactory rf(rh);
@@ -184,7 +186,7 @@ int main(int argc, char** argv) {
          input_frame += step_frame, ++output_frame) {
       rh.set_current_frame(RMF::FrameID(input_frame));
       *out << (boost::format("MODEL%1$9d") % (output_frame + 1)) << std::endl;
-      write_atoms(*out, 0, rn, af, cf, rf);
+      write_atoms(*out, 0, rn, ipf, af, cf, rf);
       *out << "ENDMDL" << output_frame + 1 << std::endl;
     }
     return 0;

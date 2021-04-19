@@ -1,7 +1,8 @@
-#!/usr/bin/env python
+from __future__ import print_function
 import unittest
 import RMF
 import shutil
+import utils
 
 
 class GenericTest(unittest.TestCase):
@@ -22,7 +23,7 @@ class GenericTest(unittest.TestCase):
         n.set_static_value(k2, 8)
         RMF.show_hierarchy_with_values(n)
         fh.flush()
-        print "closing"
+        print("closing")
         del n
         del fh
         del k
@@ -32,7 +33,7 @@ class GenericTest(unittest.TestCase):
         cf = RMF.ChainFactory(fh)
         n = fh.get_root_node().get_children()[0]
         RMF.show_hierarchy_with_values(n)
-        self.assert_(cf.get_is(n))
+        self.assertTrue(cf.get_is(n))
         chain = cf.get(n).get_chain_id()
         self.assertEqual(chain, "A")
 

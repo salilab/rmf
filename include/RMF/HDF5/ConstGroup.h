@@ -2,7 +2,7 @@
  *  \file RMF/HDF5/ConstGroup.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
@@ -24,7 +24,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
 #endif
 
   /** Wrap an HDF5 Group. See
-      \external{http://www.hdfgroup.org/HDF5/doc/UG/UG_frame09Groups.html,
+      \external{https://support.hdfgroup.org/HDF5/doc/RM/RM_H5G.html,
       the HDF5 manual} for more information.
    */
   class RMFEXPORT ConstGroup : public ConstAttributes<Object> {
@@ -92,6 +92,15 @@ RMF_ENABLE_WARNINGS namespace RMF {
     bool get_child_is_group(unsigned int i) const;
     bool get_child_is_data_set(unsigned int i) const;
     ConstGroup get_child_group(unsigned int i) const;
+
+    //! get child group with given name without checks
+    //! - verify group exists using get_has_child()
+    //! and that it's a group using get_child_is_group()
+    ConstGroup get_child_group(std::string name) const;
+
+    //! returns true if child is group without checks
+    //! - verify child exists using get_has_child()
+    bool get_child_is_group(std::string name) const;
   };
 
   } /* namespace HDF5 */

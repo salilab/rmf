@@ -2,7 +2,7 @@
  *  \file RMF/show_hierarchy.h
  *  \brief Functions to show the hierarchy.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
@@ -12,6 +12,8 @@
 #include <RMF/config.h>
 #include <iostream>
 
+RMF_ENABLE_WARNINGS
+
 namespace RMF {
 class NodeConstHandle;
 class FileConstHandle;
@@ -19,18 +21,20 @@ class FileConstHandle;
 /** \name Showing the hierarchy
 
 These functions print out the hierarchy with various extra information
-for each node. Each prints out an ascii tree designed for human inspection.
+for each node. Each prints out an ASCII tree designed for human inspection.
 @{ */
 
 /** Print out just the node names and types.
  */
 RMFEXPORT void show_hierarchy(NodeConstHandle root,
-                              std::ostream& out = std::cout);
+                              std::ostream& out);
+RMFEXPORT void show_hierarchy(NodeConstHandle root);
 
 /** Print out all attributes for each node for the current frame.
  */
 RMFEXPORT void show_hierarchy_with_values(NodeConstHandle root,
-                                          std::ostream& out = std::cout);
+                                          std::ostream& out);
+RMFEXPORT void show_hierarchy_with_values(NodeConstHandle root);
 
 /** Print out the list of decorators that can be used to decorate each node
     based on the current attributes in the loaded frame..

@@ -1,10 +1,11 @@
 ## \example geometry.py
 # Show creation of geometry in an RMF
 
+from __future__ import print_function
 import RMF
 
 tfn = RMF._get_temporary_file_path("aliases.rmf")
-print "File is", tfn
+print("File is", tfn)
 
 f = RMF.create_rmf_file(tfn)
 f.add_frame("root", RMF.FRAME)

@@ -5,7 +5,9 @@ file(GLOB_RECURSE avrocpp_sources "${PROJECT_SOURCE_DIR}/src/avrocpp/impl/*.cc")
 list(REMOVE_ITEM avrocpp_sources "${PROJECT_SOURCE_DIR}/src/avrocpp/impl/avrogencpp.cc")
 
 add_definitions("-DAVRO_DYN_LINK" "-DAVRO_SOURCE")
-include_directories("${PROJECT_SOURCE_DIR}/src/avrocpp/api/")
+include_directories(BEFORE "${PROJECT_SOURCE_DIR}/src")
+include_directories(BEFORE "${PROJECT_BINARY_DIR}/src")
+include_directories(BEFORE "${PROJECT_SOURCE_DIR}/src/avrocpp/api/")
 
 foreach (jf ${jsonfiles})
 set(jsonfiles_expanded ${jsonfiles_expanded} ${PROJECT_SOURCE_DIR}/src/${jf})
@@ -22,13 +24,14 @@ endif()
 endforeach()
 endif()
 
-add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/generated/embed_json.h" "${PROJECT_BINARY_DIR}/src/generated/embed_json.cpp"
-   COMMAND python "${PROJECT_SOURCE_DIR}/tools/build/make-embed.py"
+add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/src/generated/embed_jsons.h" "${PROJECT_BINARY_DIR}/src/generated/embed_jsons.cpp"
+   COMMAND ${PYTHON_EXECUTABLE}
+              "${PROJECT_SOURCE_DIR}/tools/build/make-embed.py"
               "${PROJECT_BINARY_DIR}/src/generated/" ${jsonfiles_expanded}
    DEPENDS ${jsonfiles} "${PROJECT_SOURCE_DIR}/tools/build/make-embed.py"
    COMMENT "Embedding json files" VERBATIM  )
 
-add_custom_target(RMF-embed DEPENDS "${PROJECT_BINARY_DIR}/src/generated/embed_json.cpp")
+add_custom_target(RMF-embed DEPENDS "${PROJECT_BINARY_DIR}/src/generated/embed_jsons.cpp")
 
 set_source_files_properties("${PROJECT_BINARY_DIR}/src/generated/embed_jsons.cpp" PROPERTIES GENERATED True)
 

@@ -1,8 +1,9 @@
+from __future__ import print_function
 import RMF
 RMF.set_log_level("trace")
 for suffix in RMF.suffixes:
     path = RMF._get_temporary_file_path("dag." + suffix)
-    print path
+    print(path)
     f = RMF.create_rmf_file(path)
     root = f.get_root_node()
     ch = root.add_child("hi", RMF.REPRESENTATION)

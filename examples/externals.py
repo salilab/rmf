@@ -1,6 +1,7 @@
 ## \example externals.py
 # Show how to create an RMF file that has references to external files.
 # And how to read it back, sort of.
+from __future__ import print_function
 import RMF
 import os.path
 import sys
@@ -8,7 +9,7 @@ import sys
 input_pdb = os.path.join(os.path.split(sys.argv[0])[0], "simple.pdb")
 rmf_name = RMF._get_temporary_file_path("externals.rmf")
 output_pdb = RMF._get_temporary_file_path("simple.pdb")
-print "file name is", rmf_name
+print("file name is", rmf_name)
 
 rmf = RMF.create_rmf_file(rmf_name)
 rmf.add_frame("root", RMF.FRAME)

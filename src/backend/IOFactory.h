@@ -2,7 +2,7 @@
  *  \file RMF/internal/SharedData.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
@@ -45,4 +45,4 @@ class IOFactory {
 
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_INTERNAL_IO_H */
+#endif /* RMF_INTERNAL_IO_FACTORY_H */

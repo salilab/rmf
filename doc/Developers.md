@@ -1,6 +1,7 @@
-# Developers
+Developers {#developers}
+==========
 
-# Overview # {#developers}
+# Overview #
 
 [TOC]
 
@@ -8,11 +9,11 @@ This page documents various internal aspects of how the RMF library works and is
 
 # Developer tools # {#dev_tools}
 
-RMF used the [Salilab developer tools](http://www.github.com/salilab/developer_tools) to provide basic developer tools in a way that is shared with IMP. This is included as a subrepository. Read the docs of that repository for more information.
+RMF uses the [Salilab developer tools](http://www.github.com/salilab/developer_tools) to provide basic developer tools in a way that is shared with [IMP](http://integrativemodeling.org). This is included as a subrepository. Read the docs of that repository for more information.
 
 # CMake tools # {#cmake_tools}
 
-RMF used the [Salilab cmake modules](http://www.github.com/salilab/cmake_modules) to provide some extensions to CMake. This is included as a subrepository.
+RMF uses [Salilab cmake modules](http://www.github.com/salilab/cmake_modules) to provide some extensions to [CMake](http://cmake.org). This is included as a subrepository.
 
 # Decorators # {#makedecorators}
 
@@ -26,15 +27,6 @@ RMF uses a [fork of AvroCpp](https://github.com/salilab/avrocpp) to encode data.
 
 RMF::NodeConstHandle and RMF::FileConstHandle work by maintaining a reference counted pointer to an RMF::internal::SharedData that contains the data for the open file. The SharedData object contains in memory a copy of the data from the current frame as well as various other file data (node hierarchy, frame hierarchy etc). Note, since it is ref counted, the file is kept open as long as there are any handles in existence.
 
-# Documentation # {#documention}
+# Documentation # {#documentation}
 
-RMF uses doxygen to build its documentation and it is published using the github pages support. To simplify things (so we can assume a fixed doxygen version), RMF downloads it own copy of doxygen (on mac or linux).  To update the published docs, first it helps to have a second clone of the repository checked out to the `gh-pages` branch (assumed to be called `gh-pages`) and lets assume you are building in a directory called `release`. Then do
-
-    cd release
-    ninja -j 4 RMF-doc
-    cd ../gh-pages
-    rm -rf *
-    cp -r ../release/doc/html/* .
-    git add --all .
-    git commit -a -m "update docs"
-    git push origin gh-pages
+RMF uses doxygen to build its documentation.

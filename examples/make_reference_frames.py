@@ -1,10 +1,11 @@
 ## \example make_reference_frames.py
 # This simple example makes an RMF file with several rigid copies of the
 # same thing
+from __future__ import print_function
 import RMF
 
 file_name = RMF._get_temporary_file_path("reference_frame.rmfz")
-print "file is", file_name
+print("file is", file_name)
 fh = RMF.create_rmf_file(file_name)
 fh.add_frame("root", RMF.FRAME)
 

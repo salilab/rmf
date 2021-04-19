@@ -2,7 +2,7 @@
  *  \file RMF/Category.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
@@ -94,30 +94,48 @@ std::string ConstGroup::get_child_name(unsigned int i) const {
 bool ConstGroup::get_has_child(std::string name) const {
   return H5Lexists(get_handle(), name.c_str(), H5P_DEFAULT);
 }
-bool ConstGroup::get_child_is_group(unsigned int i) const {
+bool ConstGroup::get_child_is_group(std::string name) const {
   H5O_info_t info;
   RMF_HDF5_HANDLE(c,
-                  H5Oopen(get_handle(), get_child_name(i).c_str(), H5P_DEFAULT),
+                  H5Oopen(get_handle(), name.c_str(), H5P_DEFAULT),
                   &H5Oclose);
+#if H5_VERS_MAJOR > 1 || (H5_VERS_MAJOR==1 && H5_VERS_MINOR>=12)
+  RMF_HDF5_CALL(H5Oget_info(c, &info, H5O_INFO_BASIC));
+#else
   RMF_HDF5_CALL(H5Oget_info(c, &info));
+#endif
   return info.type == H5O_TYPE_GROUP;  // H5O_TYPE_DATASET
 }
+bool ConstGroup::get_child_is_group(unsigned int i) const {
+  return get_child_is_group(get_child_name(i));
+}
+ConstGroup ConstGroup::get_child_group(std::string name) const {
+  return ConstGroup(boost::make_shared<SharedHandle>
+                    ( H5Gopen2(get_handle(), name.c_str(), H5P_DEFAULT), &H5Gclose,
+                      "open group"));
+}
+Group Group::get_child_group(std::string name) const {
+  return Group(boost::make_shared<SharedHandle>
+               (H5Gopen2(get_handle(), name.c_str(), H5P_DEFAULT), &H5Gclose,
+                "open group"));
+}
 ConstGroup ConstGroup::get_child_group(unsigned int i) const {
-  return ConstGroup(boost::make_shared<SharedHandle>(
-      H5Gopen2(get_handle(), get_child_name(i).c_str(), H5P_DEFAULT), &H5Gclose,
-      "open group"));
+  return get_child_group(get_child_name(i).c_str());
 }
 Group Group::get_child_group(unsigned int i) const {
-  return Group(boost::make_shared<SharedHandle>(
-      H5Gopen2(get_handle(), get_child_name(i).c_str(), H5P_DEFAULT), &H5Gclose,
-      "open group"));
+  return get_child_group(get_child_name(i).c_str());
 }
+
 bool ConstGroup::get_child_is_data_set(unsigned int i) const {
   H5O_info_t info;
   RMF_HDF5_HANDLE(c,
                   H5Oopen(get_handle(), get_child_name(i).c_str(), H5P_DEFAULT),
                   &H5Oclose);
+#if H5_VERS_MAJOR > 1 || (H5_VERS_MAJOR==1 && H5_VERS_MINOR>=12)
+  RMF_HDF5_CALL(H5Oget_info(c, &info, H5O_INFO_BASIC));
+#else
   RMF_HDF5_CALL(H5Oget_info(c, &info));
+#endif
   return info.type == H5O_TYPE_DATASET;  // H5O_TYPE_DATASET
 }
 
@@ -126,8 +144,12 @@ hid_t get_parameters() {
   hid_t plist = H5Pcreate(H5P_FILE_ACCESS);
   RMF_HDF5_CALL(H5Pset_sieve_buf_size(plist, 1000000));
   RMF_HDF5_CALL(H5Pset_cache(plist, 0, 10000, 10000000, 0.0));
-#if defined(H5_VERS_MAJOR) && H5_VERS_MAJOR >= 1 && H5_VERS_MINOR >= 8 && \
-    H5_VERS_RELEASE >= 6
+#if defined(H5_VERS_MAJOR) && \
+    ((H5_VERS_MAJOR == 1 && H5_VERS_MINOR == 10  && H5_VERS_RELEASE >= 2) || \
+     (H5_VERS_MAJOR == 1 && H5_VERS_MINOR > 10) || H5_VERS_MAJOR > 1)
+  RMF_HDF5_CALL(H5Pset_libver_bounds(plist, H5F_LIBVER_V18, H5F_LIBVER_LATEST));
+#elif defined(H5_VERS_MAJOR) && \
+    H5_VERS_MAJOR == 1 && H5_VERS_MINOR == 8 && H5_VERS_RELEASE >= 6
   RMF_HDF5_CALL(H5Pset_libver_bounds(plist, H5F_LIBVER_18, H5F_LIBVER_LATEST));
 #endif
   return plist;
@@ -313,7 +335,7 @@ void StringTraits::write_value_dataset(hid_t d, hid_t iss, hid_t s,
     c = &empty;
   }
   RMF_HDF5_CALL(H5Dwrite(d, get_hdf5_memory_type(), iss, s, H5P_DEFAULT, &c));
-  if (!v.empty()) delete c;
+  if (!v.empty()) delete[] c;
 }
 
 StringTraits::Type StringTraits::read_value_dataset(hid_t d, hid_t iss,

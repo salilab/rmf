@@ -1,6 +1,5 @@
-# Mapping Data
-
-# Mapping data to RMF files # {#mapping}
+Mapping data to RMF files {#mapping}
+=========================
 
 This page outlines how one would go about storing various types of data in RMF files. Much of what it says is merely suggestions, and is not mandatory.
 
@@ -16,7 +15,7 @@ For nodes types, the following node shapes are used
     }
 \enddot
 And a dot means an RMF::ALIAS node. The key concept to keep in mind with RMF::ALIAS nodes is that, unlike everything else, they don't introduce a new entity, simply point to one that exists elsewhere.
-See RMF::ROOT, RMF::REPRESENTATION, RMF::BOND, RMF::ORGANIZATIONAL, RMF::FEATURE for more information.
+See RMF::ROOT, RMF::REPRESENTATION, RMF::BOND, RMF::ORGANIZATIONAL, RMF::PROVENANCE, RMF::FEATURE for more information.
 
 # PDB files #
 

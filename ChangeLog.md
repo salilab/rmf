@@ -1,4 +1,16 @@
-# Change Log #
+Change Log {#changelog}
+==========
+
+# 1.2 - 2021-04-19 # {#changelog_1_2}
+- A new category of decorators 'provenance' allows information about how the
+  structure was generated to be added to the file.
+- The new RMF::decorator::Reference decorator allows for a node to mark
+  another node as its reference.
+- The new RMF::decorator::ExplicitResolution decorator allows attaching an
+  explicitly-set resolution to a node. (This allows such values from IMP to
+  be accurately stored in the file.)
+
+# 1.1 - 2014-03-07 # {#changelog_1_1}
 - To be more consisent, RMF::decorator::Domain and
 	RMF::decorator::Fragment had their access methods modified to
 	include `residue` in the name.

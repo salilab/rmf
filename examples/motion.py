@@ -1,6 +1,7 @@
 ## \example motion.py
 # Do a silly little simulation to show things moving around
 
+from __future__ import print_function
 import RMF
 import random
 
@@ -12,7 +13,7 @@ box_size = 15
 
 # find the name for a temporary file to use to for writing the hdf5 file
 tfn = RMF._get_temporary_file_path("motion.rmf3")
-print "File is", tfn
+print("File is", tfn)
 
 # open the temporary file, clearing any existing contents
 fh = RMF.create_rmf_file(tfn)
@@ -72,7 +73,7 @@ for p in range(0, number_of_particles):
 bn = fh.get_root_node().add_child("bonds", RMF.ORGANIZATIONAL)
 
 bonds = []
-print "creating bonds"
+print("creating bonds")
 for i in range(10):
     bd0 = random.choice(particles)
     bd1 = random.choice(particles)
@@ -98,11 +99,11 @@ for i in range(10):
         bonds.append(bp)
         coords[bonds[-1][0]] = coords[bonds[-1][1]]
 
-print "created", len(bonds), "bonds"
+print("created", len(bonds), "bonds")
 fn = fh.get_root_node().add_child("restraints", RMF.ORGANIZATIONAL)
 features = []
 feature_nodes = []
-print "creating features"
+print("creating features")
 for i in range(4):
     f0 = random.choice(particles)
     f1 = random.choice(particles)

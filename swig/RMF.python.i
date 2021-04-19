@@ -45,7 +45,7 @@ def _assert_signatures_equal(sa, sb):
      import difflib
      for l in difflib.unified_diff(sa.split("\n"), sb.split("\n")):
         stl = str(l)
-        print stl
+        print(stl)
      raise RuntimeError("not equal")
 
 suffixes=["rmf", "rmfz"]

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+from __future__ import print_function
 import unittest
 
 
@@ -7,7 +7,7 @@ class GenericTest(unittest.TestCase):
     def test_data_types(self):
         """Test that import works"""
         import sys
-        print "path", sys.path
+        print("path", sys.path)
         import RMF
 
 if __name__ == '__main__':

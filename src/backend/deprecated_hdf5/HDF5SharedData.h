@@ -2,7 +2,7 @@
  *  \file RMF/internal/SharedData.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
@@ -99,7 +99,10 @@ class HDF5SharedData : public backends::BackwardsIOBase {
     int type_index;
   };
 
-  typedef RMF_LARGE_UNORDERED_MAP<unsigned int, KeyData> KeyDataMap;
+  // Using unordered_map here causes segfaults on Ubuntu 12.04; possibly
+  // a boost or HDF5 bug
+  typedef RMF_LARGE_ORDERED_MAP<unsigned int, KeyData> KeyDataMap;
+
   KeyDataMap key_data_map_;
   typedef RMF_LARGE_UNORDERED_MAP<std::string, unsigned int> NameKeyInnerMap;
   typedef RMF_LARGE_UNORDERED_MAP<Category, NameKeyInnerMap> NameKeyMap;
@@ -704,7 +707,7 @@ class HDF5SharedData : public backends::BackwardsIOBase {
   std::string get_file_type() const { return "HDF5 version 1"; }
 
   FrameID add_frame(std::string name, FrameType /*t*/) {
-    // frame types not supported in rmf files right now
+    // frame types not supported in RMF files right now
     unsigned int cindex = get_number_of_frames();
     FrameID index(cindex);
     set_name(index, name);

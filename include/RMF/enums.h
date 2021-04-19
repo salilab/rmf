@@ -2,7 +2,7 @@
  *  \file RMF/enums.h
  *  \brief The various enums used in RMF.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
@@ -50,13 +50,15 @@ extern RMFEXPORT const NodeType ALIAS;
  */
 extern RMFEXPORT const NodeType CUSTOM;
 //! A link between two atoms
-/** These are mostly for display purposes eg to show a wireframe
+/** These are mostly for display purposes e.g. to show a wireframe
     view of the molecule. */
 extern RMFEXPORT const NodeType BOND;
 //! A node that is purely there for organizational purposes
 /** This includes nodes that are just RMF::ReferenceFrame nodes.
  */
 extern RMFEXPORT const NodeType ORGANIZATIONAL;
+//! Represent the process by which a structure was created
+extern RMFEXPORT const NodeType PROVENANCE;
 #ifndef RMF_DOXYGEN
 //! An internal link to another node
 extern RMFEXPORT const NodeType LINK;
@@ -80,6 +82,14 @@ extern RMFEXPORT const FrameType MODEL;
 extern RMFEXPORT const FrameType CENTER;
 //! An alias for another frame
 extern RMFEXPORT const FrameType FRAME_ALIAS;
+
+// Work around a Windows compile error. Standard Windows header WinGDI.h
+// globally #defines ALTERNATE to be "1", which will cause a compile
+// error below unless we #undef it first.
+#ifdef ALTERNATE
+#undef ALTERNATE
+#endif
+
 //! An alternate state for a frame or model
 extern RMFEXPORT const FrameType ALTERNATE;
 /** @} */

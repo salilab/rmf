@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+from __future__ import print_function
 import unittest
 import RMF
 import shutil
@@ -8,7 +8,7 @@ class Tests(unittest.TestCase):
 
     def _show(self, g):
         for i in range(0, g.get_number_of_children()):
-            print i, g.get_child_name(i), g.get_child_is_group(i)
+            print(i, g.get_child_name(i), g.get_child_is_group(i))
     """Test the python code"""
 
     def test_perturbed(self):
@@ -17,12 +17,12 @@ class Tests(unittest.TestCase):
             f = RMF.create_rmf_file(
                 RMF._get_temporary_file_path("test_file_perturbed." + suffix))
             r = f.get_root_node()
-            print r.get_type()
+            print(r.get_type())
             sc = f.get_category("sequence")
             ik = f.get_key(sc, "ik0", RMF.int_tag)
             f.add_frame("0", RMF.FRAME)
             r.set_value(ik, 1)
-            print r.get_value(ik)
+            print(r.get_value(ik))
             self.assertEqual(r.get_value(ik), 1)
 
     def test_frames(self):
@@ -32,7 +32,7 @@ class Tests(unittest.TestCase):
             f = RMF.create_rmf_file(path)
             f.add_frame("root", RMF.FRAME)
             r = f.get_root_node()
-            print r.get_type()
+            print(r.get_type())
             sc = f.get_category("sequence")
             ik = f.get_key(sc, "ik0", RMF.int_tag)
             r.set_value(ik, 1)
@@ -63,7 +63,7 @@ class Tests(unittest.TestCase):
             path = RMF._get_temporary_file_path("test_filei." + suffix)
             f = RMF.create_rmf_file(path)
             r = f.get_root_node()
-            print r.get_type()
+            print(r.get_type())
             sc = f.get_category("sequence")
             ik = f.get_key(sc, "ik0", RMF.int_tag)
             f.add_frame("0", RMF.FRAME)

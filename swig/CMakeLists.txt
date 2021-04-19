@@ -1,30 +1,13 @@
-FIND_PACKAGE(SWIG REQUIRED)
+FIND_PACKAGE(SWIG 1.3.40 REQUIRED)
 INCLUDE(${SWIG_USE_FILE})
 
-if(NOT DEFINED PYTHON_INCLUDE_DIRS)
-execute_process(COMMAND python -c "import sys; print '%d.%d.%d' % sys.version_info[:3]"
-                WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
-                OUTPUT_VARIABLE python_full_version
-                OUTPUT_STRIP_TRAILING_WHITESPACE)
-string(REGEX REPLACE "^([0-9]+\\.[0-9]+).*" "\\1" python_version
-       "${python_full_version}")
-message(STATUS "Python version is " ${python_version})
+add_definitions(-DRMF_SWIG_WRAPPER)
 
-FIND_PACKAGE(PythonLibs ${python_full_version} EXACT REQUIRED)
-endif()
-
-message(STATUS ${PYTHON_INCLUDE_DIRS})
-INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_DIRS})
-
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/swig)
-
-SET(CMAKE_SWIG_FLAGS "-castmode" "-naturalvar" "-Wextra" "-fvirtual"
-  "-DPySwigIterator=RMF_PySwigIterator" "-c++"
-  "-DSwigPyIterator=RMF_SwigPyIterator"
-  "-DRMFEXPORT")
 set(CMAKE_SWIG_OUTDIR "${PROJECT_BINARY_DIR}")
-include_directories("${PROJECT_BINARY_DIR}/include"
-  "${PROJECT_SOURCE_DIR}/include" "${PROJECT_SOURCE_DIR}/swig" ${HDF5_INCLUDE_DIRS})
+include_directories(BEFORE "${PROJECT_SOURCE_DIR}/swig")
+include_directories(${HDF5_INCLUDE_DIRS})
+
+INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_DIRS})
 
 FILE(GLOB rmf_headers "${PROJECT_SOURCE_DIR}/include/RMF/*.h" "${PROJECT_BINARY_DIR}/include/RMF/*.h" "${PROJECT_BINARY_DIR}/include/RMF/decorator/*.h")
 FILE(GLOB SWIG_INCLUDES "${PROJECT_SOURCE_DIR}/swig/RMF.*.i")
@@ -36,7 +19,18 @@ SET(SWIG_MODULE_RMF_EXTRA_DEPS ${rmf_headers} ${SWIG_INCLUDES} RMF-decorators
   )
 
 set(CMAKE_SWIG_OUTDIR ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" FORCE)
-SWIG_ADD_MODULE(RMF python RMF.i)
+SET(CMAKE_SWIG_FLAGS "-castmode" "-naturalvar" "-Wextra" "-fvirtual"
+  "-DPySwigIterator=RMF_PySwigIterator" "-c++"
+  "-DSwigPyIterator=RMF_SwigPyIterator"
+  "-DRMFEXPORT")
+
+# cmake 3.8 replaced SWIG_ADD_MODULE with SWIG_ADD_LIBRARY
+IF (COMMAND SWIG_ADD_LIBRARY)
+  SWIG_ADD_LIBRARY(RMF LANGUAGE python TYPE MODULE SOURCES RMF.i)
+ELSE()
+  SWIG_ADD_MODULE(RMF python RMF.i)
+ENDIF()
+
 set_property(TARGET "${SWIG_MODULE_RMF_REAL_NAME}" PROPERTY FOLDER "RMF")
 if(APPLE)
   set_target_properties("${SWIG_MODULE_RMF_REAL_NAME}" PROPERTIES LINK_FLAGS "-flat_namespace -undefined suppress")
@@ -65,7 +59,17 @@ SET(SWIG_MODULE_RMF_HDF5_EXTRA_DEPS ${headers}  ${hdf5_headers} ${SWIG_INCLUDES}
   )
 
 set(CMAKE_SWIG_OUTDIR ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" FORCE)
-SWIG_ADD_MODULE(RMF_HDF5 python RMF_HDF5.i)
+SET(CMAKE_SWIG_FLAGS "-castmode" "-naturalvar" "-Wextra" "-fvirtual"
+  "-DPySwigIterator=RMF_HDF5_PySwigIterator" "-c++"
+  "-DSwigPyIterator=RMF_HDF5_SwigPyIterator"
+  "-DRMFEXPORT")
+
+IF (COMMAND SWIG_ADD_LIBRARY)
+  SWIG_ADD_LIBRARY(RMF_HDF5 LANGUAGE python TYPE MODULE SOURCES RMF_HDF5.i)
+ELSE()
+  SWIG_ADD_MODULE(RMF_HDF5 python RMF_HDF5.i)
+ENDIF()
+
 set_property(TARGET "${SWIG_MODULE_RMF_HDF5_REAL_NAME}" PROPERTY FOLDER "RMF")
 if(APPLE)
   set_target_properties("${SWIG_MODULE_RMF_HDF5_REAL_NAME}" PROPERTIES LINK_FLAGS "-flat_namespace -undefined suppress")

@@ -2,7 +2,7 @@
  *  \file RMF/NodeHandle.h
  *  \brief Declaration of NodeHandle.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
@@ -83,6 +83,12 @@ class RMFEXPORT NodeHandle : public NodeConstHandle {
   /** Add an existing node as a child.*/
   void add_child(NodeConstHandle nh) const;
 
+  /** Create a new node that replaces an existing child of this one.
+      The new node will take the place of the existing child, and the
+      existing child will be moved to become the only child of the new node. */
+  NodeHandle replace_child(NodeHandle child, std::string name,
+		           NodeType t) const;
+
   NodeHandles get_children() const;
 
   /** \name Functions to access attributes
@@ -100,7 +106,7 @@ class RMFEXPORT NodeHandle : public NodeConstHandle {
     shared_->set_loaded_value(node_, k, v);
   }
   /** Set the value
-      - if the attribute has a static value and it is equal the current one
+      - if the attribute has a static value and it is equal to the current one
         do nothing.
       - if the attribute doesn't have a static value, set it,
       - otherwise set the frame value.

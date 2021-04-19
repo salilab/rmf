@@ -2,7 +2,7 @@
  *  \file RMF/Enum.h
  *  \brief Declaration of RMF::Enum.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
@@ -62,6 +62,14 @@ class Enum {
     RMF_USAGE_CHECK(TagT::get_to().find(i) != TagT::get_to().end(),
                     "Enum value not defined");
   }
+  Enum(bool, int i) : i_(i) {
+    // Map out of range values to the undefined type, rather than throwing
+    // an error. This can be used, for example, to handle reading files
+    // made with a newer version of RMF.
+    if (TagT::get_to().find(i) == TagT::get_to().end()) {
+      i_ = -1;
+    }
+  }
   Enum(std::string name) {
     RMF_USAGE_CHECK(TagT::get_from().find(name) != TagT::get_from().end(),
                     "Enum name not defined");
@@ -78,6 +86,12 @@ class Enum {
   operator int() const { return i_; }
 #endif
 };
+
+//! Produce hash values for boost hash tables.
+template <class TagT>
+inline std::size_t hash_value(const Enum<TagT>& t) {
+  return t.__hash__();
+}
 
 #if !defined(SWIG) && !defined(RMF_DOXYGEN)
 template <class Traits>
@@ -107,7 +121,7 @@ typedef Enum<FrameTypeTag> FrameType;
 typedef Enum<NodeTypeTag> NodeType;
 /**  The type for representations used in decorator::Alternatives.
 
-     See \ref representationtypes "Representaiton Types" for a complete list of
+     See \ref representationtypes "Representation Types" for a complete list of
      the possible values.
 */
 typedef Enum<RepresentationTypeTag> RepresentationType;

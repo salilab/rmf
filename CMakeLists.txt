@@ -1,10 +1,24 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.12)
 project(RMF)
 
 # needs to be in main CMakeLists.txt
 enable_testing()
 
-execute_process(COMMAND python setup_git.py
+# Default Python3_FIND_STRATEGY to LOCATION
+if(POLICY CMP0094)
+cmake_policy(SET CMP0094 NEW)
+endif(POLICY CMP0094)
+
+# Use new-style variables/escapes
+if(POLICY CMP0053)
+cmake_policy(SET CMP0053 NEW)
+endif(POLICY CMP0053)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake_modules)
+include(cmake_modules/IMPFindPython.cmake)
+imp_find_python()
+
+execute_process(COMMAND ${PYTHON_EXECUTABLE} setup_git.py
                   RESULT_VARIABLE setup
                   OUTPUT_VARIABLE toutput
                   ERROR_VARIABLE error
@@ -14,7 +28,25 @@ if(NOT ${setup} EQUAL 0)
    message(FATAL_ERROR " Failed to run setup_git.py: ${setup}; ${error}")
 endif()
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake_modules)
+# Don't deref quoted variables in if()
+if(POLICY CMP0054)
+cmake_policy(SET CMP0054 NEW)
+endif(POLICY CMP0054)
+
+# Use new method of handling Ninja custom command byproducts
+if(POLICY CMP0058)
+  cmake_policy(SET CMP0058 NEW)
+endif(POLICY CMP0058)
+
+# Use consistent SWIG target names across all supported cmake versions
+if(POLICY CMP0078)
+  cmake_policy(SET CMP0078 OLD)
+endif(POLICY CMP0078)
+
+# Quiet warning about UseSWIG honoring SWIG_MODULE_NAME (which we don't use)
+if(POLICY CMP0086)
+  cmake_policy(SET CMP0086 NEW)
+endif(POLICY CMP0086)
 
 # C++11 can use the boost version
 set(Boost_NO_BOOST_CMAKE ON)
@@ -22,7 +54,7 @@ find_package(Boost COMPONENTS system filesystem thread program_options iostreams
   REQUIRED)
 
 include(FindHDF5)
-find_package(HDF5)
+find_package(HDF5 1.8)
 
 if("${HDF5_INCLUDE_DIRS}" MATCHES .*NOTFOUND)
 set(RMF_DEPRECATED_BACKENDS 0 CACHE BOOL "Whether to build deprecated backends.")
@@ -45,19 +77,24 @@ include(cmake_modules/IMPFindCompilerFlags.cmake)
 
 if(RMF_DEPRECATED_BACKENDS)
 imp_execute_process("Making RMF/HDF5.h" ${PROJECT_SOURCE_DIR}
-  COMMAND "python" "${PROJECT_SOURCE_DIR}/tools/dev_tools/make_all_header.py" ${PROJECT_BINARY_DIR}/include/RMF/HDF5.h RMF/HDF5 ${PROJECT_SOURCE_DIR}/include/RMF/HDF5)
+  COMMAND ${PYTHON_EXECUTABLE}
+  "${PROJECT_SOURCE_DIR}/tools/dev_tools/make_all_header.py"
+  ${PROJECT_BINARY_DIR}/include/RMF/HDF5.h RMF/HDF5
+  ${PROJECT_SOURCE_DIR}/include/RMF/HDF5)
 endif()
 
 imp_execute_process("Making RMF.h" ${PROJECT_SOURCE_DIR}
-  COMMAND "python" "${PROJECT_SOURCE_DIR}/tools/dev_tools/make_all_header.py" ${PROJECT_BINARY_DIR}/include/RMF.h RMF ${PROJECT_SOURCE_DIR}/include/RMF)
-
+  COMMAND ${PYTHON_EXECUTABLE}
+  "${PROJECT_SOURCE_DIR}/tools/dev_tools/make_all_header.py"
+  ${PROJECT_BINARY_DIR}/include/RMF.h RMF ${PROJECT_SOURCE_DIR}/include/RMF)
 
 message(STATUS "Running setup_cmake.py")
-imp_execute_process("Running setup_cmake.py"  ${PROJECT_SOURCE_DIR} COMMAND python ${PROJECT_SOURCE_DIR}/tools/dev_tools/setup_cmake.py)
+imp_execute_process("Running setup_cmake.py" ${PROJECT_SOURCE_DIR}
+  COMMAND ${PYTHON_EXECUTABLE}
+  ${PROJECT_SOURCE_DIR}/tools/dev_tools/setup_cmake.py)
 
-include_directories("${PROJECT_BINARY_DIR}/src"
-  "${PROJECT_SOURCE_DIR}/src")
-
+include_directories(BEFORE "${PROJECT_BINARY_DIR}/include"
+  "${PROJECT_SOURCE_DIR}/include")
 
 set(RMF_INCLUDE_PATH "" CACHE INTERNAL "" FORCE)
 
@@ -68,6 +105,8 @@ if(POLICY CMP0017)
 cmake_policy(SET CMP0017 NEW)
 endif(POLICY CMP0017)
 
+# Don't set MACOSX_RPATH by default
+set(CMAKE_MACOSX_RPATH 0)
 
 if (${Log4CXX_LIBRARY} MATCHES "Log4CXX_LIBRARY-NOTFOUND")
   set(RMF_HAS_LOG4CXX "0" CACHE BOOL "Whether to use Log4CXX" FORCE)
@@ -104,9 +143,6 @@ configure_file (
   "${PROJECT_SOURCE_DIR}/config.h.in"
   "${PROJECT_BINARY_DIR}/include/RMF/config.h"
   )
-
-include_directories("${PROJECT_BINARY_DIR}/include"
-  "${PROJECT_SOURCE_DIR}/include")
 
 add_subdirectory(data)
 add_subdirectory(include)

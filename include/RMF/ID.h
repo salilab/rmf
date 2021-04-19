@@ -2,7 +2,7 @@
  *  \file RMF/ID.h
  *  \brief Declaration of RMF::ID.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
@@ -28,7 +28,7 @@ struct CategoryTag {
   static std::string get_tag() { return "c"; }
 };
 
-//! A general purpose ID in RMF used, with different tags, to idenfity things.
+//! A general purpose ID in RMF used, with different tags, to identify things.
 template <class TagT>
 class ID {
   int i_;
@@ -89,8 +89,18 @@ class ID {
     ++i_;
     return *this;
   }
+  // Needed to use std::distance or boost::distance
+  int operator-(const ID& other) const {
+    return i_ - other.i_;
+  }
 #endif
 };
+
+//! Produce hash values for boost hash tables.
+template <class TagT>
+inline std::size_t hash_value(const ID<TagT>& t) {
+  return t.__hash__();
+}
 
 /** Identify a node within a file. */
 typedef ID<NodeTag> NodeID;

@@ -2,6 +2,7 @@
 
 import os.path
 import sys
+import subprocess
 
 
 def replace(msg, to_replace):
@@ -71,13 +72,12 @@ class Base:
 
 class Attribute(Base):
 
-    def __init__(
-        self,
-        name,
-        attribute_type,
-            function_name=None):
+    def __init__(self, name, attribute_type, function_name=None,
+                 default=None):
         if not function_name:
-            function_name = name.replace(" ", "_")
+            self.function_name = name.replace(" ", "_")
+        else:
+            self.function_name = function_name
         Base.__init__(self, name, attribute_type +
                       "Key", attribute_type)
         self.get_methods = """
@@ -96,7 +96,12 @@ class Attribute(Base):
       return get_node().GET_STATIC(NAME_);
     } RMF_DECORATOR_CATCH( );
   }
-""" % (function_name, function_name, function_name)
+""" % (self.function_name, self.function_name, self.function_name)
+        if default is not None:
+            self.get_methods = self.get_methods.replace(
+                'return',
+                'if (!get_node().get_has_value(NAME_)) return %s;\n'
+                'return' % repr(default).replace("'", '"'))
         self.set_methods = """
   void set_%s(TYPE v) {
     try {
@@ -113,8 +118,12 @@ class Attribute(Base):
       get_node().SET_STATIC(NAME_, v);
     } RMF_DECORATOR_CATCH( );
   }
-""" % (function_name, function_name, function_name)
-        self.check = "!nh.GET(NAME_).get_is_null()"
+""" % (self.function_name, self.function_name, self.function_name)
+        # If the attribute is allowed to be null, skip check
+        if default is not None:
+            self.check = ""
+        else:
+            self.check = "!nh.GET(NAME_).get_is_null()"
         self.data_initialize = "fh.get_key<TYPETag>(cat_, \"%s\")" % name
 
 
@@ -140,38 +149,68 @@ class NodeAttribute(Attribute):
 
 
 class PathAttribute(Attribute):
+    """Similar to a string Attribute, but designed for storing paths.
+       Paths are stored internally relative to the directory containing
+       the RMF file (in-memory RMFs are considered to be in the current
+       working directory) but the API always returns absolute paths."""
 
-    def __init__(self, name):
-        Attribute.__init__(self, name, "String")
+    def __init__(self, name, function_name=None):
+        Attribute.__init__(self, name, "String", function_name)
         self.get_methods = """
-  String get_NAME() const {
+  String get_%s() const {
     try {
       String relpath = get_node().GET_BOTH(NAME_);
       String filename = get_node().get_file().get_path();
       return internal::get_absolute_path(filename, relpath);
     } RMF_DECORATOR_CATCH( );
   }
-"""
+""" % self.function_name
         self.set_methods = """
-  void set_NAME(String path) {
+  void set_%s(String path) {
    try {
      String filename = get_node().get_file().get_path();
      String relpath = internal::get_relative_path(filename, path);
      get_node().SET_BOTH(NAME_, relpath);
    } RMF_DECORATOR_CATCH( );
   }
-"""
+""" % self.function_name
+
+
+class OptionalPathAttribute(Attribute):
+    """Like a PathAttribute, but it can be empty."""
+    def __init__(self, name, function_name=None):
+        Attribute.__init__(self, name, "String", function_name)
+        self.get_methods = """
+  String get_%s() const {
+    try {
+      if (!get_node().get_has_value(NAME_)) {
+        return "";
+      } else {
+        String relpath = get_node().GET_BOTH(NAME_);
+        String filename = get_node().get_file().get_path();
+        return internal::get_absolute_path(filename, relpath);
+      }
+    } RMF_DECORATOR_CATCH( );
+  }
+""" % self.function_name
+        self.set_methods = """
+  void set_%s(String path) {
+   try {
+     if (path.empty()) {
+       get_node().SET_BOTH(NAME_, path);
+     } else {
+       String filename = get_node().get_file().get_path();
+       String relpath = internal::get_relative_path(filename, path);
+       get_node().SET_BOTH(NAME_, relpath);
+     }
+   } RMF_DECORATOR_CATCH( );
+  }
+""" % self.function_name
 
 
 class AttributePair(Base):
 
-    def __init__(
-            self,
-            name,
-        data_type,
-        return_type,
-        begin,
-            end):
+    def __init__(self, name, data_type, return_type, begin, end):
         Base.__init__(self, name, "boost::array<%sKey, 2>" %
                       data_type, return_type)
         self.helpers = """  template <class H> DATA get_NAME_keys(H fh) const {
@@ -440,7 +479,7 @@ class Decorator:
             for a in self.attributes:
                 ret.append(a.get_check())
         else:
-        # for a in self.attributes:
+            # for a in self.attributes:
             ret.append(self.attributes[0].get_check())
         return "\n    && ".join(x for x in ret if x != "")
 
@@ -472,8 +511,8 @@ class Decorator:
                ("DATA_INITIALIZE", self._get_data_initialize())]
         ret.append(("CREATE_CHECKS", """RMF_USAGE_CHECK(%s, std::string("Bad node type. Got \\\"")
                                       + boost::lexical_cast<std::string>(nh.get_type())
-                                      + "\\\" in decorator type  %s");""" % (self._get_type_check(),
-                                                                             self.name)))
+                                      + "\\\" in decorator type  %s");"""
+                    % (self._get_type_check(), self.name)))
         ret.append(
             ("FRAME_CHECKS", self._get_checks()
              .replace("GET", "get_value")))
@@ -498,11 +537,11 @@ def make_header(name, infos, deps):
 
     path = os.path.join("include", "RMF", "decorator", name + ".h")
     fl = open(path, "w")
-    print >> fl, """/**
+    fl.write("""/**
  *  \\file RMF/decorator/%(name)s.h
  *  \\brief Helper functions for manipulating RMF files.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
@@ -518,29 +557,27 @@ def make_header(name, infos, deps):
 #include <RMF/Vector.h>
 #include <RMF/internal/paths.h>
 #include <boost/array.hpp>
-#include <boost/lexical_cast.hpp>""" % {"name": name, "NAME": name.upper()}
+#include <boost/lexical_cast.hpp>
+""" % {"name": name, "NAME": name.upper()})
     for d in deps:
-        print >> fl, """#include "%s.h" """ % d
-    print >> fl, """
+        fl.write('#include "%s.h"\n' % d)
+    fl.write("""
 RMF_ENABLE_WARNINGS
 namespace RMF {
 namespace decorator {
-""" % {"name": name, "NAME": name.upper()}
+""")
     for i in infos:
-        print >> fl, i.get()
-    print >> fl, """
+        fl.write(i.get() + '\n')
+    fl.write("""
 } /* namespace decorator */
 } /* namespace RMF */
 RMF_DISABLE_WARNINGS
 
-#endif /* RMF_%(NAME)s_DECORATORS_H */""" % {"name": name, "NAME": name.upper()}
+#endif /* RMF_%(NAME)s_DECORATORS_H */
+""" % {"NAME": name.upper()})
 
     del fl
     root = os.path.split(os.path.split(sys.argv[0])[0])[0]
-    os.system(
-        os.path.join(
-            root,
-            "dev_tools",
-            "cleanup_code.py") +
-        " " +
-        path)
+    subprocess.check_call([sys.executable,
+                           os.path.join(root, "dev_tools", "cleanup_code.py"),
+                           path])

@@ -1,3 +1,4 @@
+from __future__ import print_function
 import RMF
 
 
@@ -39,7 +40,7 @@ def check(path):
 
 for suffix in RMF.suffixes:
     path = RMF._get_temporary_file_path("late_add." + suffix)
-    print path
+    print(path)
 
     add(path)
     check(path)

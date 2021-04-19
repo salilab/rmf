@@ -2,7 +2,7 @@
  *  \file RMF/HDF5/DataSetCreationPropertiesD.h
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2013 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2021 IMP Inventors. All rights reserved.
  *
  */
 
@@ -26,6 +26,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
   /** Define properties for creating an HDF5 data set.*/
   template <class TypeTraits, unsigned int D>
   struct DataSetCreationPropertiesD : DataSetAccessPropertiesD<TypeTraits, D> {
+
     using DataSetAccessPropertiesD<TypeTraits, D>::get_handle;
     void set_compression(Compression comp) {
       if (comp == GZIP_COMPRESSION) {
@@ -35,7 +36,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       }
     }
     /** See
-       \external{http://www.hdfgroup.org/HDF5/doc/RM/RM_H5P.html#Property-SetChunk,
+       \external{https://support.hdfgroup.org/HDF5/doc/RM/RM_H5P.html#Property-SetChunk,
        H5Pset_chunk}
      */
     void set_chunk_size(DataSetIndexD<D> chunk_size) {
@@ -61,6 +62,21 @@ RMF_ENABLE_WARNINGS namespace RMF {
                                       &TypeTraits::get_fill_value()));
       RMF_HDF5_CALL(H5Pset_fill_time(get_handle(), H5D_FILL_TIME_ALLOC));
       RMF_HDF5_CALL(H5Pset_alloc_time(get_handle(), H5D_ALLOC_TIME_INCR));
+    }
+
+    //! Sets custom fill value instead of the default one
+    /** Sets custom fill value instead of the default one, which
+        is used as a default value for dataset entries that were not
+        written explicitly
+        (see HDF5 documentation for more details about fill values)
+
+        @param pValue a pointer to the fill value
+    */
+    void set_custom_fill_value(typename TypeTraits::Type* pValue){
+      RMF_HDF5_CALL(H5Pset_fill_value(get_handle(),
+                                      TypeTraits::get_hdf5_fill_type(),
+                                      pValue)
+                    );
     }
   };
 
