@@ -23,8 +23,8 @@ class Tests(unittest.TestCase):
                              stderr=subprocess.PIPE,
                              universal_newlines=True)
         out, err = p.communicate()
-        self.assertEqual(out, "")
-        self.assertIn("RMF version", err)
+        self.assertEqual(err, "")
+        self.assertIn("RMF version", out)
         self.assertEqual(p.returncode, 0)
 
 
