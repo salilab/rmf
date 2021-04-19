@@ -1,6 +1,7 @@
 Change Log {#changelog}
 ==========
 
+# 1.2 - 2021-04-19 # {#changelog_1_2}
 - A new category of decorators 'provenance' allows information about how the
   structure was generated to be added to the file.
 - The new RMF::decorator::Reference decorator allows for a node to mark
