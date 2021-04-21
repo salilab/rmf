@@ -6,10 +6,13 @@
 #include "Data.h"
 #include <RMF/log.h>
 #include <RMF/exceptions.h>
+#include <boost/version.hpp>
 #include <boost/bind/bind.hpp>
 #include <boost/lambda/construct.hpp>
 
+#if BOOST_VERSION >= 107300
 using namespace boost::placeholders;
+#endif
 
 namespace {
 molfile_plugin_t plugin;
