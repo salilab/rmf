@@ -36,20 +36,8 @@
 #define RMF_OVERRIDE
 #endif
 
-#ifdef __clang__
-#define RMF_COMPILER_HAS_FINAL 1
-#elif defined(__GNUC__) && __cplusplus >= 201103L
-// probably should be finer here
-#define RMF_COMPILER_HAS_FINAL 1
-#else
-#define RMF_COMPILER_HAS_FINAL 0
-#endif
-
-#if RMF_COMPILER_HAS_FINAL
+// Deprecated; just use 'final' keyword instead
 #define RMF_FINAL final
-#else
-#define RMF_FINAL
-#endif
 
 #if defined(__GNUC__) && __cplusplus >= 201103L
 #define RMF_HAS_NOEXCEPT 1
