@@ -40,20 +40,15 @@ struct Avro2IO : public backends::IO {
  public:
   template <class T>
   Avro2IO(T t);
-  virtual void save_loaded_frame(internal::SharedData *shared_data)
-      RMF_OVERRIDE;
-  virtual void load_loaded_frame(internal::SharedData *shared_data)
-      RMF_OVERRIDE;
-  virtual void save_static_frame(internal::SharedData *shared_data)
-      RMF_OVERRIDE;
-  virtual void load_static_frame(internal::SharedData *shared_data)
-      RMF_OVERRIDE;
-  virtual void load_file(internal::SharedData *shared_data) RMF_OVERRIDE;
-  virtual void save_file(const internal::SharedData *shared_data) RMF_OVERRIDE;
-  virtual void load_hierarchy(internal::SharedData *shared_data) RMF_OVERRIDE;
-  virtual void save_hierarchy(const internal::SharedData *shared_data)
-      RMF_OVERRIDE;
-  virtual void flush() RMF_OVERRIDE;
+  virtual void save_loaded_frame(internal::SharedData *shared_data) override;
+  virtual void load_loaded_frame(internal::SharedData *shared_data) override;
+  virtual void save_static_frame(internal::SharedData *shared_data) override;
+  virtual void load_static_frame(internal::SharedData *shared_data) override;
+  virtual void load_file(internal::SharedData *shared_data) override;
+  virtual void save_file(const internal::SharedData *shared_data) override;
+  virtual void load_hierarchy(internal::SharedData *shared_data) override;
+  virtual void save_hierarchy(const internal::SharedData *shared_data) override;
+  virtual void flush() override;
   virtual ~Avro2IO();
 };
 

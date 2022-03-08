@@ -21,20 +21,8 @@
 #endif
 #endif
 
-#ifdef __clang__
-#define RMF_COMPILER_HAS_OVERRIDE 1
-#elif defined(__GNUC__) && __cplusplus >= 201103L
-// probably should be finer here
-#define RMF_COMPILER_HAS_OVERRIDE 1
-#else
-#define RMF_COMPILER_HAS_OVERRIDE 0
-#endif
-
-#if RMF_COMPILER_HAS_OVERRIDE
+// Deprecated; just use 'override' keyword instead
 #define RMF_OVERRIDE override
-#else
-#define RMF_OVERRIDE
-#endif
 
 // Deprecated; just use 'final' keyword instead
 #define RMF_FINAL final
@@ -147,7 +135,7 @@
 #define RMF_GCC_PROTOTYPES
 #endif
 
-// Warn about missing RMF_OVERRIDE on virtual methods if gcc is new enough
+// Warn about missing override on virtual methods if gcc is new enough
 #if __GNUC__ > 5 || (__GNUC__ == 5 && __GNUC_MINOR__ >= 1)
 #ifdef RMF_SWIG_WRAPPER
 #define RMF_GCC_OVERRIDE

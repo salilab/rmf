@@ -512,8 +512,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
     virtual ~BackwardsIO() { flush(); }
 
    protected:
-    virtual void load_static_frame(internal::SharedData *shared_data)
-        RMF_OVERRIDE {
+    virtual void load_static_frame(internal::SharedData *shared_data) override {
       RMF_FOREACH(Category category, shared_data->get_categories()) {
         load_frame_category(category, shared_data, internal::StaticValues());
       }
@@ -522,14 +521,13 @@ RMF_ENABLE_WARNINGS namespace RMF {
       load_restraints(sd_.get(), shared_data);
     }
 
-    virtual void save_static_frame(internal::SharedData *shared_data)
-        RMF_OVERRIDE {
+    virtual void save_static_frame(internal::SharedData *shared_data) override {
       RMF_FOREACH(Category category, shared_data->get_categories()) {
         save_frame_category(category, shared_data, internal::StaticValues());
       }
     }
 
-    virtual void load_file(internal::SharedData *shared_data) RMF_OVERRIDE {
+    virtual void load_file(internal::SharedData *shared_data) override {
       sd_->reload();
       RMF_INFO("Loading file");
       RMF::internal::clone_file(sd_.get(), shared_data);
@@ -543,15 +541,13 @@ RMF_ENABLE_WARNINGS namespace RMF {
       }
     }
 
-    virtual void save_file(const internal::SharedData *shared_data)
-        RMF_OVERRIDE {
+    virtual void save_file(const internal::SharedData *shared_data) override {
       RMF_INFO("Saving file");
       RMF::internal::clone_file(shared_data, sd_.get());
       flush();
     }
 
-    virtual void save_loaded_frame(internal::SharedData *shared_data)
-        RMF_OVERRIDE {
+    virtual void save_loaded_frame(internal::SharedData *shared_data) override {
       RMF_INFO("Saving frame " << shared_data->get_loaded_frame());
       FrameID cur = shared_data->get_loaded_frame();
       RMF_USAGE_CHECK(cur.get_index() == sd_->get_number_of_frames(),
@@ -570,8 +566,7 @@ RMF_ENABLE_WARNINGS namespace RMF {
       }
     }
 
-    virtual void load_loaded_frame(internal::SharedData *shared_data)
-        RMF_OVERRIDE {
+    virtual void load_loaded_frame(internal::SharedData *shared_data) override {
       RMF_INFO("Loading frame " << shared_data->get_loaded_frame());
       FrameID cur = shared_data->get_loaded_frame();
       sd_->set_loaded_frame(cur);
@@ -580,19 +575,18 @@ RMF_ENABLE_WARNINGS namespace RMF {
       }
     }
 
-    virtual void load_hierarchy(internal::SharedData *shared_data)
-        RMF_OVERRIDE {
+    virtual void load_hierarchy(internal::SharedData *shared_data) override {
       RMF_INFO("Loading hierarchy");
       RMF::internal::clone_hierarchy(sd_.get(), shared_data);
     }
 
     virtual void save_hierarchy(const internal::SharedData *shared_data)
-        RMF_OVERRIDE {
+        override {
       RMF_INFO("Saving hierarchy");
       RMF::internal::clone_hierarchy(shared_data, sd_.get());
     }
 
-    virtual void flush() RMF_OVERRIDE { sd_->flush(); }
+    virtual void flush() override { sd_->flush(); }
   };
 
   }  // namespace internal
