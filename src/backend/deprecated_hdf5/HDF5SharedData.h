@@ -591,7 +591,7 @@ class HDF5SharedData : public backends::BackwardsIOBase {
     std::vector<ID<TypeTraits> > ret;
     typename NameKeyMap::const_iterator oit = name_key_map_.find(cat);
     if (oit == name_key_map_.end()) return ret;
-    RMF_FOREACH(NameKeyInnerMap::const_reference rt, oit->second) {
+    for(NameKeyInnerMap::const_reference rt : oit->second) {
       if (key_data_map_.find(rt.second)->second.type_index ==
           TypeTraits::HDF5Traits::get_index()) {
         ret.push_back(ID<TypeTraits>(rt.second));

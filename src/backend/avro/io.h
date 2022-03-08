@@ -58,7 +58,7 @@ template <class Traits, class Loader>
 void load(internal::SharedData *shared_data, const KeyMaps<Traits> &keys,
           internal::TypeData<Traits> &data, Loader) {
   typedef std::pair<ID<Traits>, Category> KKP;
-  RMF_FOREACH(KKP kp, keys.category) {
+  for(KKP kp : keys.category) {
     shared_data->ensure_key(kp.second, kp.first,
                             keys.name.find(kp.first)->second, Traits());
   }
@@ -74,7 +74,7 @@ bool save(KeyType key_type, internal::SharedData *shared_data,
           internal::TypeData<Traits> &data,
           internal::TypeData<Traits> *change_data, Loader) {
   bool ret = false;
-  RMF_FOREACH(ID<Traits> k, shared_data->get_keys(Traits())) {
+  for(ID<Traits> k : shared_data->get_keys(Traits())) {
     if (keys.category.find(k) == keys.category.end()) {
       ret = true;
       std::string name = shared_data->get_name(k);
@@ -95,14 +95,14 @@ bool save(KeyType key_type, internal::SharedData *shared_data,
   }
 
   if (change_data) {
-    RMF_FOREACH(typename internal::TypeData<Traits>::const_reference kpd,
+    for(typename internal::TypeData<Traits>::const_reference kpd :
                 Loader::get_data(shared_data, Traits())) {
       if (data.find(kpd.first) == data.end() && !kpd.second.empty()) {
         ret = true;
         change_data->operator[](kpd.first) = kpd.second;
         data[kpd.first] = kpd.second;
       } else {
-        RMF_FOREACH(typename internal::KeyData<Traits>::const_reference npd,
+        for(typename internal::KeyData<Traits>::const_reference npd :
                     kpd.second) {
           if (data[kpd.first].find(npd.first) == data[kpd.first].end()) {
             ret = true;
@@ -123,8 +123,7 @@ template <class Loader>
 void load_all(const std::vector<std::pair<Category, std::string> > &categories,
               internal::SharedData *shared_data, const KeyData &keys,
               DataTypes &data, Loader) {
-  typedef std::pair<Category, std::string> CP;
-  RMF_FOREACH(CP cp, categories) {
+  for(const auto &cp : categories) {
     shared_data->ensure_category(cp.first, cp.second);
   }
   load(shared_data, keys.float_keys, data.float_data, Loader());
@@ -261,16 +260,16 @@ void Avro2IO<RW>::load_file(internal::SharedData *shared_data) {
   shared_data->set_description(file_data_.description);
   shared_data->set_producer(file_data_.producer);
   typedef std::pair<FrameID, internal::FrameData> FDP;
-  RMF_FOREACH(FDP fdp, file_data_.frames) {
+  for(FDP fdp : file_data_.frames) {
     shared_data->add_frame_data(fdp.first, fdp.second.name, fdp.second.type);
-    RMF_FOREACH(FrameID p, fdp.second.parents) {
+    for(FrameID p : fdp.second.parents) {
       shared_data->add_child_frame(p, fdp.first);
     }
   }
   shared_data->set_file_type("rmf3");
 
   typedef std::pair<Category, std::string> CP;
-  RMF_FOREACH(CP cp, file_data_.categories) {
+  for(CP cp : file_data_.categories) {
     shared_data->ensure_category(cp.first, cp.second);
   }
 }
@@ -297,7 +296,7 @@ void Avro2IO<RW>::load_hierarchy(internal::SharedData *shared_data) {
 
 template <class RW>
 void Avro2IO<RW>::save_hierarchy(const internal::SharedData *shared_data) {
-  RMF_FOREACH(NodeID n, get_nodes(shared_data)) {
+  for(NodeID n : get_nodes(shared_data)) {
     HierarchyNode cur;
     cur.id = n;
     bool cur_dirty = false;
