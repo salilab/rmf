@@ -19,7 +19,7 @@ RMF_ENABLE_WARNINGS
 namespace RMF {
 Exception::Exception() {}
 
-const char* Exception::what() const noexcept {
+const char* Exception::what() const throw() {
   try {
     if (message_.empty()) {
       message_ = get_message(*this);
@@ -30,7 +30,7 @@ const char* Exception::what() const noexcept {
   return message_.c_str();
 }
 
-Exception::~Exception() noexcept {}
+Exception::~Exception() throw() {}
 std::string get_message(const Exception& e) {
   using namespace RMF::internal::ErrorInfo;
   try {
@@ -95,16 +95,16 @@ std::string get_message(const Exception& e) {
   }
 }
 UsageException::UsageException() : Exception() {}
-UsageException::~UsageException() noexcept {}
+UsageException::~UsageException() throw() {}
 
 IOException::IOException() : Exception() {}
-IOException::~IOException() noexcept {}
+IOException::~IOException() throw() {}
 
 IndexException::IndexException() : Exception() {}
-IndexException::~IndexException() noexcept {}
+IndexException::~IndexException() throw() {}
 
 InternalException::InternalException() : Exception() {}
-InternalException::~InternalException() noexcept {}
+InternalException::~InternalException() throw() {}
 
 } /* namespace RMF */
 
