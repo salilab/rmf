@@ -71,8 +71,8 @@ void load(internal::SharedData *shared_data, const KeyMaps<Traits> &keys,
 template <class Traits, class Loader>
 bool save(KeyType key_type, internal::SharedData *shared_data,
           KeyMaps<Traits> &keys, std::vector<KeyInfo> *keys_changed,
-          internal::TypeData<Traits> &data,
-          internal::TypeData<Traits> *change_data, Loader) {
+          internal::TypeData<Traits> &data, Loader,
+          internal::TypeData<Traits> *change_data = nullptr) {
   bool ret = false;
   for(ID<Traits> k : shared_data->get_keys(Traits())) {
     if (keys.category.find(k) == keys.category.end()) {
@@ -152,43 +152,57 @@ bool save_all(FileData &file_data, FileDataChanges &file_data_changes,
     file_data_changes.categories.push_back(file_data.categories.back());
   }
 
-  ret = save(FLOAT, shared_data, file_data.keys.float_keys,
-             &file_data_changes.keys, data.float_data,
-             data_changes ? &data_changes->float_data : NULL, Loader()) ||
-        ret;
-  ret = save(INT, shared_data, file_data.keys.int_keys, &file_data_changes.keys,
-             data.int_data, data_changes ? &data_changes->int_data : NULL,
-             Loader()) ||
-        ret;
-  ret = save(STRING, shared_data, file_data.keys.string_keys,
-             &file_data_changes.keys, data.string_data,
-             data_changes ? &data_changes->string_data : NULL, Loader()) ||
-        ret;
-  ret = save(FLOATS, shared_data, file_data.keys.floats_keys,
-             &file_data_changes.keys, data.floats_data,
-             data_changes ? &data_changes->floats_data : NULL, Loader()) ||
-        ret;
-  ret = save(INTS, shared_data, file_data.keys.ints_keys,
-             &file_data_changes.keys, data.ints_data,
-             data_changes ? &data_changes->ints_data : NULL, Loader()) ||
-        ret;
-  ret = save(STRINGS, shared_data, file_data.keys.strings_keys,
-             &file_data_changes.keys, data.strings_data,
-             data_changes ? &data_changes->strings_data : NULL, Loader()) ||
-        ret;
-
-  ret = save(VECTOR3, shared_data, file_data.keys.vector3_keys,
-             &file_data_changes.keys, data.vector3_data,
-             data_changes ? &data_changes->vector3_data : NULL, Loader()) ||
-        ret;
-  ret = save(VECTOR4, shared_data, file_data.keys.vector4_keys,
-             &file_data_changes.keys, data.vector4_data,
-             data_changes ? &data_changes->vector4_data : NULL, Loader()) ||
-        ret;
-  ret = save(VECTOR3S, shared_data, file_data.keys.vector3s_keys,
-             &file_data_changes.keys, data.vector3s_data,
-             data_changes ? &data_changes->vector3s_data : NULL, Loader()) ||
-        ret;
+  // This duplication is quite ugly but works around a (compiler?) bug;
+  // although nullptr was passed for change_data to save(), it tried to
+  // dereference it anyway and caused a segfault
+  if (data_changes) {
+    ret = save(FLOAT, shared_data, file_data.keys.float_keys,
+               &file_data_changes.keys, data.float_data, Loader(),
+               &data_changes->float_data) || ret;
+    ret = save(INT, shared_data, file_data.keys.int_keys,
+               &file_data_changes.keys, data.int_data, Loader(),
+               &data_changes->int_data) || ret;
+    ret = save(STRING, shared_data, file_data.keys.string_keys,
+               &file_data_changes.keys, data.string_data, Loader(),
+               &data_changes->string_data) || ret;
+    ret = save(FLOATS, shared_data, file_data.keys.floats_keys,
+               &file_data_changes.keys, data.floats_data, Loader(),
+               &data_changes->floats_data) || ret;
+    ret = save(INTS, shared_data, file_data.keys.ints_keys,
+               &file_data_changes.keys, data.ints_data, Loader(),
+               &data_changes->ints_data) || ret;
+    ret = save(STRINGS, shared_data, file_data.keys.strings_keys,
+               &file_data_changes.keys, data.strings_data, Loader(),
+               &data_changes->strings_data) || ret;
+    ret = save(VECTOR3, shared_data, file_data.keys.vector3_keys,
+               &file_data_changes.keys, data.vector3_data, Loader(),
+               &data_changes->vector3_data) || ret;
+    ret = save(VECTOR4, shared_data, file_data.keys.vector4_keys,
+               &file_data_changes.keys, data.vector4_data, Loader(),
+               &data_changes->vector4_data) || ret;
+    ret = save(VECTOR3S, shared_data, file_data.keys.vector3s_keys,
+               &file_data_changes.keys, data.vector3s_data, Loader(),
+               &data_changes->vector3s_data) || ret;
+  } else {
+    ret = save(FLOAT, shared_data, file_data.keys.float_keys,
+               &file_data_changes.keys, data.float_data, Loader()) || ret;
+    ret = save(INT, shared_data, file_data.keys.int_keys,
+               &file_data_changes.keys, data.int_data, Loader()) || ret;
+    ret = save(STRING, shared_data, file_data.keys.string_keys,
+               &file_data_changes.keys, data.string_data, Loader()) || ret;
+    ret = save(FLOATS, shared_data, file_data.keys.floats_keys,
+               &file_data_changes.keys, data.floats_data, Loader()) || ret;
+    ret = save(INTS, shared_data, file_data.keys.ints_keys,
+               &file_data_changes.keys, data.ints_data, Loader()) || ret;
+    ret = save(STRINGS, shared_data, file_data.keys.strings_keys,
+               &file_data_changes.keys, data.strings_data, Loader()) || ret;
+    ret = save(VECTOR3, shared_data, file_data.keys.vector3_keys,
+               &file_data_changes.keys, data.vector3_data, Loader()) || ret;
+    ret = save(VECTOR4, shared_data, file_data.keys.vector4_keys,
+               &file_data_changes.keys, data.vector4_data, Loader()) || ret;
+    ret = save(VECTOR3S, shared_data, file_data.keys.vector3s_keys,
+               &file_data_changes.keys, data.vector3s_data, Loader()) || ret;
+  }
 
   return ret;
 }
