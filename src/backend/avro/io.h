@@ -239,7 +239,7 @@ void Avro2IO<RW>::save_loaded_frame(internal::SharedData *shared_data) {
   frame_.parents = FrameIDs(fd.parents.begin(), fd.parents.end());
   frame_.type = fd.type;
   frame_.name = fd.name;
-  save_all(file_data_, file_data_changes_, shared_data, frame_.data, NULL,
+  save_all(file_data_, file_data_changes_, shared_data, frame_.data, nullptr,
            internal::LoadedValues());
 }
 
