@@ -40,7 +40,7 @@ SharedData::SharedData(boost::shared_ptr<backends::IO> io, std::string name,
   }
   RMF_USAGE_CHECK(
       open_for_writing.find(get_file_path()) == open_for_writing.end(),
-      "Opening a file that is still being written is asking for trouble.");
+      "This file is currently being written to. Close it first.");
   if (write) open_for_writing.insert(get_file_path());
 }
 
