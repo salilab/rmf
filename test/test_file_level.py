@@ -124,6 +124,21 @@ class Tests(unittest.TestCase):
             f2 = RMF.open_rmf_file_read_only(path)
             self.assertEqual(f2.get_number_of_frames(), 1)
 
+    def test_context_manager(self):
+        """Test file handle context manager support"""
+        for suffix in RMF.suffixes:
+            path = RMF._get_temporary_file_path(
+                "test_context_manager." + suffix)
+            with RMF.create_rmf_file(path) as f:
+                self.assertEqual(f.get_number_of_frames(), 0)
+                f.add_frame("hi", RMF.FRAME)
+                self.assertEqual(f.get_number_of_frames(), 1)
+            self.assertTrue(f.get_is_closed())
+            self.assertRaises(OSError, f.get_number_of_frames)
+            with RMF.open_rmf_file_read_only(path) as f2:
+                self.assertEqual(f2.get_number_of_frames(), 1)
+            self.assertTrue(f2.get_is_closed())
+
 
 if __name__ == '__main__':
     unittest.main()
