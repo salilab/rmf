@@ -6,7 +6,7 @@
  *
  */
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <string>
 
 #include "RMF/BufferHandle.h"
@@ -23,7 +23,7 @@ RMF_ENABLE_WARNINGS
 
 namespace RMF {
 
-FileHandle::FileHandle(boost::shared_ptr<internal::SharedData> shared)
+FileHandle::FileHandle(std::shared_ptr<internal::SharedData> shared)
     : FileConstHandle(shared) {}
 
 NodeHandle FileHandle::get_node(NodeID id) const {

@@ -32,7 +32,7 @@ namespace internal {
 namespace {
 RMF_LARGE_UNORDERED_SET<std::string> open_for_writing;
 }
-SharedData::SharedData(boost::shared_ptr<backends::IO> io, std::string name,
+SharedData::SharedData(std::shared_ptr<backends::IO> io, std::string name,
                        bool write, bool created)
     : path_(name), write_(write), io_(io) {
   if (!created) {

@@ -11,7 +11,7 @@
 
 #include <boost/current_function.hpp>
 #include <boost/functional/hash.hpp>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <iosfwd>
 #include <limits>
 #include <string>
@@ -99,7 +99,7 @@ class RMFEXPORT FileConstHandle {
   }
 
  protected:
-  boost::shared_ptr<internal::SharedData> shared_;
+  std::shared_ptr<internal::SharedData> shared_;
 
  public:
   RMF_COMPARISONS(FileConstHandle);
@@ -108,7 +108,7 @@ class RMFEXPORT FileConstHandle {
   //! Empty root handle, no open file.
   FileConstHandle() {}
 #if !defined(RMF_DOXYGEN) && !defined(SWIG)
-  FileConstHandle(boost::shared_ptr<internal::SharedData> shared);
+  FileConstHandle(std::shared_ptr<internal::SharedData> shared);
 #endif
 
   //! Return the root of the hierarchy
