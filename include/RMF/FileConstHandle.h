@@ -122,6 +122,17 @@ class RMFEXPORT FileConstHandle {
     return !shared_;
   }
 
+  //! Explicitly close the file handle.
+  /** Normally, an RMF file is automatically closed when this handle object
+      goes out of scope. If closed with this method, any further operations
+      on this handle will raise an error.
+      Trying to close a file that is already closed will do nothing. */
+  void close() {
+    if (!get_is_closed()) {
+      shared_.reset();
+    }
+  }
+
   std::string get_name() const {
     if (shared_) {
       return shared_->get_file_name();

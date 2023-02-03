@@ -110,6 +110,20 @@ class Tests(unittest.TestCase):
             self.assertEqual(f.get_current_frame(), RMF.FrameID())
             f.set_current_frame(RMF.FrameID(0))
 
-if __name__ == '__main__':
+    def test_close(self):
+        """Test explicit close of file handle"""
+        for suffix in RMF.suffixes:
+            path = RMF._get_temporary_file_path("test_close." + suffix)
+            f = RMF.create_rmf_file(path)
+            self.assertEqual(f.get_number_of_frames(), 0)
+            f.add_frame("hi", RMF.FRAME)
+            self.assertEqual(f.get_number_of_frames(), 1)
+            f.close()
+            self.assertTrue(f.get_is_closed())
+            self.assertRaises(OSError, f.get_number_of_frames)
+            f2 = RMF.open_rmf_file_read_only(path)
+            self.assertEqual(f2.get_number_of_frames(), 1)
 
+
+if __name__ == '__main__':
     unittest.main()
