@@ -116,7 +116,13 @@ class RMFEXPORT FileConstHandle {
     return NodeConstHandle(NodeID(0), shared_);
   }
 
-  std::string get_name() const { return shared_->get_file_name(); }
+  std::string get_name() const {
+    if (shared_) {
+      return shared_->get_file_name();
+    } else {
+      return "(closed RMF file handle)";
+    }
+  }
 
   std::string get_path() const { return shared_->get_file_path(); }
 
