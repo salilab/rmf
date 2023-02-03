@@ -11,6 +11,11 @@ class Tests(unittest.TestCase):
         fh = RMF.FileHandle()
         _ = repr(fh)
 
+    def test_closed_file_methods(self):
+        """Test methods on closed file"""
+        fh = RMF.FileConstHandle()
+        self.assertTrue(fh.get_is_closed())
+
 
 if __name__ == '__main__':
     unittest.main()

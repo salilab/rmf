@@ -16,6 +16,7 @@ class Tests(unittest.TestCase):
         for suffix in RMF.suffixes:
             f = RMF.create_rmf_file(
                 RMF._get_temporary_file_path("test_file_perturbed." + suffix))
+            self.assertFalse(f.get_is_closed())
             r = f.get_root_node()
             print(r.get_type())
             sc = f.get_category("sequence")

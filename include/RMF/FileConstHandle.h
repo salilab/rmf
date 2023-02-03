@@ -116,6 +116,11 @@ class RMFEXPORT FileConstHandle {
     return NodeConstHandle(NodeID(0), shared_);
   }
 
+  //! Return True iff the file is closed
+  bool get_is_closed() const {
+    return !shared_;
+  }
+
   std::string get_name() const {
     if (shared_) {
       return shared_->get_file_name();
