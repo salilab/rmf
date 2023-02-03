@@ -113,6 +113,7 @@ class RMFEXPORT FileConstHandle {
 
   //! Return the root of the hierarchy
   NodeConstHandle get_root_node() const {
+    RMF_USAGE_CHECK(!get_is_closed(), "Operation on closed file.");
     return NodeConstHandle(NodeID(0), shared_);
   }
 
@@ -129,7 +130,10 @@ class RMFEXPORT FileConstHandle {
     }
   }
 
-  std::string get_path() const { return shared_->get_file_path(); }
+  std::string get_path() const {
+    RMF_USAGE_CHECK(!get_is_closed(), "File is closed, no path.");
+    return shared_->get_file_path();
+  }
 
   /** \name Methods for manipulating keys
       When using C++ it is most convenient to specify types
@@ -204,22 +208,31 @@ class RMFEXPORT FileConstHandle {
       point.
       @{
    */
-  FrameID get_current_frame() const { return shared_->get_loaded_frame(); }
+  FrameID get_current_frame() const {
+    RMF_USAGE_CHECK(!get_is_closed(), "Operation on closed file.");
+    return shared_->get_loaded_frame();
+  }
+
   FrameType get_type(FrameID fr) const {
+    RMF_USAGE_CHECK(!get_is_closed(), "Operation on closed file.");
     return shared_->get_frame_data(fr).type;
   }
   std::string get_name(FrameID fr) const {
+    RMF_USAGE_CHECK(!get_is_closed(), "Operation on closed file.");
     return shared_->get_frame_data(fr).name;
   }
   FrameIDs get_children(FrameID id) const {
+    RMF_USAGE_CHECK(!get_is_closed(), "Operation on closed file.");
     const internal::FrameData& fd = shared_->get_frame_data(id);
     return FrameIDs(fd.children.begin(), fd.children.end());
   }
   FrameIDs get_parents(FrameID id) const {
+    RMF_USAGE_CHECK(!get_is_closed(), "Operation on closed file.");
     const internal::FrameData& fd = shared_->get_frame_data(id);
     return FrameIDs(fd.parents.begin(), fd.parents.end());
   }
   void set_current_frame(FrameID frame) const {
+    RMF_USAGE_CHECK(!get_is_closed(), "Operation on closed file.");
     RMF_USAGE_CHECK(frame != FrameID(), "Invalid frame passed.");
     RMF_USAGE_CHECK(frame != ALL_FRAMES,
                     "Use set_static_value() and get_static_value() to "
@@ -233,6 +246,7 @@ class RMFEXPORT FileConstHandle {
   /** Return the number of frames in the file.
    */
   unsigned int get_number_of_frames() const {
+    RMF_USAGE_CHECK(!get_is_closed(), "Operation on closed file.");
     try {
       return shared_->get_number_of_frames();
     }
@@ -242,6 +256,7 @@ class RMFEXPORT FileConstHandle {
   /** Return the number of nodes in the file.
    */
   unsigned int get_number_of_nodes() const {
+    RMF_USAGE_CHECK(!get_is_closed(), "Operation on closed file.");
     try {
       return shared_->get_number_of_nodes();
     }
@@ -250,7 +265,10 @@ class RMFEXPORT FileConstHandle {
 
   /** Return a string identifying the file type.
   */
-  std::string get_file_type() const { return shared_->get_file_type(); }
+  std::string get_file_type() const {
+    RMF_USAGE_CHECK(!get_is_closed(), "Operation on closed file.");
+    return shared_->get_file_type();
+  }
 
   /** Get all the frames that are roots (aren't subframes). */
   FrameIDs get_root_frames() const;

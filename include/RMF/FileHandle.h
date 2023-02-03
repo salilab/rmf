@@ -64,7 +64,10 @@ class RMFEXPORT FileHandle : public FileConstHandle {
 #endif
 
   //! Return the root of the hierarchy stored in the file.
-  NodeHandle get_root_node() const { return NodeHandle(NodeID(0), shared_); }
+  NodeHandle get_root_node() const {
+    RMF_USAGE_CHECK(!get_is_closed(), "Operation on closed file.");
+    return NodeHandle(NodeID(0), shared_);
+  }
 
   //! Add a frame and make it the current frame.
   FrameID add_frame(std::string name, FrameType t = FRAME) const;
