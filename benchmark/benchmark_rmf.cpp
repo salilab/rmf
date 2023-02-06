@@ -222,6 +222,7 @@ RMF::FileConstHandle benchmark_open(std::string path, std::string type) {
   RMF::FileConstHandle ret;
   double count = 0;
   while (timer.elapsed() < 1) {
+    ret.close();
     ret = RMF::open_rmf_file_read_only(path);
     ++count;
   }
