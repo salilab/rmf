@@ -268,6 +268,21 @@ int main(int, char**) {
       }
       benchmark_size(name, "rmfz");
     }
+#if RMF_HAS_DEPRECATED_BACKENDS
+    {
+      const std::string name = name_base + ".rmf-hdf5";
+      {
+        RMF::FileHandle fh = RMF::create_rmf_file(name);
+        benchmark_create(fh, "hdf5");
+      }
+      {
+        RMF::FileConstHandle fh = benchmark_open(name, "hdf5");
+        benchmark_traverse(fh, "hdf5");
+        benchmark_load(fh, "hdf5");
+      }
+      benchmark_size(name, "hdf5");
+    }
+#endif
     {
       RMF::BufferHandle buffer;
       {
