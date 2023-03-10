@@ -162,3 +162,4 @@ RMF_SWIG_VECTOR(RMF, TraverseHelper)
 
 
 %include "RMF.python.i"
+%include "RMF.numpy.i"
