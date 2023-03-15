@@ -34,6 +34,7 @@
 #include <boost/exception/exception.hpp>
 
 #include <exception>
+#include <stdexcept>
 
 #include "RMF/internal/swig_helpers.h"
 #include "RMF.h"
