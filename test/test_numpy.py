@@ -37,10 +37,10 @@ class Tests(unittest.TestCase):
                           root, "foo")
         # coord array of wrong dimension
         self.assertRaises(ValueError, RMF.get_all_global_coordinates, rmf,
-                          root, numpy.empty((1, 3), numpy.float32))
+                          root, numpy.empty((1, 3)))
         self.assertRaises(ValueError, RMF.get_all_global_coordinates, rmf,
-                          root, numpy.empty((8, 3), numpy.float32))
-        coord = numpy.empty((2, 3), numpy.float32)
+                          root, numpy.empty((8, 3)))
+        coord = numpy.empty((2, 3))
         RMF.get_all_global_coordinates(rmf, root, coord)
         # Second coordinate should be transformed by the reference frame
         expected_coord = numpy.array([[1., 2., 3.], [8., 6., 7.]])
