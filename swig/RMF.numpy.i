@@ -51,7 +51,7 @@ class _OurVisitor {
   // Dimension of the NumPy array
   npy_intp ncoord_;
   // Raw data in the N*3 NumPy array
-  float *data_;
+  double *data_;
 
   void add_coordinates(const RMF::Vector3 &v) {
     numxyz++;
@@ -67,7 +67,7 @@ class _OurVisitor {
   }
 
 public:
-  _OurVisitor(RMF::FileConstHandle fh, npy_intp ncoord, float *data)
+  _OurVisitor(RMF::FileConstHandle fh, npy_intp ncoord, double *data)
           : refframef_(fh), particlef_(fh), ballf_(fh), altf_(fh),
             ncoord_(ncoord), data_(data) {}
 
@@ -111,13 +111,13 @@ void get_all_global_coordinates(
   if (numpy_import_retval != 0) {
     throw std::runtime_error("NumPy did not initialize");
   }
-  if (!is_native_numpy_2d_array(coord, NPY_FLOAT, 3)) {
-    throw std::invalid_argument("NumPy array is not a native N*3 float array");
+  if (!is_native_numpy_2d_array(coord, NPY_DOUBLE, 3)) {
+    throw std::invalid_argument("NumPy array is not a native N*3 double array");
   }
 
   PyArrayObject *acoord = (PyArrayObject *)coord;
   npy_intp ncoord = PyArray_DIM(acoord, 0);
-  float *data = (float *)PyArray_DATA(acoord);
+  double *data = (double *)PyArray_DATA(acoord);
 
   _OurVisitor v(fh, ncoord, data);
   v.handle_node(nh, RMF::CoordinateTransformer());
