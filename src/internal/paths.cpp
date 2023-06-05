@@ -2,7 +2,7 @@
  *  \file RMF/paths.cpp
  *  \brief Handle read/write of Model data from/to files.
  *
- *  Copyright 2007-2022 IMP Inventors. All rights reserved.
+ *  Copyright 2007-2023 IMP Inventors. All rights reserved.
  *
  */
 
@@ -96,8 +96,9 @@ boost::filesystem::path normalize(const boost::filesystem::path& p) {
 boost::filesystem::path relpath(boost::filesystem::path p,
                                 boost::filesystem::path base) {
   boost::filesystem::path cwd = boost::filesystem::current_path();
-  boost::filesystem::path absp = abspath(p, cwd);
-  boost::filesystem::path absbase = abspath(base.parent_path(), cwd);
+  // Handle any . or .. path components
+  boost::filesystem::path absp = normalize(abspath(p, cwd));
+  boost::filesystem::path absbase = normalize(abspath(base.parent_path(), cwd));
 
   size_t lenbase = count_path_components(absbase);
   size_t common = get_common_prefix(absp, absbase);

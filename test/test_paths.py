@@ -77,5 +77,30 @@ class Tests(unittest.TestCase):
         if sys.platform != 'win32':
             shutil.rmtree(tmpdir)
 
+    def test_parent_path(self):
+        """Test parent paths in a named RMF file"""
+        tmpdir = RMF._get_temporary_file_path('test_parent_path')
+        subdir = os.path.join(tmpdir, 'sub1', 'sub2')
+        os.makedirs(subdir)
+        # Earlier versions of RMF incorrectly handled RMF files with ..
+        # in their path, so check this here:
+        rmf = RMF.create_rmf_file(os.path.join(subdir, '..', 'test.rmf3'))
+        key = self.get_filename_key(rmf)
+        node, prov = self.make_test_node(rmf)
+
+        ap = os.path.join(subdir, 'foo.pdb')
+        prov.set_filename(ap)
+
+        if sys.platform == 'win32':
+            # On Windows, filenames are not altered
+            self.assertEqual(node.get_value(key), ap)
+            self.assertEqual(prov.get_filename(), ap)
+        else:
+            # On Mac/Linux, internally, a relative path should be stored
+            self.assertEqual(node.get_value(key), 'sub2/foo.pdb')
+            # API should return an absolute path
+            self.assertEqual(prov.get_filename(), ap)
+
+
 if __name__ == '__main__':
     unittest.main()
