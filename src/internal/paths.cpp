@@ -140,6 +140,20 @@ std::string get_relative_path(std::string base, std::string file) {
 #endif
 }
 
+bool get_is_same_base_path(std::string file1, std::string file2) {
+#ifdef _MSC_VER
+  return false;
+#else
+  boost::filesystem::path f1(file1), f2(file2);
+  boost::filesystem::path absf1 = normalize(abspath(f1.parent_path(),
+                                            boost::filesystem::current_path()));
+  boost::filesystem::path absf2 = normalize(abspath(f2.parent_path(),
+                                            boost::filesystem::current_path()));
+  return (absf1 == absf2);
+#endif
+}
+
+
 std::string get_absolute_path(std::string base, std::string file) {
 #ifdef _MSC_VER
   return file;
