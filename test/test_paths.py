@@ -101,6 +101,43 @@ class Tests(unittest.TestCase):
             # API should return an absolute path
             self.assertEqual(prov.get_filename(), ap)
 
+    def test_clone_rewrite_path(self):
+        """Test that clone rewrites relative paths"""
+        tmpdir = RMF._get_temporary_file_path('test_clone_rewrite_path')
+        subdir = os.path.join(tmpdir, 'sub1')
+        subsubdir = os.path.join(subdir, 'sub2')
+        os.makedirs(subsubdir)
+        rmf = RMF.create_rmf_file(os.path.join(subdir, 'test.rmf3'))
+        key = self.get_filename_key(rmf)
+        node, prov = self.make_test_node(rmf)
+
+        ap = os.path.join(subsubdir, 'foo.pdb')
+        prov.set_filename(ap)
+
+        if sys.platform != 'win32':
+            # On Mac/Linux, internally, a relative path should be stored
+            self.assertEqual(node.get_value(key), 'sub2/foo.pdb')
+            # API should return an absolute path
+            self.assertEqual(prov.get_filename(), ap)
+        del rmf, node, prov
+
+        inr = RMF.open_rmf_file_read_only(os.path.join(subdir, 'test.rmf3'))
+        outr = RMF.create_rmf_file(os.path.join(subsubdir, 'test.rmf3'))
+        RMF.clone_file_info(inr, outr)
+        RMF.clone_hierarchy(inr, outr)
+        RMF.clone_static_frame(inr, outr)
+        rt = outr.get_root_node()
+        f = RMF.StructureProvenanceFactory(outr)
+        node, = rt.get_children()
+        self.assertTrue(f.get_is(node))
+        prov = f.get(node)
+        if sys.platform != 'win32':
+            # New file should have a different relative path
+            key = self.get_filename_key(outr)
+            self.assertEqual(node.get_value(key), 'foo.pdb')
+            # API should return the same absolute path
+            self.assertEqual(prov.get_filename(), ap)
+
 
 if __name__ == '__main__':
     unittest.main()
