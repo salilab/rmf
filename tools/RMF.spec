@@ -127,7 +127,7 @@ make %{?_smp_mflags} DESTDIR=${RPM_BUILD_ROOT} install
 
 %if 0%{?with_python2} && 0%{?with_python3}
 # Build Python 2 wrappers
-py2_ver=`python2 -c "import sys; print('%d.%d' % sys.version_info[:2])"`
+py2_ver=`%{PYTHON2} -c "import sys; print('%d.%d' % sys.version_info[:2])"`
 py3_ver=`python3 -c "import sys; print('%d.%d' % sys.version_info[:2])"`
 py2_lib=`echo %{_libdir}/libpython2.*.so`
 py2_inc=`echo /usr/include/python2.*`
@@ -148,6 +148,24 @@ make %{?_smp_mflags} DESTDIR=${RPM_BUILD_ROOT} install
  && find site-packages -name '*.py' -a ! -name __init__.py \
       -exec ln -sf ${RPM_BUILD_ROOT}%{_libdir}/python${py3_ver}/\{\} \{\} \; \
  && symlinks -rc .)
+%endif
+
+%check
+# Basic check of installed Python wrappers and command line tools
+export LD_LIBRARY_PATH=${RPM_BUILD_ROOT}%{_libdir}
+${RPM_BUILD_ROOT}%{_prefix}/bin/rmf3_dump --version
+
+%if 0%{?with_python3}
+  py3_ver=`python3 -c "import sys; print('%d.%d' % sys.version_info[:2])"`
+  export PYTHONPATH=${RPM_BUILD_ROOT}%{_libdir}/python${py3_ver}/site-packages
+  python3 -c "import RMF; assert(RMF.__version__ == '%{version}')"
+  python3 -c "import RMF; assert(hasattr(RMF, 'get_all_global_coordinates'))"
+%endif
+
+%if 0%{?with_python2}
+  py2_ver=`%{PYTHON2} -c "import sys; print('%d.%d' % sys.version_info[:2])"`
+  export PYTHONPATH=${RPM_BUILD_ROOT}%{_libdir}/python${py2_ver}/site-packages
+  %{PYTHON2} -c "import RMF; assert(RMF.__version__ == '%{version}')"
 %endif
 
 %files
