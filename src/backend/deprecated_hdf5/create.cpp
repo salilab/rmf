@@ -43,7 +43,7 @@ struct HDF5Factory : public RMF::backends::IOFactory {
       const std::string& name) const override {
     return std::make_shared<MIO>(name, true, false);
   }
-  virtual ~HDF5Factory() {}
+  virtual ~HDF5Factory() = default;
 };
 
 }  // namespace

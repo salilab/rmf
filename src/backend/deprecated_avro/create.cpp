@@ -55,7 +55,7 @@ struct SingleTextAvroFactory : public RMF::backends::IOFactory {
       const std::string& name) const override {
     return std::make_shared<SingleAvroShareData>(name, true, false);
   }
-  virtual ~SingleTextAvroFactory() {}
+  virtual ~SingleTextAvroFactory() = default;
 };
 
 struct SingleAvroFactory : public SingleTextAvroFactory {
@@ -76,7 +76,7 @@ struct SingleAvroFactory : public SingleTextAvroFactory {
       return std::shared_ptr<RMF::backends::IO>();
     }
   }
-  virtual ~SingleAvroFactory() {}
+  virtual ~SingleAvroFactory() = default;
 };
 
 struct MultipleAvroFactory : public RMF::backends::IOFactory {
@@ -91,7 +91,7 @@ struct MultipleAvroFactory : public RMF::backends::IOFactory {
       const std::string& name) const override {
     return std::make_shared<AvroWriterShareData>(name, true, false);
   }
-  virtual ~MultipleAvroFactory() {}
+  virtual ~MultipleAvroFactory() = default;
 };
 }  // namespace
 std::vector<std::shared_ptr<backends::IOFactory> > get_factories() {
