@@ -15,7 +15,7 @@
 #include <H5Spublic.h>
 #include <H5Tpublic.h>
 #include <H5public.h>
-#include <stddef.h>
+#include <cstddef>
 #include <iostream>
 
 #define HDF5_CALL(x)                                             \
