@@ -29,7 +29,7 @@ namespace RMF {
 namespace hdf5_backend {
 namespace {
 
-typedef backends::BackwardsIO<HDF5SharedData> MIO;
+using MIO = backends::BackwardsIO<HDF5SharedData>;
 
 struct HDF5Factory : public RMF::backends::IOFactory {
   virtual std::string get_file_extension() const override {

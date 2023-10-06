@@ -36,12 +36,12 @@ namespace RMF {
 namespace avro_backend {
 namespace {
 
-typedef backends::BackwardsIO<avro_backend::AvroSharedData<
-    avro_backend::SingleAvroFile> > SingleAvroShareData;
-typedef backends::BackwardsIO<avro_backend::AvroSharedData<
-    avro_backend::MultipleAvroFileWriter> > AvroWriterShareData;
-typedef backends::BackwardsIO<avro_backend::AvroSharedData<
-    avro_backend::MultipleAvroFileReader> > AvroReaderShareData;
+using SingleAvroShareData = backends::BackwardsIO<avro_backend::AvroSharedData<
+    avro_backend::SingleAvroFile> >;
+using AvroWriterShareData = backends::BackwardsIO<avro_backend::AvroSharedData<
+    avro_backend::MultipleAvroFileWriter> >;
+using AvroReaderShareData = backends::BackwardsIO<avro_backend::AvroSharedData<
+    avro_backend::MultipleAvroFileReader> >;
 
 struct SingleTextAvroFactory : public RMF::backends::IOFactory {
   virtual std::string get_file_extension() const override {
