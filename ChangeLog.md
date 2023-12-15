@@ -2,7 +2,7 @@ Change Log {#changelog}
 ==========
 
 # 1.6.0 - 2023-12-14 # {#changelog_1_6_0}
-- RPM packages for IMP for RedHat Linux (and clones such as Alma or Rocky)
+- RPM packages for RMF for RedHat Linux (and clones such as Alma or Rocky)
   and for Fedora are now provided by the
   [COPR project](https://copr.fedorainfracloud.org/coprs/salilab/salilab/).
 - RMF::decorator::Chain can now store a per-chain sequence offset and UniProt
