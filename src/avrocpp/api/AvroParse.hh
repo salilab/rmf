@@ -20,7 +20,6 @@
 #define avro_AvroParse_hh__
 
 #include "Config.hh"
-#include <boost/static_assert.hpp>
 #include "AvroTraits.hh"
 #include "ResolvingReader.hh"
 

@@ -16,8 +16,6 @@
  * limitations under the License.
  */
 
-#include <boost/static_assert.hpp>
-
 #include "Validator.hh"
 #include "ValidSchema.hh"
 #include "NodeImpl.hh"

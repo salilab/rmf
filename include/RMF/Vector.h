@@ -16,7 +16,6 @@
 #include <boost/range/end.hpp>
 #include <type_traits>
 #include <array>
-#include <boost/static_assert.hpp>
 #include <algorithm>
 
 RMF_ENABLE_WARNINGS
