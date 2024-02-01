@@ -61,13 +61,13 @@ class Vector
   RMF_CXX11_DEFAULT_COPY_CONSTRUCTOR(Vector);
 
   Vector(float x, float y, float z) {
-    BOOST_STATIC_ASSERT(D == 3);
+    static_assert(D == 3);
     P::operator[](0) = x;
     P::operator[](1) = y;
     P::operator[](2) = z;
   }
   Vector(float x, float y, float z, float q) {
-    BOOST_STATIC_ASSERT(D == 4);
+    static_assert(D == 4);
     P::operator[](0) = x;
     P::operator[](1) = y;
     P::operator[](2) = z;

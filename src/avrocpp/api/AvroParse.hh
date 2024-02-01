@@ -48,12 +48,12 @@ void parse(ResolvingReader &p, T &val) {
 
 template <typename Reader, typename T>
 void parse(Reader &p, T &val, const boost::false_type &) {
-  BOOST_STATIC_ASSERT(sizeof(T) == 0);
+  static_assert(sizeof(T) == 0);
 }
 
 template <typename Reader, typename T>
 void translatingParse(Reader &p, T &val, const boost::false_type &) {
-  BOOST_STATIC_ASSERT(sizeof(T) == 0);
+  static_assert(sizeof(T) == 0);
 }
 
 // @{

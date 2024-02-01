@@ -43,7 +43,7 @@ void serialize(Writer &s, const T &val) {
 
 template <typename Writer, typename T>
 void serialize(Writer &s, const T &val, const boost::false_type &) {
-  BOOST_STATIC_ASSERT(sizeof(T) == 0);
+  static_assert(sizeof(T) == 0);
 }
 
 /// The remainder of the file includes default implementations for serializable
