@@ -15,8 +15,8 @@ jobs:
           flags: '--coverage'
           tests: RMF
           build: Debug
-        - os: ubuntu-24.04
-          python-version: 3.12
+        - os: ubuntu-latest
+          python-version: 3.9
           install: ''
           flags: '--coverage'
           tests: RMF
