@@ -50,8 +50,7 @@ against RMF.
 mkdir build && cd build
 
 cmake .. -DCMAKE_BUILD_TYPE=Release \
-         -DCMAKE_INSTALL_PREFIX=%{_prefix} \
-         -DUSE_PYTHON2=off
+         -DCMAKE_INSTALL_PREFIX=%{_prefix}
 make %{?_smp_mflags}
 
 %install
