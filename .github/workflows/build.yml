@@ -62,7 +62,6 @@ jobs:
         ctest -j 2 --output-on-failure -L ${{ matrix.tests }}
     - name: Combine coverage
       run: |
-        ${GCC/gcc/gcov} $(find . -name "*.gcno")
         cd build/coverage
         coverage combine && coverage xml && mv coverage.xml ../..
     - uses: codecov/codecov-action@v4
