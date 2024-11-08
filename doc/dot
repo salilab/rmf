@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """Tidy up .dot files to remove links to internal headers and
    full path names"""
