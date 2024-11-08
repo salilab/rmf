@@ -57,7 +57,10 @@ int main(int argc, char** argv) {
       }
     }
     catch (const std::exception &e) {
-      std::cerr << "Caught exception " << e.what() << std::endl;
+      // avro uses a plain exception to signal EOF
+      if (std::string(e.what()) != "EOF reached") {
+        std::cerr << "Caught exception " << e.what() << std::endl;
+      }
     }
     return 0;
   }
