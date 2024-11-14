@@ -36,9 +36,8 @@ In order to build from source, you will need:
 - [CMake](https://cmake.org) (3.14 or later)
 - [Boost](https://www.boost.org) (1.53 or later; Boost.Iostreams must be built
   with its [zlib filter enabled](https://www.boost.org/doc/libs/1_67_0/libs/iostreams/doc/installation.html))
-- [Python](https://www.python.org) (2.7 or later, or any version of Python 3)
-- [SWIG](http://www.swig.org) (1.3.40 or later; 2.0.4 or later is needed
-  if you want to use Python 3)
+- [Python](https://www.python.org) (3.6 or later)
+- [SWIG](http://www.swig.org) (2.0.4 or later)
 
 If you want to be able to read older format RMF files, you will also need:
 
