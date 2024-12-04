@@ -10,7 +10,7 @@ Source0:       rmf-%{version}.tar.gz
 BuildRequires: python3-devel, symlinks
 BuildRequires: gcc-c++, hdf5-devel >= 1.8
 BuildRequires: swig >= 3.0
-BuildRequires: cmake >= 2.8
+BuildRequires: cmake >= 3.14
 BuildRequires: boost-devel >= 1.53
 
 BuildRequires: python3-numpy
