@@ -86,6 +86,7 @@ jobs:
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release
         make -j 2
+        rm -f lib/RMFPYTHON_wrap.cxx
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
