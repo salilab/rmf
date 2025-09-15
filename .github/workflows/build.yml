@@ -63,6 +63,9 @@ jobs:
       run: |
         choco install swig boost-msvc-14.3
         pip install numpy
+    - name: Add msbuild to PATH (Windows)
+      if: matrix.os == 'windows-latest'
+      uses: microsoft/setup-msbuild@v1.0.1
     - name: Build and test (Mac or Linux)
       if: matrix.os != 'windows-latest'
       run: |
@@ -77,7 +80,7 @@ jobs:
       run: |
         mkdir build
         cd build
-        cmake .. -GNinja -DCMAKE_BUILD_TYPE="${{ matrix.build }}" -DCMAKE_CXX_FLAGS="${{ matrix.flags }}" -DCMAKE_EXE_LINKER_FLAGS="${{ matrix.flags }}" -DCMAKE_MODULE_LINKER_FLAGS="${{ matrix.flags }}" -DCMAKE_SHARED_LINKER_FLAGS="${{ matrix.flags }}"
+        cmake .. -GNinja -DCMAKE_TOOLCHAIN_FILE=${{ env.VCPKG_DEST_WIN }}\scripts\buildsystems\vcpkg.cmake -DCMAKE_BUILD_TYPE="${{ matrix.build }}" -DCMAKE_CXX_FLAGS="${{ matrix.flags }}" -DCMAKE_EXE_LINKER_FLAGS="${{ matrix.flags }}" -DCMAKE_MODULE_LINKER_FLAGS="${{ matrix.flags }}" -DCMAKE_SHARED_LINKER_FLAGS="${{ matrix.flags }}"
         ninja -j 2
         ctest -j 2 --output-on-failure -L ${{ matrix.tests }}
     - name: Combine coverage
