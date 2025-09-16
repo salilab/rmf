@@ -68,6 +68,8 @@ jobs:
       run: |
         choco install swig boost-msvc-14.3
         pip install numpy
+        set
+        dir C:\local\boost_1_87_0
     - name: Build and test (Mac or Linux)
       if: matrix.os != 'windows-latest'
       run: |
@@ -84,9 +86,10 @@ jobs:
         cd build
         cmake .. -DCMAKE_BUILD_TYPE="${{ matrix.build }}" -DCMAKE_CXX_FLAGS="${{ matrix.flags }}" -DCMAKE_EXE_LINKER_FLAGS="${{ matrix.linkflags }}" -DCMAKE_MODULE_LINKER_FLAGS="${{ matrix.linkflags }}" -DCMAKE_SHARED_LINKER_FLAGS="${{ matrix.linkflags }}"
         cmake --build . --config Release -j 2
-        copy lib\Release\*.dll bin\
+        copy lib\Release\*.dll lib\
         copy lib\Release\*.pyd lib\
         copy bin\Release\*.exe bin\
+        set PATH=%PATH%;C:\local\boost_1_87_0\bin
         ctest -j 2 --output-on-failure -L ${{ matrix.tests }}
     - name: Combine coverage
       if: matrix.os != 'windows-latest'
