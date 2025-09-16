@@ -83,7 +83,7 @@ jobs:
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE="${{ matrix.build }}" -DCMAKE_CXX_FLAGS="${{ matrix.flags }}" -DCMAKE_EXE_LINKER_FLAGS="${{ matrix.linkflags }}" -DCMAKE_MODULE_LINKER_FLAGS="${{ matrix.linkflags }}" -DCMAKE_SHARED_LINKER_FLAGS="${{ matrix.linkflags }}"
-        cmake --build . -j 2
+        cmake --build . --config Release -j 2
         ctest -j 2 --output-on-failure -L ${{ matrix.tests }}
     - name: Combine coverage
       if: matrix.os != 'windows-latest'
