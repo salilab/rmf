@@ -68,8 +68,6 @@ jobs:
       run: |
         choco install swig boost-msvc-14.3
         pip install numpy
-        dir C:\local\boost_1_87_0
-        dir env:
     - name: Build and test (Mac or Linux)
       if: matrix.os != 'windows-latest'
       run: |
