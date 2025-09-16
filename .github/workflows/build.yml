@@ -89,7 +89,7 @@ jobs:
         copy lib\Release\*.dll lib\
         copy lib\Release\*.pyd lib\
         copy bin\Release\*.exe bin\
-        set PATH=%PATH%;C:\local\boost_1_87_0\bin
+        $env:Path += ';C:\local\boost_1_87_0\lib64-msvc-14.3'
         ctest -j 2 --output-on-failure -L ${{ matrix.tests }}
     - name: Combine coverage
       if: matrix.os != 'windows-latest'
