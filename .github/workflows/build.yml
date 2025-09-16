@@ -63,9 +63,6 @@ jobs:
       run: |
         choco install swig boost-msvc-14.3
         pip install numpy
-    - name: Add msbuild to PATH (Windows)
-      if: matrix.os == 'windows-latest'
-      uses: microsoft/setup-msbuild@v2
     - name: Build and test (Mac or Linux)
       if: matrix.os != 'windows-latest'
       run: |
@@ -81,7 +78,7 @@ jobs:
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE="${{ matrix.build }}" -DCMAKE_CXX_FLAGS="${{ matrix.flags }}" -DCMAKE_EXE_LINKER_FLAGS="${{ matrix.flags }}" -DCMAKE_MODULE_LINKER_FLAGS="${{ matrix.flags }}" -DCMAKE_SHARED_LINKER_FLAGS="${{ matrix.flags }}"
-        msbuild
+        cmake --build -j 2 .
         ctest -j 2 --output-on-failure -L ${{ matrix.tests }}
     - name: Combine coverage
       if: matrix.os != 'windows-latest'
