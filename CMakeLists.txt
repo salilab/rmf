@@ -182,13 +182,6 @@ else()
   set(CMAKE_INSTALL_SWIGDIR "${CMAKE_INSTALL_PREFIX}/share/RMF/swig")
 endif()
 
-if(NOT DEFINED PATH_SEP)
-  if(WIN32)
-    Set(PATH_SEP ";")
-  else()
-    Set(PATH_SEP ":")
-  endif()
-endif()
 
 add_subdirectory(swig)
 
