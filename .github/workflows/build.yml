@@ -84,11 +84,17 @@ jobs:
         cd build
         cmake .. -DCMAKE_BUILD_TYPE="${{ matrix.build }}" -DCMAKE_CXX_FLAGS="${{ matrix.flags }}" -DCMAKE_EXE_LINKER_FLAGS="${{ matrix.linkflags }}" -DCMAKE_MODULE_LINKER_FLAGS="${{ matrix.linkflags }}" -DCMAKE_SHARED_LINKER_FLAGS="${{ matrix.linkflags }}"
         cmake --build . --config Release -j 2
+        # Scripts expect to find binaries in lib\ or bin\ but msbuild puts them
+        # in lib\Release\ or bin\Release\; copy to the expected location.
         copy lib\Release\*.dll lib\
         copy lib\Release\*.pyd lib\
         copy bin\Release\*.exe bin\
+        # Since Python 3.8 _RMF.pyd will not search for DLL dependencies
+        # in PATH. Work around by just copying them into the same directory.
         copy C:\local\boost_1_87_0\lib64-msvc-14.3\*.dll lib\
-        ctest -j 2 --output-on-failure -L ${{ matrix.tests }} -LE '(test|benchmark)-cpp' -E 'test_rmf_cat|test_rmf3_dump'
+        # Add lib directory to PATH so that C++ tests can find RMF.dll
+        $env:Path += ";$pwd\lib"
+        ctest -j 2 --output-on-failure -L ${{ matrix.tests }}
     - name: Combine coverage
       if: matrix.os != 'windows-latest'
       run: |
