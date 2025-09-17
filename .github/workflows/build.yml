@@ -84,11 +84,8 @@ jobs:
         cd build
         cmake .. -DCMAKE_BUILD_TYPE="${{ matrix.build }}" -DCMAKE_CXX_FLAGS="${{ matrix.flags }}" -DCMAKE_EXE_LINKER_FLAGS="${{ matrix.linkflags }}" -DCMAKE_MODULE_LINKER_FLAGS="${{ matrix.linkflags }}" -DCMAKE_SHARED_LINKER_FLAGS="${{ matrix.linkflags }}"
         cmake --build . --config Release -j 2
-        copy lib\Release\*.dll lib\
-        copy lib\Release\*.pyd lib\
-        copy bin\Release\*.exe bin\
-        copy C:\local\boost_1_87_0\lib64-msvc-14.3\*.dll lib\
-        ctest -j 2 --output-on-failure -L ${{ matrix.tests }} -LE '(test|benchmark)-cpp' -E 'test_rmf_cat|test_rmf3_dump'
+        $env:Path += ';$pwd\lib\Release;$pwd\bin\Release;C:\local\boost_1_87_0\lib64-msvc-14.3'
+        ctest -j 2 --output-on-failure -L ${{ matrix.tests }}
     - name: Combine coverage
       if: matrix.os != 'windows-latest'
       run: |
