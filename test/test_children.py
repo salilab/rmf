@@ -1,6 +1,5 @@
 import RMF
 import unittest
-import utils
 
 class Tests(unittest.TestCase):
     def test_children(self):

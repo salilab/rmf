@@ -2,7 +2,6 @@ import RMF
 import os.path
 import unittest
 import sys
-import utils
 
 class GenericTest(unittest.TestCase):
 
