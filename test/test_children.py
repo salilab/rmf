@@ -1,6 +1,7 @@
 import RMF
 import unittest
 
+
 class Tests(unittest.TestCase):
     def test_children(self):
         """Test handling of node children"""

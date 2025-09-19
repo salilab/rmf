@@ -1,7 +1,7 @@
-import sys
 import RMF
 import unittest
 import os
+
 
 class Tests(unittest.TestCase):
 
