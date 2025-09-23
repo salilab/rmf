@@ -18,7 +18,7 @@ jobs:
           build: Debug
           name_with: ''
         - os: ubuntu-latest
-          python-version: 3.9
+          python-version: 3.13
           install: ''
           flags: '--coverage'
           linkflags: '--coverage'
