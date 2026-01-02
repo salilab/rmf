@@ -12,7 +12,7 @@ representations of proteins), along with markup, including geometry
 and score data.
 
 The main documentation is found on the
-[web site](http://integrativemodeling.org/rmf/nightly/doc/).
+[web site](https://integrativemodeling.org/rmf/nightly/doc/).
 
 Copyright 2007-2026 IMP Inventors.
 
