@@ -81,7 +81,7 @@ jobs:
     - if: matrix.build-mode == 'manual'
       shell: bash
       run: |
-        sudo apt-get install -qq libboost-all-dev swig
+        sudo apt-get update -qq && sudo apt-get install -qq libboost-all-dev swig
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release
