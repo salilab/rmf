@@ -1,10 +1,10 @@
 Name:          RMF
-Version:       1.7.0
+Version:       1.7.1
 Release:       1%{?dist}
 License:       Apache 2.0
 Summary:       Library to support reading and writing of RMF files
 Group:         Applications/Engineering
-Packager:      Ben Webb <ben@salilab.org>
+Packager:      Ben Webb <benmwebb@gmail.com>
 URL:           https://integrativemodeling.org/rmf/
 Source0:       rmf-%{version}.tar.gz
 BuildRequires: python3-devel, symlinks
@@ -83,6 +83,9 @@ python3 -c "import RMF; assert(hasattr(RMF, 'get_all_global_coordinates'))"
 %{_libdir}/libRMF*.so
 
 %changelog
+* Wed Apr 29 2026 Ben Webb <ben@salilab.org>   1.7.1-1
+- Update for 1.7.1 release.
+
 * Wed Dec 04 2024 Ben Webb <ben@salilab.org>   1.7.0-1
 - Update for 1.7.0 release.
 

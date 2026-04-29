@@ -1,6 +1,6 @@
 # RMF #
 
-[![Build Status](https://github.com/salilab/rmf/workflows/build/badge.svg?branch=develop)](https://github.com/salilab/rmf/actions?query=workflow%3Abuild)
+[![Build Status](https://github.com/salilab/rmf/actions/workflows/build.yml/badge.svg?branch=develop)](https://github.com/salilab/rmf/actions/workflows/build.yml)
 [![conda package](https://img.shields.io/conda/vn/conda-forge/rmf.svg)](https://anaconda.org/conda-forge/rmf)
 [![codecov](https://codecov.io/gh/salilab/rmf/branch/develop/graph/badge.svg)](https://codecov.io/gh/salilab/rmf)
 [![Code Climate](https://codeclimate.com/github/salilab/rmf/badges/gpa.svg)](https://codeclimate.com/github/salilab/rmf)
@@ -12,9 +12,9 @@ representations of proteins), along with markup, including geometry
 and score data.
 
 The main documentation is found on the
-[web site](http://integrativemodeling.org/rmf/nightly/doc/).
+[web site](https://integrativemodeling.org/rmf/nightly/doc/).
 
-Copyright 2007-2024 IMP Inventors.
+Copyright 2007-2026 IMP Inventors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

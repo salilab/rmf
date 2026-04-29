@@ -56,7 +56,7 @@ endif(POLICY CMP0167)
 
 # C++11 can use the boost version
 set(Boost_NO_BOOST_CMAKE ON)
-find_package(Boost COMPONENTS system filesystem thread program_options iostreams
+find_package(Boost COMPONENTS filesystem thread program_options iostreams
   REQUIRED)
 
 include(FindHDF5)
@@ -146,7 +146,7 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 # Version information
 set (RMF_VERSION_MAJOR 1)
 set (RMF_VERSION_MINOR 7)
-set (RMF_VERSION_MICRO 0)
+set (RMF_VERSION_MICRO 1)
 math (EXPR RMF_VERSION "${RMF_VERSION_MAJOR} * 100000 + ${RMF_VERSION_MINOR} * 100 + ${RMF_VERSION_MICRO}")
 
 set(RMF_SOVERSION "${RMF_VERSION_MAJOR}.${RMF_VERSION_MINOR}" CACHE INTERNAL "" FORCE)
