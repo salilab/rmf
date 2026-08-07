@@ -1,5 +1,5 @@
 Name:          RMF
-Version:       1.7.1
+Version:       1.7.2
 Release:       1%{?dist}
 License:       Apache 2.0
 Summary:       Library to support reading and writing of RMF files
@@ -83,6 +83,9 @@ python3 -c "import RMF; assert(hasattr(RMF, 'get_all_global_coordinates'))"
 %{_libdir}/libRMF*.so
 
 %changelog
+* Fri Aug 07 2026 Ben Webb <benjamin.webb@ucsf.edu>   1.7.2-1
+- Update for 1.7.2 release.
+
 * Wed Apr 29 2026 Ben Webb <benjamin.webb@ucsf.edu>   1.7.1-1
 - Update for 1.7.1 release.
 
