@@ -83,17 +83,17 @@ python3 -c "import RMF; assert(hasattr(RMF, 'get_all_global_coordinates'))"
 %{_libdir}/libRMF*.so
 
 %changelog
-* Wed Apr 29 2026 Ben Webb <ben@salilab.org>   1.7.1-1
+* Wed Apr 29 2026 Ben Webb <benjamin.webb@ucsf.edu>   1.7.1-1
 - Update for 1.7.1 release.
 
-* Wed Dec 04 2024 Ben Webb <ben@salilab.org>   1.7.0-1
+* Wed Dec 04 2024 Ben Webb <benjamin.webb@ucsf.edu>   1.7.0-1
 - Update for 1.7.0 release.
 
-* Mon May 13 2024 Ben Webb <ben@salilab.org>   1.6.1-1
+* Mon May 13 2024 Ben Webb <benjamin.webb@ucsf.edu>   1.6.1-1
 - Update for 1.6.1 release.
 
-* Thu Dec 14 2023 Ben Webb <ben@salilab.org>   1.6.0-1
+* Thu Dec 14 2023 Ben Webb <benjamin.webb@ucsf.edu>   1.6.0-1
 - Update for 1.6.0 release.
 
-* Mon Jul 31 2023 Ben Webb <ben@salilab.org>   1.5.1-1
+* Mon Jul 31 2023 Ben Webb <benjamin.webb@ucsf.edu>   1.5.1-1
 - Initial build.
